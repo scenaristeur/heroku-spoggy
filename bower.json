@@ -1,6 +1,6 @@
 {
   "name": "spoggy",
-  "main": "index.html",
+  "main": "public/index.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },
