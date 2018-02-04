@@ -8,7 +8,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "./node_modules/bower/bin/bower install",
     "start": "node index.js"
   },
   "repository": {
