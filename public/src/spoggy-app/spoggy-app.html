@@ -1,40 +1,41 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
-<link rel="import" href="../spoggy-graphe/spoggy-graphe.html">
 <link rel="import" href="../spoggy-socket/spoggy-socket.html">
+<link rel="import" href="../spoggy-graphe/spoggy-graphe.html">
+<link rel="import" href="../spoggy-chat/spoggy-chat.html">
 
 <dom-module id="spoggy-app">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
     <div hidden$="[[connected]]">[[status]]</div>
 
-<spog-socket socket="{{socket}}" status="{{status}}"></spog-socket>
+    <spog-socket socket="{{socket}}" status="{{status}}"></spog-socket>
     <h2>Hello [[prop1]]!</h2>
-      <spoggy-socket></spoggy-socket>
+    <spoggy-socket></spoggy-socket>
     <spoggy-graphe></spoggy-graphe>
+    <spoggy-chat></spoggy-chat>
   </template>
 
   <script>
-    /**
-     * @customElement
-     * @polymer
-     */
-    class SpoggyApp extends Polymer.Element {
-      static get is() { return 'spoggy-app'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-app'
-          }
-        };
-      }
+  /**
+  * @customElement
+  * @polymer
+  */
+  class SpoggyApp extends Polymer.Element {
+    static get is() { return 'spoggy-app'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-app'
+        }
+      };
     }
+  }
 
-    window.customElements.define(SpoggyApp.is, SpoggyApp);
+  window.customElements.define(SpoggyApp.is, SpoggyApp);
   </script>
 </dom-module>
