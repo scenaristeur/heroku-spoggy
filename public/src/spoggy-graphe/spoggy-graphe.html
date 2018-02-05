@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="spoggy-graphe">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-graphe`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyGraphe extends Polymer.Element {
+      static get is() { return 'spoggy-graphe'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-graphe'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyGraphe.is, SpoggyGraphe);
+  </script>
+</dom-module>

@@ -1,5 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
+<link rel="import" href="../spoggy-graphe/spoggy-graphe.html">
+<link rel="import" href="../spoggy-socket/spoggy-socket.html">
+
 <dom-module id="spoggy-app">
   <template>
     <style>
@@ -7,7 +10,12 @@
         display: block;
       }
     </style>
+    <div hidden$="[[connected]]">[[status]]</div>
+
+<spog-socket socket="{{socket}}" status="{{status}}"></spog-socket>
     <h2>Hello [[prop1]]!</h2>
+      <spoggy-socket></spoggy-socket>
+    <spoggy-graphe></spoggy-graphe>
   </template>
 
   <script>
