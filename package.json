@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "postinstall": "cd public && bower install"
+    "postinstall": "npm install && cd public && bower install"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/scenaristeur/heroku-spoggy#readme",
   "dependencies": {
+    "bower": "^1.8.2",
     "express": "^4.16.2",
     "socket.io": "^2.0.4"
   }
