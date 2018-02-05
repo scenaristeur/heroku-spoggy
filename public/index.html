@@ -1,73 +1,111 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
-  <style> body {padding: 0; margin: 0;} </style>
-  <script src="lib/p5.min.js"></script>
-  <script src="lib/addons/p5.dom.min.js"></script>
-  <script src="lib/addons/p5.sound.min.js"></script>
-  <!--<script src="js/sketch.js"></script>-->
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <!--vis-->
-  <script type="text/javascript" src="lib/vis.min.js"></script>
-    <script type="text/javascript" src="lib/vis-network.min.js"></script>
-  <link href="css/vis-network.min.css" rel="stylesheet" type="text/css" />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Polymer Starter Kit">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-</head>
+    <title>My App</title>
+    <meta name="description" content="My App description">
 
-<!--<body onload="draw();"-->
-<body>
+    <!--
+      The `<base>` tag below is present to support two advanced deployment options:
+      1) Differential serving. 2) Serving from a non-root path.
 
-  <div id="network-popUp">
-  <span id="operation">node</span> <br>
-  <table style="margin:auto;"><tr>
-    <td>id</td><td><input id="node-id" value="new value" /></td>
-  </tr>
-    <tr>
-      <td>label</td><td><input id="node-label" value="new value" /></td>
-    </tr></table>
-  <input type="button" value="save" id="saveButton" />
-  <input type="button" value="cancel" id="cancelButton" />
-</div>
-<br />
+      Instead of manually editing the `<base>` tag yourself, you should generally either:
+      a) Add a `basePath` property to the build configuration in your `polymer.json`.
+      b) Use the `--base-path` command-line option for `polymer build`.
 
-  <div id="contenu">
-    <!--  <p id='server-time'></p>-->
+      Note: If you intend to serve from a non-root path, see [polymer-root-path] below.
+    -->
+    <base href="/">
 
-  </div>
-<!--  <p>
-  <label for="locale">Select a locale:</label>
-  <select id="locale" onchange="draw();">
-    <option value="en">en</option>
-    <option value="de">de</option>
-    <option value="es">es</option>
-    <option value="fr">fr</option>
-    <option value="it">it</option>
-    <option value="nl">nl</option>
-    <option value="pt-br">pt</option>
-    <option value="ru">ru</option>
-  </select>
-</p>-->
-  <div id="mynetwork"></div>
-<p id="selection"></p>
+    <link rel="icon" href="images/favicon.ico">
 
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="manifest.json">
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-  var socket = io();
-/*  var el = document.getElementById('server-time');
-  socket.on('time', function(timeString) {
-    el.innerHTML = 'Servor time: ' + timeString;
-  });*/
-  socket.on('update', function (data) {
-    console.log(data);
-  });
-  </script>
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#3f51b5">
 
-  <script src="js/graphe.js"></script>
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="My App">
 
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="My App">
 
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/manifest/icon-192x192.png">
 
-</body>
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#3f51b5">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <script>
+      /**
+      * [polymer-root-path]
+      *
+      * By default, we set `Polymer.rootPath` to the server root path (`/`).
+      * Leave this line unchanged if you intend to serve your app from the root
+      * path (e.g., with URLs like `my.domain/` and `my.domain/view1`).
+      *
+      * If you intend to serve your app from a non-root path (e.g., with URLs
+      * like `my.domain/my-app/` and `my.domain/my-app/view1`), edit this line
+      * to indicate the path from which you'll be serving, including leading
+      * and trailing slashes (e.g., `/my-app/`).
+      */
+      window.Polymer = {rootPath: '/'};
+
+      // Load and register pre-caching Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('service-worker.js', {
+            scope: Polymer.rootPath,
+          });
+        });
+      }
+    </script>
+
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+
+    <!-- Load your application shell -->
+    <link rel="import" href="src/my-app.html">
+
+    <!-- Add any global styles for body, document, etc. -->
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: #eeeeee;
+      }
+    </style>
+  </head>
+  <body>
+    <my-app></my-app>
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
+    <!-- Built with love using Polymer Starter Kit -->
+  </body>
 </html>

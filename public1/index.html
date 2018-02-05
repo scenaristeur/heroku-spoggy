@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+  <style> body {padding: 0; margin: 0;} </style>
+  <script src="lib/p5.min.js"></script>
+  <script src="lib/addons/p5.dom.min.js"></script>
+  <script src="lib/addons/p5.sound.min.js"></script>
+  <!--<script src="js/sketch.js"></script>-->
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <!--vis-->
+  <script type="text/javascript" src="lib/vis.min.js"></script>
+    <script type="text/javascript" src="lib/vis-network.min.js"></script>
+  <link href="css/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<!--<body onload="draw();"-->
+<body>
+
+  <div id="network-popUp">
+  <span id="operation">node</span> <br>
+  <table style="margin:auto;"><tr>
+    <td>id</td><td><input id="node-id" value="new value" /></td>
+  </tr>
+    <tr>
+      <td>label</td><td><input id="node-label" value="new value" /></td>
+    </tr></table>
+  <input type="button" value="save" id="saveButton" />
+  <input type="button" value="cancel" id="cancelButton" />
+</div>
+<br />
+
+  <div id="contenu">
+    <!--  <p id='server-time'></p>-->
+
+  </div>
+<!--  <p>
+  <label for="locale">Select a locale:</label>
+  <select id="locale" onchange="draw();">
+    <option value="en">en</option>
+    <option value="de">de</option>
+    <option value="es">es</option>
+    <option value="fr">fr</option>
+    <option value="it">it</option>
+    <option value="nl">nl</option>
+    <option value="pt-br">pt</option>
+    <option value="ru">ru</option>
+  </select>
+</p>-->
+  <div id="mynetwork"></div>
+<p id="selection"></p>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+  var socket = io();
+/*  var el = document.getElementById('server-time');
+  socket.on('time', function(timeString) {
+    el.innerHTML = 'Servor time: ' + timeString;
+  });*/
+  socket.on('update', function (data) {
+    console.log(data);
+  });
+  </script>
+
+  <script src="js/graphe.js"></script>
+
+
+
+</body>
+</html>
