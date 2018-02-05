@@ -1,23 +1,30 @@
-
+var cnv;
+var d;
+var g;
 function setup() {
-	canvas = createCanvas(windowWidth, windowHeight);
-	slider = createSlider(40, 220, 70);
-	slider.position(10, 10);
-	slider.style('width', width/2+'px');
-
-	slider2 = createSlider(990, 1050, 1000);
-	slider2.position(10, 40);
-	slider2.style('width', width/2+'px');
-
-  	socket.on('update', function (data) {
-		console.log(data);
-	});
+  cnv = createCanvas(windowWidth, windowHeight);
+  cnv.touchStarted(changeGray); // attach listener for
+  // canvas click only
+  d = 10;
+  g = 100;
 }
 
 function draw() {
+  background(g);
+  ellipse(width / 2, height / 2, d, d);
+}
 
-	background(255,255,0);
+// this function fires with any touch anywhere
+function touchStarted() {
+  d = d + 10;
+}
+
+// this function fires only when cnv is clicked
+function changeGray() {
+  g = random(0, 255);
+}
 
 
-
-	}
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+}
