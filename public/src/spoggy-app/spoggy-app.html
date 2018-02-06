@@ -18,10 +18,10 @@
   }
   </style>
   <div hidden$="[[connected]]">[[status]]</div>
-<spoggy-levelgraph></spoggy-levelgraph>
+<spoggy-levelgraph actionstosend="{{actionstosend}}" db="{{db}}"></spoggy-levelgraph>
   <spoggy-socket socket="{{socket}}" status="{{status}}"></spoggy-socket>
   <spoggy-chat  id="chat" hidden$="[[!visibleChat]]"  socket="[[socket]]" status="[[status]]" ></spoggy-chat>
-  <spoggy-graphe  hidden$="[[visibleChat]]"  socket="[[socket]]" status="[[status]]" actionstosend="{{actionstosend}}" params="{{params}}"></spoggy-graphe>
+  <spoggy-graphe  hidden$="[[visibleChat]]"  socket="[[socket]]" status="[[status]]" db=[[db]] actionstosend="{{actionstosend}}" params="{{params}}"></spoggy-graphe>
   <paper-fab id="fabchat" on-tap="toggleChat"  label="😻"></paper-fab>
 <!--<spoggy-sparql fusekiresults="{{fusekiresults}}"></spoggy-sparql>-->
 
@@ -73,6 +73,7 @@ class SpoggyApp extends Polymer.Element {
     super.ready();
     var app=this;
 
+  /* ENVOI des actions vers le serveur
     var tickInterval = setInterval(function() {
       if (app.connected){
       //  console.log("tick spoggy-app");
@@ -81,7 +82,7 @@ class SpoggyApp extends Polymer.Element {
           app.socket.emit('newActions', app.actionstosend);
           app.actionstosend = [];
         }}
-      }, this.tickDelay);
+      }, this.tickDelay); */
     }
     _consoleStatus(newValue, oldValue){
       console.log(oldValue +" -> "+ newValue);

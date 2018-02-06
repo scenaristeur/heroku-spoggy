@@ -273,9 +273,37 @@
         selectedType: {
           type: String,
           value: "node"
+        },
+        db:{
+          observer: '_dbChanged'
         }
       };
     }
+
+
+_dbChanged(){
+  console.log("##############################");
+  var app = this;
+  var limitInit = 100;
+  console.log(this.db);
+  this.db.get({
+    reverse: true,
+    limit: limitInit
+  }, function(err, list) {
+    console.log("1list");
+    console.log(list);
+    if (list != undefined){
+    console.log(list);
+    app.db2populate = list;
+    app.populateVis(app.db2populate, app.network);
+    app.triplets2popLength = app.db2populate.length;
+  }
+  });
+
+
+
+
+}
 
 
     ready() {

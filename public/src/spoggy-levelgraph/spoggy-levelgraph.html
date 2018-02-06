@@ -1,6 +1,10 @@
 <!--https://github.com/levelgraph/levelgraph-->
-
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 <script src="lib/levelgraph.min.js"></script>
 
 <dom-module id="spoggy-levelgraph">
@@ -10,51 +14,410 @@
       display: block;
     }
     </style>
-    <!--    <h2>Hello [[prop1]]!</h2>-->
-  </template>
-  <script>
-  /**
-  * `spoggy-levelgraph`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class SpoggyLevelgraph extends Polymer.Element {
-    constructor() {
-      super();
-      this.populate();
-      console.log("Spoggy-levelgraph");
-      console.log(this.db);
-    }
-    static get is() { return 'spoggy-levelgraph'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'spoggy-levelgraph'
-        },
-        db: {
-          Object,
-          notify: true
-        },
-      };
-    }
+    <h2>Hello [[prop1]]!</h2>
+    [[base.name]]</br>
+    [[graphe]]
 
-    populate(){
-      this.db = levelgraph(level("SPOGGYDB"));
-      console.log("pop");
-      var triple = { subject: "a", predicate: "b", object: "c" };
-      this.db.put(triple, function(err) {
-        // do something after the triple is inserted
-      });
-      this.db.get({ subject: "a" }, function(err, list) {
-        console.log(list);
-      });
-    }
+
+    <!-- BASE POPUP -->
+    <!--    <paper-dialog id="basePopUp" backdrop transition="core-transition-bottom">
+    <div horizontal start-justified start layout >
+    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+    <div style="padding-left:20px" vertical start-justified start layout wrap>
+    <h2 id="BaseOperation" style="margin: 0;color: #0D578B;">Créer une base</h2>
+    <p >
+    <paper-input id="baseLabel" label="Nom de la base" autofocus></paper-input>
+  </p>
+  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+  <paper-button on-tap="saveBase" raised>ok</paper-button>
+  <paper-button  on-tap="toggleBasePopUp" raised>Annuler</paper-button>
+</div>
+</div>
+</div>
+</paper-dialog>
+<paper-button on-tap="toggleBasePopUp" raised>Créer une base</paper-button>-->
+
+<!-- GRAPH POPUP -->
+<!--  <paper-dialog id="graphPopUp" backdrop transition="core-transition-bottom">
+<div horizontal start-justified start layout >
+<core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+<div style="padding-left:20px" vertical start-justified start layout wrap>
+<h2 id="GraphOperation" style="margin: 0;color: #0D578B;">Créer un graphe</h2>
+<p >
+<paper-input id="graphLabel" label="Nom du graphe" autofocus ></paper-input>
+</p>
+<div style="padding-top:10px" horizontal end-justified layout self-stretch>
+<paper-button on-tap="saveGraph" raised>ok</paper-button>
+<paper-button on-tap="toggleGraphPopUp" raised>Annuler</paper-button>
+</div>
+</div>
+</div>
+</paper-dialog>
+
+<paper-button on-tap="toggleGraphPopUp" raised>Créer un graphe</paper-button>-->
+
+<!-- TRIPLET POPUP -->
+<paper-dialog id="tripletPopUp" backdrop transition="core-transition-bottom">
+  <div horizontal start-justified start layout >
+    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+    <div style="padding-left:20px" vertical start-justified start layout wrap>
+      <h2 id="TripletOperation" style="margin: 0;color: #0D578B;">Ajouter un triplet</h2>
+      <p >
+        <paper-input id="tripletSujet" label="Sujet" autofocus ></paper-input>
+        <paper-input id="tripletPredicat" label="Predicat"  ></paper-input>
+        <paper-input id="tripletObjet" label="Objet"  ></paper-input>
+      </p>
+      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+        <paper-button on-tap="saveTriplet" raised>ok</paper-button>
+        <paper-button on-tap="toggleTripletPopUp" raised>Annuler</paper-button>
+      </div>
+    </div>
+  </div>
+</paper-dialog>
+
+<paper-button on-tap="toggleTripletPopUp" raised>Ajouter un triplet</paper-button>
+
+
+
+
+<paper-button on-tap="showBase" raised>SHOW BASE</paper-button>
+
+</template>
+<script>
+/**
+* `spoggy-levelgraph`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyLevelgraph extends Polymer.Element {
+  constructor() {
+    super();
+    this.populate();
+    console.log("Spoggy-levelgraph");
+    console.log(this.db);
+  }
+  static get is() { return 'spoggy-levelgraph'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-levelgraph'
+      },
+      db: {
+        Object,
+        notify: true
+      },
+      base: {
+        Object,
+        notify: true
+      },
+      bases: {
+        Array,
+        notify: true
+      },
+      graphe: {
+        Object,
+        notify: true
+      },
+      graphes: {
+        Array,
+        notify: true
+      },
+      actionstosend:{
+        observer: '_actionstosendChanged'
+      }
+    };
   }
 
-  window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
-  </script>
+  _actionstosendChanged(){
+    console.log(this.actionstosend);
+    if (this.actionstosend.length > 0){
+      var base = this.base;
+      this.actionstosend.forEach(function(action) {
+        //pour chaque action reçue on effectue le boulot necéssaire selon son type
+        switch (action.type) {
+          case "newNode":
+          //nouveau node du graphe ou modification
+          console.log("newNode");
+          var data = action.data;
+          console.log(data);
+          var triples = [];
+          // si data.type == "graph" on créé un nouveau graphe
+          /*    if (data.type == "graph"){
+          console.log("CREATION d'un graphe");
+          spog.createGraph(data.id);
+          console.log(spog.graphs);
+          var tripleGraph = {
+          subject: data.id,
+          predicate: "type",
+          object: "Graph",
+          type: "edge"
+        };
+
+        triples.push(tripleGraph);
+        updateGraphs(socket);
+      }*/
+
+
+
+      //si newNode mais qu'il existe, c'est un renommage  donc on regarde s'il existe dans la base
+      var triple = {
+        subject: data.id,
+        predicate: "label",
+        object: data.label,
+        type: data.type
+      };
+
+      triples.push(triple);
+      if(data.shape != undefined){
+        var tripleShape = {
+          subject: data.id,
+          predicate: "shape",
+          object: data.shape,
+          type: "shape"
+        };
+        triples.push(tripleShape);
+      }
+      if (data.color != undefined){
+        var tripleColor = {
+          subject: data.id,
+          predicate: "color",
+          object: data.color,
+          type: "color"
+        };
+        triples.push(tripleColor);
+      }
+      console.log(triples);
+      base.get({
+        subject: data.id,
+        /*          predicate: "label",
+        object: data.label,*/
+      }, function(err, list) {
+        if (list.length == 0) {
+          //console.log("ajoute");
+          base.put(triples, function(err) {
+            console.log("added");
+          });
+        } else {
+          // si le noeud existe, on le supprime et le recréé avec les nouvelles valeurs, c'est la méthode pour modifier
+          base.del(list, function(err, deleted) {
+            console.log("deleted");
+          });
+          base.put(triples, function(err, putted) {
+            console.log("added");
+          });
+        }
+      });
+      break;
+      case "deleteNode":
+      var nodeId = action.data.nodes;
+      var edges = action.data.edges;
+      base.get({
+        subject: nodeId
+      }, function(err, list) {
+        base.del(list, function(err, deleted) {});
+      });
+      // PAS CERTAIN QUE LES LIENS SOIENT BIEN SUPPRIMES DU GRAPHE lorsque l'on supprime un noeud, A REVOIR
+      edges.forEach(function(edgeId) {
+        base.get({
+          subject: edgeId
+        }, function(err, list) {
+          console.log("3 list");
+          base.del(list, function(err, deleted) {});
+        });
+      });
+      break;
+      case "newEdge":
+      console.log(action);
+      //maj de la base
+      var edge = action.data[0] || action.data;
+      if (edge != undefined) {
+        base.get({
+          subject: edge.id
+        }, function(err, list) {
+          if (list.length == 0) {
+            var tripleLabel = {
+              subject: edge.id,
+              predicate: "label",
+              object: edge.label
+            };
+            var tripleFrom = {
+              subject: edge.id,
+              predicate: "from",
+              object: edge.from
+            };
+            var tripleTo = {
+              subject: edge.id,
+              predicate: "to",
+              object: edge.to
+            };
+            base.put([tripleLabel, tripleFrom, tripleTo], function(err) {
+              console.log("added");
+            });
+          } else {
+            var tripleLabel = {
+              subject: edge.id,
+              predicate: "label",
+              object: edge.label
+            };
+            base.get({
+              subject: edge.id,
+              predicate: "label"
+            }, function(err, listLabel) {
+              base.del(listLabel[0], function(err, deleted) {
+                console.log("deleted");
+              });
+              base.put(tripleLabel, function(err, putted) {
+                console.log("added");
+              });
+            });
+          }
+        });
+      } else {
+        console.log("pb pour creer le edge, quel id ?")
+      }
+      break;
+      case "editEdge":
+      //non utilisé , regroupé avec newEdge
+      console.log(action);
+      break;
+      case "deleteEdge":
+      console.log(action);
+      var edgeId = action.data.edges[0];
+      console.log(edgeId);
+      base.get({
+        subject: edgeId
+      }, function(err, list) {
+        console.log(" 4 list");
+        base.del(list, function(err, deleted) {
+          console.log("deleted");
+        });
+      });
+      break;
+      default:
+      console.log("action non reconnue");
+      console.log(action);
+    }
+  });
+}
+}
+
+populate(){
+  var basename = "SPOGGYDB";
+  this.db = levelgraph(level(basename));
+  this.db.name = basename;
+  console.log("pop");
+
+  this.base = this.db;
+
+  var triple = { subject: "a", predicate: "b", object: "c" };
+  this.addTriple(triple)
+  this.showBase();
+}
+
+// BASE GENERALE
+addTriple(t){
+  this.base.put(t, function(err) {
+    // do something after the triple is inserted
+  });
+}
+
+showBase(){
+  //  this.base.get({ subject: "a" }, function(err, list) {
+  this.base.get({}, function(err, list) {
+    console.log(list);
+  });
+}
+
+
+// CREER UNE BASE
+toggleBasePopUp(){
+  this.$.basePopUp.toggle();
+  this.$.baseLabel.value="";
+  this.$.baseLabel.focus();
+}
+saveBase(){
+  var basename = this.$.baseLabel.value;
+  console.log(basename);
+  this.createBase(basename);
+  this.toggleBasePopUp();
+}
+
+createBase(name){
+  console.log("création "+name);
+  // ajout de name dans la base actuelle
+  var triple = { subject: name, predicate: "type", object: "Base" };
+  this.addTriple(triple);
+  this.showBase();
+
+  // création de la nouvelle base name
+  this.base = levelgraph(level(name));
+  this.base.name = name;
+
+  var triple = { subject: "this", predicate: "type", object: "Base" };
+  this.addTriple(triple);
+  this.showBase();
+}
+
+
+// CREER UN GRAPHE
+toggleGraphPopUp(){
+  this.$.graphPopUp.toggle();
+  this.$.graphLabel.value="";
+  this.$.graphLabel.focus();
+}
+saveGraph(){
+  var name  = this.$.graphLabel.value;
+  console.log("create graph "+name);
+  this.createGraph(name);
+  this.toggleGraphPopUp();
+}
+
+
+createGraph(name){
+  console.log("création "+name);
+  // ajout de name dans la base actuelle
+  var triple = { subject: name, predicate: "type", object: "Graphe" };
+  this.addTriple(triple);
+  this.graph = name;
+  this.showBase();
+}
+
+
+
+// CREER UN TRIPLET
+toggleTripletPopUp(){
+  this.$.tripletPopUp.toggle();
+  this.$.tripletSujet.value="";
+  this.$.tripletPredicat.value="";
+  this.$.tripletObjet.value="";
+  this.$.tripletSujet.focus();
+}
+saveTriplet(){
+  var sujet  = this.$.tripletSujet.value;
+  var predicat  = this.$.tripletPredicat.value;
+  var objet  = this.$.tripletObjet.value;
+  console.log("create triplet "+sujet+" "+predicat+" "+objet);
+  this.createTriplet(sujet, predicat, objet)
+  this.toggleTripletPopUp();
+}
+
+
+createTriplet(sujet, predicat, objet){
+  console.log("create triplet "+sujet+" "+predicat+" "+objet);
+  // ajout de name dans la base actuelle
+  var triple = { subject: sujet, predicate: predicat, object: objet };
+  this.addTriple(triple);
+  this.showBase();
+}
+
+
+
+}
+
+window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
+</script>
 </dom-module>
