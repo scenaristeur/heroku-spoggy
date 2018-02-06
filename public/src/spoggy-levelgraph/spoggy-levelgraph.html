@@ -10,9 +10,8 @@
       display: block;
     }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+    <!--    <h2>Hello [[prop1]]!</h2>-->
   </template>
-  var db = levelgraph(level("yourdb"));
   <script>
   /**
   * `spoggy-levelgraph`
@@ -35,7 +34,11 @@
         prop1: {
           type: String,
           value: 'spoggy-levelgraph'
-        }
+        },
+        db: {
+          Object,
+          notify: true
+        },
       };
     }
 
