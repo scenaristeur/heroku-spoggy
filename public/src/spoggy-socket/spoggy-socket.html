@@ -1,108 +1,160 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <script src="lib/socket.io.js"></script>
 
 <dom-module id="spoggy-socket">
-  <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
-    <h2>Hello [[prop1]]! [[status]]</h2>
-  </template>
 
-  <script>
-  /**
-  * `spoggy-socket`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class SpoggySocket extends Polymer.Element {
-    constructor() {
-      super();
-      this.connect();
-      console.log("SPOG-SOCKET");
-      console.log(this.socket);
-    }
-    static get is() { return 'spoggy-socket'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'spoggy-socket'
-        },
-        /**
-        * Current connection status. Can be "connected", "disconnected", or "reconnecting".
-        */
-        status: {
-          type: String,
-          notify: true,
-          //  observer: '_consoleStatus'
-        },
-        /**
-        * Internal reference to the WebSocket
-        */
-        socket: {Object,
-          notify: true},
-          /**
-          * Registered _handlers by message type
-          * @type {<String, Function>[]}
-          */
-          _handlers: {
-            type: Object,
-            value: [],
-          },
-          retry: {
-            type: Number,
-            value:10
-          }
-        };
-      }
-      /**
-      * Registers a handler for a message type
-      *
-      * @param {String} messageType	Type of the message for which a handler should be registered.
-      * 	This can be a namespace.
-      * @param {Function} handler	Handler called when a message of a specific type arrives
-      */
-      registerHandler(messageType, handler) {
-        this._handlers.push({
-          messageType,
-          handler,
-        });
-      }
+<script>
+/**
+* `spoggy-socket`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggySocket extends Polymer.Element {
 
-      connect(connectUri, token) {
-        /*this.socket = io(connectUri, {
-        'query': `token=${token}`,
-        timeout: 2000,
-      });*/
-      this.socket = io();
-      // Parse response messages retrieving 'type'
-      this.socket.on('message', message => {
-        // Execute all handlers that are registered for this namespace
-        for (let handler of this._handlers) {
-          if (message.type.startsWith(handler.messageType)) {
-            handler.handler(message);
-          }
-        }
-      });
-      // Register listeners to expose connection status
-      var chat = this;
-      this.socket.on('connect', () => this.status = 'connected');
-      this.socket.on('disconnect', () => this.status = 'disconnected');
-      this.socket.on('connect_error', () => this.status = 'disconnected');
-      this.socket.on('reconnecting', () => this.status = 'reconnecting');
-      this.socket.on('reconnect', () => this.status = 'connected');
-      this.socket.on('error', e => {
-        console.warn(`WebSocket error: ${JSON.stringify(e)}`);
-      });
-    }
+  constructor() {
+    super();
+    this.connect();
+    console.log("Spoggy-SOCKET");
+    console.log(this.socket);
   }
 
-  window.customElements.define(SpoggySocket.is, SpoggySocket);
-  </script>
+  static get is() { return 'spoggy-socket'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-socket'
+      },
+      /**
+      * Current connection status. Can be "connected", "disconnected", or "reconnecting".
+      */
+      status: {
+        type: String,
+        notify: true,
+        //  observer: '_consoleStatus'
+      },
+      /**
+      * Internal reference to the WebSocket
+      */
+      socket: {
+        Object,
+      notify: true
+    },
+      /**
+      * Registered _handlers by message type
+      * @type {<String, Function>[]}
+      */
+      _handlers: {
+        type: Object,
+        value: [],
+      },
+      retry: {
+        type: Number,
+        value:10
+      }
+
+    };
+  }
+
+
+  /**
+  * Registers a handler for a message type
+  *
+  * @param {String} messageType	Type of the message for which a handler should be registered.
+  * 	This can be a namespace.
+  * @param {Function} handler	Handler called when a message of a specific type arrives
+  */
+  registerHandler(messageType, handler) {
+    this._handlers.push({
+      messageType,
+      handler,
+    });
+  }
+/*
+  _consoleStatus(newValue, oldValue){
+    console.log(oldValue +" -> "+ newValue);
+    if(oldValue == "reconnecting" && newValue =="disconnected"){
+    this.retry --;
+    console.log(this.retry);
+    if (this.retry <= 0){
+      this.socket = null;
+    }
+  }
+}*/
+
+
+  connect(connectUri, token) {
+    /*this.socket = io(connectUri, {
+      'query': `token=${token}`,
+      timeout: 2000,
+    });*/
+    this.socket = io();
+
+    // Parse response messages retrieving 'type'
+    this.socket.on('message', message => {
+      // Execute all handlers that are registered for this namespace
+      for (let handler of this._handlers) {
+        if (message.type.startsWith(handler.messageType)) {
+          handler.handler(message);
+        }
+      }
+    });
+    // Register listeners to expose connection status
+    var chat = this;
+    this.socket.on('connect', () => this.status = 'connected');
+    this.socket.on('disconnect', () => this.status = 'disconnected');
+    this.socket.on('connect_error', () => this.status = 'disconnected');
+    this.socket.on('reconnecting', () => this.status = 'reconnecting');
+    this.socket.on('reconnect', () => this.status = 'connected');
+    this.socket.on('error', e => {
+      console.warn(`WebSocket error: ${JSON.stringify(e)}`);
+    });
+    /*this.socket.on('new message', function (data) {
+      console.log(chat);
+      console.log(data);
+      chat.addChatMessage(data);
+    });
+
+    // Whenever the server emits 'user joined', log it in the chat body
+    this.socket.on('user joined', function (data) {
+
+      chat.log(data.username + ' joined');
+      chat.addParticipantsMessage(data);
+    });
+
+    // Whenever the server emits 'user left', log it in the chat body
+    chat.socket.on('user left', function (data) {
+      chat.log(data.username + ' left');
+      chat.addParticipantsMessage(data);
+      chat.removeChatTyping(data);
+    });*/
+
+    /*chat.socket.on('initDb', function(db){
+      console.log(db);
+      //  chat.populateVis(db);
+      chat.db2populate = db;
+      chat.triplets2popLength = chat.db2populate.length;
+    });*/
+    /*  this.socket.on('rooms', function (rooms) {   chat.rooms = rooms;  });
+    this.socket.on('joined', function (data) {
+    console.log(data);
+    console.log(this);
+    if (data.username == this.id){
+    console.log("vous avez rejoint "+ data.message);
+    chat.room = data.message;
+  } else{
+  console.log(data.username+" a rejoint "+ data.message);
+  }
+
+  });*/
+
+  }
+
+}
+
+window.customElements.define(SpoggySocket.is, SpoggySocket);
+</script>
 </dom-module>

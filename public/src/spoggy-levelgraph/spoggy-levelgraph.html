@@ -1,0 +1,57 @@
+<!--https://github.com/levelgraph/levelgraph-->
+
+<link rel="import" href="../polymer/polymer-element.html">
+<script src="lib/levelgraph.min.js"></script>
+
+<dom-module id="spoggy-levelgraph">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+  var db = levelgraph(level("yourdb"));
+  <script>
+  /**
+  * `spoggy-levelgraph`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyLevelgraph extends Polymer.Element {
+    constructor() {
+      super();
+      this.populate();
+      console.log("Spoggy-levelgraph");
+      console.log(this.db);
+    }
+    static get is() { return 'spoggy-levelgraph'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-levelgraph'
+        }
+      };
+    }
+
+    populate(){
+      this.db = levelgraph(level("SPOGGYDB"));
+      console.log("pop");
+      var triple = { subject: "a", predicate: "b", object: "c" };
+      this.db.put(triple, function(err) {
+        // do something after the triple is inserted
+      });
+      this.db.get({ subject: "a" }, function(err, list) {
+        console.log(list);
+      });
+    }
+  }
+
+  window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
+  </script>
+</dom-module>
