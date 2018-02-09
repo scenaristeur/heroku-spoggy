@@ -1,0 +1,217 @@
+<!-- recupérer les infos https://github.com/scenaristeur/sparql-statements-->
+<!-- envoyer des infos https://github.com/scenaristeur/sparql-update-->
+
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../spoggy-sparqlupdate/spoggy-sparqlupdate.html">
+<link rel="import" href="../spoggy-sparqlstatements/spoggy-sparqlstatements.html">
+
+
+
+
+<dom-module id="spoggy-fuseki">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+
+    <iron-ajax
+    id="status_req"
+    url="{{url_status}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleUrlStatusResponse"
+    on-error="_handleUrlStatusError"
+    ></iron-ajax>
+
+    <iron-ajax
+    id="server_req"
+    url="{{url_server}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleUrlServerResponse"
+    on-error="_handleUrlServerError"
+    ></iron-ajax>
+
+
+
+<spoggy-sparqlupdate endpoint="{{endpoint}}" status="{{status}}"></spoggy-sparqlupdate>
+<spoggy-sparqlstatements endpoint="{{endpoint}}" status="{{status}}"></spoggy-sparqlstatements>
+
+
+
+<h2>Hello [[prop1]]!</h2>
+<table>
+  <tr>
+    <td>
+      Endpoint
+    </td>
+    <td>
+      [[endpoint]]
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Status
+    </td>
+    <td>
+      [[status]]
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Server
+    </td>
+    <td>
+      [[server]]
+    </td>
+  </tr>
+
+</table>
+
+<paper-button raised on-tap="get_endpoint_status">Test status</paper-button>
+</template>
+
+<script>
+/**
+* `spoggy-fuseki`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyFuseki extends Polymer.Element {
+  static get is() { return 'spoggy-fuseki'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-fuseki'
+      },
+      endpoint: {
+        type: String,
+        value: 'http://127.0.0.1:3030'
+      },
+      url_status: {
+        type: String,
+        value: ""
+      },
+      status: {
+        type: String,
+        value: "deconnecte"
+      },
+      url_server: {
+        type: String,
+        value: ""
+      },
+      server: {
+        type: String,
+        value: ""
+      }
+    };
+  }
+
+  get_endpoint_status(){
+    this.url_status = this.endpoint+"/$/ping";
+    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+    console.log(this.url_status);
+    this.$.status_req.generateRequest();
+  }
+
+//PING
+  _handleUrlStatusResponse(data){
+    console.log("ping ok");
+    console.log(data);
+    this.status = data.detail.response;
+    console.log(this.status);
+    this.url_server = this.endpoint+"/$/server";
+    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+    console.log(this.url_server);
+    this.$.server_req.generateRequest();
+  }
+
+  _handleUrlStatusError(data){
+    console.log("error ping");
+    console.log(data);
+    console.log(data.detail);
+    console.log(data.detail.error);
+    console.log(data.detail.error.message);
+    console.log(data.detail.request);
+    console.log(data.detail.response);
+    console.log(data.detail.request.response);
+    this.status = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+    console.log(this.status);
+    this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+  }
+
+//SERVER
+  _handleUrlServerResponse(data){
+    console.log("server ok");
+    console.log(data);
+    this.server = data.detail.response;
+    console.log(this.server);
+
+  }
+
+  _handleUrlServerError(data){
+    console.log("error server");
+    console.log(data);
+    console.log(data.detail);
+    console.log(data.detail.error);
+    console.log(data.detail.error.message);
+    console.log(data.detail.request);
+    console.log(data.detail.response);
+    console.log(data.detail.request.response);
+    this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+    console.log(this.server);
+  }
+
+}
+
+window.customElements.define(SpoggyFuseki.is, SpoggyFuseki);
+</script>
+</dom-module>
+
+<!-- FUSEKI ADMIN PROTOCOL
+http://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html
+
+Method	URL pattern	Description
+GET	/$/ping
+POST	/$/ping
+GET	/$/server
+POST	/$/server
+POST	/$/datasets
+GET	/$/datasets
+DELETE	/$/datasets/*{name}*
+GET	/$/datasets/*{name}*
+POST	/$/datasets/*{name}*?state=offline
+POST	/$/datasets/*{name}*?state=active
+POST	/$/server/shutdown	Not yet implemented
+GET	/$/stats
+GET	/$/stats/*{name}*
+POST	/$/backup/*{name}*
+GET	/$/backups-list
+POST	/$/sleep
+GET	/$/tasks
+GET	/$/tasks/*{name}*
+
+
+-->
+<!--     content-type="application/json"
+handle-as="json"
+
+enum XMLHttpRequestResponseType {
+"",
+"arraybuffer",
+"blob",
+"document",
+"json",
+"text"
+};
+-->

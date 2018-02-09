@@ -1,0 +1,163 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="spoggy-sparqlupdate">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+
+    <iron-ajax
+    id="ajaxupdate"
+    url="{{urlUpdate}}"
+    body="{{options}}"
+    method="POST"
+    handle-as="document"
+    content-type="application/x-www-form-urlencoded"
+    on-response="handleResponse">
+  </iron-ajax>
+
+  <paper-button
+  raised
+  on-tap="sendUpdate">
+  <iron-icon icon="queue"></iron-icon> <!-- ne s'affiche pas ? -->
+  Envoyer
+</paper-button>
+
+<template is="dom-bind" result="{{result}}" requete="{{requete}}">
+  <div>Result : {{result}}</div>
+  <div>Requete : {{requete}}</div>
+</template>
+
+
+<h2>Hello [[prop1]]! [[endpoint]] [[status]]</h2>
+
+</template>
+
+<script>
+/**
+* `spoggy-sparqlupdate`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggySparqlupdate extends Polymer.Element {
+  static get is() { return 'spoggy-sparqlupdate'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-sparqlupdate'
+      },
+      endpoint: {
+        type: String,
+        observer: "_endpointChanged"
+      },
+      /*  dataset: {
+      type: String,
+      value: 'ds'
+    }*/
+    /**
+    * Le sujet du triplet RDF
+    */
+    sujet : {
+      value: 'Spoggy',
+      notify: true
+    },
+
+    /**
+    * La propriete du triplet RDF
+    */
+    propriete : {
+      value: 'type',
+      notify: true
+    },
+
+    /**
+    * L'objet du triplet RDF
+    */
+    objet : {
+      value: 'Projet',
+      notify: true
+    },
+
+    /**
+    * Les paramètres de la requete update
+    */
+    options: {
+      computed: 'computeUpdate(sujet,propriete,objet)'
+    },
+
+    /**
+    *variable pour afficher la requete, n'est pas utile
+    */
+    requete: {
+      notify: true
+    },
+
+    /**
+    * La réponse du serveur retournée par la requete de mise à jour
+    */
+    result: {
+      notify: true
+    }
+  };
+}
+
+_endpointChanged(){
+  this.urlUpdate = this.endpoint+"/ds/update"; //http://rdf-smag0.rhcloud.com/ds/update
+  //  this.urlUpdate = this.endpoint+"/"+this.dataset+"/update"; //http://rdf-smag0.rhcloud.com/ds/update
+  console.log(this.urlUpdate);
+}
+/**
+* Construit la requete depuis les variables sujet, propriete, objet
+*/
+computeUpdate (sujet,propriete,objet){
+  var propSend="smag:"+propriete+" ";
+  if (propriete == "type"){
+    propSend="<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
+  }
+
+
+  var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+  update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+  update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+  update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+  update += "INSERT DATA { \n";
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+  update += "smag:"+sujet+"   "+propSend+"   smag:"+objet+" . \n";
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+  update += " } \n";
+  console.log(update);
+  this.requete=update;
+  return {update: update};
+}
+
+/**
+* Execute la requete
+*/
+sendUpdate (){
+  console.log(this.sujet);
+  console.log(this.propriete);
+  console.log(this.objet);
+  this.$.ajaxupdate.generateRequest();
+}
+
+/**
+* recupere et parse la reponse du serveur
+*/
+handleResponse(data){
+  var html=data.detail.response.getElementsByTagName("html")[0];
+  var body=html.getElementsByTagName("body")[0];
+  var resultat=body.getElementsByTagName("h1")[0].firstChild.nodeValue;
+  this.result=resultat;
+  console.log(this.result);
+}
+}
+
+window.customElements.define(SpoggySparqlupdate.is, SpoggySparqlupdate);
+</script>
+</dom-module>

@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="spoggy-sparqlstatements">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!  [[endpoint]] [[status]]</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-sparqlstatements`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggySparqlstatements extends Polymer.Element {
+      static get is() { return 'spoggy-sparqlstatements'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-sparqlstatements'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggySparqlstatements.is, SpoggySparqlstatements);
+  </script>
+</dom-module>

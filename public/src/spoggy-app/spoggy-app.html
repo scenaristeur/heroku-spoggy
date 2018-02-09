@@ -6,6 +6,7 @@
 <link rel="import" href="../spoggy-chat/spoggy-chat.html">
 <link rel="import" href="../spoggy-graphe/spoggy-graphe.html">
 <link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
+<link rel="import" href="../spoggy-fuseki/spoggy-fuseki.html">
 <!--<link rel="import" href="../spoggy-sparql/spoggy-sparql.html">-->
 
 <dom-module id="spoggy-app">
@@ -18,6 +19,7 @@
   }
   </style>
   <div hidden$="[[connected]]">[[status]]</div>
+  <spoggy-fuseki></spoggy-fuseki>
 <spoggy-levelgraph actionstosend="{{actionstosend}}" db="{{db}}"></spoggy-levelgraph>
   <spoggy-socket socket="{{socket}}" status="{{status}}"></spoggy-socket>
   <spoggy-chat  id="chat" hidden$="[[!visibleChat]]"  socket="[[socket]]" status="[[status]]" ></spoggy-chat>
