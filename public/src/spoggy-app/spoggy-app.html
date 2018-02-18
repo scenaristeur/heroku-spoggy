@@ -11,102 +11,102 @@
 
 <dom-module id="spoggy-app">
   <template>
-  <style>
-  #fabchat {
-    position: fixed;
-    right: 25px;
-    top: 25px;
-  }
-  </style>
-  <div hidden$="[[connected]]">[[status]]</div>
-  <spoggy-fuseki></spoggy-fuseki>
-<spoggy-levelgraph actionstosend="{{actionstosend}}" db="{{db}}"></spoggy-levelgraph>
-  <spoggy-socket socket="{{socket}}" status="{{status}}"></spoggy-socket>
-  <spoggy-chat  id="chat" hidden$="[[!visibleChat]]"  socket="[[socket]]" status="[[status]]" ></spoggy-chat>
-  <spoggy-graphe  hidden$="[[visibleChat]]"  socket="[[socket]]" status="[[status]]" db=[[db]] actionstosend="{{actionstosend}}" params="{{params}}"></spoggy-graphe>
-  <paper-fab id="fabchat" on-tap="toggleChat"  label="😻"></paper-fab>
-<!--<spoggy-sparql fusekiresults="{{fusekiresults}}"></spoggy-sparql>-->
+    <style>
+    #fabchat {
+      position: fixed;
+      right: 25px;
+      top: 25px;
+    }
+    </style>
+    <div hidden$="[[connected]]">[[status]]</div>
+    <spoggy-fuseki actionstosend="{{actionstosend}}"></spoggy-fuseki>
+    <spoggy-levelgraph actionstosend="{{actionstosend}}" db="{{db}}"></spoggy-levelgraph>
+    <spoggy-socket socket="{{socket}}" status="{{status}}"></spoggy-socket>
+    <spoggy-chat  id="chat" hidden$="[[!visibleChat]]"  socket="[[socket]]" status="[[status]]" ></spoggy-chat>
+    <spoggy-graphe  hidden$="[[visibleChat]]"  socket="[[socket]]" status="[[status]]" db=[[db]] actionstosend="{{actionstosend}}" params="{{params}}"></spoggy-graphe>
+    <paper-fab id="fabchat" on-tap="toggleChat"  label="😻"></paper-fab>
+    <!--<spoggy-sparql fusekiresults="{{fusekiresults}}"></spoggy-sparql>-->
 
-</template>
+  </template>
 
-<script>
-/**
-* @customElement
-* @polymer
-*/
-class SpoggyApp extends Polymer.Element {
-  static get is() { return 'spoggy-app'; }
-  static get properties() {
-    return {
-      socket: {
-        type: Object
-      },
-      status:{
-        type: String,
-        observer: '_consoleStatus'
-      },
-      connected:{
-        type: Boolean,
-      },
-      tickDelay: {
-        type: Number,
-        value: 1000       // 15ms selon source, tempo pour envoi du snapshot par le serveur pour un jeu
-      },
-      visibleChat: {
-        type: Boolean,
-        value : true
-      },
-      actionstosend: {
-        type: Array,
-        value:[]
-      },
-      visibleIcon: {
-        type: Boolean,
-        value : false
-      },
-      fusekiresults: {
-        type: Array,
-        observer: '_fusekiresultsChanged'
-      },
-    };
-  }
+  <script>
+  /**
+  * @customElement
+  * @polymer
+  */
+  class SpoggyApp extends Polymer.Element {
+    static get is() { return 'spoggy-app'; }
+    static get properties() {
+      return {
+        socket: {
+          type: Object
+        },
+        status:{
+          type: String,
+          observer: '_consoleStatus'
+        },
+        connected:{
+          type: Boolean,
+        },
+        tickDelay: {
+          type: Number,
+          value: 1000       // 15ms selon source, tempo pour envoi du snapshot par le serveur pour un jeu
+        },
+        visibleChat: {
+          type: Boolean,
+          value : false
+        },
+        actionstosend: {
+          type: Array,
+          value:[]
+        },
+        visibleIcon: {
+          type: Boolean,
+          value : false
+        },
+        fusekiresults: {
+          type: Array,
+          observer: '_fusekiresultsChanged'
+        },
+      };
+    }
 
-  ready() {
-    super.ready();
-    var app=this;
+    ready() {
+      super.ready();
+      var app=this;
 
-  /* ENVOI des actions vers le serveur
-    var tickInterval = setInterval(function() {
+      /* ENVOI des actions vers le serveur
+      var tickInterval = setInterval(function() {
       if (app.connected){
       //  console.log("tick spoggy-app");
-        if (app.actionstosend.length > 0) {
-          console.log(app.actionstosend);
-          app.socket.emit('newActions', app.actionstosend);
-          app.actionstosend = [];
-        }}
-      }, this.tickDelay); */
-    }
-    _consoleStatus(newValue, oldValue){
-      console.log(oldValue +" -> "+ newValue);
-      if(newValue =="connected"){
-        this.connected = true;
-      }else{
-        this.connected = false;
-      }
-    }
-    _fusekiresultsChanged(newValue, oldValue){
-      console.log(newValue);
-
-    }
-
-
-    toggleChat(){
-      this.visibleChat = !this.visibleChat;
-    }
-
-
+      if (app.actionstosend.length > 0) {
+      console.log(app.actionstosend);
+      app.socket.emit('newActions', app.actionstosend);
+      app.actionstosend = [];
+    }}
+  }, this.tickDelay); */
+}
+_consoleStatus(newValue, oldValue){
+  console.log(oldValue +" -> "+ newValue);
+  if(newValue =="connected"){
+    this.connected = true;
+  }else{
+    this.connected = false;
   }
+}
+_fusekiresultsChanged(newValue, oldValue){
+  console.log(newValue);
 
-  window.customElements.define(SpoggyApp.is, SpoggyApp);
-  </script>
+}
+
+
+toggleChat(){
+  this.visibleChat = !this.visibleChat;
+}
+
+
+}
+
+window.customElements.define(SpoggyApp.is, SpoggyApp);
+</script>
 </dom-module>

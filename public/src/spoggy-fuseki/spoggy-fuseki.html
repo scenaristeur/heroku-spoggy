@@ -1,9 +1,24 @@
 <!-- recupérer les infos https://github.com/scenaristeur/sparql-statements-->
 <!-- envoyer des infos https://github.com/scenaristeur/sparql-update-->
+<!-- https://www.polymer-project.org/2.0/docs/devguide/templates -->
 
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- import template repeater -->
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<!-- import array selector -->
+<link rel="import" href="../../bower_components/polymer/lib/elements/array-selector.html">
+
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<!--
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">-->
+<!--<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">-->
+
+
+
+
 <link rel="import" href="../spoggy-sparqlupdate/spoggy-sparqlupdate.html">
 <link rel="import" href="../spoggy-sparqlstatements/spoggy-sparqlstatements.html">
 
@@ -40,81 +55,110 @@
 
 
 
-<spoggy-sparqlupdate endpoint="{{endpoint}}" status="{{status}}"></spoggy-sparqlupdate>
-<spoggy-sparqlstatements endpoint="{{endpoint}}" status="{{status}}"></spoggy-sparqlstatements>
+    <spoggy-sparqlupdate endpoint="{{endpoint}}" dataset="{{dataset}}" actionstosend="{{actionstosend}}" status="{{status}}"></spoggy-sparqlupdate>
+    <spoggy-sparqlstatements endpoint="{{endpoint}}" dataset="{{dataset}}" status="{{status}}"></spoggy-sparqlstatements>
 
 
 
-<h2>Hello [[prop1]]!</h2>
-<table>
-  <tr>
-    <td>
-      Endpoint
-    </td>
-    <td>
-      [[endpoint]]
-    </td>
-  </tr>
-  <tr>
-    <td>
-      Status
-    </td>
-    <td>
-      [[status]]
-    </td>
-  </tr>
-  <tr>
-    <td>
-      Server
-    </td>
-    <td>
-      [[server]]
-    </td>
-  </tr>
+    <h2>Hello [[prop1]]!</h2>
+    <table>
+      <tr>
+        <td>
+          Endpoint
+        </td>
+        <td>
+          [[endpoint]]
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Status
+        </td>
+        <td>
+          [[status]]
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Server
+        </td>
+        <td>
+          [[server.version]]
+        </td>
+      </tr>
 
-</table>
+    </table>
+    <!-- TEST CONNEXION -->
+    <paper-button raised on-tap="get_endpoint_status">Test status</paper-button>
+    <!-- SELECTION DATASET -->
+    <select value="{{dataset::change}}">
+      <template is="dom-repeat" id="datasetsList" items="{{datasets}}">
+        <option value="{{item.ds_name}}">First name: <span>{{item.ds_name}}</span></option>
+      </template>
+    </select>
 
-<paper-button raised on-tap="get_endpoint_status">Test status</paper-button>
-</template>
+  </template>
 
-<script>
-/**
-* `spoggy-fuseki`
-*
-*
-* @customElement
-* @polymer
-* @demo demo/index.html
-*/
-class SpoggyFuseki extends Polymer.Element {
-  static get is() { return 'spoggy-fuseki'; }
-  static get properties() {
-    return {
-      prop1: {
-        type: String,
-        value: 'spoggy-fuseki'
-      },
-      endpoint: {
-        type: String,
-        value: 'http://127.0.0.1:3030'
-      },
-      url_status: {
-        type: String,
-        value: ""
-      },
-      status: {
-        type: String,
-        value: "deconnecte"
-      },
-      url_server: {
-        type: String,
-        value: ""
-      },
-      server: {
-        type: String,
-        value: ""
-      }
-    };
+  <script>
+  /**
+  * `spoggy-fuseki`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyFuseki extends Polymer.Element {
+    static get is() { return 'spoggy-fuseki'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-fuseki'
+        },
+        endpoint: {
+          type: String,
+          value: 'http://5.51.110.50:3030'
+          //  value: 'http://192.168.1.73:3030'
+          //  value: 'http://127.0.0.1:3030'
+        },
+        url_status: {
+          type: String,
+          value: ""
+        },
+        status: {
+          type: String,
+          value: "deconnecte"
+        },
+        url_server: {
+          type: String,
+          value: ""
+        },
+        server: {
+          type: Object
+        },
+        datasets: {
+          type: Array
+        },
+        dataset: {
+          type: String,
+          observer: '_datasetChange'
+        },
+        actionstosend:{
+          observer: '_actionstosendChanged'
+        }
+      };
+    }
+    _actionstosendChanged(){
+      console.log(this.actionstosend);
+    }
+    /*toggleSelection(e) {
+    var item = this.$.employeeList.itemForElement(e.target);
+    this.$.selector.select(item);
+  }*/
+  _datasetChange (v) {
+    console.log('alter ' + v);
+    console.log(this.dataset);
   }
 
   get_endpoint_status(){
@@ -124,7 +168,7 @@ class SpoggyFuseki extends Polymer.Element {
     this.$.status_req.generateRequest();
   }
 
-//PING
+  //PING
   _handleUrlStatusResponse(data){
     console.log("ping ok");
     console.log(data);
@@ -150,13 +194,15 @@ class SpoggyFuseki extends Polymer.Element {
     this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
   }
 
-//SERVER
+  //SERVER
   _handleUrlServerResponse(data){
     console.log("server ok");
     console.log(data);
-    this.server = data.detail.response;
+    var clemodif = data.detail.response.replace(/ds\./g, "ds_")
+    this.server = JSON.parse(clemodif);
     console.log(this.server);
-
+    this.datasets = this.server.datasets;
+    console.log(this.datasets);
   }
 
   _handleUrlServerError(data){
@@ -170,6 +216,7 @@ class SpoggyFuseki extends Polymer.Element {
     console.log(data.detail.request.response);
     this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
     console.log(this.server);
+
   }
 
 }

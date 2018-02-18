@@ -1,36 +1,155 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="spoggy-sparqlstatements">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
-    <h2>Hello [[prop1]]!  [[endpoint]] [[status]]</h2>
+
+    <iron-ajax
+    id="ajaxget"
+    url="{{url}}"
+    params="{{options}}"
+    handle-as="json"
+    on-response="handleResponse"
+    debounce-duration="300"></iron-ajax>
+
+
+    <table>
+      <!-- voir aussi https://saulis.github.io/iron-data-table/demo/columns.html -->
+      <tr>
+        <template is="dom-repeat" items="{{head}}">
+          <th>{{item}}</th>
+        </template>
+      </tr>
+      <template is="dom-repeat" items="{{results}}">
+        <tr>
+          <td>{{item.Sujet.value}}</td>
+          <td>{{item.Predicat.value}}</td>
+          <td>{{item.Objet.value}}</td>
+        </tr>
+      </template>
+    </table>
+
+
+
+
+
+    <h2>Hello [[prop1]]!  [[endpoint]] [[status]] [[dataset]]</h2>
+    <paper-button
+  raised
+  on-tap="sendRequest">
+  <iron-icon icon="queue"></iron-icon> <!-- ne s'affiche pas ? -->
+  Envoyer la requete
+</paper-button>
   </template>
 
   <script>
-    /**
-     * `spoggy-sparqlstatements`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggySparqlstatements extends Polymer.Element {
-      static get is() { return 'spoggy-sparqlstatements'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-sparqlstatements'
-          }
-        };
-      }
+  /**
+  * `spoggy-sparqlstatements`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggySparqlstatements extends Polymer.Element {
+    static get is() { return 'spoggy-sparqlstatements'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-sparqlstatements'
+        },
+        dataset: {
+          type: String,
+          value: '/ds',
+          observer: 'sendRequest'
+        },
+        action : {
+					value: 'query',
+					notify: true
+				},
+				query : {
+					value: 'SELECT * WHERE {?Sujet ?Predicat ?Objet}',
+					notify: true
+
+					//////////////////////////////////////////////////////////////////////
+					//
+					//            AUTRES REQUETES A AJOUTER
+					//
+					//SELECT * WHERE {?Sujet <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	?Objet}
+					//SELECT * WHERE {?Sujet <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://smag0.blogspot.fr/NS/RobotBase#Robot>}
+										/*Exemple de requetes
+											value: 'SELECT * WHERE {?Sujet <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://smag0.blogspot.fr/NS/RobotBase#Robot>}',
+					//<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://smag0.blogspot.fr/NS/RobotBase#Robot>*/
+					/*<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://smag0.blogspot.fr/ns/smag0/robotique#Exposant>*/
+				},
+				limite : {
+					value: 10,
+					notify: true
+				},
+				output : {
+					value: 'json',
+					notify: true
+				},
+				url: {
+					computed: 'computedUrl(endpoint,dataset,action)'
+				},
+				options: {
+					computed: 'computedOptions(query,limite,output)'
+				},
+				head: {
+					type: Array,
+					notify: true
+				},
+				results:{
+					type: Array,
+					notify: true
+				}
+      };
     }
 
-    window.customElements.define(SpoggySparqlstatements.is, SpoggySparqlstatements);
+  /*  computeEndpoint (id){
+				var endpoint="";
+				for(i=0;i<this.endpoints.length; i++){
+					var ep = this.endpoints[i];
+					if (ep.id==id){
+						endpoint=ep.name;
+					}
+				}
+				this.ds="ds" ; // et oui, pour l'instant, il n'y a qu'un dataset ds sur chacun des serveurs Fuseki "rdf" et "fuseki"
+				console.log(endpoint);
+				return endpoint;
+			}*/
+			computedUrl(endpoint,dataset,action){
+        var url = endpoint+dataset;
+				console.log(url);
+				return [url,action].join('/');
+			}
+			computedOptions(query,limite,output){
+				var queryLimite=query+" LIMIT "+limite;
+				return{query: queryLimite, output: output};
+			}
+			handleResponse(data){
+				console.log(data.detail.response);
+				this.head=data.detail.response.head.vars;
+				this.results=data.detail.response.results.bindings;
+				console.log(this.head);
+				console.log(this.results);
+			}
+      /**
+      * Execute la requete
+      */
+      sendRequest (){
+        this.$.ajaxget.generateRequest();
+      }
+  }
+
+  window.customElements.define(SpoggySparqlstatements.is, SpoggySparqlstatements);
   </script>
 </dom-module>
