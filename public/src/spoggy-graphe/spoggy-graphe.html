@@ -312,6 +312,22 @@ _dbChanged(){
       this.selectedShape = "ellipse";
       this.selectedType = "node";
       this.network = this.networkDivInitialize(this.$.mynetwork, this);
+
+      this.params = this.recupParams();
+      console.log(this.params);
+      if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
+    console.log("pas de param");
+    }else{
+      console.log(this.network)
+      console.log(this.params);
+      importFromParam(this.params,this.network,app);
+      //var retourCommande = catchCommande(message,this.network,this);
+      //  this.$.filepicker = this.params.source;
+    }
+
+
+
+
       // When possible, use afterNextRender to defer non-critical    // work until after first paint.
       /*Polymer.RenderStatus.afterNextRender(this, function() {
       //  console.log(this.network);
@@ -487,20 +503,11 @@ _dbChanged(){
       }
     });
     this.socket.on('initDb', function(db){
-      app.params = app.recupParams();
-      console.log(app.params);
-      if (Object.keys(app.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
-      console.log(db);
+  console.log(db);
       app.db2populate = db;
       app.populateVis(app.db2populate, app.network);
       app.triplets2popLength = app.db2populate.length;
-    }else{
-      console.log(app.network)
-      console.log(app.params);
-      importFromParam(app.params,app.network,app);
-      //var retourCommande = catchCommande(message,this.network,this);
-      //  app.$.filepicker = app.params.source;
-    }
+
   });
   this.socket.on('initFuz', function(initFuz){
     console.log(initFuz);

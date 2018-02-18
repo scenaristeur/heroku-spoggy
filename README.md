@@ -5,7 +5,30 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-# spoggy en local :
+#Installation et Lancement de SPOGGY en local :
+```
+git clone https://github.com/scenaristeur/heroku-spoggy.git
+cd heroku-spoggy
+npm install && cd public && bower install
+cd ..
+node .
+
+```
+votre spoggy devrait alors être accessible à l'adresse http://127.0.0.1:3000
+
+# commandes disponibles :
+Import : commande /i
+
+Export : commande /e
+
+[exemples de fichiers exportés depuis spoggy] (https://github.com/scenaristeur/smag0-connaissance/tree/master/meet-up_conf)
+
+pour les consulter, vous pouvez utiliser passer la source en paramètre, comme dans l'exemple ci -dessous :
+[https://spoggy.herokuapp.com/?source=https://raw.githubusercontent.com/scenaristeur/smag0-connaissance/master/meet-up_conf/de_OWL_a_Fameus_spoggy_nodes_edges_1511030598081.json](https://spoggy.herokuapp.com/?source=https://raw.githubusercontent.com/scenaristeur/smag0-connaissance/master/meet-up_conf/de_OWL_a_Fameus_spoggy_nodes_edges_1511030598081.json)
+
+
+
+# spoggy en local : (en cours)
 télécharger et décompresser apache-jena-fuseki-3.6.0
 
 lancement :
@@ -23,8 +46,3 @@ java -Xmx1024M -jar fuseki-server.jar %*
 
 doc :
 http://jena.apache.org/documentation/fuseki2/
-
-
-#Lancement de SPOGGY en local :
-cd heroku-spoggy
-node .

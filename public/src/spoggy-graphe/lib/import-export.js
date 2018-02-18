@@ -425,15 +425,6 @@ function importFromParam(params, network, app){
       network.beforeImport.edges = network.body.data.edges.get();
       network.body.data.nodes.update(nodes);
       network.body.data.edges.update(edges);
-      if(remplaceNetwork){
-        console.log(remplaceNetwork);
-        network.body.data.nodes.clear();
-        network.body.data.edges.clear();
-        console.log("clear");
-        network.body.data.nodes.add(nodes); // clear() ne semble pas fonctionner, à revoir
-        network.body.data.edges.add(edges);
-        console.log(network);
-      }else{
 
         try{
           network.body.data.nodes.update(nodes);
@@ -442,7 +433,7 @@ function importFromParam(params, network, app){
         catch(e){
           console.log(e);
         }
-      }
+
     //  console.log(network);
     //  console.log(partageImport);
     });
