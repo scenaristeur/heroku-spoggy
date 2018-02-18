@@ -42,7 +42,7 @@ if(navigator.userAgent.indexOf("Chrome") != -1)
   //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
   downloadLink.style.display = "none";
   document.body.appendChild(downloadLink);
-  console.log(this.$.popupTtl);
+  console.log(app.$.popupTtl);
 }
 console.log(downloadLink);
 /*downloadLink.click();*/
@@ -55,9 +55,10 @@ event.initMouseEvent(
 downloadLink.dispatchEvent(event);
 var app = this;
 setTimeout(function(){
+  console.log(downloadLink.parentNode);
   document.body.removeChild(downloadLink);
   window.URL.revokeObjectURL(downloadLink);
-}, 100);
+}, 1000);
 /*if (window.URL != null) {
 // Chrome allows the link to be clicked
 // without actually adding it to the DOM.
@@ -466,7 +467,7 @@ function handleFileSelect(evt) {
 
 
 
-    decortiqueFile(fichier);
+    decortiqueFile(fichier, network, remplaceNetwork);
   }
   console.log("fin");
   // Code to execute after that
@@ -475,7 +476,7 @@ function handleFileSelect(evt) {
   app.$.inputMessage.value = '';
 }
 
-function decortiqueFile(fichier){
+function decortiqueFile(fichier, network, remplaceNetwork){
   //  var network = network;
   //  console.log(network);
 
@@ -494,6 +495,7 @@ function decortiqueFile(fichier){
 
 
     switch (fichier.type) {
+        case "":
       case "text/plain":
       case "application/json":
       //    console.log("JSON");
@@ -527,7 +529,7 @@ function decortiqueFile(fichier){
         }
       }
       console.log(network);
-      console.log(partageImport);
+    //  console.log(partageImport);
       break;
       case "rdf+xml":
       case "application/rdf+xml":

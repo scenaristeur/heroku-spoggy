@@ -1,109 +1,70 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-
-<link rel="import" href="../spoggy-socket/spoggy-socket.html">
-<link rel="import" href="../spoggy-chat/spoggy-chat.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../spoggy-graphe/spoggy-graphe.html">
-<link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
-<link rel="import" href="../spoggy-fuseki/spoggy-fuseki.html">
-<!--<link rel="import" href="../spoggy-sparql/spoggy-sparql.html">-->
 
 <dom-module id="spoggy-app">
   <template>
     <style>
-    #fabchat {
-      position: fixed;
-      right: 25px;
-      top: 25px;
-    }
+
     </style>
-    <div hidden$="[[connected]]">[[status]]</div>
-    <spoggy-fuseki actionstosend="{{actionstosend}}"></spoggy-fuseki>
-    <spoggy-levelgraph actionstosend="{{actionstosend}}" db="{{db}}"></spoggy-levelgraph>
-    <spoggy-socket socket="{{socket}}" status="{{status}}"></spoggy-socket>
-    <spoggy-chat  id="chat" hidden$="[[!visibleChat]]"  socket="[[socket]]" status="[[status]]" ></spoggy-chat>
-    <spoggy-graphe  hidden$="[[visibleChat]]"  socket="[[socket]]" status="[[status]]" db=[[db]] actionstosend="{{actionstosend}}" params="{{params}}"></spoggy-graphe>
-    <paper-fab id="fabchat" on-tap="toggleChat"  label="😻"></paper-fab>
-    <!--<spoggy-sparql fusekiresults="{{fusekiresults}}"></spoggy-sparql>-->
+    <!--
+    <template is="dom-repeat" items="{{modes}}">
+    <paper-button raised>{{item.label}}</paper-button>
+  </template>-->
+  <!--<select value="{{mode::change}}">
+    <template is="dom-repeat" id="modesList" items="{{modes}}">
+      <option id="{{item.id}}" value="{{item.id}}">
+        <paper-item>
+          Mode : <span>{{item.label}}</span>
+        </paper-item>
+      </option>
+    </template>
+  </select>-->
 
-  </template>
+  <spoggy-graphe  hidden$="[[!visibleGraphe]]"  socket="[[socket]]" status="[[status]]" db=[[db]] actionstosend="{{actionstosend}}" params="{{params}}"></spoggy-graphe>
 
-  <script>
-  /**
-  * @customElement
-  * @polymer
-  */
-  class SpoggyApp extends Polymer.Element {
-    static get is() { return 'spoggy-app'; }
-    static get properties() {
-      return {
-        socket: {
-          type: Object
-        },
-        status:{
-          type: String,
-          observer: '_consoleStatus'
-        },
-        connected:{
-          type: Boolean,
-        },
-        tickDelay: {
-          type: Number,
-          value: 1000       // 15ms selon source, tempo pour envoi du snapshot par le serveur pour un jeu
-        },
-        visibleChat: {
-          type: Boolean,
-          value : false
-        },
-        actionstosend: {
-          type: Array,
-          value:[]
-        },
-        visibleIcon: {
-          type: Boolean,
-          value : false
-        },
-        fusekiresults: {
-          type: Array,
-          observer: '_fusekiresultsChanged'
-        },
-      };
+</template>
+
+
+
+
+
+<script>
+/**
+* @customElement
+* @polymer
+*/
+class SpoggyApp extends Polymer.Element {
+  static get is() { return 'spoggy-app'; }
+  static get properties() {
+    return {
+      modes : {
+        type : Array,
+        value:[
+/*          {id:"mobile", label:"mobile", state:"enable"},*/
+          {id:"solo", label:"solo", state:"enable"},
+          {id:"solo-save", label:"solo-save", state:"disabled"},
+          {id:"collaboratif", label:"collaboratif", state:"disabled"},
+          {id:"distribué", label:"distribué", state:"disabled"}
+        ]
+      },
+      mode: {
+        type: String,
+        value: 'solo',
+        observer: '_modeChange'
+      },
+      visibleGraphe: {
+        type: Boolean,
+        value: 'true'
+      }
     }
-
-    ready() {
-      super.ready();
-      var app=this;
-
-      /* ENVOI des actions vers le serveur
-      var tickInterval = setInterval(function() {
-      if (app.connected){
-      //  console.log("tick spoggy-app");
-      if (app.actionstosend.length > 0) {
-      console.log(app.actionstosend);
-      app.socket.emit('newActions', app.actionstosend);
-      app.actionstosend = [];
-    }}
-  }, this.tickDelay); */
-}
-_consoleStatus(newValue, oldValue){
-  console.log(oldValue +" -> "+ newValue);
-  if(newValue =="connected"){
-    this.connected = true;
-  }else{
-    this.connected = false;
   }
-}
-_fusekiresultsChanged(newValue, oldValue){
-  console.log(newValue);
 
-}
-
-
-toggleChat(){
-  this.visibleChat = !this.visibleChat;
-}
-
+  _modeChange (m) {
+    console.log('mode ' + m);
+    console.log(this.mode);
+  }
 
 }
 
