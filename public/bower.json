@@ -17,7 +17,7 @@
     "iron-ajax": "^2.1.0",
     "iron-collapse-button": "^1.0.1",
     "paper-item": "^2.1.0",
-    "paper-dialog": "^2.0.1",
+    "paper-dialog": "^2.0.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
