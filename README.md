@@ -3,7 +3,7 @@
 [DEMO](https://spoggy.herokuapp.com/)
 
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 #Installation et Lancement de SPOGGY en local :
 ```
