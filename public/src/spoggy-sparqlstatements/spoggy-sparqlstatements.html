@@ -19,6 +19,8 @@
     debounce-duration="300"></iron-ajax>
 
 
+
+
     <table>
       <!-- voir aussi https://saulis.github.io/iron-data-table/demo/columns.html -->
       <tr>
@@ -37,7 +39,7 @@
 
 
 
-
+{{data}}
 
     <h2>Hello [[prop1]]!  [[endpoint]] [[status]] [[dataset]]</h2>
     <paper-button
@@ -166,9 +168,9 @@
       console.log(r);
     //  this.$.ajaxget.cid = r.i;
       this.dataset = r.dsname;
-
-
     }}
+
+
   }
 
   window.customElements.define(SpoggySparqlstatements.is, SpoggySparqlstatements);

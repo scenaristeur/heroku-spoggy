@@ -1,0 +1,98 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../spoggy-graphe/spoggy-graphe.html">
+<link rel="import" href="../spoggy-fuseki/spoggy-fuseki.html">
+
+
+<dom-module id="spoggy-app">
+  <template>
+    <style>
+
+    </style>
+    <!--
+    <template is="dom-repeat" items="{{modes}}">
+    <paper-button raised>{{item.label}}</paper-button>
+  </template>-->
+  <!--<select value="{{mode::change}}">
+  <template is="dom-repeat" id="modesList" items="{{modes}}">
+  <option id="{{item.id}}" value="{{item.id}}">
+  <paper-item>
+  Mode : <span>{{item.label}}</span>
+</paper-item>
+</option>
+</template>
+</select>-->
+
+<spoggy-graphe
+hidden$="[[!visibleGraphe]]"
+socket="[[socket]]"
+server="{{server}}"
+endpont="{{endpoint}}"
+status="[[status]]"
+requetes="{{requetes}}"
+dataset="{{dataset}}"
+db="[[db]]"
+results="{{results}}"
+actionstosend="{{actionstosend}}"
+params="{{params}}"
+></spoggy-graphe>
+
+<spoggy-fuseki
+actionstosend="{{actionstosend}}"
+server="{{server}}"
+endpont="{{endpoint}}"
+requetes="{{requetes}}"
+results="{{results}}"
+dataset="{{dataset}}"
+></spoggy-fuseki>
+<a href="https://github.com/scenaristeur/heroku-spoggy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
+
+</template>
+
+
+
+
+
+<script>
+/**
+* @customElement
+* @polymer
+*/
+class SpoggyApp extends Polymer.Element {
+  static get is() { return 'spoggy-app'; }
+  static get properties() {
+    return {
+      modes : {
+        type : Array,
+        value:[
+          /*          {id:"mobile", label:"mobile", state:"enable"},*/
+          {id:"solo", label:"solo", state:"enable"},
+          {id:"solo-save", label:"solo-save", state:"disabled"},
+          {id:"collaboratif", label:"collaboratif", state:"disabled"},
+          {id:"distribué", label:"distribué", state:"disabled"}
+        ]
+      },
+      mode: {
+        type: String,
+        value: 'solo',
+        observer: '_modeChange'
+      },
+      visibleGraphe: {
+        type: Boolean,
+        value: 'true'
+      }
+    }
+  }
+
+  _modeChange (m) {
+    console.log('mode ' + m);
+    console.log(this.mode);
+  }
+
+
+}
+
+window.customElements.define(SpoggyApp.is, SpoggyApp);
+</script>
+</dom-module>
