@@ -110,7 +110,13 @@
 				results:{
 					type: Array,
 					notify: true
-				}
+				},
+        requetes:{
+          type:Array,
+          value:[],
+          notify: true,
+            observer: '_requetesChanged'
+        }
       };
     }
 
@@ -135,7 +141,9 @@
 				var queryLimite=query+" LIMIT "+limite;
 				return{query: queryLimite, output: output};
 			}
-			handleResponse(data){
+			handleResponse(data, req){
+        console.log(data);
+        console.log(req);
 				console.log(data.detail.response);
 				this.head=data.detail.response.head.vars;
 				this.results=data.detail.response.results.bindings;
@@ -146,8 +154,21 @@
       * Execute la requete
       */
       sendRequest (){
+        if (this.endpoint.length>0){
         this.$.ajaxget.generateRequest();
       }
+    }
+
+    _requetesChanged(){
+      while (this.requetes.length>0){
+      console.log(this.requetes);
+      var r = this.requetes.shift();
+      console.log(r);
+    //  this.$.ajaxget.cid = r.i;
+      this.dataset = r.dsname;
+
+
+    }}
   }
 
   window.customElements.define(SpoggySparqlstatements.is, SpoggySparqlstatements);

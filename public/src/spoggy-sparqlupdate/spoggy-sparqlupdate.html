@@ -334,6 +334,14 @@ update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   \""+triplet.
       //maj de la base
       var edge = action.data[0] || action.data;
       if (edge != undefined) {
+
+app.sujet = edge.from.split("#")[1];
+app.propriete = edge.label;
+app.objet = edge.to.split("#")[1];
+app.sendUpdate();
+
+
+        /*
         base.get({
           subject: edge.id
         }, function(err, list) {
@@ -374,7 +382,7 @@ update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   \""+triplet.
               });
             });
           }
-        });
+        });*/
       } else {
         console.log("pb pour creer le edge, quel id ?")
       }

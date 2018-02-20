@@ -276,10 +276,100 @@
         },
         db:{
           observer: '_dbChanged'
-        }
+        },
+        server:{
+          observer: '_serverChanged'
+        },
+        endpoint:{
+          observer: '_endpointChanged'
+        },
+        requetes:{
+          type: Array,
+          value:[],
+          notify: true
+        },
+        results:{
+          type: Array,
+          value:[],
+          observer: '_resultsChanged'
+        },
+        dataset:{
+          type:String,
+          notify: true
+        },
+
       };
     }
 
+_resultsChanged(results){
+  if (results.length>0){
+    this.fusekiresults=results;
+  }
+}
+
+
+
+
+    _endpointChanged(){
+      console.log(this.endpoint);
+
+    }
+
+    _serverChanged(){
+      var app = this;
+      app.network.clear;
+      console.log(this.server);
+      var node = {
+        label: "endpoint",
+        shape: 'database',
+        type: "endpoint",
+        groupe:0
+
+      };
+      var endpointNode = app.network.body.data.nodes.add(node);
+      /*var endpointNode = app.network.body.data.nodes.get({
+      filter: function(node){
+      return (node.label == "endpoint");
+    }
+  });*/
+  app.network.clear;
+  console.log(this.server.datasets);
+  var i = 0;
+  if (this.server.datasets.length >0){
+    this.server.datasets.forEach(function(ds) {
+      console.log(ds);
+
+      var node = {
+        label: ds.ds_name,
+        shape: 'database',
+        type: "dataset",
+        cid:i
+
+      };
+      var n =   app.network.body.data.nodes.add(node);
+      console.log(n);
+      app.network.body.data.edges.add({
+        label: "hasDataset",
+        from : endpointNode[0],
+        to : n[0]
+      });
+    //  app.askTriplets(ds.ds_name,i);
+      i++;
+    });
+  }
+}
+
+/*
+askTriplets(dsname, i){
+  var req = {};
+  req.dsname=dsname;
+  req.i=i;
+  var requetesTemp = this.requetes;
+  this.requetes = [];
+  requetesTemp.push(req);
+  this.requetes = requetesTemp;
+  console.log(this.requetes);
+}*/
 
 _dbChanged(){
   console.log("##############################");
@@ -293,11 +383,11 @@ _dbChanged(){
     console.log("1list");
     console.log(list);
     if (list != undefined){
-    console.log(list);
-    app.db2populate = list;
-    app.populateVis(app.db2populate, app.network);
-    app.triplets2popLength = app.db2populate.length;
-  }
+      console.log(list);
+      app.db2populate = list;
+      app.populateVis(app.db2populate, app.network);
+      app.triplets2popLength = app.db2populate.length;
+    }
   });
 
 
@@ -306,207 +396,209 @@ _dbChanged(){
 }
 
 
-    ready() {
-      super.ready();
-      this.colorValue = "rgb(173,208,255)";
-      this.selectedShape = "ellipse";
-      this.selectedType = "node";
-      this.network = this.networkDivInitialize(this.$.mynetwork, this);
+ready() {
+  super.ready();
+  this.colorValue = "rgb(173,208,255)";
+  this.selectedShape = "ellipse";
+  this.selectedType = "node";
+  this.network = this.networkDivInitialize(this.$.mynetwork, this);
 
-      this.params = this.recupParams();
-      console.log(this.params);
-      if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
-    console.log("pas de param");
-    }else{
-      console.log(this.network)
-      console.log(this.params);
-      importFromParam(this.params,this.network,app);
-      //var retourCommande = catchCommande(message,this.network,this);
-      //  this.$.filepicker = this.params.source;
-    }
-
-
+  this.params = this.recupParams();
+  console.log(this.params);
+  if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
+  console.log("pas de param");
+}else{
+  console.log(this.network)
+  console.log(this.params);
+  importFromParam(this.params,this.network,app);
+  //var retourCommande = catchCommande(message,this.network,this);
+  //  this.$.filepicker = this.params.source;
+}
 
 
-      // When possible, use afterNextRender to defer non-critical    // work until after first paint.
-      /*Polymer.RenderStatus.afterNextRender(this, function() {
-      //  console.log(this.network);
-      //  this.network.fit();
-      this.network.moveTo(this.network.body.data.nodes.get(1));
-    });*/
-    var app = this;
-    app.tickInterval = setInterval(function() {
-      if ((app.db2populate.length > 0) && (app.network != undefined)) {
-        console.log(app.db2populate.length );
-        //  console.log(app.network);
-        app.populateVis(app.db2populate, app.network);
-        //log(app.db2populate.length + "/" + app.tiplets2popLength);
-        app.network.fit();
-      }
-      if ((app.data != app.network.body.data)  && !app.eyehidden){
-        console.log("bip2");
-        app.data = [];
-        app.data = app.network.body.data;
-        console.log(app.data);
-      }
-    }, app.tickDelay);
-    var network = this.network;
-    this.network.on("selectNode", function(params) {
-      console.log("select");
-      console.log(params);
-      if (params.nodes.length == 1) {
-        if (network.isCluster(params.nodes[0]) == true) {
-          network.openCluster(params.nodes[0]);
-        }else if (params.nodes[0] == 7) {
-          app._toggleDesc();
-        }else {
-          var node = network.body.data.nodes.get(params.nodes[0]);
-          console.log(node);
-          if (node.type == "graph" ){
-            // AJOUTER UN LIEN DANS LE NOEUD AVEC SVG : VISJS, html in node & http://apike.ca/prog_svg_web_links.html
-            console.log(node.label);
-            var txt;
-            var r =confirm('Basculer sur le graphe '+node.label+'?');
-            if (r == true) {
-              txt = "You pressed OK!";
-              app.socket.emit("changeGraph", node.id);
-            } else {
-              txt = "You pressed Cancel!";
-            }
-            console.log(txt);
-          }
+
+
+// When possible, use afterNextRender to defer non-critical    // work until after first paint.
+/*Polymer.RenderStatus.afterNextRender(this, function() {
+//  console.log(this.network);
+//  this.network.fit();
+this.network.moveTo(this.network.body.data.nodes.get(1));
+});*/
+var app = this;
+app.tickInterval = setInterval(function() {
+  if ((app.db2populate.length > 0) && (app.network != undefined)) {
+    console.log(app.db2populate.length );
+    //  console.log(app.network);
+    app.populateVis(app.db2populate, app.network);
+    //log(app.db2populate.length + "/" + app.tiplets2popLength);
+    app.network.fit();
+  }
+  if ((app.data != app.network.body.data)  && !app.eyehidden){
+    console.log("bip2");
+    app.data = [];
+    app.data = app.network.body.data;
+    console.log(app.data);
+  }
+}, app.tickDelay);
+var network = this.network;
+this.network.on("selectNode", function(params) {
+  console.log("select");
+  console.log(params);
+  if (params.nodes.length == 1) {
+    if (network.isCluster(params.nodes[0]) == true) {
+      network.openCluster(params.nodes[0]);
+    }else if (params.nodes[0] == 7) {
+      app._toggleDesc();
+    }else {
+      var node = network.body.data.nodes.get(params.nodes[0]);
+      console.log(node);
+      if (node.type == "graph" ){
+        // AJOUTER UN LIEN DANS LE NOEUD AVEC SVG : VISJS, html in node & http://apike.ca/prog_svg_web_links.html
+        console.log(node.label);
+        var txt;
+        var r =confirm('Basculer sur le graphe '+node.label+'?');
+        if (r == true) {
+          txt = "You pressed OK!";
+          app.socket.emit("changeGraph", node.id);
+        } else {
+          txt = "You pressed Cancel!";
         }
+        console.log(txt);
+      }else if (node.type == "dataset") {
+        app.dataset = node.label;
       }
-    });
-    this._toggleDesc();
-    console.log(this.network);
-    /*
-    this.nodes = [];
-    this.nodes = this.network.body.data.nodes;
-    this.edges = [];
-    this.edges = this.network.body.data.edges;*/
-  }
-  traiteMessage(){
-    var message = this.$.inputMessage.value;
-    console.log(message);
-    if (message.startsWith("::")){
-      this.catchTriplet(message, this.network);
-      this.$.inputMessage.value = "::";
-    }else if (message.startsWith("/")){
-      var retourCommande = catchCommande(message,this.network,this);
-      // implementer les commandes import, export, connexion endpoint...
     }
   }
-  catchTriplet(message, network){
-    console.log(message.length);
-    message=message.trim();
-    var tripletString = message.substring(2).trim().split(" ");
-    // les noeuds existent-ils ?
-    var sujetNode = network.body.data.nodes.get({
-      filter: function(node){
-        //    console.log(node);
-        return (node.label == tripletString[0] );
-      }
-    });
-    var objetNode = network.body.data.nodes.get({
-      filter: function(node){
-        //    console.log(node);
-        return (node.label == tripletString[2]);
-      }
-    });
-    console.log(sujetNode);
-    console.log(objetNode);
-    // sinon, on les créé
-    if (sujetNode.length == 0){
-      network.body.data.nodes.add({label: tripletString[0] });
-    }
-    if (objetNode.length == 0){
-      network.body.data.nodes.add({ label: tripletString[2] });
-    }
-    // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
-    sujetNode = network.body.data.nodes.get({
-      filter: function(node){
-        console.log(node);
-        return (node.label == tripletString[0] );
-      }
-    });
-    objetNode = network.body.data.nodes.get({
-      filter: function(node){
-        console.log(node);
-        return (node.label == tripletString[2]);
-      }
-    });
-    var actionSujet = {};
-    actionSujet.type = "newNode";
-    actionSujet.data = sujetNode[0];
-    //  actionsToSendTemp.push(actionSujet);
-    this.addAction(actionSujet);
-    var actionObjet = {};
-    actionObjet.type = "newNode";
-    actionObjet.data = objetNode[0];
-    //  actionsToSendTemp.push(actionObjet);
-    this.addAction(actionObjet);
-    // maintenant, on peut ajouter l'edge
-    network.body.data.edges.add({
-      label: tripletString[1],
-      from : sujetNode[0].id,
-      to : objetNode[0].id
-    });
-    //on récupère ce edge pour l'envoyer au serveur
-    var edge = network.body.data.edges.get({
-      filter: function(edge) {
-        return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == tripletString[1]);
-      }
-    });
-    var actionEdge = {};
-    actionEdge.type = "newEdge";
-    actionEdge.data = edge;
-    this.addAction(actionEdge);
-    //  actionsToSendTemp.push(actionEdge);
-    //console.log(actionsToSendTemp);
-    //  return actionsToSendTemp;
+});
+this._toggleDesc();
+console.log(this.network);
+/*
+this.nodes = [];
+this.nodes = this.network.body.data.nodes;
+this.edges = [];
+this.edges = this.network.body.data.edges;*/
+}
+traiteMessage(){
+  var message = this.$.inputMessage.value;
+  console.log(message);
+  if (message.startsWith("::")){
+    this.catchTriplet(message, this.network);
+    this.$.inputMessage.value = "::";
+  }else if (message.startsWith("/")){
+    var retourCommande = catchCommande(message,this.network,this);
+    // implementer les commandes import, export, connexion endpoint...
   }
-  _socketChanged(s){
-    console.log(s);
-    var app = this;
-    this.socket.on('tick', function(data){
-      console.log(data);
-      if (data.actions.length>0){
-        data.actions.forEach(function(action) {
-          //    console.log(action);
-          switch(action.type) {
-            case "newNode":
-            if(app.network != undefined){
-              app.addNodeIfNotExist(app.network, action.data);
-            }
-            break;
-            case "editNode":
-            break;
-            case "deleteNode":
-            app.deleteFromServer(action.data);
-            break;
-            case "newEdge":
-            if(app.network != undefined){
-              app.addEdgeIfNotExist(app.network, action.data);
-            }
-            break;
-            case "editEdge":
-            break;
-            case "deleteEdge":
-            app.deleteFromServer(action.data);
-            break;
-            default:
-            console.log("action non reconnue");
-            console.log(action);
+}
+catchTriplet(message, network){
+  console.log(message.length);
+  message=message.trim();
+  var tripletString = message.substring(2).trim().split(" ");
+  // les noeuds existent-ils ?
+  var sujetNode = network.body.data.nodes.get({
+    filter: function(node){
+      //    console.log(node);
+      return (node.label == tripletString[0] );
+    }
+  });
+  var objetNode = network.body.data.nodes.get({
+    filter: function(node){
+      //    console.log(node);
+      return (node.label == tripletString[2]);
+    }
+  });
+  console.log(sujetNode);
+  console.log(objetNode);
+  // sinon, on les créé
+  if (sujetNode.length == 0){
+    network.body.data.nodes.add({label: tripletString[0] });
+  }
+  if (objetNode.length == 0){
+    network.body.data.nodes.add({ label: tripletString[2] });
+  }
+  // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
+  sujetNode = network.body.data.nodes.get({
+    filter: function(node){
+      console.log(node);
+      return (node.label == tripletString[0] );
+    }
+  });
+  objetNode = network.body.data.nodes.get({
+    filter: function(node){
+      console.log(node);
+      return (node.label == tripletString[2]);
+    }
+  });
+  var actionSujet = {};
+  actionSujet.type = "newNode";
+  actionSujet.data = sujetNode[0];
+  //  actionsToSendTemp.push(actionSujet);
+  this.addAction(actionSujet);
+  var actionObjet = {};
+  actionObjet.type = "newNode";
+  actionObjet.data = objetNode[0];
+  //  actionsToSendTemp.push(actionObjet);
+  this.addAction(actionObjet);
+  // maintenant, on peut ajouter l'edge
+  network.body.data.edges.add({
+    label: tripletString[1],
+    from : sujetNode[0].id,
+    to : objetNode[0].id
+  });
+  //on récupère ce edge pour l'envoyer au serveur
+  var edge = network.body.data.edges.get({
+    filter: function(edge) {
+      return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == tripletString[1]);
+    }
+  });
+  var actionEdge = {};
+  actionEdge.type = "newEdge";
+  actionEdge.data = edge;
+  this.addAction(actionEdge);
+  //  actionsToSendTemp.push(actionEdge);
+  //console.log(actionsToSendTemp);
+  //  return actionsToSendTemp;
+}
+_socketChanged(s){
+  console.log(s);
+  var app = this;
+  this.socket.on('tick', function(data){
+    console.log(data);
+    if (data.actions.length>0){
+      data.actions.forEach(function(action) {
+        //    console.log(action);
+        switch(action.type) {
+          case "newNode":
+          if(app.network != undefined){
+            app.addNodeIfNotExist(app.network, action.data);
           }
-        });
-      }
-    });
-    this.socket.on('initDb', function(db){
-  console.log(db);
-      app.db2populate = db;
-      app.populateVis(app.db2populate, app.network);
-      app.triplets2popLength = app.db2populate.length;
+          break;
+          case "editNode":
+          break;
+          case "deleteNode":
+          app.deleteFromServer(action.data);
+          break;
+          case "newEdge":
+          if(app.network != undefined){
+            app.addEdgeIfNotExist(app.network, action.data);
+          }
+          break;
+          case "editEdge":
+          break;
+          case "deleteEdge":
+          app.deleteFromServer(action.data);
+          break;
+          default:
+          console.log("action non reconnue");
+          console.log(action);
+        }
+      });
+    }
+  });
+  this.socket.on('initDb', function(db){
+    console.log(db);
+    app.db2populate = db;
+    app.populateVis(app.db2populate, app.network);
+    app.triplets2popLength = app.db2populate.length;
 
   });
   this.socket.on('initFuz', function(initFuz){
@@ -546,13 +638,13 @@ _fusekiresultsChanged(fusekiTriplets, oldValue){
             id: sujetTemp.uri,
             label: sujetTemp.localName.match(/.{1,40}/g).join("\n"),
             //shape: "box",
-            group: groupe
+            //group: groupe
           });
         } else {
           var node = {
             id: sujetTemp.uri,
             label: sujetTemp.localName,
-            group: groupe,
+            //group: groupe,
           };
           this.network.body.data.nodes.add(node);
         }

@@ -55,8 +55,20 @@
 
 
 
-    <spoggy-sparqlupdate endpoint="{{endpoint}}" dataset="{{dataset}}" actionstosend="{{actionstosend}}" status="{{status}}"></spoggy-sparqlupdate>
-    <spoggy-sparqlstatements endpoint="{{endpoint}}" dataset="{{dataset}}" status="{{status}}"></spoggy-sparqlstatements>
+    <spoggy-sparqlupdate
+    endpoint="{{endpoint}}"
+    dataset="{{dataset}}"
+    actionstosend="{{actionstosend}}"
+    status="{{status}}"
+    ></spoggy-sparqlupdate>
+    
+    <spoggy-sparqlstatements
+    endpoint="{{endpoint}}"
+    requetes="{{requetes]]"
+    dataset="{{dataset}}"
+    status="{{status}}
+    " results="{{results}}"
+    ></spoggy-sparqlstatements>
 
 
 
@@ -89,7 +101,7 @@
 
     </table>
     <!-- TEST CONNEXION -->
-    <paper-button raised on-tap="get_endpoint_status">Test status</paper-button>
+    <!--  <paper-button raised on-tap="get_endpoint_status">Test status</paper-button>-->
     <!-- SELECTION DATASET -->
     <select value="{{dataset::change}}">
       <template is="dom-repeat" id="datasetsList" items="{{datasets}}">
@@ -118,7 +130,8 @@
         },
         endpoint: {
           type: String,
-          value: 'http://5.51.110.50:3030'
+          notify: true,
+          value: ""
           //  value: 'http://192.168.1.73:3030'
           //  value: 'http://127.0.0.1:3030'
         },
@@ -135,7 +148,8 @@
           value: ""
         },
         server: {
-          type: Object
+          type: Object,
+          notify: true
         },
         datasets: {
           type: Array
@@ -146,6 +160,16 @@
         },
         actionstosend:{
           observer: '_actionstosendChanged'
+        },
+        requetes:{
+          type:Array,
+          value:[],
+          notify: true
+        },
+        results:{
+          type:Array,
+          value:[],
+          notify: true
         }
       };
     }
@@ -161,7 +185,9 @@
     console.log(this.dataset);
   }
 
-  get_endpoint_status(){
+  ready(){
+    super.ready();
+    this.endpoint = 'http://5.51.110.50:3030';
     this.url_status = this.endpoint+"/$/ping";
     //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
     console.log(this.url_status);
