@@ -12,7 +12,7 @@
     {"id":4, "label":"global", "disabled": false}
   ],
   "modules":[
-    {"id":0, "label":"triplet", "disponible":true, "actif": true, "description": "Le module le plus simple pour saisir un triplet, efficace sur mobile"},
+    {"id":0, "label":"triplet", "disponible":true, "actif": false, "description": "Le module le plus simple pour saisir un triplet, efficace sur mobile"},
     {"id":1, "label":"graphe", "disponible":true, "actif": true, "description": "Le module le plus visuel, adapté pour pc et tablettes"},
     {"id":2, "label":"socket", "disponible":true, "actif": true, "description": "Module permettant la communication en mode synchrone, pour construire des graphes à plusieurs"},
     {"id":3, "label":"fuseki","disponible":true,  "actif": true, "description": "Module permettant de se connecter à un endpoint fuseki (doc sur http://smag0.blogspot.fr)"},
