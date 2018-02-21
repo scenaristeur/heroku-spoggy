@@ -12,11 +12,13 @@
     {"id":4, "label":"global", "disabled": false}
   ],
   "modules":[
-    {"id":0, "label":"triplet", "disponible":true, "actif": false, "description": "Le module le plus simple pour saisir un triplet, efficace sur mobile"},
+    {"id":0, "label":"triplet", "disponible":true, "actif": true, "description": "Le module le plus simple pour saisir un triplet, efficace sur mobile"},
     {"id":1, "label":"graphe", "disponible":true, "actif": true, "description": "Le module le plus visuel, adapté pour pc et tablettes"},
-    {"id":2, "label":"socket", "disponible":true, "actif": false, "description": "Module permettant la communication en mode synchrone, pour construire des graphes à plusieurs"},
+    {"id":2, "label":"socket", "disponible":true, "actif": true, "description": "Module permettant la communication en mode synchrone, pour construire des graphes à plusieurs"},
     {"id":3, "label":"fuseki","disponible":true,  "actif": true, "description": "Module permettant de se connecter à un endpoint fuseki (doc sur http://smag0.blogspot.fr)"},
     {"id":4, "label":"levelgraph", "disponible":true, "actif": true, "description": "Module permettant de stocker vos informations directement dans votre navigateur"},
-    {"id":5, "label":"chat", "disponible":true, "actif": false, "description": "Module permettant de chatter avec les autres utilisateurs (nécessite le module socket)"}
+    {"id":5, "label":"chat", "disponible":true, "actif": true, "description": "Module permettant de chatter avec les autres utilisateurs (nécessite le module socket)"},
+    {"id":6, "label":"eye-reasoner", "disponible":true, "actif": true, "description": "Module permettant au système d'inférer"}
+
   ]
 }

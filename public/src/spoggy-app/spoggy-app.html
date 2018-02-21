@@ -7,6 +7,8 @@
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
@@ -25,6 +27,7 @@
 <link rel="import" href="../spoggy-graphe/spoggy-graphe.html">
 <link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
 <link rel="import" href="../spoggy-fuseki/spoggy-fuseki.html">
+<link rel="import" href="../spog-eye/spog-eye.html">
 
 
 <dom-module id="spoggy-app">
@@ -101,6 +104,11 @@
       paper-button[toggles] {
         background: red;
       }
+      #fabchat {
+        position: fixed;
+        right: 25px;
+        top: 25px;
+      }
       </style>
     </custom-style>
 
@@ -112,10 +120,10 @@
     on-response="handleResponseLocal">
   </iron-ajax>
 
-
+  <div hidden$="[[connected]]">[[status]]</div>
 
   <!--  <paper-card id="papercard" image="images/donuts.png">-->
-  <paper-card id="papercard">
+  <paper-card    id="papercard">
     <div class="card-content">
       <div class="cafe-header"> {{config}} {{mode}}
         <div class="cafe-location cafe-light">
@@ -144,6 +152,7 @@
 
             <template is="dom-if" if="[[isOk(item.label, 'graphe')]]">
               <spoggy-graphe
+              hidden$="[[visibleChat]]"
               hidden$="[[!visibleGraphe]]"
               socket="[[socket]]"
               server="{{server}}"
@@ -179,6 +188,10 @@
 
             <template is="dom-if" if="[[isOk(item.label, 'chat')]]">
               <spoggy-chat  id="chat" hidden$="[[!visibleChat]]"  socket="[[socket]]" status="[[status]]" ></spoggy-chat>
+            </template>
+
+            <template is="dom-if" if="[[isOk(item.label, 'eye-reasoner')]]">
+              <spog-eye  id="chat" hidden$="[[!visibleEye]]"  socket="[[socket]]" status="[[status]]" ></spog-eyet>
             </template>
 
           </paper-item>
@@ -267,6 +280,8 @@
 </div>
 </paper-dialog>
 
+<paper-fab id="fabchat" on-tap="toggleChat"  label="😻"></paper-fab>
+
 </template>
 
 <script>
@@ -284,6 +299,32 @@ class SpoggyApp extends Polymer.Element {
       mode: {
         observer: '_modeChange'
       },
+      socket: {
+        type: Object
+      },
+      status:{
+        type: String,
+        observer: '_consoleStatus'
+      },
+      connected:{
+        type: Boolean,
+      },
+      tickDelay: {
+        type: Number,
+        value: 1000       // 15ms selon source, tempo pour envoi du snapshot par le serveur pour un jeu
+      },
+      visibleChat: {
+        type: Boolean,
+        value : false
+      },
+      actionstosend: {
+        type: Array,
+        value:[]
+      },
+      visibleIcon: {
+        type: Boolean,
+        value : false
+      },
     }
   }
 
@@ -291,6 +332,19 @@ class SpoggyApp extends Polymer.Element {
     super.ready();
     this.$.configsPopUp.style.display = 'block';
     this.$.fork.style.display = "block"; // "hidden";
+
+    var app=this;
+
+    /* ENVOI des actions vers le serveur*/
+    var tickInterval = setInterval(function() {
+    if (app.connected){
+    //  console.log("tick spoggy-app");
+    if (app.actionstosend.length > 0) {
+    console.log(app.actionstosend);
+    app.socket.emit('newActions', app.actionstosend);
+    app.actionstosend = [];
+  }}
+}, this.tickDelay);
   }
 
   _configChange (c) {
@@ -375,6 +429,24 @@ class SpoggyApp extends Polymer.Element {
   isOk (label, element) {
   if (label == element) return true;
     return false;
+  }
+
+  _consoleStatus(newValue, oldValue){
+    console.log(oldValue +" -> "+ newValue);
+    if(newValue =="connected"){
+      this.connected = true;
+    }else{
+      this.connected = false;
+    }
+  }
+  _fusekiresultsChanged(newValue, oldValue){
+    console.log(newValue);
+
+  }
+
+
+  toggleChat(){
+    this.visibleChat = !this.visibleChat;
   }
 }
 
