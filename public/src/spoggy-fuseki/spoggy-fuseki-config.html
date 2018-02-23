@@ -1,0 +1,382 @@
+<!-- recupérer les infos https://github.com/scenaristeur/sparql-statements-->
+<!-- envoyer des infos https://github.com/scenaristeur/sparql-update-->
+<!-- https://www.polymer-project.org/2.0/docs/devguide/templates -->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- import template repeater -->
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<!-- import array selector -->
+<link rel="import" href="../../bower_components/polymer/lib/elements/array-selector.html">
+
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<!--
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">-->
+<!--<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">-->
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+
+<dom-module id="spoggy-fuseki-config">
+  <template>
+    <style>
+    .popup {
+      display: none;
+      position: absolute, center;
+      z-index: 299;
+      background-color: #f9f9f9;
+      border-style: solid;
+      border-width: 3px;
+      border-color: #5394ed;
+      padding: 2%;
+      margin: 2%;
+    }
+    .detail {
+      font-size: 12px;
+    }
+    </style>
+
+    <iron-ajax
+    id="status_req"
+    url="{{url_status}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+debounce-duration="300"
+
+    ></iron-ajax>
+    <!--
+    rejectWithRequest=true machin="{{machin}}"
+      on-response="_handleUrlStatusResponse"
+      on-error="_handleUrlStatusError" -->
+
+    <iron-ajax
+    id="server_req"
+    url="{{url_server}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+      machin="{{machin}}"
+    on-response="_handleUrlServerResponse"
+    on-error="_handleUrlServerError"
+    debounce-duration="300"
+    ></iron-ajax>
+
+    <paper-dialog id="settingsPopup" class="popup" backdrop transition="core-transition-bottom">
+      <div horizontal start-justified start layout >
+        <!--<iron-icon icon="thumb-up" style="height: 15px; width:150px;color: #0D578B;"></iron-icon>-->
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
+          <h2 id="settingOperation" style="margin: 0;color: #0D578B;">{{label}}</h2>
+
+          <paper-input label="Endpoint" value="{{endpoint::input}}"></paper-input>
+          <template is="dom-repeat" id="endpointsList" items="{{endpoints}}">
+            <p>
+              <paper-button
+              raised id="{{item.id}}"
+              on-tap="_setEndpoint">{{item.label}} ({{item.id}})
+            </paper-button>
+          </br>
+          <span class="detail">  ping: {{item.ping}}, status: {{item.status}}</span>
+
+        </p>
+      </template>
+      <div class="paper-dialog-buttons">
+        <paper-button raised dialog-dismiss on-tap="_validSettings">Cancel</paper-button>
+        <paper-button raised dialog-confirm on-tap="_validSettings">OK</paper-button>
+      </div>
+
+    </div>
+  </div>
+</paper-dialog>
+
+
+</template>
+
+<script>
+/**
+* `spoggy-fuseki`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyFusekiConfig extends Polymer.Element {
+  static get is() { return 'spoggy-fuseki-config'; }
+  static get properties() {
+    return {
+      label: {
+        type: String,
+        value: 'Configuration Mode Endpoint',
+      },
+      id: {
+        type: String,
+        value: "spoggy-fuseki-config"
+      },
+      endpoints:{
+        type: Array,
+        value:[
+          {id:'http://127.0.0.1:3030', label : 'local', ping : 'inconnu', status: 'inconnu'},
+          {id:'http://5.51.110.50:3030', label : 'défaut', ping : 'inconnu', status: 'inconnu'}
+        ]
+      },
+      endpoint: {
+        type: String,
+        notify: true,
+        value: ""
+        //  value: 'http://192.168.1.73:3030'
+        //  value: 'http://127.0.0.1:3030'
+      },
+      url_status: {
+        type: String,
+        value: ""
+      },
+      machin: {
+        type: String,
+        value: ""
+      },
+      status: {
+        type: String,
+        value: "deconnecte"
+      },
+      url_server: {
+        type: String,
+        value: ""
+      },
+      server: {
+        type: Object,
+        notify: true
+      },
+      datasets: {
+        type: Array
+      },
+      dataset: {
+        type: String,
+        observer: '_datasetChange'
+      },
+      actionstosend:{
+        observer: '_actionstosendChanged'
+      },
+      requetes:{
+        type:Array,
+        value:[],
+        notify: true
+      },
+      results:{
+        type:Array,
+        value:[],
+        notify: true
+      },
+      settings_actif:{
+        type: String,
+        value:"",
+        observer: '_settings_actif',
+        notify:true
+      }
+    };
+  }
+  _settings_actif(settings_actif){
+    // onfirst reponse, on next reponse https://codepen.io/tony19/pen/WxxMGy
+    var app = this;
+    console.log(settings_actif)
+    if(settings_actif == this.id){
+      console.log("verification : "+settings_actif)
+      var endpoints=app.endpoints;
+      app.endpoints = []
+      while (endpoints.length>0){
+        var e = endpoints.shift()
+        console.log(e);
+        app.url_status = e.id+"/$/ping";
+      //  app.$.status_req.params='{"part":'+e.id+'}'
+        let request = app.$.status_req.generateRequest();
+        request.completes.then(function(req) {
+          console.log(req.parseResponse())
+            console.log(req.response)
+            console.log(req.url)
+          }, function(rejected) {
+            // failed request, argument is an object
+            let req = rejected;
+            let error = rejected.type;
+            console.log(req)
+              console.log(error)
+                console.log(req.url)
+          }
+        )
+      /*  app.$.status_req.generateRequest().completes.then(
+          	request => {
+              console.log('success '+e.id, request.response)
+              e.ping = request.response;
+              console.log(e);
+              //  app.push('endpoints', e)
+              //  console.log(app.endpoints);
+          },
+            request => {
+              console.log('failure  '+e.id, request)
+              e.ping = request.type;
+              console.log(e);
+            //  app.push('endpoints', e)
+              console.log(app.endpoints);
+            }
+          );*/
+      }
+    //  app.endpoints = endpoints;
+  //    console.log(app.endpoints);
+    /*  app.endpoints.forEach( function(e){
+
+
+        /*app.machin = e.id+"david";
+        console.log(app.url_status);
+        app.$.status_req.generateRequest();*/
+      //});
+      /*
+      this.endpoint = 'http://5.51.110.50:3030';
+      this.url_status = this.endpoint+"/$/ping";
+
+      console.log(this.url_status);
+      this.$.status_req.generateRequest();*/
+      this.$.settingsPopup.style.display = 'block';
+    }else{
+     this.$.settingsPopup.style.display = 'none';
+    }
+  }
+  _setEndpoint(event, detail, sender){
+    console.log(event.currentTarget.id);
+    this.endpoint = event.currentTarget.id;
+  }
+
+  _validSettings(event, detail, sender){
+    if (event.currentTarget.hasAttribute('dialog-confirm')){
+      console.log('update settings')
+    }else{
+      console.log("don't update settings mais changer la modif du champ endpoint:input")
+    }
+    this.settings_actif=""
+  }
+
+  _actionstosendChanged(){
+    console.log(this.actionstosend);
+  }
+  /*toggleSelection(e) {
+  var item = this.$.employeeList.itemForElement(e.target);
+  this.$.selector.select(item);
+}*/
+_datasetChange (v) {
+  console.log('alter ' + v);
+  console.log(this.dataset);
+}
+
+ready(){
+  super.ready();
+  //  this.$.settingsPopup.style.display = 'block';
+  this.endpoint = 'http://5.51.110.50:3030';
+  this.url_status = this.endpoint+"/$/ping";
+  //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+  console.log(this.url_status);
+  this.$.status_req.generateRequest();
+}
+
+//PING
+_handleUrlStatusResponse(data, request){
+  console.log("ping ok");
+  console.log(data);
+  console.log(request);
+  this.status = data.detail.response;
+  console.log(this.status);
+  this.url_server = this.endpoint+"/$/server";
+  //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+  console.log(this.url_server);
+  this.$.server_req.generateRequest();
+}
+
+_handleUrlStatusError(data, request){
+  console.log("error ping");
+  console.log(data);
+    console.log(request);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+  this.status = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+  console.log(this.status);
+  this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+}
+
+//SERVER
+_handleUrlServerResponse(data, request){
+    console.log(request);
+  console.log("server ok");
+  console.log(data);
+  var clemodif = data.detail.response.replace(/ds\./g, "ds_")
+  this.server = JSON.parse(clemodif);
+  console.log(this.server);
+  this.datasets = this.server.datasets;
+  console.log(this.datasets);
+}
+
+_handleUrlServerError(data, request){
+    console.log(request);
+  console.log("error server");
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+  this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+  console.log(this.server);
+}
+
+
+
+}
+
+window.customElements.define(SpoggyFusekiConfig.is, SpoggyFusekiConfig);
+</script>
+</dom-module>
+
+<!-- FUSEKI ADMIN PROTOCOL
+http://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html
+
+Method	URL pattern	Description
+GET	/$/ping
+POST	/$/ping
+GET	/$/server
+POST	/$/server
+POST	/$/datasets
+GET	/$/datasets
+DELETE	/$/datasets/*{name}*
+GET	/$/datasets/*{name}*
+POST	/$/datasets/*{name}*?state=offline
+POST	/$/datasets/*{name}*?state=active
+POST	/$/server/shutdown	Not yet implemented
+GET	/$/stats
+GET	/$/stats/*{name}*
+POST	/$/backup/*{name}*
+GET	/$/backups-list
+POST	/$/sleep
+GET	/$/tasks
+GET	/$/tasks/*{name}*
+
+
+-->
+<!--     content-type="application/json"
+handle-as="json"
+
+enum XMLHttpRequestResponseType {
+"",
+"arraybuffer",
+"blob",
+"document",
+"json",
+"text"
+};
+-->

@@ -15,10 +15,14 @@
 <!--<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">-->
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 
 
-
-
+<link rel="import" href="spoggy-fuseki-config.html">
 <link rel="import" href="../spoggy-sparqlupdate/spoggy-sparqlupdate.html">
 <link rel="import" href="../spoggy-sparqlstatements/spoggy-sparqlstatements.html">
 
@@ -28,8 +32,16 @@
 <dom-module id="spoggy-fuseki">
   <template>
     <style>
-    :host {
-      display: block;
+    .popup {
+      display: none;
+      position: absolute, center;
+      z-index: 299;
+      background-color: #f9f9f9;
+      border-style: solid;
+      border-width: 3px;
+      border-color: #5394ed;
+      padding: 2%;
+      margin: 2%;
     }
     </style>
 
@@ -61,7 +73,7 @@
     actionstosend="{{actionstosend}}"
     status="{{status}}"
     ></spoggy-sparqlupdate>
-    
+
     <spoggy-sparqlstatements
     endpoint="{{endpoint}}"
     requetes="{{requetes]]"
@@ -70,7 +82,20 @@
     " results="{{results}}"
     ></spoggy-sparqlstatements>
 
-
+    <paper-dialog id="settingsPopup" class="popup" backdrop transition="core-transition-bottom">
+      <div horizontal start-justified start layout >
+        <!--<iron-icon icon="thumb-up" style="height: 15px; width:150px;color: #0D578B;"></iron-icon>-->
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
+          <h2 id="settingOperation" style="margin: 0;color: #0D578B;">SETTINGS {{id}}</h2>
+        <!--  <template is="dom-repeat" id="configsList" items="{{configs}}">
+            <p>
+              <paper-button raised disabled="[[item.disabled]]" id="{{item.label}}"  on-tap="_selectConfig">{{item.label}}</paper-button>
+            </p>
+          </template>-->
+        </div>
+      </div>
+    </paper-dialog>
 
     <h2>Hello [[prop1]]!</h2>
     <table>
@@ -124,7 +149,7 @@
     static get is() { return 'spoggy-fuseki'; }
     static get properties() {
       return {
-        prop1: {
+        id: {
           type: String,
           value: 'spoggy-fuseki'
         },
@@ -170,6 +195,9 @@
           type:Array,
           value:[],
           notify: true
+        },
+        settings:{
+          observer: '_settings'
         }
       };
     }
@@ -242,6 +270,17 @@
     console.log(data.detail.request.response);
     this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
     console.log(this.server);
+  }
+
+  _settings(settings){
+  if(settings == this.id){
+      console.log("settings : "+settings)
+      this.$.settingsPopup.style.display = 'block';
+          //  this.$.modesPopUp.style.display = 'none';
+
+  }else{
+    console.log("rate")
+  }
 
   }
 
