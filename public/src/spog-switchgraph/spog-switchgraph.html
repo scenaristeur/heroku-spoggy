@@ -1,0 +1,61 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="spog-switchgraph">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spog-switchgraph`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpogSwitchgraph extends Polymer.Element {
+      static get is() { return 'spog-switchgraph'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spog-switchgraph'
+          },
+          socket: {
+            type: Object,
+            observer: "_socketChanged"
+          },
+        };
+      }
+      ready() {
+        super.ready();
+        var app = this;
+
+
+
+        /*app.tickIntervalSwitch = setInterval(function() {
+        console.log(this.graphs);
+      }, 1000);*/
+      }
+
+
+      _socketChanged(s){
+        console.log(s);
+        var app = this;
+        app.socket.on("initGraph", function(data){
+          console.log(data);
+          this.graphs = data.graphs;
+          console.log(data.currentGraph);
+        });
+      }
+    }
+
+    window.customElements.define(SpogSwitchgraph.is, SpogSwitchgraph);
+  </script>
+</dom-module>

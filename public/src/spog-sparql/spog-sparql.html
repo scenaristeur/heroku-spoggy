@@ -1,0 +1,136 @@
+<!--reprise de https://github.com/scenaristeur/0smag/blob/master/public/smag-visualisation.html-->
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+
+
+
+<dom-module id="spog-sparql">
+  <template>
+  <style>
+  :host {
+    display: block;
+  }
+  </style>
+<!--auto-->
+  <iron-ajax
+
+  id="ajaxGet"
+  url="{{urlRequete}}"
+  params="{{options}}"
+  handle-as="json"
+  on-response="handleResponse"
+  on-error="ajaxError"
+  debounce-duration="300">
+</iron-ajax>
+
+<!--
+<div>a[[fusekiresults.length]]b</div>
+<h2>Hello [[prop1]]!</h2>-->
+</template>
+
+<script>
+/**
+* `spog-sparql`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpogSparql extends Polymer.Element {
+  static get is() { return 'spog-sparql'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spog-sparql'
+      },
+      url:{
+        type: Object,
+        //  statePath: 'url'
+        value :"http://127.0.0.1:3030"
+      },
+      ds:{
+        type: String,
+        //  statePath: 'ds'
+        value : "holacracy"
+      },
+      graphe: {
+        type: String,
+        //  statePath: 'graphe'
+        value : "<http://smag0.blogspot.fr/SparqlUpdate>"
+      },
+      action : {
+        value: 'query',
+        notify: true
+      },
+      query : {
+        notify: true
+      },
+      limite : {
+        value: 1000,
+        notify: true
+      },
+      output : {
+        value: 'json',
+        notify: true
+      },
+      urlRequete: {
+        computed: 'computedUrl(url,ds,action)'
+      },
+      options: {
+        computed: 'computedOptions(graphe,limite,output)'
+      },
+      fusekiresults:{
+        type: Array,
+        notify: true
+      }
+    };
+  }
+
+  computedUrl(url,ds,action){
+    this.results = null;
+    //  console.log(ds);
+    if(ds != undefined){
+      return [url,ds,action].join('/');
+    }else{
+      return [url,action].join('/');
+    }
+  }
+  computedOptions(graphe,limite,output){
+    if (graphe != ""){
+      this.query = 'SELECT * FROM '+graphe+' WHERE {?Sujet ?Predicat ?Objet}';
+    }else{
+      this.query = 'SELECT * WHERE {?Sujet ?Predicat ?Objet}'
+    }
+    var queryLimite=this.query+" LIMIT "+limite;
+    //console.log(queryLimite);
+    return{query: queryLimite, output: output};
+  }
+  /**
+  * en cas d'erreur de la requete
+  */
+  ajaxError(data){
+    console.log("pb avec la connexion fuseki, le serveur est-il démarré ?");
+    console.log(data);
+    console.log(data.detail.response);
+    console.log(data.detail.error);
+    console.log(data.detail.error.message);
+  }
+  /* Recuperation de la reponse */
+  handleResponse(data){
+    console.log(data);
+    this.head=data.detail.response.head.vars;
+    this.fusekiresults=[];
+    this.fusekiresults = data.detail.response.results.bindings;
+    var nb=0;
+    //this.dispatch('update_nb_maj', nb);
+    console.log(this.fusekiresults);
+  }
+
+}
+
+window.customElements.define(SpogSparql.is, SpogSparql);
+</script>
+</dom-module>

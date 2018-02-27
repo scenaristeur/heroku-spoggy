@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+
+
+<dom-module id="spog-source">
+  <template>
+  <style>
+  :host {
+    display: block;
+  }
+  </style>
+  <app-localstorage-document key="endpoint" data="{{endpoint}}">
+  </app-localstorage-document>
+  <app-localstorage-document key="dataset" data="{{dataset}}">
+  </app-localstorage-document>
+  <app-localstorage-document key="graphe" data="{{graphe}}">
+  </app-localstorage-document>
+  <!--<app-localstorage-document key="fuseki" data="{{fuseki}}">
+  </app-localstorage-document>-->
+  <h2>Sources</h2>
+  <!--<iron-selector attr-for-selected="name" selected="{{sources}}" multi selected-attribute="checked">
+    <paper-checkbox name="level" checked >Base du serveur (LEVEL)</paper-checkbox>
+    <paper-checkbox name="fuseki" checked>fuseki</paper-checkbox>
+  </iron-selector>-->
+
+
+  <paper-input label ="Endpoint" placeholder="http://127.0.0.1:3000" value="{{endpoint}}"></paper-input>
+  <paper-input label ="Dataset" placeholder="spoggy" value="{{dataset}}"></paper-input>
+    <paper-input label ="Graphe" placeholder="graphe" value="{{graphe}}"></paper-input>
+
+</template>
+
+<script>
+/**
+* `spog-source`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpogSource extends Polymer.Element {
+  static get is() { return 'spog-source'; }
+  static get properties() {
+    return {
+      endpoint: {
+        type: String,
+        value: 'http://127.0.0.1:3000'
+      },
+      dataset: {
+        type: String,
+        value: 'spoggy'
+      },
+      graphe: {
+        type: String,
+        value: ''
+      }
+    };
+  }
+}
+
+window.customElements.define(SpogSource.is, SpogSource);
+</script>
+</dom-module>

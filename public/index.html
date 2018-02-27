@@ -1,31 +1,58 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-  <title>S.P.O.G.G.Y</title>
-  <meta name="description" content="spoggy description">
+    <title>S P O G G Y</title>
+    <meta name="description" content="spoggypolymer description">
 
-  <!-- See https://goo.gl/OOhYW5 -->
-  <link rel="manifest" href="/manifest.json">
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="/manifest.json">
 
-  <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+    <!--  <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-  <link rel="import" href="/src/spoggy-app/spoggy-app.html">
+      <link rel="import" href="/src/spogpol-app/spogpol-app.html">
+  -->
   <style>
-  body{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0px;
+      body.loading #splash {
+        opacity: 1;
+      }
+      #splash {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transition: opacity 300ms cubic-bezier(0,0,0.2,1);
+        opacity: 0;
+        will-change: opacity;
+        z-index: 1;
+          background: linear-gradient(to top, rgba(55, 55, 255, 0.3), rgba(200, 200, 10, 0.3));
+  /*      background: url(...) no-repeat;
+        background-color: #E53935;*/
+      }
+    </style>
 
-  }
-  </style>
-</head>
-<body>
-  <spoggy-app></spoggy-app>
-</body>
+    <!-- 1. Async HTML Imports do not block rending. Benefit of keeping it declarative
+         (instead of dynamically loading it later in JS) is that the parser can go
+         to town pre-fetching resources, etc. -->
+  <link rel="import" id="bundle" href="/src/spog-app/spog-app.html" async>
+    </head>
+    <!-- 2. Don't use <body unresolved>. It's a simple FOUC solution, but hides
+         the page until imports and Polymer are loaded. Intead, control FOUC manually with
+         a splash screen. -->
+    <body class="loading" style="margin: 0px;">
+      <!-- 3. Light weight splash screen is outside of Polymer/imports and styled by
+           the main page. 1st paint is fast, even on polyfilled browsers. Alternatively,
+           one could create an "app shell" and style the page's un-upgraded elements
+           similar to their final upgraded version. -->
+    <div id="splash">
+  <center>Chargement,... mais c'est plus rapide avec Chrome car on utilise les webcomponents.</center>
+
+    </div>
+      <spog-app></spog-app>
+
+       <script src="app.js" async></script>
+    </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "name": "spog",
+  "version": "1.0.0",
+  "description": "spog for smag , using levelgraph database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "spag",
+    "smag",
+    "levelgraph"
+  ],
+  "dependencies": {
+    "level-browserify": "^1.1.1",
+    "levelgraph": "^2.1.1",
+    "levelgraph-jsonld": "^1.1.1",
+    "levelgraph-n3": "^2.1.0"
+  },
+  "author": "smag0",
+  "license": "ISC"
+}

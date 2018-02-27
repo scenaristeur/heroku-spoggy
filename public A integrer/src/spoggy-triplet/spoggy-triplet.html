@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="spoggy-triplet">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .popup {
+        display: none;
+        position: absolute, center;
+        z-index: 299;
+        background-color: #f9f9f9;
+        border-style: solid;
+        border-width: 3px;
+        border-color: #5394ed;
+        padding: 2%;
+        margin: 2%;
+      }
+      .detail {
+        font-size: 12px;
+      }
+    </style>
+    <paper-dialog id="tripletPopup" class="popup" backdrop transition="core-transition-bottom">
+      <div horizontal start-justified start layout >
+        <!--<iron-icon icon="thumb-up" style="height: 15px; width:150px;color: #0D578B;"></iron-icon>-->
+        <div style="padding-left:20px" horizontal start-justified start layout wrap>
+          <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
+          <h2 id="tripletSaisie" style="margin: 0;color: #0D578B;">{{prop1}}</h2>
+<div class="layout horizontal wrap">
+          <paper-input label="Sujet" value="{{sujett::input}}"></paper-input>
+          <paper-input label="Propriete" value="{{propriete::input}}"></paper-input>
+          <paper-input label="Objet" value="{{objet::input}}"></paper-input>
+        </div>
+          <div class="paper-dialog-buttons">
+            <paper-button raised dialog-dismiss on-tap="_validTriplet">Cancel</paper-button>
+            <paper-button raised dialog-confirm on-tap="_validTriplet">OK</paper-button>
+          </div>
+
+        </div>
+      </div>
+    </paper-dialog>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-triplet`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyTriplet extends Polymer.Element {
+      static get is() { return 'spoggy-triplet'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-triplet'
+          }
+        };
+      }
+      ready(){
+        super.ready();
+        this.$.tripletPopup.style.display = 'block';
+      }
+    }
+
+    window.customElements.define(SpoggyTriplet.is, SpoggyTriplet);
+  </script>
+</dom-module>

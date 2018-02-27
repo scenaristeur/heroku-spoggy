@@ -1,0 +1,420 @@
+<!-- multichatroom : http://psitsmike.com/2011/10/node-js-and-socket-io-multiroom-chat-tutorial/-->
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- import template repeater -->
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="styles/chat-styles.html">
+
+<dom-module id="spog-chat">
+  <template>
+  <style include="chat-styles"></style>
+
+  <paper-dialog id="createRoom">
+    <!--<h3>Export ttl <paper-button ontap="_pageAide">?</paper-button><paper-button dialog-dismiss raised>X</paper-button></h3>-->
+
+    <paper-input id="inputRoomName" label="Nom de la room"></paper-input>
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+      <paper-button on-tap="_roomCreate" raised>ok</paper-button>
+      <paper-button  dialog-dismiss raised>Annuler</paper-button>
+    </div>
+
+  </paper-dialog>
+
+  <ul id="pages" class="pages">
+    <!--<li id="chatPage"  hidden$="[[!username]]" class="chat page">-->
+    <li id="chatPage" hidden$="[[!visible]]"   class="app page">
+      <div id="chatArea"  class="chatArea">
+        <!--  <div align="right" id="toggleMessagesDiv">X</div>-->
+
+
+        <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+          <b>ROOMS ({{rooms.length}})<paper-button on-tap="_openRoomDialog">+<paper-button></b>
+
+            <div>
+              <template is="dom-repeat" items="{{rooms}}" selected="{{selectedRoomId}}" attr-for-selected="myroomid">
+                <div>
+                  <!--                <span class="key">[[item.id]]</span>
+                  <span class="room">[[item.name]]</span>
+                  <span class="room">[[item.current]]</span>
+                -->
+                <paper-item on-tap="_switchRoom" myroomid="[[item.id]]" roomName$="[[item.name]]" >[[item.name]]</paper-item>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+          <div id="conversation"></div>
+          <input id="data" style="width:200px;" />
+          <input type="button" id="datasend" on-tap="_datasend" value="send" />
+        </div>
+
+
+
+        <ul id="messages" class="messages">
+          <template is="dom-repeat" items="{{messages}}">
+            <li class="message">
+              <span class="username" style="[[item.color]]">[[item.username]]</span>
+              <span class="messageBody">[[item.message]]</span>
+            </li>
+          </template>
+        </ul>
+
+      </div>
+
+      <input id="inputMessage" class="inputMessage" on-change="sendMessage" placeholder="Tapez votre texte ici..."/>
+    </li>
+    <!--<li id="appPage" hidden$="[[visible]]" class="app page">
+
+    <spogpol-graphe
+    network="{{network}}"
+    db2populate="{{db2populate}}"
+    ></spogpol-graphe>
+
+    <paper-fab id="fabchat" on-tap="toggleChat"  label="😻"></paper-fab>
+  </li>-->
+  <li id="loginPage" hidden$="[[username]]" class="login page">
+    <div id="form" class="form">
+      <h3 class="title">Quel est votre pseudo?</h3>
+      <input id="usernameInput" class="usernameInput" type="text" on-change="setUsername" maxlength="14" />
+      <center>
+        <paper-fab id="fabEnter" on-tap="setUsername"  label="Go"></paper-fab>
+      </center>
+    </div>
+  </li>
+</ul>
+</template>
+
+<script>
+/**
+* `spog-chat`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpogChat extends Polymer.Element {
+  static get is() { return 'spog-chat'; }
+  static get properties() {
+    return {
+      socket: {
+        type: Object,
+        observer: "_socketChanged"
+      },
+      messages: {
+        type: Object,
+        value: [],
+      },
+      colors: {
+        type: Object,
+        value:  [
+          '#e21400', '#91580f', '#f8a700', '#f78b00',
+          '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
+          '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
+        ]
+      },
+      rooms: {
+        type: Array,
+        value: []
+      },
+      current_room: {
+        type: String,
+        value: ""
+      }
+    };
+  }
+
+  ready() {
+    super.ready();
+    this.$.usernameInput.focus();
+  }
+  _socketChanged(s){
+    //  console.log(s);
+    var app = this;
+    this.socket.on('login', function (data) {
+      app.log({username: "Spog", message:"Bonjour, je m'appelle Spog."});
+      app.log({username: "Spog", message:"Sur cette page, tu peux chatter avec les autres utilisateurs connectes."});
+      app.log({username: "Spog", message:"En cliquant sur le chat, en haut à droite, tu bascules sur le graphe."});
+      app.addParticipantsMessage(data);
+    });
+
+    this.socket.on('new message', function (data) {
+      app.addChatMessage(data);
+    });
+
+    // Whenever the server emits 'user joined', log it in the chat body
+    this.socket.on('user joined', function (data) {
+      app.log({username:"spog-system", message:data.username + ' joined'});
+      app.addParticipantsMessage(data);
+    });
+
+    // Whenever the server emits 'user left', log it in the chat body
+    this.socket.on('user left', function (data) {
+      app.log({username: "spog-system", message:data.username + ' left'});
+      app.addParticipantsMessage(data);
+      //  app.removeChatTyping(data);
+    });
+
+    // listener, whenever the server emits 'updatechat', this updates the chat body
+    this.socket.on('updatechat', function (username, data) {
+      app.$.conversation.append(username + ': ' + data);
+    });
+
+    // listener, whenever the server emits 'updaterooms', this updates the room the client is in
+    this.socket.on('updaterooms', function(rooms, current_room) {
+      console.log(rooms);
+      console.log(current_room);
+      //app.$.rooms.innerHTML=null;
+      app.rooms = [];
+      //  app.current_room=current_room;
+      /*$.each(rooms, function(key, value) {
+      if(value == current_room){
+      app.$.rooms.append('<div>' + value + '</div>');
+    }
+    else {
+    app.$.rooms.append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+  }
+});*/
+
+Object.keys(rooms).forEach(function (key) {
+  // do something with obj[key]
+  console.log(key +"->"+rooms[key]);
+  var room = {};
+  room.id = key;
+  room.name = rooms[key];
+
+  if(rooms[key] == current_room){
+    room.current = true;
+  } else{
+    room.current = false;
+  }
+  console.log(room);
+  app.push('rooms', room);
+});
+
+
+
+});
+
+
+}
+
+// Log a message
+log (message, options) {
+  //  console.log(message);
+  message.classe="log";
+  //  var $el = $('<li>').addClass('log').text(message);
+  this.addMessageElement(message, options);
+}
+
+addParticipantsMessage (data) {
+  //  var lastMessages = data.lastMessages;
+  //  console.log(lastMessages);
+  //  console.log(data);
+  var mess = {};
+  mess.username = "spog-system";
+  if (data.numUsers === 1) {
+    mess.message = "il y a 1 participant";
+  } else {
+    mess.message = "il y a " + data.numUsers + " participants";
+  }
+  //  console.log(mess);
+  this.log(mess);
+  /*  if(lastMessages != undefined){
+  //console.log(lastMessages);
+  lastMessages.forEach(function(mess) {
+  this.addChatMessage(mess);
+});
+}*/
+}
+
+
+// Sends a chat message
+sendMessage () {
+  var message = this.$.inputMessage.value;
+  //  console.log(message);
+  // Prevent markup from being injected into the message
+  //message = cleanInput(message);
+  //var retourCommande = catchCommande(message, network);
+
+  ///////////////////////////////////////////
+
+
+  //  var actionsToSendTemp = this.catchTripletMess(message);
+  /*  var actionsToSendTemp = thicatchTriplet(message, network);
+  console.log(actionsToSendTemp);
+  if ((actionsToSendTemp != undefined) && (actionsToSendTemp.length > 0)) {
+  actionsToSend = actionsToSend.concat(actionsToSendTemp);
+  console.log("send");
+  console.log(actionsToSend);
+  this.actionsToSend.push(action);
+}*/
+//Socket.addAction(message);
+/* attrappe les triplets depuis le chat
+//  var actionsToSendTemp = this.catchTripletMess(message);
+this.actionsToSend = this.actionsToSend.concat(actionsToSendTemp);
+*/
+
+//////////////////////////////////////////////////////////
+// if there is a non-empty message and a socket connection
+if (message && this.socket) {
+  this.$.inputMessage.value ='';
+  this.addChatMessage({
+    username: this.username,
+    message: message
+  });
+  // tell server to execute 'new message' and send along one parameter
+  this.socket.emit('new message', message);
+  /*
+  if (retourCommande && retourCommande.length>0 && connected){
+  $inputMessage.val('');
+  retourCommande.forEach(function(retour){
+  var mess = retour.id+" : "+retour.contenu;
+  addChatMessage({
+  username: "Spog",
+  message: mess
+});
+});
+}
+retourCommande = [];
+*/
+}
+}
+
+
+// Adds a message element to the messages and scrolls to the bottom
+// el - The element to add as a message
+// options.fade - If the element should fade-in (default = true)
+// options.prepend - If the element should prepend
+//   all other messages (default = false)
+addMessageElement (el, options) {
+  //var $el = $(el);
+  //  console.log(el);
+
+  // Setup default options
+  if (!options) {
+    options = {};
+  }
+  if (typeof options.fade === 'undefined') {
+    options.fade = true;
+  }
+  if (typeof options.prepend === 'undefined') {
+    options.prepend = false;
+  }
+
+  // Apply options
+  if (options.fade) {
+    //  console.log("fadein");//  $el.hide().fadeIn(FADE_TIME);
+  }
+  if (options.prepend) {
+    //  console.log("prepend");
+    //          $messages.prepend($el);
+  } else {
+    //  console.log("append");//        $messages.append($el);
+    this.push('messages', el);
+    //  console.log(this.messages);
+  }
+  //  console.log(this.$.messages.scrollHeight);
+  //  console.log(this.$.messages.scrollTop);
+  //setTimeout("Timer()",900);
+  //PB le dernier message est parfois caché GRRRRR ! sous Firefox, notmment
+  this.$.messages.scrollTop = this.$.messages.scrollHeight;
+  //console.log(this.$.messages.scrollTop);
+  //      $messages[0].scrollTop = $messages[0].scrollHeight;
+}
+
+
+// Adds the visual chat message to the message list
+addChatMessage (data, options) {
+  // Don't fade the message in if there is an 'X was typing'
+  //  var typingMessages = this.getTypingMessages(data);
+  options = options || {};
+  //  console.log(data);
+  var messageDiv = data;
+  messageDiv.color = "color:"+this.getUsernameColor(data.username);
+  this.addMessageElement(messageDiv, options);
+  /*  if (typingMessages.length !== 0) {
+  options.fade = false;
+  typingMessages.remove();
+}*/
+/*
+var usernameDiv = $('<span class="username"/>')
+.text(data.username)
+.css('color', this.getUsernameColor(data.username));
+var messageBodyDiv = $('<span class="messageBody">')
+.text(data.message);
+
+var typingClass = data.typing ? 'typing' : '';
+var messageDiv = $('<li class="message"/>')
+.data('username', data.username)
+.this.addClass(typingClass)
+.append(usernameDiv, messageBodyDiv);
+*/
+
+}
+
+// Gets the color of a username through our hash function
+getUsernameColor (username) {
+  // Compute hash code
+  var hash = 7;
+  for (var i = 0; i < username.length; i++) {
+    hash = username.charCodeAt(i) + (hash << 5) - hash;
+  }
+  // Calculate color
+  var index = Math.abs(hash % this.colors.length);
+  return this.colors[index];
+}
+toggleChat(){
+  this.visible = !this.visible && this.username;
+  console.log(this.visible);
+}
+
+setUsername(){
+  this.username = this.$.usernameInput.value.trim();
+  if (this.username) {
+    this.$.currentInput = this.$.inputMessage.focus();
+    // Tell the server your username
+    console.log(this.username);
+    this.socket.emit('add user', this.username);
+  }
+}
+
+_switchRoom(e){
+  //  console.log(e.target);
+  var room = e.target.getAttribute('roomName');
+  console.log(room);
+  this.socket.emit('switchRoom', room);
+}
+// when the client clicks SEND
+_datasend() {
+  var message = this.$.data.value;
+  console.log(message);
+  this.$.data.value='';
+  // tell server to execute 'sendchat' and send along one parameter
+  this.socket.emit('sendchat', message);
+}
+
+_openRoomDialog() {
+  this.$.createRoom.toggle();
+  this.$.inputRoomName.focus;
+}
+
+_roomCreate(){
+  var room = this.$.inputRoomName.value;
+  console.log(room);
+  this.$.inputRoomName.value = '';
+  this.socket.emit('switchRoom', room);
+  this.$.createRoom.toggle();
+}
+
+
+}
+
+window.customElements.define(SpogChat.is, SpogChat);
+</script>
+</dom-module>

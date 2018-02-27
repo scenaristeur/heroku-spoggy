@@ -10,15 +10,6 @@ var port = process.env.PORT || 3000;
 var useLevelgraph = true; //possibilite d'utiliser LevelGRAPH DB : opérationnel (stocké dans daossier data)
 var useFuseki = false; //possibilité d'utiliser un serveur fuseki sur http://127.0.0.1:3000
 
-var currentDb, graphs, currentGraph;
-var currentGraph = "graph0";
-
-// usernames which are currently connected to the chat
-var usernames = {};
-
-// rooms which are currently available in chat
-var rooms = ['room1','room2','room3'];
-
 
 if (useLevelgraph){
   ///////////////////////////////////////////////////////////
@@ -26,45 +17,36 @@ if (useLevelgraph){
   ///////////////////////////////////////////////////////////
   var Spog = require('./spog');
   var spog = new Spog(); // name, mode (n3 or null), demo or not
+  //var db = spog.db;
 
-  currentDb = spog.db;
-  graphs = currentDb.sublevels;
-  currentGraph = spog.graph0;
-  //var graph0 =  db.graph0;
-  //console.log(currentGraph);
-  /*var triple = {
-  subject: "graph0",
-  predicate: "type",
-  object: "Graphe",
-  type: "graph"
-};
-currentGraph.put(triple, function(err,data) {
-console.log(err);
-console.log(data);
-});
+  console.log(spog.graph0)
+var currentGraph = spog.graph0;
+  currentGraph.get({
+    reverse: true
+  }, function(err, list) {
+    console.log("restit list");
+      console.log(list);
+      console.log(err);
+    //socket.emit('initDb', list);
+  });
 
-triple = {
-subject: "graphAdmin",
-predicate: "type",
-object: "Graphe",
-type: "graph"
-};
-currentGraph.put(triple, function(err,data) {
-console.log(err);
-console.log(data);
-});*/
 
-///////////////////////////////////////////////////////////
-// structure d'un noeud stocké dans la base LEVELGRAPH
-// un noeud possede un id, le predicat "label" et son label + un type noeud
-// c'est un triplet sujet, predicat, objet, avec une quatrième valeur, levelgraph permet de le faire
-// var triple = { subject: data.id, predicate: "label", object: data.label , type: "node"};
-//
-//un lien entre deux noeuds est definit dans la base par trois triplets :
-//var tripleLabel = { subject: edge.id, predicate: "label", object: edge.label };
-//var tripleFrom = { subject: edge.id, predicate: "from", object: edge.from };
-//var tripleTo = { subject: edge.id, predicate: "to", object: edge.to };
-///////////////////////////////////////////////////////////
+//  var graph0 = spog.graph0;
+
+
+  //console.log(db)
+  //  console.log(graph0)
+  ///////////////////////////////////////////////////////////
+  // structure d'un noeud stocké dans la base LEVELGRAPH
+  // un noeud possede un id, le predicat "label" et son label + un type noeud
+  // c'est un triplet sujet, predicat, objet, avec une quatrième valeur, levelgraph permet de le faire
+  // var triple = { subject: data.id, predicate: "label", object: data.label , type: "node"};
+  //
+  //un lien entre deux noeuds est definit dans la base par trois triplets :
+  //var tripleLabel = { subject: edge.id, predicate: "label", object: edge.label };
+  //var tripleFrom = { subject: edge.id, predicate: "from", object: edge.from };
+  //var tripleTo = { subject: edge.id, predicate: "to", object: edge.to };
+  ///////////////////////////////////////////////////////////
 }
 
 if (useFuseki){
@@ -106,6 +88,8 @@ tickInterval = setInterval(function() {
   //A intervalles réguliers, on envoie à tout utilisateur connecté, un snapshot des dernières modifications et on réinitialise les actions stockées dans le snapshot
   //  console.log("tick");
   //  console.log(snapshot);
+
+
   if(snapshot.actions.length >0){
     updateSnapshot();
     console.log("tock");
@@ -137,6 +121,16 @@ io.on('connection', function (socket) {
   console.log("connection");
   var addedUser = false;
 
+/*
+  currentGraph.get({
+    reverse: true
+  }, function(err, list) {
+    console.log("0 list");
+      console.log(list);
+      console.log(err);
+    //socket.emit('initDb', list);
+  });*/
+
   // when the client emits 'new message', this listens and executes
   socket.on('new message', function (data) {
     console.log("new message");
@@ -155,22 +149,6 @@ io.on('connection', function (socket) {
 
     // we store the username in the socket session for this client
     socket.username = username;
-
-    //GESTION MULTIROOM
-    // store the room name in the socket session for this client
-    socket.room = 'room1';
-    // add the client's username to the global list
-    usernames[username] = username;
-    // send client to room 1
-    socket.join('room1');
-    // echo to client they've connected
-    socket.emit('updatechat', 'SERVER', 'you have connected to room1');
-    // echo to room 1 that a person has connected to their room
-    socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
-    socket.emit('updaterooms', rooms, 'room1');
-
-    // FIN GESTION MULTIROOM
-
     ++numUsers;
     addedUser = true;
     socket.emit('login', {
@@ -183,8 +161,7 @@ io.on('connection', function (socket) {
     });
     console.log(socket.username+" joined");
 
-    //  initDb(socket);
-    initGraphs(socket);
+    initDb(socket);
 
   });
 
@@ -223,41 +200,9 @@ io.on('connection', function (socket) {
     });
   });
 
-  // when the client emits 'sendchat', this listens and executes
-  socket.on('sendchat', function (data) {
-    // we tell the client to execute 'updatechat' with 2 parameters
-    io.sockets.in(socket.room).emit('updatechat', socket.username, data);
-  });
-
-  socket.on('switchRoom', function(newroom){
-    // leave the current room (stored in session)
-    console.log(newroom);
-    rooms.indexOf(newroom) === -1 ? rooms.push(newroom) : console.log("This item already exists");
-    socket.leave(socket.room);
-    // join new room, received as function parameter
-    socket.join(newroom);
-    socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
-    // sent message to OLD room
-    socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
-    // update socket session room title
-    socket.room = newroom;
-    socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
-    console.log(rooms);
-    socket.emit('updaterooms', rooms, newroom);
-    socket.broadcast.emit('updaterooms', rooms );
-  });
-
   // when the user disconnects.. perform this
   socket.on('disconnect', function () {
     console.log("disconnect");
-    // remove the username from global usernames list
-    delete usernames[socket.username];
-    // update list of users in chat, client-side
-    io.sockets.emit('updateusers', usernames);
-    // echo globally that this client has left
-    socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
-    socket.leave(socket.room);
-
     if (addedUser) {
       --numUsers;
 
@@ -270,16 +215,6 @@ io.on('connection', function (socket) {
     }
   });
 
-  socket.on("changeGraph", function(name){
-    console.log("CHANGE GRAPH "+name);
-    //cherche si le graph existe, si oui le renvoyer, sinon le créer
-    if (!spog.graphs.includes(name)){
-      spog.createGraph(name);
-    }
-    console.log(spog.graphs);
-    console.log(spog.graphs.includes(name));
-    currentGraph = name;
-  });
   // de nouvelles actions à executer sont reçues d'un client
   socket.on('newActions', function(actions) {
     //console.log("newActions");
@@ -296,169 +231,149 @@ io.on('connection', function (socket) {
         console.log("newNode");
         var data = action.data;
         console.log(data);
+        //si newNode mais qu'il existe, c'est un renommage  donc on regarde s'il existe dans la base
+        var triple = {
+          subject: data.id,
+          predicate: "label",
+          object: data.label,
+          type: "node"
+        };
         var triples = [];
-        // si data.type == "graph" on créé un nouveau graphe
-        /*    if (data.type == "graph"){
-        console.log("CREATION d'un graphe");
-        spog.createGraph(data.id);
-        console.log(spog.graphs);
-        var tripleGraph = {
-        subject: data.id,
-        predicate: "type",
-        object: "Graph",
-        type: "edge"
-      };
-
-      triples.push(tripleGraph);
-      updateGraphs(socket);
-    }*/
-
-
-
-    //si newNode mais qu'il existe, c'est un renommage  donc on regarde s'il existe dans la base
-    var triple = {
-      subject: data.id,
-      predicate: "label",
-      object: data.label,
-      type: data.type
-    };
-
-    triples.push(triple);
-    if(data.shape != undefined){
-      var tripleShape = {
-        subject: data.id,
-        predicate: "shape",
-        object: data.shape,
-        type: "shape"
-      };
-      triples.push(tripleShape);
-    }
-    if (data.color != undefined){
-      var tripleColor = {
-        subject: data.id,
-        predicate: "color",
-        object: data.color,
-        type: "color"
-      };
-      triples.push(tripleColor);
-    }
-    console.log(triples);
-    currentGraph.get({
-      subject: data.id,
-      /*          predicate: "label",
-      object: data.label,*/
-    }, function(err, list) {
-      if (list.length == 0) {
-        //console.log("ajoute");
-        currentGraph.put(triples, function(err) {
-          console.log("added");
-        });
-      } else {
-        // si le noeud existe, on le supprime et le recréé avec les nouvelles valeurs, c'est la méthode pour modifier
-        currentGraph.del(list, function(err, deleted) {
-          console.log("deleted");
-        });
-        currentGraph.put(triples, function(err, putted) {
-          console.log("added");
-        });
-      }
-    });
-    break;
-    case "deleteNode":
-    var nodeId = action.data.nodes;
-    var edges = action.data.edges;
-    currentGraph.get({
-      subject: nodeId
-    }, function(err, list) {
-      currentGraph.del(list, function(err, deleted) {});
-    });
-    // PAS CERTAIN QUE LES LIENS SOIENT BIEN SUPPRIMES DU GRAPHE lorsque l'on supprime un noeud, A REVOIR
-    edges.forEach(function(edgeId) {
-      currentGraph.get({
-        subject: edgeId
-      }, function(err, list) {
-        console.log("3 list");
-        currentGraph.del(list, function(err, deleted) {});
-      });
-    });
-    break;
-    case "newEdge":
-    console.log(action);
-    //maj de la base
-    var edge = action.data[0] || action.data;
-    if (edge != undefined) {
-      currentGraph.get({
-        subject: edge.id
-      }, function(err, list) {
-        if (list.length == 0) {
-          var tripleLabel = {
-            subject: edge.id,
-            predicate: "label",
-            object: edge.label
+        triples.push(triple);
+        if(data.shape != undefined){
+          var tripleShape = {
+            subject: data.id,
+            predicate: "shape",
+            object: data.shape,
+            type: "shape"
           };
-          var tripleFrom = {
-            subject: edge.id,
-            predicate: "from",
-            object: edge.from
+          triples.push(tripleShape);
+        }
+        if (data.color != undefined){
+          var tripleColor = {
+            subject: data.id,
+            predicate: "color",
+            object: data.color,
+            type: "color"
           };
-          var tripleTo = {
-            subject: edge.id,
-            predicate: "to",
-            object: edge.to
-          };
-          currentGraph.put([tripleLabel, tripleFrom, tripleTo], function(err) {
-            console.log("added");
-          });
-        } else {
-          var tripleLabel = {
-            subject: edge.id,
-            predicate: "label",
-            object: edge.label
-          };
-          currentGraph.get({
-            subject: edge.id,
-            predicate: "label"
-          }, function(err, listLabel) {
-            currentGraph.del(listLabel[0], function(err, deleted) {
-              console.log("deleted");
-            });
-            currentGraph.put(tripleLabel, function(err, putted) {
+          triples.push(tripleColor);
+        }
+        console.log(triples);
+        currentGraph.get({
+          subject: data.id,
+          predicate: "label",
+          type: "node"
+        }, function(err, list) {
+          if (list.length == 0) {
+            //console.log("ajoute");
+            currentGraph.put(triples, function(err) {
               console.log("added");
             });
+          } else {
+            // si le noeud existe, on le supprime et le recréé avec les nouvelles valeurs, c'est la méthode pour modifier
+            currentGraph.del(list[0], function(err, deleted) {
+              console.log("deleted");
+            });
+            currentGraph.put(triples, function(err, putted) {
+              console.log("added");
+            });
+          }
+        });
+        break;
+        case "deleteNode":
+        var nodeId = action.data.nodes;
+        var edges = action.data.edges;
+        currentGraph.get({
+          subject: nodeId
+        }, function(err, list) {
+          currentGraph.del(list, function(err, deleted) {});
+        });
+        edges.forEach(function(edgeId) {
+          currentGraph.get({
+            subject: edgeId
+          }, function(err, list) {
+            console.log("3 list");
+            currentGraph.del(list, function(err, deleted) {});
           });
+        });
+        break;
+        case "newEdge":
+        console.log(action);
+        //maj de la base
+        var edge = action.data[0] || action.data;
+        if (edge != undefined) {
+          currentGraph.get({
+            subject: edge.id
+          }, function(err, list) {
+            if (list.length == 0) {
+              var tripleLabel = {
+                subject: edge.id,
+                predicate: "label",
+                object: edge.label
+              };
+              var tripleFrom = {
+                subject: edge.id,
+                predicate: "from",
+                object: edge.from
+              };
+              var tripleTo = {
+                subject: edge.id,
+                predicate: "to",
+                object: edge.to
+              };
+              currentGraph.put([tripleLabel, tripleFrom, tripleTo], function(err) {
+                console.log("added");
+              });
+            } else {
+              var tripleLabel = {
+                subject: edge.id,
+                predicate: "label",
+                object: edge.label
+              };
+              currentGraph.get({
+                subject: edge.id,
+                predicate: "label"
+              }, function(err, listLabel) {
+                currentGraph.del(listLabel[0], function(err, deleted) {
+                  console.log("deleted");
+                });
+                currentGraph.put(tripleLabel, function(err, putted) {
+                  console.log("added");
+                });
+              });
+            }
+          });
+        } else {
+          console.log("pb pour creer le edge, quel id ?")
         }
-      });
-    } else {
-      console.log("pb pour creer le edge, quel id ?")
-    }
-    break;
-    case "editEdge":
-    //non utilisé , regroupé avec newEdge
-    console.log(action);
-    break;
-    case "deleteEdge":
-    console.log(action);
-    var edgeId = action.data.edges[0];
-    console.log(edgeId);
-    currentGraph.get({
-      subject: edgeId
-    }, function(err, list) {
-      console.log(" 4 list");
-      currentGraph.del(list, function(err, deleted) {
-        console.log("deleted");
-      });
+        break;
+        case "editEdge":
+        //non utilisé , regroupé avec newEdge
+        console.log(action);
+        break;
+        case "deleteEdge":
+        console.log(action);
+        var edgeId = action.data.edges[0];
+        console.log(edgeId);
+        currentGraph.get({
+          subject: edgeId
+        }, function(err, list) {
+          console.log(" 4 list");
+          currentGraph.del(list, function(err, deleted) {
+            console.log("deleted");
+          });
+        });
+        break;
+        default:
+        console.log("action non reconnue");
+        console.log(action);
+      }
     });
-    break;
-    default:
-    console.log("action non reconnue");
-    console.log(action);
-  }
-});
-});
+  });
 
 
 
-//});
+  //});
 
 
 
@@ -471,78 +386,35 @@ function zeCallback(socket, initFuz){
 
 }
 
-function initGraphs(socket){
+function initDb(socket){
+  // initialisation avec base levelgraph
   if(useLevelgraph){
-    console.log("LEVELGRAPH + SUBLEVEL");
-    console.log(socket.currentGraph);
-    //  socket.emit('initDb', currentDb.graphs);
-    currentGraph.get({
-      reverse: true,
-      limit: limitInit
-    }, function(err, list) {
-      console.log("1list");
-      console.log(list);
-      if (list != undefined){
-      socket.emit('initDb', list);
+    console.log("LEVELGRAPH");
+    if (limitInit > 0) {
+      currentGraph.get({
+        reverse: true,
+        limit: limitInit
+      }, function(err, list) {
+        console.log("1list");
+          console.log(list);
+        socket.emit('initDb', list);
+      });
+    } else {
+      currentGraph.get({
+        reverse: true
+      }, function(err, list) {
+        console.log("2 list");
+          console.log(list);
+        socket.emit('initDb', list);
+      });
     }
-    });
+  }else if(useFuseki){
+    console.log("FUSEKI");
+    //sendFusekiInit(socket, zeCallback);
+    var initFuz = sparql.getCentPremiers(socket, zeCallback);
+
   }
 }
-
-function updateGraphs(socket){
-  currentGraph.get({
-    /*subject: data.id,*/
-    predicate: "type",
-    object: "Graph",
-  }, function(err, list) {
-    if (list.length == 0) {
-      //console.log("ajoute");
-      //  currentGraph.put(triples, function(err) {
-      console.log("pas de liste de graphs");
-      //});
-    } else {
-      console.log(" liste de graphs");
-      console.log(list);
-      socket.emit('initDb', list);
-      // si le noeud existe, on le supprime et le recréé avec les nouvelles valeurs, c'est la méthode pour modifier
-      /*  currentGraph.del(list, function(err, deleted) {
-      console.log("deleted");
-    });
-    currentGraph.put(triples, function(err, putted) {
-    console.log("added");
-  });*/
-}
-});
-}
-
-/*
-function initDb(socket){
-// initialisation avec base levelgraph
-if(useLevelgraph){
-console.log("LEVELGRAPH");
-if (limitInit > 0) {
-db.get({
-reverse: true,
-limit: limitInit
-}, function(err, list) {
-console.log("1list");
-socket.emit('initDb', list);
-});
-} else {
-db.get({
-reverse: true
-}, function(err, list) {
-console.log("2 list");
-socket.emit('initDb', list);
-});
-}
-}else if(useFuseki){
-console.log("FUSEKI");
-//sendFusekiInit(socket, zeCallback);
-var initFuz = sparql.getCentPremiers(socket, zeCallback);
-
-}
-}*/
 
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////

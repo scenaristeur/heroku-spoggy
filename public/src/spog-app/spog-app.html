@@ -1,0 +1,108 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../spog-socket/spog-socket.html">
+<link rel="import" href="../spog-chat/spog-chat.html">
+<link rel="import" href="../spog-graphe/spog-graphe.html">
+<link rel="import" href="../spog-sparql/spog-sparql.html">
+
+<dom-module id="spog-app">
+  <template>
+  <style>
+  #fabchat {
+    position: fixed;
+    right: 25px;
+    top: 25px;
+  }
+  </style>
+  <div hidden$="[[connected]]">[[status]]</div>
+
+  <spog-socket socket="{{socket}}" status="{{status}}"></spog-socket>
+  <spog-chat  id="chat" hidden$="[[!visibleChat]]"  socket="[[socket]]" status="[[status]]" ></spog-chat>
+  <spog-graphe  hidden$="[[visibleChat]]"  socket="[[socket]]" status="[[status]]" actionstosend="{{actionstosend}}" params="{{params}}"></spog-graphe>
+  <paper-fab id="fabchat" on-tap="toggleChat"  label="😻"></paper-fab>
+<spog-sparql fusekiresults="{{fusekiresults}}"></spog-sparql>
+
+</template>
+
+<script>
+/**
+* @customElement
+* @polymer
+*/
+class SpogApp extends Polymer.Element {
+  static get is() { return 'spog-app'; }
+  static get properties() {
+    return {
+      socket: {
+        type: Object
+      },
+      status:{
+        type: String,
+        observer: '_consoleStatus'
+      },
+      connected:{
+        type: Boolean,
+      },
+      tickDelay: {
+        type: Number,
+        value: 1000       // 15ms selon source, tempo pour envoi du snapshot par le serveur pour un jeu
+      },
+      visibleChat: {
+        type: Boolean,
+        value : true
+      },
+      actionstosend: {
+        type: Array,
+        value:[]
+      },
+      visibleIcon: {
+        type: Boolean,
+        value : false
+      },
+      fusekiresults: {
+        type: Array,
+        observer: '_fusekiresultsChanged'
+      },
+    };
+  }
+
+  ready() {
+    super.ready();
+    var app=this;
+
+    var tickInterval = setInterval(function() {
+      if (app.connected){
+      //  console.log("tick spog-app");
+        if (app.actionstosend.length > 0) {
+          console.log(app.actionstosend);
+          app.socket.emit('newActions', app.actionstosend);
+          app.actionstosend = [];
+        }}
+      }, this.tickDelay);
+    }
+    _consoleStatus(newValue, oldValue){
+      console.log(oldValue +" -> "+ newValue);
+      if(newValue =="connected"){
+        this.connected = true;
+      }else{
+        this.connected = false;
+      }
+    }
+    _fusekiresultsChanged(newValue, oldValue){
+      console.log(newValue);
+
+    }
+
+
+    toggleChat(){
+      this.visibleChat = !this.visibleChat;
+    }
+
+
+  }
+
+  window.customElements.define(SpogApp.is, SpogApp);
+  </script>
+</dom-module>

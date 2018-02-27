@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="spoggy-liste">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-liste`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyListe extends Polymer.Element {
+      static get is() { return 'spoggy-liste'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-liste'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyListe.is, SpoggyListe);
+  </script>
+</dom-module>

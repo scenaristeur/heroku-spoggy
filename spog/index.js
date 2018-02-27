@@ -1,40 +1,38 @@
-//https://github.com/levelgraph/levelgraph
-var level = require("level");
-var sublevel = require("level-sublevel");
-var levelgraph = require("levelgraph");
+var LevelUp = require('levelup'),
+LevelDown = require('leveldown'),
+    Sublevel = require('level-sublevel'),
+    LevelGraph = require('levelgraph');
+
 
 
 function spog(name, mode, demo) { // name,  demo or not, n3 or not,
   this.dbName = name || "smagBoose";
-  this.graphs = [];
-  //this.db = levelgraph(level("data/"+this.dbName));
-  this.db = sublevel(level("data/"+this.dbName));
-  this.graph0 = this.createGraph('graph0');
- this.createGraph('graphAdmin');
 
-//  this.populate(this.graph0);
-  //this.graph0 = this.graphs[0];
-  //  console.log(this.graphs);
-  /*this.graph0 = levelgraph(this.db.sublevel('graph0'));
-  console.log(this.graph0);*/
+  this.db = Sublevel(LevelUp(LevelDown("data/"+this.dbName)));
+  this.graph0 = LevelGraph(this.db.sublevel('graph0'));
+
+
+  var triple = { subject: "a", predicate: "b", object: "c" };
+  this.graph0.put(triple, function(err) {
+    // do something after the triple is inserted
+  });
+
+
+  this.graph0.get({ subject: "a" }, function(err, list) {
+    console.log(list);
+  });
+
+  var stream = this.graph0.getStream({ predicate: "b" });
+  stream.on("data", function(data) {
+    console.log(data);
+  });
+
+  this.populate(this.graph0)
+
 }
 
-spog.prototype.createGraph =function(name){
-  var graph = levelgraph(this.db.sublevel(name));
-  this.graphs.push(name);
-return graph;
-}
-
-spog.prototype.foo = function () {
-  // whatever
-  console.log("fou");
-}
-
-spog.prototype.getName = function () {
-  // whatever
-  return this.dbName;
-}
 spog.prototype.populate = function (graph) {
+  var g = graph;
   var t1 = { subject: "David", predicate: "type", object: "SpogUser" };
   var t2 = { subject: "Smag0", predicate: "type", object: "Projet" };
   var t3 = { subject: "SmagYun", predicate: "type", object: "Projet" };
@@ -47,86 +45,17 @@ spog.prototype.populate = function (graph) {
   graph.put([t1, t2, t3, t4, t5, t6, t7],  function(err) {
     // do something after the triples are inserted
     console.log("le graphe est populaté ;-)");
+    console.log(g);
+    g.get({
+      reverse: true
+    }, function(err, list) {
+      console.log("populate list");
+        console.log(list);
+        console.log(err);
+      //socket.emit('initDb', list);
+    });
+
   });
 }
 
-
-
-
-
 module.exports = spog;
-/*
-//https://github.com/levelgraph/levelgraph
-var level = require("level-browserify");
-var levelgraph = require("levelgraph");
-//var levelgraphN3 = levelgraphN3 = require('levelgraph-n3'); pour Import / Export Turtle
-
-// just use this in the browser with the provided bundle
-var db = levelgraph(level("data/testyourdb"));
-
-//console.log(db);
-
-//Inserting a triple in the database is extremely easy:
-
-var triple = { subject: "David", predicate: "type", object: "Personne" };
-db.put(triple, function(err) {
-console.log("0, triplet ajouté");
-// do something after the triple is inserted
-});
-
-var triple = { subject: "David", predicate: "developpeurDe", object: "Smag0", "graphe": "Projet" };
-db.put(triple, function() {
-db.get({ subject: "David" }, function(err, list) {
-console.log("1");
-console.log(list);
-});
-});
-
-//Retrieving it through pattern-matching is extremely easy:
-
-db.get({ subject: "David" }, function(err, list) {
-console.log("2");
-console.log(list);
-});
-
-
-db.get({ predicate: "type", object:"Personne" }, function(err, list) {
-console.log("3");
-console.log(list);
-});
-
-//It even supports a Stream interface:
-
-var stream = db.getStream({ predicate: "b" });
-stream.on("data", function(data) {
-console.log("4");
-console.log(data);
-});
-
-
-db.get({ subject: "a" }, function(err, list) {
-console.log("5");
-console.log(list);
-
-});
-*/
-
-/* this.db = levelgraphN3(levelgraph(level("data/"+this.dbName)));
-
-console.log(this.db);
-var turtleIn = "@prefix c: <http://example.org/cartoons#>.\n" +
-"c:Tom a c:Cat.\n" +
-"c:Jerry a c:Mouse;\n" +
-"        c:smarterThan c:Tom;\n" +
-"        c:place \"fantasy\".";
-
-this.db.n3.put(turtleIn, function(err) {
-// do something after the triple is inserted
-
-});
-
-this.db.n3.get({ subject: "http://example.org/cartoons#Tom" }, function(err, turtle) {
-// turtle is "<http://example.org/cartoons#Tom> a <http://example.org/cartoons#Cat> .\n";
-console.log(turtle);
-});
-*/
