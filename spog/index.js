@@ -11,7 +11,7 @@ function spog(name, mode, demo) { // name,  demo or not, n3 or not,
   this.db = Sublevel(LevelUp(LevelDown("data/"+this.dbName)));
   this.graph0 = LevelGraph(this.db.sublevel('graph0'));
 
-
+/*
   var triple = { subject: "a", predicate: "b", object: "c" };
   this.graph0.put(triple, function(err) {
     // do something after the triple is inserted
@@ -27,7 +27,7 @@ function spog(name, mode, demo) { // name,  demo or not, n3 or not,
     console.log(data);
   });
 
-  this.populate(this.graph0)
+  this.populate(this.graph0)*/
 
 }
 

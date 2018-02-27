@@ -21,14 +21,14 @@ if (useLevelgraph){
 
   console.log(spog.graph0)
 var currentGraph = spog.graph0;
-  currentGraph.get({
+  /*currentGraph.get({
     reverse: true
   }, function(err, list) {
     console.log("restit list");
       console.log(list);
       console.log(err);
     //socket.emit('initDb', list);
-  });
+  });*/
 
 
 //  var graph0 = spog.graph0;
