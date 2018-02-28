@@ -27,276 +27,276 @@ A COMPLETER AVEC  DANS LIB  : IMPORT / EXPORT, COMMANDES -->
 
 <dom-module id="spog-graphe">
   <template>
-  <style include="graphe-styles"></style>
-  <style include="vis-styles"></style>
-  <style>
-  #fabsetting {
-    position: fixed;
-    right: 25px;
-    top: 100px;
-  }
-  #fabEye {
-    position: fixed;
-    right: 25px;
-    top: 175px;
-  }
-  paper-button{background-color:#0D578B;color:white}
-  </style>
+    <style include="graphe-styles"></style>
+    <style include="vis-styles"></style>
+    <style>
+    #fabsetting {
+      position: fixed;
+      right: 25px;
+      top: 100px;
+    }
+    #fabEye {
+      position: fixed;
+      right: 25px;
+      top: 175px;
+    }
+    paper-button{background-color:#0D578B;color:white}
+    </style>
 
-  <div hidden$="{{eyehidden}}">
-    <spog-eye id="eye" data="{{eyedata}}" infered="{{infered}}"></spog-eye>
-  </div>
+    <div hidden$="{{eyehidden}}">
+      <spog-eye id="eye" data="{{eyedata}}" infered="{{infered}}"></spog-eye>
+    </div>
 
-  <paper-dialog id="popupTtl">
-    <h3>Export ttl <paper-button ontap="_pageAide">?</paper-button><paper-button dialog-dismiss raised>X</paper-button></h3>
+    <paper-dialog id="popupTtl">
+      <h3>Export ttl <paper-button ontap="_pageAide">?</paper-button><paper-button dialog-dismiss raised>X</paper-button></h3>
 
-    <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-    <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
-    <paper-dialog-scrollable>
-      <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
-    </paper-dialog-scrollable>
-  </paper-dialog>
-
-
-
-  <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
-
-    <div horizontal start-justified start layout >
-
-      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-      <div style="padding-left:20px" vertical start-justified start layout wrap>
-
-        <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
-        <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
-        <p>
-          <paper-input id="nodeLabel" label="Nom du noeud"></paper-input>
-          <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
-        </p>
+      <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+      <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
+      <paper-dialog-scrollable>
+        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
+      </paper-dialog-scrollable>
+    </paper-dialog>
 
 
-        <iron-collapse-button>
-          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
-          <div slot="collapse-content">
-            <fieldset>
-              <legend>Forme</legend>
-              <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
-                <div>Label interne</div>
-                <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
-                <paper-checkbox name="circle">Cercle</paper-checkbox>
-                <paper-checkbox name="database">Database</paper-checkbox>
-                <paper-checkbox name="box">Box</paper-checkbox>
-                <paper-checkbox name="text">Texte</paper-checkbox>
-                <hr>
-                <div>Label externe</div>
-                <paper-checkbox name="diamond">Diamant</paper-checkbox>
-                <paper-checkbox name="star">Etoile</paper-checkbox>
-                <paper-checkbox name="triangle">Triangle</paper-checkbox>
-                <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
-                <paper-checkbox name="square">Carré</paper-checkbox>
-                <!--          <paper-checkbox name="image" disabled>Image</paper-checkbox>
-                <paper-checkbox name="circularImage" disabled>Image Cercle</paper-checkbox>
-                <paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
-              </iron-selector>
-            </fieldset>
+
+    <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
+
+      <div horizontal start-justified start layout >
+
+        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+
+          <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
+          <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
+          <p>
+            <paper-input id="nodeLabel" label="Nom du noeud"></paper-input>
+            <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
+          </p>
+
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
+            <div slot="collapse-content">
+              <fieldset>
+                <legend>Forme</legend>
+                <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
+                  <div>Label interne</div>
+                  <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
+                  <paper-checkbox name="circle">Cercle</paper-checkbox>
+                  <paper-checkbox name="database">Database</paper-checkbox>
+                  <paper-checkbox name="box">Box</paper-checkbox>
+                  <paper-checkbox name="text">Texte</paper-checkbox>
+                  <hr>
+                  <div>Label externe</div>
+                  <paper-checkbox name="diamond">Diamant</paper-checkbox>
+                  <paper-checkbox name="star">Etoile</paper-checkbox>
+                  <paper-checkbox name="triangle">Triangle</paper-checkbox>
+                  <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
+                  <paper-checkbox name="square">Carré</paper-checkbox>
+                  <!--          <paper-checkbox name="image" disabled>Image</paper-checkbox>
+                  <paper-checkbox name="circularImage" disabled>Image Cercle</paper-checkbox>
+                  <paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
+                </iron-selector>
+              </fieldset>
+            </div>
+          </iron-collapse-button>
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
+            <div slot="collapse-content">
+              <fieldset>
+                <legend>Couleur</legend>
+                <color-picker  id="colorpicker" native value="{{colorValue}}" css-value="{{cssValue}}" alpha="{{alpha}}" position="right"></color-picker>
+                <div class="horizontal-section-container result">
+                  <div><code>hex</code>: <b>[[colorValue]]</b></div>
+                  <div><code>alpha</code>: <b>[[alpha]]</b></div>
+                  <div><code>css-value</code>: <b>[[cssValue]]</b></div>
+                </div>
+              </fieldset>
+            </div>
+          </iron-collapse-button>
+
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
+            <div slot="collapse-content">
+              (developpements en cours)
+              <fieldset>
+                <legend>Type</legend>
+                <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
+                  <paper-checkbox name="node">Node</paper-checkbox>
+                  <paper-checkbox name="url">Url</paper-checkbox>
+                  <paper-checkbox name="graph">Graphe</paper-checkbox>
+                  <paper-checkbox name="source">Source</paper-checkbox>
+                </iron-selector>
+              </fieldset>
+            </div>
+          </iron-collapse-button>
+
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button id="nodeSaveButton" raised>ok</paper-button>
+            <paper-button id="nodeCancelButton" raised>Annuler</paper-button>
           </div>
-        </iron-collapse-button>
-
-        <iron-collapse-button>
-          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
-          <div slot="collapse-content">
-            <fieldset>
-              <legend>Couleur</legend>
-              <color-picker  id="colorpicker" native value="{{colorValue}}" css-value="{{cssValue}}" alpha="{{alpha}}" position="right"></color-picker>
-              <div class="horizontal-section-container result">
-                <div><code>hex</code>: <b>[[colorValue]]</b></div>
-                <div><code>alpha</code>: <b>[[alpha]]</b></div>
-                <div><code>css-value</code>: <b>[[cssValue]]</b></div>
-              </div>
-            </fieldset>
-          </div>
-        </iron-collapse-button>
-
-
-        <iron-collapse-button>
-          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
-          <div slot="collapse-content">
-            (developpements en cours)
-            <fieldset>
-              <legend>Type</legend>
-              <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
-                <paper-checkbox name="node">Node</paper-checkbox>
-                <paper-checkbox name="url">Url</paper-checkbox>
-                <paper-checkbox name="graph">Graphe</paper-checkbox>
-                <paper-checkbox name="source">Source</paper-checkbox>
-              </iron-selector>
-            </fieldset>
-          </div>
-        </iron-collapse-button>
-
-        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-          <paper-button id="nodeSaveButton" raised>ok</paper-button>
-          <paper-button id="nodeCancelButton" raised>Annuler</paper-button>
         </div>
       </div>
-    </div>
-  </paper-dialog>
+    </paper-dialog>
 
 
-  <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
-    <div horizontal start-justified start layout >
-      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-      <div style="padding-left:20px" vertical start-justified start layout wrap>
-        <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
-        <p >  <paper-input id="edgeLabel" label="Nom du lien"></paper-input></p>
-        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-          <paper-button id="edgeSaveButton" raised>ok</paper-button>
-          <paper-button id="edgeCancelButton" raised>Annuler</paper-button>
+    <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
+      <div horizontal start-justified start layout >
+        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
+          <p >  <paper-input id="edgeLabel" label="Nom du lien"></paper-input></p>
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button id="edgeSaveButton" raised>ok</paper-button>
+            <paper-button id="edgeCancelButton" raised>Annuler</paper-button>
+          </div>
         </div>
       </div>
-    </div>
-  </paper-dialog>
+    </paper-dialog>
 
-  <paper-dialog id="importPopUp" backdrop transition="core-transition-bottom">
-    <div horizontal start-justified start layout >
-      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-      <div style="padding-left:20px" vertical start-justified start layout wrap>
-        <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
-        <p >
-          <fieldset>
-            <legend>Paramètres</legend>
-            <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
-            <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
-          </fieldset>
-        </p>
-        <p>
-          <fieldset>
-            <legend>Fichier</legend>
-            <input id="filepicker" type="file" multiple value="Importer"></input>
-          </fieldset>
-        </p>
-        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-          <paper-button id="importCancelButton" on-tap="_closeImportPopUp" raised>Annuler</paper-button>
+    <paper-dialog id="importPopUp" backdrop transition="core-transition-bottom">
+      <div horizontal start-justified start layout >
+        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+          <p >
+            <fieldset>
+              <legend>Paramètres</legend>
+              <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+              <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
+            </fieldset>
+          </p>
+          <p>
+            <fieldset>
+              <legend>Fichier</legend>
+              <input id="filepicker" type="file" multiple value="Importer"></input>
+            </fieldset>
+          </p>
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button id="importCancelButton" on-tap="_closeImportPopUp" raised>Annuler</paper-button>
+          </div>
         </div>
       </div>
-    </div>
-  </paper-dialog>
+    </paper-dialog>
 
 
-  <div id="settings" hidden$="{{settinghidden}}">
-    <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
-      Gravité   <paper-slider  min="0" max="0.01" value="{{gravityValue}}" step="0.001" on-change="_changeGravity" ></paper-slider>
-      Longueur des liens     <paper-slider  min="10" max="800" value="{{springLengthValue}}"  on-change="_changeSpringLength"></paper-slider>
-      Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" on-change="_changeSpringConstant"></paper-slider>
-      Distance entre deux noeuds     <paper-slider  min="10" max="800" value="{{nodeDistanceValue}}"  on-change="_changeNodeDistance"></paper-slider>
-      Souplesse           <paper-slider  min="0.01" max="2" value="{{dampingValue}}"  step="0.01" on-change="_changeDamping"></paper-slider>
-      <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
-      <br><br>
+    <div id="settings" hidden$="{{settinghidden}}">
+      <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
+        Gravité   <paper-slider  min="0" max="0.01" value="{{gravityValue}}" step="0.001" on-change="_changeGravity" ></paper-slider>
+        Longueur des liens     <paper-slider  min="10" max="800" value="{{springLengthValue}}"  on-change="_changeSpringLength"></paper-slider>
+        Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" on-change="_changeSpringConstant"></paper-slider>
+        Distance entre deux noeuds     <paper-slider  min="10" max="800" value="{{nodeDistanceValue}}"  on-change="_changeNodeDistance"></paper-slider>
+        Souplesse           <paper-slider  min="0.01" max="2" value="{{dampingValue}}"  step="0.01" on-change="_changeDamping"></paper-slider>
+        <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
+        <br><br>
+      </div>
+      <div>
+        <!--<spog-source></spog-source>-->
+      </div>
     </div>
-    <div>
-      <!--<spog-source></spog-source>-->
-    </div>
-  </div>
-  <div id="mynetwork"></div>
-  <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
-  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
-  <input id="inputMessage" class="inputMessage" on-change="traiteMessage" placeholder="Tapez votre triplet ici, précédé de '::' ou une commande : '/e' pour exporter, '/t' pour exporter au format .ttl, '/i' pour importer" />
-</template>
+    <div id="mynetwork"></div>
+    <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
+    <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
+    <input id="inputMessage" class="inputMessage" on-change="traiteMessage" placeholder="Tapez votre triplet ici, précédé de '::' ou une commande : '/e' pour exporter, '/t' pour exporter au format .ttl, '/i' pour importer" />
+  </template>
 
-<script>
-/**
-* `spog-graphe`
-*
-*
-* @customElement
-* @polymer
-* @demo demo/index.html
-*/
-class SpogGraphe extends Polymer.Element {
-  static get is() { return 'spog-graphe'; }
-  static get properties() {
-    return {
-      actionstosend: {
+  <script>
+  /**
+  * `spog-graphe`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpogGraphe extends Polymer.Element {
+    static get is() { return 'spog-graphe'; }
+    static get properties() {
+      return {
+        actionstosend: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+        socket: {
+          type: Object,
+          observer: "_socketChanged"
+        },
+        tickDelay: {
+          type: Number,
+          value: 100         // 15ms selon source, tempo pour envoi du snapshot par le serveur
+        },
+        db2populate:{
+          type: Array,
+          value: []
+        },
+        gravityValue :{
+          type : Number,
+          value: 0.001
+        },
+        springLengthValue :{
+          type : Number,
+          value: 220
+        },
+        springConstantValue :{
+          type : Number,
+          value: 0.05
+        },
+        nodeDistanceValue :{
+          type : Number,
+          value: 400
+        },
+        dampingValue :{
+          type : Number,
+          value: 0.08
+        },
+        fusekiresults: {
+          type: Array,
+          observer: '_fusekiresultsChanged'
+        },
+        settinghidden:{
+          type: Boolean,
+          value: true
+        },
+        eyehidden:{
+          type: Boolean,
+          value: true
+        },
+        infered:{
+          type: Array,
+          value:[],
+          observer: '_inferedChanged'
+        },
+        value: {
+          type: String,
+          value: "rgb(173,208,255)"
+        } ,
+        selectedShape: {
+          type: String,
+          value: "ellipse"
+        },
+        selectedType: {
+          type: String,
+          value: "node"
+        },
+
+        /*  nodes:{
         type: Array,
-        value: [],
         notify: true
       },
-      socket: {
-        type: Object,
-        observer: "_socketChanged"
-      },
-      tickDelay: {
-        type: Number,
-        value: 100         // 15ms selon source, tempo pour envoi du snapshot par le serveur
-      },
-      db2populate:{
-        type: Array,
-        value: []
-      },
-      gravityValue :{
-        type : Number,
-        value: 0.001
-      },
-      springLengthValue :{
-        type : Number,
-        value: 220
-      },
-      springConstantValue :{
-        type : Number,
-        value: 0.05
-      },
-      nodeDistanceValue :{
-        type : Number,
-        value: 400
-      },
-      dampingValue :{
-        type : Number,
-        value: 0.08
-      },
-      fusekiresults: {
-        type: Array,
-        observer: '_fusekiresultsChanged'
-      },
-      settinghidden:{
-        type: Boolean,
-        value: true
-      },
-      eyehidden:{
-        type: Boolean,
-        value: true
-      },
-      infered:{
-        type: Array,
-        value:[],
-        observer: '_inferedChanged'
-      },
-      value: {
-        type: String,
-        value: "rgb(173,208,255)"
-      } ,
-      selectedShape: {
-        type: String,
-        value: "ellipse"
-      },
-      selectedType: {
-        type: String,
-        value: "node"
-      },
-
-      /*  nodes:{
+      edges:{
       type: Array,
       notify: true
     },
-    edges:{
-    type: Array,
+    network:{
     notify: true
   },
-  network:{
-  notify: true
-},
-data:{
-type: Object,
-notify: true,
-computed: '_networkDataChanged(network.body.data)'
+  data:{
+  type: Object,
+  notify: true,
+  computed: '_networkDataChanged(network.body.data)'
 },*/
 };
 }
@@ -512,29 +512,29 @@ _socketChanged(s){
     app.params = app.recupParams();
     console.log(app.params);
     if (Object.keys(app.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
-          console.log(db);
-      app.db2populate = db;
-      app.populateVis(app.db2populate, app.network);
-      app.triplets2popLength = app.db2populate.length;
-    }else{
-        console.log(app.network)
-          console.log(app.params);
-          importFromParam(app.params,app.network,app);
-          //var retourCommande = catchCommande(message,this.network,this);
-        //  app.$.filepicker = app.params.source;
+    console.log(db);
+    app.db2populate = db;
+    app.populateVis(app.db2populate, app.network);
+    app.triplets2popLength = app.db2populate.length;
+  }else{
+    console.log(app.network)
+    console.log(app.params);
+    importFromParam(app.params,app.network,app);
+    //var retourCommande = catchCommande(message,this.network,this);
+    //  app.$.filepicker = app.params.source;
   }
 
 
-  });
+});
 
-  this.socket.on('initFuz', function(initFuz){
-    console.log(initFuz);
-  })
+this.socket.on('initFuz', function(initFuz){
+  console.log(initFuz);
+})
 
-  /*
-  app.data = [];
-  app.data = app.network.body.data;
-  console.log(app.data);*/
+/*
+app.data = [];
+app.data = app.network.body.data;
+console.log(app.data);*/
 
 }
 
@@ -919,7 +919,7 @@ populateVis(db, network) {
     this.tickInterval = setInterval(function() {
       if (!app.eyehidden){
         console.log("kick");
-      //  app.eyedata = [];
+        //  app.eyedata = [];
         app.eyedata = app.network.body.data;
       }
     }, 5000);
@@ -1376,25 +1376,42 @@ addEdgeIfNotExist (network, data){
   try {
     existEdge = this.network.body.data.edges.get({
       filter: function(edge){
+        if (data[0] != undefined){ // parfois edges.get retourne un tableau, parfois directement l'objet
         return (edge.id == data[0].id);
       }
-    });
-    if (existEdge.length == 0){
-      this.network.body.data.edges.add(data[0]);
-    }else{
-      //s'il existe déjà, ne serait-ce pas un renommage ?
-      //  console.log("renomme");
-      //  console.log(data);
-      //existNode[0].label = data.label;
-      //  editNode(data, null);
-      //    console.log(this.network.body.data.edges);
-      this.network.body.data.edges.update({id: data[0].id, label: data[0].label});
-      //  console.log(this.network.body.data.edges);
+      else{
+        return (  edge.id == data.id);
+      }
     }
+  });
+  if (existEdge.length == 0){
+
+    if (data[0] != undefined){ // parfois edges.get retourne un tableau, parfois directement l'objet
+    this.network.body.data.edges.add(data[0]);
   }
-  catch (err) {
-    console.log(err);
+  else{
+    this.network.body.data.edges.add(data);
   }
+  }else{
+    //s'il existe déjà, ne serait-ce pas un renommage ?
+    //  console.log("renomme");
+    //  console.log(data);
+    //existNode[0].label = data.label;
+    //  editNode(data, null);
+    //    console.log(this.network.body.data.edges);
+
+    if (data[0] != undefined){ // parfois edges.get retourne un tableau, parfois directement l'objet
+      this.network.body.data.edges.update({id: data[0].id, label: data[0].label});
+  }
+  else{
+      this.network.body.data.edges.update({id: data.id, label: data.label});
+  }
+    //  console.log(this.network.body.data.edges);
+  }
+}
+catch (err) {
+  console.log(err);
+}
 }
 
 addNodeIfNotExist(network, data){

@@ -42,7 +42,7 @@ if(navigator.userAgent.indexOf("Chrome") != -1)
   //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
   downloadLink.style.display = "none";
   document.body.appendChild(downloadLink);
-  console.log(app.$.popupTtl);
+  console.log(this.$.popupTtl);
 }
 console.log(downloadLink);
 /*downloadLink.click();*/
@@ -55,10 +55,9 @@ event.initMouseEvent(
 downloadLink.dispatchEvent(event);
 var app = this;
 setTimeout(function(){
-  console.log(downloadLink.parentNode);
   document.body.removeChild(downloadLink);
   window.URL.revokeObjectURL(downloadLink);
-}, 1000);
+}, 100);
 /*if (window.URL != null) {
 // Chrome allows the link to be clicked
 // without actually adding it to the DOM.
@@ -359,10 +358,11 @@ function newGraph(network,app){
     color: "red",*/
     type: "node"
   };
+
   network.body.data.nodes.clear();
   network.body.data.edges.clear();
     var nodes = network.body.data.nodes.add([nodeName, nodeGraph]);
-
+  //  console.log(nodes);
   var edge = {
     from: nodes[0],
     to: nodes[1],
@@ -392,6 +392,7 @@ function newGraph(network,app){
   app.addAction(action);
   app.socket.graph = graphname;
     console.log(app.socket);
+
 
   //app.socket.emit('newGraph', graphname);
   /*
@@ -433,6 +434,15 @@ function importFromParam(params, network, app){
       network.beforeImport.edges = network.body.data.edges.get();
       network.body.data.nodes.update(nodes);
       network.body.data.edges.update(edges);
+      if(remplaceNetwork){
+        console.log(remplaceNetwork);
+        network.body.data.nodes.clear();
+        network.body.data.edges.clear();
+        console.log("clear");
+        network.body.data.nodes.add(nodes); // clear() ne semble pas fonctionner, à revoir
+        network.body.data.edges.add(edges);
+        console.log(network);
+      }else{
 
         try{
           network.body.data.nodes.update(nodes);
@@ -441,7 +451,7 @@ function importFromParam(params, network, app){
         catch(e){
           console.log(e);
         }
-
+      }
     //  console.log(network);
     //  console.log(partageImport);
     });
@@ -466,7 +476,7 @@ function handleFileSelect(evt) {
 
 
 
-    decortiqueFile(fichier, network, remplaceNetwork);
+    decortiqueFile(fichier);
   }
   console.log("fin");
   // Code to execute after that
@@ -475,7 +485,7 @@ function handleFileSelect(evt) {
   app.$.inputMessage.value = '';
 }
 
-function decortiqueFile(fichier, network, remplaceNetwork){
+function decortiqueFile(fichier){
   //  var network = network;
   //  console.log(network);
 
@@ -494,7 +504,6 @@ function decortiqueFile(fichier, network, remplaceNetwork){
 
 
     switch (fichier.type) {
-        case "":
       case "text/plain":
       case "application/json":
       //    console.log("JSON");
@@ -528,7 +537,7 @@ function decortiqueFile(fichier, network, remplaceNetwork){
         }
       }
       console.log(network);
-    //  console.log(partageImport);
+      console.log(partageImport);
       break;
       case "rdf+xml":
       case "application/rdf+xml":
