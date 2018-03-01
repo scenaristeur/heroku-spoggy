@@ -1,5 +1,5 @@
-2018/02/28-00:37:35.192 2b10 Recovering log #3
-2018/02/28-00:37:35.192 2b10 Level-0 table #5: started
-2018/02/28-00:37:35.453 2b10 Level-0 table #5: 4290 bytes OK
-2018/02/28-00:37:35.708 2b10 Delete type=0 #3
-2018/02/28-00:37:35.708 2b10 Delete type=3 #2
+2018/02/28-22:00:27.691 2ba4 Recovering log #6
+2018/02/28-22:00:27.713 2ba4 Level-0 table #8: started
+2018/02/28-22:00:28.116 2ba4 Level-0 table #8: 5478 bytes OK
+2018/02/28-22:00:28.482 2ba4 Delete type=0 #6
+2018/02/28-22:00:28.482 2ba4 Delete type=3 #4

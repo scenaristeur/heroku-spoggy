@@ -58,5 +58,4 @@ typings/
 .env
 
 # database
-data
-
+#data
