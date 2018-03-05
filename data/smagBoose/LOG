@@ -1,1 +1,5 @@
-2018/03/05-22:44:50.553 25e4 Delete type=3 #1
+2018/03/05-23:26:46.100 1bb4 Recovering log #6
+2018/03/05-23:26:46.101 1bb4 Level-0 table #8: started
+2018/03/05-23:26:46.315 1bb4 Level-0 table #8: 1760 bytes OK
+2018/03/05-23:26:47.568 1bb4 Delete type=0 #6
+2018/03/05-23:26:47.572 1bb4 Delete type=3 #4
