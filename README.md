@@ -5,7 +5,7 @@
 
 [![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-
+ - [https://github.com/scenaristeur/heroku-spoggy/wiki](plus d'infos sur le wiki Spoggy)
 # TODO : tous les modules sont implémentés : graphe, socket, chat, levelgraph, connection endpoint fuseki, inférence y'a plus qu'à les remettre en ordre ;-)
 
 #Installation et Lancement de SPOGGY en local :
