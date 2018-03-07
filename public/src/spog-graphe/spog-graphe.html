@@ -1421,7 +1421,7 @@ addNodeIfNotExist(network, data){
     existNode = this.network.body.data.nodes.get({
       filter: function(node){
         //    console.log(node);
-        return (node.id == data.id );
+        return (node.id == data.id || node.label == data.label);
       }
     });
     console.log(existNode);

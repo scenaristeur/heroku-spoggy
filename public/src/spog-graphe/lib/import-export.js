@@ -640,7 +640,110 @@ function rdf2Xml(data, network){
   }
 
   console.log(triplets);
-  //  destinataire.triplets=this.triplets;
+  //destinataire.triplets=triplets;
+  if(remplaceNetwork.checked){
+    console.log(remplaceNetwork.checked);
+    network.body.data.nodes.clear();
+    network.body.data.edges.clear();
+    console.log("clear");
+
+    var nodes =[];
+    var edges = [];
+    triplets.forEach(function(t){
+      console.log(t);
+
+      var nS = {};
+      nS.label = t.sujet;
+      //network.body.data.nodes.add(nS);
+      var nO = {};
+      nO.label = t.objet;
+      //  network.body.data.nodes.add(nO);
+      //  addNodeIfNotExist(network, nS);
+      //  addNodeIfNotExist(network, nO);
+      var nodeSujet = [] , nodeObjet =[] ;
+      var existSujet = false;
+      var existObjet = false;
+      try{
+        existSujet = network.body.data.nodes.get({
+          filter: function(node){
+            //    console.log(node);
+            return (node.label == nS.label);
+          }
+        });
+        console.log(existSujet);
+        if (existSujet.length == 0){
+          console.log("n'existe pas")
+          nodeSujet = network.body.data.nodes.add(nS);
+        }else{
+          console.log("existe")
+          //s'il existe déjà, ne serait-ce pas un renommage ?
+          //  console.log("renomme");
+          //  console.log(data);
+          //existNode[0].label = data.label;
+          //  editNode(data, null);
+          //  console.log(this.network.body.data.nodes);
+          //  nodeSujet =   network.body.data.nodes.update(nS);
+          nodeSujet[0] = existSujet[0].id;
+        }
+      }
+      catch (err){
+        console.log(err);
+      }
+      try{
+        existObjet = network.body.data.nodes.get({
+          filter: function(node){
+            //    console.log(node);
+            return (node.label == nO.label);
+          }
+        });
+        console.log(existObjet);
+        if (existObjet.length == 0){
+          console.log("n'existe pas")
+          nodeObjet = network.body.data.nodes.add(nO);
+        }else{
+          console.log("existe")
+          //s'il existe déjà, ne serait-ce pas un renommage ?
+          //  console.log("renomme");
+          //  console.log(data);
+          //existNode[0].label = data.label;
+          //  editNode(data, null);
+          //  console.log(this.network.body.data.nodes);
+          //nodeObjet =   network.body.data.nodes.update(nO);
+          nodeObjet[0] = existObjet[0].id;
+        }
+      }
+      catch (err){
+        console.log(err);
+      }
+
+      console.log(nodeSujet);
+      console.log(nodeObjet);
+      var edge = {};
+      edge.from = nodeSujet[0];
+      edge.to = nodeObjet[0];
+      edge.label = t.propriete;
+      console.log(edge);
+
+
+      //  addEdgeIfNotExist(network, edge)
+      network.body.data.edges.add(edge);
+    });
+
+
+    //  network.body.data.nodes.add(nodes); // clear() ne semble pas fonctionner, à revoir
+    //  network.body.data.edges.add(edges);
+    console.log(network);
+  }else{
+
+    try{
+      network.body.data.nodes.update(nodes);
+      network.body.data.edges.update(edges);
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+  console.log(network);
 
 
 }
@@ -1034,49 +1137,38 @@ function parseRdfNode(data, triplets){
         triplets = parseOwlNamedIndividual(element, triplets);
         break;
         default :
-        console.log("non traite 3 , name : "+name);
+        console.log("traitement parseRdfOther : "+name);
         console.log(type +" "+name+" "+value);
         console.log(element);
-
         triplets = parseRdfOther(element, triplets);
-
-
-        /*element.attributes.forEach(function(a) {
-        console.log(a);
-      });*/
-
-      // nécessaire pour continuer à descendre ? ou intégrer dans parseRdfOther ? parseRdfNode(element, triplets)
+        break;
+      }
       break;
+      case 3 :
+      if(value.trim() != ""){
+        //  console.log(type +" "+name+" "+value);
+      }
+      break;
+      case 8 :
+      // console.log("Commentaire");
+      // console.log(element);
+      break;
+      default :
+      console.log("non traite 2 , type : "+type);
 
-
-
-    }
-    break;
-    case 3 :
-    if(value.trim() != ""){
       //  console.log(type +" "+name+" "+value);
+      //  console.log(element);
+      break;
     }
-    break;
-    case 8 :
-    // console.log("Commentaire");
-    // console.log(element);
-    break;
-    default :
-    console.log("non traite 2 , type : "+type);
 
-    //  console.log(type +" "+name+" "+value);
-    //  console.log(element);
-    break;
+
+
   }
 
-
-
-}
-
-console.log(ontologie);
-console.log(title);
-console.log(description);
-return triplets;
+  console.log(ontologie);
+  console.log(title);
+  console.log(description);
+  return triplets;
 }
 
 function parseObjectProperty(data, triplets){
@@ -1169,24 +1261,53 @@ function parseOwlNamedIndividual(data, triplets){
 
 
 function parseRdfOther(data, triplets){
+  console.log("RDF PARSE OTHER");
   console.log(data);
   if (data.attributes.length > 0){
-    console.log("ATTRIBUTS :"+data.attributes.length);
-    console.log(data.attributes);
+    //  console.log("ATTRIBUTS :"+data.attributes.length);
+    //  console.log(data.attributes);
     Array.prototype.slice.call(data.attributes).forEach(function(item) { //https://davidwalsh.name/javascript-attributes
-      console.log("A traiter : "+data.nodeName+" -> "+item.name + '= '+ item.value);
+      //    console.log("traitement : "+data.nodeName+" -> "+item.name + '= '+ item.value);
+      if (item.value.trim() !="" && (item.name == "rdf:about" || item.name == "rdf:resource")){
+        var t1 = {sujet: item.value, propriete: "rdf:type", objet: data.nodeName};
+        triplets.push(t1);
+/*
+        var t2 = {sujet: data.nodeName, propriete: item.name, objet: item.value};
+        triplets.push(t2);*/
+
+      }else{
+        var triplet = {sujet: data.nodeName, propriete: item.name, objet: item.value};
+        triplets.push(triplet);
+      }
+
+
     });
 
   }
-  if (element.childNodes.length > 0){
+  if (data.childNodes.length > 0){
     console.log("CHILDS :");
-    element.childNodes.forEach(function(c) {
-      console.log(c);
+    data.childNodes.forEach(function(c) {
+    //  if(c.nodeValue!= undefined && c.nodeValue.trim().length>0){
+        console.log(data.nodeName);
+        console.log(c);
+        console.log("########################## "+data.nodeName +" -> "+ c.nodeName+ " -> "+c.nodeValue );
+        var triplet = {sujet: data.nodeName, propriete: c.nodeName, objet: c.nodeValue};
+        triplets.push(triplet);
+    //  }
+
+
+
+      /*var triplet = {sujet: data.nodeName, propriete: c.nodeName, objet: item.value};
+      triplets.push(triplet);*/
+
+      //  parseRdfNode(c, triplets) ou //  parseRdfOther(c, triplets); //recuperer les ATTRIBUTS
     });
   }
+  triplets = parseRdfNode(data, triplets)
   //var triplet = {sujet: sujet, propriete: propriete, objet: objet};
 
   //triplets.push(triplet);
+  // nécessaire pour continuer à descendre ? ou intégrer dans parseRdfOther ? parseRdfNode(element, triplets)
 
   console.log(triplets);
 
