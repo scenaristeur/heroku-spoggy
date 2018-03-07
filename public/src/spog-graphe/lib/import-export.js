@@ -361,7 +361,7 @@ function newGraph(network,app){
   };
   network.body.data.nodes.clear();
   network.body.data.edges.clear();
-    var nodes = network.body.data.nodes.add([nodeName, nodeGraph]);
+  var nodes = network.body.data.nodes.add([nodeName, nodeGraph]);
 
   var edge = {
     from: nodes[0],
@@ -391,7 +391,7 @@ function newGraph(network,app){
   action.data = graphname;
   app.addAction(action);
   app.socket.graph = graphname;
-    console.log(app.socket);
+  console.log(app.socket);
 
   //app.socket.emit('newGraph', graphname);
   /*
@@ -434,20 +434,20 @@ function importFromParam(params, network, app){
       network.body.data.nodes.update(nodes);
       network.body.data.edges.update(edges);
 
-        try{
-          network.body.data.nodes.update(nodes);
-          network.body.data.edges.update(edges);
-        }
-        catch(e){
-          console.log(e);
-        }
+      try{
+        network.body.data.nodes.update(nodes);
+        network.body.data.edges.update(edges);
+      }
+      catch(e){
+        console.log(e);
+      }
 
-    //  console.log(network);
-    //  console.log(partageImport);
+      //  console.log(network);
+      //  console.log(partageImport);
     });
     reader.readAsText(reponse);
-};
-xhr.send();
+  };
+  xhr.send();
 }
 
 function handleFileSelect(evt) {
@@ -494,7 +494,7 @@ function decortiqueFile(fichier, network, remplaceNetwork){
 
 
     switch (fichier.type) {
-        case "":
+      case "":
       case "text/plain":
       case "application/json":
       //    console.log("JSON");
@@ -528,7 +528,7 @@ function decortiqueFile(fichier, network, remplaceNetwork){
         }
       }
       console.log(network);
-    //  console.log(partageImport);
+      //  console.log(partageImport);
       break;
       case "rdf+xml":
       case "application/rdf+xml":
@@ -790,7 +790,7 @@ function ttl2Xml(data,network){
     });
 
     var sujetId , objetId;
-    console.log("8888888888888888888888888888888888888");
+    //  console.log("8888888888888888888888888888888888888");
     if(nodeSujet.length>0){
       console.log("sujet exist "+s);
       nodeSujet = nodeSujet[0];
@@ -803,7 +803,7 @@ function ttl2Xml(data,network){
     }
     console.log(nodeSujet);
     console.log(nodeObjet);
-    console.log("8888888888888888888888888888888888888");
+    //console.log("8888888888888888888888888888888888888");
 
 
     var edge = {
@@ -967,13 +967,14 @@ function parseRdfNode(data, triplets){
   var objectProperties=[];
   var datatypeProperties=[];
   var comments=[];
-  //  console.log(data.childNodes);
+  //    console.log(data.childNodes);
   for(var i = 0; i< data.childNodes.length; i++){
     var element = data.childNodes[i];
     var name = element.nodeName;
     var type = element.nodeType;
     var value = element.nodeValue;
 
+    console.log(element);
 
     switch(type){
       case 1 :
@@ -1034,39 +1035,48 @@ function parseRdfNode(data, triplets){
         break;
         default :
         console.log("non traite 3 , name : "+name);
-        //  console.log(type +" "+name+" "+value);
-        //  console.log(element);
-        break;
+        console.log(type +" "+name+" "+value);
+        console.log(element);
+
+        triplets = parseRdfOther(element, triplets);
+
+
+        /*element.attributes.forEach(function(a) {
+        console.log(a);
+      });*/
+
+      // nécessaire pour continuer à descendre ? ou intégrer dans parseRdfOther ? parseRdfNode(element, triplets)
+      break;
 
 
 
-      }
-      break;
-      case 3 :
-      if(value.trim() != ""){
-        //  console.log(type +" "+name+" "+value);
-      }
-      break;
-      case 8 :
-      // console.log("Commentaire");
-      // console.log(element);
-      break;
-      default :
-      console.log("non traite 2 , type : "+type);
-
-      //  console.log(type +" "+name+" "+value);
-      //  console.log(element);
-      break;
     }
+    break;
+    case 3 :
+    if(value.trim() != ""){
+      //  console.log(type +" "+name+" "+value);
+    }
+    break;
+    case 8 :
+    // console.log("Commentaire");
+    // console.log(element);
+    break;
+    default :
+    console.log("non traite 2 , type : "+type);
 
-
-
+    //  console.log(type +" "+name+" "+value);
+    //  console.log(element);
+    break;
   }
 
-  console.log(ontologie);
-  console.log(title);
-  console.log(description);
-  return triplets;
+
+
+}
+
+console.log(ontologie);
+console.log(title);
+console.log(description);
+return triplets;
 }
 
 function parseObjectProperty(data, triplets){
@@ -1154,6 +1164,32 @@ function parseOwlNamedIndividual(data, triplets){
       }
     }
   }
+  return triplets;
+}
+
+
+function parseRdfOther(data, triplets){
+  console.log(data);
+  if (data.attributes.length > 0){
+    console.log("ATTRIBUTS :"+data.attributes.length);
+    console.log(data.attributes);
+    Array.prototype.slice.call(data.attributes).forEach(function(item) { //https://davidwalsh.name/javascript-attributes
+      console.log("A traiter : "+data.nodeName+" -> "+item.name + '= '+ item.value);
+    });
+
+  }
+  if (element.childNodes.length > 0){
+    console.log("CHILDS :");
+    element.childNodes.forEach(function(c) {
+      console.log(c);
+    });
+  }
+  //var triplet = {sujet: sujet, propriete: propriete, objet: objet};
+
+  //triplets.push(triplet);
+
+  console.log(triplets);
+
   return triplets;
 }
 
