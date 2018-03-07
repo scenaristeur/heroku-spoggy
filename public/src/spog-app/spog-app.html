@@ -81,6 +81,13 @@ class SpogApp extends Polymer.Element {
           app.actionstosend = [];
         }}
       }, this.tickDelay);
+
+      this.params = this.recupParams();
+      if (this.params.source.length > 0){
+        this.visibleChat =false;
+        console.log(this.visibleChat);
+      }
+      console.log(this.params.source);
     }
     _consoleStatus(newValue, oldValue){
       console.log(oldValue +" -> "+ newValue);
@@ -100,7 +107,21 @@ class SpogApp extends Polymer.Element {
       this.visibleChat = !this.visibleChat;
     }
 
-
+    recupParams(){
+      var params = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {        var p=a[i].split('=', 2);
+        if (p.length == 1)
+        b[p[0]] = "";
+        else
+        b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+      }
+      return b;
+    })(window.location.search.substr(1).split('&'));
+    return params;
+    }
   }
 
   window.customElements.define(SpogApp.is, SpogApp);

@@ -224,6 +224,10 @@ A COMPLETER AVEC  DANS LIB  : IMPORT / EXPORT, COMMANDES -->
           type: Object,
           observer: "_socketChanged"
         },
+        params: {
+          type: Array,
+          observer: "_paramsChanged"
+        },
         tickDelay: {
           type: Number,
           value: 100         // 15ms selon source, tempo pour envoi du snapshot par le serveur
@@ -326,6 +330,9 @@ ready() {
   this.network.moveTo(this.network.body.data.nodes.get(1));
 });*/
 var app = this;
+
+
+
 app.tickInterval = setInterval(function() {
   if ((app.db2populate.length > 0) && (app.network != undefined)) {
     console.log(app.db2populate.length );
@@ -381,6 +388,17 @@ this.nodes = this.network.body.data.nodes;
 this.edges = [];
 this.edges = this.network.body.data.edges;*/
 
+}
+
+_paramsChanged(){
+  // initialisation en fonction du parametre source (a virer de socket.on (initbd))
+  console.log(this.params);
+  if (Object.keys(this.params).length > 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
+
+  importFromParam(this.params,this.network,this);
+  //var retourCommande = catchCommande(message,this.network,this);
+  //  app.$.filepicker = app.params.source;
+  }
 }
 
 traiteMessage(){
@@ -509,7 +527,7 @@ _socketChanged(s){
 
 
   this.socket.on('initDb', function(db){
-    app.params = app.recupParams();
+  //  app.params = app.recupParams();
     console.log(app.params);
     if (Object.keys(app.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
     console.log(db);
@@ -1639,21 +1657,7 @@ setTimeout(function(){
 }, 100);
 }
 
-recupParams(){
-  var params = (function(a) {
-    if (a == "") return {};
-    var b = {};
-    for (var i = 0; i < a.length; ++i)
-    {        var p=a[i].split('=', 2);
-    if (p.length == 1)
-    b[p[0]] = "";
-    else
-    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-  }
-  return b;
-})(window.location.search.substr(1).split('&'));
-return params;
-}
+
 
 }
 

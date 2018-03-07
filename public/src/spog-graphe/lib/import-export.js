@@ -424,6 +424,8 @@ function importFromParam(params, network, app){
     var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
     reader.addEventListener('load', function () {
       console.log(reader.result);
+// ajouter test en fonction du type de fichier, extension
+
       var nodes = JSON.parse(reader.result).nodes;
       //    console.log(nodes);
       var edges = JSON.parse(reader.result).edges;
