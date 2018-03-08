@@ -11,7 +11,7 @@ Spoggy facilite le stockage, la transmission, le partage des connaissances :
 - j'ai une idee
 
 ## entre humains et machines
-### Comment un 'robot', une voiture autonome, une machine ou encore un objet connecté pourraient-ils 'proteger les humains' s'il n'on pas un minimum de connaissances de ce qu'est un être humain ? 
+### Comment un 'robot', une voiture autonome, une machine ou encore un objet connecté pourraient-ils 'proteger les humains' s'il n'ont pas un minimum de connaissances de ce qu'est un être humain ? 
 
 - description d'un contexte, d'un lieu, 
 - possiblite d'inférence sur des graphes RDF, déduction d'information non contenues dans un graphe en fonction de règles.
