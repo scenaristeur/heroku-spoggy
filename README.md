@@ -1,13 +1,13 @@
-(En raison de l'utilisation des [web components](https://www.webcomponents.org/){:target="_blank"}, SPOGGY fonctionne avec les dernières versions de Chrome & Opera, certains éléments n'apparaissent pas avec Firefox ou Edge)
+(En raison de l'utilisation des [web components](https://www.webcomponents.org/), SPOGGY fonctionne avec les dernières versions de Chrome & Opera, certains éléments n'apparaissent pas avec Firefox ou Edge)
 # heroku-spoggy
 
 Spoggy est un outil de stockage de connaissances.
 Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vous foisonnez d'idées mais avez toujours du mal à vous faire comprendre par un public 'non initié', si vous devez travailler en équipe de manière 'collaborative', si le collègue que vous devez remplacer part à la retraite sans vous avoir donné toutes les clés de sa fonction, si vous voulez exprimer de manière simple une tension 'holocratique', Spoggy peut vous aider.
 # DEMO
-[DEMO](https://spoggy.herokuapp.com/){:target="_blank"}
+[DEMO](https://spoggy.herokuapp.com/)
 
 # Deployer Spoggy sur Heroku
-[![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy){:target="_blank"}
+[![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Spoggy facilite le stockage, la transmission, le partage des connaissances :
 ## entre humains
@@ -39,10 +39,10 @@ cd ..
 node .
 
 ```
-votre spoggy devrait alors être accessible à l'adresse [http://127.0.0.1:3000](http://127.0.0.1:3000){:target="_blank"}
+votre spoggy devrait alors être accessible à l'adresse [http://127.0.0.1:3000](http://127.0.0.1:3000)
 
 
-# la suite était présent dans les anciennes versions (dossier archive) et est à réinitégrer dans la nouvelle
+# la suite était présente dans les anciennes versions (dossier archive) et est à réinitégrer dans la nouvelle
 
 # commandes disponibles :
 Import : commande /i
@@ -51,10 +51,10 @@ Export : commande /e
 
 
 
-[exemples de fichiers exportés depuis spoggy](https://github.com/scenaristeur/smag0-connaissance/tree/master/meet-up_conf){:target="_blank"}
+[exemples de fichiers exportés depuis spoggy](https://github.com/scenaristeur/smag0-connaissance/tree/master/meet-up_conf)
 
 pour les consulter, vous pouvez utiliser passer la source en paramètre, comme dans l'exemple ci -dessous :
-[https://spoggy.herokuapp.com/?source=https://raw.githubusercontent.com/scenaristeur/smag0-connaissance/master/meet-up_conf/de_OWL_a_Fameus_spoggy_nodes_edges_1511030598081.json](https://spoggy.herokuapp.com/?source=https://raw.githubusercontent.com/scenaristeur/smag0-connaissance/master/meet-up_conf/de_OWL_a_Fameus_spoggy_nodes_edges_1511030598081.json){:target="_blank"}
+[https://spoggy.herokuapp.com/?source=https://raw.githubusercontent.com/scenaristeur/smag0-connaissance/master/meet-up_conf/de_OWL_a_Fameus_spoggy_nodes_edges_1511030598081.json](https://spoggy.herokuapp.com/?source=https://raw.githubusercontent.com/scenaristeur/smag0-connaissance/master/meet-up_conf/de_OWL_a_Fameus_spoggy_nodes_edges_1511030598081.json)
 
 
 
@@ -62,7 +62,7 @@ pour les consulter, vous pouvez utiliser passer la source en paramètre, comme d
 # spoggy en local : (en cours)
 télécharger et décompresser apache-jena-fuseki-3.6.0
 
-[http://jena.apache.org/documentation/fuseki2/](http://jena.apache.org/documentation/fuseki2/){:target="_blank"}
+[http://jena.apache.org/documentation/fuseki2/](http://jena.apache.org/documentation/fuseki2/)
 
 lancement :
 création d'un dossier data/DEFAUT,
