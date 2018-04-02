@@ -1,19 +1,20 @@
+(En raison de l'utilisation des [web components](https://www.webcomponents.org/), SPOGGY fonctionne avec les dernières versions de Chrome & Opera, certains éléments n'apparaissent pas avec Firefox ou Edge)
 # heroku-spoggy
 
 Spoggy est un outil de stockage de connaissances.
 Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vous foisonnez d'idées mais avez toujours du mal à vous faire comprendre par un public 'non initié', si vous devez travailler en équipe de manière 'collaborative', si le collègue que vous devez remplacer part à la retraite sans vous avoir donné toutes les clés de sa fonction, si vous voulez exprimer de manière simple une tension 'holocratique', Spoggy peut vous aider.
 
-Spoggy facilite le stockage, la transmission, le partage des connaissances : 
-## entre humains 
+Spoggy facilite le stockage, la transmission, le partage des connaissances :
+## entre humains
 
 ### mode solo
 
-- j'ai une idee
+- j'ai une idee, je peux facilement la mettre en forme, comme une carte heuristique, l'enregistrer au format rdf ou turtle, l'exporter, la partager pour que d'autres puissent l'importer, la modifier, et la partager à nouveau.
 
 ## entre humains et machines
-### Comment un 'robot', une voiture autonome, une machine ou encore un objet connecté pourraient-ils 'proteger les humains' s'il n'ont pas un minimum de connaissances de ce qu'est un être humain ? 
+### Comment un 'robot', une voiture autonome, une machine ou encore un objet connecté pourraient-ils 'proteger les humains' s'il n'ont pas un minimum de connaissances de ce qu'est un être humain ?
 
-- description d'un contexte, d'un lieu, 
+- description d'un contexte, d'un lieu,
 - possiblite d'inférence sur des graphes RDF, déduction d'information non contenues dans un graphe en fonction de règles.
 
 [DEMO](https://spoggy.herokuapp.com/)
@@ -27,6 +28,7 @@ Spoggy facilite le stockage, la transmission, le partage des connaissances :
 # TODO : tous les modules sont implémentés : graphe, socket, chat, levelgraph, connection endpoint fuseki, inférence y'a plus qu'à les remettre en ordre ;-)
 
 #Installation et Lancement de SPOGGY en local :
+nécessite nodejs > 6.2
 ```
 git clone https://github.com/scenaristeur/heroku-spoggy.git
 cd heroku-spoggy
@@ -36,6 +38,9 @@ node .
 
 ```
 votre spoggy devrait alors être accessible à l'adresse http://127.0.0.1:3000
+
+
+# la suite était présent dans les anciennes versions (dossier archive) et est à réinitégrer dans la nouvelle
 
 # commandes disponibles :
 Import : commande /i
