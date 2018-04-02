@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="my-mixin.html">
+
+<link rel="import" href="./spoggy-graph-network.html">
+<!--
+<link rel="import" as graph href="./spoggy-graph-behavior.html">
+<script src="./spoggy-graph-behavior.js" type="text/javascript"></script>-->
+
+<dom-module id="spoggy-graph">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <spoggy-graph-network></spoggy-graph-network>
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-graph`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyGraph extends MyMixin(Polymer.Element) {
+    static get is() { return 'spoggy-graph'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-graph'
+        }
+      };
+    }
+    _graphOk(date){
+  console.log("le graph est ok en callback "+date);
+}
+    ready(){
+      // If you override ready, always call super.ready() first.
+      super.ready();
+      // Output the custom element's HTML tag to the browser console.
+      // Open your browser's developer tools to view the output.
+      console.log(this.tagName);
+      let   container = this.$.mynetwork;
+    //  testMyxin();
+      super.testMyxin();
+//  vis.graph.init( this, container, this._graphOk);
+//Spoggy.General.graph.init(this, container, this._graphOk);
+      /* test modules
+      //  vis.graph.init( this, container, this._graphOk);
+//Polymer.GraphBehavior.microTask.run(() => console.log("bip"));
+var result = "ok";
+Spoggy.Graph.base.init("touch" , () => console.log("bop "+result));
+SomeNamespace.SomeBehavior.base.init("touch1" , () => console.log("bop1 "+result));*/
+    }
+  }
+
+  window.customElements.define(SpoggyGraph.is, SpoggyGraph);
+  </script>
+</dom-module>

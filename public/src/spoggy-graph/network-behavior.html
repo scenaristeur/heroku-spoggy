@@ -1,0 +1,275 @@
+<script>
+//https://codelabs.developers.google.com/codelabs/polymer-2-carousel/index.html?index=..%2F..%2Findex#4
+//https://vlad.d2dx.com/polymer-2-0-mixins-confusion/ dedupingMixin
+//https://stackoverflow.com/questions/42916271/using-polymers-own-behaviors-in-polymer-2-x
+
+
+var NetworkBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class NetworkBehavior extends superClass {
+    constructor() {
+      super();
+      console.log("networkbehavior")
+    //  this.init();
+    }
+    static get properties() {
+  //    super();
+      return {
+
+      };
+    }
+
+    methodInBehavior() {
+      return "this method is defined in Behavior";
+    }
+
+    //////////////////////////////////////////////////////////////////
+    networkDivInitialize(container, graphe, dialogs, callback){
+      //init( container, graphe){
+this.dialogs = dialogs;
+
+    // create an array with nodes
+    var nodes = new vis.DataSet([
+      {id: 1, label: 'Node 1'},
+      {id: 2, label: 'Node 2'},
+      {id: 3, label: 'Node 3'},
+      {id: 4, label: 'Node 4'},
+      {id: 5, label: 'Node 5'},
+      {id: 6, label: 'Node 6'},
+      {id: 7, label: 'Node 7'},
+      {id: 8, label: 'Node 8'}
+    ]);
+
+    // create an array with edges
+    var edges = new vis.DataSet([
+      {from: 1, to: 8, arrows:'to', dashes:true},
+      {from: 1, to: 3, arrows:'to'},
+      {from: 1, to: 2, arrows:'to, from'},
+      {from: 2, to: 4, arrows:'to, middle'},
+      {from: 2, to: 5, arrows:'to, middle, from'},
+      {from: 5, to: 6, arrows:{to:{scaleFactor:2}}},
+      {from: 6, to: 7, arrows:{middle:{scaleFactor:0.5},from:true}}
+    ]);
+
+    // create a network
+
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {
+      edges:{
+        arrows: 'to'
+      },
+      interaction: {
+        dragNodes:true,
+        dragView: true,
+        hideEdgesOnDrag: false,
+        hideNodesOnDrag: false,
+        hover: false,
+        hoverConnectedEdges: true,
+        keyboard: {
+          enabled: true,
+          speed: {x: 10, y: 10, zoom: 0.02},
+          bindToWindow: true
+        },
+        multiselect: false,
+        navigationButtons: true,
+        selectable: true,
+        selectConnectedEdges: true,
+        tooltipDelay: 300,
+        zoomView: true
+
+      },
+
+      manipulation: {
+        addNode: function (data, callback) {
+          // filling in the popup DOM elements
+          dialogs.$.nodeOperation.innerHTML = "Add Node";
+          graphe.editNode(data, graphe.clearNodePopUp, callback);
+        },
+        editNode: function (data, callback) {
+          // filling in the popup DOM elements
+          dialogs.$.nodeOperation.innerHTML = "Edit Node";
+          graphe.editNode(data, graphe.cancelNodeEdit, callback);
+        },
+        addEdge: function (data, callback) {
+          if (data.from == data.to) {
+            var r = confirm("Do you want to connect the node to itself?");
+            if (r != true) {
+              callback(null);
+              return;
+            }
+          }
+          dialogs.$.edgeOperation.innerHTML = "Add Edge";
+          graphe.editEdgeWithoutDrag(data, callback);
+        },
+        editEdge: {
+          editWithoutDrag: function(data, callback) {
+            dialogs.$.edgeOperation.innerHTML = "Edit Edge";
+            graphe.editEdgeWithoutDrag(data,callback);
+          }
+        },
+        deleteNode: function (data, callback) {
+          // filling in the popup DOM elements
+          graphe.deleteNode(data, callback);
+        },
+        deleteEdge: function(data,callback){
+          graphe.deleteEdge(data,callback);
+        }
+      }
+    }
+
+    this.network = new vis.Network(container, data, options);
+    callback(this.network);
+    //
+    let d=Date.now();
+    //  console.log(d);
+    callback(d);
+    return this.network;
+  }
+
+/* fonctionnalités VIS JS  http://visjs.org/examples/network/other/manipulationEditEdgeNoDrag.html*/
+ editNode(data, cancelAction, callback) {
+   console.log(this.dialogs)
+this.dialogs.$.nodeLabel.value = data.label;
+this.dialogs.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
+this.dialogs.$.nodeCancelButton.onclick = cancelAction.bind(this, callback);
+this.dialogs.$.nodePopUp.style.display = 'block';
+}
+
+// Callback passed as parameter is ignored
+ clearNodePopUp() {
+this.dialogs.$.nodeSaveButton.onclick = null;
+this.dialogs.$.nodeCancelButton.onclick = null;
+this.dialogs.$.nodePopUp.style.display = 'none';
+}
+
+ cancelNodeEdit(callback) {
+this.clearNodePopUp();
+callback(null);
+}
+
+ saveNodeData(data, callback) {
+data.label = this.dialogs.$.nodeLabel.value;
+console.log(data);
+this.clearNodePopUp();
+data.format = "vis" // pour identifier l'origine et le format de l'info
+//sg.action.addNode(data,  callback);
+ callback(data);
+}
+
+
+
+ editEdgeWithoutDrag(data, callback) {
+// filling in the popup DOM elements
+this.dialogs.$.edgeLabel.value = data.label;
+this.dialogs.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
+this.dialogs.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
+this.dialogs.$.edgePopUp.style.display = 'block';
+}
+
+ clearEdgePopUp() {
+this.dialogs.$.edgeSaveButton.onclick = null;
+this.dialogs.$.edgeCancelButton.onclick = null;
+this.dialogs.$.edgePopUp.style.display = 'none';
+}
+
+ cancelEdgeEdit(callback) {
+this.clearEdgePopUp();
+callback(null);
+}
+
+ saveEdgeData(data, callback) {
+if (typeof data.to === 'object')
+data.to = data.to.id
+if (typeof data.from === 'object')
+data.from = data.from.id
+data.label = this.dialogs.$.edgeLabel.value;
+data.format = "vis" // pour identifier l'origine et le format de l'info
+console.log(data);
+//sg.action.addEdge(data, callback);
+this.clearEdgePopUp();
+  callback(data);
+}
+
+ deleteNode (data, callback){
+console.log(data);
+//sg.action.delete(data, callback);
+callback(data);
+}
+ deleteEdge (data, callback){
+console.log(data);
+//sg.action.delete(data, callback);
+callback(data);
+}
+  }
+});
+</script>
+
+/*  const MyMixin = superclass => class extends superclass {
+
+    static get properties() {
+      return {
+        selected: {
+          type: Object,
+          observer: '_selectedChanged'
+        }
+      };
+    }
+
+testMyxin(){
+  console.log("texts")
+}
+    connectedCallback() {
+      super.connectedCallback();
+
+      this.shadowRoot.addEventListener('slotchange', this._resetSelected.bind(this));
+      this._resetSelected();
+    }
+
+    _selectedChanged(selected, oldSelected) {
+      if (oldSelected) oldSelected.removeAttribute('selected');
+      if (selected) selected.setAttribute('selected', '');
+    }
+
+    _resetSelected() {
+      if (!this.selected || this.selected.parentElement !== this) {
+        this.selected = this.firstElementChild;
+      }
+    }
+
+  };
+*/
+
+/*var MyBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class MyBehavior extends superClass {
+    constructor() {
+      super();
+    }
+
+    methodInBehavior() {
+      return "this method is defined in Behavior";
+    }
+  }
+}
+class MyElement extends MyBehaviorMixin(Polymer.Element){
+  constructor(){
+    super();
+    console.log(this.methodInBehavior());
+  }
+}*/
+
+/*
+TequilaMixin = Polymer.dedupingMixin(base => {
+
+  let myTempBase = Mixin1(Mixin2(MixinN(base)));
+
+  // Note that this scope is executed exactly once! Do not try to put hidden variables here.
+
+  class Tequila extends myTempBase {
+     // Usual class declarations here. constructor(), properties(), etc...
+  }
+
+  return Tequila;
+
+});*/

@@ -1,0 +1,136 @@
+<!-- voir aussi http://www.ericfeminella.com/blog/2016/03/25/polymer-behaviors-in-es6/ -->
+
+
+<script>
+import * as vis from './spoggy-visBehavior.js';
+
+let app,db, network;
+(function() {
+'use strict';
+  if (!window.Spoggy) {
+  window.Spoggy = {};
+}
+
+var vis = "test"
+
+   Spoggy.General = {
+     properties: {
+      first: {
+        type: String,
+        value: 'First Behavior'
+      },
+      app:{},
+      db:{},
+      network:{}
+    },
+
+
+     graph:{
+       init(_app, container, callback){
+     app = _app;
+
+     // create an array with nodes
+     var nodes = new vis.DataSet([
+       {id: 1, label: 'Node 1'},
+       {id: 2, label: 'Node 2'},
+       {id: 3, label: 'Node 3'},
+       {id: 4, label: 'Node 4'},
+       {id: 5, label: 'Node 5'},
+       {id: 6, label: 'Node 6'},
+       {id: 7, label: 'Node 7'},
+       {id: 8, label: 'Node 8'}
+     ]);
+
+     // create an array with edges
+     var edges = new vis.DataSet([
+       {from: 1, to: 8, arrows:'to', dashes:true},
+       {from: 1, to: 3, arrows:'to'},
+       {from: 1, to: 2, arrows:'to, from'},
+       {from: 2, to: 4, arrows:'to, middle'},
+       {from: 2, to: 5, arrows:'to, middle, from'},
+       {from: 5, to: 6, arrows:{to:{scaleFactor:2}}},
+       {from: 6, to: 7, arrows:{middle:{scaleFactor:0.5},from:true}}
+     ]);
+
+     // create a network
+
+     var data = {
+       nodes: nodes,
+       edges: edges
+     };
+     var options = {
+       edges:{
+         arrows: 'to'
+       },
+       interaction: {
+         dragNodes:true,
+         dragView: true,
+         hideEdgesOnDrag: false,
+         hideNodesOnDrag: false,
+         hover: false,
+         hoverConnectedEdges: true,
+         keyboard: {
+           enabled: true,
+           speed: {x: 10, y: 10, zoom: 0.02},
+           bindToWindow: true
+         },
+         multiselect: false,
+         navigationButtons: true,
+         selectable: true,
+         selectConnectedEdges: true,
+         tooltipDelay: 300,
+         zoomView: true
+
+       },
+
+       manipulation: {
+         addNode: function (data, callback) {
+           // filling in the popup DOM elements
+           app.$.nodeOperation.innerHTML = "Add Node";
+           editNode(data, clearNodePopUp, callback);
+         },
+         editNode: function (data, callback) {
+           // filling in the popup DOM elements
+           app.$.nodeOperation.innerHTML = "Edit Node";
+           editNode(data, cancelNodeEdit, callback);
+         },
+         addEdge: function (data, callback) {
+           if (data.from == data.to) {
+             var r = confirm("Do you want to connect the node to itself?");
+             if (r != true) {
+               callback(null);
+               return;
+             }
+           }
+           app.$.edgeOperation.innerHTML = "Add Edge";
+           editEdgeWithoutDrag(data, callback);
+         },
+         editEdge: {
+           editWithoutDrag: function(data, callback) {
+             app.$.edgeOperation.innerHTML = "Edit Edge";
+             editEdgeWithoutDrag(data,callback);
+           }
+         },
+         deleteNode: function (data, callback) {
+           // filling in the popup DOM elements
+           deleteNode(data, callback);
+         },
+         deleteEdge: function(data,callback){
+           deleteEdge(data,callback);
+         }
+       }
+     }
+
+     network = new vis.Network(container, data, options);
+     callback(network);
+     //
+     let d=Date.now();
+     //  console.log(d);
+     callback(d);
+     return network;
+   },
+     }
+   };
+
+})();
+</script>

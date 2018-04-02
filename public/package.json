@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "paper-button": "^0.0.0",
+    "paper-checkbox": "^0.10.0"
+  }
+}
