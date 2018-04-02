@@ -15,17 +15,17 @@
     </style>
     <spoggy-levelgraph></spoggy-levelgraph>
     <paper-button raised id="graph"  on-tap="_selectPage">Graph</paper-button>
-    <!--
+
   <paper-button raised id="el"  on-tap="_selectPage">Expression Libre</paper-button>
   <paper-button raised id="triplet"  on-tap="_selectPage">Triplet</paper-button>
-  <paper-button raised id="holacracy"  on-tap="_selectPage">Holocracy</paper-button>
+  <paper-button raised id="holacracy"  on-tap="_selectPage">Holocracy</paper-button><!--
   <paper-button raised id="options"  on-tap="_selectPage">Options</paper-button>
   <paper-button raised id="news"  on-tap="_selectPage">News</paper-button>-->
   <paper-button raised id="contact"  on-tap="_selectPage">Contact</paper-button>
   <paper-button raised id="about"  on-tap="_selectPage">About</paper-button>
 
   <template is="dom-if" if=[[pageIs(page,'el')]]>
-  <spoggy-el><p>el loading...</p></spoggy-el>
+  <spoggy-el><p>Expression Libre loading...</p></spoggy-el>
   </template>
   <template is="dom-if" if=[[pageIs(page,'triplet')]]>
   <spoggy-triplet><p>triplet loading...</p></spoggy-triplet>
@@ -72,6 +72,7 @@
   pageIs(page, activePage){
     return page == activePage;
   }
+
     }
 
     window.customElements.define(SpoggyApp.is, SpoggyApp);

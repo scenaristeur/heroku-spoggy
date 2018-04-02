@@ -24,7 +24,7 @@
 
     paper-button{background-color:#0D578B;color:white}
     </style>
-
+[[test]]
     <spoggy-graph-dialogs id="dialogs"></spoggy-graph-dialogs>
     <div id="mynetwork"></div>
 
@@ -46,7 +46,7 @@
         prop1: {
           type: String,
           value: 'spoggy-graph-network'
-        }
+        },
       };
     }
     _graphOk(date){
@@ -69,6 +69,13 @@
     //  this.network.fit();
     this.network.moveTo(this.network.body.data.nodes.get(1));
   });*/
+    this.visTest();
+    console.log(this.bidule);
+  /*  let app = this;
+    setInterval(function(){
+      app.test = this.bidule;
+      console.log("UP "+this.bidule);
+    }, 5000);*/
 }
 }
 

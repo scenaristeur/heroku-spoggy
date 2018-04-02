@@ -12,12 +12,25 @@ var NetworkBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     //  this.init();
     }
     static get properties() {
-  //    super();
       return {
-
+        bidule: {
+          type: String,
+          value: 'un bidule',
+          notify:true
+        }
       };
     }
+    
+visTest(){
+  console.log("################### vis test");
+//  setInterval(this.tick, 1000);
+}
+/*
+tick() {
+  this.bidule = new Date().toLocaleTimeString();
+  console.log("tick behavior "+this.bidule)
 
+}*/
     methodInBehavior() {
       return "this method is defined in Behavior";
     }
