@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
+<link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
 
 <dom-module id="spoggy-app">
   <template>
@@ -10,6 +11,7 @@
         display: block;
       }
     </style>
+    <spoggy-levelgraph></spoggy-levelgraph>
     <paper-button raised id="graph"  on-tap="_selectPage">Graph</paper-button>
   <paper-button raised id="el"  on-tap="_selectPage">Expression Libre</paper-button>
   <paper-button raised id="triplet"  on-tap="_selectPage">Triplet</paper-button>

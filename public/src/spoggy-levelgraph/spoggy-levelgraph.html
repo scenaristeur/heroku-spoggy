@@ -1,0 +1,81 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="./levelgraph-behavior.html">
+
+
+<dom-module id="spoggy-levelgraph">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <!--<h2>Hello [[prop1]]!</h2>-->
+  </template>
+
+  <script>
+    /**
+     * `spoggy-levelgraph`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyLevelgraph extends LevelgraphBehaviorMixin(Polymer.Element) {
+      static get is() { return 'spoggy-levelgraph'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-levelgraph'
+          }
+        };
+      }
+
+      _dbOk(date){
+        console.log("la db est ok en callback "+date);
+
+      }
+
+      ready() {
+    super.ready();
+
+    console.log("init levelgraph");
+  //  lg.base.init("spoggy", this._baseOk);
+  this.db = this.initLevelGraph(this, "spoggy",this._dbOk);
+    console.log(this.db);
+    var stream = this.db.getStream({ });
+let lg = this
+
+    stream.on("data", function(data) {
+      console.log(data);
+      var visTriplet = lg.level_to_Vis_Triplet(data);
+      if (visTriplet.node != undefined){
+        lg.addNodeToVis(visTriplet.node);
+      }
+      if (visTriplet.edge != undefined){
+        lg.addEdgeToVis(visTriplet.edge);
+      }
+    });
+
+    // When possible, use afterNextRender to defer non-critical    // work until after first paint.
+    /*Polymer.RenderStatus.afterNextRender(this, function() {
+    //  console.log(this.network);
+    //  this.network.fit();
+    this.network.moveTo(this.network.body.data.nodes.get(1));
+    });*/
+    var app = this;
+    }
+
+
+
+
+
+
+
+
+    }
+
+    window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
+  </script>
+</dom-module>
