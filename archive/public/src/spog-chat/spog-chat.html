@@ -30,28 +30,29 @@
       <div id="chatArea"  class="chatArea">
         <!--  <div align="right" id="toggleMessagesDiv">X</div>-->
 
-
+  <!--
         <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
           <b>ROOMS ({{rooms.length}})<paper-button on-tap="_openRoomDialog">+<paper-button></b>
 
-            <div>
+        <div>
               <template is="dom-repeat" items="{{rooms}}" selected="{{selectedRoomId}}" attr-for-selected="myroomid">
-                <div>
+                <div>-->
                   <!--                <span class="key">[[item.id]]</span>
                   <span class="room">[[item.name]]</span>
                   <span class="room">[[item.current]]</span>
                 -->
-                <paper-item on-tap="_switchRoom" myroomid="[[item.id]]" roomName$="[[item.name]]" >[[item.name]]</paper-item>
+            <!--    <paper-item on-tap="_switchRoom" myroomid="[[item.id]]" roomName$="[[item.name]]" >[[item.name]]</paper-item>
               </div>
             </template>
           </div>
         </div>
-
+-->
+<!--
         <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
           <div id="conversation"></div>
           <input id="data" style="width:200px;" />
           <input type="button" id="datasend" on-tap="_datasend" value="send" />
-        </div>
+        </div>-->
 
 
 
@@ -84,10 +85,10 @@
     <div id="form" class="form">
       <h3 class="title">Quel est votre pseudo?</h3>
       <input id="usernameInput" class="usernameInput" type="text" on-change="setUsername" maxlength="14" />
-      <center>
+
+     <center>
         <paper-fab id="fabEnter" on-tap="setUsername"  label="Go"></paper-fab>
       </center>
-
     </div>
 
   </li>
