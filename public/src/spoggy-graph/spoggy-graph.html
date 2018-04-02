@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="my-mixin.html">
+<!--<link rel="import" href="my-mixin.html">-->
 
 <link rel="import" href="./spoggy-graph-network.html">
 <!--
@@ -26,7 +26,7 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyGraph extends MyMixin(Polymer.Element) {
+  class SpoggyGraph extends Polymer.Element {
     static get is() { return 'spoggy-graph'; }
     static get properties() {
       return {
@@ -47,7 +47,7 @@
       console.log(this.tagName);
       let   container = this.$.mynetwork;
     //  testMyxin();
-      super.testMyxin();
+    //  super.testMyxin();
 //  vis.graph.init( this, container, this._graphOk);
 //Spoggy.General.graph.init(this, container, this._graphOk);
       /* test modules
