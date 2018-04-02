@@ -1,0 +1,7 @@
+{
+  "name": "S.P.O.G.G.Y",
+  "description": "Create your own rdf graphs",
+  "repository": "https://github.com/scenaristeur/heroku-spoggy",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "rdf", "levelgraph", "vis", "polymer", "smag0"]
+}
