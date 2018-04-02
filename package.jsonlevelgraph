@@ -1,0 +1,33 @@
+
+  "name": "heroku-spoggy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "6.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "postinstall": "cd public && bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scenaristeur/heroku-spoggy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scenaristeur/heroku-spoggy/issues"
+  },
+  "homepage": "https://github.com/scenaristeur/heroku-spoggy#readme",
+  "dependencies": {
+    "bower": "^1.8.2",
+    "express": "^4.16.2",
+    "level": "^3.0.0",
+    "level-sublevel": "^6.6.1",
+    "levelgraph": "^2.1.1",
+    "socket.io": "^2.0.4"
+  }
+}
