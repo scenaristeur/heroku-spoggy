@@ -25,7 +25,7 @@
     paper-button{background-color:#0D578B;color:white}
     </style>
 
-      <spoggy-graph-dialogs id="dialogs"></spoggy-graph-dialogs>
+    <spoggy-graph-dialogs id="dialogs"></spoggy-graph-dialogs>
     <div id="mynetwork"></div>
 
   </template>
@@ -52,30 +52,26 @@
     _graphOk(date){
       console.log("le graph est ok en callback "+date);
     }
-  /*  ready(){
-      // If you override ready, always call super.ready() first.
-      super.ready();
-      // Output the custom element's HTML tag to the browser console.
-      // Open your browser's developer tools to view the output.
-      console.log(this.tagName);
-      let   container = this.$.mynetwork;
-      //  vis.graph.init( this, container, this._graphOk);
-      super.init(this, container, this._graphOk, this.$.dialogs);
-    }*/
-    ready() {
-  super.ready();
+    /*  ready(){
+    // If you override ready, always call super.ready() first.
+    super.ready();
+    // Output the custom element's HTML tag to the browser console.
+    // Open your browser's developer tools to view the output.
+    console.log(this.tagName);
+  }*/
+  ready() {
+    super.ready();
 
-  this.network = this.networkDivInitialize(this.$.mynetwork, this, this.$.dialogs, this._graphOk);
-  // When possible, use afterNextRender to defer non-critical    // work until after first paint.
-  /*Polymer.RenderStatus.afterNextRender(this, function() {
-  //  console.log(this.network);
-  //  this.network.fit();
-  this.network.moveTo(this.network.body.data.nodes.get(1));
-});*/
-var app = this;
-  }
+    this.network = this.networkDivInitialize(this.$.mynetwork, this, this.$.dialogs, this._graphOk);
+    // When possible, use afterNextRender to defer non-critical    // work until after first paint.
+    /*Polymer.RenderStatus.afterNextRender(this, function() {
+    //  console.log(this.network);
+    //  this.network.fit();
+    this.network.moveTo(this.network.body.data.nodes.get(1));
+  });*/
+}
 }
 
-  window.customElements.define(SpoggyGraphNetwork.is, SpoggyGraphNetwork);
-  </script>
+window.customElements.define(SpoggyGraphNetwork.is, SpoggyGraphNetwork);
+</script>
 </dom-module>

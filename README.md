@@ -3,6 +3,11 @@
 
 Spoggy est un outil de stockage de connaissances.
 Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vous foisonnez d'idées mais avez toujours du mal à vous faire comprendre par un public 'non initié', si vous devez travailler en équipe de manière 'collaborative', si le collègue que vous devez remplacer part à la retraite sans vous avoir donné toutes les clés de sa fonction, si vous voulez exprimer de manière simple une tension 'holocratique', Spoggy peut vous aider.
+# DEMO
+[DEMO](https://spoggy.herokuapp.com/)
+
+# Deployer Spoggy sur Heroku 
+[![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Spoggy facilite le stockage, la transmission, le partage des connaissances :
 ## entre humains
@@ -17,10 +22,7 @@ Spoggy facilite le stockage, la transmission, le partage des connaissances :
 - description d'un contexte, d'un lieu,
 - possiblite d'inférence sur des graphes RDF, déduction d'information non contenues dans un graphe en fonction de règles.
 
-[DEMO](https://spoggy.herokuapp.com/)
 
-
-[![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 - [plus d'infos sur le wiki Spoggy](https://github.com/scenaristeur/heroku-spoggy/wiki)
 
