@@ -13,7 +13,7 @@
       display: block;
     }
     </style>
-    <spoggy-graph-network></spoggy-graph-network>
+    <spoggy-graph-network vis="{{vis}}" lg="{{lg}}"></spoggy-graph-network>
 
   </template>
 
@@ -33,19 +33,25 @@
         prop1: {
           type: String,
           value: 'spoggy-graph'
-        }
+        } ,
+         vis:{
+            type: Object,
+            notify: true,
+            observable:"_visChanged"
+          }
       };
     }
-    _graphOk(date){
+  /*  _graphOk(date){
   console.log("le graph est ok en callback "+date);
-}
+}*/
     ready(){
       // If you override ready, always call super.ready() first.
       super.ready();
       // Output the custom element's HTML tag to the browser console.
       // Open your browser's developer tools to view the output.
-      console.log(this.tagName);
-      let   container = this.$.mynetwork;
+    //  console.log(this.tagName);
+    //  let   container = this.$.mynetwork;
+    //  console.log(this.$.mynetwork);
 
     //  testMyxin();
     //  super.testMyxin();
@@ -57,6 +63,11 @@
 var result = "ok";
 Spoggy.Graph.base.init("touch" , () => console.log("bop "+result));
 SomeNamespace.SomeBehavior.base.init("touch1" , () => console.log("bop1 "+result));*/
+this.vis.log("spoggy graph  VIS LOG ");
+    }
+    _visChanged(){
+      console.log("VIS CHANGED GRAPH");
+      console.log(vis);
     }
   }
 

@@ -24,8 +24,9 @@
 
     paper-button{background-color:#0D578B;color:white}
     </style>
-[[test]]
+    [[test]]
     <spoggy-graph-dialogs id="dialogs"></spoggy-graph-dialogs>
+        <paper-button raised   on-tap="_testlgBehavior">test Levelgraph BEhavior</paper-button>-->
     <div id="mynetwork"></div>
 
   </template>
@@ -47,10 +48,25 @@
           type: String,
           value: 'spoggy-graph-network'
         },
+
+        vis:{
+          type: Object,
+          notify: true,
+          observable:"_visChanged"
+        }
       };
+    }
+
+    _testlgBehavior(){
+    this.lg.log("spoggy graph network   LG LOG ");
     }
     _graphOk(date){
       console.log("le graph est ok en callback "+date);
+    }
+
+    _visChanged(){
+      console.log("VIS CHANGED NETWORK GRAPH");
+      console.log(vis);
     }
     /*  ready(){
     // If you override ready, always call super.ready() first.
@@ -61,21 +77,21 @@
   }*/
   ready() {
     super.ready();
-
-    this.network = this.networkDivInitialize(this.$.mynetwork, this, this.$.dialogs, this._graphOk);
+    this.vis.log("spoggy graph network VIS LOG ");
+    this.vis.network = this.networkDivInitialize(this.$.mynetwork, this, this.$.dialogs, this._graphOk);
     // When possible, use afterNextRender to defer non-critical    // work until after first paint.
     /*Polymer.RenderStatus.afterNextRender(this, function() {
     //  console.log(this.network);
     //  this.network.fit();
     this.network.moveTo(this.network.body.data.nodes.get(1));
   });*/
-    this.visTest();
-    console.log(this.bidule);
+  this.visTest();
+  console.log(this.bidule);
   /*  let app = this;
-    setInterval(function(){
-      app.test = this.bidule;
-      console.log("UP "+this.bidule);
-    }, 5000);*/
+  setInterval(function(){
+  app.test = this.bidule;
+  console.log("UP "+this.bidule);
+}, 5000);*/
 }
 }
 

@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="./levelgraph-behavior.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 
 <dom-module id="spoggy-levelgraph">
@@ -10,6 +11,8 @@
       }
     </style>
     <!--<h2>Hello [[prop1]]!</h2>-->
+        <!--<paper-button raised id="el"  on-tap="_initlevelgraph">Init levelgraph</paper-button>-->
+          <paper-button raised id="el"  on-tap="_testVisBehavior">test Vis BEhavior</paper-button>-->
   </template>
 
   <script>
@@ -25,24 +28,21 @@
       static get is() { return 'spoggy-levelgraph'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'spoggy-levelgraph'
+              lg:{
+            type: Object,
+            notify: true
           }
         };
       }
 
-      _dbOk(date){
-        console.log("la db est ok en callback "+date);
 
-      }
 
       ready() {
     super.ready();
 
-    console.log("init levelgraph");
+  //  console.log("init levelgraph");
   //  lg.base.init("spoggy", this._baseOk);
-  this.db = this.initLevelGraph(this, "spoggy",this._dbOk);
+/*  this.db = this.initLevelGraph(this, "spoggy",this._dbOk);
     console.log(this.db);
     var stream = this.db.getStream({ });
 let lg = this
@@ -56,7 +56,7 @@ let lg = this
       if (visTriplet.edge != undefined){
         lg.addEdgeToVis(visTriplet.edge);
       }
-    });
+    });*/
 
     // When possible, use afterNextRender to defer non-critical    // work until after first paint.
     /*Polymer.RenderStatus.afterNextRender(this, function() {
@@ -64,7 +64,20 @@ let lg = this
     //  this.network.fit();
     this.network.moveTo(this.network.body.data.nodes.get(1));
     });*/
-    var app = this;
+  //  var app = this;
+  this.lg.log("patatos ");
+//  this.lg.log("patate")
+    }
+  /*  _initlevelgraph(){
+      this.db = this.initLevelGraph(this, "spoggy",this._dbOk);
+      console.log(this.db)
+    }
+    _dbOk(date){
+      console.log("la db est ok en callback "+date);
+    }*/
+
+    _testVisBehavior(){
+    this.vis.log("spoggy levelgraph test  VIS LOG ");
     }
 
 
@@ -72,9 +85,9 @@ let lg = this
 
 
 
-
-
     }
+
+
 
     window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
   </script>

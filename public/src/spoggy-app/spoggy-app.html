@@ -7,76 +7,88 @@
 <link rel="import" href="../spoggy-contact/spoggy-contact.html">
 <link rel="import" href="../spoggy-about/spoggy-about.html">
 
+
 <dom-module id="spoggy-app">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
-    <spoggy-levelgraph></spoggy-levelgraph>
+    <spoggy-levelgraph lg="{{lg}}" vis="{{vis}}"></spoggy-levelgraph>
     <paper-button raised id="graph"  on-tap="_selectPage">Graph</paper-button>
 
-  <paper-button raised id="el"  on-tap="_selectPage">Expression Libre</paper-button>
-  <paper-button raised id="triplet"  on-tap="_selectPage">Triplet</paper-button>
-  <paper-button raised id="holacracy"  on-tap="_selectPage">Holocracy</paper-button><!--
-  <paper-button raised id="options"  on-tap="_selectPage">Options</paper-button>
-  <paper-button raised id="news"  on-tap="_selectPage">News</paper-button>-->
-  <paper-button raised id="contact"  on-tap="_selectPage">Contact</paper-button>
-  <paper-button raised id="about"  on-tap="_selectPage">About</paper-button>
+    <paper-button raised id="el"  on-tap="_selectPage">Expression Libre</paper-button>
+    <paper-button raised id="triplet"  on-tap="_selectPage">Triplet</paper-button>
+    <paper-button raised id="holacracy"  on-tap="_selectPage">Holocracy</paper-button><!--
+      <paper-button raised id="options"  on-tap="_selectPage">Options</paper-button>
+      <paper-button raised id="news"  on-tap="_selectPage">News</paper-button>-->
+      <paper-button raised id="contact"  on-tap="_selectPage">Contact</paper-button>
+      <paper-button raised id="about"  on-tap="_selectPage">About</paper-button>
+    <!-- DEBUG POUR TESTER LE CHARGEMENT DES BEHAVIORS (vis n'est chargé que quand le module spoggy-graph est chargé) -->
+      <paper-button raised id="el"  on-tap="_testLgBehavior">test LG BEhavior</paper-button>
+      <paper-button raised id="el"  on-tap="_testVisBehavior">test Vis BEhavior</paper-button>-->
 
-  <template is="dom-if" if=[[pageIs(page,'el')]]>
-  <spoggy-el><p>Expression Libre loading...</p></spoggy-el>
-  </template>
-  <template is="dom-if" if=[[pageIs(page,'triplet')]]>
-  <spoggy-triplet><p>triplet loading...</p></spoggy-triplet>
-  </template>
-  <template is="dom-if" if=[[pageIs(page,'holacracy')]]>
-  <spoggy-holacracy><p>holacracy loading...</p></spoggy-holacracy>
-  </template>
-  <template is="dom-if" if=[[pageIs(page,'graph')]]>
-  <spoggy-graph><p>graph loading...</p></spoggy-graph>
-  </template>
-  <template is="dom-if" if=[[pageIs(page,'options')]]>
-  <spoggy-options><p>options loading...</p></spoggy-options>
-  </template>
-  <template is="dom-if" if=[[pageIs(page,'news')]]>
-  <spoggy-news><p>news loading...</p></spoggy-news>
-  </template>
-  <template is="dom-if" if=[[pageIs(page,'contact')]]>
-  <spoggy-contact><p>contact loading...</p></spoggy-contact>
-  </template>
-  <template is="dom-if" if=[[pageIs(page,'about')]]>
-  <spoggy-about><p>about loading...</p></spoggy-about>
-  </template>
-  </template>
+      <template is="dom-if" if=[[pageIs(page,'el')]]>
+        <spoggy-el><p>Expression Libre loading...</p></spoggy-el>
+      </template>
+      <template is="dom-if" if=[[pageIs(page,'triplet')]]>
+        <spoggy-triplet><p>triplet loading...</p></spoggy-triplet>
+      </template>
+      <template is="dom-if" if=[[pageIs(page,'holacracy')]]>
+        <spoggy-holacracy><p>holacracy loading...</p></spoggy-holacracy>
+      </template>
+      <template is="dom-if" if=[[pageIs(page,'graph')]]>
+        <spoggy-graph vis="{{vis}}" lg="{{lg}}"><p>graph loading...</p></spoggy-graph>
+      </template>
+      <template is="dom-if" if=[[pageIs(page,'options')]]>
+        <spoggy-options><p>options loading...</p></spoggy-options>
+      </template>
+      <template is="dom-if" if=[[pageIs(page,'news')]]>
+        <spoggy-news><p>news loading...</p></spoggy-news>
+      </template>
+      <template is="dom-if" if=[[pageIs(page,'contact')]]>
+        <spoggy-contact><p>contact loading...</p></spoggy-contact>
+      </template>
+      <template is="dom-if" if=[[pageIs(page,'about')]]>
+        <spoggy-about><p>about loading...</p></spoggy-about>
+      </template>
+    </template>
 
-  <script>
+    <script>
     /**
-     * @customElement
-     * @polymer
-     */
+    * @customElement
+    * @polymer
+    */
     class SpoggyApp extends Polymer.Element {
       static get is() { return 'spoggy-app'; }
       static get properties() {
         return {
           page:{
             type: String,
-            value: 'holacracy'
-          }
+            value: 'graph'
+          },
         };
       }
 
       _selectPage(event, detail, sender){
-    this.page = event.currentTarget.id;
-  }
-  pageIs(page, activePage){
-    return page == activePage;
-  }
-
+        this.page = event.currentTarget.id;
+      }
+      pageIs(page, activePage){
+        return page == activePage;
+      }
+      _testLgBehavior(){
+        this.lg.log("TEST patatos LG Debilos");
+        console.log(this.lg.dbFake);
+        console.log(this.lg.db);
+      }
+      _testVisBehavior(){
+      this.vis.log("spoggy app  VIS LOG ");
+      console.log(this.vis.networkFake);
+      console.log(this.vis.network);
+      }
     }
 
     window.customElements.define(SpoggyApp.is, SpoggyApp);
-  </script>
-</dom-module>
-
+    </script>
+  </dom-module>

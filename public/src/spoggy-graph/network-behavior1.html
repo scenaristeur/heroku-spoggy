@@ -9,7 +9,7 @@ var NetworkBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     constructor() {
       super();
       console.log("networkbehavior")
-      this.init();
+    //  this.init();
     }
     static get properties() {
       return {
@@ -17,28 +17,10 @@ var NetworkBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           type: String,
           value: 'un bidule',
           notify:true
-        },
-
-        vis:{
-          type: Object,
-          notify: true
         }
       };
     }
-
-
-    init(){
-      console.log("init VIS func");
-      this.vis = {
-       networkFake : "VIS network FAKE",
-
-        log(text){
-          console.log("La c'est VIS "+text)
-        },
-
-      }
-    }
-
+    
 visTest(){
   console.log("################### vis test");
 //  setInterval(this.tick, 1000);
@@ -160,7 +142,7 @@ this.dialogs = dialogs;
   }
 
 /* fonctionnalités VIS JS  http://visjs.org/examples/network/other/manipulationEditEdgeNoDrag.html*/
-/* editNode(data, cancelAction, callback) {
+ editNode(data, cancelAction, callback) {
    console.log(this.dialogs)
 this.dialogs.$.nodeLabel.value = data.label;
 this.dialogs.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
@@ -232,7 +214,7 @@ callback(data);
 console.log(data);
 //sg.action.delete(data, callback);
 callback(data);
-}*/
+}
   }
 });
 </script>
