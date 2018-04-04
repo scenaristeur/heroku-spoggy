@@ -6,6 +6,7 @@
 <link rel="import" href="../spoggy-holacracy/spoggy-holacracy.html">
 <link rel="import" href="../spoggy-contact/spoggy-contact.html">
 <link rel="import" href="../spoggy-about/spoggy-about.html">
+<link rel="import" href="../spog-graphe/spog-graphe.html">
 
 
 <dom-module id="spoggy-app">
@@ -15,6 +16,7 @@
       display: block;
     }
     </style>
+        <spog-graphe lg="{{lg}}" vis="{{vis}}"></spog-graphe> <!-- test d'un ancien plgin car les boutons de navigation et manipulation n'apparaissent pas dans le graphe -->
     <spoggy-levelgraph lg="{{lg}}" vis="{{vis}}"></spoggy-levelgraph>
     <paper-button raised id="graph"  on-tap="_selectPage">Graph</paper-button>
 

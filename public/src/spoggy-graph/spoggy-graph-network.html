@@ -6,24 +6,28 @@
 <script src="../../bower_components/vis/dist/vis.min.js"></script>
 <link rel="import" href="styles/vis-styles.html">
 <link rel="import" href="styles/graphe-styles.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
 
 <script src="lib/commandes.js"></script>
 <script src="lib/import-export.js"></script>
 
 <dom-module id="spoggy-graph-network">
   <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
     <style include="graphe-styles"></style>
     <style include="vis-styles"></style>
     <style>
-
+    #fabsetting {
+      position: fixed;
+      right: 25px;
+      top: 100px;
+    }
+    #fabEye {
+      position: fixed;
+      right: 25px;
+      top: 175px;
+    }
     paper-button{background-color:#0D578B;color:white}
     </style>
+
     [[test]]
     <spoggy-graph-dialogs id="dialogs"></spoggy-graph-dialogs>
         <paper-button raised   on-tap="_testlgBehavior">test Levelgraph BEhavior</paper-button>-->
