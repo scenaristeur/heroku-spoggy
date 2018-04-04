@@ -1,0 +1,208 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="spoggy-holacracy">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+
+    <!--
+    <template is="dom-if" if=[[etapeIs(etape,'tension')]]>
+    <spoggy-el><p>Expression Libre loading...</p></spoggy-el>
+  </template>-->
+
+  <template is="dom-if" if=[[etapeIs(etape,'tension')]]>
+    <p>En holacratie, une tension est un écart entre "Ce qui est" et "Ce qui devrait être".</p>
+    <paper-textarea rows="2" value = "{{cqe::change}}" label="Ce qui est (le problème)" autofocus></paper-textarea>
+    <paper-textarea rows="2" value = "{{cqde::change}}" label="Ce qui devrait être (la solution)"></paper-textarea>
+    <paper-button on-tap="_suivant" raised>Suivant</paper-button>
+  </template>
+
+  <template is="dom-if" if=[[etapeIs(etape,'deux')]]>
+    <p>Une tension peut être attachée à un domaine, et concerner plusieurs acteurs, et ça serait bien aussi de lui donner un petit nom...</p>
+    <paper-input label="Nom" value="{{nom::change}}" autofocus></paper-input>
+
+
+    <fieldset>
+       <legend>Domaines</legend>
+       <paper-input value="{{domaineTemp::change}}" label="Ajouter un domaine" ></paper-input>
+       <paper-fab
+       icon="add"
+       title="Ajouter un acteur"
+       on-tap="createDomaine"
+       class="blue">
+     </paper-fab>
+
+<!--     <paper-icon-button icon="delete" on-tap="clearDomaines"></paper-icon-button>-->
+     <template is="dom-repeat" items="{{domaines}}">
+       <paper-button  raised domaine={{item}}>{{item}}
+         <paper-icon-button icon="delete" on-tap="deleteDomaine"></paper-icon-button>
+       </paper-button>
+     </template>
+     </fieldset>
+
+     <fieldset>
+        <legend>Acteurs</legend>
+      <paper-input value="{{acteurTemp::change}}" label="Ajouter un acteur" ></paper-input>
+
+        <paper-fab
+        icon="add"
+        title="Ajouter un acteur"
+        on-tap="createActeur"
+        class="blue">
+      </paper-fab>
+
+    <!--  <paper-icon-button icon="delete" on-tap="clearActeurs"></paper-icon-button>-->
+      <template is="dom-repeat" items="{{acteurs}}">
+        <paper-button raised  acteur={{item}}>{{item}}
+          <paper-icon-button icon="delete" on-tap="deleteActeur"></paper-icon-button>
+        </paper-button>
+      </template>
+
+      </fieldset>
+
+<!--affichage de la liste de individus -->
+  <paper-toast id="toast1" class="fit-bottom" text="Nom ne peut être vide."></paper-toast>
+  <paper-toast id="toast2" class="fit-bottom" text="Date de naissance ne peut être vide."></paper-toast>
+
+  <paper-button on-tap="_precedent"  raised>Précédent</paper-button>
+  <paper-button on-tap="_suivant"  raised>Suivant</paper-button>
+</template>
+
+</template>
+
+<script>
+/**
+* `spoggy-holacracy`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyHolacracy extends Polymer.Element {
+  static get is() { return 'spoggy-holacracy'; }
+  static get properties() {
+    return {
+      indice: {
+        type: Number,
+        value : 0
+      },
+      etape:{
+        type: String,
+        value: "tension"
+      },
+      etapes:{
+        type: Array,
+        value: ["tension", "deux", "trois"]
+      },
+      domaine: {
+        type : Object,
+        notify : true,
+        value:{	}
+      },
+      acteur: {
+        type : Object,
+        notify : true,
+        value:{	}
+      },
+      acteurs: {
+        type : Array,
+        notify : true,
+        value : []
+      },
+      domaines: {
+        type: Array,
+        notify: true,
+        value: []
+      },
+      tension:{
+        nom:"",
+        cqe: "",
+        cqde: ,
+        domaines: [],
+        acteurs: []
+      }
+    };
+  }
+
+  _suivant(event, detail, sender){
+    this.indice = this.indice+1;
+    console.log(this.indice);
+    this.etape =  this.etapes[this.indice];
+    console.log(this.etape);
+  }
+  _precedent(event, detail, sender){
+    this.indice = this.indice-1;
+    console.log(this.indice);
+    this.etape =  this.etapes[this.indice];
+    console.log(this.etape);
+  }
+  etapeIs(etape, activeEtape){
+    return etape == activeEtape;
+  }
+  createActeur(e){
+  //  console.log(e);
+    console.log(this.acteurTemp);
+    this.push('acteurs', this.acteurTemp);
+    this.acteurTemp = "";
+  }
+  createDomaine(e){
+    //console.log(e);
+    console.log(this.domaineTemp);
+    this.push('domaines', this.domaineTemp);
+    this.domaineTemp = "";
+  /*  if ((this.$.indivNomInput.value!=undefined)
+    &&(this.$.dateN.value!=undefined)){
+      this.push('individus', this.individu);
+      //Update manuelle
+      var indivTemp=this.individus;
+      this.individus=[];
+      this.individus=indivTemp;
+      this.individu={};
+      console.log(this.individus);
+    }
+    else{
+      if(this.$.dateN.value==undefined){
+        this.$.toast2.fitInto=this.$.dateN;
+        this.$.toast2.open();
+      }
+      if(this.$.indivNomInput.value==undefined){
+        this.$.toast1.fitInto=this.$.indivNomInput;
+        this.$.toast1.open();
+      }
+    }*/
+  }
+  deleteDomaine(e){
+    console.log(e.model.item)
+    var domaine= e.model.item;
+    var index=this.domaines.indexOf(domaine);
+    console.log(index);
+    if (index != -1) {
+      this.splice('domaines',index, 1);
+    }
+    console.log(this.domaines);
+  }
+  deleteActeur(e){
+    console.log(e.model.item)
+    var acteur = e.model.item;
+    var index=this.acteurs.indexOf(acteur);
+    console.log(index);
+    if (index != -1) {
+      this.splice('acteurs',index, 1);
+    }
+    console.log(this.acteurs);
+  }
+}
+
+window.customElements.define(SpoggyHolacracy.is, SpoggyHolacracy);
+</script>
+</dom-module>
