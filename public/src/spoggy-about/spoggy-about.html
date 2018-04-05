@@ -3,35 +3,62 @@
 <dom-module id="spoggy-about">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+    /*  display: block;  // interfere avec la balise hidden sur l'element spoggy-app */
+    }
     </style>
-    <h2><a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank">
-      https://github.com/scenaristeur/heroku-spoggy</a></h2>
+    <p>Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> & les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>, mais ceux-ci ne sont pas pris en compte par tous les navigateurs Web</p>
+    <p>Spoggy fonctionne avec les dernières versions de Chrome et Opéra.<br>
+      Le chargement est lent avec Firefox.<br>
+      Vous pouvez vérifier la compatibilité de votre navigateur au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a></p>
+      <br>
+      <p> Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour : <a href="standalone/interface.html">SPOGGY-STANDALONE</a></p>
+      <br>
+      <p>Vous pouvez obtenir plus d'informations sur Spoggy ou contribuer à son développement sur <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
+      </p>
+
+      <h2>Quelques docs, exemples</h2>
+      <p>exemple <a href="./doc/spoggy_ncc_vue0.png" target="_blank">spoggy_ncc_vue0.png</a>
+      </p>
+
+      <h2>Import / Export </h2>
+      <h3>Importer un fichier spoggy</h3>
+      <ul>
+        <li>
+          Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter avec la commande "/e", et l'envoyer par mail à vos collaborateurs.
+        </li>
+
+        <li>  Avec la commande "/i" pouvez importer un fichier spoggy comme celui de
+          <a href="./exemple_files/Ncc_2018_spoggy_nodes_edges_1519860090242.json"
+          target="_blank">
+          la nuit du code des Bricodeurs
+        </a> (clic droit / "Enregistrer Sous")
+      </li>
+    </ul>
+
   </template>
 
   <script>
-    /**
-     * `spoggy-about`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyAbout extends Polymer.Element {
-      static get is() { return 'spoggy-about'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-about'
-          }
-        };
-      }
+  /**
+  * `spoggy-about`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyAbout extends Polymer.Element {
+    static get is() { return 'spoggy-about'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-about'
+        }
+      };
     }
+  }
 
-    window.customElements.define(SpoggyAbout.is, SpoggyAbout);
+  window.customElements.define(SpoggyAbout.is, SpoggyAbout);
   </script>
 </dom-module>

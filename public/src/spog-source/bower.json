@@ -1,6 +1,6 @@
 {
-  "name": "spoggy-graph-dialogs",
-  "main": "spoggy-graph-dialogs.html",
+  "name": "spog-source",
+  "main": "spog-source.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },

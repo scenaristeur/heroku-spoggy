@@ -1,4 +1,4 @@
-# \<spoggy-graph-dialogs\>
+# \<spog-source\>
 
 
 
