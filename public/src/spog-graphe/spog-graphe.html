@@ -12,7 +12,7 @@
 <link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 <link rel="import" href="../spog-eye/spog-eye.html">
 <link rel="import" href="../spog-source/spog-source.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<!--<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">-->
 
 
 <!--
@@ -197,10 +197,15 @@ A COMPLETER AVEC  DANS LIB  : IMPORT / EXPORT, COMMANDES -->
         <!--<spog-source></spog-source>-->
       </div>
     </div>
-    <div id="mynetwork"></div>
-    <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
-    <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
-    <input id="inputMessage" class="inputMessage" on-change="traiteMessage" placeholder="Tapez votre triplet ici, précédé de '::' ou une commande : '/e' pour exporter, '/t' pour exporter au format .ttl, '/i' pour importer" />
+
+    <div id="container">
+      <div id="mynetwork"></div>
+      <input id="inputMessage" class="inputMessage" on-change="traiteMessage" placeholder="Tapez votre triplet ici, précédé de '::' ou une commande : '/e' pour exporter, '/t' pour exporter au format .ttl, '/i' pour importer" />
+    </div>
+
+        <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
+        <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
+
   </template>
 
   <script>
@@ -399,7 +404,7 @@ _paramsChanged(){
   importFromParam(this.params,this.network,this);
   //var retourCommande = catchCommande(message,this.network,this);
   //  app.$.filepicker = app.params.source;
-  }
+}
 }
 
 traiteMessage(){
@@ -528,7 +533,7 @@ _socketChanged(s){
 
 
   this.socket.on('initDb', function(db){
-  //  app.params = app.recupParams();
+    //  app.params = app.recupParams();
     console.log(app.params);
     if (Object.keys(app.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
     console.log(db);
@@ -1411,22 +1416,22 @@ addEdgeIfNotExist (network, data){
   else{
     this.network.body.data.edges.add(data);
   }
-  }else{
-    //s'il existe déjà, ne serait-ce pas un renommage ?
-    //  console.log("renomme");
-    //  console.log(data);
-    //existNode[0].label = data.label;
-    //  editNode(data, null);
-    //    console.log(this.network.body.data.edges);
+}else{
+  //s'il existe déjà, ne serait-ce pas un renommage ?
+  //  console.log("renomme");
+  //  console.log(data);
+  //existNode[0].label = data.label;
+  //  editNode(data, null);
+  //    console.log(this.network.body.data.edges);
 
-    if (data[0] != undefined){ // parfois edges.get retourne un tableau, parfois directement l'objet
-      this.network.body.data.edges.update({id: data[0].id, label: data[0].label});
-  }
-  else{
-      this.network.body.data.edges.update({id: data.id, label: data.label});
-  }
-    //  console.log(this.network.body.data.edges);
-  }
+  if (data[0] != undefined){ // parfois edges.get retourne un tableau, parfois directement l'objet
+  this.network.body.data.edges.update({id: data[0].id, label: data[0].label});
+}
+else{
+  this.network.body.data.edges.update({id: data.id, label: data.label});
+}
+//  console.log(this.network.body.data.edges);
+}
 }
 catch (err) {
   console.log(err);
