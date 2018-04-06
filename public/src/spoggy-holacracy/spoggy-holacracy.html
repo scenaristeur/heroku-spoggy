@@ -6,77 +6,215 @@
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
+<!-- paper-card  inspiré de https://github.com/PolymerElements/paper-card/blob/master/demo/index.html-->
+
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<!-- fin paper-card -->
+
 <dom-module id="spoggy-holacracy">
   <template>
-    <style>
-    :host {
-    /*  display: block;  // interfere avec la balise hidden sur l'element spoggy-app sous chrome, mais pas sous firefox ??*/
-    }
-    </style>
+    <custom-style>
+      <style is="custom-style" >  <!-- <style is="custom-style" include="demo-pages-shared-styles"> -->
+      /*demo-snippet {
+      --demo-snippet-demo: {
+      background: var(--paper-grey-200);
+      padding: 16px;
+    };
+    --demo-snippet-code: {
+    max-height: 300px;
+  }
+  }*/
+  .vertical-section-container {
+    max-width: 400px;
+  }
+  paper-card {
+    width: 100%;
+  }
+  .horizontal {
+    @apply --layout-horizontal;
+  }
+  .flex {
+    @apply --layout-flex;
+  }
+  .justified {
+    @apply --layout-justified;
+  }
+  .amber {
+    background: var(--paper-amber-900);
+  }
+  .lime {
+    background: var(--paper-lime-500);
+  }
+  .cyan {
+    background: var(--paper-cyan-500);
+  }
+  .dark {
+    background: var(--paper-blue-grey-500);
+  }
+  paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
+    color: white;
+    --paper-card-header-color: white;
+  }
+  paper-checkbox {
+    display: block;
+    margin-bottom: 4px;
+    --paper-checkbox-label-color: white;
+    --paper-checkbox-unchecked-color: white;
+  }
+  paper-icon-button {
+    color: var(--paper-grey-600);
+  }
+  paper-icon-button.white {
+    color: white !important;
+  }
 
-    <!--
-    <template is="dom-if" if=[[etapeIs(etape,'tension')]]>
-    <spoggy-el><p>Expression Libre loading...</p></spoggy-el>
-  </template>-->
+  </style>
+  <style is="custom-style">
+  .cafe-header { @apply --paper-font-headline; }
+  .cafe-light { color: var(--paper-grey-600); }
+  .cafe-location {
+    float: right;
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  .cafe-reserve { color: var(--google-blue-500); }
+  iron-icon.star {
+    --iron-icon-width: 16px;
+    --iron-icon-height: 16px;
+    color: var(--paper-amber-500);
+  }
+  iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+  </style>
+  <style>
+  #eyediv {
+    padding: .2em;
+    border: 1px solid #aaaaaa;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin: 10px;
+  }
+  paper-tabs {
+    background-color: black;
+    width: 100%;
+    margin-bottom: 1px;
+    color: #fff;
+  }
+  .eyetab1 {
+    width: 100%;
+    height: 200px;
 
-  <template is="dom-if" if=[[etapeIs(etape,'tension')]]>
-    <p>En holacratie, une tension est un écart entre "Ce qui est" et "Ce qui devrait être".</p>
-    <paper-textarea rows="2" value = "{{cqe::change}}" label="Ce qui est (le problème)" autofocus></paper-textarea>
-    <paper-textarea rows="2" value = "{{cqde::change}}" label="Ce qui devrait être (la solution)"></paper-textarea>
-    <paper-button on-tap="_suivant" raised>Suivant</paper-button>
-  </template>
-
-  <template is="dom-if" if=[[etapeIs(etape,'deux')]]>
-    <p>Une tension peut être attachée à un domaine, et concerner plusieurs acteurs, et ça serait bien aussi de lui donner un petit nom...</p>
-    <paper-input label="Nom" value="{{nom::change}}" autofocus></paper-input>
+    font-family: Courier, "Courier New", monospace !important;
+  }
+  </style>
+</custom-style>
 
 
-    <fieldset>
-       <legend>Domaines</legend>
-       <paper-input value="{{domaineTemp::change}}" label="Ajouter un domaine" ></paper-input>
-       <paper-fab
-       icon="add"
-       title="Ajouter un acteur"
-       on-tap="createDomaine"
-       class="blue">
-     </paper-fab>
+<!-- test paper-card -->
+<paper-card > <!--      <paper-card image="../../bower_components/paper-card/demo/donuts.png" alt="Tension"> -->
+  <div class="card-content">
+    <div class="cafe-header">{{titre}}</div>
+    <div class="cafe-location cafe-light">type: {{type}}</div>
 
-<!--     <paper-icon-button icon="delete" on-tap="clearDomaines"></paper-icon-button>-->
-     <template is="dom-repeat" items="{{domaines}}">
-       <paper-button  raised domaine={{item}}>{{item}}
-         <paper-icon-button icon="delete" on-tap="deleteDomaine"></paper-icon-button>
-       </paper-button>
-     </template>
-     </fieldset>
+  <div id="eyediv" class="ui-corner-all">
+    <paper-tabs selected={{selected}}>
+      <paper-tab>Création</paper-tab>
+      <paper-tab>Domaines & Acteurs</paper-tab>
+      <paper-tab>Précisions</paper-tab>
+      <paper-tab>Suite</paper-tab>
+      <paper-tab>Vérif</paper-tab>
+    </paper-tabs>
 
-     <fieldset>
-        <legend>Acteurs</legend>
-      <paper-input value="{{acteurTemp::change}}" label="Ajouter un acteur" ></paper-input>
+    <div>
+      <iron-pages selected={{selected}}>
 
-        <paper-fab
-        icon="add"
-        title="Ajouter un acteur"
-        on-tap="createActeur"
-        class="blue">
-      </paper-fab>
+        <div>
+          <p>En holacratie, une tension est un écart entre "Ce qui est" et "Ce qui devrait être".
+            <a href="https://igipartners.com/sites/default/files/constitution_4.1_0.pdf" target="_blank">En savoir plus...</a></p>
+            <p>Pour commencer à enregistrer une TENSION, complétez le formulaire ci-dessous. Vous pouvez également préciser un 'titre' pour cette tension.</p>
+            <paper-textarea class="cafe-light" rows="2" value = "{{cqe::input}}" label="- ce qui est (le problème) :" autofocus></paper-textarea>
+            <paper-textarea rows="2" value = "{{cqde::input}}" label="- ce qui devrait être (la solution)"></paper-textarea>
+            <paper-input label="Choisissez un titre pour faciliter la recherche de cette Tension" value="{{titre::input}}" autofocus></paper-input>
+          </div>
 
-    <!--  <paper-icon-button icon="delete" on-tap="clearActeurs"></paper-icon-button>-->
-      <template is="dom-repeat" items="{{acteurs}}">
-        <paper-button raised  acteur={{item}}>{{item}}
-          <paper-icon-button icon="delete" on-tap="deleteActeur"></paper-icon-button>
-        </paper-button>
-      </template>
 
-      </fieldset>
 
-<!--affichage de la liste de individus -->
-  <paper-toast id="toast1" class="fit-bottom" text="Nom ne peut être vide."></paper-toast>
-  <paper-toast id="toast2" class="fit-bottom" text="Date de naissance ne peut être vide."></paper-toast>
+          <div>
+            <p>Une tension peut être attachée à un ou plusieurs domaines, et concerner plusieurs acteurs.</p>
+            <fieldset>
+              <legend>Domaines</legend>
+              <paper-input value="{{domaineTemp::input}}" label="Ajouter un domaine (exemple : Ecologie, Mobilité...)" ></paper-input>
+              <paper-fab
+              icon="add"
+              title="Ajouter un acteur"
+              on-tap="createDomaine"
+              class="blue">
+            </paper-fab>
+            <!--     <paper-icon-button icon="delete" on-tap="clearDomaines"></paper-icon-button>-->
+            <template is="dom-repeat" items="{{domaines}}">
+              <paper-button  raised domaine={{item}}>{{item}}
+                <paper-icon-button icon="delete" on-tap="deleteDomaine"></paper-icon-button>
+              </paper-button>
+            </template>
+          </fieldset>
 
-  <paper-button on-tap="_precedent"  raised>Précédent</paper-button>
-  <paper-button on-tap="_suivant"  raised>Suivant</paper-button>
-</template>
+          <fieldset>
+            <legend>Acteurs</legend>
+            <paper-input value="{{acteurTemp::input}}" label="Ajouter un acteur (exemple : Gouvernement, LaMetropole, LesBricodeurs...)" ></paper-input>
+            <paper-fab
+            icon="add"
+            title="Ajouter un acteur"
+            on-tap="createActeur"
+            class="blue">
+          </paper-fab>
+          <!--  <paper-icon-button icon="delete" on-tap="clearActeurs"></paper-icon-button>-->
+          <template is="dom-repeat" items="{{acteurs}}">
+            <paper-button raised  acteur={{item}}>{{item}}
+              <paper-icon-button icon="delete" on-tap="deleteActeur"></paper-icon-button>
+            </paper-button>
+          </template>
+        </fieldset>
+      </div>
 
+
+
+      <div>
+        <p>Merci d'indiquer sous quel 'ROLE' (par défaut: 'Terrien' ) vous présentez cette tension</p>
+        <fieldset>
+          <legend>Rôle, Contact</legend>
+          <paper-input label="Indiquer le Rôle sous lequel vous soumettez cette tension (exemple : Citoyen, Entreprise, Père de famille...)" value="{{role::change}}" autofocus></paper-input>
+          <label for="contact-input">(Optionnel)</label>
+          <paper-input id="contact-input" label="Vous pouvez aussi préciser un identifiant pour faciliter le suivi, le contact au sujet de cette tension" value="{{contact::change}}" autofocus></paper-input>
+        </fieldset>
+        <iron-icon icon="communication:location-on"></iron-icon>
+        <span> Ajouter un lieu</span>
+      </div>
+
+    </iron-pages>
+      </div>
+  </div>
+</div>
+<div class="card-actions">
+  <div class="horizontal justified">
+    <paper-button on-tap="_precedent" hidden$="[[_selectedIs(selected,'0')]]" raised>Précédent</paper-button>  <!-- n'affiche pas precedent si on est au 1er tab -->
+    <paper-button on-tap="_suivant"  hidden$="[[_selectedIs(selected,'4')]]" raised>Suivant</paper-button> <!-- n'affiche pas suivant si on est au 5ème tab -->
+  <paper-button on-tap="_enregistre" class="cafe-reserve">Enregistrer</paper-button>
+  </div>
+</div>
+</paper-card>
+<!--<paper-toast id="toast1" class="fit-bottom" text="Nom ne peut être vide."></paper-toast>
+<paper-toast id="toast2" class="fit-bottom" text="Date de naissance ne peut être vide."></paper-toast>-->
 </template>
 
 <script>
@@ -92,18 +230,20 @@ class SpoggyHolacracy extends Polymer.Element {
   static get is() { return 'spoggy-holacracy'; }
   static get properties() {
     return {
-      indice: {
-        type: Number,
-        value : 0
+      /* Variables par Defaut TENSION */
+      tension:{
+        type: Object,
+        value: {}
       },
-      etape:{
+      type: {
         type: String,
-        value: "tension"
+        value: "Tension"
       },
-      etapes:{
-        type: Array,
-        value: ["tension", "deux", "trois"]
+      role: {
+        type: String,
+        value: "Terrien"
       },
+      /* Details, listes */
       domaine: {
         type : Object,
         notify : true,
@@ -123,34 +263,36 @@ class SpoggyHolacracy extends Polymer.Element {
         type: Array,
         notify: true,
         value: []
-      },
-      tension:{
-        nom:"",
-        cqe: "",
-        cqde: "",
-        domaines: [],
-        acteurs: []
       }
     };
   }
 
-  _suivant(event, detail, sender){
-    this.indice = this.indice+1;
-    console.log(this.indice);
-    this.etape =  this.etapes[this.indice];
-    console.log(this.etape);
+  ready() {
+    super.ready();
+    this.selected = 0;
   }
-  _precedent(event, detail, sender){
-    this.indice = this.indice-1;
-    console.log(this.indice);
-    this.etape =  this.etapes[this.indice];
-    console.log(this.etape);
+  _suivant(){
+    this.selected = this.selected+1;
   }
-  etapeIs(etape, activeEtape){
-    return etape == activeEtape;
+  _precedent(){
+    this.selected = this.selected-1;
   }
+  _selectedIs(sel, compare){
+    return sel == compare;
+  }
+
+  _enregistre(){
+    console.log(this.titre);
+    console.log(this.cqe);
+    console.log(this.cqde);
+    console.log(this.contact);
+    console.log(this.role);
+    console.log(this.domaines);
+    console.log(this.acteurs);
+  }
+
   createActeur(e){
-  //  console.log(e);
+    //  console.log(e);
     console.log(this.acteurTemp);
     this.push('acteurs', this.acteurTemp);
     this.acteurTemp = "";
@@ -160,47 +302,47 @@ class SpoggyHolacracy extends Polymer.Element {
     console.log(this.domaineTemp);
     this.push('domaines', this.domaineTemp);
     this.domaineTemp = "";
-  /*  if ((this.$.indivNomInput.value!=undefined)
+    /*  if ((this.$.indivNomInput.value!=undefined)
     &&(this.$.dateN.value!=undefined)){
-      this.push('individus', this.individu);
-      //Update manuelle
-      var indivTemp=this.individus;
-      this.individus=[];
-      this.individus=indivTemp;
-      this.individu={};
-      console.log(this.individus);
-    }
-    else{
-      if(this.$.dateN.value==undefined){
-        this.$.toast2.fitInto=this.$.dateN;
-        this.$.toast2.open();
-      }
-      if(this.$.indivNomInput.value==undefined){
-        this.$.toast1.fitInto=this.$.indivNomInput;
-        this.$.toast1.open();
-      }
-    }*/
+    this.push('individus', this.individu);
+    //Update manuelle
+    var indivTemp=this.individus;
+    this.individus=[];
+    this.individus=indivTemp;
+    this.individu={};
+    console.log(this.individus);
   }
-  deleteDomaine(e){
-    console.log(e.model.item)
-    var domaine= e.model.item;
-    var index=this.domaines.indexOf(domaine);
-    console.log(index);
-    if (index != -1) {
-      this.splice('domaines',index, 1);
-    }
-    console.log(this.domaines);
+  else{
+  if(this.$.dateN.value==undefined){
+  this.$.toast2.fitInto=this.$.dateN;
+  this.$.toast2.open();
+}
+if(this.$.indivNomInput.value==undefined){
+this.$.toast1.fitInto=this.$.indivNomInput;
+this.$.toast1.open();
+}
+}*/
+}
+deleteDomaine(e){
+  console.log(e.model.item)
+  var domaine= e.model.item;
+  var index=this.domaines.indexOf(domaine);
+  console.log(index);
+  if (index != -1) {
+    this.splice('domaines',index, 1);
   }
-  deleteActeur(e){
-    console.log(e.model.item)
-    var acteur = e.model.item;
-    var index=this.acteurs.indexOf(acteur);
-    console.log(index);
-    if (index != -1) {
-      this.splice('acteurs',index, 1);
-    }
-    console.log(this.acteurs);
+  console.log(this.domaines);
+}
+deleteActeur(e){
+  console.log(e.model.item)
+  var acteur = e.model.item;
+  var index=this.acteurs.indexOf(acteur);
+  console.log(index);
+  if (index != -1) {
+    this.splice('acteurs',index, 1);
   }
+  console.log(this.acteurs);
+}
 }
 
 window.customElements.define(SpoggyHolacracy.is, SpoggyHolacracy);

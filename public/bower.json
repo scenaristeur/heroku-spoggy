@@ -23,7 +23,8 @@
     "app-storage": "^2.1.1",
     "l2t-paper-color": "^1.0.2",
     "color-picker": "fooloomanzoo/color-picker#^1.0.5",
-    "paper-fab-speed-dial": "Collaborne/paper-fab-speed-dial#^2.4.0"
+    "paper-fab-speed-dial": "Collaborne/paper-fab-speed-dial#^2.4.0",
+    "paper-card": "PolymerElements/paper-card#^2.1.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
