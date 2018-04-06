@@ -131,21 +131,25 @@
     <paper-tabs selected={{selected}}>
       <paper-tab>Création</paper-tab>
       <paper-tab>Domaines & Acteurs</paper-tab>
-      <paper-tab>Précisions</paper-tab>
+      <paper-tab>Précisions</paper-tab><!--
       <paper-tab>Suite</paper-tab>
-      <paper-tab>Vérif</paper-tab>
+      <paper-tab>Vérif</paper-tab>-->
     </paper-tabs>
 
     <div>
       <iron-pages selected={{selected}}>
 
         <div>
-          <p>En holacratie, une tension est un écart entre "Ce qui est" et "Ce qui devrait être".
+          <p>En holacratie, une tension est un écart entre "Ce qui est" et "Ce qui devrait être".<br>
+             Cela peut être un problème dont vous n'arrivez pas à trouver la solution,
+              un projet qui vous tient à coeur, une idée pour faire disparaître une injustice insoutenable,
+               ou encore une modification qu'il faut apporter à Spoggy...
             <a href="https://igipartners.com/sites/default/files/constitution_4.1_0.pdf" target="_blank">En savoir plus...</a></p>
-            <p>Pour commencer à enregistrer une TENSION, complétez le formulaire ci-dessous. Vous pouvez également préciser un 'titre' pour cette tension.</p>
+            <p>Pour commencer à enregistrer une TENSION, complétez le formulaire ci-dessous.</p>
+            <paper-input label="Choisissez un titre :" value="{{titre::input}}" autofocus></paper-input>
+            Décrivez ensuite :<br>
             <paper-textarea class="cafe-light" rows="2" value = "{{cqe::input}}" label="- ce qui est (le problème) :" autofocus></paper-textarea>
             <paper-textarea rows="2" value = "{{cqde::input}}" label="- ce qui devrait être (la solution)"></paper-textarea>
-            <paper-input label="Choisissez un titre pour faciliter la recherche de cette Tension" value="{{titre::input}}" autofocus></paper-input>
           </div>
 
 
@@ -168,7 +172,7 @@
               </paper-button>
             </template>
           </fieldset>
-
+<br>
           <fieldset>
             <legend>Acteurs</legend>
             <paper-input value="{{acteurTemp::input}}" label="Ajouter un acteur (exemple : Gouvernement, LaMetropole, LesBricodeurs...)" ></paper-input>
@@ -190,12 +194,14 @@
 
 
       <div>
-        <p>Merci d'indiquer sous quel 'ROLE' (par défaut: 'Terrien' ) vous présentez cette tension</p>
+        <p>Merci d'indiquer sous quel 'ROLE' vous présentez cette tension. (par défaut: 'Terrien' ) </p>
         <fieldset>
           <legend>Rôle, Contact</legend>
-          <paper-input label="Indiquer le Rôle sous lequel vous soumettez cette tension (exemple : Citoyen, Entreprise, Père de famille...)" value="{{role::change}}" autofocus></paper-input>
-          <label for="contact-input">(Optionnel)</label>
-          <paper-input id="contact-input" label="Vous pouvez aussi préciser un identifiant pour faciliter le suivi, le contact au sujet de cette tension" value="{{contact::change}}" autofocus></paper-input>
+            <label for="role-input">Indiquer le Rôle sous lequel vous soumettez cette tension (exemple : Citoyen, Entreprise, Père de famille...)</label>
+          <paper-input id="role-input" label="Rôle :" value="{{role::input}}" autofocus></paper-input>
+          <br>
+          <label for="contact-input">(Optionnel, voir 'Sécurité dans le menu About') Vous pouvez aussi préciser un contact ou un pseudo pour faciliter le suivi au sujet de cette tension</label>
+          <paper-input id="contact-input" label="Contact: " value="{{contact::input}}" autofocus></paper-input>
         </fieldset>
         <iron-icon icon="communication:location-on"></iron-icon>
         <span> Ajouter un lieu</span>
@@ -208,8 +214,8 @@
 <div class="card-actions">
   <div class="horizontal justified">
     <paper-button on-tap="_precedent" hidden$="[[_selectedIs(selected,'0')]]" raised>Précédent</paper-button>  <!-- n'affiche pas precedent si on est au 1er tab -->
-    <paper-button on-tap="_suivant"  hidden$="[[_selectedIs(selected,'4')]]" raised>Suivant</paper-button> <!-- n'affiche pas suivant si on est au 5ème tab -->
-  <paper-button on-tap="_enregistre" class="cafe-reserve">Enregistrer</paper-button>
+    <paper-button on-tap="_suivant"  hidden$="[[_selectedIs(selected,'2')]]" raised>Suivant</paper-button> <!-- n'affiche pas suivant si on est au 5ème tab -->
+  <paper-button on-tap="_enregistre" raised class="cafe-reserve">Enregistrer</paper-button>
   </div>
 </div>
 </paper-card>
