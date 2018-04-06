@@ -1,0 +1,39 @@
+<script src="lib/rdf-ext-all-latest.js"></script>
+
+<script>
+var RdfExtBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class RdfExtBehavior extends superClass {
+    constructor() {
+      super();
+      console.log("RDF EXTbehavior")
+      this.init();
+    }
+
+
+init(){
+  console.log("init RDF EXT func");
+  this.rdf = {
+    dbFake : "RDF EXT DB FAKE",
+  //  db : this.initLevelGraph("spoggy",this._dbOk),
+
+    log(text){
+      console.log("La c'est rdf -ext "+text)
+    },
+        methodInBehavior(data, num) {
+          console.log(data);
+          let newnum = num+10;
+          return "this method is defined in Behavior"+newnum;
+        },
+
+  }
+}
+
+_dbOk(date){
+  console.log("la db est ok en callback "+date);
+}
+
+
+}
+});
+
+</script>

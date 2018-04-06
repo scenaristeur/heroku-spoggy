@@ -8,9 +8,7 @@ var LevelgraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.init();
     }
 
-    methodInBehavior() {
-      return "this method is defined in Behavior";
-    }
+
     initLevelGraph( name, callback){
       let  db = levelgraph(level(name));
       this.db = db;
@@ -76,6 +74,17 @@ init(){
     log(text){
       console.log("La c'est lg "+text)
     },
+        methodInBehavior(data, num) {
+          console.log(data);
+          let newnum = num+10;
+          return "this method is defined in Behavior"+newnum;
+        },
+        put(data, num) {
+          console.log("BEHAVIOR ENREGISTREMENT DANS LG")
+          console.log(data);
+          let newnum = num+10;
+          return "this method PUT is defined in LG Behavior"+newnum;
+        },
 
   }
 }

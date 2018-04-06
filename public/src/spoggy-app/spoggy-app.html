@@ -10,6 +10,7 @@
 <link rel="import" href="../spoggy-holacracy/spoggy-holacracy.html">
 <link rel="import" href="../spoggy-about/spoggy-about.html">
 <link rel="import" href="../spog-graphe/spog-graphe.html">
+<link rel="import" href="../spoggy-rdf-ext/rdf-ext-behavior.html">
 <!--
 <link rel="import" href="../../bower_components/paper-fab-speed-dial/paper-fab-speed-dial.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
@@ -28,79 +29,85 @@
 
     </style>
 
-<!-- menu paper-fab
+    <!-- menu paper-fab
     <paper-fab-speed-dial with-backdrop>
-      <paper-fab-speed-dial-action icon="icons:content-copy">Copy</paper-fab-speed-dial-action>
-      <paper-fab-speed-dial-action icon="icons:print">Print</paper-fab-speed-dial-action>
+    <paper-fab-speed-dial-action icon="icons:content-copy">Copy</paper-fab-speed-dial-action>
+    <paper-fab-speed-dial-action icon="icons:print">Print</paper-fab-speed-dial-action>
   </paper-fab-speed-dial> -->
 
 
-    <spoggy-levelgraph lg="{{lg}}" vis="{{vis}}"></spoggy-levelgraph>
-    <paper-button raised id="graph" on-tap="_selectPage">Graph</paper-button>
-<!--
-    <paper-button raised id="el"  on-tap="_selectPage">Expression Libre</paper-button>
-    <paper-button raised id="triplet"  on-tap="_selectPage">Triplet</paper-button>-->
-    <paper-button raised id="holacracy"  on-tap="_selectPage">Holacracy</paper-button><!--
-      <paper-button raised id="options"  on-tap="_selectPage">Options</paper-button>
-      <paper-button raised id="news"  on-tap="_selectPage">News</paper-button>-->
-      <paper-button raised id="about"  on-tap="_selectPage">About</paper-button>
-      <!-- DEBUG POUR TESTER LE CHARGEMENT DES BEHAVIORS (vis n'est chargé que quand le module spoggy-graph est chargé)
-      <paper-button raised id="el"  on-tap="_testLgBehavior">test LG BEhavior</paper-button>
-      <paper-button raised id="el"  on-tap="_testVisBehavior">test Vis BEhavior</paper-button>-->
+  <spoggy-levelgraph lg="{{lg}}" vis="{{vis}}"></spoggy-levelgraph>
+  <paper-button raised id="graph" on-tap="_selectPage">Graph</paper-button>
+  <!--
+  <paper-button raised id="el"  on-tap="_selectPage">Expression Libre</paper-button>
+  <paper-button raised id="triplet"  on-tap="_selectPage">Triplet</paper-button>-->
+  <paper-button raised id="holacracy"  on-tap="_selectPage">Holacracy</paper-button><!--
+    <paper-button raised id="options"  on-tap="_selectPage">Options</paper-button>
+    <paper-button raised id="news"  on-tap="_selectPage">News</paper-button>-->
+    <paper-button raised id="about"  on-tap="_selectPage">About</paper-button>
+    <!-- DEBUG POUR TESTER LE CHARGEMENT DES BEHAVIORS (vis n'est chargé que quand le module spoggy-graph est chargé)
+    <paper-button raised id="el"  on-tap="_testLgBehavior">test LG BEhavior</paper-button>
+    <paper-button raised id="el"  on-tap="_testVisBehavior">test Vis BEhavior</paper-button>-->
 
-      <spoggy-el hidden$="[[!pageIs(page,'el')]]" vis="{{vis}}" lg="{{lg}}"><p>Expression Libre loading...</p></spoggy-el>
+    <spoggy-el hidden$="[[!pageIs(page,'el')]]" vis="{{vis}}" lg="{{lg}}"><p>Expression Libre loading...</p></spoggy-el>
 
-      <spoggy-triplet hidden$="[[!pageIs(page,'triplet')]]" vis="{{vis}}" lg="{{lg}}"><p>triplet loading...</p></spoggy-triplet>
+    <spoggy-triplet hidden$="[[!pageIs(page,'triplet')]]" vis="{{vis}}" lg="{{lg}}"><p>triplet loading...</p></spoggy-triplet>
 
-      <spoggy-holacracy hidden$="[[!pageIs(page,'holacracy')]]" vis="{{vis}}" lg="{{lg}}" ><p>holacracy loading...</p></spoggy-holacracy>
+    <spoggy-holacracy hidden$="[[!pageIs(page,'holacracy')]]" vis="{{vis}}" lg="{{lg}}" ><p>holacracy loading...</p></spoggy-holacracy>
 
-      <!-- test avec behavior <spoggy-graph hidden$="[[!pageIs(page,'graph')]]" vis="{{vis}}" lg="{{lg}}"><p>graph loading...</p></spoggy-graph>
-      alors que spog-graphe est l'ancien plgin plus complet avec import export, essayer de mettre tout ça dans un behavior? un module es6 ?--><!--pb d'affichage navigation et manipulation sous firefox dans le dom-if-->
-      <spog-graphe hidden$="[[!pageIs(page,'graph')]]" vis="{{vis}}" lg="{{lg}}"><p>graph loading...</p></spog-graphe>
+    <!-- test avec behavior <spoggy-graph hidden$="[[!pageIs(page,'graph')]]" vis="{{vis}}" lg="{{lg}}"><p>graph loading...</p></spoggy-graph>
+    alors que spog-graphe est l'ancien plgin plus complet avec import export, essayer de mettre tout ça dans un behavior? un module es6 ?--><!--pb d'affichage navigation et manipulation sous firefox dans le dom-if-->
+    <spog-graphe hidden$="[[!pageIs(page,'graph')]]" vis="{{vis}}" lg="{{lg}}"><p>graph loading...</p></spog-graphe>
 
-      <spoggy-options hidden$="[[!pageIs(page,'options')]]" vis="{{vis}}" lg="{{lg}}"><p>options loading...</p></spoggy-options>
+    <spoggy-options hidden$="[[!pageIs(page,'options')]]" vis="{{vis}}" lg="{{lg}}"><p>options loading...</p></spoggy-options>
 
-      <spoggy-news hidden$="[[!pageIs(page,'news')]]" ><p>news loading...</p></spoggy-news>
+    <spoggy-news hidden$="[[!pageIs(page,'news')]]" ><p>news loading...</p></spoggy-news>
 
-      <spoggy-about hidden$="[[!pageIs(page,'about')]]" ><p>about loading...</p></spoggy-about>
+    <spoggy-about hidden$="[[!pageIs(page,'about')]]" ><p>about loading...</p></spoggy-about>
 
-      <!--<paper-fab-menu><paper-fab-menu>-->
-    </template>
+    <!--<paper-fab-menu><paper-fab-menu>-->
+  </template>
 
-    <script>
-    /**
-    * @customElement
-    * @polymer
-    */
-    class SpoggyApp extends Polymer.Element {
-      static get is() { return 'spoggy-app'; }
-      static get properties() {
-        return {
-          page:{
-            type: String,
-            value: 'graph'
-          },
-        };
-      }
-
-      _selectPage(event, detail, sender){
-        this.page = event.currentTarget.id;
-      }
-      pageIs(page, activePage){
-        return page == activePage;
-      }
-      _testLgBehavior(){
-        this.lg.log("TEST patatos LG Debilos");
-        console.log(this.lg.dbFake);
-        console.log(this.lg.db);
-      }
-      _testVisBehavior(){
-        this.vis.log("spoggy app  VIS LOG ");
-        console.log(this.vis.networkFake);
-        console.log(this.vis.network);
-      }
+  <script>
+  /**
+  * @customElement
+  * @polymer
+  */
+  class SpoggyApp extends RdfExtBehaviorMixin(Polymer.Element) {
+    static get is() { return 'spoggy-app'; }
+    static get properties() {
+      return {
+        page:{
+          type: String,
+          value: 'graph'
+        },
+      };
     }
 
-    window.customElements.define(SpoggyApp.is, SpoggyApp);
-    </script>
-  </dom-module>
+    _selectPage(event, detail, sender){
+      this.page = event.currentTarget.id;
+    }
+    pageIs(page, activePage){
+      return page == activePage;
+    }
+    _testLgBehavior(){
+      this.lg.log("TEST patatos LG Debilos");
+      console.log(this.lg.dbFake);
+      console.log(this.lg.db);
+    }
+    _testVisBehavior(){
+      this.vis.log("spoggy app  VIS LOG ");
+      console.log(this.vis.networkFake);
+      console.log(this.vis.network);
+    }
+    ready() {
+      super.ready();
+      this.rdf.log("bidule");
+      let retourFonctionTestRdf = this.rdf.methodInBehavior("du texte", 10);
+      console.log(retourFonctionTestRdf)
+    }
+  }
+
+  window.customElements.define(SpoggyApp.is, SpoggyApp);
+  </script>
+</dom-module>

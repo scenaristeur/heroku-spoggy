@@ -13,7 +13,7 @@
 <link rel="import" href="../spog-source/spog-source.html">
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
 
-
+<link rel="import" href="./vis-behavior.html">
 <!--
 A COMPLETER AVEC  DANS LIB  : IMPORT / EXPORT, COMMANDES -->
 
@@ -202,8 +202,8 @@ A COMPLETER AVEC  DANS LIB  : IMPORT / EXPORT, COMMANDES -->
       <input id="inputMessage" class="inputMessage" on-change="traiteMessage" placeholder="Tapez votre triplet ici, précédé de '::' ou une commande : '/e' pour exporter, '/t' pour exporter au format .ttl, '/i' pour importer" />
     </div>
 
-        <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
-        <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
+    <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
+    <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
 
   </template>
 
@@ -216,7 +216,7 @@ A COMPLETER AVEC  DANS LIB  : IMPORT / EXPORT, COMMANDES -->
   * @polymer
   * @demo demo/index.html
   */
-  class SpogGraphe extends Polymer.Element {
+  class SpogGraphe extends VisBehaviorMixin(Polymer.Element) {
     static get is() { return 'spog-graphe'; }
     static get properties() {
       return {
@@ -322,6 +322,14 @@ this.set('edges', this.network.body.data.edges);
 
 ready() {
   super.ready();
+  console.log("################################## init VIS")
+  this.vis.log("bidule");
+  let retourFonctionTestVis = this.vis.methodInBehavior("du texte", 10);
+  console.log(retourFonctionTestVis)
+  console.log("################################## FIN init VIS")
+
+
+
   this.colorValue = "rgb(173,208,255)";
   this.selectedShape = "ellipse";
   this.selectedType = "node";
