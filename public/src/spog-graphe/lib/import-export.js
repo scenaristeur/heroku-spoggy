@@ -1,5 +1,8 @@
 // recupere du projet Github/scenaristeur/Spog
-
+function afficheAide(network,app){
+//cette fonction ne devrait pas être dans import/export
+  app.$.helpPopUp.style.display = 'block';
+}
 function exportJson(network,app) {
   var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
   app.$.inputMessage.value = '';

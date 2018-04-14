@@ -19,6 +19,8 @@
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
 
 <dom-module id="spoggy-mode">
   <template>
@@ -131,41 +133,70 @@
       <paper-tabs selected={{selected}}>
         <paper-tab>Autonome</paper-tab>
         <paper-tab>Collaboratif</paper-tab>
-        <paper-tab>Global</paper-tab><!--
-          <paper-tab>Suite</paper-tab>
-          <paper-tab>Vérif</paper-tab>-->
-        </paper-tabs>
+        <paper-tab>Global</paper-tab>
+      </paper-tabs>
 
-        <div>
-          <iron-pages selected={{selected}}>
+      <div>
+        <iron-pages selected={{selected}}>
+          <!--MODE AUTONOME -->
+          <div>
+            <p>Le mode autonomone de Spoggy vous permet de créer des graphes, de les exporter et de les importer.</p>
 
-            <div>
-              1
-            </div>
+          </div>
 
+          <!-- MODE COLLABORATIF -->
+          <div>
+            <p>Le mode collaboratif permet de créer des graphes à plusieurs.</p>
+            <p> En cours de developpement (voir About / Github pour participer)  Basé sur socket.io et Accompagné d'un chat pour communiquer </p>
 
+          </div>
 
-            <div>
-              2
+          <!-- MODE GLOBAL -->
+          <div>
+            <p>Le mode global permet de se connecter à différent endpoint Sparql/RDF et d'utiliser leurs ressources (<a href="http://wiki.dbpedia.org/" target="_blank">DBpedia</a>... )
+              ou de les compléter ( 'Smag0 Endpoint One', serveur perso... ). </p>
+              <p> En cours de developpement (voir About / Github pour participer) </p>
+              <fieldset>
+                <legend>Sources</legend>
+                <paper-input value="{{sourceNameTemp::input}}" label="Nom de la source (ex: Dbpedia)" ></paper-input>
+                Modèle : <!--virtuoso / Fuseki / graphDB / Neo4J... -->
+                <paper-radio-group selected="autre">
+                  <paper-radio-button name="Fuseki">Fuseki</paper-radio-button>
+                  (<a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">doc Fuseki</a>)
+                  <paper-radio-button name="Virtuoso">Virtuoso</paper-radio-button>
+                  (<a href="https://virtuoso.openlinksw.com/" target="_blank">doc Virtuoso</a>)
+                  <paper-radio-button name="autre">Autre / Je ne sais pas</paper-radio-button>
+                </paper-radio-group>
 
-            </div>
-
-
-
-            <div>
-              3
-            </div>
-
-          </iron-pages>
+                <!--    <paper-input value="{{sourceQueryTemp::input}}" label="Url de l'endpoint (ex: http://dbpedia.org/sparql?)" ></paper-input>
+                <paper-input value="{{sourceUpdateTemp::input}}" label="Url de requete update (ex: http://dbpedia.org/update?)" ></paper-input>
+              -->
+              <paper-fab
+              icon="add"
+              title="Ajouter une source"
+              on-tap="createSource"
+              class="blue">
+            </paper-fab>
+            <!--     <paper-icon-button icon="delete" on-tap="clearDomaines"></paper-icon-button>-->
+            <template is="dom-repeat" items="{{sources}}">
+              <paper-button  raised source={{item.name}}>{{item.name}}
+                <!--  <paper-icon-button icon="delete" on-tap="deleteSource"></paper-icon-button> -->
+              </paper-button>
+            </template>
+          </fieldset>
         </div>
-      </div>
-    </div>
-    <div class="card-actions">
-      <div class="horizontal justified">
 
-      </div>
+      </iron-pages>
     </div>
-  </paper-card>
+  </div>
+</div>
+<!--
+<div class="card-actions">
+<div class="horizontal justified">
+
+</div>
+</div>-->
+</paper-card>
 
 
 
@@ -184,10 +215,52 @@ class SpoggyMode extends Polymer.Element {
   static get is() { return 'spoggy-mode'; }
   static get properties() {
     return {
-      prop1: {
-        type: String,
-        value: 'spoggy-mode'
+      sources: {
+        type: Array,
+        notify: true,
+        value: [
+          {
+            name: "Dbpedia",
+            modele: "Virtuoso",
+            version: "inconnue",
+            query: "http://dbpedia.org/sparql",
+            update: "false"
+          },
+          {
+            name: "Smag0 Endpoint One",
+            modele: "Fuseki",
+            version: "inconnue",
+            endpoint: "http://5.51.110.50:3030/",
+            update: "true",
+            ping: "",
+            datasets:["ds", "spoggy", "test"]
+          }
+        ]
       }
+      /* Modele Fuseki
+      Administration Protocole et serveur info / datasets infos
+      https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html
+      /$/ping
+      /$/server
+      /$/datasets
+      /$/stats/*{name}*
+      /$/backup/*{name}*
+      /$/tasks
+      File Upload:
+http://5.51.110.50:3030/ds/upload
+Graph Store Protocol:
+http://5.51.110.50:3030/ds/data
+Graph Store Protocol (Read):
+http://5.51.110.50:3030/ds/get
+HTTP Quads:
+http://5.51.110.50:3030/ds/
+SPARQL Query:
+http://5.51.110.50:3030/ds/query
+SPARQL Query:
+http://5.51.110.50:3030/ds/sparql
+SPARQL Update:
+http://5.51.110.50:3030/ds/update
+*/
     };
   }
 
@@ -195,6 +268,44 @@ class SpoggyMode extends Polymer.Element {
     super.ready();
     this.selected = 0;
   }
+
+  createSource(e){
+    //console.log(e);
+    //  console.log(this.domaineTemp);
+    let source = {};
+    source.name = this.sourceNameTemp;
+    source.query = this.sourceQueryTemp;
+    source.update = this.sourceUpdateTemp;
+    this.push('sources', source );
+    this.sourceTemp = "";
+    /*  if ((this.$.indivNomInput.value!=undefined)
+    &&(this.$.dateN.value!=undefined)){
+    this.push('individus', this.individu);
+    //Update manuelle
+    var indivTemp=this.individus;
+    this.individus=[];
+    this.individus=indivTemp;
+    this.individu={};
+    console.log(this.individus);
+  }
+  else{
+  if(this.$.dateN.value==undefined){
+  this.$.toast2.fitInto=this.$.dateN;
+  this.$.toast2.open();
+}
+if(this.$.indivNomInput.value==undefined){
+this.$.toast1.fitInto=this.$.indivNomInput;
+this.$.toast1.open();
+}
+}*/
+}
+deleteSource(e){
+  var source= e.model.item;
+  var index=this.sources.indexOf(source);
+  if (index != -1) {
+    this.splice('sources',index, 1);
+  }
+}
 }
 
 window.customElements.define(SpoggyMode.is, SpoggyMode);

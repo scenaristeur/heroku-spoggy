@@ -1,6 +1,7 @@
 {
-  "name": "spoggy",
-  "short_name": "spoggy",
+  "name": "Spoggy",
+  "short_name": "Spoggy",
   "start_url": "/",
-  "display": "standalone"
+  "display": "standalone",
+  "background_color": "#2196F3",
 }

@@ -3,6 +3,12 @@ function catchCommande(message, network,app){
   if (message.startsWith("/")) {
     console.log(message);
     switch(message) {
+      case "/h":
+      case "/help":
+      case "/aide":
+      afficheAide(network,app);
+      app.$.inputMessage.value="";
+      break;
       case "/e":
       case "/export":
       case "/exportJson":
