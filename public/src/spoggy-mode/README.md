@@ -1,4 +1,4 @@
-# \<spoggy-contact\>
+# \<spoggy-mode\>
 
 
 

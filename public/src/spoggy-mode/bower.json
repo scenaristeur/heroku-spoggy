@@ -1,6 +1,6 @@
 {
-  "name": "spoggy-contact",
-  "main": "spoggy-contact.html",
+  "name": "spoggy-mode",
+  "main": "spoggy-mode.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },

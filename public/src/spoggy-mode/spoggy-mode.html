@@ -1,0 +1,202 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<!-- paper-card  inspiré de https://github.com/PolymerElements/paper-card/blob/master/demo/index.html-->
+
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<dom-module id="spoggy-mode">
+  <template>
+    <custom-style>
+      <style is="custom-style" >  <!-- <style is="custom-style" include="demo-pages-shared-styles"> -->
+      /*demo-snippet {
+      --demo-snippet-demo: {
+      background: var(--paper-grey-200);
+      padding: 16px;
+    };
+    --demo-snippet-code: {
+    max-height: 300px;
+  }
+  }*/
+  .vertical-section-container {
+    max-width: 400px;
+  }
+  paper-card {
+    width: 100%;
+  }
+  .horizontal {
+    @apply --layout-horizontal;
+  }
+  .flex {
+    @apply --layout-flex;
+  }
+  .justified {
+    @apply --layout-justified;
+  }
+  .amber {
+    background: var(--paper-amber-900);
+  }
+  .lime {
+    background: var(--paper-lime-500);
+  }
+  .cyan {
+    background: var(--paper-cyan-500);
+  }
+  .dark {
+    background: var(--paper-blue-grey-500);
+  }
+  paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
+    color: white;
+    --paper-card-header-color: white;
+  }
+  paper-checkbox {
+    display: block;
+    margin-bottom: 4px;
+    --paper-checkbox-label-color: white;
+    --paper-checkbox-unchecked-color: white;
+  }
+  paper-icon-button {
+    color: var(--paper-grey-600);
+  }
+  paper-icon-button.white {
+    color: white !important;
+  }
+
+  </style>
+  <style is="custom-style">
+  .cafe-header { @apply --paper-font-headline; }
+  .cafe-light { color: var(--paper-grey-600); }
+  .cafe-location {
+    float: right;
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  .cafe-reserve { color: var(--google-blue-500); }
+  iron-icon.star {
+    --iron-icon-width: 16px;
+    --iron-icon-height: 16px;
+    color: var(--paper-amber-500);
+  }
+  iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+  </style>
+  <style>
+  #eyediv {
+    padding: .2em;
+    border: 1px solid #aaaaaa;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin: 10px;
+  }
+  paper-tabs {
+    background-color: black;
+    width: 100%;
+    margin-bottom: 1px;
+    color: #fff;
+  }
+  .eyetab1 {
+    width: 100%;
+    height: 200px;
+
+    font-family: Courier, "Courier New", monospace !important;
+  }
+  </style>
+</custom-style>
+<div>
+  Spoggy peut être utilisé selon différents modes en fonctions des modules sélectionnés :
+</div>
+
+<paper-card > <!--      <paper-card image="../../bower_components/paper-card/demo/donuts.png" alt="Tension"> -->
+  <div class="card-content">
+    <!--  <div class="cafe-header">{{titre}}</div>-->
+    <div class="cafe-location cafe-light">mode : {{selected}}</div>
+
+    <div id="eyediv" class="ui-corner-all">
+      <paper-tabs selected={{selected}}>
+        <paper-tab>Autonome</paper-tab>
+        <paper-tab>Collaboratif</paper-tab>
+        <paper-tab>Global</paper-tab><!--
+          <paper-tab>Suite</paper-tab>
+          <paper-tab>Vérif</paper-tab>-->
+        </paper-tabs>
+
+        <div>
+          <iron-pages selected={{selected}}>
+
+            <div>
+              1
+            </div>
+
+
+
+            <div>
+              2
+
+            </div>
+
+
+
+            <div>
+              3
+            </div>
+
+          </iron-pages>
+        </div>
+      </div>
+    </div>
+    <div class="card-actions">
+      <div class="horizontal justified">
+
+      </div>
+    </div>
+  </paper-card>
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-mode`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyMode extends Polymer.Element {
+  static get is() { return 'spoggy-mode'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-mode'
+      }
+    };
+  }
+
+  ready() {
+    super.ready();
+    this.selected = 0;
+  }
+}
+
+window.customElements.define(SpoggyMode.is, SpoggyMode);
+</script>
+</dom-module>

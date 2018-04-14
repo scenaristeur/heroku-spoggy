@@ -4,36 +4,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>spoggy-contact test</title>
+    <title>spoggy-mode test</title>
 
     <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
 
-    <link rel="import" href="../spoggy-contact.html">
+    <link rel="import" href="../spoggy-mode.html">
   </head>
   <body>
 
     <test-fixture id="BasicTestFixture">
       <template>
-        <spoggy-contact></spoggy-contact>
+        <spoggy-mode></spoggy-mode>
       </template>
     </test-fixture>
 
     <test-fixture id="ChangedPropertyTestFixture">
       <template>
-        <spoggy-contact prop1="new-prop1"></spoggy-contact>
+        <spoggy-mode prop1="new-prop1"></spoggy-mode>
       </template>
     </test-fixture>
 
     <script>
-      suite('spoggy-contact', () => {
+      suite('spoggy-mode', () => {
 
         test('instantiating the element with default properties works', () => {
           const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'spoggy-contact');
+          assert.equal(element.prop1, 'spoggy-mode');
           const elementShadowRoot = element.shadowRoot;
           const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello spoggy-contact!');
+          assert.equal(elementHeader.innerHTML, 'Hello spoggy-mode!');
         });
 
         test('setting a property on the element works', () => {

@@ -8,6 +8,7 @@
 
 <link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
 <link rel="import" href="../spoggy-holacracy/spoggy-holacracy.html">
+<link rel="import" href="../spoggy-mode/spoggy-mode.html">
 <link rel="import" href="../spoggy-about/spoggy-about.html">
 <link rel="import" href="../spog-graphe/spog-graphe.html">
 <link rel="import" href="../spoggy-rdf-ext/rdf-ext-behavior.html">
@@ -44,6 +45,8 @@
   <paper-button raised id="holacracy"  on-tap="_selectPage">Holacracy</paper-button><!--
     <paper-button raised id="options"  on-tap="_selectPage">Options</paper-button>
     <paper-button raised id="news"  on-tap="_selectPage">News</paper-button>-->
+    <paper-button raised id="mode"  on-tap="_selectPage">Mode</paper-button>
+
     <paper-button raised id="about"  on-tap="_selectPage">About</paper-button>
     <!-- DEBUG POUR TESTER LE CHARGEMENT DES BEHAVIORS (vis n'est chargé que quand le module spoggy-graph est chargé)
     <paper-button raised id="el"  on-tap="_testLgBehavior">test LG BEhavior</paper-button>
@@ -62,6 +65,8 @@
     <spoggy-options hidden$="[[!pageIs(page,'options')]]" vis="{{vis}}" lg="{{lg}}"><p>options loading...</p></spoggy-options>
 
     <spoggy-news hidden$="[[!pageIs(page,'news')]]" ><p>news loading...</p></spoggy-news>
+
+          <spoggy-mode hidden$="[[!pageIs(page,'mode')]]" ><p>mode loading...</p></spoggy-mode>
 
     <spoggy-about hidden$="[[!pageIs(page,'about')]]" ><p>about loading...</p></spoggy-about>
 
