@@ -314,7 +314,7 @@ ready() {
 var app = this;
 
 
-
+/*
 app.tickInterval = setInterval(function() {
   if ((app.db2populate.length > 0) && (app.network != undefined)) {
     console.log(app.db2populate.length );
@@ -331,7 +331,12 @@ app.tickInterval = setInterval(function() {
     app.data = app.network.body.data;
     console.log(app.data);
   }
-}, app.tickDelay);
+}, app.tickDelay);*/
+
+
+
+
+
 var network = this.network;
 this.network.on("selectNode", function(params) {
   console.log("select");
