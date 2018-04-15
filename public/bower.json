@@ -29,7 +29,8 @@
     "paper-listbox": "^2.1.1",
     "color-input": "fooloomanzoo/color-input#^2.1.1",
     "paper-radio-group": "^2.2.0",
-    "paper-radio-button": "^2.1.0"
+    "paper-radio-button": "^2.1.0",
+    "rdf-ext": "^1.1.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
@@ -43,10 +44,6 @@
     "paper-behaviors": "^1.0.0",
     "paper-styles": "^1.0.0",
     "paper-fab": "^1.0.0",
-    "iron-icon": "^1.0.0",
-    "iron-icons": "^1.0.0",
-    "iron-iconset-svg": "^1.0.0",
-    "iron-overlay-behavior": "^1.0.0",
-    "paper-fab-speed-dial": "^1.0.16"
+    "iron-overlay-behavior": "^1.0.0"
   }
 }

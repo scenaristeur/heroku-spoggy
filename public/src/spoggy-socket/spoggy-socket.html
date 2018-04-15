@@ -51,9 +51,9 @@
       class SpoggySocket extends Polymer.Element {
         constructor() {
           super();
-          this.connect();
+        /*  this.connect();
           console.log("SPOG-SOCKET");
-          console.log(this.socket);
+          console.log(this.socket);*/
         }
 
         static get is() { return 'spoggy-socket'; }
@@ -202,6 +202,9 @@ console.log(data.username+" a rejoint "+ data.message);
 });*/
 }
 _addUser(){
+  this.connect();
+  console.log("SPOG-SOCKET");
+  console.log(this.socket);
   this.socket.emit('adduser', prompt("Pour passer en mode collaboratif, veuillez entrez un pseudo :"));
 }
 switchRoom(e){
