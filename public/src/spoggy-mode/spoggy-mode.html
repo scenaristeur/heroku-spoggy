@@ -21,6 +21,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../spoggy-socket/spoggy-socket.html">
 
 <dom-module id="spoggy-mode">
   <template>
@@ -149,18 +150,7 @@
             <p>Le mode collaboratif permet de créer des graphes à plusieurs.</p>
             (serveur non opérationnel)
             <p> En cours de developpement (voir About / Github pour participer)  Basé sur socket.io et Accompagné d'un chat pour communiquer </p>
-            <fieldset>
-              <legend>Créer un graphe</legend>
-            <paper-input value="{{newGraphTemp::input}}" label="Choisissez un nom explicite" ></paper-input>
-            <paper-button raised on-tap="_createCollaborativeGraph">Créer</paper-button>
-          </fieldset>
-          <legend>Rejoindre un graphe</legend>
-          <template is="dom-repeat" items="{{graphes}}">
-            <paper-button  raised source={{item.name}}>{{item.name}}
-              <!--  <paper-icon-button icon="delete" on-tap="deleteSource"></paper-icon-button> -->
-            </paper-button>
-          </template>
-      </fieldset>
+      <spoggy-socket></spoggy-socket>
 
           </div>
 
@@ -248,13 +238,6 @@ class SpoggyMode extends Polymer.Element {
             ping: "",
             datasets:["ds", "spoggy", "test"]
           }
-        ]
-      },
-      graphes: {
-        type: Array,
-        notify: true,
-        value: [
-          {name: "CollaboratifDefaut"}
         ]
       }
       /* Modele Fuseki
