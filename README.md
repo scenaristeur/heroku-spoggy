@@ -9,29 +9,40 @@ Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vo
 # Deployer Spoggy sur Heroku
 [![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+<p>
+  Vous pouvez utiliser les boutons <b><i>'Edit / Add node'</i></b>
+   pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.
+</p>
+<p>  ou la zone de saisie # SPOGGY INPUT<br>
+  ## Saisir un message pour le chat<br>
+  Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
+  ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
+</p>
+<p>
+  ## Saisir un triplet au format Turtle<br>
+  Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
+   n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
+  - David type Personne<b>.</b> -> triplet complet,<br>
+  - David type Personne<b>;</b> -> indique de garder le sujet<br>
+  - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
+  - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
+</p>
 
-# SPOGGY INPUT
-## Saisir un message pour le char
-Un message pour le chat ne doit ni commencer par / , ; .
-nii se terminer par , ; . sinon, il sera considéré comme un triplet
+<p>
+  ## Récupérer le dernier triplet saisi<br>
+  - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
+  - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
+  - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
+</p>
+<p>
+  ## Saisir une commande<br>
+  - les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide
+</p>
 
-## Saisir un triplet au format Turtle
-Une saisie qui ne se termine pas par . ou ; ou , n'est pas pris en compte comme un triplet
-- David a man. -> triplet complet,
-- David a man; -> indique de garder le sujet
-- David a man, -> indique de garder sujet et propriete
+/C pour afficher un formulaire proposant les classes les plus courantes et un formulaire de saisi adapté à cette classe (foaf:Person, hola:Tension...)
 
-
-## Récupérer le dernier triplet saisi
-- en commençant par . -> on récupère tout le dernier triplet
-- en commençant par ; -> on récupère le sujet et la propriete
-- en commençant par , -> on récupère seulement le dernier sujet
-
-## Saisir une commande
-- le commandes commencent par / -> exemple /h pour afficher l'aide
-
-
-
+# Polymer 2 cheatsheet
+https://meowni.ca/posts/polymer-2-cheatsheet/
 
 
 

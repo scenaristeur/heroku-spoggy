@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../spoggy-input/spoggy-input.html">
+<link rel="import" href="../spoggy-graph/spoggy-graph.html">
+
+
+<dom-module id="spoggy-gui">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <spoggy-input sources="{{sources}}" network="{{network}}"></spoggy-input>
+    <spoggy-graph network="{{network}}"></spoggy-graph>
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-gui`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyGui extends Polymer.Element {
+    static get is() { return 'spoggy-gui'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-gui'
+        },
+        sources:{
+          type: Array,
+          notify: true
+        },
+        network:{
+          type: Object,
+          notify: true
+        }
+      };
+    }
+  }
+
+  window.customElements.define(SpoggyGui.is, SpoggyGui);
+  </script>
+</dom-module>

@@ -1,0 +1,72 @@
+<script>
+//https://codelabs.developers.google.com/codelabs/polymer-2-carousel/index.html?index=..%2F..%2Findex#4
+//https://vlad.d2dx.com/polymer-2-0-mixins-confusion/ dedupingMixin
+//https://stackoverflow.com/questions/42916271/using-polymers-own-behaviors-in-polymer-2-x
+  const MyMixin = superclass => class extends superclass {
+
+    static get properties() {
+      return {
+        selected: {
+          type: Object,
+          observer: '_selectedChanged'
+        }
+      };
+    }
+
+testMyxin(){
+  console.log("texts")
+}
+    connectedCallback() {
+      super.connectedCallback();
+
+      this.shadowRoot.addEventListener('slotchange', this._resetSelected.bind(this));
+      this._resetSelected();
+    }
+
+    _selectedChanged(selected, oldSelected) {
+      if (oldSelected) oldSelected.removeAttribute('selected');
+      if (selected) selected.setAttribute('selected', '');
+    }
+
+    _resetSelected() {
+      if (!this.selected || this.selected.parentElement !== this) {
+        this.selected = this.firstElementChild;
+      }
+    }
+
+  };
+
+</script>
+
+/*var MyBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class MyBehavior extends superClass {
+    constructor() {
+      super();
+    }
+
+    methodInBehavior() {
+      return "this method is defined in Behavior";
+    }
+  }
+}
+class MyElement extends MyBehaviorMixin(Polymer.Element){
+  constructor(){
+    super();
+    console.log(this.methodInBehavior());
+  }
+}*/
+
+/*
+TequilaMixin = Polymer.dedupingMixin(base => {
+
+  let myTempBase = Mixin1(Mixin2(MixinN(base)));
+
+  // Note that this scope is executed exactly once! Do not try to put hidden variables here.
+
+  class Tequila extends myTempBase {
+     // Usual class declarations here. constructor(), properties(), etc...
+  }
+
+  return Tequila;
+
+});*/

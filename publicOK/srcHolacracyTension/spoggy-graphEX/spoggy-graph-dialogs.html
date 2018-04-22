@@ -1,0 +1,187 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/color-picker/color-picker.html">
+<link rel="import" href="../../bower_components/color-picker/color-element.html">
+<link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="styles/graphe-styles.html">
+
+<dom-module id="spoggy-graph-dialogs">
+  <template>
+    <style is="custom-style" type="custom" include="graphe-styles"></style>
+    <style>
+      :host {
+      /*  display: block; */
+      }
+      paper-button{background-color:#0D578B;color:white}
+
+    </style>
+
+    <paper-dialog id="popupTtl">
+        <h3>Export ttl <paper-button ontap="_pageAide">?</paper-button><paper-button dialog-dismiss raised>X</paper-button></h3>
+
+        <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+        <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
+        <paper-dialog-scrollable>
+          <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
+        </paper-dialog-scrollable>
+      </paper-dialog>
+
+
+
+      <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
+
+        <div horizontal start-justified start layout >
+
+          <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+          <div style="padding-left:20px" vertical start-justified start layout wrap>
+
+            <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
+            <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
+            <p>
+              <paper-input id="nodeLabel" label="Nom du noeud"></paper-input>
+              <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
+            </p>
+
+
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
+              <div slot="collapse-content">
+                <fieldset>
+                  <legend>Forme</legend>
+                  <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
+                    <div>Label interne</div>
+                    <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
+                    <paper-checkbox name="circle">Cercle</paper-checkbox>
+                    <paper-checkbox name="database">Database</paper-checkbox>
+                    <paper-checkbox name="box">Box</paper-checkbox>
+                    <paper-checkbox name="text">Texte</paper-checkbox>
+                    <hr>
+                    <div>Label externe</div>
+                    <paper-checkbox name="diamond">Diamant</paper-checkbox>
+                    <paper-checkbox name="star">Etoile</paper-checkbox>
+                    <paper-checkbox name="triangle">Triangle</paper-checkbox>
+                    <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
+                    <paper-checkbox name="square">Carré</paper-checkbox>
+                    <!--          <paper-checkbox name="image" disabled>Image</paper-checkbox>
+                    <paper-checkbox name="circularImage" disabled>Image Cercle</paper-checkbox>
+                    <paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
+                  </iron-selector>
+                </fieldset>
+              </div>
+            </iron-collapse-button>
+<!--
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
+              <div slot="collapse-content">
+                <fieldset>
+                  <legend>Couleur</legend>
+               <paper-swatch-picker></paper-swatch-picker>
+                  <color-picker  id="colorpicker" native value="{{colorValue}}" css-value="{{cssValue}}" alpha="{{alpha}}" position="right"></color-picker>
+                  <div class="horizontal-section-container result">
+                    <div><code>hex</code>: <b>[[colorValue]]</b></div>
+                    <div><code>alpha</code>: <b>[[alpha]]</b></div>
+                    <div><code>css-value</code>: <b>[[cssValue]]</b></div>
+                  </div>
+                </fieldset>
+              </div>
+            </iron-collapse-button>
+            -->
+
+
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
+              <div slot="collapse-content">
+                (developpements en cours)
+                <fieldset>
+                  <legend>Type</legend>
+                  <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
+                    <paper-checkbox name="node">Node</paper-checkbox>
+                    <paper-checkbox name="url">Url</paper-checkbox>
+                    <paper-checkbox name="graph">Graphe</paper-checkbox>
+                    <paper-checkbox name="source">Source</paper-checkbox>
+                  </iron-selector>
+                </fieldset>
+              </div>
+            </iron-collapse-button>
+
+            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+              <paper-button id="nodeSaveButton" raised>ok</paper-button>
+              <paper-button id="nodeCancelButton" raised>Annuler</paper-button>
+            </div>
+          </div>
+        </div>
+      </paper-dialog>
+
+
+      <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
+        <div horizontal start-justified start layout >
+          <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+          <div style="padding-left:20px" vertical start-justified start layout wrap>
+            <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
+            <p >  <paper-input id="edgeLabel" label="Nom du lien"></paper-input></p>
+            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+              <paper-button id="edgeSaveButton" raised>ok</paper-button>
+              <paper-button id="edgeCancelButton" raised>Annuler</paper-button>
+            </div>
+          </div>
+        </div>
+      </paper-dialog>
+
+      <paper-dialog id="importPopUp" backdrop transition="core-transition-bottom">
+        <div horizontal start-justified start layout >
+          <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+          <div style="padding-left:20px" vertical start-justified start layout wrap>
+            <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+            <p >
+              <fieldset>
+                <legend>Paramètres</legend>
+                <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+                <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
+              </fieldset>
+            </p>
+            <p>
+              <fieldset>
+                <legend>Fichier</legend>
+                <input id="filepicker" type="file" multiple value="Importer"></input>
+              </fieldset>
+            </p>
+            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+              <paper-button id="importCancelButton" on-tap="_closeImportPopUp" raised>Annuler</paper-button>
+            </div>
+          </div>
+        </div>
+      </paper-dialog>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-graph-dialogs`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyGraphDialogs extends Polymer.Element {
+      static get is() { return 'spoggy-graph-dialogs'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-graph-dialogs'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyGraphDialogs.is, SpoggyGraphDialogs);
+  </script>
+</dom-module>

@@ -1,0 +1,87 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+
+
+<link rel="import" href="../spoggy-tools/spoggy-tools.html">
+<link rel="import" href="../spoggy-sources/spoggy-sources.html">
+<link rel="import" href="../spoggy-gui/spoggy-gui.html">
+<link rel="import" href="../spoggy-dialogs/spoggy-dialogs.html">
+
+<dom-module id="spoggy-app">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <spoggy-dialogs></spoggy-dialogs>
+    <spoggy-tools id="tools" lazyRegister rdf="{{rdf}}" tools="{{tools}}"></spoggy-tools>
+
+    <spoggy-gui sources="{{sources}}" network="{{network}}"></spoggy-gui>
+      <spoggy-sources sources="{{sources}}"></spoggy-sources>
+  </template>
+
+  <script>
+  /**
+  * @customElement
+  * @polymer
+  */
+  class SpoggyApp extends Polymer.Element {
+    static get is() { return 'spoggy-app'; }
+    static get properties() {
+      return {
+        sources: {
+          type : Array,
+          value: [
+          /*  {label : "smagEndpointLocal", type: 'sparql', endpointUrl: 'http://127.0.0.1:3030'},*/
+            {label : "smagEndpoint", type: 'sparql', endpointUrl: 'http://5.51.110.50:3030', actif: true},
+            {label : "smagCollab", type: 'socket', actif: false},
+            {label: "smagLevel", type: "levelgraph", actif: false},
+            {label: "smagInput", type: "input", actif: false},
+            {label: "smagGraph", type: "vis", actif: false}],
+            notify: true
+          },
+          rdf: {
+            type: Object,
+            observer: '_rdfChanged'
+          },
+          network:{
+            type: Object,
+            notify: true
+          }
+        };
+      }
+      constructor(){
+        super();
+        console.log("APP constructor")
+
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+        });
+      }
+
+      connectedCallback(){
+        super.connectedCallback()
+        console.log("APP connected")
+
+      }
+
+      _deferred(){
+        console.log("APP defered")
+        this.sources = this.$.tools.consolideSource(this.sources);
+        console.log(this.sources);
+      }
+      attributeChangedCallback(e){
+        console.log(e)
+      }
+      _rdfChanged(){
+        console.log("_rdf changed")
+        //  console.log(rdf);
+      }
+    }
+
+    window.customElements.define(SpoggyApp.is, SpoggyApp);
+  </script>
+</dom-module>

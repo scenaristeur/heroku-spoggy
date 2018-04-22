@@ -1,0 +1,558 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./rdf-ext-behavior.html">
+<link rel="import" href="../spoggy-graph/vis-behavior.html">
+<link rel="import" href="../spoggy-dialogs/spoggy-dialogs.html">
+
+<dom-module id="spoggy-tools">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+
+
+    <iron-ajax
+    id="get_ping"
+    method="get"
+    handle-as="text"
+    debounce-duration="300">
+  </iron-ajax>
+  <!-- ajax sans promise     on-response="_pingSuccess"       on-error="_pingError"   on-response="_serverSuccess"
+  on-error="_serverError"-->
+  <iron-ajax
+  id="get_server"
+  method="get"
+  handle-as="json"
+  debounce-duration="300">
+</iron-ajax>
+
+<iron-ajax
+id="ajaxGet"
+url="{{urlQuery}}"
+params="{{options}}"
+handle-as="json"
+debounce-duration="300">
+</iron-ajax>
+
+<iron-ajax
+id="ajaxUpdate"
+url="{{urlUpdate}}"
+body="{{options}}"
+method="POST"
+handle-as="document"
+content-type="application/x-www-form-urlencoded">
+</iron-ajax>
+
+<!-- POPUPS -->
+<spoggy-dialogs id="dialogs"></spoggy-dialogs>
+<!-- FIN POPUPS -->
+
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-tools`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyTools extends VisBehaviorMixin(RdfExtBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-tools'; }
+  static get properties() {
+    return {
+      rdf:{
+        type: Object,
+        notify: true
+      },
+      tools:{
+        type: Object,
+        notify: true
+      },
+      sources:{
+        type: Array,
+        notify: true
+      }
+    };
+  }
+  constructor(){
+    super();
+    console.log(" TOOLS constructor")
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+
+  connectedCallback(){
+    super.connectedCallback()
+    console.log("Tools connected")
+    //  this.testRdfLib();
+  }
+
+  _deferred(){
+    console.log("tools defered")
+    //  console.log(this.rdf)
+  }
+  testRdfLib(){
+    //test librairy rdf-ext
+    let quad1 = rdf.quad(rdf.namedNode('http://example.org/subject'), rdf.namedNode('http://example.org/predicate'),rdf.literal('a'))
+    console.log(quad1)
+    let store = new SparqlStore({
+      endpointUrl: 'https://dbpedia.org/sparql'
+    })
+    console.log(store)
+    console.log(rdf)
+  }
+
+
+  catchCommande(commande){
+    console.log(commande)
+    switch(commande) {
+      case "/h":
+      case "/help":
+      case "/aide":
+      this.$.dialogs.show("helpPopUp")
+      break;
+      case "/e":
+      case "/export":
+      case "/exportJson":
+      this.exportJson();
+      break;
+      case "/t":
+      //  exportTtl(network,app);
+      this.$.dialogs.show("popupTtl")
+      break;
+      case "/i":
+      case "/import":
+      case "/importJson":
+      //  importJson(network,app);
+      this.$.dialogs.show("importPopUp")
+      this.$.dialogs.openImport(this.network)
+      break;
+      case "/n":
+      console.log("new graph");
+      newGraph(network,app);
+      break;
+      case "/b":
+      console.log("connection a la base levelgraph");
+      connectBase(network,app);
+      break;
+      /*
+      case "/p":
+      case "/t":
+      // non traité ici , mais par le serveur
+      console.log("triplet, predicat ou noeud");
+      break;*/
+      default:
+      console.log("non traite"+ commande);
+      //  return afficheCommandes();
+    }
+  }
+
+  catchTriplets(triplets){
+    var app = this;
+    console.log( "test pour voir si c'est une query ou une update");
+    let sens = "update";
+    if(triplets[0].s.startsWith('?') || triplets[0].p.startsWith('?') || triplets[0].o.startsWith('?')  ){
+      sens = "query";
+    }
+    app.sources.forEach(function(s){
+      if (s.actif){
+        app.applyTriplets(s, triplets, sens)
+      }
+    })
+  }
+
+
+  exportJson() {
+    var network = this.network;
+    console.log(network)
+    var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
+  //  app.$.inputMessage.value = '';
+    if (filename == null || filename == "") {
+      txt = "User cancelled the prompt.";
+      return;
+    }
+    var textToWrite = "";
+    var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
+    var textFileAsBlob = "";
+
+    console.log("export Json");
+    console.log(network.body.data);
+    var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
+    console.log(nodes_edges);
+    var nodes_edgesJSON = JSON.stringify(nodes_edges);
+    console.log(nodes_edgesJSON);
+    textFileAsBlob = new Blob([nodes_edgesJSON], {
+      type:
+      'application/json'
+    }
+  );
+  var downloadLink = document.createElement("a");
+  downloadLink.download = fileNameToSaveAs;
+  downloadLink.innerHTML = "Download File";
+  if(navigator.userAgent.indexOf("Chrome") != -1)
+  {
+    // Chrome allows the link to be clicked
+    // without actually adding it to the DOM.
+    console.log("CHROME");
+    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  } else
+  {
+    // Firefox requires the link to be added to the DOM
+    // before it can be clicked.
+    console.log("FF");
+    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    downloadLink.target="_blank";
+    //downloadLink.onclick = destroyClickedElement;
+    //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+    console.log(app.$.popupTtl);
+  }
+  console.log(downloadLink);
+  /*downloadLink.click();*/
+  /* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+  var event = document.createEvent("MouseEvents");
+  event.initMouseEvent(
+    "click", true, false, window, 0, 0, 0, 0, 0
+    , false, false, false, false, 0, null
+  );
+  downloadLink.dispatchEvent(event);
+  var app = this;
+  setTimeout(function(){
+    console.log(downloadLink.parentNode);
+    document.body.removeChild(downloadLink);
+    window.URL.revokeObjectURL(downloadLink);
+  }, 1000);
+  /*if (window.URL != null) {
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  } else {
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.onclick = destroyClickedElement;
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  }
+  downloadLink.click();*/
+  }
+   exportTtl(network, app) {
+    /* source https://github.com/scenaristeur/dreamcatcherAutonome/blob/master/autonome/public/agents/ExportAgent.js */
+    app.$.inputMessage.value = '';
+    var nodes = network.body.data.nodes.get();
+    var edges = network.body.data.edges.get();
+    console.log("exportation");
+    console.log(nodes);
+    console.log(edges);
+    //creation des statements (triplets)
+    /*var statements = [];
+    for (var j = 0; j < edges.length; j++){
+    var edge = edges[j];
+    console.log(edge);
+    statements.push({sujet: node.id, propriete: "rdfs:label", objet: node.label});
+  }
+  console.log(statements);*/
+
+  var output = "@prefix : <http://smag0.blogspot.fr/spoggy#> . \n";
+  output += "@prefix owl: <http://www.w3.org/2002/07/owl#> . \n";
+  output += "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . \n";
+  output += "@prefix xml: <http://www.w3.org/XML/1998/namespace> . \n";
+  output += "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> . \n";
+  output += "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . \n";
+  output += "@prefix smag: <http://smag0.blogspot.fr/spoggy#> . \n";
+  output += "@base <http://smag0.blogspot.fr/spoggy> . \n";
+  output += "<http://smag0.blogspot.fr/spoggy> rdf:type owl:Ontology ;  \n";
+  output += "                    owl:versionIRI <http://smag0.blogspot.fr/spoggy/1.0.0> . \n";
+  output += " \n";
+  output += "owl:Class rdfs:subClassOf owl:Thing .  \n";
+
+  var listeInfos = new Array();
+  var listeComplementaire = new Array();
+
+  for (var i = 0; i < edges.length; i++) {
+    var edge = edges[i];
+
+    var sujet = edge.from;
+    var propriete = edge.label;
+    var objet = edge.to;
+
+
+    //string.indexOf(substring) > -1
+    //console.log(sujet);
+    //console.log(propriete);
+    //  console.log(objet);
+
+    // AJOUTER EVENTUELLEMENT LA RECUPERATION DE SHAPE, COLOR, pour l'export RDF
+    var sujetLabel = network.body.data.nodes.get(sujet).label;
+    var objetLabel = network.body.data.nodes.get(objet).label;
+    //console.log("#########################");
+    //console.log(sujetLabel);
+    //console.log(objetLabel)
+    //console.log("#########################");
+
+    var sujetWithPrefix = this.validRdf(network, sujet);
+    var proprieteWithPrefix = this.validRdf(network, propriete);
+    var objetWithPrefix = this.validRdf(network, objet);
+
+    if (sujetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
+    sujetWithPrefix = ':' + sujetWithPrefix;
+  }
+
+  if (proprieteWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
+  proprieteWithPrefix = ':' + proprieteWithPrefix;
+
+  }
+
+  if (objetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
+  objetWithPrefix = ':' + objetWithPrefix;
+  }
+
+
+  var typedeProp = ["owl:AnnotationProperty", "owl:ObjectProperty", "owl:DatatypeProperty"];
+  var indiceTypeDeProp = 1; // -1 pour ne pas ajouter la prop, sinon par defaut en annotationProperty, 1 pour Object, 2 pour Datatype --> revoir pour les datatypes
+
+  if ((proprieteWithPrefix == "type") || (proprieteWithPrefix == ":type") || (proprieteWithPrefix == "rdf:type")) {
+    proprieteWithPrefix = "rdf:type";
+    listeComplementaire.push(objetWithPrefix + " rdf:type owl:Class . \n");
+    indiceTypeDeProp = 1;
+
+
+  } else if ((proprieteWithPrefix == "subClassOf") || (proprieteWithPrefix == ":subClassOf") || (proprieteWithPrefix == "rdfs:subClassOf")) {
+    proprieteWithPrefix = "rdfs:subClassOf";
+
+  }
+  else if ((proprieteWithPrefix == "sameAs") || (proprieteWithPrefix == ":sameAs")) {
+    proprieteWithPrefix = "owl:sameAs";
+    indiceTypeDeProp = -1;
+  }
+  else if ((proprieteWithPrefix.toLowerCase() == "ispartof") || (proprieteWithPrefix.toLowerCase() == "partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof") || (proprieteWithPrefix.toLowerCase() == ":partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof")) {
+    proprieteWithPrefix = "smag:partOf";
+    indiceTypeDeProp = 1;
+
+  } else if ((proprieteWithPrefix.toLowerCase() == "comment") || (proprieteWithPrefix.toLowerCase() == "commentaire") || (proprieteWithPrefix.toLowerCase() == "//") || (proprieteWithPrefix.toLowerCase() == "#")) {
+    proprieteWithPrefix = "rdfs:comment";
+    indiceTypeDeProp = -1;
+
+  }
+
+
+  if (indiceTypeDeProp >= 0) {
+    listeComplementaire.push(proprieteWithPrefix + " rdf:type " + typedeProp[indiceTypeDeProp] + " . \n");
+  }
+  var data = sujetWithPrefix + " " + proprieteWithPrefix + " " + objetWithPrefix + " . \n";
+  data += sujetWithPrefix + " " + "rdfs:label \"" + sujetLabel + "\" . \n";
+  data += objetWithPrefix + " " + "rdfs:label \"" + objetLabel + "\" . \n";
+  listeInfos[i] = data;
+  console.log(data);
+  console.log("||||||||||||||||||||||--");
+  }
+  //console.log(listeInfos);
+  //console.log(listeComplementaire);
+  //suppression des doublons
+  listeInfos = uniq_fast(listeInfos.sort());
+  listeComplementaire = uniq_fast(listeComplementaire.sort());
+  // console.log (listeInfos);
+  for (var k = 0; k < listeInfos.length; k++) {
+    output = output + listeInfos[k];
+    //  console.log(output);
+  }
+
+  for (var l = 0; l < listeComplementaire.length; l++) {
+    output = output + listeComplementaire[l];
+    //  console.log(output);
+  }
+
+
+  app.$.inputTextToSave.value = output; //     document.getElementById("inputTextToSave").value =output;
+  /*this.$.popupTtl.fitInto = this.$.menu;*/
+  app.$.popupTtl.toggle();
+  }
+  applyTriplets(source, triplets, sens){
+    console.log(source)
+    console.log(triplets)
+    console.log(sens)
+    switch (source.type) {
+      case 'sparql':
+      let server = source.endpointUrl;
+      let dataset = source.currentDataset;
+      let endpoint = server+dataset;
+
+      //let store = new SparqlStore({endpointUrl: endpoint+"/sparql",   updateUrl : endpoint+"/update" })
+
+      if(sens == "update"){
+        this.urlUpdate = endpoint+"/update";
+        this.options = this.computeUpdateTriplets(triplets);
+        //  console.log(source.store.server.datasets[0].name)
+        //  console.log("update sparql "+urlUpdate)
+        //const query = 'INSERT DATA{GRAPH<http://example.org/graph>{<http://example.org/subject> <http://example.org/predicate> "object" .\n}}'
+        const update = 'PREFIX dc: <http://purl.org/dc/elements/1.1/> INSERT DATA {   <http://example/book1> dc:title "A new book" ;  dc:creator "A.N.Other" .}'
+        this.$.ajaxUpdate.generateRequest().completes.then(function (request) {
+          var html = request.response.getElementsByTagName("html")[0];
+          var body=html.getElementsByTagName("body")[0];
+          var resultat=body.getElementsByTagName("h1")[0].firstChild.nodeValue;
+          console.log(resultat);
+        });
+      }else{
+        let urlQuery = endpoint+"/sparql?query="
+        console.log("query sparql "+ urlQuery)
+        this.urlQuery = endpoint+"/sparql"
+        this.options = this.computeQueryTriplets(triplets);
+        this.$.ajaxGet.generateRequest().completes.then(function (request){
+          var rep = request.response;
+          console.log(rep);
+        }, function(rejected) {
+          // failed request, argument is an object
+          let req = rejected.request;
+          let error = rejected.error;
+          console.log(error)
+        });
+      }
+      break;
+      case 'vis':
+      if(sens == "update"){
+        console.log("update vis")
+      }else{
+        console.log("query vis")
+      }
+      break;
+      case 'levelgraph':
+      if(sens == "update"){
+        console.log("update levelgraph")
+      }else{
+        console.log("query levelgraph")
+      }
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'input':
+      //  s.lg = {'lg'};
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'socket':
+      if(sens == "update"){
+        console.log("update socket")
+      }else{
+        console.log("query socket")
+      }
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      default:
+      console.log( source.type + 'non traité');
+    }
+    /*  triplets.forEach(function(t){
+    console.log(t);
+
+  });*/
+}
+
+
+
+
+computeUpdateTriplets (triplets){
+  var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+  update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+  update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+  update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+  update += "INSERT DATA { \n";
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+  triplets.forEach(function(triplet) {
+    //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+    update += "smag:"+triplet.s+"   smag:"+triplet.p+"   \""+triplet.o+"\" . \n";
+  });
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+  update += " } \n";
+  console.log(update);
+  //  this.requete=update;
+  return {update: update};
+}
+
+computeQueryTriplets (triplets){
+  var   query = "SELECT * WHERE { \n";
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  query += "GRAPH <http://smag0.blogspot.fr/Sparqlquery>{ \n";
+  triplets.forEach(function(triplet) {
+    //  query += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+    query += triplet.s+" "+triplet.p+" "+triplet.o+". \n";
+  });
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   query += " } \n";
+  query += " } \n";
+  console.log(query);
+  //  this.requete=query;
+  return {query: query, output: "json"};
+}
+
+
+
+
+
+
+
+consolideSource(sources){
+  let app = this;
+  sources.forEach(function(s){
+    console.log(s);
+    switch (s.type) {
+      case 'sparql':
+      s =app.consolideSparql(s,app)
+      break;
+      case 'vis':
+      console.log(app.network)
+      s.network = {};
+      break;
+      case 'levelgraph':
+      s.lg = {};
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'input':
+      //  s.lg = {'lg'};
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'socket':
+      s.socket = {};
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      default:
+      console.log( s.type + 'non traité');
+    }
+  });
+  return sources
+}
+
+consolideSparql(s,app){
+/* STATS
+  //https://codyburleson.com/display/ldn/SPARQL+examples+-+count+all+statements
+  //https://gist.github.com/yayamamo/8052bd4620c1c58adff8
+  */
+
+  app.$.get_ping.url = s.endpointUrl+"/$/ping";
+  app.$.get_server.url = s.endpointUrl+"/$/server";
+  let pingRequest = app.$.get_ping.generateRequest();
+  let serverRequest = app.$.get_server.generateRequest();
+
+  Promise.all([pingRequest.completes, serverRequest.completes]).then(function (requests) {
+    var ping = requests[0].response;
+    var server = requests[1].response;
+    s.ping = ping;
+    let serverCorrige  = JSON.parse(JSON.stringify(server).replace(/ds\./g, '').replace(/srv\./g, '')); //les cles fuseki possèdent des points ! GRRRR
+    s.server = serverCorrige   //  app.set('s.server', serverCorrige)
+    s.currentDataset =   s.server.datasets[0].name
+
+  });
+}
+_closeHelpPopUp(){
+  this.$.helpPopUp.style.display = 'none';
+}
+}
+
+window.customElements.define(SpoggyTools.is, SpoggyTools);
+</script>
+</dom-module>

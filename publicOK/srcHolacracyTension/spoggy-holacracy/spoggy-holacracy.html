@@ -1,0 +1,370 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<!-- paper-card  inspiré de https://github.com/PolymerElements/paper-card/blob/master/demo/index.html-->
+
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<!-- fin paper-card -->
+
+<dom-module id="spoggy-holacracy">
+  <template>
+    <custom-style>
+      <style is="custom-style" >  <!-- <style is="custom-style" include="demo-pages-shared-styles"> -->
+      /*demo-snippet {
+      --demo-snippet-demo: {
+      background: var(--paper-grey-200);
+      padding: 16px;
+    };
+    --demo-snippet-code: {
+    max-height: 300px;
+  }
+  }*/
+  .vertical-section-container {
+    max-width: 400px;
+  }
+  paper-card {
+    width: 100%;
+  }
+  .horizontal {
+    @apply --layout-horizontal;
+  }
+  .flex {
+    @apply --layout-flex;
+  }
+  .justified {
+    @apply --layout-justified;
+  }
+  .amber {
+    background: var(--paper-amber-900);
+  }
+  .lime {
+    background: var(--paper-lime-500);
+  }
+  .cyan {
+    background: var(--paper-cyan-500);
+  }
+  .dark {
+    background: var(--paper-blue-grey-500);
+  }
+  paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
+    color: white;
+    --paper-card-header-color: white;
+  }
+  paper-checkbox {
+    display: block;
+    margin-bottom: 4px;
+    --paper-checkbox-label-color: white;
+    --paper-checkbox-unchecked-color: white;
+  }
+  paper-icon-button {
+    color: var(--paper-grey-600);
+  }
+  paper-icon-button.white {
+    color: white !important;
+  }
+
+  </style>
+  <style is="custom-style">
+  .cafe-header { @apply --paper-font-headline; }
+  .cafe-light { color: var(--paper-grey-600); }
+  .cafe-location {
+    float: right;
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  .cafe-reserve { color: var(--google-blue-500); }
+  iron-icon.star {
+    --iron-icon-width: 16px;
+    --iron-icon-height: 16px;
+    color: var(--paper-amber-500);
+  }
+  iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+  </style>
+  <style>
+  #eyediv {
+    padding: .2em;
+    border: 1px solid #aaaaaa;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin: 10px;
+  }
+  paper-tabs {
+    background-color: black;
+    width: 100%;
+    margin-bottom: 1px;
+    color: #fff;
+  }
+  .eyetab1 {
+    width: 100%;
+    height: 200px;
+
+    font-family: Courier, "Courier New", monospace !important;
+  }
+  </style>
+</custom-style>
+
+
+<!-- test paper-card -->
+<paper-card > <!--      <paper-card image="../../bower_components/paper-card/demo/donuts.png" alt="Tension"> -->
+  <div class="card-content">
+    <div class="cafe-header">{{titre}}</div>
+    <div class="cafe-location cafe-light">type: {{type}}</div>
+
+    <div id="eyediv" class="ui-corner-all">
+      <paper-tabs selected={{selected}}>
+        <paper-tab>Création</paper-tab>
+        <paper-tab>Domaines & Acteurs</paper-tab>
+        <paper-tab>Précisions</paper-tab><!--
+          <paper-tab>Suite</paper-tab>
+          <paper-tab>Vérif</paper-tab>-->
+        </paper-tabs>
+
+        <div>
+          <iron-pages selected={{selected}}>
+
+            <div>
+              <p>En holacratie, une tension est un écart entre "Ce qui est" et "Ce qui devrait être".<br>
+                Cela peut être un problème dont vous n'arrivez pas à trouver la solution,
+                un projet qui vous tient à coeur, une idée pour faire disparaître une injustice insoutenable,
+                ou encore une modification qu'il faut apporter à Spoggy...
+                <a href="https://igipartners.com/sites/default/files/constitution_4.1_0.pdf" target="_blank">En savoir plus...</a></p>
+                <p>Pour commencer à enregistrer une TENSION, complétez le formulaire ci-dessous.</p>
+                <paper-input label="Choisissez un titre :" value="{{titre::input}}" autofocus></paper-input>
+                Décrivez ensuite :<br>
+                <paper-textarea class="cafe-light" rows="2" value = "{{cqe::input}}" label="- ce qui est (le problème) :" autofocus></paper-textarea>
+                <paper-textarea rows="2" value = "{{cqde::input}}" label="- ce qui devrait être (la solution)"></paper-textarea>
+              </div>
+
+
+
+              <div>
+                <p>Une tension peut être attachée à un ou plusieurs domaines, et concerner plusieurs acteurs.</p>
+                <fieldset>
+                  <legend>Domaines</legend>
+                  <paper-input value="{{domaineTemp::input}}" label="Ajouter un domaine (exemple : Ecologie, Mobilité...)" ></paper-input>
+                  <paper-fab
+                  icon="add"
+                  title="Ajouter un acteur"
+                  on-tap="createDomaine"
+                  class="blue">
+                </paper-fab>
+                <!--     <paper-icon-button icon="delete" on-tap="clearDomaines"></paper-icon-button>-->
+                <template is="dom-repeat" items="{{domaines}}">
+                  <paper-button  raised domaine={{item}}>{{item}}
+                    <paper-icon-button icon="delete" on-tap="deleteDomaine"></paper-icon-button>
+                  </paper-button>
+                </template>
+              </fieldset>
+              <br>
+              <fieldset>
+                <legend>Acteurs</legend>
+                <paper-input value="{{acteurTemp::input}}" label="Ajouter un acteur (exemple : Gouvernement, LaMetropole, LesBricodeurs...)" ></paper-input>
+                <paper-fab
+                icon="add"
+                title="Ajouter un acteur"
+                on-tap="createActeur"
+                class="blue">
+              </paper-fab>
+              <!--  <paper-icon-button icon="delete" on-tap="clearActeurs"></paper-icon-button>-->
+              <template is="dom-repeat" items="{{acteurs}}">
+                <paper-button raised  acteur={{item}}>{{item}}
+                  <paper-icon-button icon="delete" on-tap="deleteActeur"></paper-icon-button>
+                </paper-button>
+              </template>
+            </fieldset>
+          </div>
+
+
+
+          <div>
+            <p>Merci d'indiquer sous quel 'ROLE' vous présentez cette tension. (par défaut: 'Terrien' ) </p>
+            <fieldset>
+              <legend>Rôle, Contact</legend>
+              <label for="role-input">Indiquer le Rôle sous lequel vous soumettez cette tension (exemple : Citoyen, Entreprise, Père de famille...)</label>
+              <paper-input id="role-input" label="Rôle :" value="{{role::input}}" autofocus></paper-input>
+              <br>
+              <label for="contact-input">(Optionnel, voir 'Sécurité dans le menu About') Vous pouvez aussi préciser un contact ou un pseudo pour faciliter le suivi au sujet de cette tension</label>
+              <paper-input id="contact-input" label="Contact: " value="{{contact::input}}" autofocus></paper-input>
+            </fieldset>
+            <iron-icon icon="communication:location-on"></iron-icon>
+            <span> Ajouter un lieu</span>
+          </div>
+
+        </iron-pages>
+      </div>
+    </div>
+  </div>
+  <div class="card-actions">
+    <div class="horizontal justified">
+      <paper-button on-tap="_precedent" hidden$="[[_selectedIs(selected,'0')]]" raised>Précédent</paper-button>  <!-- n'affiche pas precedent si on est au 1er tab -->
+      <paper-button on-tap="_suivant"  hidden$="[[_selectedIs(selected,'2')]]" raised>Suivant</paper-button> <!-- n'affiche pas suivant si on est au 5ème tab -->
+      <paper-button on-tap="_enregistre" raised class="cafe-reserve">Enregistrer</paper-button>
+    </div>
+  </div>
+</paper-card>
+<!--<paper-toast id="toast1" class="fit-bottom" text="Nom ne peut être vide."></paper-toast>
+<paper-toast id="toast2" class="fit-bottom" text="Date de naissance ne peut être vide."></paper-toast>-->
+</template>
+
+<script>
+/**
+* `spoggy-holacracy`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyHolacracy extends Polymer.Element {
+  static get is() { return 'spoggy-holacracy'; }
+  static get properties() {
+    return {
+      /* Variables par Defaut TENSION */
+      tension:{
+        type: Object,
+        value: {}
+      },
+      type: {
+        type: String,
+        value: "Tension"
+      },
+      role: {
+        type: String,
+        value: "Terrien"
+      },
+      /* Details, listes */
+      domaine: {
+        type : Object,
+        notify : true,
+        value:{	}
+      },
+      acteur: {
+        type : Object,
+        notify : true,
+        value:{	}
+      },
+      acteurs: {
+        type : Array,
+        notify : true,
+        value : []
+      },
+      domaines: {
+        type: Array,
+        notify: true,
+        value: []
+      }
+    };
+  }
+
+  ready() {
+    super.ready();
+    this.selected = 0;
+  }
+  _suivant(){
+    this.selected = this.selected+1;
+  }
+  _precedent(){
+    this.selected = this.selected-1;
+  }
+  _selectedIs(sel, compare){
+    return sel == compare;
+  }
+
+  _enregistre(){
+    /* TRANSFORMER LES DATAS EN RDF-EXT  ?*/
+
+
+
+    console.log(this.titre);
+    console.log(this.type);
+    console.log(this.cqe);
+    console.log(this.cqde);
+    console.log(this.contact);
+    console.log(this.role);
+    console.log(this.domaines);
+    console.log(this.acteurs);
+    var tension = [];
+    // RECUPERER D'abord les id de Vis behavior
+let retourInscriptionVis = this.vis.put(tension);
+console.log(retourInscriptionVis)
+
+    tension.push(rdf.triple(rdf.namedNode(this.titre), rdf.namedNode("rdf:type"), rdf.namedNode(this.type)));
+    tension.push(rdf.triple(rdf.namedNode(this.titre), rdf.namedNode("smag:cqe"),  rdf.literal(this.cqe,"fr")));
+    tension.push(rdf.triple(rdf.namedNode(this.titre), rdf.namedNode("smag:cqde"),  rdf.literal(this.cqde,"fr")));
+    //data.
+
+    let retourFonctionTestLG = this.lg.methodInBehavior("du texte", 10);
+    console.log(retourFonctionTestLG)
+
+    let retourInscriptionLG = this.lg.put(tension);
+    console.log(retourInscriptionLG)
+  }
+
+  createActeur(e){
+    //  console.log(e);
+    //  console.log(this.acteurTemp);
+    this.push('acteurs', this.acteurTemp);
+    this.acteurTemp = "";
+  }
+  createDomaine(e){
+    //console.log(e);
+    //  console.log(this.domaineTemp);
+    this.push('domaines', this.domaineTemp);
+    this.domaineTemp = "";
+    /*  if ((this.$.indivNomInput.value!=undefined)
+    &&(this.$.dateN.value!=undefined)){
+    this.push('individus', this.individu);
+    //Update manuelle
+    var indivTemp=this.individus;
+    this.individus=[];
+    this.individus=indivTemp;
+    this.individu={};
+    console.log(this.individus);
+  }
+  else{
+  if(this.$.dateN.value==undefined){
+  this.$.toast2.fitInto=this.$.dateN;
+  this.$.toast2.open();
+}
+if(this.$.indivNomInput.value==undefined){
+this.$.toast1.fitInto=this.$.indivNomInput;
+this.$.toast1.open();
+}
+}*/
+}
+deleteDomaine(e){
+  var domaine= e.model.item;
+  var index=this.domaines.indexOf(domaine);
+  if (index != -1) {
+    this.splice('domaines',index, 1);
+  }
+}
+deleteActeur(e){
+  var acteur = e.model.item;
+  var index=this.acteurs.indexOf(acteur);
+  if (index != -1) {
+    this.splice('acteurs',index, 1);
+  }
+}
+}
+
+window.customElements.define(SpoggyHolacracy.is, SpoggyHolacracy);
+</script>
+</dom-module>
