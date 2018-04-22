@@ -1,69 +1,59 @@
+<!--
+# SPOGGY INPUT
+- Saisir un message pour le chat
+Un message pour le chat ne doit ni commencer par / , ; .
+nii se terminer par , ; . sinon, il sera considéré comme un triplet
+
+- Saisir un triplet au format Turtle
+Une saisie qui ne se termine pas par . ou ; ou , n'est pas pris en compte comme un triplet
+David a man. -> triplet complet,
+David a man; -> indique de garder le sujet
+David a man, -> indique de garder sujet et propriete
+
+
+- Récupérer le dernier triplet saisi
+en commençant par . -> on récupère tout le dernier triplet
+en commençant par ; -> on récupère le sujet et la propriete
+en commençant par , -> on récupère seulement le dernier sujet
+
+- Saisir une commande
+le commandes commencent par / -> exemple /h pour afficher l'aide
+-->
+
+
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 
+<link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+<!--
+<link rel="import" href="../spoggy-tools/spoggy-tools.html">-->
+<link rel="import" href="./input-behavior.html">
+<link rel="import" href="../spoggy-data/data-behavior.html">
+
+
+
+<link rel="import" href="./input-styles.html">
 <dom-module id="spoggy-input">
   <template>
-    <style>
-    /*:host {
-    display: block;
-    }*/
-    /* Input */
-
-    .inputMessage {
-      border: 3px solid #000;
-      /*  top: 20px; */
-      position: sticky;
-      font-size: 100%;
-      /*  left: 0;
-      right: 0;
-      font-size: 100%;
-      outline: none;
-      margin: 0;
-      padding: 0; */
-      padding-left: 10px;
-      width: 60vw;
-      /*  height: 40px;*/
-      /*height: 5vh;
-      outline: none;
-      margin: 0;
-      padding: 0;
-      padding-left: 10px;
-      */
-    }
-    #importPopUp {
-      display:none;
-      position:absolute;
-      top:2vw;
-      left:2vw;
-      z-index:299;
-      background-color: #f9f9f9;
-      border-style:solid;
-      border-width:3px;
-      border-color: #5394ed;
-      padding:10px;
-    }
-    #helpPopUp {
-      display:none;
-      position:absolute;
-      top:2vw;
-      left:2vw;
-      z-index:299;
-      background-color: #f9f9f9;
-      border-style:solid;
-      border-width:3px;
-      border-color: #5394ed;
-      padding:10px;
-    }
+<style is="custom-style" include="input-styles">
+      :host {
+        display: block;
+      }
     </style>
-
-
-    <paper-dialog id="popupTtl">
-      <h3>Export ttl <paper-button ontap="_pageAide">?</paper-button><paper-button dialog-dismiss raised>X</paper-button></h3>
+  <!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
+  <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
+    on-iron-overlay-closed="_myClosedFunction" -->
+    <h3>Export ttl
+      <!--<paper-button ontap="_pageAide">?</paper-button>-->
+      <paper-button dialog-dismiss raised>X</paper-button></h3>
 
       <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
       <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
@@ -72,7 +62,7 @@
       </paper-dialog-scrollable>
     </paper-dialog>
 
-    <paper-dialog id="helpPopUp">
+    <paper-dialog id="helpPopUp" >
       <h3>Help <paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button></h3>
       <!--
       <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
@@ -82,36 +72,60 @@
         <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Afficher l'aide</h3>
           <div slot="collapse-content">
-            /help ou /h ou /aide
+            <b>/h</b>
+          </div>
+        </iron-collapse-button>
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Créer un nouveau graphe</h3>
+          <div slot="collapse-content">
+            <b>/n</b>
           </div>
         </iron-collapse-button>
 
         <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Saisir un triplet</h3>
           <div slot="collapse-content">
-            <p>- Pour saisir un triplet, saisissez trois mots en les faisant précéder de '::', exemple : <br>
-              <span><b><i>::Lyon type Ville</i></b></span><br>
-              Evitez les espaces ('literal' pas encore implémenté), exemple :<br>
-              <span><b><i>::Arduino type CarteElectronique</i></b></span><br>
+            <p>
+              Vous pouvez utiliser les boutons <b><i>'Edit / Add node'</i></b>
+               pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.
+            </p>
+            <p>  ou la zone de saisie # SPOGGY INPUT<br>
+              ## Saisir un message pour le chat<br>
+              Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
+              ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
             </p>
             <p>
-              Vous pouvez aussi utiliser les boutons <b><i>'Edit / Add node'</i></b> pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.
+              ## Saisir un triplet au format Turtle<br>
+              Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
+               n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
+              - David type Personne<b>.</b> -> triplet complet,<br>
+              - David type Personne<b>;</b> -> indique de garder le sujet<br>
+              - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
+              - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
             </p>
+
+            <p>
+              ## Récupérer le dernier triplet saisi<br>
+              - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
+              - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
+              - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
+            </p>
+            <p>
+              ## Saisir une commande<br>
+              - les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide
+            </p>
+
           </div>
         </iron-collapse-button>
 
         <iron-collapse-button>
-          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Démarrer un nouveau graphe</h3>
-          <div slot="collapse-content">
-            <p><b><i>/n</i></b></p>
-          </div>
-        </iron-collapse-button>
-        
-        <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Exporter un graphe</h3>
           <div slot="collapse-content">
             <p>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></p>
-            <p>Au format <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a> : <b><i>/t</i></b></p>
+            <p>Au format
+              <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
+              pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></p>
           </div>
         </iron-collapse-button>
 
@@ -122,283 +136,81 @@
           </div>
         </iron-collapse-button>
 
-
-
         <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
       </paper-dialog-scrollable>
       <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-        <paper-button  on-tap="_closeHelpPopUp" raised>Fermer l'aide</paper-button>
+        <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
       </div>
     </paper-dialog>
 
+<!--  on-iron-overlay-opened="_openImport"
+on-iron-overlay-closed="_closeImport"-->
+    <paper-dialog id="importPopUp"
 
-    <paper-dialog id="importPopUp" backdrop transition="core-transition-bottom">
-      <div horizontal start-justified start layout >
-        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-        <div style="padding-left:20px" vertical start-justified start layout wrap>
-          <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
-          <p >
-            <fieldset>
-              <legend>Paramètres</legend>
-              <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
-              <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
-            </fieldset>
-          </p>
-          <p>
-            <fieldset>
-              <legend>Fichier</legend>
-              <input id="filepicker" type="file" multiple value="Importer"></input>
-            </fieldset>
-          </p>
-          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-            <paper-button id="importCancelButton" on-tap="_closeImportPopUp" raised>Annuler</paper-button>
-          </div>
+    backdrop transition="core-transition-bottom">
+    <div horizontal start-justified start layout >
+      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+      <div style="padding-left:20px" vertical start-justified start layout wrap>
+        <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+        <p >
+          <fieldset>
+            <legend>Paramètres</legend>
+            <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+            <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
+          </fieldset>
+        </p>
+        <p>
+          <fieldset>
+            <legend>Fichier</legend>
+            <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
+          </fieldset>
+        </p>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
         </div>
       </div>
-    </paper-dialog>
+    </div>
+  </paper-dialog>
+
 
     <input id="inputMessage"
     class="inputMessage"
     on-change="traiteMessage"
-    placeholder="/help pour afficher l'aide"
+    placeholder="'/h + Entrée' pour afficher l'aide"
     autofocus
     />
-
-    <!--
-    placeholder="Tapez votre triplet ici, précédé de '::'
-    ou une commande : '/e' pour exporter, '/t' pour exporter au format .ttl, '/i' pour importer" -->
-
   </template>
 
   <script>
-  /**
-  * `spoggy-input`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class SpoggyInput extends Polymer.Element {
-    static get is() { return 'spoggy-input'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'spoggy-input'
-        },
-        actionstosend: {
-          type: Array,
-          value: [],
-          notify: true
-        },
-      };
-    }
-    traiteMessage(){
-      var message = this.$.inputMessage.value;
-      console.log(message);
-      if (message.startsWith("::")){
-        this.catchTriplet(message, this.network);
-        this.$.inputMessage.value = "::";
-      }else if (message.startsWith("/")){
-        var retourCommande = catchCommande(message,this.network,this);
-        // implementer les commandes import, export, connexion endpoint...
+    /**
+     * `spoggy-input`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyInput extends InputBehaviorMixin(DataBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'spoggy-input'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-input'
+          },
+          commandHistory:{
+            type : Array,
+            value: []
+          },
+          sources:{
+            type: Array,
+            notify: true
+          }
+        };
       }
-    }
-
-    catchTriplet(message, network){
-
-      console.log(message.length);
-      message=message.trim();
-      var tripletString = message.substring(2).trim().split(" ");
-      // les noeuds existent-ils ?
-      var sujetNode = network.body.data.nodes.get({
-        filter: function(node){
-          //    console.log(node);
-          return (node.label == tripletString[0] );
-        }
-      });
-      var objetNode = network.body.data.nodes.get({
-        filter: function(node){
-          //    console.log(node);
-          return (node.label == tripletString[2]);
-        }
-      });
-      console.log(sujetNode);
-      console.log(objetNode);
-      // sinon, on les créé
-      if (sujetNode.length == 0){
-        network.body.data.nodes.add({label: tripletString[0] });
-      }
-      if (objetNode.length == 0){
-        network.body.data.nodes.add({ label: tripletString[2] });
-      }
-      // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
-      sujetNode = network.body.data.nodes.get({
-        filter: function(node){
-          console.log(node);
-          return (node.label == tripletString[0] );
-        }
-      });
-      objetNode = network.body.data.nodes.get({
-        filter: function(node){
-          console.log(node);
-          return (node.label == tripletString[2]);
-        }
-      });
-      var actionSujet = {};
-      actionSujet.type = "newNode";
-      actionSujet.data = sujetNode[0];
-      //  actionsToSendTemp.push(actionSujet);
-      this.addAction(actionSujet);
-      var actionObjet = {};
-      actionObjet.type = "newNode";
-      actionObjet.data = objetNode[0];
-      //  actionsToSendTemp.push(actionObjet);
-      this.addAction(actionObjet);
-
-      // maintenant, on peut ajouter l'edge
-      network.body.data.edges.add({
-        label: tripletString[1],
-        from : sujetNode[0].id,
-        to : objetNode[0].id
-      });
-
-      //on récupère ce edge pour l'envoyer au serveur
-      var edge = network.body.data.edges.get({
-        filter: function(edge) {
-          return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == tripletString[1]);
-        }
-      });
-      var actionEdge = {};
-      actionEdge.type = "newEdge";
-      actionEdge.data = edge;
-      this.addAction(actionEdge);
-
-      //  actionsToSendTemp.push(actionEdge);
-      //console.log(actionsToSendTemp);
-      //  return actionsToSendTemp;
 
     }
-    _closeImportPopUp(){
-      this.$.importPopUp.style.display = 'none';
-    }
-    _closeHelpPopUp(){
-      this.$.helpPopUp.style.display = 'none';
-    }
-    addAction(action){
-      //  var actionstosendTemp = catchTriplet(message, network, actionstosend);
-      //  var actionstosendTemp = catchTriplet(message, network);
-      var actionstosendTemp = this.actionstosend;
-      this.actionstosend = [];
-      actionstosendTemp.push(action);
-      this.actionstosend = actionstosendTemp;
-      //  console.log(this.actionstosend);
-      /*if ((actionstosendTemp != undefined) && (actionstosendTemp.length > 0)) {
-      actionstosend = actionstosend.concat(actionstosendTemp);
-      console.log("send");
-      console.log(actionstosend);
-    }*/
-    /*
-    this.nodes = [];
-    this.nodes = this.network.body.data.nodes;
-    this.edges = [];
-    this.edges = this.network.body.data.edges;*/
-  }
 
-  saveTextAsFile(){
-    var textToWrite="";
-    var fileNameToSaveAs="";
-    var textFileAsBlob="";
-    var extension="ttl";
-    var nomFichier="";
-    var data = this.$.inputTextToSave.value;
-    console.log(data);
-
-    if((typeof data != "undefined")&& (data.length>0)){
-      textToWrite=data;
-    }else{
-
-      textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
-    }
-
-    if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
-      fileNameToSaveAs = nomFichier+"."+extension;
-    }else{
-      fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
-    }
-
-
-    if ((typeof extension != "undefined") && (extension.length>0)){
-      switch(extension){
-        case "ttl" :
-        textFileAsBlob = new Blob([textToWrite], {
-          type:
-          'text/turtle'
-        }
-      );
-      break;
-      case "rdf" :
-      //pas implementé pour l'instant
-      textFileAsBlob = new Blob([textToWrite], {
-        type:
-        'application/rdf+xml'
-      }
-    );
-    break;
-    default :
-    console.log("non traite  , extension : "+extension);
-    break;
-  }
-}
-
-
-console.log(nomFichier+" : "+extension);
-
-
-
-var downloadLink = document.createElement("a");
-downloadLink.download = fileNameToSaveAs;
-downloadLink.innerHTML = "Download File";
-//console.log(window.URL);
-//if (window.URL != null)
-if(navigator.userAgent.indexOf("Chrome") != -1)
-{
-  // Chrome allows the link to be clicked
-  // without actually adding it to the DOM.
-  console.log("CHROME");
-  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-} else
-{
-  // Firefox requires the link to be added to the DOM
-  // before it can be clicked.
-  console.log("FF");
-  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-  downloadLink.target="_blank";
-  //downloadLink.onclick = destroyClickedElement;
-  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
-  downloadLink.style.display = "none";
-  document.body.appendChild(downloadLink);
-  console.log(this.$.popupTtl);
-}
-console.log(downloadLink);
-/*downloadLink.click();*/
-/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
-var event = document.createEvent("MouseEvents");
-event.initMouseEvent(
-  "click", true, false, window, 0, 0, 0, 0, 0
-  , false, false, false, false, 0, null
-);
-downloadLink.dispatchEvent(event);
-var app = this;
-setTimeout(function(){
-  document.body.removeChild(downloadLink);
-  window.URL.revokeObjectURL(downloadLink);
-}, 100);
-}
-
-}
-
-window.customElements.define(SpoggyInput.is, SpoggyInput);
-</script>
+    window.customElements.define(SpoggyInput.is, SpoggyInput);
+  </script>
 </dom-module>

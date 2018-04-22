@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<dom-module id="spoggy-levelgraph">
+<dom-module id="spoggy-collab">
   <template>
     <style>
       :host {
@@ -12,25 +12,25 @@
 
   <script>
     /**
-     * `spoggy-levelgraph`
+     * `spoggy-collab`
      *
      *
      * @customElement
      * @polymer
      * @demo demo/index.html
      */
-    class SpoggyLevelgraph extends Polymer.Element {
-      static get is() { return 'spoggy-levelgraph'; }
+    class SpoggyCollab extends Polymer.Element {
+      static get is() { return 'spoggy-collab'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'spoggy-levelgraph'
+            value: 'spoggy-collab'
           }
         };
       }
     }
 
-    window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
+    window.customElements.define(SpoggyCollab.is, SpoggyCollab);
   </script>
 </dom-module>

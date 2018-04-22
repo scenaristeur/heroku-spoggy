@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../spoggy-sparql/spoggy-sparql.html">
+<link rel="import" href="../spoggy-collab/spoggy-collab.html">
+<link rel="import" href="../spoggy-dbpedia/spoggy-dbpedia.html">
+<link rel="import" href="../spoggy-vocabs/spoggy-vocabs.html">
+
+<dom-module id="spoggy-comm">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <spoggy-sparql></spoggy-sparql>
+    <spoggy-collab></spoggy-collab>
+    <spoggy-dbpedia></spoggy-dbpedia>
+    <spoggy-vocabs></spoggy-vocabs>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-comm`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyComm extends Polymer.Element {
+      static get is() { return 'spoggy-comm'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-comm'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyComm.is, SpoggyComm);
+  </script>
+</dom-module>

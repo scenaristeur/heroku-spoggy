@@ -1,196 +1,37 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<!-- import template repeater -->
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
-<!-- import conditional template -->
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<!-- pour choix de la langue : country picker https://github.com/anandAbhi/country-picker -->
-
-<link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
-<link rel="import" href="../spoggy-holacracy/spoggy-holacracy.html">
-<link rel="import" href="../spoggy-mode/spoggy-mode.html">
-<link rel="import" href="../spoggy-about/spoggy-about.html">
-<link rel="import" href="../spog-graphe/vis-behavior.html">
-<link rel="import" href="../spog-graphe/spog-graphe.html">
-<link rel="import" href="../spoggy-rdf-ext/rdf-ext-behavior.html">
-<link rel="import" href="../spoggy-mode/source-behavior.html">
-
-
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
-
-<link rel="import" href="../spoggy-input/spoggy-input.html">
-
-<!--
-<link rel="import" href="../../bower_components/paper-fab-speed-dial/paper-fab-speed-dial.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../../bower_components/paper-fab-speed-dial/paper-fab-speed-dial-action.html">-->
-
-<!-- test behavior <link rel="import" href="../spoggy-graph/spoggy-graph.html">-->
-
-
+<link rel="import" href="../spoggy-ui/spoggy-ui.html">
+<link rel="import" href="../spoggy-data/spoggy-data.html">
+<link rel="import" href="../spoggy-comm/spoggy-comm.html">
 
 <dom-module id="spoggy-app">
   <template>
     <style>
-    :host {
-      /*  display: block;*/
-    }
-    paper-item {
-      height: 54px;
-    }
-
-    paper-item > a {
-      width: 100%;
-      height: 100%;
-      line-height: 54px;
-      text-align: center;
-      text-decoration: none;
-      color: black;
-    }
-  /* app-drawer-layout:not([narrow]) [drawer-toggle] {
-  display: none;
-}*/
-
+      :host {
+        display: block;
+      }
     </style>
-
-    <!-- menu paper-fab
-    <paper-fab-speed-dial with-backdrop>
-    <paper-fab-speed-dial-action icon="icons:content-copy">Copy</paper-fab-speed-dial-action>
-    <paper-fab-speed-dial-action icon="icons:print">Print</paper-fab-speed-dial-action>
-  </paper-fab-speed-dial> -->
-  <spoggy-levelgraph lg="{{lg}}" vis="{{vis}}"></spoggy-levelgraph>
-
-
-  <app-drawer-layout fullbleed>
-    <app-drawer slot="drawer">
-
-      <paper-listbox>
-        <paper-item name="graph">
-        <!--  <a href="#/home" name="name">Home</a> -->
-
-        </paper-item>
-        <paper-item name="graph">
-        <!--  <a href="#/home" name="name">Home</a> -->
-              <a href="#" id="graph" on-tap="_selectPage" drawer-toggle name="name">Graph</a>
-        </paper-item>
-        <paper-item name="holacracy">
-          <a href="#"  id="holacracy"  on-tap="_selectPage" drawer-toggle name="name">Holacracy</a>
-        </paper-item>
-        <paper-item name="mode">
-          <a href="#/mode" id="mode"  on-tap="_selectPage" drawer-toggle name="name">Mode</a>
-        </paper-item>
-        <paper-item name="about">
-          <a href="#/about" id="about"  on-tap="_selectPage" drawer-toggle name="name">About</a>
-        </paper-item>
-      </paper-listbox>
-      <!--
-      <paper-icon-button icon="delete"></paper-icon-button>
-      <paper-icon-button icon="search"></paper-icon-button>
-      <paper-icon-button icon="close"></paper-icon-button>
-      <paper-progress value="10" indeterminate bottom-item></paper-progress>-->
-
-      <!--
-      <paper-button raised id="el"  on-tap="_selectPage">Expression Libre</paper-button>
-      <paper-button raised id="triplet"  on-tap="_selectPage">Triplet</paper-button>-->
-  <!--    <paper-button raised id="holacracy"  on-tap="_selectPage" drawer-toggle>Holacracy</paper-button>-->
-  <!--
-        <paper-button raised id="options"  on-tap="_selectPage">Options</paper-button>
-        <paper-button raised id="news"  on-tap="_selectPage">News</paper-button>-->
-      <!--  <paper-button raised id="mode"  on-tap="_selectPage" drawer-toggle>Mode</paper-button>
-
-        <paper-button raised id="about"  on-tap="_selectPage" drawer-toggle>About</paper-button>-->
-        <!-- DEBUG POUR TESTER LE CHARGEMENT DES BEHAVIORS (vis n'est chargé que quand le module spoggy-graph est chargé)
-        <paper-button raised id="el"  on-tap="_testLgBehavior">test LG BEhavior</paper-button>
-        <paper-button raised id="el"  on-tap="_testVisBehavior">test Vis BEhavior</paper-button>-->
-    </app-drawer>
-    <app-header-layout>
-      <app-header slot="header" reveals>
-        <app-toolbar>
-          <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-          <div main-title>Spoggy</div>
-          <div>
-              <spoggy-input network="{{network}}"></spoggy-input>
-            </div>
-        </app-toolbar>
-      </app-header>
-
-      <spoggy-el hidden$="[[!pageIs(page,'el')]]" vis="{{vis}}" lg="{{lg}}"><p>Expression Libre loading...</p></spoggy-el>
-
-      <spoggy-triplet hidden$="[[!pageIs(page,'triplet')]]" vis="{{vis}}" lg="{{lg}}"><p>triplet loading...</p></spoggy-triplet>
-
-      <spoggy-holacracy hidden$="[[!pageIs(page,'holacracy')]]" vis="{{vis}}" lg="{{lg}}" ><p>holacracy loading...</p></spoggy-holacracy>
-
-      <!-- test avec behavior <spoggy-graph hidden$="[[!pageIs(page,'graph')]]" vis="{{vis}}" lg="{{lg}}"><p>graph loading...</p></spoggy-graph>
-      alors que spog-graphe est l'ancien plgin plus complet avec import export, essayer de mettre tout ça dans un behavior? un module es6 ?--><!--pb d'affichage navigation et manipulation sous firefox dans le dom-if-->
-      <spog-graphe hidden$="[[!pageIs(page,'graph')]]" vis="{{vis}}" lg="{{lg}}" network="{{network}}"><p>graph loading...</p></spog-graphe>
-
-      <spoggy-options hidden$="[[!pageIs(page,'options')]]" vis="{{vis}}" lg="{{lg}}"><p>options loading...</p></spoggy-options>
-
-      <spoggy-news hidden$="[[!pageIs(page,'news')]]" ><p>news loading...</p></spoggy-news>
-
-      <spoggy-mode hidden$="[[!pageIs(page,'mode')]]" ><p>mode loading...</p></spoggy-mode>
-
-      <spoggy-about hidden$="[[!pageIs(page,'about')]]" ><p>about loading...</p></spoggy-about>
-
-      <!--<paper-fab-menu><paper-fab-menu>-->
-
-    </app-header-layout>
-  </app-drawer-layout>
-
-
-
+    <spoggy-ui></spoggy-ui>
+    <spoggy-data></spoggy-data>
+    <spoggy-comm></spoggy-comm>
   </template>
 
   <script>
-  /**
-  * @customElement
-  * @polymer
-  */
-  class SpoggyApp extends SourceBehaviorMixin(RdfExtBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'spoggy-app'; }
-    static get properties() {
-      return {
-        page:{
-          type: String,
-          value: 'graph'
-        },
-      };
+    /**
+     * @customElement
+     * @polymer
+     */
+    class SpoggyApp extends Polymer.Element {
+      static get is() { return 'spoggy-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-app'
+          }
+        };
+      }
     }
 
-    _selectPage(event, detail, sender){
-      this.page = event.currentTarget.id;
-    }
-    pageIs(page, activePage){
-      return page == activePage;
-    }
-    _testLgBehavior(){
-      this.lg.log("TEST patatos LG Debilos");
-      console.log(this.lg.dbFake);
-      console.log(this.lg.db);
-    }
-    _testVisBehavior(){
-      this.vis.log("spoggy app  VIS LOG ");
-      console.log(this.vis.networkFake);
-      console.log(this.vis.network);
-    }
-    ready() {
-      super.ready();
-  //    this.rdf.log("bidule");
-  //    let retourFonctionTestRdf = this.rdf.methodInBehavior("du texte", 10);
-    //  console.log(retourFonctionTestRdf)
-      console.log(this.network)
-    }
-  }
-
-  window.customElements.define(SpoggyApp.is, SpoggyApp);
+    window.customElements.define(SpoggyApp.is, SpoggyApp);
   </script>
 </dom-module>

@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<dom-module id="spoggy-levelgraph">
+<dom-module id="spoggy-sparql">
   <template>
     <style>
       :host {
@@ -12,25 +12,25 @@
 
   <script>
     /**
-     * `spoggy-levelgraph`
+     * `spoggy-sparql`
      *
      *
      * @customElement
      * @polymer
      * @demo demo/index.html
      */
-    class SpoggyLevelgraph extends Polymer.Element {
-      static get is() { return 'spoggy-levelgraph'; }
+    class SpoggySparql extends Polymer.Element {
+      static get is() { return 'spoggy-sparql'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'spoggy-levelgraph'
+            value: 'spoggy-sparql'
           }
         };
       }
     }
 
-    window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
+    window.customElements.define(SpoggySparql.is, SpoggySparql);
   </script>
 </dom-module>

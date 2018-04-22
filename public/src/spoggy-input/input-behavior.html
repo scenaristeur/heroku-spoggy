@@ -1,0 +1,144 @@
+
+<script>
+var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class InputBehavior extends superClass {
+    constructor() {
+      super();
+      console.log("*************************INPUT behavior")
+      console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'inputB*****************************************'
+        }
+      };
+    }
+
+    traiteMessage(){
+      console.log(this.network)
+      var message = this.$.inputMessage.value;
+      message=message.trim();
+      let firstChar = message.charAt(0);
+      switch(firstChar){
+        case '/':
+    //    let commande = rdf.quad(rdf.blankNode(), rdf.namedNode('commande'),rdf.literal(message))
+        //  this.catchCommande(message,this.network,this);
+        this.catchCommande(message, this.network, this);
+        this.$.inputMessage.value = "";
+        break;
+
+        case '.':
+        var last = this.commandHistory[this.commandHistory.length-1];
+        this.$.inputMessage.value = last.s+" "+last.p+" "+last.o;
+        break;
+
+        case ';':
+        var last = this.commandHistory[this.commandHistory.length-1];
+        this.$.inputMessage.value = last.s+" "+last.p+" ";
+        break;
+
+        case ',':
+        var last = this.commandHistory[this.commandHistory.length-1];
+        this.$.inputMessage.value = last.s+" ";
+        break;
+
+        default:
+        let lastChar = message.slice(-1);
+        let messageCut = message.slice(0,-1).split(" ");
+        let isTriplet = true;
+        switch(lastChar){
+
+          case '.':
+          this.$.inputMessage.value = "";
+          break;
+
+          case ';':
+          this.$.inputMessage.value = messageCut[0]+" ";
+          break;
+
+          case ',':
+          this.$.inputMessage.value = messageCut[0]+" "+messageCut[1]+" ";
+          break;
+
+          case '-':
+          this.$.inputMessage.value = messageCut[2]+" ";
+          break;
+
+          default:
+          console.log("message to chat "+message)
+        //  this.catchTriplet(message.slice(0,-1), this.network); // A REMPLACER PAR CATCHTRIPLETS V2
+          this.$.inputMessage.value = "";
+          isTriplet = false;
+        }
+        if (isTriplet){
+          let t = {}
+          t.s = messageCut.shift();
+          t.p = messageCut.shift();
+          t.o = messageCut.join(" ");
+          if (this.commandHistory.length > 10){
+            this.shift('commandHistory');
+          }
+          this.push('commandHistory',t);
+          let triplets = [];
+          triplets.push(t)
+          // utiliser addActions
+        //  this.catchTripletsV2(triplets, this.network);
+        this.catchTriplet(message.slice(0,-1), this.network);
+        }
+      }
+    }
+
+    catchCommande(commande){
+      console.log(commande)
+      switch(commande) {
+        case "/h":
+        case "/help":
+        case "/aide":
+        this.$.helpPopUp.toggle();
+        break;
+        case "/e":
+        case "/export":
+        case "/exportJson":
+        this.exportJson();
+        break;
+        case "/t":
+        this.exportTtl(this.network,this);      
+        break;
+        case "/i":
+        case "/import":
+        case "/importJson":
+        //  importJson(network,app);
+        this.$.importPopUp.toggle();
+      //  this.$.dialogs.openImport(this.network)
+        break;
+        case "/n":
+        console.log("new graph");
+        this.newGraph(this.network, this);
+        break;
+        case "/b":
+        console.log("connection a la base levelgraph");
+        this.connectBase(this.network,this);
+        break;
+        /*
+        case "/p":
+        case "/t":
+        // non traité ici , mais par le serveur
+        console.log("triplet, predicat ou noeud");
+        break;*/
+        default:
+        console.log("non traite"+ commande);
+        //  return afficheCommandes();
+      }
+    }
+
+
+
+
+
+  }
+});
+
+</script>

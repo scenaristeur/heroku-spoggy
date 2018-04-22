@@ -1,36 +1,36 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<dom-module id="spoggy-levelgraph">
+<dom-module id="spoggy-import-export">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-
+    <h2>Hello [[prop1]]!</h2>
   </template>
 
   <script>
     /**
-     * `spoggy-levelgraph`
-     *
+     * `spoggy-import-export`
+     * 
      *
      * @customElement
      * @polymer
      * @demo demo/index.html
      */
-    class SpoggyLevelgraph extends Polymer.Element {
-      static get is() { return 'spoggy-levelgraph'; }
+    class SpoggyImportExport extends Polymer.Element {
+      static get is() { return 'spoggy-import-export'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'spoggy-levelgraph'
+            value: 'spoggy-import-export'
           }
         };
       }
     }
 
-    window.customElements.define(SpoggyLevelgraph.is, SpoggyLevelgraph);
+    window.customElements.define(SpoggyImportExport.is, SpoggyImportExport);
   </script>
 </dom-module>
