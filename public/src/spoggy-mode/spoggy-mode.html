@@ -180,16 +180,14 @@ debounce-duration="300">
     <paper-input value="{{source.modele}}" label="Modèle"></paper-input>
     <paper-input value="{{source.endpoint}}" label="Endpoint"></paper-input>
     <paper-input value="{{source.version}}" label="Version"></paper-input>
-  <!--  <paper-input value="{{source.update}}" label="Update"></paper-input> -->
+    <!--  <paper-input value="{{source.update}}" label="Update"></paper-input> -->
     <p> Ping : {{source.ping}}</p>
     <p>DataSets :
       <template is="dom-repeat" items="{{source.datasets}}">
-        <paper-button  raised >{{item.ds.name}}
-          <!--source={{item.name}} on-tap="_detailSource"-->
-          <!--  <paper-icon-button icon="delete" on-tap="deleteSource"></paper-icon-button> -->
-        </paper-button>
+        <paper-item id="{{item.name}}" on-tap="_selectDS" raised>
+      {{item.name}}
+        </paper-item>
       </template>
-
     </p>
   </paper-dialog-scrollable>
   <div class="buttons">
@@ -323,7 +321,7 @@ class SpoggyMode extends SourceBehaviorMixin(RdfExtBehaviorMixin(Polymer.Element
             name: "Smag0 Endpoint One",
             modele: "Fuseki",
             version: "inconnue",
-            endpoint: "http://5.51.110.50:3030/",
+            endpoint: "http://5.51.110.50:3030",
             update: "true",
             datasets:["ds", "spoggy", "test"],
             disponible: "inconnu",
@@ -337,6 +335,15 @@ class SpoggyMode extends SourceBehaviorMixin(RdfExtBehaviorMixin(Polymer.Element
   ready() {
     super.ready();
     this.selected = 0;
+
+    //test librairy rdf-ext
+    let quad1 = rdf.quad(rdf.namedNode('http://example.org/subject'), rdf.namedNode('http://example.org/predicate'),rdf.literal('a'))
+    console.log(quad1)
+    let store = new SparqlStore({
+      endpointUrl: 'https://dbpedia.org/sparql'
+    })
+    console.log(store)
+    console.log(rdf)
   }
 
   _sourceChanged(s){
@@ -388,33 +395,37 @@ sourceLog(){
   console.log(this.source);
 }
 _pingSuccess(e){
-   console.log(e.detail.response);
-   this.set('source.ping', e.detail.response)
-  this.$.get_server.url = this.source.endpoint+"$/server";
-     let requestServer = this.$.get_server.generateRequest();
+  console.log(e.detail.response);
+  this.set('source.ping', e.detail.response)
+  this.$.get_server.url = this.source.endpoint+"/$/server";
+  let requestServer = this.$.get_server.generateRequest();
 }
 _pingError(e){
-   console.log(e.detail.request.xhr);
-      this.set('source.ping', e.detail.request.xhr.response+ "URL : "+e.detail.request.xhr.responseURL)
+  console.log(e.detail.request.xhr);
+  this.set('source.ping', e.detail.request.xhr.response+ "URL : "+e.detail.request.xhr.responseURL)
 }
 _serverSuccess(e){
-   let server = e.detail.response;
-   let datasets = server.datasets;//JSON.stringify(server.datasets).replace(/"ds."/g, '').replace(/"srv."/g, '');
-   console.log(datasets)
-   let quad1 = rdf.quad(rdf.namedNode('http://example.org/subject'), rdf.namedNode('http://example.org/predicate'),rdf.literal('a'))
-console.log(quad1)
-   let store = new SparqlStore({
-  endpointUrl: 'https://dbpedia.org/sparql'
-})
-   console.log(store)
-   console.log(rdf)
-  // this.set('source.datasets', server.datasets)
-      this.set('source.version', server.version)
+  let server = e.detail.response;
+    this.set('source.version', server.version)
+  let datasets = [];
+  console.log(server.datasets)
+  let dsCorrige  = JSON.parse(JSON.stringify(server.datasets).replace(/ds\./g, '').replace(/srv\./g, ''));
+
+      this.set('source.datasets', dsCorrige)
+          console.log(this.source)
+/*  server.datasets.forEach(function(d){
+
+    console.log(dString);
+  });*
+/*  JSON.stringify(server.datasets).replace(/"ds."/g, '').replace(/"srv."/g, '');
+  console.log(datasets)
+  this.set('source.datasets', datasets)*/
+
 
 }
 _serverError(e){
-   console.log(e.detail.request.xhr);
-      this.set('source.datasets', e.detail.request.xhr.response+ "URL : "+e.detail.request.xhr.responseURL)
+  console.log(e.detail.request.xhr);
+  this.set('source.datasets', e.detail.request.xhr.response+ "URL : "+e.detail.request.xhr.responseURL)
 }
 
 _detailSource(e){
@@ -425,44 +436,44 @@ _detailSource(e){
   this.$.detailSourcePopUp.style.display = 'block';
   //this.$.nodeLabel.focus();
   this.$.detailSourcePopUp.toggle();
-  this.$.get_ping.url = this.source.endpoint+"$/ping";
+  this.$.get_ping.url = this.source.endpoint+"/$/ping";
 
   //  this.$.get_ping.generateRequest();
   let requestPing = this.$.get_ping.generateRequest();
 
-/*  let app = this;
+  /*  let app = this;
   requestPing.completes.then(function(req) {
-    console.log(req)
-    app.set('app.source.ping', req.parseResponse());
-    //  app.source.ping = req.parseResponse();
-    console.log(app.source)
-  }, function(rejected) {
-    // failed request, argument is an object
-    let req = rejected.request;
-    let error = rejected.error;
-    console.log(req)
-    console.log(error)
-    //  ...
-  });
+  console.log(req)
+  app.set('app.source.ping', req.parseResponse());
+  //  app.source.ping = req.parseResponse();
+  console.log(app.source)
+}, function(rejected) {
+// failed request, argument is an object
+let req = rejected.request;
+let error = rejected.error;
+console.log(req)
+console.log(error)
+//  ...
+});
 
-  requestServer.completes.then(function(req) {
-    console.log(req)
-    let server = req.parseResponse();
-    app.set('app.source.version', server.version);
-    app.set('app.source.datasets', server.datasets);
-    console.log(server)
-  }, function(rejected) {
-    // failed request, argument is an object
-    let req = rejected.request;
-    let error = rejected.error;
-    console.log(req)
-    console.log(error)
-    //  ...
-  });*/
+requestServer.completes.then(function(req) {
+console.log(req)
+let server = req.parseResponse();
+app.set('app.source.version', server.version);
+app.set('app.source.datasets', server.datasets);
+console.log(server)
+}, function(rejected) {
+// failed request, argument is an object
+let req = rejected.request;
+let error = rejected.error;
+console.log(req)
+console.log(error)
+//  ...
+});*/
 
-  /*  request.completes.then(
-  request => console.log('success', request.response),
-  request => console.log('failure', request.error)
+/*  request.completes.then(
+request => console.log('success', request.response),
+request => console.log('failure', request.error)
 );*/
 /*onResponse: function(e) {
 var request = e.detail;
@@ -470,6 +481,16 @@ var response = request.response;
 }
 */
 }
+
+_selectDS(event, detail, sender){
+  this.ds = event.currentTarget.id;
+  console.log(this.ds);
+  this.urlUpdate = this.source.endpoint+this.ds+"?update=";
+  this.urlQuery = this.source.endpoint+this.ds+"?query=";
+let queryTest = "SELECT * where {?s ?p ?o}";
+  console.log(this.urlQuery+queryTest);
+}
+
 }
 
 window.customElements.define(SpoggyMode.is, SpoggyMode);

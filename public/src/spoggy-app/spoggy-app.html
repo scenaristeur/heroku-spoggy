@@ -13,6 +13,7 @@
 <link rel="import" href="../spog-graphe/vis-behavior.html">
 <link rel="import" href="../spog-graphe/spog-graphe.html">
 <link rel="import" href="../spoggy-rdf-ext/rdf-ext-behavior.html">
+<link rel="import" href="../spoggy-mode/source-behavior.html">
 
 
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
@@ -154,7 +155,7 @@
   * @customElement
   * @polymer
   */
-  class SpoggyApp extends RdfExtBehaviorMixin(Polymer.Element) {
+  class SpoggyApp extends SourceBehaviorMixin(RdfExtBehaviorMixin(Polymer.Element)) {
     static get is() { return 'spoggy-app'; }
     static get properties() {
       return {
@@ -183,9 +184,9 @@
     }
     ready() {
       super.ready();
-      this.rdf.log("bidule");
-      let retourFonctionTestRdf = this.rdf.methodInBehavior("du texte", 10);
-      console.log(retourFonctionTestRdf)
+  //    this.rdf.log("bidule");
+  //    let retourFonctionTestRdf = this.rdf.methodInBehavior("du texte", 10);
+    //  console.log(retourFonctionTestRdf)
       console.log(this.network)
     }
   }

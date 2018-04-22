@@ -101,6 +101,13 @@
         </iron-collapse-button>
 
         <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Démarrer un nouveau graphe</h3>
+          <div slot="collapse-content">
+            <p><b><i>/n</i></b></p>
+          </div>
+        </iron-collapse-button>
+        
+        <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Exporter un graphe</h3>
           <div slot="collapse-content">
             <p>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></p>
@@ -114,6 +121,8 @@
             <p><b><i>/i</i></b></p>
           </div>
         </iron-collapse-button>
+
+
 
         <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
       </paper-dialog-scrollable>
@@ -247,6 +256,7 @@
       actionObjet.data = objetNode[0];
       //  actionsToSendTemp.push(actionObjet);
       this.addAction(actionObjet);
+
       // maintenant, on peut ajouter l'edge
       network.body.data.edges.add({
         label: tripletString[1],
@@ -264,6 +274,7 @@
       actionEdge.type = "newEdge";
       actionEdge.data = edge;
       this.addAction(actionEdge);
+
       //  actionsToSendTemp.push(actionEdge);
       //console.log(actionsToSendTemp);
       //  return actionsToSendTemp;

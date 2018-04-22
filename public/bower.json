@@ -30,7 +30,8 @@
     "color-input": "fooloomanzoo/color-input#^2.1.1",
     "paper-radio-group": "^2.2.0",
     "paper-radio-button": "^2.1.0",
-    "rdf-ext": "^1.1.0"
+    "rdf-ext": "^1.1.0",
+    "paper-toggle-button": "^2.1.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

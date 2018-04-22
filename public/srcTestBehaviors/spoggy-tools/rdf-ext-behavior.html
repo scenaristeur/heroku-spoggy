@@ -1,0 +1,165 @@
+<!--http://rdf.js.org/-->
+
+
+
+<script src="lib/rdf-ext-all-latest.min.js"></script>
+
+
+
+<script>
+var RdfExtBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class RdfExtBehavior extends superClass {
+    constructor() {
+      super();
+      console.log("RDF EXTbehavior")
+      this.init();
+    }
+
+    static get properties() {
+      return {
+        rdfexttestprop: {
+          type: String,
+          value: 'spoggy-app'
+        }
+      };
+    }
+
+
+init(){
+  console.log("init RDF EXT func");
+
+  this.tools = {
+
+  }
+
+
+
+
+
+//TESTS
+  this.rdf = {
+    dbFake : "RDF EXT DB FAKE",
+  //  db : this.initLevelGraph("spoggy",this._dbOk),
+
+    log(text){
+      console.log("La c'est rdf -ext "+text)
+    },
+        methodInBehavior(data, num) {
+          console.log(data);
+          let newnum = num+10;
+          return "this method is defined in Behavior"+newnum;
+        },
+
+  }
+}
+
+_dbOk(date){
+  console.log("la db est ok en callback "+date);
+}
+_pingSuccess(e){
+  console.log(e.detail.response);
+//  this.set('source.ping', e.detail.response)
+//  this.$.get_server.url = this.source.endpoint+"/$/server";
+//  let requestServer = this.$.get_server.generateRequest();
+}
+_pingError(e){
+  console.log(e.detail.request.xhr);
+  this.set('source.ping', e.detail.request.xhr.response+ "URL : "+e.detail.request.xhr.responseURL)
+}
+
+
+_serverSuccess(e){
+  let server = e.detail.response;
+    this.set('source.version', server.version)
+  let datasets = [];
+  console.log(server.datasets)
+  let dsCorrige  = JSON.parse(JSON.stringify(server.datasets).replace(/ds\./g, '').replace(/srv\./g, ''));
+
+      this.set('source.datasets', dsCorrige)
+          console.log(this.source)
+
+}
+_serverError(e){
+  console.log(e.detail.request.xhr);
+  this.set('source.datasets', e.detail.request.xhr.response+ "URL : "+e.detail.request.xhr.responseURL)
+}
+
+exportJson(network,app) {
+  var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
+  app.$.inputMessage.value = '';
+  if (filename == null || filename == "") {
+    txt = "User cancelled the prompt.";
+    return;
+  }
+  var textToWrite = "";
+  var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
+  var textFileAsBlob = "";
+
+  console.log("export Json");
+  console.log(network.body.data);
+  var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
+  console.log(nodes_edges);
+  var nodes_edgesJSON = JSON.stringify(nodes_edges);
+  console.log(nodes_edgesJSON);
+  textFileAsBlob = new Blob([nodes_edgesJSON], {
+    type:
+    'application/json'
+  }
+);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  console.log("FF");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  console.log(app.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  console.log(downloadLink.parentNode);
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 1000);
+/*if (window.URL != null) {
+// Chrome allows the link to be clicked
+// without actually adding it to the DOM.
+downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else {
+// Firefox requires the link to be added to the DOM
+// before it can be clicked.
+downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+downloadLink.onclick = destroyClickedElement;
+downloadLink.style.display = "none";
+document.body.appendChild(downloadLink);
+}
+downloadLink.click();*/
+}
+
+
+}
+});
+
+</script>

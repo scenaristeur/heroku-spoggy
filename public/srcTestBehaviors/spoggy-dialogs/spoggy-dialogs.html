@@ -1,0 +1,436 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+
+<link rel="import" href="../spoggy-graph/vis-behavior.html">
+
+<dom-module id="spoggy-dialogs">
+  <template>
+    <style>
+    paper-dialog {
+        position:relative;
+        overflow: auto;
+    /*  top:2vw;
+      z-index:299;*/
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      /*  padding:10px;*/
+    }
+
+    </style>
+    <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
+      on-iron-overlay-closed="_myClosedFunction" -->
+      <h3>Export ttl
+        <!--<paper-button ontap="_pageAide">?</paper-button>-->
+        <paper-button dialog-dismiss raised>X</paper-button></h3>
+
+        <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+        <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
+        <paper-dialog-scrollable>
+          <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
+        </paper-dialog-scrollable>
+      </paper-dialog>
+
+      <paper-dialog id="helpPopUp" auto-fit-on-attach>
+        <h3>Help <paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button></h3>
+        <!--
+        <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
+        <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
+        <paper-dialog-scrollable>
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Afficher l'aide</h3>
+            <div slot="collapse-content">
+              /help ou /h ou /aide
+            </div>
+          </iron-collapse-button>
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Saisir un triplet</h3>
+            <div slot="collapse-content">
+              <p>  # SPOGGY INPUT<br>
+                ## Saisir un message pour le chat<br>
+                Un message pour le chat ne doit ni commencer par / , ; .<br>
+                nii se terminer par , ; . sinon, il sera considéré comme un triplet
+              </p>
+              <p>
+                ## Saisir un triplet au format Turtle<br>
+                Une saisie qui ne se termine pas par . ou ; ou , n'est pas pris en compte comme un triplet<br>
+                - David type Personne. -> triplet complet,<br>
+                - David type Personne; -> indique de garder le sujet<br>
+                - David type Personne, -> indique de garder sujet et propriete
+              </p>
+
+              <p>
+                ## Récupérer le dernier triplet saisi<br>
+                - en commençant par . -> on récupère tout le dernier triplet<br>
+                - en commençant par ; -> on récupère le sujet et la propriete<br>
+                - en commençant par , -> on récupère seulement le dernier sujet
+              </p>
+              <p>
+                ## Saisir une commande<br>
+                - le commandes commencent par / -> exemple /h pour afficher l'aide
+              </p>
+              <p>
+                Vous pouvez aussi utiliser les boutons <b><i>'Edit / Add node'</i></b> pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.
+              </p>
+            </div>
+          </iron-collapse-button>
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Exporter un graphe</h3>
+            <div slot="collapse-content">
+              <p>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></p>
+              <p>Au format <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a> : <b><i>/t</i></b></p>
+            </div>
+          </iron-collapse-button>
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Importer un graphe</h3>
+            <div slot="collapse-content">
+              <p><b><i>/i</i></b></p>
+            </div>
+          </iron-collapse-button>
+
+          <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
+        </paper-dialog-scrollable>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
+        </div>
+      </paper-dialog>
+
+<!--  on-iron-overlay-opened="_openImport"
+  on-iron-overlay-closed="_closeImport"-->
+      <paper-dialog id="importPopUp"
+
+      backdrop transition="core-transition-bottom">
+      <div horizontal start-justified start layout >
+        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+          <p >
+            <fieldset>
+              <legend>Paramètres</legend>
+              <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+              <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
+            </fieldset>
+          </p>
+          <p>
+            <fieldset>
+              <legend>Fichier</legend>
+              <input id="filepicker" type="file" multiple value="Importer" on-change="_handleFileSelected"></input>
+            </fieldset>
+          </p>
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
+          </div>
+        </div>
+      </div>
+    </paper-dialog>
+
+    <paper-dialog id="nodePopUp"
+    backdrop transition="core-transition-bottom">
+    <div horizontal start-justified start layout >
+      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+      <div style="padding-left:20px" vertical start-justified start layout wrap>
+
+        <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
+        <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
+        <p>
+          <paper-input id="nodeLabel" label="Nom du noeud"></paper-input>
+          <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
+        </p>
+
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
+          <div slot="collapse-content">
+            <fieldset>
+              <legend>Forme</legend>
+              <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
+                <div>Label interne</div>
+                <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
+                <paper-checkbox name="circle">Cercle</paper-checkbox>
+                <paper-checkbox name="database">Database</paper-checkbox>
+                <paper-checkbox name="box">Box</paper-checkbox>
+                <paper-checkbox name="text">Texte</paper-checkbox>
+                <hr>
+                <div>Label externe</div>
+                <paper-checkbox name="diamond">Diamant</paper-checkbox>
+                <paper-checkbox name="star">Etoile</paper-checkbox>
+                <paper-checkbox name="triangle">Triangle</paper-checkbox>
+                <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
+                <paper-checkbox name="square">Carré</paper-checkbox>
+                <!--          <paper-checkbox name="image" disabled>Image</paper-checkbox>
+                <paper-checkbox name="circularImage" disabled>Image Cercle</paper-checkbox>
+                <paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
+              </iron-selector>
+            </fieldset>
+          </div>
+        </iron-collapse-button>
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
+          <div slot="collapse-content">
+            <fieldset>
+              <legend>Couleur</legend>
+              <color-picker  id="colorpicker" native value="{{colorValue}}" css-value="{{cssValue}}" alpha="{{alpha}}" position="right"></color-picker>
+              <div class="horizontal-section-container result">
+                <div><code>hex</code>: <b>[[colorValue]]</b></div>
+                <div><code>alpha</code>: <b>[[alpha]]</b></div>
+                <div><code>css-value</code>: <b>[[cssValue]]</b></div>
+              </div>
+            </fieldset>
+          </div>
+        </iron-collapse-button>
+
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
+          <div slot="collapse-content">
+            (developpements en cours)
+            <fieldset>
+              <legend>Type</legend>
+              <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
+                <paper-checkbox name="node">Node</paper-checkbox>
+                <paper-checkbox name="url">Url</paper-checkbox>
+                <paper-checkbox name="graph">Graphe</paper-checkbox>
+                <paper-checkbox name="source">Source</paper-checkbox>
+              </iron-selector>
+            </fieldset>
+          </div>
+        </iron-collapse-button>
+
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button id="nodeSaveButton" raised>ok</paper-button>
+          <paper-button id="nodeCancelButton" raised>Annuler</paper-button>
+        </div>
+      </div>
+    </div>
+  </paper-dialog>
+
+
+  <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
+    <div horizontal start-justified start layout >
+      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+      <div style="padding-left:20px" vertical start-justified start layout wrap>
+        <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
+        <p >  <paper-input id="edgeLabel" label="Nom du lien"></paper-input></p>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button id="edgeSaveButton" raised>ok</paper-button>
+          <paper-button id="edgeCancelButton" raised>Annuler</paper-button>
+        </div>
+      </div>
+    </div>
+  </paper-dialog>
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-dialogs`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyDialogs extends VisBehaviorMixin(Polymer.Element) {
+  static get is() { return 'spoggy-dialogs'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-dialogs'
+      },
+      network: {
+        type: Object,
+        notify: true
+      }
+    };
+  }
+  show(popup,data){
+    //  console.log(popup)
+    this.data = data;
+    this.$[popup].toggle();
+    //  this.$[popup].style.display = 'block';
+  }
+  hide(popup){
+    console.log(popup)
+    this.$[popup].style.display= 'none';
+  }
+  openImport(network){
+    console.log(network)
+    this.$.filepicker.network = network;
+  }
+  _handleFileSelected(evt) {
+    var app = this;
+    var network = app.$.filepicker.network;
+    console.log(network)
+    var partageImport = app.$.partageImport.checked;
+    var remplaceNetwork = app.$.remplaceNetwork.checked;
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0; i < files.length; i++) {
+      // Code to execute for every file selected
+      var fichier = files[i];
+      console.log(fichier);
+        this.decortiqueFile(fichier, network, remplaceNetwork);
+    }
+    console.log("fin");
+    // Code to execute after that
+    evt.target.files = null;
+    app.$.importPopUp.style.display = 'none';
+  //  app.$.inputMessage.value = '';
+  }
+
+  decortiqueFile(fichier, network, remplaceNetwork){
+    //  var network = network;
+    //  console.log(network);
+
+    //  console.log(fichier);
+    var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
+    reader.addEventListener('load', function () {
+      //  console.log(fichier);
+      /*loadstart : La lecture vient de commencer.
+      progress : Tout comme avec les objets XHR, l'événement progress se déclenche à intervalles réguliers durant la progression de la lecture. Il fournit, lui aussi, un objet en paramètre possédant deux propriétés, loaded et total, indiquant respectivement le nombre d'octets lus et le nombre d'octets à lire en tout.
+      load : La lecture vient de se terminer avec succès.
+      loadend : La lecture vient de se terminer (avec ou sans succès).
+      abort : Se déclenche quand la lecture est interrompue (avec la méthode abort() par exemple).
+      error : Se déclenche quand une erreur a été rencontrée. La propriété error contiendra alors un objet de type FileError pouvant vous fournir plus d'informations.*/
+      //    console.log(this.result);
+      //alert('Contenu du fichier "' + fichier.name + '" :\n\n' + reader.result);
+
+
+      switch (fichier.type) {
+        case "":
+        case "text/plain":
+        case "application/json":
+        //    console.log("JSON");
+        //  thisElement.dispatch('addNodesEdgesJSON', JSON.parse(reader.result));
+        //    console.log(network);
+        var nodes = JSON.parse(reader.result).nodes;
+        //    console.log(nodes);
+        var edges = JSON.parse(reader.result).edges;
+        //    console.log(edges);
+        network.beforeImport = [];
+        network.beforeImport.nodes = network.body.data.nodes.get();
+        network.beforeImport.edges = network.body.data.edges.get();
+        network.body.data.nodes.update(nodes);
+        network.body.data.edges.update(edges);
+        if(remplaceNetwork){
+          console.log(remplaceNetwork);
+          network.body.data.nodes.clear();
+          network.body.data.edges.clear();
+          console.log("clear");
+          network.body.data.nodes.add(nodes); // clear() ne semble pas fonctionner, à revoir
+          network.body.data.edges.add(edges);
+          console.log(network);
+        }else{
+
+          try{
+            network.body.data.nodes.update(nodes);
+            network.body.data.edges.update(edges);
+          }
+          catch(e){
+            console.log(e);
+          }
+        }
+        console.log(network);
+        //  console.log(partageImport);
+        break;
+        case "rdf+xml":
+        case "application/rdf+xml":
+        console.log("fichier RDF"); //https://github.com/scenaristeur/dreamcatcherAutonome/blob/8376cb5211095a90314e34e9d286b820fbed335b/autonome1/public/agents/FichierAgent.js
+        rdf2Xml(reader.result, network);
+        //  network.dispatch('addTriplets', network.triplets);// CREER UNE NOUVELLE ACTION POUR ENVOYER TS LES TRIPLETS
+        break;
+        case "turtle":
+        case "text/turtle":
+        case "application/turtle":
+        console.log("fichier turtle");
+        console.log("ce type de fichier n'est pas pris en compte (" + fichier.type + ")");
+        ttl2Xml(reader.result, network);
+        //network.dispatch('addTriplets', network.triplets);
+        break;
+        default:
+        console.log("ce type de fichier n'est pas pris en compte (" + fichier.type + ")");
+        var extension = fichier.name.split('.').pop();
+        console.log(extension);
+        console.log(fichier);
+        //  console.log(reader.result);
+        if ((extension == "ttl") || (extension == "n3") || (extension == "n3t")) {
+          //   sketch.ttl2Xml(reader.result);
+          ttl2Xml(reader.result, network);
+          //  network.dispatch('addTriplets', network.triplets);
+        } else if ((extension == "rdf") || (extension == "owl")) {
+          //  sketch.data2Xml(reader.result); //if srdf
+          rdf2Xml(reader.result, network);
+          //  network.dispatch('addTriplets', network.triplets);
+        }
+        else if ((extension == "json") || (reader.result.startsWith("[{"))) {
+          // json2Xml(reader.result);
+          //  network.dispatch('addNodesEdgesJSON', JSON.parse(reader.result));
+        } else {
+          data2Xml(reader.result, network);
+        }
+        console.log("fichier lu");
+      }
+
+      // thisApp.dispatch('update_triplets2add', this.triplets2add);
+
+    });
+    console.log(fichier);
+
+    reader.readAsText(fichier);
+
+
+  }
+
+openEdgePopUp(data,callback){
+  this.$.edgeLabel.value = data.label || "";
+  this.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
+  this.$.edgePopUp.style.display = 'block';
+  this.$.edgeLabel.focus();
+}
+
+  openNodePopUp(data,callback){
+    console.log(this.network)
+  //  console.log(this.data);
+  //  var data = this.data;
+    this.$.nodeLabel.value= data.label || "";
+    this.selectedShape = data.shape || "ellipse";
+    this.selectedType = data.type || "node";
+    //console.log(typeof data.color.background);
+    //  if(data.color != undefined){
+    this.cssValue = data.color || "rgb(173,208,255)";
+    //  }else{
+    //    this.colorValue = "rgb(173,208,255)";
+    //  this.cssValue = "rgb(173,208,255)";
+    //  }
+    this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
+    //this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data);
+    //  this.$.nodeLabel.onchange = this.saveNodeData.bind(this, data, callback);
+    this.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
+    this.$.nodePopUp.style.display = 'block';
+    this.$.nodeLabel.focus();
+  }
+}
+
+window.customElements.define(SpoggyDialogs.is, SpoggyDialogs);
+</script>
+</dom-module>
