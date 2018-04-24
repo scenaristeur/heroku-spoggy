@@ -192,6 +192,10 @@ revoir color picker -->
         network : {
           type: Object,
           notify: true
+        },
+        addToGraph: {
+          observer: '_addToGraphArrivedGRAPH',
+          notify: true
         }
       };
     }
@@ -400,6 +404,7 @@ revoir color picker -->
         var action = {};
         action.type = "newNode";
         action.data = node;
+        console.log
         this.addAction(action);
         if( data.type == "graph"){
           console.log("nodeID");

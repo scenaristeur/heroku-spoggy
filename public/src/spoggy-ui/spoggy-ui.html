@@ -2,7 +2,7 @@
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../spoggy-input/spoggy-input.html">
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
-<!--<link rel="import" href="../spoggy-mode/spoggy-mode.html">-->
+<link rel="import" href="../spoggy-mode/spoggy-mode.html">
 
 <dom-module id="spoggy-ui">
   <template>
@@ -11,8 +11,12 @@
       display: block;
     }
     </style>
-    <spoggy-input network="{{network}}"></spoggy-input>  <!--    <spoggy-mode></spoggy-mode>-->
-    <spoggy-graph network="{{network}}"></spoggy-graph>
+      <div hidden$="[[connected]]">[[status]]</div>
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+      <spoggy-input network="{{network}}" socket="{{socket}}" ></spoggy-input>
+      <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
+    </div>
+    <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}"></spoggy-graph>
     <div id="div"></div>
   </template>
 
@@ -32,10 +36,24 @@
         prop1: {
           type: String,
           value: 'spoggy-ui'
+        },
+        status:{
+          type: String,
+          observer: '_consoleStatus'
+        },
+        connected:{
+          type: Boolean,
+        },
+        addToGraph: {
+          observer: '_addToGraphArrivedUI',
+          notify: true
         }
       };
     }
 
+_addToGraphArrivedUI(){
+  console.log(addToGraph)
+}
     constructor(){
       super();
       console.log("** UI CONSTRUCTOR **")
@@ -43,6 +61,14 @@
         this._deferred();
       });
 
+    }
+    _consoleStatus(newValue, oldValue){
+      console.log(oldValue +" -> "+ newValue);
+      if(newValue =="connected"){
+        this.connected = true;
+      }else{
+        this.connected = false;
+      }
     }
 
     connectedCallback(){

@@ -1,42 +1,248 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
+
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
+
+<link rel="import" href="../spoggy-collab/collab-behavior.html">
+<link rel="import" href="../spoggy-data/data-behavior.html">
 
 <dom-module id="spoggy-mode">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
-    <paper-button on-tap="openChangeMode" raised>{{mode}}</paper-button>
 
-  </template>
+    <paper-dialog id="modePopup"
+    on-iron-overlay-opened="_openModePopp"
+    on-iron-overlay-closed="_closeModePopup" >
+    <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>
+    <!--
+    <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
+    <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
 
-  <script>
-    /**
-     * `spoggy-mode`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyMode extends Polymer.Element {
-      static get is() { return 'spoggy-mode'; }
-      static get properties() {
-        return {
-          mode: {
-            type: String,
-            value: 'solo'
+    <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
+      <paper-checkbox name="solo" auto>Solo</paper-checkbox>
+      <paper-checkbox name="collaboratif" >Collaboratif</paper-checkbox>
+      <paper-checkbox name="global">Global</paper-checkbox>
+    </iron-selector>
+
+    <paper-dialog-scrollable>
+      <div hidden$="[[!modeIs(mode,'collaboratif')]]">
+        <paper-input label="Entrer un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
+
+        <div hidden$="[[isEmpty(pseudo)]]">
+
+          <paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" no-animations>
+            <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="{{selectedRoom}}">
+              <template is="dom-repeat" items="[[rooms]]">
+                <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+
+
+          <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
+          <paper-button raised on-tap="creer">Créer</paper-button>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- test de saisi + selection
+        <paper-dropdown-input label="Rejoindre une room"
+        items="[[rooms]]"
+        value={{room}}
+        >
+        <paper-button on-tap="rejoindre">Rejoindre</paper-button>
+      </paper-dropdown-input>-->
+
+
+
+    </div>
+
+    <div hidden$="[[!modeIs(mode,'global')]]">
+      conf global
+    </div>
+
+  </paper-dialog-scrollable>
+
+  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+    <paper-button  dialog-dismiss raised>Fermer</paper-button>
+  </div>
+</paper-dialog>
+
+
+
+<paper-button on-tap="openChangeMode" raised>{{mode}}</paper-button>
+
+</template>
+
+<script>
+/**
+* `spoggy-mode`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-mode'; }
+  static get properties() {
+    return {
+      mode: {
+        type: String,
+        value: 'solo'
+      },
+      selectedMode: {
+        value: "solo",
+        observer: '_modeChanged'
+      },
+      pseudo: {
+        type: String,
+        value: ""
+      },
+
+      addToGraph: {
+        observer: '_addToGraphArrivedMode',
+        notify: true
+      }
+    };
+  }
+
+  _addToGraphArrivedMode(){
+    console.log(this.addToGraph)
+    console.log(this.network)
+    var app = this;
+    let data = this.addToGraph;
+    if (data.actions.length>0){
+      data.actions.forEach(function(action) {
+            console.log(action);
+            console.log(app.network)
+        switch(action.type) {
+          case "newNode":
+          if(app.network != undefined){
+            app.addNodeIfNotExist(app.network, action.data);
           }
-        };
-      }
-      openChangeMode(){
-        console.log("changeMode");
-
-      }
+          break;
+          case "editNode":
+          break;
+          case "deleteNode":
+          app.deleteFromServer(app.network,action.data);
+          break;
+          case "newEdge":
+          if(app.network != undefined){
+            app.addEdgeIfNotExist(app.network, action.data);
+          }
+          break;
+          case "editEdge":
+          break;
+          case "deleteEdge":
+          app.deleteFromServer(app.network, action.data);
+          break;
+          default:
+          console.log("action non reconnue");
+          console.log(action);
+        }
+      });
     }
 
-    window.customElements.define(SpoggyMode.is, SpoggyMode);
-  </script>
+
+
+
+  }
+  _modeChanged(newMode, oldMode){
+    this.set('modeConfig.mode', newMode);
+    this.mode = newMode;
+    console.log();
+    switch (newMode) {
+      case 'solo':
+      console.log('passage solo');
+      break;
+      case 'collaboratif':
+      console.log('connexion socket');
+      this.connectSocket();
+      console.log("SPOG-SOCKET");
+      console.log(this.socket);
+
+
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'global':
+      console.log('connexion endpoint.');
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      default:
+      console.log('Sorry, we are out of ' + newMode + '.');
+    }
+    switch (oldMode) {
+      case 'solo':
+      console.log('quitte solo');
+      break;
+      case 'collaboratif':
+      console.log('deconnect socket');
+      break;
+      case 'global':
+      console.log('deconnect endpoint');
+      break;
+      default:
+
+    }
+  }
+  rejoindre(e){
+    let room = e.model.item;
+    console.log(room);
+    this.$.modePopup.toggle();
+    this.switchRoom(room);
+  }
+  creer(){
+    let room = this.newRoom;
+    this.switchRoom(room);
+  }
+
+
+  /* TECHNICAL TOOLS */
+
+  openChangeMode(){
+    console.log("changeMode");
+    this.$.modePopup.toggle();
+  }
+
+  modeIs(mode, activeMode){
+    return mode == activeMode;
+  }
+  isEmpty(value){
+    //  console.log(value.length)
+    return value.length==0;
+  }
+  pseudoChanged(){
+    // test a faire pour voir si deconnecter ou changer de nom si deja connecté
+    console.log(this.pseudo)
+    this.socket.emit('adduser', this.pseudo);
+  }
+}
+
+window.customElements.define(SpoggyMode.is, SpoggyMode);
+</script>
 </dom-module>
