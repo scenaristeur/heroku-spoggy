@@ -76,11 +76,12 @@ revoir color picker -->
               <fieldset>
                 <legend>Couleur</legend>
                 <!--<paper-swatch-picker></paper-swatch-picker>-->
-                x  <color-picker  id="colorpicker" native value="{{colorValue}}" css-value="{{cssValue}}" alpha="{{alpha}}" position="right"></color-picker>
+                <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
                 <div class="horizontal-section-container result">
-                  <div><code>hex</code>: <b>[[colorValue]]</b></div>
+                  <!--  <div><code>hex</code>: <b>[[colorValue]]</b></div>
+                  css-value="{{cssValue}}" alpha="{{alpha}}"
                   <div><code>alpha</code>: <b>[[alpha]]</b></div>
-                  <div><code>css-value</code>: <b>[[cssValue]]</b></div>
+                  <div><code>css-value</code>: <b>[[cssValue]]</b></div>-->
                 </div>
               </fieldset>
             </div>
@@ -350,15 +351,9 @@ revoir color picker -->
         this.$.nodeLabel.value= data.label || "";
         this.selectedShape = data.shape || "ellipse";
         this.selectedType = data.type || "node";
-        //console.log(typeof data.color.background);
-        //  if(data.color != undefined){
-        this.cssValue = data.color || "rgb(173,208,255)";
-        //  }else{
-        //    this.colorValue = "rgb(173,208,255)";
-        //  this.cssValue = "rgb(173,208,255)";
-        //  }
+        this.colorValue = data.color || "rgb(173,208,255)";
+
         this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
-        //  this.$.nodeLabel.onchange = this.saveNodeData.bind(this, data, callback);
         this.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
         this.$.nodePopUp.style.display = 'block';
         this.$.nodeLabel.focus();
@@ -373,11 +368,23 @@ revoir color picker -->
         callback(null);
       }
       saveNodeData (data, callback) {
-        //  console.log(this.selectedShape);
-        //  console.log(this.cssValue);
+        /*
+        let dataTemp = data;
+        let cb = callback;
+        console.log(dataTemp);
+        console.log(cb);
+        console.log(data.type);
+        data et callback apparaissent comme des events ?????
+        {id: "38e05a49-feb0-4d65-a35f-c7c7d973390e", x: -518.5339336634761, y: -388.3170534287593, label: ""}
+        spoggy-graph.html:373 Event {isTrusted: false, detail: {…}, type: "tap", target: paper-button#nodeSaveButton, currentTarget: paper-button#nodeSaveButton, …}
+        spoggy-graph.html:374 {x: 138, y: 588, sourceEvent: MouseEvent, preventer: undefined}preventer: undefinedsourceEvent: MouseEvent {isTrusted: true, __polymerGesturesHandled: {…}, screenX: 2058, screenY: 654, clientX: 138, …}x: 138y: 588__proto__: Object
+        spoggy-graph.html:378 tap
+        */
+
         data.label = this.$.nodeLabel.value;
         data.shape = this.selectedShape;
-        data.color = this.cssValue;
+        data.color = this.colorValue;
+
         data.type = this.selectedType;
         if (data.label.length > 40){
           var titleTemp =data.label.match(/.{1,40}/g);

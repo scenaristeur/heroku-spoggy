@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="spoggy-mode">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-button on-tap="openChangeMode" raised>{{mode}}</paper-button>
+
+  </template>
+
+  <script>
+    /**
+     * `spoggy-mode`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyMode extends Polymer.Element {
+      static get is() { return 'spoggy-mode'; }
+      static get properties() {
+        return {
+          mode: {
+            type: String,
+            value: 'solo'
+          }
+        };
+      }
+      openChangeMode(){
+        console.log("changeMode");
+
+      }
+    }
+
+    window.customElements.define(SpoggyMode.is, SpoggyMode);
+  </script>
+</dom-module>

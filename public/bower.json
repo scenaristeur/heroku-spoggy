@@ -14,7 +14,8 @@
     "iron-selector": "^2.1.0",
     "paper-swatch-picker": "^2.2.0",
     "web-animations-js": "^2.3.1",
-    "color-picker": "fooloomanzoo/color-picker#^2.0.6"
+    "color-picker": "fooloomanzoo/color-picker#^2.0.6",
+    "paper-slider": "^2.0.6"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

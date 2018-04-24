@@ -2,62 +2,63 @@
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../spoggy-input/spoggy-input.html">
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
+<!--<link rel="import" href="../spoggy-mode/spoggy-mode.html">-->
 
 <dom-module id="spoggy-ui">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
-    <spoggy-input network="{{network}}"></spoggy-input>
+    <spoggy-input network="{{network}}"></spoggy-input>  <!--    <spoggy-mode></spoggy-mode>-->
     <spoggy-graph network="{{network}}"></spoggy-graph>
     <div id="div"></div>
   </template>
 
   <script>
-    /**
-     * `spoggy-ui`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyUi extends Polymer.Element {
-      static get is() { return 'spoggy-ui'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-ui'
-          }
-        };
-      }
-
-      constructor(){
-        super();
-        console.log("** UI CONSTRUCTOR **")
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          this._deferred();
-        });
-
-      }
-
-      connectedCallback(){
-      super.connectedCallback();
-        console.log("** UI CONNECTED **");
-      //  console.log(this.$.graph);
-      }
-
-      _deferred(){
-          console.log("** UI DEFERRED **");
-    //   console.log(this.$.graph.test);
-    //   this.$.graph.log("machin")
-    //   this.$.graph.methodInBehavior();
-      }
+  /**
+  * `spoggy-ui`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyUi extends Polymer.Element {
+    static get is() { return 'spoggy-ui'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-ui'
+        }
+      };
     }
 
-    window.customElements.define(SpoggyUi.is, SpoggyUi);
+    constructor(){
+      super();
+      console.log("** UI CONSTRUCTOR **")
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+
+    }
+
+    connectedCallback(){
+      super.connectedCallback();
+      console.log("** UI CONNECTED **");
+      //  console.log(this.$.graph);
+    }
+
+    _deferred(){
+      console.log("** UI DEFERRED **");
+      //   console.log(this.$.graph.test);
+      //   this.$.graph.log("machin")
+      //   this.$.graph.methodInBehavior();
+    }
+  }
+
+  window.customElements.define(SpoggyUi.is, SpoggyUi);
   </script>
 </dom-module>
