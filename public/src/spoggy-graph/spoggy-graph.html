@@ -314,6 +314,7 @@ revoir color picker -->
         edges: edges
       };
       var options = {
+      //  locale: 'fr',
         edges:{
           arrows: {
             to:     {enabled: true, scaleFactor:1, type:'arrow'},
@@ -323,7 +324,9 @@ revoir color picker -->
           interaction:{
             navigationButtons: true,
             //  keyboard: true  //incompatible avec rappel de commande en cours d'implémentation
+              multiselect: true,
           },
+
           manipulation: {
             addNode: function (data, callback) {
               // filling in the popup DOM elements
