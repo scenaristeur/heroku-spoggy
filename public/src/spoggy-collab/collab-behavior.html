@@ -149,6 +149,17 @@ this.socket.on('tick', function(data){
 });
 
 
+this.socket.on('initDb', function(db){
+  console.log(db);
+  app.db2populate = db;
+console.log(app.network);
+  app.populateVis(app.db2populate, app.network);
+  app.triplets2popLength = app.db2populate.length;
+
+});
+
+
+
 
 }
 

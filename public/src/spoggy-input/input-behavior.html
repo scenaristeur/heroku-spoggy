@@ -69,6 +69,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
           default:
           console.log("message to chat "+message)
+          this.sendMessage(message);
         //  this.catchTriplet(message.slice(0,-1), this.network); // A REMPLACER PAR CATCHTRIPLETS V2
           this.$.inputMessage.value = "";
           isTriplet = false;
@@ -105,7 +106,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         this.exportJson();
         break;
         case "/t":
-        this.exportTtl(this.network,this);      
+        this.exportTtl(this.network,this);
         break;
         case "/i":
         case "/import":

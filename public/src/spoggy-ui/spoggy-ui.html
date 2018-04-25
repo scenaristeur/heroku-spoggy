@@ -12,9 +12,9 @@
     }
     </style>
       <div hidden$="[[connected]]">[[status]]</div>
-    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-      <spoggy-input network="{{network}}" socket="{{socket}}" ></spoggy-input>
-      <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
+<div class="layout horizontal layout-start" >
+  <spoggy-input network="{{network}}" socket="{{socket}}" ></spoggy-input>
+   <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
     </div>
     <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}"></spoggy-graph>
     <div id="div"></div>

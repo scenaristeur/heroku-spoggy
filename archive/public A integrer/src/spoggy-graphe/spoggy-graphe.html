@@ -11,6 +11,8 @@
 <link rel="import" href="../../bower_components/color-picker/color-element.html">
 <link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
 <script src="../../bower_components/vis/dist/vis.min.js"></script>
 <link rel="import" href="styles/vis-styles.html">
@@ -37,6 +39,9 @@
     }
     paper-button{background-color:#0D578B;color:white}
     </style>
+
+  
+
     <paper-dialog id="popupTtl">
       <h3>Export ttl <paper-button ontap="_pageAide">?</paper-button><paper-button dialog-dismiss raised>X</paper-button></h3>
       <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
@@ -131,7 +136,7 @@
     </paper-dialog>
 
 
-  
+
     <div id="mynetwork"></div>
     <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
     <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
@@ -803,6 +808,9 @@ populateFromInfered(infered, network){
     }
   }
 }
+
+
+
 populateVis(db, network) {
   console.log("POPULATE");
   if (db.length > 0) {

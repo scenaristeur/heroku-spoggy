@@ -9,6 +9,10 @@
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
 <link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 
 
@@ -25,11 +29,30 @@ revoir color picker -->
 
 <link rel="import" href="styles/vis-styles.html">
 <link rel="import" href="styles/graphe-styles.html">
+<link rel="import" href="../spog-eye/spog-eye.html">
 
 <dom-module id="spoggy-graph">
   <template>
-    <style is="custom-style"  include="graphe-styles"></style>
+    <style is="custom-style"  include="graphe-styles">
+    #fabsetting {
+      position: fixed;
+      right: 25px;
+      top: 100px;
+    }
+    #fabEye {
+      position: fixed;
+      right: 25px;
+      top: 175px;
+    }
+  </style>
     <style is="custom-style"  include="vis-styles"></style>
+
+<paper-dialog id="eye">
+    <spog-eye ></spog-eye>
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+      <paper-button dialog-dismiss raised>Fermer</paper-button>
+    </div>
+</paper-dialog>
     <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
       <div horizontal start-justified start layout >
         <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
@@ -105,7 +128,7 @@ revoir color picker -->
           </iron-collapse-button>
 
           <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-            <paper-button id="nodeSaveButton" on-tap="saveNodeData" raised>ok</paper-button>
+            <paper-button id="nodeSaveButton"  raised>ok</paper-button>
             <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
           </div>
         </div>
@@ -153,7 +176,7 @@ revoir color picker -->
     </paper-dialog>
 
 
-    <paper-dialog id="settings" hidden$="{{settinghidden}}">
+    <paper-dialog id="settings" >
       <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
         Gravité   <paper-slider  min="0" max="0.01" value="{{gravityValue}}" step="0.001" on-change="_changeGravity" ></paper-slider>
         Longueur des liens     <paper-slider  min="10" max="800" value="{{springLengthValue}}"  on-change="_changeSpringLength"></paper-slider>
@@ -161,7 +184,9 @@ revoir color picker -->
         Distance entre deux noeuds     <paper-slider  min="10" max="800" value="{{nodeDistanceValue}}"  on-change="_changeNodeDistance"></paper-slider>
         Souplesse           <paper-slider  min="0.01" max="2" value="{{dampingValue}}"  step="0.01" on-change="_changeDamping"></paper-slider>
         <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
-        <br><br>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button  dialog-dismiss raised>Fermer</paper-button>
+        </div>
       </div>
       <div>
         <!--<spog-source></spog-source>-->
@@ -169,7 +194,11 @@ revoir color picker -->
     </paper-dialog>
 
 
-    <div id="mynetwork"></div>
+        <div id="mynetwork"></div>
+    <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
+    <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
+
+
   </template>
 
   <script>
@@ -196,7 +225,40 @@ revoir color picker -->
         addToGraph: {
           observer: '_addToGraphArrivedGRAPH',
           notify: true
-        }
+        },
+        gravityValue :{
+          type : Number,
+          value: 0.001
+        },
+        springLengthValue :{
+          type : Number,
+          value: 220
+        },
+        springConstantValue :{
+          type : Number,
+          value: 0.05
+        },
+        nodeDistanceValue :{
+          type : Number,
+          value: 400
+        },
+        dampingValue :{
+          type : Number,
+          value: 0.08
+        },
+        settinghidden:{
+          type: Boolean,
+          value: true
+        },
+        eyehidden:{
+          type: Boolean,
+          value: true
+        },
+        infered:{
+          type: Array,
+          value:[],
+          observer: '_inferedChanged'
+        },
       };
     }
     constructor(){
@@ -664,12 +726,131 @@ _inferedChanged(newInfered,oldinfered){
 _toggleSettings(){
   console.log(this.$.settings.hidden);
   //this.$.settings.hidden= !this.$.settings.hidden;
-  this.settinghidden = !this.settinghidden;
+  //this.settinghidden = !this.settinghidden;
+  this.$.settings.toggle();
 }
 _toggleEye(){
   console.log(this.$.eye.hidden);
   //this.$.eye.hidden= !this.$.eye.hidden;
-  this.eyehidden = !this.eyehidden;
+  //this.eyehidden = !this.eyehidden;
+  this.$.eye.toggle();
+}
+
+populateFromInfered(infered, network){
+  if(network != undefined){
+    console.log(infered);
+    if(infered.length != 0){
+      infered.forEach(function(triplet){
+        //var triplet = infered.pop();
+        console.log(triplet);
+        if (triplet != undefined) {
+          console.log(infered.length);
+          var sujet = triplet[0].trim();
+          var propriete = triplet[1].trim();
+          var objet = triplet[2].trim();
+          var sujetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == sujet );
+            }
+          });
+          var objetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == objet );
+            }
+          });
+          if(sujetExist == null  || sujetExist.length == 0){
+            console.log("creation "+sujet);
+            var node = {
+              label: sujet,
+              group: 100, // règles
+              borderWidth: 2,
+              shape: "diamond",
+              color: "rgb(255,153,30)"
+            };
+            network.body.data.nodes.add(node);
+          }else{
+            console.log(sujet+ " exist");
+            console.log(sujetExist);
+            //  network.body.data.nodes.update({id: sujetExist[0].id, group: 1,borderWidth: 2,shape: "diamond"});
+          }
+          if(objetExist == null  || objetExist.length == 0){
+            console.log("creation "+objet);
+            var node = {
+              label: objet,
+              group: 100,
+              borderWidth: 2,
+              shape: "diamond",
+              color: "rgb(255,153,30)"
+            };
+            network.body.data.nodes.add(node);
+          }else{
+            console.log(objet+ " exist");
+            console.log(objetExist);
+            //  network.body.data.nodes.update({id: sujetExist[0].id, group: 1,borderWidth: 2,shape: "diamond"});
+          }
+          sujetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == sujet );
+            }
+          });
+          objetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == objet );
+            }
+          });
+          var edgeExist = network.body.data.edges.get({
+            filter: function(edge) {
+              return (edge.from == sujetExist[0].id && edge.to == objetExist[0].id && edge.label == propriete);
+            }
+          });
+          if (edgeExist == null || edgeExist.length == 0) {
+            var edge = {
+              from: sujetExist[0].id,
+              to: objetExist[0].id,
+              label: propriete,
+              group: 100, // règles
+              arrows: "to",
+              color: "rgb(255,153,30)"
+            };
+            //edge.id = triplet.subject;
+            //edge[triplet.predicate] = triplet.object;
+            console.log("add");
+            console.log(edge);
+            network.body.data.edges.add(edge);
+          } else {
+            console.log("update");
+            console.log(edgeExist);
+            //var edge = edgeExist;
+            //edge[triplet.predicate] = triplet.object;
+            //  network.body.data.edges.update(edge);
+          }
+        }
+      });
+    }
+    else{
+      console.log("suppression des inférences");
+      var edgesInferres = network.body.data.edges.get({
+        filter: function(edge){
+          //    console.log(node);
+          return (edge.group == 100 );
+        }
+      });
+      console.log(edgesInferres);
+      network.body.data.edges.remove(edgesInferres);
+      var nodesInferres = network.body.data.nodes.get({
+        filter: function(node){
+          //    console.log(node);
+          return (node.group == 100 );
+        }
+      });
+      console.log(nodesInferres);
+      network.body.data.nodes.remove(nodesInferres);
+    }
+  }
 }
 // CLUSTERS
 _toggleDesc() {

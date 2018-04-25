@@ -17,7 +17,11 @@
     "color-picker": "fooloomanzoo/color-picker#^2.0.6",
     "paper-slider": "^2.0.6",
     "socket.io": "^2.1.0",
-    "paper-dropdown-input": "^2.5.2"
+    "paper-dropdown-input": "^2.5.2",
+    "paper-fab": "^2.1.0",
+    "paper-tabs": "^2.1.1",
+    "iron-pages": "^2.1.1",
+    "iron-ajax": "^2.1.3"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
