@@ -44,6 +44,10 @@ Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vo
 # Polymer 2 cheatsheet
 https://meowni.ca/posts/polymer-2-cheatsheet/
 
+# Partager un fichier
+- http://127.0.0.1:3000/?source=/exemple_files/Spoggy-Donner%20du%20sens%20%C3%A0%20l%27IA_spoggy_nodes_edges_1524152542056.json
+- http://127.0.0.1:3000/?source=https://raw.githubusercontent.com/scenaristeur/heroku-spoggy/master/public/exemple_files/Spoggy-Donner%20du%20sens%20%C3%A0%20l%27IA_spoggy_nodes_edges_1524152542056.json
+
 
 
 Spoggy facilite le stockage, la transmission, le partage des connaissances :

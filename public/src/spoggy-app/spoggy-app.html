@@ -1,15 +1,18 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../spoggy-ui/spoggy-ui.html">
 <link rel="import" href="../spoggy-data/spoggy-data.html">
 <link rel="import" href="../spoggy-comm/spoggy-comm.html">
 
 
+
+
 <dom-module id="spoggy-app">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
 
     <spoggy-ui></spoggy-ui>
@@ -18,22 +21,40 @@
   </template>
 
   <script>
-    /**
-     * @customElement
-     * @polymer
-     */
-    class SpoggyApp extends Polymer.Element {
-      static get is() { return 'spoggy-app'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-app'
-          }
-        };
-      }
+  /**
+  * @customElement
+  * @polymer
+  */
+  class SpoggyApp extends Polymer.Element {
+    static get is() { return 'spoggy-app'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-app'
+        }
+      };
+    }
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+      });
+
     }
 
-    window.customElements.define(SpoggyApp.is, SpoggyApp);
-  </script>
+
+    _deferred(){
+      console.log("APP defered")
+
+  }
+
+
+
+}
+
+window.customElements.define(SpoggyApp.is, SpoggyApp);
+</script>
 </dom-module>

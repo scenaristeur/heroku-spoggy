@@ -1,3 +1,11 @@
+/* CONFIG
+* useLevelgraph : utilisation de levelgraph pour persistance des triplets sur le serveur nodejs (https://github.com/levelgraph/levelgraph)
+*/
+
+var useLevelgraph = false; //possibilite d'utiliser LevelGRAPH DB : opérationnel (stocké dans daossier data) ne fonctionne pas sur tous les systemes
+
+/* IMPORTS NODE_MODULES  */
+
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
@@ -5,9 +13,10 @@ var io = require('socket.io')(server);
 //https://github.com/scenaristeur/spoggy/blob/master/public/src/spog-socket/spog-socket.html
 //http://psitsmike.com/2011/10/node-js-and-socket-io-multiroom-chat-tutorial/
 //https://www.codementor.io/codementorteam/socketio-player-matchmaking-system-pdxz4apty
-var port = process.env.PORT || 3000;
 
-var useLevelgraph = true; //possibilite d'utiliser LevelGRAPH DB : opérationnel (stocké dans daossier data)
+
+/* CONFIGURATION DU SERVEUR WEB */
+var port = process.env.PORT || 3000;
 
 
 if (useLevelgraph){

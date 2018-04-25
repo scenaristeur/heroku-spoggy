@@ -4,6 +4,8 @@
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
 <link rel="import" href="../spoggy-mode/spoggy-mode.html">
 
+<link rel="import" href="../spoggy-data/data-behavior.html">
+
 <dom-module id="spoggy-ui">
   <template>
     <style>
@@ -29,7 +31,7 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyUi extends Polymer.Element {
+  class SpoggyUi extends DataBehaviorMixin(Polymer.Element) {
     static get is() { return 'spoggy-ui'; }
     static get properties() {
       return {
@@ -82,6 +84,17 @@ _addToGraphArrivedUI(){
       //   console.log(this.$.graph.test);
       //   this.$.graph.log("machin")
       //   this.$.graph.methodInBehavior();
+      this.params = this.recupParams();
+      console.log(this.params);
+      if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
+      console.log("pas de param");
+    }else{
+      console.log(this.network)
+      console.log(this.params);
+      this.importFromParam(this.params, this.network, this);
+      //var retourCommande = catchCommande(message,this.network,this);
+      //  this.$.filepicker = this.params.source;
+    }
     }
   }
 
