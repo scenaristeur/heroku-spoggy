@@ -387,10 +387,5 @@ function initDb(socket){
         socket.emit('initDb', list);
       });
     }
-  }else if(useFuseki){
-    console.log("FUSEKI");
-    //sendFusekiInit(socket, zeCallback);
-    var initFuz = sparql.getCentPremiers(socket, zeCallback);
-
   }
 }
