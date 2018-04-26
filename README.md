@@ -117,3 +117,6 @@ FAQ :
 si pb space object map ,
 java -Xmx1024M -jar fuseki-server.jar %*
 @java -Xmx1200M -jar fuseki-server.jar %*
+
+
+    "evejs": "^0.5.0",

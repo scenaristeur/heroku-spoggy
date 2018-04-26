@@ -1,9 +1,20 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../spoggy-ui/spoggy-ui.html">
 <link rel="import" href="../spoggy-data/spoggy-data.html">
 <link rel="import" href="../spoggy-comm/spoggy-comm.html">
+<link rel="import" href="../spoggy-input/spoggy-input.html">
 
+<!--
+<link rel="import" href="../../bower_components/lrnapp-fab-menu/lrnapp-fab-menu.html">
+<link rel="import" href="../../bower_components/lrnapp-fab-menu/lrnapp-fab-speed-dial-action.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">-->
+<!--
+<link rel="import" href="../../bower_components/paper-fab-speed-dial/paper-fab-speed-dial.html">
+<link rel="import" href="../../bower_components/paper-fab-speed-dial/paper-fab-speed-dial-action.html">-->
 
 
 
@@ -15,39 +26,61 @@
     }
     </style>
 
-    <spoggy-ui></spoggy-ui>
+    <app-toolbar>
+    <!--  <paper-icon-button icon="menu"></paper-icon-button>
+      <div main-title>Spoggy</div>-->
+      <spoggy-input network="{{network}}" socket="{{socket}}" ></spoggy-input>
+    <!--   <paper-icon-button icon="search"></paper-icon-button>-->
+    </app-toolbar>
+
+    <spoggy-ui network="{{network}}" socket="{{socket}}"></spoggy-ui>
     <spoggy-data></spoggy-data>
     <spoggy-comm></spoggy-comm>
-  </template>
 
-  <script>
-  /**
-  * @customElement
-  * @polymer
-  */
-  class SpoggyApp extends Polymer.Element {
-    static get is() { return 'spoggy-app'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'spoggy-app'
-        }
-      };
-    }
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        // When possible, use afterNextRender to defer non-critical
-        // work until after first paint.
-        this._deferred();
-      });
+    <!--
+    <lrnapp-fab-menu>
+    <lrnapp-fab-speed-dial-action icon="mail" color="red">Inbox</lrnapp-fab-speed-dial-action>
+    <lrnapp-fab-speed-dial-action icon="line-weight" color="green">Content</lrnapp-fab-speed-dial-action>
+    <lrnapp-fab-speed-dial-action icon="link" color="orange">Blog</lrnapp-fab-speed-dial-action>
+    <lrnapp-fab-speed-dial-action icon="list">Studio</lrnapp-fab-speed-dial-action>
+  </lrnapp-fab-menu>-->
+  <!--
+  <paper-fab-speed-dial>
+  <paper-fab-speed-dial-action icon="icons:content-copy">Copy</paper-fab-speed-dial-action>
+  <paper-fab-speed-dial-action icon="icons:print">Print</paper-fab-speed-dial-action>
+</paper-fab-speed-dial>
+-->
 
-    }
+</template>
+
+<script>
+/**
+* @customElement
+* @polymer
+*/
+class SpoggyApp extends Polymer.Element {
+  static get is() { return 'spoggy-app'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-app'
+      }
+    };
+  }
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
+    });
+
+  }
 
 
-    _deferred(){
-      console.log("APP defered")
+  _deferred(){
+    console.log("APP defered")
 
   }
 
