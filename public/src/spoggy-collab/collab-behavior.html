@@ -54,10 +54,15 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.retry --;
       console.log(this.retry);
       if (this.retry <= 0){
-        this.socket = null;
+        this.socket.disconnect();
       }
     }
     }
+
+disconnectSocket(){
+  this.socket.disconnect();
+}
+
     connectSocket(connectUri, token) {
       /*this.socket = io(connectUri, {
       'query': `token=${token}`,

@@ -31,6 +31,7 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
 <link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 <!--
@@ -47,9 +48,9 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
     <!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
     <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
       on-iron-overlay-closed="_myClosedFunction" -->
-      <h3>Export ttl
+      <h3>Export au format turtle (RDF)
         <!--<paper-button ontap="_pageAide">?</paper-button>-->
-        <paper-button dialog-dismiss raised>X</paper-button></h3>
+        <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
 
         <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
         <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
@@ -59,7 +60,9 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
       </paper-dialog>
 
       <paper-dialog id="helpPopUp" >
-        <h3>Help <paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button></h3>
+
+        <h3>Aide <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h3>
+        <!--<paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button> -->
         <!--
         <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
         <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
@@ -133,128 +136,147 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
             </iron-collapse-button>
 
 
-            <p>Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> & les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>, mais ceux-ci ne sont pas pris en compte par tous les navigateurs Web</p>
-            <p>Spoggy fonctionne avec les dernières versions de Chrome et Opéra.<br>
-              Le chargement est lent avec Firefox.<br>
-              Vous pouvez vérifier la compatibilité de votre navigateur au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a></p>
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Technique & navigateur</h3>
+              <div slot="collapse-content">
+                <p>Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> & les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>, mais ceux-ci ne sont pas pris en compte par tous les navigateurs Web</p>
+                <p>Spoggy fonctionne avec les dernières versions de Chrome et Opéra.<br>
+                  Le chargement est lent avec Firefox.<br>
+                  Vous pouvez vérifier la compatibilité de votre navigateur
+                  au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a></p>
+                <p>
+                  Spoggy utilise également vis.js, socket.io, rdf-ext, levelgraph,... et des tonnes de cellules grises...
+                </p>
+              </div>
+            </iron-collapse-button>
+
+
+
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Importer un graphe</h3>
+              <div slot="collapse-content">
+                <p><b><i>/i</i></b></p>
+              </div>
+            </iron-collapse-button>
+
+
+            <h2>Sécurité</h2>
+            <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
+              Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
+
+              <h2>Afficher l'aide</h2>
+              <p>Pour afficher l'aide, tapez '/help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</p>
+
+
+              <h2>Import / Export </h2>
+              <h3>Importer un fichier spoggy</h3>
+              <ul>
+                <li>
+                  Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter avec la commande "/e", et l'envoyer par mail à vos collaborateurs.
+                </li>
+
+                <li>  Avec la commande "/i" pouvez importer un fichier spoggy comme celui de (clic droit / "Enregistrer Sous") :
+                  <ul>
+                    <li><a href="./?source=/exemple_files/Ncc_2018_spoggy_nodes_edges_1519860090242.json" > la nuit du code des Bricodeurs </a></li>
+                    <li> ou de <a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" >l'application SPOGGY</a></li>
+                    <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
+                  </ul>
+                </li>
+              </ul>
+
+              <h2>Contact</h2>
+              <p>scenaristeur@gmail.com</p>
+              <h2>Github / Source </h2>
+              <p>Vous pouvez obtenir plus d'informations sur Spoggy ou contribuer à son développement sur <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
+              </p>
+
+              <h2>Quelques docs, exemples</h2>
+              <p>exemple <a href="./doc/spoggy_ncc_vue0.png" target="_blank">spoggy_ncc_vue0.png</a>
+              </p>
+              <p> Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour : <a href="standalone/interface.html">SPOGGY-STANDALONE</a></p>
               <br>
 
+              <!--
+              <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
+              border="0" title="compteur de site" alt="compteur de site"> -->
 
-              <h2>Sécurité</h2>
-              <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
-                Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
-
-                <h2>Afficher l'aide</h2>
-                <p>Pour afficher l'aide, tapez '/help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</p>
-
-
-                <h2>Import / Export </h2>
-                <h3>Importer un fichier spoggy</h3>
-                <ul>
-                  <li>
-                    Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter avec la commande "/e", et l'envoyer par mail à vos collaborateurs.
-                  </li>
-
-                  <li>  Avec la commande "/i" pouvez importer un fichier spoggy comme celui de (clic droit / "Enregistrer Sous") :
-                    <ul>
-                      <li><a href="./?source=/exemple_files/Ncc_2018_spoggy_nodes_edges_1519860090242.json" > la nuit du code des Bricodeurs </a></li>
-                      <li> ou de <a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" >l'application SPOGGY</a></li>
-                      <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
-                    </ul>
-                  </li>
-                </ul>
-
-                <h2>Contact</h2>
-                <p>scenaristeur@gmail.com</p>
-                <h2>Github / Source </h2>
-                <p>Vous pouvez obtenir plus d'informations sur Spoggy ou contribuer à son développement sur <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
-                </p>
-
-                <h2>Quelques docs, exemples</h2>
-                <p>exemple <a href="./doc/spoggy_ncc_vue0.png" target="_blank">spoggy_ncc_vue0.png</a>
-                </p>
-                <p> Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour : <a href="standalone/interface.html">SPOGGY-STANDALONE</a></p>
-                <br>
-
-<!--
-                <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
-                border="0" title="compteur de site" alt="compteur de site"> -->
-
-                <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
-              </paper-dialog-scrollable>
-              <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
-              </div>
-            </paper-dialog>
-
-            <!--  on-iron-overlay-opened="_openImport"
-            on-iron-overlay-closed="_closeImport"-->
-            <paper-dialog id="importPopUp"
-
-            backdrop transition="core-transition-bottom">
-            <div horizontal start-justified start layout >
-              <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-              <div style="padding-left:20px" vertical start-justified start layout wrap>
-                <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
-                <p >
-                  <fieldset>
-                    <legend>Paramètres</legend>
-                    <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
-                    <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
-                  </fieldset>
-                </p>
-                <p>
-                  <fieldset>
-                    <legend>Fichier</legend>
-                    <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
-                  </fieldset>
-                </p>
-                <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                  <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
-                </div>
-              </div>
-            </div>
+              <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
+            </paper-dialog-scrollable>
+            <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>-->
+            <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
+            <!--  </div>-->
           </paper-dialog>
 
+          <!--  on-iron-overlay-opened="_openImport"
+          on-iron-overlay-closed="_closeImport"-->
+          <paper-dialog id="importPopUp"
 
-          <input id="inputMessage"
+          backdrop transition="core-transition-bottom">
+          <div horizontal start-justified start layout >
+            <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+            <div style="padding-left:20px" vertical start-justified start layout wrap>
+              <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+              <p >
+                <fieldset>
+                  <legend>Paramètres</legend>
+                  <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+                  <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
+                </fieldset>
+              </p>
+              <p>
+                <fieldset>
+                  <legend>Fichier</legend>
+                  <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
+                </fieldset>
+              </p>
+              <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+                <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
+              </div>
+            </div>
+          </div>
+        </paper-dialog>
+
+        <div>
+          <paper-input id="inputMessage"
           class="inputMessage"
           on-change="traiteMessage"
-          placeholder="'/h + Entrée' pour afficher l'aide"
-          autofocus
-          />
-        </template>
+          label="'/h + Entrée' pour afficher l'aide"
+          raised
+          autofocus>
+        </paper-input>
+      </div>
+    </template>
 
-        <script>
-        /**
-        * `spoggy-input`
-        *
-        *
-        * @customElement
-        * @polymer
-        * @demo demo/index.html
-        */
-        class SpoggyInput extends InputBehaviorMixin(DataBehaviorMixin(Polymer.Element)) {
-          static get is() { return 'spoggy-input'; }
-          static get properties() {
-            return {
-              prop1: {
-                type: String,
-                value: 'spoggy-input'
-              },
-              commandHistory:{
-                type : Array,
-                value: []
-              },
-              sources:{
-                type: Array,
-                notify: true
-              }
-            };
+    <script>
+    /**
+    * `spoggy-input`
+    *
+    *
+    * @customElement
+    * @polymer
+    * @demo demo/index.html
+    */
+    class SpoggyInput extends InputBehaviorMixin(DataBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'spoggy-input'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-input'
+          },
+          commandHistory:{
+            type : Array,
+            value: []
+          },
+          sources:{
+            type: Array,
+            notify: true
           }
+        };
+      }
 
-        }
+    }
 
-        window.customElements.define(SpoggyInput.is, SpoggyInput);
-        </script>
-      </dom-module>
+    window.customElements.define(SpoggyInput.is, SpoggyInput);
+    </script>
+  </dom-module>

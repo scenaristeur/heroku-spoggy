@@ -13,36 +13,46 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+
 <link rel="import" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
 
 <link rel="import" href="../spoggy-collab/collab-behavior.html">
 <link rel="import" href="../spoggy-data/data-behavior.html">
 
+<link rel="import" href="../spoggy-graph/styles/graphe-styles.html"> <!-- voir à multualiser les syles !!!! -->
+
 <dom-module id="spoggy-mode">
   <template>
-    <style></style>
-
+  <style is="custom-style"  include="graphe-styles">
+  #fabmode {
+    position: fixed;
+    right: 5px;
+    top: 20px;
+  }
+  </style>
     <paper-dialog id="modePopup" > <!--    on-iron-overlay-opened="_openModePopp"
         on-iron-overlay-closed="_closeModePopup"-->
-    <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>
+  <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
     <!--
     <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
     <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-
+  <paper-dialog-scrollable>
     <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
-      <paper-checkbox name="solo" auto>Solo</paper-checkbox>
-      <paper-checkbox name="collaboratif" >Collaboratif</paper-checkbox>
-      <paper-checkbox name="global">Global</paper-checkbox>
+      <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
+      <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
+      <br>
+<!--      <paper-checkbox name="global">Global</paper-checkbox> -->
     </iron-selector>
 
-    <paper-dialog-scrollable>
-      <div hidden$="[[!modeIs(mode,'collaboratif')]]">
+
+      <div hidden$="[[!modeIs(mode,'collab')]]">
         <paper-input label="Entrer un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
 
         <div hidden$="[[isEmpty(pseudo)]]">
 
-          <paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" no-animations>
-            <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="{{selectedRoom}}">
+          <paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
+            <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="1">
               <template is="dom-repeat" items="[[rooms]]">
                 <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
               </template>
@@ -51,7 +61,7 @@
 
 
           <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
-          <paper-button raised on-tap="creer">Créer</paper-button>
+          <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
 
 
         </div>
@@ -79,17 +89,18 @@
     <div hidden$="[[!modeIs(mode,'global')]]">
       conf global
     </div>
-
+<br>
   </paper-dialog-scrollable>
-
+<!--
   <div style="padding-top:10px" horizontal end-justified layout self-stretch>
     <paper-button  dialog-dismiss raised>Fermer</paper-button>
-  </div>
+  </div>-->
 </paper-dialog>
 
 
 
-<paper-button on-tap="openChangeMode" raised>{{mode}}</paper-button>
+<paper-fab id="fabmode" on-tap="openChangeMode" label="{{modeBtnText}}"></paper-fab>
+
 
 </template>
 
@@ -170,12 +181,12 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
   _modeChanged(newMode, oldMode){
     this.set('modeConfig.mode', newMode);
     this.mode = newMode;
-    console.log();
+      this.modeBtnText = this.mode.substring(0, 6);
     switch (newMode) {
       case 'solo':
       console.log('passage solo');
       break;
-      case 'collaboratif':
+      case 'collab':
       console.log('connexion socket');
       this.connectSocket();
       console.log("SPOG-SOCKET");
@@ -195,11 +206,13 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
       case 'solo':
       console.log('quitte solo');
       break;
-      case 'collaboratif':
+      case 'collab':
       console.log('deconnect socket');
+      this.socket.disconnect();
       break;
       case 'global':
       console.log('deconnect endpoint');
+        this.socket.disconnect();
       break;
       default:
 
@@ -210,10 +223,12 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
     console.log(room);
     this.$.modePopup.toggle();
     this.switchRoom(room);
+    this.modeBtnText = room.substring(0, 6);
   }
   creer(){
     let room = this.newRoom;
     this.switchRoom(room);
+      this.modeBtnText = room.substring(0, 6);
   }
 
 
