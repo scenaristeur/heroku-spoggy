@@ -24,81 +24,81 @@
 
 <dom-module id="spoggy-mode">
   <template>
-  <style is="custom-style"  include="graphe-styles">
-  #fabmode {
-    position: fixed;
-    right: 5px;
-    top: 20px;
-  }
-  </style>
+    <style is="custom-style"  include="graphe-styles">
+    #fabmode {
+      position: fixed;
+      right: 5px;
+      top: 20px;
+    }
+    </style>
     <paper-dialog id="modePopup" > <!--    on-iron-overlay-opened="_openModePopp"
-        on-iron-overlay-closed="_closeModePopup"-->
-  <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
-    <!--
-    <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
-    <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-  <paper-dialog-scrollable>
-    <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
-      <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
-      <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
+      on-iron-overlay-closed="_closeModePopup"-->
+      <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
+      <!--
+      <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
+      <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
+      <paper-dialog-scrollable>
+        <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
+          <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
+          <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
+          <br>
+          <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
+        </iron-selector>
+
+
+        <div hidden$="[[!modeIs(mode,'collab')]]">
+          <paper-input label="Entrer un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
+
+          <div hidden$="[[isEmpty(pseudo)]]">
+
+            <paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
+              <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+                <template is="dom-repeat" items="[[rooms]]">
+                  <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+                </template>
+              </paper-listbox>
+            </paper-dropdown-menu>
+
+
+            <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
+            <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+          <!-- test de saisi + selection
+          <paper-dropdown-input label="Rejoindre une room"
+          items="[[rooms]]"
+          value={{room}}
+          >
+          <paper-button on-tap="rejoindre">Rejoindre</paper-button>
+        </paper-dropdown-input>-->
+
+
+
+      </div>
+
+      <div hidden$="[[!modeIs(mode,'global')]]">
+        conf global
+      </div>
       <br>
-<!--      <paper-checkbox name="global">Global</paper-checkbox> -->
-    </iron-selector>
-
-
-      <div hidden$="[[!modeIs(mode,'collab')]]">
-        <paper-input label="Entrer un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
-
-        <div hidden$="[[isEmpty(pseudo)]]">
-
-          <paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
-            <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="1">
-              <template is="dom-repeat" items="[[rooms]]">
-                <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
-              </template>
-            </paper-listbox>
-          </paper-dropdown-menu>
-
-
-          <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
-          <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-        <!-- test de saisi + selection
-        <paper-dropdown-input label="Rejoindre une room"
-        items="[[rooms]]"
-        value={{room}}
-        >
-        <paper-button on-tap="rejoindre">Rejoindre</paper-button>
-      </paper-dropdown-input>-->
-
-
-
-    </div>
-
-    <div hidden$="[[!modeIs(mode,'global')]]">
-      conf global
-    </div>
-<br>
-  </paper-dialog-scrollable>
-<!--
-  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+    </paper-dialog-scrollable>
+    <!--
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
     <paper-button  dialog-dismiss raised>Fermer</paper-button>
   </div>-->
 </paper-dialog>
 
-
-
+<!--
+<div on-tap="openChangeMode">{{modeBtnText}}</div>-->
 <paper-fab id="fabmode" on-tap="openChangeMode" label="{{modeBtnText}}"></paper-fab>
 
 
@@ -144,8 +144,8 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
     let data = this.addToGraph;
     if (data.actions.length>0){
       data.actions.forEach(function(action) {
-            console.log(action);
-            console.log(app.network)
+        console.log(action);
+        console.log(app.network)
         switch(action.type) {
           case "newNode":
           if(app.network != undefined){
@@ -181,7 +181,7 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
   _modeChanged(newMode, oldMode){
     this.set('modeConfig.mode', newMode);
     this.mode = newMode;
-      this.modeBtnText = this.mode.substring(0, 6);
+    this.modeBtnText = this.mode.substring(0, 6);
     switch (newMode) {
       case 'solo':
       console.log('passage solo');
@@ -212,7 +212,7 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
       break;
       case 'global':
       console.log('deconnect endpoint');
-        this.socket.disconnect();
+      this.socket.disconnect();
       break;
       default:
 
@@ -221,14 +221,15 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
   rejoindre(e){
     let room = e.model.item;
     console.log(room);
-    this.$.modePopup.toggle();
-    this.switchRoom(room);
     this.modeBtnText = room.substring(0, 6);
+    this.switchRoom(room);
+    this.$.modePopup.toggle();
   }
+
   creer(){
     let room = this.newRoom;
+    this.modeBtnText = room.substring(0, 6);
     this.switchRoom(room);
-      this.modeBtnText = room.substring(0, 6);
   }
 
 

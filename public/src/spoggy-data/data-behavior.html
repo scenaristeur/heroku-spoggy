@@ -72,9 +72,12 @@ addAction(action){
   console.log(this.actionstosend);*/
 console.log(action);
 if (this.socket != undefined){
+  console.log(this.socket)
   this.actionstosend.push(action);
   this.socket.emit('newActions', this.actionstosend);
   this.actionstosend = [];
+}else{
+  console.log("socket n'est pas défini")
 }
   //  this.socket.emit('sendchat', this.actionstosend);
 }

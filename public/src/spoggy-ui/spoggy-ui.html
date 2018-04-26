@@ -12,11 +12,8 @@
       display: block;
     }
     </style>
-  <!--    <div hidden$="[[connected]]">[[status]]</div> -->
-<div class="layout horizontal layout-start" >
-
-   <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
-    </div>
+    <!--    <div hidden$="[[connected]]">[[status]]</div> -->
+    <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
     <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}"></spoggy-graph>
     <div id="div"></div>
   </template>
@@ -53,12 +50,16 @@
           type: Object,
           notify: true
         },
+        socket : {
+          type: Object,
+          notify: true
+        },
       };
     }
 
-_addToGraphArrivedUI(){
-  console.log(addToGraph)
-}
+    _addToGraphArrivedUI(){
+      console.log(addToGraph)
+    }
     constructor(){
       super();
       console.log("** UI CONSTRUCTOR **")
@@ -98,9 +99,9 @@ _addToGraphArrivedUI(){
       //var retourCommande = catchCommande(message,this.network,this);
       //  this.$.filepicker = this.params.source;
     }
-    }
   }
+}
 
-  window.customElements.define(SpoggyUi.is, SpoggyUi);
-  </script>
+window.customElements.define(SpoggyUi.is, SpoggyUi);
+</script>
 </dom-module>
