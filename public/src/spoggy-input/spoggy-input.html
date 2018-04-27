@@ -68,32 +68,51 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
         <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
         <paper-dialog-scrollable>
 
-          <iron-collapse-button>
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Afficher l'aide</h3>
-            <div slot="collapse-content">
-              <b>/h</b>
-            </div>
-          </iron-collapse-button>
 
           <iron-collapse-button>
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Créer un nouveau graphe</h3>
-            <div slot="collapse-content">
-              <b>/n</b>
-            </div>
-          </iron-collapse-button>
-
-          <iron-collapse-button>
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Saisir un triplet</h3>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Le graphe</h3>
             <div slot="collapse-content">
               <p>
                 Vous pouvez utiliser les boutons <b><i>'Edit / Add node'</i></b>
-                pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.
+                pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.<br>
+                Je vous laisse découvrir les fonctionnalités de 'Edit Node', 'Edit Edge', 'Delete Node', 'Delete Edge'... ;-)
               </p>
-              <p>  ou la zone de saisie # SPOGGY INPUT<br>
-                ## Saisir un message pour le chat<br>
-                Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
-                ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
-              </p>
+            </div>
+          </iron-collapse-button>
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">La zone de saisie</h3>
+            <div slot="collapse-content">
+              La zone de saisie est l'endroit où par défaut il est écrit "/h + Entrée pour l'aide". En cliquant dessus, vous pouvez :  <br>
+              - saisir des commandes<br>
+                    - les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide<br>
+              <ul>
+                <li>Pour afficher l'aide, tapez '/h' comme 'help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</li>
+                <li> <b>/n></b> pour créer un nouveau graphe.</li>
+                <li>Exporter un graphe<br>
+                  <p>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></p>
+                  <p>Au format
+                    <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
+                    pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></p>
+                  </div>
+                </li>
+                <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
+              </ul>
+              <br>
+              <ul>
+                <li>
+                  Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter avec la commande "/e", et l'envoyer par mail à vos collaborateurs.
+                </li>
+
+                <li>  Avec la commande "/i" pouvez importer un fichier spoggy comme celui de (clic droit / "Enregistrer Sous") :
+                  <ul>
+                    <li><a href="./?source=/exemple_files/Ncc_2018_spoggy_nodes_edges_1519860090242.json" > la nuit du code des Bricodeurs </a></li>
+                    <li> ou de <a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" >l'application SPOGGY</a></li>
+                    <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
+                  </ul>
+                </li>
+              </ul>
+              - saisir des triplets<br>
               <p>
                 ## Saisir un triplet au format Turtle<br>
                 Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
@@ -110,91 +129,137 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
                 - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
                 - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
               </p>
-              <p>
-                ## Saisir une commande<br>
-                - les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide
+              - chatter en mode collaboratif (voir Modes / Echelles)<br>
+              <p>  ou la zone de saisie # SPOGGY INPUT (là où est écrit par défaut '/h + Entrée pour l'aide)<br>
+                ## Saisir un message pour le chat <br>
+                Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
+                ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
               </p>
 
             </div>
           </iron-collapse-button>
 
-          <iron-collapse-button>
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Exporter un graphe</h3>
-            <div slot="collapse-content">
-              <p>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></p>
-              <p>Au format
-                <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
-                pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></p>
-              </div>
-            </iron-collapse-button>
 
-            <iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Importer un graphe</h3>
-              <div slot="collapse-content">
-                <p><b><i>/i</i></b></p>
-              </div>
-            </iron-collapse-button>
 
 
             <iron-collapse-button>
               <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Technique & navigateur</h3>
               <div slot="collapse-content">
-                <p>Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> & les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>, mais ceux-ci ne sont pas pris en compte par tous les navigateurs Web</p>
-                <p>Spoggy fonctionne avec les dernières versions de Chrome et Opéra.<br>
-                  Le chargement est lent avec Firefox.<br>
-                  Vous pouvez vérifier la compatibilité de votre navigateur
-                  au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a></p>
                 <p>
-                  Spoggy utilise également vis.js, socket.io, rdf-ext, levelgraph,... et des tonnes de cellules grises...
+                  Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> &
+                  les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>,
+                  mais ceux-ci ne sont pas nativement pris en compte par tous les navigateurs Web.
+                </p>
+                <p>
+                  Spoggy fonctionne correctement avec les dernières versions de Chrome et Opéra.<br>
+                  Firefox ne les prend en compte qu'à partir de la version 60.<br>
+                  Vous pouvez vérifier la compatibilité de votre navigateur
+                  au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a>
+                </p>
+                <p>
+                  Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour :
+                  <a href="standalone/interface.html">SPOGGY-STANDALONE</a>
+                </p>
+                <p>
+                  Spoggy utilise également vis.js, socket.io, rdf-ext, levelgraph,... et fait travailler des tonnes de cellules grises...
                 </p>
               </div>
             </iron-collapse-button>
 
-
-
             <iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Importer un graphe</h3>
+              <h3 slot="collapse-trigger" style="margin: 0; color: #0D578B;">Modes / Echelles</h3>
               <div slot="collapse-content">
-                <p><b><i>/i</i></b></p>
+                <iron-collapse-button>
+                  <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px; color: #0D578B;">Solo / Humain</h4>
+                  <div slot="collapse-content">
+                    <p>Spoggy gère l'information à l'échelle humaine, au sein de votre navigateur. Vous choisissez quelles données exporter ou partager (/e). Par défaut, aucune information n'est enregistrée.</p>
+                    <p>[Un développement pour une option de stockage pérenne dans le navigateur est à l'étude (levelgraph)]</p>
+                  </div>
+                </iron-collapse-button>
+                <iron-collapse-button>
+                  <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px;  color: #0D578B;">Collaboratif / Groupe</h4>
+                  <div slot="collapse-content">
+                    <p>Spoggy permet à un groupe de collaborer en temps réel à la manière d'un chat. Pour y accéder, clique sur le bouton rose 's...', saisis un pseudo, et selectionne la room que tu veux rejoindre ou créé une nouvelle room.</p>
+                  </div>
+                </iron-collapse-button>
+                <iron-collapse-button>
+                  <h4 slot="collapse-trigger" style="margin: 0;  margin-left: 40px; color: #0D578B;">Global / Monde</h4>
+                  <div slot="collapse-content">
+                    <p>
+                      Des endpoints / triplestores et entrepots de données peuvent être ajoutés à Spoggy.
+                      Ce sont de gros serveurs qui fournissent à Spoggydes espaces partagés.
+                    </p>
+                    <p>
+                      Vous pouvez créer votre propre sparql endpoint en utilisant un serveur
+                      <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>
+                    </p>
+                    <p> Par défaut le endpoint global Fuseki est totalement ouvert :
+                      N'importe qui peut insérer toute information,
+                      mais aussi modifier ou supprimer les informations précédemment enregistrées par d'autres utilisateurs. <br>
+                      Il n'est donc pas garanti que vos informations perdurent...<br>
+                      Tout peut être effacé à tout moment,<br> un peu comme une plage sur laquelle on construirait un château de sable :<br>
+                      on n'est pas certain certain qu'il en restera quelque chose le lendemain, mais peut-être que le château aura été amélioré par un autre bâtisseur.
+                    </p>
+                    <p>En installant votre propre endpoint fuseki, vous pouvez aussi choisir de fiabiliser et garantir vos informations,
+                      ceci peut-être utile par exemple pour une entreprise qui souhaiterait rendre sont catalogue disponible au format Spoggy
+                      et permettre à ses clients de le parcourir de manière plus visuelle et ludique, sous forme de graphe...
+                    </p>
+                    <p>
+                      Un bon (en)tendeur... <br>et ben... ça tient bien ;-)
+                    </p>
+
+                  </div>
+                </iron-collapse-button>
               </div>
             </iron-collapse-button>
 
 
-            <h2>Sécurité</h2>
-            <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
-              Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Sécurité</h3>
+              <div slot="collapse-content">
+                <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
+                  Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
+                </div>
+              </iron-collapse-button>
 
-              <h2>Afficher l'aide</h2>
-              <p>Pour afficher l'aide, tapez '/help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</p>
+              <iron-collapse-button>
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Contact</h3>
+                <div slot="collapse-content">
+                  <p>scenaristeur@gmail.com</p>
+                </div>
+              </iron-collapse-button>
+
+              <iron-collapse-button>
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Github / Source</h3>
+                <div slot="collapse-content">
+                  <p>Vous pouvez obtenir plus d'informations sur Spoggy ou contribuer à son développement sur <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
+                  </p>
+                </div>
+              </iron-collapse-button>
+
+              <iron-collapse-button>
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Quelques docs, exemples</h3>
+                <div slot="collapse-content">
+                  <p><a href="./doc/spoggy_ncc_vue0.png" target="_blank"><img width="100" height="100" src="./doc/spoggy_ncc_vue0.png" alt="spoggy_ncc_vue0.png"></img></a>
+                  </p>
+
+                </div>
+              </iron-collapse-button>
 
 
-              <h2>Import / Export </h2>
-              <h3>Importer un fichier spoggy</h3>
-              <ul>
-                <li>
-                  Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter avec la commande "/e", et l'envoyer par mail à vos collaborateurs.
-                </li>
 
-                <li>  Avec la commande "/i" pouvez importer un fichier spoggy comme celui de (clic droit / "Enregistrer Sous") :
-                  <ul>
-                    <li><a href="./?source=/exemple_files/Ncc_2018_spoggy_nodes_edges_1519860090242.json" > la nuit du code des Bricodeurs </a></li>
-                    <li> ou de <a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" >l'application SPOGGY</a></li>
-                    <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
-                  </ul>
-                </li>
-              </ul>
 
-              <h2>Contact</h2>
-              <p>scenaristeur@gmail.com</p>
-              <h2>Github / Source </h2>
-              <p>Vous pouvez obtenir plus d'informations sur Spoggy ou contribuer à son développement sur <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
-              </p>
+              <iron-collapse-button>
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Menu</h3>
+                <div slot="collapse-content">
+                  en cours
+                </div>
+              </iron-collapse-button>
 
-              <h2>Quelques docs, exemples</h2>
-              <p>exemple <a href="./doc/spoggy_ncc_vue0.png" target="_blank">spoggy_ncc_vue0.png</a>
-              </p>
-              <p> Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour : <a href="standalone/interface.html">SPOGGY-STANDALONE</a></p>
-              <br>
+
+
+
+
 
               <!--
               <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
@@ -236,13 +301,13 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
           </div>
         </paper-dialog>
 
-          <paper-input id="inputMessage"
-          class="inputMessage"
-          on-change="traiteMessage"
-          label="/h + Entrée pour l'aide"
-          raised
-          autofocus>
-        </paper-input>
+        <paper-input id="inputMessage"
+        class="inputMessage"
+        on-change="traiteMessage"
+        label="/h + Entrée pour l'aide"
+        raised
+        autofocus>
+      </paper-input>
     </template>
 
     <script>
