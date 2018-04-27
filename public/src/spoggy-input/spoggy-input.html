@@ -88,7 +88,7 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
                     - les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide<br>
               <ul>
                 <li>Pour afficher l'aide, tapez '/h' comme 'help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</li>
-                <li> <b>/n></b> pour créer un nouveau graphe.</li>
+                <li> <b>/n</b> pour créer un nouveau graphe.</li>
                 <li>Exporter un graphe<br>
                   <p>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></p>
                   <p>Au format
@@ -179,7 +179,8 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
                 <iron-collapse-button>
                   <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px;  color: #0D578B;">Collaboratif / Groupe</h4>
                   <div slot="collapse-content">
-                    <p>Spoggy permet à un groupe de collaborer en temps réel à la manière d'un chat. Pour y accéder, clique sur le bouton rose 's...', saisis un pseudo, et selectionne la room que tu veux rejoindre ou créé une nouvelle room.</p>
+                    <p>Spoggy permet à un groupe de collaborer en temps réel à la manière d'un chat. Pour y accéder, cliquez sur le bouton rose 's...',
+                       saisissez un pseudo, et selectionnez la room que vous souhaitez rejoindre ou créez une nouvelle room.</p>
                   </div>
                 </iron-collapse-button>
                 <iron-collapse-button>
@@ -187,17 +188,17 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
                   <div slot="collapse-content">
                     <p>
                       Des endpoints / triplestores et entrepots de données peuvent être ajoutés à Spoggy.
-                      Ce sont de gros serveurs qui fournissent à Spoggydes espaces partagés.
+                      Ce sont de gros serveurs qui fournissent à Spoggy des espaces de stockage partagés.
                     </p>
                     <p>
                       Vous pouvez créer votre propre sparql endpoint en utilisant un serveur
-                      <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>
+                      <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>.
                     </p>
                     <p> Par défaut le endpoint global Fuseki est totalement ouvert :
                       N'importe qui peut insérer toute information,
                       mais aussi modifier ou supprimer les informations précédemment enregistrées par d'autres utilisateurs. <br>
                       Il n'est donc pas garanti que vos informations perdurent...<br>
-                      Tout peut être effacé à tout moment,<br> un peu comme une plage sur laquelle on construirait un château de sable :<br>
+                      Tout peut être effacé à tout moment !!! <br> Un peu comme une plage sur laquelle on construirait un château de sable :<br>
                       on n'est pas certain certain qu'il en restera quelque chose le lendemain, mais peut-être que le château aura été amélioré par un autre bâtisseur.
                     </p>
                     <p>En installant votre propre endpoint fuseki, vous pouvez aussi choisir de fiabiliser et garantir vos informations,
