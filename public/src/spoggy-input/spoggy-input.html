@@ -84,60 +84,54 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
             <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">La zone de saisie</h3>
             <div slot="collapse-content">
               La zone de saisie est l'endroit où par défaut il est écrit "/h + Entrée pour l'aide". En cliquant dessus, vous pouvez :  <br>
-              - saisir des commandes<br>
-                    - les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide<br>
+              <b> - Saisir des commandes</b><br>
+              les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide<br>
               <ul>
                 <li>Pour afficher l'aide, tapez '/h' comme 'help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</li>
                 <li> <b>/n</b> pour créer un nouveau graphe.</li>
-                <li>Exporter un graphe<br>
-                  <p>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></p>
-                  <p>Au format
-                    <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
-                    pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></p>
-                  </div>
-                </li>
-                <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
-              </ul>
-              <br>
-              <ul>
-                <li>
-                  Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter avec la commande "/e", et l'envoyer par mail à vos collaborateurs.
-                </li>
-
-                <li>  Avec la commande "/i" pouvez importer un fichier spoggy comme celui de (clic droit / "Enregistrer Sous") :
+                <li>Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter et l'envoyer par mail à vos collaborateurs. :
                   <ul>
-                    <li><a href="./?source=/exemple_files/Ncc_2018_spoggy_nodes_edges_1519860090242.json" > la nuit du code des Bricodeurs </a></li>
-                    <li> ou de <a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" >l'application SPOGGY</a></li>
-                    <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
+<li>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></li>
+<li>Au format
+  <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
+  pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></li>
                   </ul>
-                </li>
-              </ul>
-              - saisir des triplets<br>
-              <p>
-                ## Saisir un triplet au format Turtle<br>
-                Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
-                n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
-                - David type Personne<b>.</b> -> triplet complet,<br>
-                - David type Personne<b>;</b> -> indique de garder le sujet<br>
-                - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
-                - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
-              </p>
 
-              <p>
-                ## Récupérer le dernier triplet saisi<br>
-                - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
-                - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
-                - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
-              </p>
-              - chatter en mode collaboratif (voir Modes / Echelles)<br>
-              <p>  ou la zone de saisie # SPOGGY INPUT (là où est écrit par défaut '/h + Entrée pour l'aide)<br>
-                ## Saisir un message pour le chat <br>
-                Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
-                ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
-              </p>
 
-            </div>
-          </iron-collapse-button>
+                  <li>  Avec la commande '/i' pouvez importer un fichier spoggy comme celui de (clic droit / "Enregistrer Sous") :
+                    <ul>
+                      <li><a href="./?source=/exemple_files/Ncc_2018_spoggy_nodes_edges_1519860090242.json" > la nuit du code des Bricodeurs </a></li>
+                      <li> ou de <a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" >l'application SPOGGY</a></li>
+                      <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA_spoggy_nodes_edges_1524152542056.json" >Donner du sens à l'IA (mission gouvernementale)</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <b>- Saisir des triplets</b><br>
+                <p>
+                  ## Saisir un triplet au format Turtle<br>
+                  Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
+                  n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
+                  - David type Personne<b>.</b> -> triplet complet,<br>
+                  - David type Personne<b>;</b> -> indique de garder le sujet<br>
+                  - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
+                  - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
+                </p>
+
+                <p>
+                  ## Récupérer le dernier triplet saisi<br>
+                  - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
+                  - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
+                  - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
+                </p>
+                <b>- Chatter en mode collaboratif (voir Modes / Echelles)</b><br>
+                <p> [développement en cours]
+                  ## Saisir un message pour le chat <br>
+                  Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
+                  ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
+                </p>
+
+              </div>
+            </iron-collapse-button>
 
 
 
@@ -180,167 +174,167 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
                   <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px;  color: #0D578B;">Collaboratif / Groupe</h4>
                   <div slot="collapse-content">
                     <p>Spoggy permet à un groupe de collaborer en temps réel à la manière d'un chat. Pour y accéder, cliquez sur le bouton rose 's...',
-                       saisissez un pseudo, et selectionnez la room que vous souhaitez rejoindre ou créez une nouvelle room.</p>
+                      saisissez un pseudo, et selectionnez la room que vous souhaitez rejoindre ou créez une nouvelle room.</p>
+                    </div>
+                  </iron-collapse-button>
+                  <iron-collapse-button>
+                    <h4 slot="collapse-trigger" style="margin: 0;  margin-left: 40px; color: #0D578B;">Global / Monde</h4>
+                    <div slot="collapse-content">
+                      <p>
+                        Des endpoints / triplestores et entrepots de données peuvent être ajoutés à Spoggy.
+                        Ce sont de gros serveurs qui fournissent à Spoggy des espaces de stockage partagés.
+                      </p>
+                      <p>
+                        Vous pouvez créer votre propre sparql endpoint en utilisant un serveur
+                        <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>.
+                      </p>
+                      <p> Par défaut le endpoint global Fuseki est totalement ouvert :
+                        N'importe qui peut insérer toute information,
+                        mais aussi modifier ou supprimer les informations précédemment enregistrées par d'autres utilisateurs. <br>
+                        Il n'est donc pas garanti que vos informations perdurent...<br>
+                        Tout peut être effacé à tout moment !!! <br> Un peu comme une plage sur laquelle on construirait un château de sable :<br>
+                        on n'est pas certain certain qu'il en restera quelque chose le lendemain, mais peut-être que le château aura été amélioré par un autre bâtisseur.
+                      </p>
+                      <p>En installant votre propre endpoint fuseki, vous pouvez aussi choisir de fiabiliser et garantir vos informations,
+                        ceci peut-être utile par exemple pour une entreprise qui souhaiterait rendre sont catalogue disponible au format Spoggy
+                        et permettre à ses clients de le parcourir de manière plus visuelle et ludique, sous forme de graphe...
+                      </p>
+                      <p>
+                        Un bon (en)tendeur... <br>et ben... ça tient bien ;-)
+                      </p>
+
+                    </div>
+                  </iron-collapse-button>
+                </div>
+              </iron-collapse-button>
+
+
+              <iron-collapse-button>
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Sécurité</h3>
+                <div slot="collapse-content">
+                  <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
+                    Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
                   </div>
                 </iron-collapse-button>
+
                 <iron-collapse-button>
-                  <h4 slot="collapse-trigger" style="margin: 0;  margin-left: 40px; color: #0D578B;">Global / Monde</h4>
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Contact</h3>
                   <div slot="collapse-content">
-                    <p>
-                      Des endpoints / triplestores et entrepots de données peuvent être ajoutés à Spoggy.
-                      Ce sont de gros serveurs qui fournissent à Spoggy des espaces de stockage partagés.
+                    <p>scenaristeur@gmail.com</p>
+                  </div>
+                </iron-collapse-button>
+
+                <iron-collapse-button>
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Github / Source</h3>
+                  <div slot="collapse-content">
+                    <p>Vous pouvez obtenir plus d'informations sur Spoggy ou contribuer à son développement sur <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
                     </p>
-                    <p>
-                      Vous pouvez créer votre propre sparql endpoint en utilisant un serveur
-                      <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>.
-                    </p>
-                    <p> Par défaut le endpoint global Fuseki est totalement ouvert :
-                      N'importe qui peut insérer toute information,
-                      mais aussi modifier ou supprimer les informations précédemment enregistrées par d'autres utilisateurs. <br>
-                      Il n'est donc pas garanti que vos informations perdurent...<br>
-                      Tout peut être effacé à tout moment !!! <br> Un peu comme une plage sur laquelle on construirait un château de sable :<br>
-                      on n'est pas certain certain qu'il en restera quelque chose le lendemain, mais peut-être que le château aura été amélioré par un autre bâtisseur.
-                    </p>
-                    <p>En installant votre propre endpoint fuseki, vous pouvez aussi choisir de fiabiliser et garantir vos informations,
-                      ceci peut-être utile par exemple pour une entreprise qui souhaiterait rendre sont catalogue disponible au format Spoggy
-                      et permettre à ses clients de le parcourir de manière plus visuelle et ludique, sous forme de graphe...
-                    </p>
-                    <p>
-                      Un bon (en)tendeur... <br>et ben... ça tient bien ;-)
+                  </div>
+                </iron-collapse-button>
+
+                <iron-collapse-button>
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Quelques docs, exemples</h3>
+                  <div slot="collapse-content">
+                    <p><a href="./doc/spoggy_ncc_vue0.png" target="_blank"><img width="100" height="100" src="./doc/spoggy_ncc_vue0.png" alt="spoggy_ncc_vue0.png"></img></a>
                     </p>
 
                   </div>
                 </iron-collapse-button>
-              </div>
-            </iron-collapse-button>
 
 
-            <iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Sécurité</h3>
-              <div slot="collapse-content">
-                <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
-                  Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
+
+
+                <iron-collapse-button>
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Menu</h3>
+                  <div slot="collapse-content">
+                    en cours
+                  </div>
+                </iron-collapse-button>
+
+
+
+
+
+
+                <!--
+                <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
+                border="0" title="compteur de site" alt="compteur de site"> -->
+
+                <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
+              </paper-dialog-scrollable>
+              <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>-->
+              <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
+              <!--  </div>-->
+            </paper-dialog>
+
+            <!--  on-iron-overlay-opened="_openImport"
+            on-iron-overlay-closed="_closeImport"-->
+            <paper-dialog id="importPopUp"
+
+            backdrop transition="core-transition-bottom">
+            <div horizontal start-justified start layout >
+              <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+              <div style="padding-left:20px" vertical start-justified start layout wrap>
+                <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+                <p >
+                  <fieldset>
+                    <legend>Paramètres</legend>
+                    <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+                    <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
+                  </fieldset>
+                </p>
+                <p>
+                  <fieldset>
+                    <legend>Fichier</legend>
+                    <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
+                  </fieldset>
+                </p>
+                <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+                  <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
                 </div>
-              </iron-collapse-button>
-
-              <iron-collapse-button>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Contact</h3>
-                <div slot="collapse-content">
-                  <p>scenaristeur@gmail.com</p>
-                </div>
-              </iron-collapse-button>
-
-              <iron-collapse-button>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Github / Source</h3>
-                <div slot="collapse-content">
-                  <p>Vous pouvez obtenir plus d'informations sur Spoggy ou contribuer à son développement sur <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
-                  </p>
-                </div>
-              </iron-collapse-button>
-
-              <iron-collapse-button>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Quelques docs, exemples</h3>
-                <div slot="collapse-content">
-                  <p><a href="./doc/spoggy_ncc_vue0.png" target="_blank"><img width="100" height="100" src="./doc/spoggy_ncc_vue0.png" alt="spoggy_ncc_vue0.png"></img></a>
-                  </p>
-
-                </div>
-              </iron-collapse-button>
-
-
-
-
-              <iron-collapse-button>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Menu</h3>
-                <div slot="collapse-content">
-                  en cours
-                </div>
-              </iron-collapse-button>
-
-
-
-
-
-
-              <!--
-              <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
-              border="0" title="compteur de site" alt="compteur de site"> -->
-
-              <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
-            </paper-dialog-scrollable>
-            <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>-->
-            <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
-            <!--  </div>-->
-          </paper-dialog>
-
-          <!--  on-iron-overlay-opened="_openImport"
-          on-iron-overlay-closed="_closeImport"-->
-          <paper-dialog id="importPopUp"
-
-          backdrop transition="core-transition-bottom">
-          <div horizontal start-justified start layout >
-            <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-            <div style="padding-left:20px" vertical start-justified start layout wrap>
-              <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
-              <p >
-                <fieldset>
-                  <legend>Paramètres</legend>
-                  <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
-                  <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
-                </fieldset>
-              </p>
-              <p>
-                <fieldset>
-                  <legend>Fichier</legend>
-                  <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
-                </fieldset>
-              </p>
-              <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
               </div>
             </div>
-          </div>
-        </paper-dialog>
+          </paper-dialog>
 
-        <paper-input id="inputMessage"
-        class="inputMessage"
-        on-change="traiteMessage"
-        label="/h + Entrée pour l'aide"
-        raised
-        autofocus>
-      </paper-input>
-    </template>
+          <paper-input id="inputMessage"
+          class="inputMessage"
+          on-change="traiteMessage"
+          label="/h + Entrée pour l'aide"
+          raised
+          autofocus>
+        </paper-input>
+      </template>
 
-    <script>
-    /**
-    * `spoggy-input`
-    *
-    *
-    * @customElement
-    * @polymer
-    * @demo demo/index.html
-    */
-    class SpoggyInput extends InputBehaviorMixin(DataBehaviorMixin(Polymer.Element)) {
-      static get is() { return 'spoggy-input'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-input'
-          },
-          commandHistory:{
-            type : Array,
-            value: []
-          },
-          sources:{
-            type: Array,
-            notify: true
-          }
-        };
+      <script>
+      /**
+      * `spoggy-input`
+      *
+      *
+      * @customElement
+      * @polymer
+      * @demo demo/index.html
+      */
+      class SpoggyInput extends InputBehaviorMixin(DataBehaviorMixin(Polymer.Element)) {
+        static get is() { return 'spoggy-input'; }
+        static get properties() {
+          return {
+            prop1: {
+              type: String,
+              value: 'spoggy-input'
+            },
+            commandHistory:{
+              type : Array,
+              value: []
+            },
+            sources:{
+              type: Array,
+              notify: true
+            }
+          };
+        }
+
       }
 
-    }
-
-    window.customElements.define(SpoggyInput.is, SpoggyInput);
-    </script>
-  </dom-module>
+      window.customElements.define(SpoggyInput.is, SpoggyInput);
+      </script>
+    </dom-module>
