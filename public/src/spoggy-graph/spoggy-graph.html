@@ -44,15 +44,15 @@ revoir color picker -->
       right: 5px;
       top: 200px;
     }
-  </style>
+    </style>
     <style is="custom-style"  include="vis-styles"></style>
 
-<paper-dialog id="eye">
-    <spog-eye ></spog-eye>
-    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-      <paper-button dialog-dismiss raised>Fermer</paper-button>
-    </div>
-</paper-dialog>
+    <paper-dialog id="eye">
+      <spog-eye ></spog-eye>
+      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+        <paper-button dialog-dismiss raised>Fermer</paper-button>
+      </div>
+    </paper-dialog>
     <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
       <div horizontal start-justified start layout >
         <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
@@ -194,7 +194,7 @@ revoir color picker -->
     </paper-dialog>
 
 
-        <div id="mynetwork"></div>
+    <div id="mynetwork"></div>
     <paper-fab id="fabsetting" on-tap="_toggleSettings"  label="set"></paper-fab>
     <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab>
 
@@ -314,7 +314,7 @@ revoir color picker -->
         edges: edges
       };
       var options = {
-      //  locale: 'fr',
+        //  locale: 'fr',
         edges:{
           arrows: {
             to:     {enabled: true, scaleFactor:1, type:'arrow'},
@@ -324,7 +324,7 @@ revoir color picker -->
           interaction:{
             navigationButtons: true,
             //  keyboard: true  //incompatible avec rappel de commande en cours d'implémentation
-              multiselect: true,
+            multiselect: true,
           },
 
           manipulation: {
@@ -420,7 +420,12 @@ revoir color picker -->
         this.$.nodeLabel.value= data.label || "";
         this.selectedShape = data.shape || "ellipse";
         this.selectedType = data.type || "node";
-        this.colorValue = data.color || "rgb(173,208,255)";
+        if ((data.color != undefined) && (data.color.background != undefined)){
+          this.colorValue = data.color.background
+        }
+        else{
+          this.colorValue =   "rgb(173,208,255)";
+        }
 
         this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
         this.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
