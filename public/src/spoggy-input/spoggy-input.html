@@ -39,12 +39,27 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
 <link rel="import" href="./input-behavior.html">
 <link rel="import" href="../spoggy-data/data-behavior.html">
 
+<link rel="import" href="../spoggy-mode/spoggy-mode.html">
+
+
 
 
 <link rel="import" href="./input-styles.html">
 <dom-module id="spoggy-input">
   <template>
-    <style is="custom-style" include="input-styles"> </style>
+    <style is="custom-style" include="input-styles">
+    :host {
+/*      display: block;*/
+    width: 75vw;
+    }
+
+
+
+      </style>
+
+
+
+
     <!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
     <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
       on-iron-overlay-closed="_myClosedFunction" -->
@@ -271,7 +286,6 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
             <!--  on-iron-overlay-opened="_openImport"
             on-iron-overlay-closed="_closeImport"-->
             <paper-dialog id="importPopUp"
-
             backdrop transition="core-transition-bottom">
             <div horizontal start-justified start layout >
               <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
@@ -304,6 +318,8 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
           raised
           autofocus>
         </paper-input>
+            <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
+
       </template>
 
       <script>

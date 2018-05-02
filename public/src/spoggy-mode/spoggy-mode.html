@@ -13,7 +13,9 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
+<!--
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+-->
 
 <link rel="import" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
 
@@ -25,11 +27,11 @@
 <dom-module id="spoggy-mode">
   <template>
     <style is="custom-style"  include="graphe-styles">
-    #fabmode {
+  /*  #fabmode {
       position: fixed;
       right: 5px;
       top: 20px;
-    }
+    }*/
     </style>
     <paper-dialog id="modePopup" > <!--    on-iron-overlay-opened="_openModePopp"
       on-iron-overlay-closed="_closeModePopup"-->
@@ -97,9 +99,9 @@
   </div>-->
 </paper-dialog>
 
-<!--
-<div on-tap="openChangeMode">{{modeBtnText}}</div>-->
-<paper-fab id="fabmode" on-tap="openChangeMode" label="{{modeBtnText}}"></paper-fab>
+
+<paper-button on-tap="openChangeMode" raised>{{modeBtnText}}</paper-button>
+<!--<paper-fab id="fabmode" on-tap="openChangeMode" label="{{modeBtnText}}"></paper-fab>-->
 
 
 </template>
