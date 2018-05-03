@@ -4,7 +4,14 @@
 Spoggy est un outil de stockage de connaissances.
 Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vous foisonnez d'idées mais avez toujours du mal à vous faire comprendre par un public 'non initié', si vous devez travailler en équipe de manière 'collaborative', si le collègue que vous devez remplacer part à la retraite sans vous avoir donné toutes les clés de sa fonction, si vous voulez exprimer de manière simple une tension 'holocratique', Spoggy peut vous aider.
 # DEMO
-[DEMO](https://spoggy.herokuapp.com/)
+[DEMO plein écran](https://spoggy.herokuapp.com/)
+
+# Intégrer Spoggy sur votre site Web ? Simple comme une iframe :
+<pre><code class="js">&lt;iframe  width="700" height="700" src="https://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"&gt;&lt;/iframe&gt;</code></pre>
+
+
+<iframe  width="700" height="700" src="https://spoggy.herokuapp.comhttps://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"></iframe>
+
 
 # Deployer Spoggy sur Heroku
 [![Deploy](http://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
