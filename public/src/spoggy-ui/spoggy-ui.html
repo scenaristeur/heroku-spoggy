@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
-
+<link rel="import" href="../spoggy-mode/spoggy-mode.html">
 
 <link rel="import" href="../spoggy-data/data-behavior.html">
 
@@ -14,7 +14,9 @@
     </style>
     <!--    <div hidden$="[[connected]]">[[status]]</div> -->
 
+
     <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}"></spoggy-graph>
+        <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
     <div id="div"></div>
   </template>
 

@@ -52,6 +52,12 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
       @apply --layout-horizontal;
       @apply --layout-flex;
     }
+    #fabAide {
+      position: fixed;
+      right: 5px;
+      top: 10px;
+    }
+
     </style>
 
 
@@ -186,7 +192,9 @@ Spoggy est utilisable selon trois modes, du plus simple au plus complexe : solo,
                         <p>En mode <b>'COLLABORATIF'</b>, Spoggy permet à un groupe de collaborer en temps réel.
                            On peut alors construire des graphes en parfaite synchronistaion et voir en temps réel les modifications effectuées par nos collaborateurs.
                           Le mode collaboratif se base sur les principes du 'chat' : des rooms ou salles pour discuter, sauf qu'ici, on fait un peu plus que discuter...<br>
-                          Pour accéder au mode collaboratif de Spoggy, cliquez sur le bouton 'SOLO',
+                          Pour accéder au mode collaboratif de Spoggy, cliquez sur le bouton
+                          <paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+,
                           saisissez un pseudo, et selectionnez le nom de la room que vous souhaitez rejoindre ou créez une nouvelle room.</p>
                         </div>
                       </iron-collapse-button>
@@ -348,11 +356,12 @@ Spoggy est utilisable selon trois modes, du plus simple au plus complexe : solo,
                 raised
                 autofocus>
               </paper-input>
-              <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
-              <div style="align:right">
-                <paper-icon-button icon="help" on-tap="afficheAide"></paper-icon-button>
-              </div>
+
             </div>
+            <!--<div style="align:right">
+              <paper-icon-button icon="help" on-tap="afficheAide"></paper-icon-button>
+            </div>-->
+            <paper-fab id="fabAide" on-tap="afficheAide"  icon="help" style="height: 50px; width:50px;"></paper-fab>
 
 
           </template>

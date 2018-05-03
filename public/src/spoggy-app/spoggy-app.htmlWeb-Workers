@@ -7,6 +7,7 @@
 <link rel="import" href="../spoggy-data/spoggy-data.html">
 <link rel="import" href="../spoggy-comm/spoggy-comm.html">
 <link rel="import" href="../spoggy-input/spoggy-input.html">
+<link rel="import" href="../../bower_components/web-worker/web-worker.html">
 
 <!--
 <link rel="import" href="../../bower_components/lrnapp-fab-menu/lrnapp-fab-menu.html">
@@ -26,16 +27,17 @@
     }
     </style>
 
-  <!--  <app-toolbar>-->
+    <app-toolbar>
     <!--  <paper-icon-button icon="menu"></paper-icon-button>
       <div main-title>Spoggy</div>-->
       <spoggy-input network="{{network}}" socket="{{socket}}" ></spoggy-input>
     <!--   <paper-icon-button icon="search"></paper-icon-button>-->
-  <!--</app-toolbar>-->
-
+    </app-toolbar>
+-{{reply}}-
     <spoggy-ui network="{{network}}" socket="{{socket}}"></spoggy-ui>
     <spoggy-data></spoggy-data>
     <spoggy-comm></spoggy-comm>
+    <web-worker url="./workers/some_script.js" last-message="{{reply}}"></web-worker>
 
     <!--
     <lrnapp-fab-menu>
