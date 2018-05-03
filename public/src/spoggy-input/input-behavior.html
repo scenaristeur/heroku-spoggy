@@ -92,6 +92,10 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       }
     }
 
+afficheAide()
+{
+  this.$.helpPopUp.toggle();
+}
     catchCommande(commande){
       console.log(commande)
       switch(commande) {
