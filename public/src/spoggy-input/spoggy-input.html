@@ -48,14 +48,11 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
 <dom-module id="spoggy-input">
   <template>
     <style is="custom-style" include="input-styles">
-    :host {
-/*      display: block;*/
-    width: 75vw;
+    div{
+      @apply --layout-horizontal;
+      @apply --layout-flex;
     }
-
-
-
-      </style>
+    </style>
 
 
 
@@ -106,15 +103,15 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
                 <li> <b>/n</b> pour créer un nouveau graphe.</li>
                 <li>Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter et l'envoyer par mail à vos collaborateurs. :
                   <ul>
-<li>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></li>
-<li>Au format
-  <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
-  pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></li>
-                  </ul>
+                    <li>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></li>
+                    <li>Au format
+                      <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
+                      pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></li>
+                    </ul>
 
 
-                  <li>  Avec la commande '/i' pouvez importer un fichier spoggy </li>
-                  vous pouvez également indiquer un paramètre "?source=" dans l'url de la page :
+                    <li>  Avec la commande '/i' pouvez importer un fichier spoggy </li>
+                    vous pouvez également indiquer un paramètre "?source=" dans l'url de la page :
                     <ul>
                       <li><a href="./?source=/exemple_files/NCC_2018.json" > la nuit du code des Bricodeurs </a></li>
                       <li> ou de <a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" >l'application SPOGGY</a></li>
@@ -311,14 +308,19 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
             </div>
           </paper-dialog>
 
-          <paper-input id="inputMessage"
-          class="inputMessage"
-          on-change="traiteMessage"
-          label="/h + Entrée pour l'aide"
-          raised
-          autofocus>
-        </paper-input>
-            <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
+          <div>
+            
+            <paper-input id="inputMessage"
+            class="inputMessage"
+            on-change="traiteMessage"
+            label="/h + Entrée pour l'aide"
+            raised
+            autofocus>
+          </paper-input>
+          <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
+
+        </div>
+
 
       </template>
 
