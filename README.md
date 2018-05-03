@@ -10,7 +10,7 @@ Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vo
 <pre><code class="js">&lt;iframe  width="700" height="700" src="https://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"&gt;&lt;/iframe&gt;</code></pre>
 
 
-<iframe  width="700" height="700" src="https://spoggy.herokuapp.comhttps://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"></iframe>
+<iframe  width="700" height="700" src="https://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"></iframe>
 
 
 # Deployer Spoggy sur Heroku
