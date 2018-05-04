@@ -23,7 +23,8 @@ revoir color picker -->
 <link rel="import" href="../../bower_components/paper-swatch-picker/paper-swatch-picker.html">
 <link rel="import" href="../../bower_components/neon-animation/web-animations.html">
 
-<script src="../../bower_components/vis/dist/vis.min.js"></script>
+<!--<script src="../../bower_components/vis/dist/vis.min.js"></script> Prend la version non minifiée pour le français -->
+<script src="./lib/vis.js"></script>
 
 <link rel="import" href="../spoggy-data/data-behavior.html">
 
@@ -315,7 +316,7 @@ revoir color picker -->
         edges: edges
       };
       var options = {
-        //  locale: 'fr',
+          locale: 'fr',
         edges:{
           arrows: {
             to:     {enabled: true, scaleFactor:1, type:'arrow'},
