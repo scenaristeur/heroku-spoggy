@@ -1,8 +1,8 @@
 (En raison de l'utilisation des [web components](https://www.webcomponents.org/), SPOGGY fonctionne avec les dernières versions de Chrome & Opera, Le chargement dans Firefox < v60 est lent)
 # heroku-spoggy
 
-[voir la doc en pleine page ](https://scenaristeur.github.io/heroku-spoggy/) /\/\  
-[ voir le repo github](https://github.com/scenaristeur/heroku-spoggy)
+[voir la doc en pleine page ](https://scenaristeur.github.io/heroku-spoggy/) ou  
+[voir le repo github](https://github.com/scenaristeur/heroku-spoggy)
 
 
 Spoggy est un outil de stockage de connaissances.
