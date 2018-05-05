@@ -9,7 +9,7 @@
       display: block;
     }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+  <h2>Dernier data reçu :  [[prop1]]!</h2>
     <test-agent></test-agent>
   </template>
 
@@ -35,7 +35,7 @@
 
     constructor(){
       super();
-      this.interneAgent = new InterneAgent('interneAgent');
+      this.agentInterne = new InterneAgent('agentInterne', this);
       Polymer.RenderStatus.afterNextRender(this, function() {
         // When possible, use afterNextRender to defer non-critical
         // work until after first paint.
@@ -47,7 +47,7 @@
       this.initAgents()
     }
     initAgents(){
-  this.interneAgent.send('agentHello', 'Hello agentHello!');
+  this.agentInterne.send('agentHello', 'Hello agentHello!');
     }
     connectedCallback(){
          console.log("agent INTERNE connected");

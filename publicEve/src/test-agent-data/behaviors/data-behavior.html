@@ -1,0 +1,74 @@
+
+<script>
+var DataBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class DataBehavior extends superClass {
+    constructor() {
+      super();
+      console.log("*************************Data behavior")
+      console.log(this.dataProp);
+    }
+
+    static get properties() {
+      return {
+        dataProp: {
+          type: String,
+          value: 'dataB*****************************************'
+        }
+      };
+    }
+
+
+        catchCommande(commande){
+          console.log(commande)
+          switch(commande) {
+            case "/h":
+            case "/help":
+            case "/aide":
+          //  this.$.helpPopUp.toggle();
+          var action = {
+            type : "toggle",
+            dialog : "helpPopUp"
+          };
+          this.agentData.send('agentDialog', action);
+            break;
+            case "/e":
+            case "/export":
+            case "/exportJson":
+            this.exportJson();
+            break;
+            case "/t":
+            this.exportTtl(this.network,this);
+            break;
+            case "/i":
+            case "/import":
+            case "/importJson":
+            //  importJson(network,app);
+            this.$.importPopUp.toggle();
+            //  this.$.dialogs.openImport(this.network)
+            break;
+            case "/n":
+            console.log("new graph");
+            this.newGraph(this.network, this);
+            break;
+            case "/b":
+            console.log("connection a la base levelgraph");
+            this.connectBase(this.network,this);
+            break;
+            /*
+            case "/p":
+            case "/t":
+            // non traité ici , mais par le serveur
+            console.log("triplet, predicat ou noeud");
+            break;*/
+            default:
+            console.log("non traite"+ commande);
+            //  return afficheCommandes();
+          }
+        }
+
+      
+
+  }
+});
+
+</script>

@@ -1,41 +1,40 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../test-agent/test-agent.html">
+<script src="agents/DialogAgent.js"></script>
 
-<script src="agents/HelloAgent.js"></script>
-
-<dom-module id="test-agent-hello">
+<dom-module id="test-agent-dialog">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <h2>Dernier data reçu :  [[prop1]]!</h2>
-        <test-agent></test-agent>
+    <h2>Hello [[prop1]]!</h2>
   </template>
 
   <script>
     /**
-     * `test-agent-hello`
+     * `test-agent-dialog`
      *
      *
      * @customElement
      * @polymer
      * @demo demo/index.html
      */
-    class TestAgentHello extends Polymer.Element {
-      static get is() { return 'test-agent-hello'; }
+    class TestAgentDialog extends Polymer.Element {
+      static get is() { return 'test-agent-dialog'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'test-agent-hello'
+            value: 'test-agent-dialog'
           }
         };
       }
+
       constructor(){
         super();
-        this.agentHello = new HelloAgent('agentHello', this);
+        this.agentDialog = new DialogAgent('agentDialog', this);
         Polymer.RenderStatus.afterNextRender(this, function() {
           // When possible, use afterNextRender to defer non-critical
           // work until after first paint.
@@ -43,20 +42,17 @@
         });
       }
       _deferred(){
-          console.log("agent HELLO defered")
-      //  this.initAgents()
+         console.log("agent DIALOG defered")
+        this.initAgents()
       }
       initAgents(){
-        this.agentHello.send('agentGraph', 'Hello agentGraph!');
-        this.agentHello.send('agentInput', 'Hello agentInput!');
-        this.agentHello.send('agentData', 'Hello agentData!');
-        this.agentHello.send('agentInterne', 'Hello agentInterne!');
+    this.agentDialog.send('agentHello', 'Hello agentHello!');
       }
       connectedCallback(){
-           console.log("agent HELLO connected");
+           console.log("agent INTERNE connected");
       }
     }
 
-    window.customElements.define(TestAgentHello.is, TestAgentHello);
+    window.customElements.define(TestAgentDialog.is, TestAgentDialog);
   </script>
 </dom-module>

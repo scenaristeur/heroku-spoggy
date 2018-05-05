@@ -1,9 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../test-agent/test-agent.html">
+<script src="agents/CommAgent.js"></script>
 
-<script src="agents/HelloAgent.js"></script>
 
-<dom-module id="test-agent-hello">
+<dom-module id="test-agent-comm">
   <template>
     <style>
       :host {
@@ -11,31 +11,32 @@
       }
     </style>
     <h2>Dernier data reçu :  [[prop1]]!</h2>
-        <test-agent></test-agent>
+    <test-agent></test-agent>
   </template>
 
   <script>
     /**
-     * `test-agent-hello`
+     * `test-agent-comm`
      *
      *
      * @customElement
      * @polymer
      * @demo demo/index.html
      */
-    class TestAgentHello extends Polymer.Element {
-      static get is() { return 'test-agent-hello'; }
+    class TestAgentComm extends Polymer.Element {
+      static get is() { return 'test-agent-comm'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'test-agent-hello'
+            value: 'test-agent-comm'
           }
         };
       }
+
       constructor(){
         super();
-        this.agentHello = new HelloAgent('agentHello', this);
+        this.agentComm = new CommAgent('agentComm', this);
         Polymer.RenderStatus.afterNextRender(this, function() {
           // When possible, use afterNextRender to defer non-critical
           // work until after first paint.
@@ -43,20 +44,19 @@
         });
       }
       _deferred(){
-          console.log("agent HELLO defered")
+        console.log("agent COMM defered")
       //  this.initAgents()
       }
       initAgents(){
-        this.agentHello.send('agentGraph', 'Hello agentGraph!');
-        this.agentHello.send('agentInput', 'Hello agentInput!');
-        this.agentHello.send('agentData', 'Hello agentData!');
-        this.agentHello.send('agentInterne', 'Hello agentInterne!');
+        this.agentComm.send('agentHello', 'Hello agentHello!');
+      //  this.graphAgent.send('agentInterne', 'Hello agentInterne!');
       }
       connectedCallback(){
-           console.log("agent HELLO connected");
+        console.log("agent COMM connected");
       }
+
     }
 
-    window.customElements.define(TestAgentHello.is, TestAgentHello);
+    window.customElements.define(TestAgentComm.is, TestAgentComm);
   </script>
 </dom-module>

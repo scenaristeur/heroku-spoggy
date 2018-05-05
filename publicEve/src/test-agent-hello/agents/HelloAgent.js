@@ -4,10 +4,10 @@
   * @constructor
   * @extend eve.Agent
   */
- function HelloAgent(id) {
+ function HelloAgent(id, app) {
    // execute super constructor
    eve.Agent.call(this, id);
-
+   this.app = app;
    // connect to all transports configured by the system
    this.connect(eve.system.transports.getAll());
  }
@@ -32,6 +32,7 @@
   */
  HelloAgent.prototype.receive = function(from, message) {
    console.log(from + ' said: ' + JSON.stringify(message) );
+      this.app.prop1 = message;
 
    if (message.indexOf('Hello') === 0) {
      // reply to the greeting

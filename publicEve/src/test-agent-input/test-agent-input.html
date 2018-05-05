@@ -2,58 +2,129 @@
 <link rel="import" href="../test-agent/test-agent.html">
 <script src="agents/InputAgent.js"></script>
 
+<link rel="import" href="../../bower_components/chat-window/chat-window.html">
+
+
 <dom-module id="test-agent-input">
   <template>
-    <style>
+    <!--  <style>
     :host {
-      display: block;
-    }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
-    <test-agent></test-agent>
-  </template>
+    display: block;
+  }
+</style>-->
+<style is="custom-style">
+chat-window.styled {
+  font-size: small;
+  --chat-messages-height: 12em;
+  --paper-input-container-input: {
+    margin: 0 2px;
+  }
+  --chat-message-text: {
+    background-color: #f0f0f0;
+    padding: 6px 8px;
+    margin: 4px 0;
+    border-radius: 6px;
+  };
+}
+}
+</style>
 
-  <script>
-  /**
-  * `test-agent-input`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class TestAgentInput extends Polymer.Element {
-    static get is() { return 'test-agent-input'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'test-agent-input'
-        }
-      };
-    }
+<chat-window
+id = "chat"
+class="styled"
+author="me"
+single-line
+input-text="{{text}}"
+messages="[[messages]]"
+on-send="sendMsg"
+></chat-window>
 
-    constructor(){
-      super();
-      this.inputAgent = new InputAgent('inputAgent');
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        // When possible, use afterNextRender to defer non-critical
-        // work until after first paint.
-        this._deferred();
-      });
-    }
-    _deferred(){
-        console.log("agent INPUT defered")
-      this.initAgents()
-    }
-    initAgents(){
-      this.inputAgent.send('helloAgent', 'Hello helloAgent!');
-    }
-    connectedCallback(){
-       console.log("agent INPUT connected");
-    }
+<h2>Dernier data reçu :  [[prop1]]!</h2>
+
+<test-agent></test-agent>
+</template>
+
+<script>
+/**
+* `test-agent-input`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class TestAgentInput extends Polymer.Element {
+  static get is() { return 'test-agent-input'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'test-agent-input'
+      },
+      messages : {
+        type : Array,
+        value : [
+          { author: 'you', text: 'dummy msg 1', created: this.now - (60*1000) },
+          { author: 'me', text: 'dummy msg 2', created: this.now - (3*60*1000) },
+          { author: 'you', text: 'dummy msg 3', created: this.now - (10*60*1000) },
+          { author: 'you', text: 'dummy msg 4', created: this.now - (60*60*1000) },
+          { author: 'me', text: 'dummy msg 5', created: this.now - (1.2*60*60*1000) },
+          { author: 'me', text: 'dummy msg 6', created: this.now - (1.5*60*60*1000) },
+          { author: 'you', text: 'dummy msg 7', created: this.now - (11.5*60*60*1000) },
+          { author: 'me', text: 'dummy msg 8', created: this.now - (12*60*60*1000) },
+          { author: 'you', text: 'dummy msg 9', created: this.now - (13*60*60*1000) },
+          { author: 'me', text: 'dummy msg 10', created: this.now - (1.5*24*60*60*1000) },
+          { author: 'you', text: 'dummy msg 11', created: this.now - (1.6*24*60*60*1000) },
+          { author: 'me', text: 'dummy msg 12', created: this.now - (4*24*60*60*1000) },
+          { author: 'me', text: 'dummy msg 13', created: this.now - (4.5*24*60*60*1000) },
+          { author: 'you', text: 'dummy msg 14', created: this.now - (14*24*60*60*1000) },
+          { author: 'me', text: 'dummy msg 15', created: this.now - (14.5*24*60*60*1000) },
+        ]
+      }
+
+    };
   }
 
-  window.customElements.define(TestAgentInput.is, TestAgentInput);
-  </script>
+  constructor(){
+    super();
+    this.agentInput = new InputAgent('agentInput', this);
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
+    });
+  }
+  _deferred(){
+    console.log("agent INPUT defered")
+    this.initAgents()
+  }
+  initAgents(){
+    this.agentInput.send('agentHello', 'Hello agentHello!');
+  }
+  connectedCallback(){
+    console.log("agent INPUT connected");
+  }
+
+  sendMsg(e){
+    // filtrer avant de passer en mode chat
+    console.log(e.detail)
+  //  this.agentInput.send('agentHello', 'Hello FROM CHAT '+e.detail);
+  var mess = {}
+  mess.type = "chat";
+  mess.data = e.detail;
+    this.agentInput.send('agentData', mess);
+
+    this.$.chat.messages = this.messages;
+    this.author = this.author == 'me' ? 'you' : 'me'; // For demo
+    this.$.chat.push('messages',{
+      author: this.author,
+      text: e.detail,
+      created: Date.now()
+    });
+
+  }
+}
+
+window.customElements.define(TestAgentInput.is, TestAgentInput);
+</script>
 </dom-module>
