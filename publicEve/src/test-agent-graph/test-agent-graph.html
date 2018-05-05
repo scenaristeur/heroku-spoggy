@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../test-agent/test-agent.html">
+<script src="agents/GraphAgent.js"></script>
+
+<dom-module id="test-agent-graph">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <test-agent></test-agent>
+  </template>
+
+  <script>
+  /**
+  * `test-agent-graph`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class TestAgentGraph extends Polymer.Element {
+    static get is() { return 'test-agent-graph'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'test-agent-graph'
+        }
+      };
+    }
+
+    constructor(){
+      super();
+      this.graphAgent = new GraphAgent('graphAgent');
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+      });
+    }
+    _deferred(){
+      console.log("agent GRAPH defered")
+      this.initAgents()
+    }
+    initAgents(){
+      this.graphAgent.send('agentHello', 'Hello agentHello!');
+    //  this.graphAgent.send('agentInterne', 'Hello agentInterne!');
+    }
+    connectedCallback(){
+      console.log("agent GRAPH connected");
+    }
+  }
+
+  window.customElements.define(TestAgentGraph.is, TestAgentGraph);
+  </script>
+</dom-module>

@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../test-agent/test-agent.html">
+<script src="agents/InterneAgent.js"></script>
+
+<dom-module id="test-agent-interne">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <test-agent></test-agent>
+  </template>
+
+  <script>
+  /**
+  * `test-agent-interne`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class TestAgentInterne extends Polymer.Element {
+    static get is() { return 'test-agent-interne'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'test-agent-interne'
+        }
+      };
+    }
+
+    constructor(){
+      super();
+      this.interneAgent = new InterneAgent('interneAgent');
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+      });
+    }
+    _deferred(){
+       console.log("agent INTERNE defered")
+      this.initAgents()
+    }
+    initAgents(){
+  this.interneAgent.send('agentHello', 'Hello agentHello!');
+    }
+    connectedCallback(){
+         console.log("agent INTERNE connected");
+    }
+
+  }
+
+  window.customElements.define(TestAgentInterne.is, TestAgentInterne);
+  </script>
+</dom-module>

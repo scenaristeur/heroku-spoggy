@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../test-agent/test-agent.html">
+
+<script src="agents/HelloAgent.js"></script>
+
+<dom-module id="test-agent-hello">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+        <test-agent></test-agent>
+  </template>
+
+  <script>
+    /**
+     * `test-agent-hello`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class TestAgentHello extends Polymer.Element {
+      static get is() { return 'test-agent-hello'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'test-agent-hello'
+          }
+        };
+      }
+      constructor(){
+        super();
+        this.agentHello = new HelloAgent('agentHello');
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+        });
+      }
+      _deferred(){
+          console.log("agent HELLO defered")
+        this.initAgents()
+      }
+      initAgents(){
+        this.agentHello.send('graphAgent', 'Hello graphAgent!');
+        this.agentHello.send('inputAgent', 'Hello inputAgent!');
+        this.agentHello.send('dataAgent', 'Hello dataAgent!');
+        this.agentHello.send('interneAgent', 'Hello interneAgent!');
+      }
+      connectedCallback(){
+           console.log("agent HELLO connected");
+      }
+    }
+
+    window.customElements.define(TestAgentHello.is, TestAgentHello);
+  </script>
+</dom-module>

@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../test-agent/test-agent.html">
+<script src="agents/InputAgent.js"></script>
+
+<dom-module id="test-agent-input">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <test-agent></test-agent>
+  </template>
+
+  <script>
+  /**
+  * `test-agent-input`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class TestAgentInput extends Polymer.Element {
+    static get is() { return 'test-agent-input'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'test-agent-input'
+        }
+      };
+    }
+
+    constructor(){
+      super();
+      this.inputAgent = new InputAgent('inputAgent');
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+      });
+    }
+    _deferred(){
+        console.log("agent INPUT defered")
+      this.initAgents()
+    }
+    initAgents(){
+      this.inputAgent.send('helloAgent', 'Hello helloAgent!');
+    }
+    connectedCallback(){
+       console.log("agent INPUT connected");
+    }
+  }
+
+  window.customElements.define(TestAgentInput.is, TestAgentInput);
+  </script>
+</dom-module>
