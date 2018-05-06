@@ -1,0 +1,76 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../test-agent/test-agent.html">
+<script src="agents/ModeAgent.js"></script>
+<link rel="import" href="./behaviors/mode-behavior.html">
+
+<dom-module id="spoggy-agent-mode">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
+      <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
+      <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
+      <br>
+      <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
+    </iron-selector>
+
+
+    <div hidden$="[[!modeIs(mode,'collab')]]">
+      <paper-input label="Entrer un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
+
+      <div hidden$="[[isEmpty(pseudo)]]">
+
+        <paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
+          <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+            <template is="dom-repeat" items="[[rooms]]">
+              <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+
+
+        <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
+        <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
+      </div>
+      <!-- test de saisi + selection
+      <paper-dropdown-input label="Rejoindre une room"
+      items="[[rooms]]"
+      value={{room}}
+      >
+      <paper-button on-tap="rejoindre">Rejoindre</paper-button>
+    </paper-dropdown-input>-->
+  </div>
+
+  <div hidden$="[[!modeIs(mode,'global')]]">
+    conf global
+  </div>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-agent-mode`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyAgentMode extends Polymer.Element {
+      static get is() { return 'spoggy-agent-mode'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-agent-mode'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyAgentMode.is, SpoggyAgentMode);
+  </script>
+</dom-module>

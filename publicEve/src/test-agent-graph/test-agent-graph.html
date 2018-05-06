@@ -32,12 +32,11 @@
     <style is="custom-style"  include="graphe-styles"></style>
     <style is="custom-style"  include="vis-styles"></style>
     <style>
-    :host {
+  /*  :host {
       display: block;
-    }
+    }*/
     </style>
 
-    <h2>Dernier data reçu :  [[prop1]]!</h2>
     <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
       <div horizontal start-justified start layout >
         <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
@@ -135,6 +134,19 @@
       </div>
     </paper-dialog>
 
+    <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
+      on-iron-overlay-closed="_myClosedFunction" -->
+      <h3>Export au format turtle (RDF)
+        <!--<paper-button ontap="_pageAide">?</paper-button>-->
+        <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
+
+        <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+        <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
+        <paper-dialog-scrollable>
+          <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
+        </paper-dialog-scrollable>
+      </paper-dialog>
+      
     <paper-dialog id="importPopUp" backdrop transition="core-transition-bottom">
       <div horizontal start-justified start layout >
         <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>

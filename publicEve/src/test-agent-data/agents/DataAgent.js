@@ -74,6 +74,9 @@ DataAgent.prototype.receive = function(from, message) {
       let chatMessCut = chatMess.slice(0,-1).split(" ");
       let isTriplet = true;
       switch(lastChar){
+        case '.':
+        inputNewValue.value = "";
+        break;
         case ';':
         inputNewValue.value = chatMessCut[0]+" ";
         break;
@@ -83,7 +86,6 @@ DataAgent.prototype.receive = function(from, message) {
         case '-':
         inputNewValue.value = chatMessCut[2]+" ";
         break;
-        case '.':
         default:
         console.log("chatMess to chat "+chatMess)
         // this.sendMessage(chatMess);
@@ -106,13 +108,12 @@ DataAgent.prototype.receive = function(from, message) {
         triplets.push(t)
         // utiliser addActions
         //  this.catchTripletsV2(triplets, this.network);
-      //  this.app.catchTriplet(chatMess.slice(0,-1), this.network);
-      let catchTriplet = {
-        type: 'catchTriplet',
-        value: chatMess.slice(0,-1)
-      };
-      console.log(catchTriplet)
-      this.send('agentGraph', catchTriplet);
+        //  this.app.catchTriplet(chatMess.slice(0,-1), this.network);
+        let catchTriplet = {
+          type: 'catchTriplet',
+          value: chatMess.slice(0,-1)
+        };
+        this.send('agentGraph', catchTriplet);
       }
     }
     this.send('agentInput', inputNewValue);

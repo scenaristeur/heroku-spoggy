@@ -4,15 +4,15 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class GraphBehavior extends superClass {
     constructor() {
       super();
-      console.log("*************************Data behavior")
-      console.log(this.dataProp);
+      //  console.log("*************************Data behavior")
+      //  console.log(this.dataProp);
     }
 
     static get properties() {
       return {
         dataProp: {
           type: String,
-          value: 'dataB*****************************************'
+          value: 'dataB'
         }
       };
     }
@@ -54,7 +54,7 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         edges: edges
       };
       var options = {
-          locale: 'fr',
+        locale: 'fr',
         edges:{
           arrows: {
             to:     {enabled: true, scaleFactor:1, type:'arrow'},
@@ -216,6 +216,7 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         action.data = node;
         console.log
         this.addAction(action);
+
         if( data.type == "graph"){
           console.log("nodeID");
           console.log(node.id);
@@ -335,7 +336,728 @@ this.addAction(actionGraph);
 this.nodes = this.network.body.data.nodes;*/
 }
 
+
+editEdgeWithoutDrag (data, callback) {
+  this.$.edgeLabel.value = data.label || "";
+  this.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
+  this.$.edgePopUp.style.display = 'block';
+  this.$.edgeLabel.focus();
+}
+clearEdgePopUp () {
+  this.$.edgeSaveButton.onclick = null;
+  this.$.edgeCancelButton.onclick = null;
+  this.$.edgePopUp.style.display = 'none';
+}
+cancelEdgeEdit (callback) {
+  this.clearEdgePopUp();
+  callback(null);
+}
+saveEdgeData (data, callback) {
+  if (typeof data.to === 'object')
+  data.to = data.to.id
+  if (typeof data.from === 'object')
+  data.from = data.from.id
+  data.label = this.$.edgeLabel.value;
+  this.clearEdgePopUp();
+  callback(data);
+  var edge = this.network.body.data.edges.get({
+    filter: function(edge) {
+      return (edge.from == data.from && edge.to == data.to && edge.label == data.label);
+    }
+  });
+
+  var action = {};
+  action.type = "newEdge";
+  action.data = edge;
+  this.addAction(action);
+}
+deleteNode (data, callback){
+  var action = {};
+  action.type = "deleteNode";
+  action.data = data;
+  this.addAction(action);
+
+  callback(data);
+}
+deleteEdge (data, callback){
+  var action = {};
+  action.type = "deleteEdge";
+  action.data = data;
+  this.addAction(action);
+  callback(data);
+}
+
+addAction(action){
+  var addActions = {type: "addActions"};
+  var actions2add = [];
+  actions2add.push(action);
+  addActions.actions=actions2add;
+  //this.agentGraph.send('agentComm', addActions);
+  this.agentGraph.send('agentSocket', addActions);
+}
+
+addEdgeIfNotExist (network, data){
+  var existEdge = false;
+  console.log(data);
+  if (Array.isArray(data)){
+    data = data[0];
   }
+  console.log(data);
+  /*  try {
+  existEdge = this.network.body.data.edges.get({
+  filter: function(edge){
+  //  return (edge.id == data.id);
+  return (edge.id == data.id ||  (edge.from == data.from && edge.to == data.to && edge.label == data.label));
+}
+});
+console.log(existEdge);
+if (existEdge.length == 0){
+this.network.body.data.edges.add(data);
+}else{
+this.network.body.data.edges.update({id: data.id, label: data.label});
+}
+}
+catch (err) {
+console.log(err);
+}*/
+var edgeExist = network.body.data.edges.get({
+  filter: function(edge) {
+    return (edge.from == data.from && edge.to == data.to && edge.label == data.label);
+  }
+});
+if (edgeExist == null || edgeExist.length == 0) {
+  var edge = {
+    from: data.from,
+    to: data.to,
+    label: data.label,
+    //    group: 100, // règles
+    //    arrows: "to",
+    //  color: "rgb(255,153,30)"
+  };
+  //edge.id = triplet.subject;
+  //edge[triplet.predicate] = triplet.object;
+  console.log("add");
+  console.log(edge);
+  network.body.data.edges.add(edge);
+} else {
+  console.log("update");
+  console.log(edgeExist);
+  var edge = edgeExist;
+  edge.label = data.label;
+  network.body.data.edges.update(edge);
+}
+}
+addNodeIfNotExist(network, data){
+  var existNode = false;
+  console.log(data);
+  try{
+    existNode = this.network.body.data.nodes.get({
+      filter: function(node){
+        return (node.id == data.id );
+      }
+    });
+    console.log(existNode);
+    if (existNode.length == 0){
+      console.log("n'existe pas")
+      this.network.body.data.nodes.add(data);
+    }else{
+      console.log("existe")
+      delete data.x;
+      delete data.y
+      this.network.body.data.nodes.update(data);
+    }
+  }
+  catch (err){
+    console.log(err);
+  }
+
+}
+
+_changeGravity(e){
+  this.network.physics.options.repulsion.centralGravity = this.gravityValue;
+}
+_changeSpringLength(){
+  this.network.physics.options.repulsion.springLength = this.springLengthValue;
+}
+_changeSpringConstant(){
+  this.network.physics.options.repulsion.springConstant = this.springConstantValue;
+}
+_changeNodeDistance(){
+  this.network.physics.options.repulsion.nodeDistance = this.nodeDistanceValue;
+}
+_changeDamping(){
+  this.network.physics.options.repulsion.damping = this.dampingValue;
+}
+_defaultPhysicValues(){
+  /*valeurs par Defaut de network.physics.repulsion
+  centralGravity: 0.001,
+  springLength: 220, //200 //300
+  springConstant: 0.005,
+  nodeDistance: 180, //100 //350
+  damping: 0.08*/
+  this.gravityValue = 0.001;
+  this.network.physics.options.repulsion.centralGravity = this.gravityValue;
+  this.springLengthValue = 200;
+  this.network.physics.options.repulsion.springLength = this.springLengthValue;
+  this.springConstantValue = 0.01;
+  this.network.physics.options.repulsion.springConstant = this.springConstantValue;
+  this.nodeDistanceValue = 150;
+  this.network.physics.options.repulsion.nodeDistance = this.nodeDistanceValue;
+  this.dampingValue = 0.08;
+  this.network.physics.options.repulsion.damping = this.dampingValue;
+}
+_inferedChanged(newInfered,oldinfered){
+  console.log("INFERED");
+  console.log(newInfered);
+  this.populateFromInfered(newInfered, this.network)
+}
+_toggleSettings(){
+  console.log(this.$.settings.hidden);
+  //this.$.settings.hidden= !this.$.settings.hidden;
+  //this.settinghidden = !this.settinghidden;
+  this.$.settings.toggle();
+}
+_toggleEye(){
+  console.log(this.$.eye.hidden);
+  //this.$.eye.hidden= !this.$.eye.hidden;
+  //this.eyehidden = !this.eyehidden;
+  this.$.eye.toggle();
+}
+
+_addToGraph(actions){
+  console.log("ADD TO GRAPH")
+  console.log(this.network)
+  var app = this;
+
+  if (actions.length>0){
+    actions.forEach(function(action) {
+      console.log(action);
+      console.log(app.network)
+      switch(action.type) {
+        case "newNode":
+        if(app.network != undefined){
+          app.addNodeIfNotExist(app.network, action.data);
+        }
+        break;
+        case "editNode":
+        break;
+        case "deleteNode":
+        case "deleteEdge":
+        console.log(action)
+        //  app.deleteFromServer(app.network,action.data);
+        app.network.body.data.nodes.remove(action.data.nodes);
+        app.network.body.data.edges.remove(action.data.edges);
+        break;
+        case "newEdge":
+        if(app.network != undefined){
+          app.addEdgeIfNotExist(app.network, action.data);
+        }
+        break;
+        case "editEdge":
+        break;
+        default:
+        console.log("action non reconnue");
+        console.log(action);
+      }
+    });
+  }
+}
+
+populateFromInfered(infered, network){
+  if(network != undefined){
+    console.log(infered);
+    if(infered.length != 0){
+      infered.forEach(function(triplet){
+        //var triplet = infered.pop();
+        console.log(triplet);
+        if (triplet != undefined) {
+          console.log(infered.length);
+          var sujet = triplet[0].trim();
+          var propriete = triplet[1].trim();
+          var objet = triplet[2].trim();
+          var sujetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == sujet );
+            }
+          });
+          var objetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == objet );
+            }
+          });
+          if(sujetExist == null  || sujetExist.length == 0){
+            console.log("creation "+sujet);
+            var node = {
+              label: sujet,
+              group: 100, // règles
+              borderWidth: 2,
+              shape: "diamond",
+              color: "rgb(255,153,30)"
+            };
+            network.body.data.nodes.add(node);
+          }else{
+            console.log(sujet+ " exist");
+            console.log(sujetExist);
+            //  network.body.data.nodes.update({id: sujetExist[0].id, group: 1,borderWidth: 2,shape: "diamond"});
+          }
+          if(objetExist == null  || objetExist.length == 0){
+            console.log("creation "+objet);
+            var node = {
+              label: objet,
+              group: 100,
+              borderWidth: 2,
+              shape: "diamond",
+              color: "rgb(255,153,30)"
+            };
+            network.body.data.nodes.add(node);
+          }else{
+            console.log(objet+ " exist");
+            console.log(objetExist);
+            //  network.body.data.nodes.update({id: sujetExist[0].id, group: 1,borderWidth: 2,shape: "diamond"});
+          }
+          sujetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == sujet );
+            }
+          });
+          objetExist = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == objet );
+            }
+          });
+          var edgeExist = network.body.data.edges.get({
+            filter: function(edge) {
+              return (edge.from == sujetExist[0].id && edge.to == objetExist[0].id && edge.label == propriete);
+            }
+          });
+          if (edgeExist == null || edgeExist.length == 0) {
+            var edge = {
+              from: sujetExist[0].id,
+              to: objetExist[0].id,
+              label: propriete,
+              group: 100, // règles
+              arrows: "to",
+              color: "rgb(255,153,30)"
+            };
+            //edge.id = triplet.subject;
+            //edge[triplet.predicate] = triplet.object;
+            console.log("add");
+            console.log(edge);
+            network.body.data.edges.add(edge);
+          } else {
+            console.log("update");
+            console.log(edgeExist);
+            //var edge = edgeExist;
+            //edge[triplet.predicate] = triplet.object;
+            //  network.body.data.edges.update(edge);
+          }
+        }
+      });
+    }
+    else{
+      console.log("suppression des inférences");
+      var edgesInferres = network.body.data.edges.get({
+        filter: function(edge){
+          //    console.log(node);
+          return (edge.group == 100 );
+        }
+      });
+      console.log(edgesInferres);
+      network.body.data.edges.remove(edgesInferres);
+      var nodesInferres = network.body.data.nodes.get({
+        filter: function(node){
+          //    console.log(node);
+          return (node.group == 100 );
+        }
+      });
+      console.log(nodesInferres);
+      network.body.data.nodes.remove(nodesInferres);
+    }
+  }
+}
+// CLUSTERS
+_toggleDesc() {
+  //  network.setData(data);
+  var clusterOptionsByData = {
+    joinCondition:function(childOptions) {
+      return childOptions.cid == 1;
+    },
+    processProperties: function (clusterOptions, childNodes) {
+      //clusterIndex = clusterIndex + 1;
+      var clusterIndex = 1
+      var childrenCount = 0;
+      for (var i = 0; i < childNodes.length; i++) {
+        childrenCount += childNodes[i].childrenCount || 1;
+      }
+      clusterOptions.childrenCount = childrenCount;
+      clusterOptions.label = "Description\n# " + childrenCount + "";
+      // clusterOptions.font = {size: childrenCount*5+30}
+      clusterOptions.id = 'cluster:' + clusterIndex;
+      clusterOptions.mass = 1/childrenCount;
+      // clusters.push({id:'cluster:' + clusterIndex, scale:scale});
+      return clusterOptions;
+    },
+    clusterNodeProperties: {id:'cidCluster',  color: 'rgba(97,238,195,0.5)', borderWidth:3, shape:'box'}
+  };
+  this.network.cluster(clusterOptionsByData);
+}
+_closeImportPopUp(){
+  this.$.importPopUp.style.display = 'none';
+}
+_toogle() {
+  console.log("clic");
+  this.$.nodePopUp.toggle();
+}
+saveTextAsFile(){
+  var textToWrite="";
+  var fileNameToSaveAs="";
+  var textFileAsBlob="";
+  var extension="ttl";
+  var nomFichier="";
+  var data = this.$.inputTextToSave.value;
+  console.log(data);
+  if((typeof data != "undefined")&& (data.length>0)){
+    textToWrite=data;
+  }else{
+    textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+  }
+  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+    fileNameToSaveAs = nomFichier+"."+extension;
+  }else{
+    fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+  }
+  if ((typeof extension != "undefined") && (extension.length>0)){
+    switch(extension){
+      case "ttl" :
+      textFileAsBlob = new Blob([textToWrite], {
+        type:
+        'text/turtle'
+      }
+    );
+    break;
+    case "rdf" :
+    //pas implementé pour l'instant
+    textFileAsBlob = new Blob([textToWrite], {
+      type:
+      'application/rdf+xml'
+    }
+  );
+  break;
+  default :
+  console.log("non traite  , extension : "+extension);
+  break;
+}
+}
+console.log(nomFichier+" : "+extension);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+//console.log(window.URL);
+//if (window.URL != null)
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  console.log("FF");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  console.log(this.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 100);
+}
+recupParams(){
+  var params = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {        var p=a[i].split('=', 2);
+    if (p.length == 1)
+    b[p[0]] = "";
+    else
+    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+  }
+  return b;
+})(window.location.search.substr(1).split('&'));
+return params;
+}
+
+
+exportJson() {
+  var network = this.network;
+  console.log(network)
+  var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
+  //  app.$.inputMessage.value = '';
+  if (filename == null || filename == "") {
+    txt = "User cancelled the prompt.";
+    return;
+  }
+  var textToWrite = "";
+  var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
+  var textFileAsBlob = "";
+
+  console.log("export Json");
+  console.log(network.body.data);
+  var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
+  console.log(nodes_edges);
+  var nodes_edgesJSON = JSON.stringify(nodes_edges);
+  console.log(nodes_edgesJSON);
+  textFileAsBlob = new Blob([nodes_edgesJSON], {
+    type:
+    'application/json'
+  }
+);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  console.log("FF");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  //  console.log(app.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  console.log(downloadLink.parentNode);
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 1000);
+/*if (window.URL != null) {
+// Chrome allows the link to be clicked
+// without actually adding it to the DOM.
+downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else {
+// Firefox requires the link to be added to the DOM
+// before it can be clicked.
+downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+downloadLink.onclick = destroyClickedElement;
+downloadLink.style.display = "none";
+document.body.appendChild(downloadLink);
+}
+downloadLink.click();*/
+}
+
+uniq_fast(a) {
+  var seen = {};
+  var out = [];
+  var len = a.length;
+  var j = 0;
+  for(var i = 0; i < len; i++) {
+    var item = a[i];
+    if(seen[item] !== 1) {
+      seen[item] = 1;
+      out[j++] = item;
+    }
+  }
+  return out;
+}
+
+validRdf(network, string){
+  // A REVOIR
+  console.log(network.body.data.nodes.get(string));
+  console.log("nettoyage "+ string);
+  // transformer le noeud en noeud rdf (resource ou literal)
+  // ajouter la construction du noeud, son uri, prefix, localname, type...
+  var valid = {};
+  valid.type = "uri";
+  if (string.indexOf(" ") !== -1){
+    valid.type = "literal";
+  }else{
+    /*
+    replaceAll(string, " ","_");
+    replaceAll(string, "","_");
+    replaceAll(string, ",","_");
+    replaceAll(string, ";","_");
+    replaceAll(string, " ","_");*/
+  }
+
+  return string;
+}
+
+exportTtl() {
+  /* source https://github.com/scenaristeur/dreamcatcherAutonome/blob/master/autonome/public/agents/ExportAgent.js */
+  //  app.$.inputMessage.value = '';
+  var nodes = this.network.body.data.nodes.get();
+  var edges = this.network.body.data.edges.get();
+  console.log("exportation");
+  console.log(nodes);
+  console.log(edges);
+  //creation des statements (triplets)
+  /*var statements = [];
+  for (var j = 0; j < edges.length; j++){
+  var edge = edges[j];
+  console.log(edge);
+  statements.push({sujet: node.id, propriete: "rdfs:label", objet: node.label});
+}
+console.log(statements);*/
+
+var output = "@prefix : <http://smag0.blogspot.fr/spoggy#> . \n";
+output += "@prefix owl: <http://www.w3.org/2002/07/owl#> . \n";
+output += "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . \n";
+output += "@prefix xml: <http://www.w3.org/XML/1998/namespace> . \n";
+output += "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> . \n";
+output += "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . \n";
+output += "@prefix smag: <http://smag0.blogspot.fr/spoggy#> . \n";
+output += "@base <http://smag0.blogspot.fr/spoggy> . \n";
+output += "<http://smag0.blogspot.fr/spoggy> rdf:type owl:Ontology ;  \n";
+output += "                    owl:versionIRI <http://smag0.blogspot.fr/spoggy/1.0.0> . \n";
+output += " \n";
+output += "owl:Class rdfs:subClassOf owl:Thing .  \n";
+
+var listeInfos = new Array();
+var listeComplementaire = new Array();
+
+for (var i = 0; i < edges.length; i++) {
+  var edge = edges[i];
+
+  var sujet = edge.from;
+  var propriete = edge.label;
+  var objet = edge.to;
+
+
+  //string.indexOf(substring) > -1
+  //console.log(sujet);
+  //console.log(propriete);
+  //  console.log(objet);
+
+  // AJOUTER EVENTUELLEMENT LA RECUPERATION DE SHAPE, COLOR, pour l'export RDF
+  var sujetLabel = this.network.body.data.nodes.get(sujet).label;
+  var objetLabel = this.network.body.data.nodes.get(objet).label;
+  //console.log("#########################");
+  //console.log(sujetLabel);
+  //console.log(objetLabel)
+  //console.log("#########################");
+
+  var sujetWithPrefix = this.validRdf(this.network, sujet);
+  var proprieteWithPrefix = this.validRdf(this.network, propriete);
+  var objetWithPrefix = this.validRdf(this.network, objet);
+
+  if (sujetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
+  sujetWithPrefix = ':' + sujetWithPrefix;
+}
+
+if (proprieteWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
+proprieteWithPrefix = ':' + proprieteWithPrefix;
+
+}
+
+if (objetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
+objetWithPrefix = ':' + objetWithPrefix;
+}
+
+
+var typedeProp = ["owl:AnnotationProperty", "owl:ObjectProperty", "owl:DatatypeProperty"];
+var indiceTypeDeProp = 1; // -1 pour ne pas ajouter la prop, sinon par defaut en annotationProperty, 1 pour Object, 2 pour Datatype --> revoir pour les datatypes
+
+if ((proprieteWithPrefix == "type") || (proprieteWithPrefix == ":type") || (proprieteWithPrefix == "rdf:type")) {
+  proprieteWithPrefix = "rdf:type";
+  listeComplementaire.push(objetWithPrefix + " rdf:type owl:Class . \n");
+  indiceTypeDeProp = 1;
+
+
+} else if ((proprieteWithPrefix == "subClassOf") || (proprieteWithPrefix == ":subClassOf") || (proprieteWithPrefix == "rdfs:subClassOf")) {
+  proprieteWithPrefix = "rdfs:subClassOf";
+
+}
+else if ((proprieteWithPrefix == "sameAs") || (proprieteWithPrefix == ":sameAs")) {
+  proprieteWithPrefix = "owl:sameAs";
+  indiceTypeDeProp = -1;
+}
+else if ((proprieteWithPrefix.toLowerCase() == "ispartof") || (proprieteWithPrefix.toLowerCase() == "partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof") || (proprieteWithPrefix.toLowerCase() == ":partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof")) {
+  proprieteWithPrefix = "smag:partOf";
+  indiceTypeDeProp = 1;
+
+} else if ((proprieteWithPrefix.toLowerCase() == "comment") || (proprieteWithPrefix.toLowerCase() == "commentaire") || (proprieteWithPrefix.toLowerCase() == "//") || (proprieteWithPrefix.toLowerCase() == "#")) {
+  proprieteWithPrefix = "rdfs:comment";
+  indiceTypeDeProp = -1;
+
+}
+
+
+if (indiceTypeDeProp >= 0) {
+  listeComplementaire.push(proprieteWithPrefix + " rdf:type " + typedeProp[indiceTypeDeProp] + " . \n");
+}
+var data = sujetWithPrefix + " " + proprieteWithPrefix + " " + objetWithPrefix + " . \n";
+data += sujetWithPrefix + " " + "rdfs:label \"" + sujetLabel + "\" . \n";
+data += objetWithPrefix + " " + "rdfs:label \"" + objetLabel + "\" . \n";
+listeInfos[i] = data;
+console.log(data);
+console.log("||||||||||||||||||||||--");
+}
+//console.log(listeInfos);
+//console.log(listeComplementaire);
+//suppression des doublons
+listeInfos = this.uniq_fast(listeInfos.sort());
+listeComplementaire = this.uniq_fast(listeComplementaire.sort());
+// console.log (listeInfos);
+for (var k = 0; k < listeInfos.length; k++) {
+  output = output + listeInfos[k];
+  //  console.log(output);
+}
+
+for (var l = 0; l < listeComplementaire.length; l++) {
+  output = output + listeComplementaire[l];
+  //  console.log(output);
+}
+
+
+this.$.inputTextToSave.value = output; //     document.getElementById("inputTextToSave").value =output;
+/*this.$.popupTtl.fitInto = this.$.menu;*/
+this.$.popupTtl.style.zIndex = "99";
+this.$.popupTtl.toggle();
+}
+
+}
 });
 
 </script>

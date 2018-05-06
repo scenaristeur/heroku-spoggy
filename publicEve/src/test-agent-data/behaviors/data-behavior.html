@@ -34,10 +34,11 @@ var DataBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             case "/e":
             case "/export":
             case "/exportJson":
-            this.exportJson();
+          //  this.exportJson();
+            this.agentData.send('agentGraph', {type:"action", action: "exportJson"});
             break;
             case "/t":
-            this.exportTtl(this.network,this);
+            this.agentData.send('agentGraph', {type:"action", action: "exportTtl"});
             break;
             case "/i":
             case "/import":
@@ -65,8 +66,6 @@ var DataBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             //  return afficheCommandes();
           }
         }
-
-      
 
   }
 });

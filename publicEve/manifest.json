@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "Spoggy",
+  "short_name": "Spoggy",
+  "description": "Partagez vos graphes",
   "icons": [
     {
       "src": "images/manifest/icon-192x192.png",

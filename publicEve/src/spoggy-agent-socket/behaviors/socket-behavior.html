@@ -1,0 +1,223 @@
+<script src="../lib/socket.io.js"></script>
+<script>
+var SocketBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class SocketBehavior extends superClass {
+
+    constructor() {
+      super();
+      console.log("SOCKET BEHAVIOR INIT");
+    }
+    static get properties() {
+      return {
+        /**
+        * Current connection status. Can be "connected", "disconnected", or "reconnecting".
+        */
+        status: {
+          type: String,
+          notify: true,
+          observer: '_consoleStatus'
+        },
+        /**
+        * Internal reference to the WebSocket
+        */
+        socket: {Object,
+          notify: true
+        },
+        /**
+        * Registered _handlers by message type
+        * @type {<String, Function>[]}
+        */
+        _handlers: {
+          type: Object,
+          value: [],
+        },
+        retry: {
+          type: Number,
+          value:10
+        },
+        rooms: {
+          type: Array,
+          notify: true,
+          value: []
+        },
+        addToGraph: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+      };
+    }
+
+    _consoleStatus(newValue, oldValue){
+      console.log(oldValue +" -> "+ newValue);
+      if(oldValue == "reconnecting" && newValue =="disconnected"){
+        this.retry --;
+        console.log(this.retry);
+        if (this.retry <= 0){
+          this.socket.disconnect();
+        }
+      }
+    }
+
+    disconnectSocket(){
+      this.socket.disconnect();
+    }
+
+    addUser(user){
+      console.log(user)
+      this.socket.emit('adduser', user);
+    }
+
+    emitActions(actions){
+      console.log(actions)
+      if (this.socket != undefined)
+        {this.socket.emit('newActions', actions);}
+    }
+
+
+
+    connectSocket(connectUri, token) {
+      /*this.socket = io(connectUri, {
+      'query': `token=${token}`,
+      timeout: 2000,
+    });*/
+    this.socket = io();
+    // Parse response messages retrieving 'type'
+    this.socket.on('message', message => {
+      // Execute all handlers that are registered for this namespace
+      for (let handler of this._handlers) {
+        if (message.type.startsWith(handler.messageType)) {
+          handler.handler(message);
+        }
+      }
+    });
+    // Register listeners to expose connection status
+    var app = this;
+    this.socket.on('connect', () => this.status = 'connected');
+    this.socket.on('disconnect', () => this.status = 'disconnected');
+    this.socket.on('connect_error', () => this.status = 'disconnected');
+    this.socket.on('reconnecting', () => this.status = 'reconnecting');
+    this.socket.on('reconnect', () => this.status = 'connected');
+    this.socket.on('error', e => {
+      console.warn(`WebSocket error: ${JSON.stringify(e)}`);
+    });
+    // listener, whenever the server emits 'updatechat', this updates the chat body
+    this.socket.on('updatechat', function (username, data) {
+      console.log('update chat '+ username +" - "+ data)
+      //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+      //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
+    });
+
+    // listener, whenever the server emits 'updaterooms', this updates the room the client is in
+    this.socket.on('updaterooms', function(rooms, current_room) {
+      console.log('updaterooms ')
+      console.log(rooms)
+
+      app.rooms = rooms;
+      if(current_room != null){
+        app.current_room = current_room;
+        console.log("this room : "+current_room)
+      }
+
+      let updateRoomsAction = {type:"action", action:"updateRooms", value: {rooms: rooms, current_room: current_room}};
+      app.agentSocket.send('agentMode', updateRoomsAction);
+    //  this.switchRoom(current_room)
+
+      /*	$.each(rooms, function(key, value) {
+      if(value == current_room){
+      app.$.rooms.append('<div>' + value + '</div>');
+    }
+    else {
+    app.$.rooms.append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+  }
+});*/
+});
+
+
+this.socket.on('tick', function(data){
+  console.log(data);
+  data.type = "newActions"
+  app.agentSocket.send('agentGraph', data)
+  app.set('addToGraph',data);
+  /*if (data.actions.length>0){
+  data.actions.forEach(function(action) {
+  console.log(action);
+  console.log(app.network)
+  switch(action.type) {
+  case "newNode":
+  if(app.network != undefined){
+  app.addNodeIfNotExist(app.network, action.data);
+}
+break;
+case "editNode":
+break;
+case "deleteNode":
+app.deleteFromServer(action.data);
+break;
+case "newEdge":
+if(app.network != undefined){
+app.addEdgeIfNotExist(app.network, action.data);
+}
+break;
+case "editEdge":
+break;
+case "deleteEdge":
+app.deleteFromServer(action.data);
+break;
+default:
+console.log("action non reconnue");
+console.log(action);
+}
+});
+}*/
+});
+
+
+this.socket.on('initDb', function(db){
+  console.log(db);
+  app.db2populate = db;
+  console.log(app.network);
+  app.populateVis(app.db2populate, app.network);
+  app.triplets2popLength = app.db2populate.length;
+
+});
+
+
+
+
+}
+
+
+
+
+
+_datasend(){
+  /*    <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+  <div id="conversation"></div>
+  <input id="message" style="width:200px;" />
+  <input type="button" on-tap="_datasend" value="send" />
+  </div>
+  */
+  let message = this.$.message.value;
+  this.$.message.value = "";
+  console.log(message);
+  this.socket.emit('sendchat', message);
+}
+
+switchRoom(room){
+  console.log(room);
+  /*  console.log(e)
+  console.log(e.model.item)
+  console.log(e.currentTarget.id)*/
+  //  let room = e.model.item;
+  this.socket.emit('switchRoom', room);
+}
+methodInBehavior() {
+  return "this method is defined in Behavior";
+}
+
+
+
+}
+});
+</script>

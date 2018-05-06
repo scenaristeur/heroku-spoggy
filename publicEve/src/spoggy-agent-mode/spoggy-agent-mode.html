@@ -1,0 +1,276 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../test-agent/test-agent.html">
+<script src="agents/ModeAgent.js"></script>
+<link rel="import" href="./behaviors/mode-behavior.html">
+
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<!-- Ensure Web Animations polyfill is loaded since neon-animation 2.0 doesn't import it -->
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+
+<!--
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+-->
+
+
+<dom-module id="spoggy-agent-mode">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
+      <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
+      <paper-checkbox name="collab">Collaboratif</paper-checkbox>
+      <br>
+      <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
+    </iron-selector>
+
+    <div hidden$="[[!modeIs(mode,'collab')]]">
+      <paper-input label="Entrer un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
+
+      <div hidden$="[[isEmpty(pseudo)]]">
+
+        <paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" ><!--vertical-align="bottom" horizontal-align="left"-->
+          <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+            <template is="dom-repeat" items="[[rooms]]">
+                <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+
+
+        <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
+        <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
+      </div>
+      <!-- test de saisi + selection
+      <paper-dropdown-input label="Rejoindre une room"
+      items="[[rooms]]"
+      value={{room}}
+      >
+      <paper-button on-tap="rejoindre">Rejoindre</paper-button>
+    </paper-dropdown-input>-->
+  </div>
+
+  <div hidden$="[[!modeIs(mode,'global')]]">
+    conf global
+  </div>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-agent-mode`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyAgentMode extends Polymer.Element {
+      static get is() { return 'spoggy-agent-mode'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-agent-mode'
+          },
+          mode: {
+            type: String,
+            value: 'solo'
+          },
+          selectedMode: {
+            value: "solo",
+            observer: '_modeChanged'
+          },
+          pseudo: {
+            type: String,
+            value: ""
+          },
+          addToGraph: {
+            observer: '_addToGraphArrivedMode',
+            notify: true
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        this.agentMode = new ModeAgent('agentMode', this);
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+        });
+      }
+      _deferred(){
+        console.log("agent MODE defered")
+       this.initAgents()
+      }
+      initAgents(){
+        this.agentMode.send('agentHello', 'Hello agentHello!');
+      //  this.graphAgent.send('agentInterne', 'Hello agentInterne!');
+      }
+      connectedCallback(){
+        console.log("agent MODE connected");
+      }
+
+        _addToGraphArrivedMode(){
+          console.log(this.addToGraph)
+          console.log(this.network)
+          var app = this;
+          let data = this.addToGraph;
+          if (data.actions.length>0){
+            data.actions.forEach(function(action) {
+              console.log(action);
+              console.log(app.network)
+              switch(action.type) {
+                case "newNode":
+                if(app.network != undefined){
+                  app.addNodeIfNotExist(app.network, action.data);
+                }
+                break;
+                case "editNode":
+                break;
+                case "deleteNode":
+                app.deleteFromServer(app.network,action.data);
+                break;
+                case "newEdge":
+                if(app.network != undefined){
+                  app.addEdgeIfNotExist(app.network, action.data);
+                }
+                break;
+                case "editEdge":
+                break;
+                case "deleteEdge":
+                app.deleteFromServer(app.network, action.data);
+                break;
+                default:
+                console.log("action non reconnue");
+                console.log(action);
+              }
+            });
+          }
+
+
+
+
+        }
+        _modeChanged(newMode, oldMode){
+          this.set('modeConfig.mode', newMode);
+          this.mode = newMode;
+          this.modeBtnText = this.mode.substring(0, 6);
+          switch (newMode) {
+            case 'solo':
+            console.log('passage solo');
+            break;
+            case 'collab':
+            console.log('connexion socket');
+            let connectAction = {type:"action", action:"connect"};
+            this.agentMode.send('agentSocket', connectAction);
+        //    this.connectSocket();
+
+          //  console.log("SPOG-SOCKET");
+          //  console.log(this.socket);
+
+
+            // expected output: "Mangoes and papayas are $2.79 a pound."
+            break;
+            case 'global':
+            console.log('connexion endpoint.');
+            // expected output: "Mangoes and papayas are $2.79 a pound."
+            break;
+            default:
+            console.log('Sorry, we are out of ' + newMode + '.');
+          }
+          switch (oldMode) {
+            case 'solo':
+            console.log('quitte solo');
+            break;
+            case 'collab':
+            console.log('deconnect socket');
+          //  this.socket.disconnect();
+              let disconnectAction = {type:"action", action:"disconnect"}
+                this.agentMode.send('agentSocket', disconnectAction);
+            break;
+            case 'global':
+            console.log('deconnect endpoint');
+          //  this.socket.disconnect();
+            break;
+            default:
+
+          }
+        }
+        rejoindre(e){
+          let room = e.model.item;
+          console.log(room);
+          this.modeBtnText = room;
+        //  this.switchRoom(room);
+        let switchAction = {type: "action", action: "switch", value: room}
+          this.agentMode.send('agentSocket', switchAction);
+
+        }
+
+        creer(){
+          let room = this.newRoom;
+          this.modeBtnText = room;
+        //  this.switchRoom(room);
+        let switchAction = {type: "action", action: "switch", value: room}
+          this.agentMode.send('agentSocket', switchAction);
+        }
+
+
+        /* TECHNICAL TOOLS */
+
+        openChangeMode(){
+          console.log("changeMode");
+          this.$.modePopup.toggle();
+        }
+
+        modeIs(mode, activeMode){
+          return mode == activeMode;
+        }
+        isEmpty(value){
+          //  console.log(value.length)
+          return value.length==0;
+        }
+        pseudoChanged(){
+          // test a faire pour voir si deconnecter ou changer de nom si deja connecté
+          console.log(this.pseudo)
+        //  this.socket.emit('adduser', this.pseudo);
+          let addUSerAction = {type: "action", action: "addUser", value: this.pseudo}
+            this.agentMode.send('agentSocket', addUSerAction);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    window.customElements.define(SpoggyAgentMode.is, SpoggyAgentMode);
+  </script>
+</dom-module>

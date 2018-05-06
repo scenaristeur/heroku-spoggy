@@ -69,13 +69,16 @@ var nbLastMessages = 10; // nombre de messages à afficher pour les nouveaux con
 var limitInit = 0 // nbre d'elements à recuperer dans la base lors du login d'un user, 0 pour sans limite
 
 
-
 server.listen(port, function() {
   console.log('Server listening at port %d', port);
 });
 
 // Routing
 app.use(express.static(__dirname + '/public'));
+app.get('*', function(req, res){
+//nécessaire pour ne pas avoir des cannot get sur http://127.0.0.1:3000/view2
+  res.sendFile("/public/index.html", {root: '.'});
+});
 
 
 
@@ -152,12 +155,12 @@ io.sockets.on('connection', function (socket) {
 
   // de nouvelles actions à executer sont reçues d'un client
   socket.on('newActions', function(actions) {
-    //console.log("newActions");
+    console.log("newActions");
     // on ajoute à snapshot.Actions les actions reçues par le client
   /*  var snapActions = snapshot.actions;
     var newActions = snapActions.concat(actions);
-    snapshot.actions = newActions;
-    console.log(actions);*/
+    snapshot.actions = newActions;*/
+    console.log(actions);
     // RACCOURCIS POUR METTRE A JOUR LA ROOM SANS PASSER PAR LG
     var data = {};
     data.actions = actions;

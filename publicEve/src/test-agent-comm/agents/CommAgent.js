@@ -34,10 +34,22 @@
    console.log(from + ' said: ' + JSON.stringify(message) + '<br>');
       this.app.prop1 = message;
 
-   if (message.indexOf('Hello') === 0) {
-     // reply to the greeting
-     this.send(from, 'Hi ' + from + ', nice to meet you!');
-   }
+      if (typeof message == String && message.indexOf('Hello') === 0) {
+        // reply to the greeting
+        this.send(from, 'Hi ' + from + ', nice to meet you!');
+      }
 
+
+      switch(message.type){
+        case 'addActions':
+        //    let commande = rdf.quad(rdf.blankNode(), rdf.namedNode('commande'),rdf.literal(chatMess))
+        //  this.catchCommande(chatMess,this.network,this);
+        console.log ("addActions à envoyer au levelgraph, serveurs collab et rdf, PB, les couleurs changements de couleur ne semblent pas arriver ");
+        console.log(message);
+
+        break;
+        default:
+        console.log(message);
+      }
 
  };

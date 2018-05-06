@@ -2,15 +2,20 @@
 <link rel="import" href="../test-agent/test-agent.html">
 <script src="agents/CommAgent.js"></script>
 
+<link rel="import" href="../spoggy-agent-socket/spoggy-agent-socket.html">
+<link rel="import" href="../spoggy-agent-sparql/spoggy-agent-sparql.html">
+
 
 <dom-module id="test-agent-comm">
   <template>
-    <style>
+    <!--  <style>
       :host {
         display: block;
       }
     </style>
-    <h2>Dernier data reçu :  [[prop1]]!</h2>
+  <h2>Dernier data reçu :  [[prop1]]!</h2>-->
+    <spoggy-agent-socket></spoggy-agent-socket>
+    <spoggy-agent-sparql></spoggy-agent-sparql>
     <test-agent></test-agent>
   </template>
 

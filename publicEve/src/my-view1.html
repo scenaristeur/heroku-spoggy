@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="test-agent-data/test-agent-data.html">
 <link rel="import" href="test-agent-input/test-agent-input.html">
 <link rel="import" href="test-agent-graph/test-agent-graph.html">
-<link rel="import" href="test-agent-comm/test-agent-comm.html">
+
 <link rel="import" href="test-agent-dialog/test-agent-dialog.html">
 
 <dom-module id="my-view1">
@@ -27,45 +27,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       padding: 10px;
     }
+    .etendu {
+      padding: 10px;
+      margin: 0;
+      margin-bottom: 10px;
+    }
     </style>
 
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Input</h1>
+    <div class="card etendu">
       <test-agent-input></test-agent-input>
     </div>
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Graph</h1>
+      <div class="card etendu">
       <test-agent-graph></test-agent-graph>
-  </div>
+    </div
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Interne</h1>
-      <test-agent-interne></test-agent-interne>
-  </div>
-
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Data</h1>
-      <test-agent-data></test-agent-data>
-  </div>
-
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Comm</h1>
-      <test-agent-comm></test-agent-comm>
-  </div>
-
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>DIALOG</h1>
-      <test-agent-dialog></test-agent-dialog>
-    </div>
-
+    <test-agent-interne></test-agent-interne>
+    <test-agent-data></test-agent-data>
+    <test-agent-dialog></test-agent-dialog>
     <test-agent-hello></test-agent-hello>
 
   </template>
