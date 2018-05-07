@@ -179,12 +179,12 @@ revoir color picker -->
 
     <paper-dialog id="settings" >
       <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
-        Gravité   <paper-slider  min="0" max="0.01" value="{{gravityValue}}" step="0.001" on-change="_changeGravity" ></paper-slider>
-        Longueur des liens     <paper-slider  min="10" max="800" value="{{springLengthValue}}"  on-change="_changeSpringLength"></paper-slider>
-        Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" on-change="_changeSpringConstant"></paper-slider>
-        Distance entre deux noeuds     <paper-slider  min="10" max="800" value="{{nodeDistanceValue}}"  on-change="_changeNodeDistance"></paper-slider>
-        Souplesse           <paper-slider  min="0.01" max="2" value="{{dampingValue}}"  step="0.01" on-change="_changeDamping"></paper-slider>
-        <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
+        Gravité   <paper-slider  min="-10" max="10" value="{{centralGravityValue}}" value="centralGravityValueDefault" step="1" on-change="_changeGravity" ></paper-slider>
+        Longueur des liens     <paper-slider  min="0" max="800" value="{{springLengthValue}}" value="springLengthValueDefault"  on-change="_changeSpringLength"></paper-slider>
+        Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" value="springConstantValueDefault" on-change="_changeSpringConstant"></paper-slider>
+        Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"  value="nodeDistanceValueDefault" on-change="_changeNodeDistance"></paper-slider>
+        Souplesse           <paper-slider  min="0" max="2" value="{{dampingValue}}"  step="0.01" value="dampingValueDefault" on-change="_changeDamping"></paper-slider>
+        <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button> <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>
         <div style="padding-top:10px" horizontal end-justified layout self-stretch>
           <paper-button  dialog-dismiss raised>Fermer</paper-button>
         </div>
@@ -198,7 +198,7 @@ revoir color picker -->
     <div id="mynetwork"></div>
     <paper-fab id="fabsetting" on-tap="_toggleSettings"  icon="settings" style="height: 50px; width:50px;"></paper-fab>
     <!-- style="height: 150px; width:150px;color: #0D578B;"-->
-  <!--  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab> -->
+    <!--  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab> -->
 
 
   </template>
@@ -228,25 +228,25 @@ revoir color picker -->
           observer: '_addToGraphArrivedGRAPH',
           notify: true
         },
-        gravityValue :{
+        centralGravityValueDefault :{
           type : Number,
-          value: 0.001
+          value: 0 //0.001
         },
-        springLengthValue :{
+        springLengthValueDefault :{
           type : Number,
-          value: 220
+          value:  15//15 //220
         },
-        springConstantValue :{
+        springConstantValueDefault :{
           type : Number,
-          value: 0.05
+          value: 0.016 //0.05
         },
-        nodeDistanceValue :{
+        nodeDistanceValueDefault :{
           type : Number,
-          value: 400
+          value: 150 //16 //400
         },
-        dampingValue :{
+        dampingValueDefault :{
           type : Number,
-          value: 0.08
+          value: 0.1 //0.08
         },
         settinghidden:{
           type: Boolean,
@@ -294,6 +294,7 @@ revoir color picker -->
         {id: "node9", label: 'graph0', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph0'},
         {id: "node10", label: 'graph1', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph1'},
         {id: "node11", label: 'graph2', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph2'},
+        {id: "node12", label: 'Input', color: 'rgba(195,238,97,0.5)', cid:2},
       ]);
       // create an array with edges
       var edges = new vis.DataSet([
@@ -301,6 +302,7 @@ revoir color picker -->
         {from: "node1", to: "node3", label: "developpeur", array:"to"},
         {from: "node3", to: "node4", label: "connait", array:"to"},
         {from: "node1", to: "node5", label: "hasPart", array:"to"},
+        {from: "node1", to: "node12", label: "hasPart", array:"to"},
         {from: "node1", to: "node6", label: "description", array:"to"},
         {from: "node6", to: "node7", label: "type", array:"to"},
         {from: "node5", to: "node8", label: "description", array:"to"},
@@ -316,7 +318,7 @@ revoir color picker -->
         edges: edges
       };
       var options = {
-          locale: 'fr',
+        locale: 'fr',
         edges:{
           arrows: {
             to:     {enabled: true, scaleFactor:1, type:'arrow'},
@@ -388,11 +390,11 @@ revoir color picker -->
               avoidOverlap: 0
             },
             repulsion: {
-              centralGravity: 0.001, //0.001 ? A quoi sert cette valeur ?
-              springLength: 220, //220 (//200 //300)
-              springConstant: 0.01, //0.01
-              nodeDistance: 150, //100 //350
-              damping: 0.08
+              centralGravity: graphe.centralGravityValueDefault,  //0.001, //0.001 ? A quoi sert cette valeur ?
+              springLength: graphe.springLengthValueDefault,   // 220, //220 (//200 //300)
+              springConstant: graphe.springConstantValueDefault, //0.01, //0.01
+              nodeDistance:  graphe.nodeDistanceValueDefault, //150, //100 //350
+              damping: graphe.dampingValueDefault, ///0.08
             },
             hierarchicalRepulsion: {
               centralGravity: 0.0,
@@ -465,8 +467,9 @@ revoir color picker -->
         if (data.label.length > 40){
           var titleTemp =data.label.match(/.{1,40}/g);
           //  console.log(titleTemp);
-          data.label = titleTemp.join("\n");
-          //  data.shape = "box";
+          data.title = titleTemp.join("<br>");
+          data.label = titleTemp[0]+'...';
+            data.shape = "box";
           //  data.mass = 1/data.label.length
         }
         this.clearNodePopUp(this);
@@ -696,37 +699,36 @@ deleteFromServer (data){
   this.network.body.data.edges.remove(data.edges);
 }
 _changeGravity(e){
-  this.network.physics.options.repulsion.centralGravity = this.gravityValue;
+  console.log(this.centralGravityValue);
+  this.network.physics.options.repulsion.centralGravity = this.centralGravityValue;
 }
 _changeSpringLength(){
   this.network.physics.options.repulsion.springLength = this.springLengthValue;
+  console.log(this.springLengthValue);
 }
 _changeSpringConstant(){
   this.network.physics.options.repulsion.springConstant = this.springConstantValue;
+  console.log(this.springConstantValue);
 }
 _changeNodeDistance(){
   this.network.physics.options.repulsion.nodeDistance = this.nodeDistanceValue;
+  console.log(this.nodeDistanceValue);
 }
 _changeDamping(){
   this.network.physics.options.repulsion.damping = this.dampingValue;
+  console.log(this.dampingValue);
 }
 _defaultPhysicValues(){
-  /*valeurs par Defaut de network.physics.repulsion
-  centralGravity: 0.001,
-  springLength: 220, //200 //300
-  springConstant: 0.005,
-  nodeDistance: 180, //100 //350
-  damping: 0.08*/
-  this.gravityValue = 0.001;
-  this.network.physics.options.repulsion.centralGravity = this.gravityValue;
-  this.springLengthValue = 200;
-  this.network.physics.options.repulsion.springLength = this.springLengthValue;
-  this.springConstantValue = 0.01;
-  this.network.physics.options.repulsion.springConstant = this.springConstantValue;
-  this.nodeDistanceValue = 150;
-  this.network.physics.options.repulsion.nodeDistance = this.nodeDistanceValue;
-  this.dampingValue = 0.08;
-  this.network.physics.options.repulsion.damping = this.dampingValue;
+  this.centralGravityValue = this.centralGravityValueDefault;
+  this.springLengthValue = this.springLengthValueDefault;
+  this.springConstantValue = this.springConstantValueDefault;
+  this.nodeDistanceValue = this.nodeDistanceValueDefault;
+  this.dampingValue = this.dampingValueDefault;
+  this._changeGravity();
+  this._changeSpringLength();
+  this._changeSpringConstant();
+  this._changeNodeDistance();
+  this._changeDamping();
 }
 _inferedChanged(newInfered,oldinfered){
   console.log("INFERED");
