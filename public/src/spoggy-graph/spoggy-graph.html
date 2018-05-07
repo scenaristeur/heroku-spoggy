@@ -27,6 +27,7 @@ revoir color picker -->
 <script src="./lib/vis.js"></script>
 
 <link rel="import" href="../spoggy-data/data-behavior.html">
+<link rel="import" href="../spoggy-input/input-behavior.html">
 
 <link rel="import" href="styles/vis-styles.html">
 <link rel="import" href="styles/graphe-styles.html">
@@ -184,7 +185,7 @@ revoir color picker -->
         Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" value="springConstantValueDefault" on-change="_changeSpringConstant"></paper-slider>
         Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"  value="nodeDistanceValueDefault" on-change="_changeNodeDistance"></paper-slider>
         Souplesse           <paper-slider  min="0" max="2" value="{{dampingValue}}"  step="0.01" value="dampingValueDefault" on-change="_changeDamping"></paper-slider>
-        <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button> <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>
+        <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button> <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
         <div style="padding-top:10px" horizontal end-justified layout self-stretch>
           <paper-button  dialog-dismiss raised>Fermer</paper-button>
         </div>
@@ -212,7 +213,7 @@ revoir color picker -->
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyGraph extends DataBehaviorMixin(Polymer.Element) {
+  class SpoggyGraph extends InputBehaviorMixin(DataBehaviorMixin(Polymer.Element)) {
     static get is() { return 'spoggy-graph'; }
     static get properties() {
       return {
@@ -277,7 +278,18 @@ revoir color picker -->
     connectedCallback(){
       super.connectedCallback();
       this.network = this.networkDivInitialize(this.$.mynetwork, this);
+      let app = this;
+      this.network.on("selectNode", function (params) {
+        console.log('selectNode Event:', params);
+console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
+//ne fonctionne pas pour mettre le label du node dans l'input ???
+        //app.inputValueFromGraph = params.nodes[0];
+    //  app.updateInputValue(params.nodes[0]);
+      });
     }
+
+
+
 
     //////////////////////////////////////////////////////////////////
     networkDivInitialize(container, graphe){
@@ -469,7 +481,7 @@ revoir color picker -->
           //  console.log(titleTemp);
           data.title = titleTemp.join("<br>");
           data.label = titleTemp[0]+'...';
-            data.shape = "box";
+          data.shape = "box";
           //  data.mass = 1/data.label.length
         }
         this.clearNodePopUp(this);

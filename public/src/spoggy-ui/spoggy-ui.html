@@ -15,7 +15,7 @@
     <!--    <div hidden$="[[connected]]">[[status]]</div> -->
 
 
-    <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}"></spoggy-graph>
+    <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}" ></spoggy-graph>
         <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
     <div id="div"></div>
   </template>
@@ -55,13 +55,15 @@
         socket : {
           type: Object,
           notify: true
-        },
+        }
       };
     }
 
     _addToGraphArrivedUI(){
       console.log(addToGraph)
     }
+
+
     constructor(){
       super();
       console.log("** UI CONSTRUCTOR **")

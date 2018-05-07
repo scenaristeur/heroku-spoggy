@@ -297,6 +297,7 @@ function ttl2Xml(data,network){
       type: "node"
     };
 
+
     addNodeIfNotExist(network, nodeSujetTemp);
     addNodeIfNotExist(network, nodeObjetTemp);
 
@@ -474,6 +475,34 @@ network.body.data.nodes.update(nodes);
 network.body.data.edges.update(edges);
 //  destinataire.triplets=this.triplets;
 }
+
+
+function addNodeIfNotExist(network, data){
+  var existNode = false;
+  console.log(data);
+  try{
+    existNode = network.body.data.nodes.get({
+      filter: function(node){
+        return (node.id == data.id );
+      }
+    });
+    console.log(existNode);
+    if (existNode.length == 0){
+      console.log("n'existe pas")
+    network.body.data.nodes.add(data);
+    }else{
+      console.log("existe")
+      delete data.x;
+      delete data.y
+      network.body.data.nodes.update(data);
+    }
+  }
+  catch (err){
+    console.log(err);
+  }
+}
+
+
 
 /////////////////////////////////////////
 // OUTILS PARSING

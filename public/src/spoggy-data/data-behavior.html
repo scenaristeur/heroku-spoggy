@@ -100,42 +100,42 @@ catchTripletsV2(triplets, network){
 catchTriplet(message, network){
   // A REVOIR ET REMPLACER PAR catchTripletsV2()
   console.log(message.length);
-  message=message.trim();
+  //message=message.trim();
   //  var tripletString = message.substring(2).trim().split(" ");
-  var tripletString = message.trim().split(" ");
+//  var tripletString = message.trim().split(" ");
   // les noeuds existent-ils ?
   var sujetNode = network.body.data.nodes.get({
     filter: function(node){
       //    console.log(node);
-      return (node.label == tripletString[0] );
+      return (node.label == message[0] );
     }
   });
   var objetNode = network.body.data.nodes.get({
     filter: function(node){
       //    console.log(node);
-      return (node.label == tripletString[2]);
+      return (node.label == message[2]);
     }
   });
   console.log(sujetNode);
   console.log(objetNode);
   // sinon, on les créé
   if (sujetNode.length == 0){
-    network.body.data.nodes.add({label: tripletString[0] });
+    network.body.data.nodes.add({label: message[0] });
   }
   if (objetNode.length == 0){
-    network.body.data.nodes.add({ label: tripletString[2] });
+    network.body.data.nodes.add({ label: message[2] });
   }
   // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
   sujetNode = network.body.data.nodes.get({
     filter: function(node){
       console.log(node);
-      return (node.label == tripletString[0] );
+      return (node.label == message[0] );
     }
   });
   objetNode = network.body.data.nodes.get({
     filter: function(node){
       console.log(node);
-      return (node.label == tripletString[2]);
+      return (node.label == message[2]);
     }
   });
   var actionSujet = {};
@@ -151,7 +151,7 @@ catchTriplet(message, network){
 
   // maintenant, on peut ajouter l'edge
   network.body.data.edges.add({
-    label: tripletString[1],
+    label: message[1],
     from : sujetNode[0].id,
     to : objetNode[0].id
   });
@@ -159,7 +159,7 @@ catchTriplet(message, network){
   //on récupère ce edge pour l'envoyer au serveur
   var edge = network.body.data.edges.get({
     filter: function(edge) {
-      return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == tripletString[1]);
+      return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == message[1]);
     }
   });
   var actionEdge = {};
@@ -370,6 +370,9 @@ document.body.appendChild(downloadLink);
 }
 downloadLink.click();*/
 }
+
+
+
 exportTtl(network, app) {
   /* source https://github.com/scenaristeur/dreamcatcherAutonome/blob/master/autonome/public/agents/ExportAgent.js */
   app.$.inputMessage.value = '';
