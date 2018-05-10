@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="./agent-behavior.html">
+
+<dom-module id="spoggy-agent">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-agent`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyAgent extends AgentBehaviorMixin(Polymer.Element) {
+      static get is() { return 'spoggy-agent'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-agent'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyAgent.is, SpoggyAgent);
+  </script>
+</dom-module>
