@@ -76,7 +76,7 @@ server.listen(port, function() {
 // Routing
 app.use(express.static(__dirname + '/public'));
 app.get('*', function(req, res){
-  console.log(req.originalUrl);
+//  console.log(req.originalUrl);
 //  console.log(res);
 //nécessaire pour ne pas avoir des cannot get sur http://127.0.0.1:3000/view2
   res.sendFile("/public/index.html", {root: '.'});
