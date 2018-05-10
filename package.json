@@ -21,7 +21,6 @@
   "homepage": "https://github.com/scenaristeur/heroku-spoggy#readme",
   "dependencies": {
     "bower": "^1.8.4",
-    "evejs": "git+https://github.com/enmasseio/evejs.git#develop",
     "express": "^4.16.2",
     "level": "^3.0.1",
     "level-sublevel": "^6.6.1",
