@@ -121,7 +121,7 @@ var numUsers = 0;
 var app = this;
 
 // rooms which are currently available in chat
-var rooms = ['defaut','Personne','Tension'];
+var rooms = ['defaut','graph0', 'graph1','Personne','Tension', 'Organisation'];
 
 
 io.sockets.on('connection', function (socket) {
