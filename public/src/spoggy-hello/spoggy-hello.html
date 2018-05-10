@@ -53,7 +53,9 @@
     initAgents(){
       this.agentHello.send('agentHello', 'Hello agentHello!');
             this.agentHello.send('agentData', 'Hello agentData!');
+            this.agentHello.send('agentSocket', 'Hello agentData!');
 
+            this.agentHello.send('agentInput', 'Hello agentInput!');
 
             // send a request to agent 1, await the response
             this.agent2.request('agent1', 'Hello agent1!')

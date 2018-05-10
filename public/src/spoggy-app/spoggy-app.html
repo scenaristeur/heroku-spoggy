@@ -3,10 +3,11 @@
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../spoggy-ui/spoggy-ui.html">
 <link rel="import" href="../spoggy-data/spoggy-data.html">
 <link rel="import" href="../spoggy-comm/spoggy-comm.html">
 <link rel="import" href="../spoggy-input/spoggy-input.html">
+<link rel="import" href="../spoggy-graph/spoggy-graph.html">
+<link rel="import" href="../spoggy-mode/spoggy-mode.html">
 
 <link rel="import" href="../spoggy-hello/spoggy-hello.html">
 
@@ -35,7 +36,10 @@
     <!--   <paper-icon-button icon="search"></paper-icon-button>-->
   <!--</app-toolbar>-->
 
-    <spoggy-ui network="{{network}}" socket="{{socket}}" ></spoggy-ui>
+    <!--<spoggy-ui network="{{network}}" socket="{{socket}}" ></spoggy-ui>-->
+    <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}" ></spoggy-graph>
+        <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
+
     <spoggy-data></spoggy-data>
     <spoggy-comm></spoggy-comm>
 <spoggy-hello></spoggy-hello>
@@ -81,10 +85,26 @@ class SpoggyApp extends Polymer.Element {
   }
 
 
-  _deferred(){
-    console.log("APP defered")
 
+
+  _deferred(){
+    console.log("** APP DEFERRED **");
+    //   console.log(this.$.graph.test);
+    //   this.$.graph.log("machin")
+    //   this.$.graph.methodInBehavior();
+
+  //  console.log(this.analyseUrl);
+
+}
+
+_consoleStatus(newValue, oldValue){
+  console.log(oldValue +" -> "+ newValue);
+  if(newValue =="connected"){
+    this.connected = true;
+  }else{
+    this.connected = false;
   }
+}
 
 
 

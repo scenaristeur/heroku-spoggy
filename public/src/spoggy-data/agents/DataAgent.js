@@ -34,10 +34,19 @@
    console.log(from + ' said: ' + JSON.stringify(message) );
       this.app.prop1 = message;
 
-   if (message.indexOf('Hello') === 0) {
-     // reply to the greeting
-     this.send(from, 'Hi ' + from + ', nice to meet you!');
-   }
+
+        if (typeof message == String && message.indexOf('Hello') === 0) {
+          // reply to the greeting
+          this.send(from, 'Hi ' + from + ', nice to meet you!');
+          this.app.prop1 = message;
+        }
 
 
+        switch(message.type){
+          case 'connect':
+
+          break;
+          default:
+          console.log(message);
+        }
  };

@@ -20,8 +20,13 @@
 
 <link rel="import" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
 
+
+<link rel="import" href="./mode-behavior.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/ModeAgent.js"></script>
+<!-- Suppression pour passge par agents
 <link rel="import" href="../spoggy-collab/collab-behavior.html">
-<link rel="import" href="../spoggy-data/data-behavior.html">
+<link rel="import" href="../spoggy-data/data-behavior.html">-->
 
 <link rel="import" href="../spoggy-graph/styles/graphe-styles.html"> <!-- voir à multualiser les syles !!!! -->
 
@@ -116,7 +121,7 @@
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element)) {
+class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
   static get is() { return 'spoggy-mode'; }
   static get properties() {
     return {
@@ -140,47 +145,35 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
     };
   }
 
-  _addToGraphArrivedMode(){
-    console.log(this.addToGraph)
-    console.log(this.network)
-    var app = this;
-    let data = this.addToGraph;
-    if (data.actions.length>0){
-      data.actions.forEach(function(action) {
-        console.log(action);
-        console.log(app.network)
-        switch(action.type) {
-          case "newNode":
-          if(app.network != undefined){
-            app.addNodeIfNotExist(app.network, action.data);
-          }
-          break;
-          case "editNode":
-          break;
-          case "deleteNode":
-          app.deleteFromServer(app.network,action.data);
-          break;
-          case "newEdge":
-          if(app.network != undefined){
-            app.addEdgeIfNotExist(app.network, action.data);
-          }
-          break;
-          case "editEdge":
-          break;
-          case "deleteEdge":
-          app.deleteFromServer(app.network, action.data);
-          break;
-          default:
-          console.log("action non reconnue");
-          console.log(action);
-        }
-      });
-    }
+  constructor(){
+    super();
+    this.agentMode = new ModeAgent('agentMode', this);
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
 
-
-
+    });
+  }
+  _deferred(){
+    //  console.log("agent DATA defered")
+    console.log(this.agentMode);
+    this.initAgents()
 
   }
+  initAgents(){
+    this.agentMode.send('agentHello', 'Hello agentHello!');
+    //  console.log(eve)
+    /*
+    this.agentData.send('agentGraph', 'Hello agentGraph!');
+    this.agentData.send('agentInput', 'Hello agentInput!');
+    this.agentData.send('agentData', 'Hello agentData!');
+    this.agentData.send('agentInterne', 'Hello agentInterne!');*/
+  }
+  connectedCallback(){
+    //  console.log("agent DATA connected");
+  }
+
   _modeChanged(newMode, oldMode){
     this.set('modeConfig.mode', newMode);
     this.mode = newMode;
@@ -191,7 +184,8 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
       break;
       case 'collab':
       console.log('connexion socket');
-      this.connectSocket();
+      //  this.connectSocket();
+      this.agentMode.send('agentSocket', {type: "connect"});
       console.log("SPOG-SOCKET");
       console.log(this.socket);
 
@@ -211,11 +205,13 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
       break;
       case 'collab':
       console.log('deconnect socket');
-      this.socket.disconnect();
+    //  this.socket.disconnect();
+        this.agentMode.send('agentSocket', {type: "disconnect"});
       break;
       case 'global':
       console.log('deconnect endpoint');
-      this.socket.disconnect();
+      //this.socket.disconnect();
+        this.agentMode.send('agentSocket', {type: "disconnect"});
       break;
       default:
 
@@ -225,14 +221,16 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
     let room = e.model.item;
     console.log(room);
     this.modeBtnText = room.substring(0, 6);
-    this.switchRoom(room);
+    //this.switchRoom(room);
+      this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
     this.$.modePopup.toggle();
   }
 
   creer(){
     let room = this.newRoom;
     this.modeBtnText = room.substring(0, 6);
-    this.switchRoom(room);
+  //  this.switchRoom(room);
+      this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
   }
 
 
@@ -253,7 +251,7 @@ class SpoggyMode extends DataBehaviorMixin(CollabBehaviorMixin(Polymer.Element))
   pseudoChanged(){
     // test a faire pour voir si deconnecter ou changer de nom si deja connecté
     console.log(this.pseudo)
-    this.socket.emit('adduser', this.pseudo);
+    this.agentMode.send('agentSocket', {type: "adduser", pseudo: this.pseudo});
   }
 }
 

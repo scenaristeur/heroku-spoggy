@@ -64,6 +64,7 @@ disconnectSocket(){
 }
 
     connectSocket(connectUri, token) {
+      var app = this;
       /*this.socket = io(connectUri, {
       'query': `token=${token}`,
       timeout: 2000,
@@ -99,12 +100,12 @@ disconnectSocket(){
     this.socket.on('updaterooms', function(rooms, current_room) {
       console.log('updaterooms ')
       console.log(rooms)
-
-      app.rooms = rooms;
+    app.agentSocket.send('agentMode', {type: "updaterooms", rooms: rooms, current_room: current_room});
+    /*  app.rooms = rooms;
       if(current_room != null){
       app.current_room = current_room;
           console.log("this room : "+current_room)
-}
+}*/
 
       /*	$.each(rooms, function(key, value) {
       if(value == current_room){
@@ -119,7 +120,8 @@ disconnectSocket(){
 
 this.socket.on('tick', function(data){
   console.log(data);
-  app.set('addToGraph',data);
+//  app.set('addToGraph',data);
+      app.agentSocket.send('agentGraph', {type: "addToGraph", data: data});
   /*if (data.actions.length>0){
     data.actions.forEach(function(action) {
           console.log(action);

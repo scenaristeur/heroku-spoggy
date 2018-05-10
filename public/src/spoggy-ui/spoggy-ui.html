@@ -3,7 +3,8 @@
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
 <link rel="import" href="../spoggy-mode/spoggy-mode.html">
 
-<link rel="import" href="../spoggy-data/data-behavior.html">
+<!-- suppression pour agents
+<link rel="import" href="../spoggy-data/data-behavior.html">-->
 
 <dom-module id="spoggy-ui">
   <template>
@@ -15,9 +16,7 @@
     <!--    <div hidden$="[[connected]]">[[status]]</div> -->
 
 
-    <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}" ></spoggy-graph>
-        <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
-    <div id="div"></div>
+  <div id="div"></div>
   </template>
 
   <script>
@@ -29,7 +28,7 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyUi extends DataBehaviorMixin(Polymer.Element) {
+  class SpoggyUi extends Polymer.Element {
     static get is() { return 'spoggy-ui'; }
     static get properties() {
       return {

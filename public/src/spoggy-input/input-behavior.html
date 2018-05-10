@@ -133,7 +133,10 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         triplets.push(t)*/
         // utiliser addActions
         //  this.catchTripletsV2(triplets, this.network);
-        this.catchTriplet(messageCut, this.network);
+
+        //      this.catchTriplet(messageCut, this.network);
+        this.agentInput.send('agentGraph', {type: "catchTriplet", triplets:messageCut});
+
       }
     }
   }
@@ -142,6 +145,29 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   {
     this.$.helpPopUp.toggle();
   }
+
+  handleFileSelected(evt) {
+    var app = this;
+    var partageImport = app.$.partageImport.checked;
+    var remplaceNetwork = app.$.remplaceNetwork.checked;
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0; i < files.length; i++) {
+      // Code to execute for every file selected
+      var fichier = files[i];
+      console.log(fichier);
+      this.agentInput.send('agentGraph', {type: 'decortiqueFile', fichier: fichier, remplaceNetwork: remplaceNetwork});
+      //    this.decortiqueFile(fichier, this.network, remplaceNetwork);
+    }
+    console.log("fin");
+    // Code to execute after that
+    evt.target.files = null;
+    app.$.importPopUp.style.display = 'none';
+    //  app.$.inputMessage.value = '';
+  }
+
   catchCommande(commande){
     console.log(commande)
     switch(commande) {
@@ -153,10 +179,12 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       case "/e":
       case "/export":
       case "/exportJson":
-      this.exportJson();
+      //this.exportJson();
+      this.agentInput.send('agentGraph', {type: 'exportJson'})
       break;
       case "/t":
-      this.exportTtl(this.network,this);
+      //  this.exportTtl(this.network,this);
+      this.agentInput.send('agentGraph', {type: 'exportTtl'})
       break;
       case "/i":
       case "/import":
@@ -167,7 +195,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       break;
       case "/n":
       console.log("new graph");
-      this.newGraph(this.network, this);
+      //  this.newGraph(this.network, this);
+      this.agentInput.send('agentGraph', {type: 'newGraph'})
       break;
       case "/b":
       console.log("connection a la base levelgraph");

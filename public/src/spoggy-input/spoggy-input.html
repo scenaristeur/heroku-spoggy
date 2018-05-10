@@ -37,9 +37,12 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
 <!--
 <link rel="import" href="../spoggy-tools/spoggy-tools.html">-->
 <link rel="import" href="./input-behavior.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/InputAgent.js"></script>
+<!--
+Suppression pour passage par les agents
 <link rel="import" href="../spoggy-data/data-behavior.html">
-
-<link rel="import" href="../spoggy-mode/spoggy-mode.html">
+<link rel="import" href="../spoggy-mode/spoggy-mode.html">-->
 
 
 
@@ -64,18 +67,7 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
 
 
     <!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
-    <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
-      on-iron-overlay-closed="_myClosedFunction" -->
-      <h3>Export au format turtle (RDF)
-        <!--<paper-button ontap="_pageAide">?</paper-button>-->
-        <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
-
-        <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-        <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
-        <paper-dialog-scrollable>
-          <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
-        </paper-dialog-scrollable>
-      </paper-dialog>
+  
 
       <paper-dialog id="helpPopUp" >
 
@@ -391,7 +383,7 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
             * @polymer
             * @demo demo/index.html
             */
-            class SpoggyInput extends InputBehaviorMixin(DataBehaviorMixin(Polymer.Element)) {
+            class SpoggyInput extends InputBehaviorMixin(Polymer.Element) {
               static get is() { return 'spoggy-input'; }
               static get properties() {
                 return {
@@ -409,6 +401,37 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
                   }
                 };
               }
+
+              constructor(){
+                super();
+                this.agentInput = new InputAgent('agentInput', this);
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                  // When possible, use afterNextRender to defer non-critical
+                  // work until after first paint.
+                  this._deferred();
+
+                });
+              }
+              _deferred(){
+              //  console.log("agent DATA defered")
+                console.log(this.agentData);
+                this.initAgents()
+              }
+              initAgents(){
+                this.agentInput.send('agentHello', 'Hello agentHello!');
+              //  console.log(eve)
+                /*
+                this.agentData.send('agentGraph', 'Hello agentGraph!');
+                this.agentData.send('agentInput', 'Hello agentInput!');
+                this.agentData.send('agentData', 'Hello agentData!');
+                this.agentData.send('agentInterne', 'Hello agentInterne!');*/
+              }
+              connectedCallback(){
+              //  console.log("agent DATA connected");
+              }
+
+
+
               updateInputValue(texte){
 
                 //merdique obligé de mettre ce behavior sur spoggy-graph pour cette fonction !
