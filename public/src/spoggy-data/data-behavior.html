@@ -41,12 +41,7 @@ methodInBehavior() {
   return "this method is defined in Behavior";
 }
 
-sendMessage(message){
-  console.log(message);
-  if (this.socket != undefined){
-    this.socket.emit('sendchat', message);
-  }
-}
+
 
 recupParams(){
   var params = (function(a) {
@@ -150,54 +145,6 @@ connectBase(network,app){
 }
 
 
-importFromParam(params, network, app){
-  var source = params.source;
-  console.log(source);
-  console.log(network);
-
-  var output = [];
-
-  console.log(source);
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', source, true);
-  xhr.responseType = 'blob';
-
-  xhr.onload = function(e) {
-    console.log(e);
-    var reponse = e.target.response;
-
-    console.log(reponse);
-    var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
-    reader.addEventListener('load', function () {
-      console.log(reader.result);
-      // ajouter test en fonction du type de fichier, extension
-
-      var nodes = JSON.parse(reader.result).nodes;
-      //    console.log(nodes);
-      var edges = JSON.parse(reader.result).edges;
-      //    console.log(edges);
-      network.beforeImport = [];
-      network.beforeImport.nodes = network.body.data.nodes.get();
-      network.beforeImport.edges = network.body.data.edges.get();
-      network.body.data.nodes.update(nodes);
-      network.body.data.edges.update(edges);
-
-      try{
-        network.body.data.nodes.update(nodes);
-        network.body.data.edges.update(edges);
-      }
-      catch(e){
-        console.log(e);
-      }
-
-      //  console.log(network);
-      //  console.log(partageImport);
-    });
-    reader.readAsText(reponse);
-  };
-  xhr.send();
-}
 applyTriplets(source, triplets, sens){
   console.log(source)
   console.log(triplets)

@@ -50,13 +50,15 @@
       this.initAgents()
            this.analyseUrl();
 
+
            this.params = this.recupParams();
            if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
            console.log("pas de param");
          }else{
            console.log(this.network)
            console.log(this.params);
-           this.importFromParam(this.params, this.network, this);
+             this.agentData.send('agentGraph', {type: 'importFromParam', params: this.params});
+      
            //var retourCommande = catchCommande(message,this.network,this);
            //  this.$.filepicker = this.params.source;
          }

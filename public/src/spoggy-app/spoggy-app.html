@@ -4,22 +4,14 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../spoggy-data/spoggy-data.html">
-<link rel="import" href="../spoggy-comm/spoggy-comm.html">
+<link rel="import" href="../spoggy-collab/spoggy-collab.html">
 <link rel="import" href="../spoggy-input/spoggy-input.html">
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
 <link rel="import" href="../spoggy-mode/spoggy-mode.html">
 
+<!-- utile pour tester les agents
 <link rel="import" href="../spoggy-hello/spoggy-hello.html">
-
-<!--
-<link rel="import" href="../../bower_components/lrnapp-fab-menu/lrnapp-fab-menu.html">
-<link rel="import" href="../../bower_components/lrnapp-fab-menu/lrnapp-fab-speed-dial-action.html">
-<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">-->
-<!--
-<link rel="import" href="../../bower_components/paper-fab-speed-dial/paper-fab-speed-dial.html">
-<link rel="import" href="../../bower_components/paper-fab-speed-dial/paper-fab-speed-dial-action.html">-->
-
-
+-->
 
 <dom-module id="spoggy-app">
   <template>
@@ -29,31 +21,33 @@
     }
     </style>
 
-  <!--  <app-toolbar>-->
+    <!--  <app-toolbar>-->
     <!--  <paper-icon-button icon="menu"></paper-icon-button>
-      <div main-title>Spoggy</div>-->
-      <spoggy-input network="{{network}}" socket="{{socket}}" ></spoggy-input>
+    <div main-title>Spoggy</div>-->
+    <spoggy-input></spoggy-input>
     <!--   <paper-icon-button icon="search"></paper-icon-button>-->
-  <!--</app-toolbar>-->
+    <!--</app-toolbar>-->
 
     <!--<spoggy-ui network="{{network}}" socket="{{socket}}" ></spoggy-ui>-->
-    <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}" ></spoggy-graph>
-        <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
+    <spoggy-graph></spoggy-graph>
+    <spoggy-mode></spoggy-mode>
 
     <spoggy-data></spoggy-data>
-    <spoggy-comm></spoggy-comm>
-<spoggy-hello></spoggy-hello>
-    <!--
-    <lrnapp-fab-menu>
-    <lrnapp-fab-speed-dial-action icon="mail" color="red">Inbox</lrnapp-fab-speed-dial-action>
-    <lrnapp-fab-speed-dial-action icon="line-weight" color="green">Content</lrnapp-fab-speed-dial-action>
-    <lrnapp-fab-speed-dial-action icon="link" color="orange">Blog</lrnapp-fab-speed-dial-action>
-    <lrnapp-fab-speed-dial-action icon="list">Studio</lrnapp-fab-speed-dial-action>
-  </lrnapp-fab-menu>-->
+    <spoggy-collab></spoggy-collab>
+    <!-- utile pour tester les agents
+    <spoggy-hello></spoggy-hello>
+  -->
   <!--
-  <paper-fab-speed-dial>
-  <paper-fab-speed-dial-action icon="icons:content-copy">Copy</paper-fab-speed-dial-action>
-  <paper-fab-speed-dial-action icon="icons:print">Print</paper-fab-speed-dial-action>
+  <lrnapp-fab-menu>
+  <lrnapp-fab-speed-dial-action icon="mail" color="red">Inbox</lrnapp-fab-speed-dial-action>
+  <lrnapp-fab-speed-dial-action icon="line-weight" color="green">Content</lrnapp-fab-speed-dial-action>
+  <lrnapp-fab-speed-dial-action icon="link" color="orange">Blog</lrnapp-fab-speed-dial-action>
+  <lrnapp-fab-speed-dial-action icon="list">Studio</lrnapp-fab-speed-dial-action>
+</lrnapp-fab-menu>-->
+<!--
+<paper-fab-speed-dial>
+<paper-fab-speed-dial-action icon="icons:content-copy">Copy</paper-fab-speed-dial-action>
+<paper-fab-speed-dial-action icon="icons:print">Print</paper-fab-speed-dial-action>
 </paper-fab-speed-dial>
 -->
 
@@ -66,47 +60,6 @@
 */
 class SpoggyApp extends Polymer.Element {
   static get is() { return 'spoggy-app'; }
-  static get properties() {
-    return {
-      prop1: {
-        type: String,
-        value: 'spoggy-app'
-      }
-    };
-  }
-  constructor(){
-    super();
-    Polymer.RenderStatus.afterNextRender(this, function() {
-      // When possible, use afterNextRender to defer non-critical
-      // work until after first paint.
-      this._deferred();
-    });
-
-  }
-
-
-
-
-  _deferred(){
-    console.log("** APP DEFERRED **");
-    //   console.log(this.$.graph.test);
-    //   this.$.graph.log("machin")
-    //   this.$.graph.methodInBehavior();
-
-  //  console.log(this.analyseUrl);
-
-}
-
-_consoleStatus(newValue, oldValue){
-  console.log(oldValue +" -> "+ newValue);
-  if(newValue =="connected"){
-    this.connected = true;
-  }else{
-    this.connected = false;
-  }
-}
-
-
 
 }
 

@@ -5,7 +5,7 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class CollabBehavior extends superClass {
     constructor() {
       super();
-      console.log("COLLAB BEHAVIOR INIT");
+    //  console.log("COLLAB BEHAVIOR INIT");
     }
     static get properties() {
       return {
@@ -61,6 +61,13 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 disconnectSocket(){
   this.socket.disconnect();
+}
+
+sendMessage(message){
+  console.log(message);
+  if (this.socket != undefined){
+    this.socket.emit('sendchat', message);
+  }
 }
 
     connectSocket(connectUri, token) {

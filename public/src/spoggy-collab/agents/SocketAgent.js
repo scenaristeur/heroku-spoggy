@@ -64,6 +64,9 @@ SocketAgent.prototype.receive = function(from, message) {
     case 'switchRoom':
     this.app.switchRoom(message.graph);
     break;
+    case 'sendMessage':
+    this.app.sendMessage(message.message);
+    break;
     case 'newActions':
     let actions = message.actions;
     if(this.app.socket != undefined){

@@ -64,6 +64,10 @@ GraphAgent.prototype.receive = function(from, message) {
     console.log(message.data)
     this.app.addToGraph(message.data);
     break;
+    case 'importFromParam':
+    console.log(message.params)
+    this.app.importFromParam(message.params);
+    break;
 
     default:
     console.log(message);

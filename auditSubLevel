@@ -1,0 +1,26 @@
+                                                                                
+                       === npm audit security report ===                        
+                                                                                
+                                                                                
+                                 Manual Review                                  
+             Some vulnerabilities require your attention to resolve             
+                                                                                
+          Visit https://go.npm.me/audit-guide for additional guidance           
+                                                                                
+                                                                                
+  Moderate        Memory Exposure                                               
+                                                                                
+  Package         bl                                                            
+                                                                                
+  Patched in      >=0.9.5 <1.0.0 || >=1.0.1                                     
+                                                                                
+  Dependency of   level-sublevel                                                
+                                                                                
+  Path            level-sublevel > levelup > bl                                 
+                                                                                
+  More info       https://nodesecurity.io/advisories/596                        
+                                                                                
+
+[!] 1 vulnerability found - Packages audited: 498 (0 dev, 0 optional)
+    Severity: 1 Moderate
+
