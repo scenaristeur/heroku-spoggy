@@ -8,15 +8,8 @@ var AgentBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       super();
   //    console.log("AGENT behavior const")
     //  console.log(this.agentProp);
-  /*  eve.system.init({
-  transports: [
-    {
-      type: 'local',
-      id: 'myLocalTransport', // optional identifier for the transport
-    }
-   ]
-});
-*/
+
+
     }
 
     static get properties() {
@@ -26,6 +19,19 @@ var AgentBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           value: 'Agent Behavior prop'
         }
       };
+    }
+
+    connectedCallback(){
+    //  console.log("agent DATA connected");
+  /*  eve.system.init({
+  transports: [
+    {
+      type: 'local',
+      id: 'myLocalTransport', // optional identifier for the transport
+    }
+   ]
+});*/
+console.log(eve)
     }
 
     }

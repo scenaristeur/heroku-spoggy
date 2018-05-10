@@ -2,61 +2,76 @@
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
 
 <script src="agents/HelloAgent.js"></script>
+<script src="agents/RequestAgent.js"></script>
 
 
 <dom-module id="spoggy-hello">
   <template>
-  <spoggy-agent></spoggy-agent>
+    <spoggy-agent></spoggy-agent>
   </template>
 
   <script>
-    /**
-     * `spoggy-hello`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyHello extends Polymer.Element {
-      static get is() { return 'spoggy-hello'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-hello'
-          }
-        };
-      }
-
-      constructor(){
-        super();
-        this.agentHello = new HelloAgent('agentHello', this);
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          // When possible, use afterNextRender to defer non-critical
-          // work until after first paint.
-          this._deferred();
-
-        });
-      }
-      _deferred(){
-          console.log("agent HELLO defered")
-                console.log(this.agentHello);
-       this.initAgents()
-      }
-      initAgents(){
-  this.agentHello.send('agentHello', 'Hello agentHello!');
-        this.agentHello.send('agentGraph', 'Hello agentGraph!');
-        this.agentHello.send('agentInput', 'Hello agentInput!');
-        this.agentHello.send('agentData', 'Hello agentData!');
-        this.agentHello.send('agentInterne', 'Hello agentInterne!');
-      }
-      connectedCallback(){
-           console.log("agent HELLO connected");
-      }
-
+  /**
+  * `spoggy-hello`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyHello extends Polymer.Element {
+    static get is() { return 'spoggy-hello'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-hello'
+        }
+      };
     }
 
-    window.customElements.define(SpoggyHello.is, SpoggyHello);
+    constructor(){
+      super();
+      this.agentHello = new HelloAgent('agentHello', this);
+      // create two agents
+      this.agent1 = new RequestAgent('agent1');
+      this.agent2 = new RequestAgent('agent2');
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+
+      });
+    }
+    _deferred(){
+      //    console.log("agent HELLO defered")
+      console.log(this.agentHello);
+      console.log(this.agent1)
+      console.log(this.agent2)
+      this.initAgents()
+    }
+    initAgents(){
+      this.agentHello.send('agentHello', 'Hello agentHello!');
+            this.agentHello.send('agentData', 'Hello agentData!');
+
+
+            // send a request to agent 1, await the response
+            this.agent2.request('agent1', 'Hello agent1!')
+                .then(function(reply) {
+                  console.log('reply: ' + reply);
+                });
+            /*
+      this.agentHello.send('agentGraph', 'Hello agentGraph!');
+      this.agentHello.send('agentInput', 'Hello agentInput!');
+
+      this.agentHello.send('agentInterne', 'Hello agentInterne!');*/
+    }
+    connectedCallback(){
+      //   console.log("agent HELLO connected");
+    }
+
+  }
+
+  window.customElements.define(SpoggyHello.is, SpoggyHello);
   </script>
 </dom-module>

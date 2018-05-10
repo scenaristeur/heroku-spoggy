@@ -78,6 +78,7 @@ if(pathname[1] == 'graph' || pathname[1] == 'graphe'){
   let graph = pathname[2];
   let node = pathname[3];
   console.log("on tente d'afficher les infos du graph "+graph+" sur le noeud "+node);
+      this.agentData.send('agentSocket', "Hello agentHello! on tente d'afficher les infos du graph "+graph+" sur le noeud "+node);
 }
 }
 
