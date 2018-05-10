@@ -296,34 +296,34 @@ console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
     networkDivInitialize(container, graphe){
       // create an array with nodes
       var nodes = new vis.DataSet([
-        {id: "node1", label: 'Spoggy', color: 'rgb(195,238,0)'},
-        {id: "node2", label: 'WebApp', color: 'rgba(97,238,195,0.5)'},
+       {id: "node1", label: 'Spoggy', color: 'rgb(195,238,0)'},
+        {id: "node2", label: 'Application Web', color: 'rgba(97,238,195)'},
         {id: "node3", label: 'David'},
-        {id: "node4", label: 'Bob'},
-        {id: "node5", label: 'Graph', color: 'rgba(195,238,97,0.5)', cid:2},
-        {id: "node6", label: 'Spoggy est une application multiutilisateurs\n permettant la création de graphes de connaissance.\n Cliquez sur le bouton Edit\n pour ajouter / modifier un noeud ou un lien.', color: 'rgba(238,97,195,0.5)', shape: 'box', cid:1},
-        {id: "node7", label: 'Description', color: 'rgba(238,97,195,0.5)', cid:1},
-        {id: "node8", label: 'Un graphe est un ensemble de noeuds\n et de liens entre ces noeuds.', color: 'rgba(238,97,195,0.5)', shape: 'box', cid:1},
-        {id: "node9", label: 'graph0', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph0'},
+      /*  {id: "node4", label: 'Bob'},*/
+        {id: "node5", label: 'Graph', color: 'rgba(195,238,97)', cid:2},
+        {id: "node6", label: 'Spoggy est une application permettant la création de graphes.', color: 'rgba(238,97,195)', shape: 'box', cid:1},
+    /*    {id: "node7", label: 'Description', color: 'rgba(238,97,195,0.5)', cid:1},*/
+        {id: "node8", label: 'Un graphe est un ensemble de noeuds\n et de liens entre ces noeuds.', color: 'rgba(238,97,195)', shape: 'box', cid:1},
+      /*  {id: "node9", label: 'graph0', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph0'},
         {id: "node10", label: 'graph1', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph1'},
         {id: "node11", label: 'graph2', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph2'},
-        {id: "node12", label: 'Input', color: 'rgba(195,238,97,0.5)', cid:2},
+        {id: "node12", label: 'Input', color: 'rgba(195,238,97,0.5)', cid:2},*/
       ]);
       // create an array with edges
       var edges = new vis.DataSet([
         {from: "node1", to: "node2", label: "type", array:"to"},
         {from: "node1", to: "node3", label: "developpeur", array:"to"},
-        {from: "node3", to: "node4", label: "connait", array:"to"},
-        {from: "node1", to: "node5", label: "hasPart", array:"to"},
-        {from: "node1", to: "node12", label: "hasPart", array:"to"},
+      //  {from: "node3", to: "node4", label: "connait", array:"to"},
+        {from: "node1", to: "node5", label: "utilise", array:"to"},
+      //  {from: "node1", to: "node12", label: "hasPart", array:"to"},
         {from: "node1", to: "node6", label: "description", array:"to"},
-        {from: "node6", to: "node7", label: "type", array:"to"},
+    //   {from: "node6", to: "node7", label: "type", array:"to"},
         {from: "node5", to: "node8", label: "description", array:"to"},
-        {from: "node8", to: "node7", label: "type", array:"to"},
-        {from: "node9", to: "node5", label: "type", array:"to"},
+      /*  {from: "node8", to: "node7", label: "type", array:"to"},
+    /    {from: "node9", to: "node5", label: "type", array:"to"},
         {from: "node10", to: "node5", label: "type", array:"to"},
         {from: "node11", to: "node5", label: "type", array:"to"},
-        {from: "node1", to: "node9", label: "first", array:"to"},
+        {from: "node1", to: "node9", label: "first", array:"to"},*/
 
       ]);
       var data = {
