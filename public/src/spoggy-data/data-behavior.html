@@ -64,6 +64,23 @@ recupParams(){
 return params;
 }
 
+analyseUrl(){
+  let url = window.location;
+  url.protocol; //(http:)
+url.hostname; //(www.example.com)
+url.pathname; //(/some/path)
+url.search; // (?name=value)
+url.hash; //(#anchor)
+console.log("REST " +url.pathname);
+let pathname = url.pathname.split("/");
+console.log(pathname);
+if(pathname[1] == 'graph' || pathname[1] == 'graphe'){
+  let graph = pathname[2];
+  let node = pathname[3];
+  console.log("on tente d'afficher les infos du graph "+graph+" sur le noeud "+node);
+}
+}
+
 addAction(action){
   /*  var actionstosendTemp = this.actionstosend;
   this.actionstosend = [];

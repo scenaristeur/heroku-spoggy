@@ -92,8 +92,9 @@
       //   console.log(this.$.graph.test);
       //   this.$.graph.log("machin")
       //   this.$.graph.methodInBehavior();
+      this.analyseUrl = this.analyseUrl();
+    //  console.log(this.analyseUrl);
       this.params = this.recupParams();
-      console.log(this.params);
       if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
       console.log("pas de param");
     }else{
