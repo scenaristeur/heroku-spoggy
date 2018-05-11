@@ -1,14 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<dom-module id="spoggy-collab">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+<link rel="import" href="./collab-behavior.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/SocketAgent.js"></script>
 
-  </template>
+<dom-module id="spoggy-collab">
 
   <script>
     /**
@@ -19,7 +15,7 @@
      * @polymer
      * @demo demo/index.html
      */
-    class SpoggyCollab extends Polymer.Element {
+    class SpoggyCollab extends CollabBehaviorMixin(Polymer.Element) {
       static get is() { return 'spoggy-collab'; }
       static get properties() {
         return {
@@ -29,6 +25,26 @@
           }
         };
       }
+
+      constructor(){
+        super();
+        this.agentSocket = new SocketAgent('agentSocket', this);
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+
+        });
+      }
+      _deferred(){
+      //  console.log("agent DATA defered")
+      //  console.log(this.agentSocket);
+      //  this.initAgents()
+      }
+      initAgents(){
+        this.agentSocket.send('agentHello', 'Hello agentHello!');
+      }
+
     }
 
     window.customElements.define(SpoggyCollab.is, SpoggyCollab);

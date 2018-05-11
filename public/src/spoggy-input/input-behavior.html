@@ -4,8 +4,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class InputBehavior extends superClass {
     constructor() {
       super();
-      console.log("*************************INPUT behavior")
-      console.log(this.inputProp);
+    //  console.log("*************************INPUT behavior")
+    //  console.log(this.inputProp);
     }
 
     static get properties() {
@@ -50,40 +50,36 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         let lastChar = message.slice(-1);
         let messageCut = message.slice(0,-1).split(" ");
         let isTriplet = true;
-        console.log(messageCut);
+      //  console.log(messageCut);
 
         let detectLiteral = "";
         let messageCutTemp = [];
         messageCut.forEach(function(part){
           part = part.trim();
-          console.log(part);
+        //  console.log(part);
           if (part.startsWith('"')){
             detectLiteral ="debut";
-            console.log(detectLiteral);
+          //  console.log(detectLiteral);
             messageCutTemp.push(part.substr(1));
           }else if (part.endsWith('"')){
             detectLiteral = "fin";
-            console.log(detectLiteral);
+            //console.log(detectLiteral);
             messageCutTemp.push(messageCutTemp.pop()+" "+part.slice(0,-1));
           }else if (detectLiteral == "debut"){
-            console.log("recupere le dernier et lui ajoute part" )
+          //  console.log("recupere le dernier et lui ajoute part" )
             messageCutTemp.push(messageCutTemp.pop()+" "+part)
           }else {
-            console.log( "on est au début, sans dble quotes");
             messageCutTemp.push(part);
           }
         });
-        console.log(messageCutTemp);
         if (messageCutTemp.length > 0){
           messageCut = messageCutTemp;
         }
 
         switch(lastChar){
-
           case '.':
           this.$.inputMessage.value = "";
           break;
-
           case ';':
           if (messageCut[0].indexOf(" ") > -1){
             this.$.inputMessage.value = '"'+messageCut[0]+'"'+' ';
@@ -91,7 +87,6 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             this.$.inputMessage.value = messageCut[0]+' ';
           }
           break;
-
           case ',':
           if (messageCut[0].indexOf(" ") > -1){
             this.$.inputMessage.value = '"'+messageCut[0]+'" ';
@@ -104,7 +99,6 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             this.$.inputMessage.value += messageCut[1]+' ';
           }
           break;
-
           case '-':
           if (messageCut[2].indexOf(" ") > -1){
             this.$.inputMessage.value = '"'+messageCut[2]+'"'+' ';
@@ -112,10 +106,10 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             this.$.inputMessage.value = messageCut[2]+' ';
           }
           break;
-
           default:
           console.log("message to chat "+message)
-          this.sendMessage(message);
+          //this.sendMessage(message);
+              this.agentInput.send('agentSocket', {type: "sendMessage", message:message});
           //  this.catchTriplet(message.slice(0,-1), this.network); // A REMPLACER PAR CATCHTRIPLETS V2
           this.$.inputMessage.value = "";
           isTriplet = false;
@@ -133,7 +127,9 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         triplets.push(t)*/
         // utiliser addActions
         //  this.catchTripletsV2(triplets, this.network);
-        this.catchTriplet(messageCut, this.network);
+
+        //      this.catchTriplet(messageCut, this.network);
+        this.agentInput.send('agentGraph', {type: "catchTriplet", triplets:messageCut});
       }
     }
   }
@@ -142,6 +138,28 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   {
     this.$.helpPopUp.toggle();
   }
+
+  handleFileSelected(evt) {
+    var app = this;
+    var partageImport = app.$.partageImport.checked;
+    var remplaceNetwork = app.$.remplaceNetwork.checked;
+    var files = evt.target.files; // FileList object
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0; i < files.length; i++) {
+      // Code to execute for every file selected
+      var fichier = files[i];
+      console.log(fichier);
+      this.agentInput.send('agentGraph', {type: 'decortiqueFile', fichier: fichier, remplaceNetwork: remplaceNetwork});
+      //    this.decortiqueFile(fichier, this.network, remplaceNetwork);
+    }
+    console.log("fin");
+    // Code to execute after that
+    evt.target.files = null;
+    app.$.importPopUp.style.display = 'none';
+    //  app.$.inputMessage.value = '';
+  }
+
   catchCommande(commande){
     console.log(commande)
     switch(commande) {
@@ -153,10 +171,12 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       case "/e":
       case "/export":
       case "/exportJson":
-      this.exportJson();
+      //this.exportJson();
+      this.agentInput.send('agentGraph', {type: 'exportJson'})
       break;
       case "/t":
-      this.exportTtl(this.network,this);
+      //  this.exportTtl(this.network,this);
+      this.agentInput.send('agentGraph', {type: 'exportTtl'})
       break;
       case "/i":
       case "/import":
@@ -167,7 +187,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       break;
       case "/n":
       console.log("new graph");
-      this.newGraph(this.network, this);
+      //  this.newGraph(this.network, this);
+      this.agentInput.send('agentGraph', {type: 'newGraph'})
       break;
       case "/b":
       console.log("connection a la base levelgraph");

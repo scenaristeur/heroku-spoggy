@@ -1,6 +1,6 @@
 {
-  "name": "spoggy-comm",
-  "main": "spoggy-comm.html",
+  "name": "spoggy-hello",
+  "main": "spoggy-hello.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },

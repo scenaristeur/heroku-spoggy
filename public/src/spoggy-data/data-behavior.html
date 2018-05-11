@@ -5,7 +5,7 @@ var DataBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     constructor() {
       super();
-      console.log("data behavior")
+    //  console.log("data behavior")
       /* ENVOI des actions vers le serveur*/
 
       /*  var tickInterval = setInterval(function() {
@@ -41,12 +41,7 @@ methodInBehavior() {
   return "this method is defined in Behavior";
 }
 
-sendMessage(message){
-  console.log(message);
-  if (this.socket != undefined){
-    this.socket.emit('sendchat', message);
-  }
-}
+
 
 recupParams(){
   var params = (function(a) {
@@ -64,23 +59,54 @@ recupParams(){
 return params;
 }
 
-addAction(action){
+analyseUrl(){
+  let url = window.location;
+  url.protocol; //(http:)
+  url.hostname; //(www.example.com)
+  url.pathname; //(/some/path)
+  url.search; // (?name=value)
+  url.hash; //(#anchor)
+  console.log("REST " +url.pathname);
+  let pathname = url.pathname.split("/");
+  console.log(pathname);
+  if(pathname[1] == 'graph' || pathname[1] == 'graphe'){
+    let graph = pathname[2];
+    let node = pathname[3];
+    console.log("on tente d'afficher les infos du graph "+graph+" sur le noeud "+node);
+    this.agentData.send('agentSocket', "Hello agentHello! on tente d'afficher les infos du graph "+graph+" sur le noeud "+node);
+    this.agentData.send('agentSocket', {type: "connect", graph:graph, node:node, pseudo: "anonyme"});
+
+  }
+}
+
+addAction1(action){
   /*  var actionstosendTemp = this.actionstosend;
   this.actionstosend = [];
   actionstosendTemp.push(action);
   this.actionstosend = actionstosendTemp;
   console.log(this.actionstosend);*/
-console.log(action);
-if (this.socket != undefined){
-  console.log(this.socket)
-  this.actionstosend.push(action);
-  this.socket.emit('newActions', this.actionstosend);
-  this.actionstosend = [];
-}else{
-  console.log("socket n'est pas défini")
-}
+  console.log(action);
+  if (this.socket != undefined){
+    console.log(this.socket)
+    this.actionstosend.push(action);
+    this.socket.emit('newActions', this.actionstosend);
+    this.actionstosend = [];
+  }else{
+    console.log("socket n'est pas défini")
+  }
   //  this.socket.emit('sendchat', this.actionstosend);
 }
+
+addActionAgent(action){
+  console.log(action);
+  console.log(this.socket)
+  this.actionstosend.push(action);
+  this.agentData.send('agentSocket', {type: "newActions", actions: this.actionstosend});
+  this.actionstosend = [];
+}
+
+
+
 
 catchTripletsV2(triplets, network){
   var app = this;
@@ -97,413 +123,11 @@ catchTripletsV2(triplets, network){
 }
 })*/
 }
-catchTriplet(message, network){
-  // A REVOIR ET REMPLACER PAR catchTripletsV2()
-  console.log(message.length);
-  //message=message.trim();
-  //  var tripletString = message.substring(2).trim().split(" ");
-//  var tripletString = message.trim().split(" ");
-  // les noeuds existent-ils ?
-  var sujetNode = network.body.data.nodes.get({
-    filter: function(node){
-      //    console.log(node);
-      return (node.label == message[0] );
-    }
-  });
-  var objetNode = network.body.data.nodes.get({
-    filter: function(node){
-      //    console.log(node);
-      return (node.label == message[2]);
-    }
-  });
-  console.log(sujetNode);
-  console.log(objetNode);
-  // sinon, on les créé
-  if (sujetNode.length == 0){
-    network.body.data.nodes.add({label: message[0] });
-  }
-  if (objetNode.length == 0){
-    network.body.data.nodes.add({ label: message[2] });
-  }
-  // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
-  sujetNode = network.body.data.nodes.get({
-    filter: function(node){
-      console.log(node);
-      return (node.label == message[0] );
-    }
-  });
-  objetNode = network.body.data.nodes.get({
-    filter: function(node){
-      console.log(node);
-      return (node.label == message[2]);
-    }
-  });
-  var actionSujet = {};
-  actionSujet.type = "newNode";
-  actionSujet.data = sujetNode[0];
-  //  actionsToSendTemp.push(actionSujet);
-  this.addAction(actionSujet);
-  var actionObjet = {};
-  actionObjet.type = "newNode";
-  actionObjet.data = objetNode[0];
-  //  actionsToSendTemp.push(actionObjet);
-  this.addAction(actionObjet);
-
-  // maintenant, on peut ajouter l'edge
-  network.body.data.edges.add({
-    label: message[1],
-    from : sujetNode[0].id,
-    to : objetNode[0].id
-  });
-
-  //on récupère ce edge pour l'envoyer au serveur
-  var edge = network.body.data.edges.get({
-    filter: function(edge) {
-      return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == message[1]);
-    }
-  });
-  var actionEdge = {};
-  actionEdge.type = "newEdge";
-  actionEdge.data = edge;
-  this.addAction(actionEdge);
-
-  //  actionsToSendTemp.push(actionEdge);
-  //console.log(actionsToSendTemp);
-  //  return actionsToSendTemp;
-
-}
-
-handleFileSelected(evt) {
-  var app = this;
-  var partageImport = app.$.partageImport.checked;
-  var remplaceNetwork = app.$.remplaceNetwork.checked;
-  var files = evt.target.files; // FileList object
-
-  // files is a FileList of File objects. List some properties.
-  var output = [];
-  for (var i = 0; i < files.length; i++) {
-    // Code to execute for every file selected
-    var fichier = files[i];
-    console.log(fichier);
-    this.decortiqueFile(fichier, this.network, remplaceNetwork);
-  }
-  console.log("fin");
-  // Code to execute after that
-  evt.target.files = null;
-  app.$.importPopUp.style.display = 'none';
-  //  app.$.inputMessage.value = '';
-}
-
-decortiqueFile(fichier, network, remplaceNetwork){
-  //  var network = network;
-  //  console.log(network);
-
-  //  console.log(fichier);
-  var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
-  reader.addEventListener('load', function () {
-    //  console.log(fichier);
-    /*loadstart : La lecture vient de commencer.
-    progress : Tout comme avec les objets XHR, l'événement progress se déclenche à intervalles réguliers durant la progression de la lecture. Il fournit, lui aussi, un objet en paramètre possédant deux propriétés, loaded et total, indiquant respectivement le nombre d'octets lus et le nombre d'octets à lire en tout.
-    load : La lecture vient de se terminer avec succès.
-    loadend : La lecture vient de se terminer (avec ou sans succès).
-    abort : Se déclenche quand la lecture est interrompue (avec la méthode abort() par exemple).
-    error : Se déclenche quand une erreur a été rencontrée. La propriété error contiendra alors un objet de type FileError pouvant vous fournir plus d'informations.*/
-    //    console.log(this.result);
-    //alert('Contenu du fichier "' + fichier.name + '" :\n\n' + reader.result);
-
-
-    switch (fichier.type) {
-      case "":
-      case "text/plain":
-      case "application/json":
-      //    console.log("JSON");
-      //  thisElement.dispatch('addNodesEdgesJSON', JSON.parse(reader.result));
-      //    console.log(network);
-      var nodes = JSON.parse(reader.result).nodes;
-      //    console.log(nodes);
-      var edges = JSON.parse(reader.result).edges;
-      //    console.log(edges);
-      network.beforeImport = [];
-      network.beforeImport.nodes = network.body.data.nodes.get();
-      network.beforeImport.edges = network.body.data.edges.get();
-      network.body.data.nodes.update(nodes);
-      network.body.data.edges.update(edges);
-      if(remplaceNetwork){
-        console.log(remplaceNetwork);
-        network.body.data.nodes.clear();
-        network.body.data.edges.clear();
-        console.log("clear");
-        network.body.data.nodes.add(nodes); // clear() ne semble pas fonctionner, à revoir
-        network.body.data.edges.add(edges);
-        console.log(network);
-      }else{
-
-        try{
-          network.body.data.nodes.update(nodes);
-          network.body.data.edges.update(edges);
-        }
-        catch(e){
-          console.log(e);
-        }
-      }
-      console.log(network);
-      //  console.log(partageImport);
-      break;
-      case "rdf+xml":
-      case "application/rdf+xml":
-      console.log("fichier RDF"); //https://github.com/scenaristeur/dreamcatcherAutonome/blob/8376cb5211095a90314e34e9d286b820fbed335b/autonome1/public/agents/FichierAgent.js
-      rdf2Xml(reader.result, network);
-      //  network.dispatch('addTriplets', network.triplets);// CREER UNE NOUVELLE ACTION POUR ENVOYER TS LES TRIPLETS
-      break;
-      case "turtle":
-      case "text/turtle":
-      case "application/turtle":
-      console.log("fichier turtle");
-      console.log("ce type de fichier n'est pas pris en compte (" + fichier.type + ")");
-      ttl2Xml(reader.result, network);
-      //network.dispatch('addTriplets', network.triplets);
-      break;
-      default:
-      console.log("ce type de fichier n'est pas pris en compte (" + fichier.type + ")");
-      var extension = fichier.name.split('.').pop();
-      console.log(extension);
-      console.log(fichier);
-      //  console.log(reader.result);
-      if ((extension == "ttl") || (extension == "n3") || (extension == "n3t")) {
-        //   sketch.ttl2Xml(reader.result);
-        ttl2Xml(reader.result, network);
-        //  network.dispatch('addTriplets', network.triplets);
-      } else if ((extension == "rdf") || (extension == "owl")) {
-        //  sketch.data2Xml(reader.result); //if srdf
-        rdf2Xml(reader.result, network);
-        //  network.dispatch('addTriplets', network.triplets);
-      }
-      else if ((extension == "json") || (reader.result.startsWith("[{"))) {
-        // json2Xml(reader.result);
-        //  network.dispatch('addNodesEdgesJSON', JSON.parse(reader.result));
-      } else {
-        data2Xml(reader.result, network);
-      }
-      console.log("fichier lu");
-    }
-
-    // thisApp.dispatch('update_triplets2add', this.triplets2add);
-
-  });
-  console.log(fichier);
-
-  reader.readAsText(fichier);
-}
-
-exportJson() {
-  var network = this.network;
-  console.log(network)
-  var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
-  //  app.$.inputMessage.value = '';
-  if (filename == null || filename == "") {
-    txt = "User cancelled the prompt.";
-    return;
-  }
-  var textToWrite = "";
-  var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
-  var textFileAsBlob = "";
-
-  console.log("export Json");
-  console.log(network.body.data);
-  var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
-  console.log(nodes_edges);
-  var nodes_edgesJSON = JSON.stringify(nodes_edges);
-  console.log(nodes_edgesJSON);
-  textFileAsBlob = new Blob([nodes_edgesJSON], {
-    type:
-    'application/json'
-  }
-);
-var downloadLink = document.createElement("a");
-downloadLink.download = fileNameToSaveAs;
-downloadLink.innerHTML = "Download File";
-if(navigator.userAgent.indexOf("Chrome") != -1)
-{
-  // Chrome allows the link to be clicked
-  // without actually adding it to the DOM.
-  console.log("CHROME");
-  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-} else
-{
-  // Firefox requires the link to be added to the DOM
-  // before it can be clicked.
-  console.log("FF");
-  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-  downloadLink.target="_blank";
-  //downloadLink.onclick = destroyClickedElement;
-  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
-  downloadLink.style.display = "none";
-  document.body.appendChild(downloadLink);
-//  console.log(app.$.popupTtl);
-}
-console.log(downloadLink);
-/*downloadLink.click();*/
-/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
-var event = document.createEvent("MouseEvents");
-event.initMouseEvent(
-  "click", true, false, window, 0, 0, 0, 0, 0
-  , false, false, false, false, 0, null
-);
-downloadLink.dispatchEvent(event);
-var app = this;
-setTimeout(function(){
-  console.log(downloadLink.parentNode);
-  document.body.removeChild(downloadLink);
-  window.URL.revokeObjectURL(downloadLink);
-}, 1000);
-/*if (window.URL != null) {
-// Chrome allows the link to be clicked
-// without actually adding it to the DOM.
-downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-} else {
-// Firefox requires the link to be added to the DOM
-// before it can be clicked.
-downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-downloadLink.onclick = destroyClickedElement;
-downloadLink.style.display = "none";
-document.body.appendChild(downloadLink);
-}
-downloadLink.click();*/
-}
 
 
 
-exportTtl(network, app) {
-  /* source https://github.com/scenaristeur/dreamcatcherAutonome/blob/master/autonome/public/agents/ExportAgent.js */
-  app.$.inputMessage.value = '';
-  var nodes = network.body.data.nodes.get();
-  var edges = network.body.data.edges.get();
-  console.log("exportation");
-  console.log(nodes);
-  console.log(edges);
-  //creation des statements (triplets)
-  /*var statements = [];
-  for (var j = 0; j < edges.length; j++){
-  var edge = edges[j];
-  console.log(edge);
-  statements.push({sujet: node.id, propriete: "rdfs:label", objet: node.label});
-}
-console.log(statements);*/
-
-var output = "@prefix : <http://smag0.blogspot.fr/spoggy#> . \n";
-output += "@prefix owl: <http://www.w3.org/2002/07/owl#> . \n";
-output += "@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . \n";
-output += "@prefix xml: <http://www.w3.org/XML/1998/namespace> . \n";
-output += "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> . \n";
-output += "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . \n";
-output += "@prefix smag: <http://smag0.blogspot.fr/spoggy#> . \n";
-output += "@base <http://smag0.blogspot.fr/spoggy> . \n";
-output += "<http://smag0.blogspot.fr/spoggy> rdf:type owl:Ontology ;  \n";
-output += "                    owl:versionIRI <http://smag0.blogspot.fr/spoggy/1.0.0> . \n";
-output += " \n";
-output += "owl:Class rdfs:subClassOf owl:Thing .  \n";
-
-var listeInfos = new Array();
-var listeComplementaire = new Array();
-
-for (var i = 0; i < edges.length; i++) {
-  var edge = edges[i];
-
-  var sujet = edge.from;
-  var propriete = edge.label;
-  var objet = edge.to;
 
 
-  //string.indexOf(substring) > -1
-  //console.log(sujet);
-  //console.log(propriete);
-  //  console.log(objet);
-
-  // AJOUTER EVENTUELLEMENT LA RECUPERATION DE SHAPE, COLOR, pour l'export RDF
-  var sujetLabel = network.body.data.nodes.get(sujet).label;
-  var objetLabel = network.body.data.nodes.get(objet).label;
-  //console.log("#########################");
-  //console.log(sujetLabel);
-  //console.log(objetLabel)
-  //console.log("#########################");
-
-  var sujetWithPrefix = this.validRdf(network, sujet);
-  var proprieteWithPrefix = this.validRdf(network, propriete);
-  var objetWithPrefix = this.validRdf(network, objet);
-
-  if (sujetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
-  sujetWithPrefix = ':' + sujetWithPrefix;
-}
-
-if (proprieteWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
-proprieteWithPrefix = ':' + proprieteWithPrefix;
-
-}
-
-if (objetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
-objetWithPrefix = ':' + objetWithPrefix;
-}
-
-
-var typedeProp = ["owl:AnnotationProperty", "owl:ObjectProperty", "owl:DatatypeProperty"];
-var indiceTypeDeProp = 1; // -1 pour ne pas ajouter la prop, sinon par defaut en annotationProperty, 1 pour Object, 2 pour Datatype --> revoir pour les datatypes
-
-if ((proprieteWithPrefix == "type") || (proprieteWithPrefix == ":type") || (proprieteWithPrefix == "rdf:type")) {
-  proprieteWithPrefix = "rdf:type";
-  listeComplementaire.push(objetWithPrefix + " rdf:type owl:Class . \n");
-  indiceTypeDeProp = 1;
-
-
-} else if ((proprieteWithPrefix == "subClassOf") || (proprieteWithPrefix == ":subClassOf") || (proprieteWithPrefix == "rdfs:subClassOf")) {
-  proprieteWithPrefix = "rdfs:subClassOf";
-
-}
-else if ((proprieteWithPrefix == "sameAs") || (proprieteWithPrefix == ":sameAs")) {
-  proprieteWithPrefix = "owl:sameAs";
-  indiceTypeDeProp = -1;
-}
-else if ((proprieteWithPrefix.toLowerCase() == "ispartof") || (proprieteWithPrefix.toLowerCase() == "partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof") || (proprieteWithPrefix.toLowerCase() == ":partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof")) {
-  proprieteWithPrefix = "smag:partOf";
-  indiceTypeDeProp = 1;
-
-} else if ((proprieteWithPrefix.toLowerCase() == "comment") || (proprieteWithPrefix.toLowerCase() == "commentaire") || (proprieteWithPrefix.toLowerCase() == "//") || (proprieteWithPrefix.toLowerCase() == "#")) {
-  proprieteWithPrefix = "rdfs:comment";
-  indiceTypeDeProp = -1;
-
-}
-
-
-if (indiceTypeDeProp >= 0) {
-  listeComplementaire.push(proprieteWithPrefix + " rdf:type " + typedeProp[indiceTypeDeProp] + " . \n");
-}
-var data = sujetWithPrefix + " " + proprieteWithPrefix + " " + objetWithPrefix + " . \n";
-data += sujetWithPrefix + " " + "rdfs:label \"" + sujetLabel + "\" . \n";
-data += objetWithPrefix + " " + "rdfs:label \"" + objetLabel + "\" . \n";
-listeInfos[i] = data;
-console.log(data);
-console.log("||||||||||||||||||||||--");
-}
-//console.log(listeInfos);
-//console.log(listeComplementaire);
-//suppression des doublons
-listeInfos = uniq_fast(listeInfos.sort());
-listeComplementaire = uniq_fast(listeComplementaire.sort());
-// console.log (listeInfos);
-for (var k = 0; k < listeInfos.length; k++) {
-  output = output + listeInfos[k];
-  //  console.log(output);
-}
-
-for (var l = 0; l < listeComplementaire.length; l++) {
-  output = output + listeComplementaire[l];
-  //  console.log(output);
-}
-
-
-app.$.inputTextToSave.value = output; //     document.getElementById("inputTextToSave").value =output;
-/*this.$.popupTtl.fitInto = this.$.menu;*/
-app.$.popupTtl.toggle();
-}
 
 
 
@@ -520,118 +144,7 @@ connectBase(network,app){
   filepicker.network = network;*/
 }
 
-newGraph(network,app){
-  //network.body.data.nodes.clear();
-  //network.body.data.edges.clear();
-  app.$.inputMessage.value = "";
 
-  var graphname = prompt("Comment nommer ce nouveau graphe ?", "Spoggy-Graph_"+Date.now());
-  var nodeName = {
-    label: graphname,
-    shape: "star",
-    color: "green",
-    type: "node"
-  };
-  var nodeGraph = {
-    label: "Graph",
-    /*    shape: "star",
-    color: "red",*/
-    type: "node"
-  };
-  network.body.data.nodes.clear();
-  network.body.data.edges.clear();
-  var nodes = network.body.data.nodes.add([nodeName, nodeGraph]);
-
-  var edge = {
-    from: nodes[0],
-    to: nodes[1],
-    arrows: "to",
-    label: "type"
-  }
-  network.body.data.edges.add(edge);
-
-  var action = {};
-  action.type = "newNode";
-  action.data = nodeName;
-  app.addAction(action);
-
-  action = {};
-  action.type = "newNode";
-  action.data = nodeGraph;
-  app.addAction(action);
-
-  action = {};
-  action.type = "newEdge";
-  action.data = edge;
-  app.addAction(action);
-
-  action = {};
-  action.type = "changeGraph";
-  action.data = graphname;
-  app.addAction(action);
-  if(app.socket != undefined){
-  app.socket.graph = graphname;
-  console.log(app.socket);
-}
-
-  //app.socket.emit('newGraph', graphname);
-  /*
-  //document.getElementById('importPopUp').style.display = 'block';
-  app.$.importPopUp.style.display = 'block';
-
-  var filepicker = app.$.filepicker;
-  filepicker.addEventListener('change', handleFileSelect.bind(app), false);
-  filepicker.network = network;*/
-}
-
-importFromParam(params, network, app){
-  var source = params.source;
-  console.log(source);
-  console.log(network);
-
-  var output = [];
-
-  console.log(source);
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', source, true);
-  xhr.responseType = 'blob';
-
-  xhr.onload = function(e) {
-    console.log(e);
-    var reponse = e.target.response;
-
-    console.log(reponse);
-    var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
-    reader.addEventListener('load', function () {
-      console.log(reader.result);
-      // ajouter test en fonction du type de fichier, extension
-
-      var nodes = JSON.parse(reader.result).nodes;
-      //    console.log(nodes);
-      var edges = JSON.parse(reader.result).edges;
-      //    console.log(edges);
-      network.beforeImport = [];
-      network.beforeImport.nodes = network.body.data.nodes.get();
-      network.beforeImport.edges = network.body.data.edges.get();
-      network.body.data.nodes.update(nodes);
-      network.body.data.edges.update(edges);
-
-      try{
-        network.body.data.nodes.update(nodes);
-        network.body.data.edges.update(edges);
-      }
-      catch(e){
-        console.log(e);
-      }
-
-      //  console.log(network);
-      //  console.log(partageImport);
-    });
-    reader.readAsText(reponse);
-  };
-  xhr.send();
-}
 applyTriplets(source, triplets, sens){
   console.log(source)
   console.log(triplets)
@@ -820,14 +333,14 @@ populateVis(db, network) {
     clearInterval(this.tickInterval);
     var app = this;
     console.log("revoir app.eyedata = app.network.body.data")
-  /*  this.tickInterval = setInterval(function() {
-      if (!app.eyehidden){
-        console.log("kick");
-        //  app.eyedata = [];
-        app.eyedata = app.network.body.data;
-      }
-    }, 5000);*/
+    /*  this.tickInterval = setInterval(function() {
+    if (!app.eyehidden){
+    console.log("kick");
+    //  app.eyedata = [];
+    app.eyedata = app.network.body.data;
   }
+}, 5000);*/
+}
 }
 }
 }
@@ -923,28 +436,6 @@ consolideSparql(s,app){
 
   });
 }
-validRdf(network, string){
-  // A REVOIR
-  console.log(network.body.data.nodes.get(string));
-  console.log("nettoyage "+ string);
-  // transformer le noeud en noeud rdf (resource ou literal)
-  // ajouter la construction du noeud, son uri, prefix, localname, type...
-  var valid = {};
-  valid.type = "uri";
-  if (string.indexOf(" ") !== -1){
-    valid.type = "literal";
-  }else{
-    /*
-    replaceAll(string, " ","_");
-    replaceAll(string, "","_");
-    replaceAll(string, ",","_");
-    replaceAll(string, ";","_");
-    replaceAll(string, " ","_");*/
-  }
-
-  return string;
-}
-
 deleteFromServer (network, data){
   //Pour suppression, on recupere le noeud et ses liens envoyés par le serveur
   network.body.data.nodes.remove(data.nodes);

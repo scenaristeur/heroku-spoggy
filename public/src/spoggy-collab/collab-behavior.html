@@ -1,11 +1,11 @@
-<script src="./lib/socket.io.js"></script>
+<script src="./lib/socket.io.slim.js"></script>
 
 <script>
 var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class CollabBehavior extends superClass {
     constructor() {
       super();
-      console.log("COLLAB BEHAVIOR INIT");
+    //  console.log("COLLAB BEHAVIOR INIT");
     }
     static get properties() {
       return {
@@ -63,7 +63,15 @@ disconnectSocket(){
   this.socket.disconnect();
 }
 
+sendMessage(message){
+  console.log(message);
+  if (this.socket != undefined){
+    this.socket.emit('sendchat', message);
+  }
+}
+
     connectSocket(connectUri, token) {
+      var app = this;
       /*this.socket = io(connectUri, {
       'query': `token=${token}`,
       timeout: 2000,
@@ -91,6 +99,7 @@ disconnectSocket(){
     // listener, whenever the server emits 'updatechat', this updates the chat body
     this.socket.on('updatechat', function (username, data) {
       console.log('update chat '+ username +" - "+ data)
+        app.agentSocket.send('agentInput', {type: "updateChat", username: username, data: data, room: this.room});
       //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
     //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
     });
@@ -99,12 +108,13 @@ disconnectSocket(){
     this.socket.on('updaterooms', function(rooms, current_room) {
       console.log('updaterooms ')
       console.log(rooms)
-
-      app.rooms = rooms;
+    app.agentSocket.send('agentMode', {type: "updaterooms", rooms: rooms, current_room: current_room});
+    app.agentSocket.send('agentInput', {type: "updaterooms", rooms: rooms, current_room: current_room});
+    /*  app.rooms = rooms;
       if(current_room != null){
       app.current_room = current_room;
           console.log("this room : "+current_room)
-}
+}*/
 
       /*	$.each(rooms, function(key, value) {
       if(value == current_room){
@@ -119,7 +129,8 @@ disconnectSocket(){
 
 this.socket.on('tick', function(data){
   console.log(data);
-  app.set('addToGraph',data);
+//  app.set('addToGraph',data);
+      app.agentSocket.send('agentGraph', {type: "addToGraph", data: data});
   /*if (data.actions.length>0){
     data.actions.forEach(function(action) {
           console.log(action);

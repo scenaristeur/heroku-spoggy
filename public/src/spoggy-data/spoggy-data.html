@@ -1,39 +1,63 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
-<link rel="import" href="../spoggy-rdf-ext/spoggy-rdf-ext.html">
+<!--<link rel="import" href="../spoggy-levelgraph/spoggy-levelgraph.html">
+<link rel="import" href="../spoggy-rdf-ext/spoggy-rdf-ext.html">-->
+
+<link rel="import" href="./data-behavior.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/DataAgent.js"></script>
 
 <dom-module id="spoggy-data">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+    <spoggy-agent></spoggy-agent>
+    <!--
     <spoggy-levelgraph></spoggy-levelgraph>
-    <spoggy-rdf-ext></spoggy-rdf-ext>
+    <spoggy-rdf-ext></spoggy-rdf-ext>-->
   </template>
 
   <script>
-    /**
-     * `spoggy-data`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyData extends Polymer.Element {
-      static get is() { return 'spoggy-data'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-data'
-          }
-        };
-      }
+  /**
+  * `spoggy-data`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyData extends DataBehaviorMixin(Polymer.Element) {
+    static get is() { return 'spoggy-data'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-data'
+        }
+      };
     }
 
-    window.customElements.define(SpoggyData.is, SpoggyData);
-  </script>
+    constructor(){
+      super();
+      this.agentData = new DataAgent('agentData', this);
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+    }
+    _deferred(){
+      //  this.initAgents()
+      this.analyseUrl();
+      this.params = this.recupParams();
+      if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
+      console.log("pas de param");
+    }else{
+      console.log(this.network)
+      console.log(this.params);
+      this.agentData.send('agentGraph', {type: 'importFromParam', params: this.params});
+    }
+  }
+  initAgents(){
+    this.agentData.send('agentHello', 'Hello agentHello!');
+  }
+}
+
+window.customElements.define(SpoggyData.is, SpoggyData);
+</script>
 </dom-module>

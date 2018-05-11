@@ -3,7 +3,8 @@
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
 <link rel="import" href="../spoggy-mode/spoggy-mode.html">
 
-<link rel="import" href="../spoggy-data/data-behavior.html">
+<!-- suppression pour agents
+<link rel="import" href="../spoggy-data/data-behavior.html">-->
 
 <dom-module id="spoggy-ui">
   <template>
@@ -13,11 +14,6 @@
     }
     </style>
     <!--    <div hidden$="[[connected]]">[[status]]</div> -->
-
-
-    <spoggy-graph network="{{network}}" socket="{{socket}}" addToGraph="{{addToGraph}}" ></spoggy-graph>
-        <spoggy-mode socket="{{socket}}"  status="{{status}}" network="{{network}}" addToGraph="{{addToGraph}}"></spoggy-mode>
-    <div id="div"></div>
   </template>
 
   <script>
@@ -29,7 +25,7 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyUi extends DataBehaviorMixin(Polymer.Element) {
+  class SpoggyUi extends Polymer.Element {
     static get is() { return 'spoggy-ui'; }
     static get properties() {
       return {
@@ -92,8 +88,9 @@
       //   console.log(this.$.graph.test);
       //   this.$.graph.log("machin")
       //   this.$.graph.methodInBehavior();
+
+    //  console.log(this.analyseUrl);
       this.params = this.recupParams();
-      console.log(this.params);
       if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
       console.log("pas de param");
     }else{
