@@ -52,7 +52,7 @@ SocketAgent.prototype.receive = function(from, message) {
     let pseudo = message.pseudo;
     if (pseudo == "anonyme"){
       console.log("tentative de connexion au graph "+graph+" centré sur le noeud "+node);
-      pseudo = "anonyme_"+Date.now();
+      pseudo = "ano_"+Date.now().toString().slice(-6);
       pseudo = prompt("Entrez un pseudo pour entrer dans le mode Collaboratif", pseudo);
       this.app.socket.emit('adduser', pseudo);
       this.app.switchRoom(graph);

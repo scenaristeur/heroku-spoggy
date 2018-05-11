@@ -6,7 +6,17 @@
 */
 function InputAgent(id, app) {
   // execute super constructor
+  // eve.system.init({transports: [{type: 'local'}]});
+  /*eve.system.init({
+    transports: [
+      {
+        type: 'local',
+        id: 'myLocalTransport', // optional identifier for the transport
+      }
+     ]
+  });*/
   eve.Agent.call(this, id);
+
   this.app = app;
   // connect to all transports configured by the system
   this.connect(eve.system.transports.getAll());
@@ -42,10 +52,21 @@ InputAgent.prototype.receive = function(from, message) {
   }
 
 
-  switch(message.type){
-    case 'connect':
 
+  switch(message.type){
+    case 'updaterooms':
+    console.log(message.rooms);
+    console.log(message.current_room);
+this.app.$.inputMessage.label = "Mode Collab, room :"+ message.current_room;
     break;
+    app.agentSocket.send('agentInput', {type: "updateChat", username: username, data: data, room: this.room});
+    case 'updateChat':
+    console.log(message.username);
+    console.log(message.data);
+    console.log(message.room);
+this.app.$.inputMessage.label = message.username +" : "+ message.data;
+    break;
+
     default:
     console.log(message);
   }

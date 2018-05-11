@@ -1,4 +1,4 @@
-<script src="lib/eve.min.js"></script>
+<script src="lib/eve.js"></script>
  <!--AGENTS  EVE.JS  http://eve.almende.com/implementations/javascript/gettingstarted.html -->
 
 <script>
@@ -8,8 +8,16 @@ var AgentBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       super();
   //    console.log("AGENT behavior const")
     //  console.log(this.agentProp);
-
-
+/*
+    eve.system.init({
+      transports: [
+        {
+          type: 'local'
+        }
+       ]
+    });
+  this.eve = eve;
+   console.log(this.eve)*/
     }
 
     static get properties() {
@@ -23,15 +31,6 @@ var AgentBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     connectedCallback(){
     //  console.log("agent DATA connected");
-  /*  eve.system.init({
-  transports: [
-    {
-      type: 'local',
-      id: 'myLocalTransport', // optional identifier for the transport
-    }
-   ]
-});*/
-console.log(eve)
     }
 
     }

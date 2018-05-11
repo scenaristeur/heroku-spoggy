@@ -4,15 +4,15 @@ var ModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class ModeBehavior extends superClass {
     constructor() {
       super();
-      console.log("*************************Mode behavior")
-      console.log(this.inputProp);
+    //  console.log("Mode behavior")
+    //  console.log(this.inputProp);
     }
 
     static get properties() {
       return {
         inputProp: {
           type: String,
-          value: 'modeB*****************************************'
+          value: 'modeB'
         }
       };
     }

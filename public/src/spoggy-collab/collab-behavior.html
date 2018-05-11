@@ -99,6 +99,7 @@ sendMessage(message){
     // listener, whenever the server emits 'updatechat', this updates the chat body
     this.socket.on('updatechat', function (username, data) {
       console.log('update chat '+ username +" - "+ data)
+        app.agentSocket.send('agentInput', {type: "updateChat", username: username, data: data, room: this.room});
       //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
     //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
     });
@@ -108,6 +109,7 @@ sendMessage(message){
       console.log('updaterooms ')
       console.log(rooms)
     app.agentSocket.send('agentMode', {type: "updaterooms", rooms: rooms, current_room: current_room});
+    app.agentSocket.send('agentInput', {type: "updaterooms", rooms: rooms, current_room: current_room});
     /*  app.rooms = rooms;
       if(current_room != null){
       app.current_room = current_room;

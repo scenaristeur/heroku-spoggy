@@ -51,6 +51,7 @@
       this.initAgents()
     }
     initAgents(){
+      console.log(this.agentHello)
       this.agentHello.send('agentHello', 'Hello agentHello!');
             this.agentHello.send('agentData', 'Hello agentData!');
             this.agentHello.send('agentSocket', 'Hello agentData!');

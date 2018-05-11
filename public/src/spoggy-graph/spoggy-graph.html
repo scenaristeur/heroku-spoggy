@@ -34,7 +34,8 @@ revoir color picker -->
 -->
 <link rel="import" href="styles/vis-styles.html">
 <link rel="import" href="styles/graphe-styles.html">
-<link rel="import" href="../spog-eye/spog-eye.html">
+<!-- en attente
+<link rel="import" href="../spog-eye/spog-eye.html">-->
 
 <dom-module id="spoggy-graph">
   <template>
@@ -65,12 +66,15 @@ revoir color picker -->
         </paper-dialog-scrollable>
       </paper-dialog>
 
-      <paper-dialog id="eye">
+  <!--    <paper-dialog id="eye">
         <spog-eye ></spog-eye>
         <div style="padding-top:10px" horizontal end-justified layout self-stretch>
           <paper-button dialog-dismiss raised>Fermer</paper-button>
         </div>
       </paper-dialog>
+-->
+
+
       <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
         <div horizontal start-justified start layout >
           <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
@@ -288,9 +292,7 @@ revoir color picker -->
         });
       }
       _deferred(){
-        //  console.log("agent DATA defered")
-        console.log(this.agentData);
-        this.initAgents()
+      //  this.initAgents()
       }
       initAgents(){
         this.agentGraph.send('agentHello', 'Hello agentHello!');

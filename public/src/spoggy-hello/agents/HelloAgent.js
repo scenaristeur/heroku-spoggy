@@ -6,6 +6,7 @@
   */
  function HelloAgent(id, app) {
    // execute super constructor
+//   eve.system.init({transports: [{type: 'local'}]});
    eve.Agent.call(this, id);
    this.app = app;
    // connect to all transports configured by the system
