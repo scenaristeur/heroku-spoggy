@@ -311,7 +311,7 @@ io.sockets.on('connection', function (socket) {
                     object: 'edge'
                   };
                   var triples = [tripleLabel, tripleFrom, tripleTo, tripleG, tripleT];
-              //    console.log(triples);
+                  console.log(triples);
                   currentGraph.put(triples, function(err) {
                     if(err){console.log(err)}else{console.log("added edge 1");}
                   });
@@ -327,8 +327,10 @@ io.sockets.on('connection', function (socket) {
                   }, function(err, listLabel) {
                     currentGraph.del(listLabel[0], function(err, deleted) {
                       if(err){console.log(err)}else{console.log("deleted");}
+
                     });
                     currentGraph.put(tripleLabel, function(err, putted) {
+
                       if(err){console.log(err)}else{console.log("added 2");}
                     });
                   });
