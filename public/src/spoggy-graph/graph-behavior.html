@@ -99,8 +99,8 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     populateVis(db) {
       console.log("POPULATE");
       let network = this.network;
-      this.network.body.data.nodes.clear();
-      this.network.body.data.edges.clear();
+      network.body.data.nodes.clear();
+      network.body.data.edges.clear();
       if (db.length > 0) {
         if (db.length % 100 < 5) {
           /*
@@ -108,118 +108,131 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           network.fit();
           network.redraw();
         }
+        var nodes = [];
+        var edges = [];
+        var reste = [];
+        db.forEach(function(t){
+          if(t.predicate == "type" && t.object == "node"){
+            nodes.push(t.subject);
+            network.body.data.nodes.add({id: t.subject, type: t.object, y:2*Math.random()});
+          }else if(t.predicate == "type" && t.object == "edge"){
+            edges.push(t.subject);
+          }  else{ reste.push(t);  }
+        });
+        reste.forEach(function(r){
+          if (nodes.includes(r.subject)){
+            var n = {id : r.subject}
+            n[r.predicate] = r.object;
+            network.body.data.nodes.update(n);
+          }else if(edges.includes(r.subject)){
+            var e = {id : r.subject}
+            e[r.predicate] = r.object;
+            network.body.data.edges.update(e);
+          }else{
+            console.log("Probleme non pris en compte : ")
+            console.log(r)
+          }
+        });
+
+console.log(network)
+
+        /*
         for (var i = 0; i < 10; i++) {
-          var triplet = db.pop();
-          if (triplet != undefined) {
-            console.log(triplet);
-            if ( triplet.predicate == "label") {
-              var noeudExist = network.body.data.nodes.get(triplet.subject);
-              if (noeudExist == null || noeudExist.length == 0) {
-                if (triplet.object.length > 40) {
-                  network.body.data.nodes.add({
-                    id: triplet.subject,
-                    label: triplet.object.match(/.{1,40}/g).join("\n"),
-                    //  shape: "box",
-                  //  group: 0
-                  });
-                } else {
-                  var node = {
-                    id: triplet.subject,
-                    label: triplet.object,
-                  //  type: triplet.type,
-                    //group: 0,
-                  };
-                  network.body.data.nodes.add(node);
-                  if ((node.label.toLowerCase() == "depart") || (node.label.toLowerCase() == "départ")) {
-                    //  console.log('trouve depart');
-                    //var nodeDep = network.body.data.nodes.get(triplet.subject);
-                    //console.log(nodeDep);
-                    //nodeDep.color = {background:'pink', border:'purple'};
-                    network.body.data.nodes.update({
-                      id: triplet.subject,
-                      color: {
-                        background: 'pink',
-                        border: 'purple'
-                      }
-                    })
-                    var nodeDep = network.body.data.nodes.get(triplet.subject);
-                    /*nodeDep = network.body.data.nodes.get(triplet.subject);*/
-                    network.focus(nodeDep.id);
-                    network.fit();
-                  }
-                  /*  if (node.label.match(/^\d/)) {
-                  // Return true if starts with number
-                  console.log(node.label);
-                  // first number
-                  var firstNum = node.label.split(".")[0];
-                  network.body.data.nodes.update({
-                  id: triplet.subject,
-                  group: firstNum
-                });
-              }*/
-            }
-          } else {
-            //    console.log("exist : ");
-            /*            console.log(noeudExist);
-            noeudExist.mass++;
-            console.log(noeudExist);*/
-            //    console.log(triplet);
-            network.body.data.nodes.update({
-              id: triplet.subject,
-              label: triplet.object,
-            //  type: triplet.type,
-            })
-          }
-        } /*else if (triplet.type == "shape") {
-          console.log(triplet);
-          network.body.data.nodes.update({
-            id: triplet.subject,
-            shape: triplet.object
-          })
-        }
-        else if (triplet.type == "color") {
-          console.log(triplet);
-          network.body.data.nodes.update({
-            id: triplet.subject,
-            color: triplet.object
-          })
-        }     */  else {
-          var edgeExist = [];
-          edgeExist = network.body.data.edges.get(triplet.subject);
-          if (edgeExist == null || edgeExist.length == 0) {
-            var edge = {
-              id: "",
-              from: "",
-              to: "",
-              label: "",
-              arrows: "to"
-            };
-            edge.id = triplet.subject;
-            edge[triplet.predicate] = triplet.object;
-            network.body.data.edges.add(edge);
-          } else {
-            var edge = edgeExist;
-            edge[triplet.predicate] = triplet.object;
-            network.body.data.edges.update(edge);
-          }
-        }
-      } else {
-        console.log("import terminé")
-        //  network.focus(nodeDep);
-        clearInterval(this.tickInterval);
-        var app = this;
-        console.log("revoir app.eyedata = app.network.body.data")
-        /*  this.tickInterval = setInterval(function() {
-        if (!app.eyehidden){
-        console.log("kick");
-        //  app.eyedata = [];
-        app.eyedata = app.network.body.data;
-      }
-    }, 5000);*/
-  }
+        var triplet = db.pop();
+        if (triplet != undefined) {
+        console.log(triplet);
+        if (triplet.predicate == "type"  && triplet.object == "node") {
+        console.log("NODE : "+triplet.subject);
+        var noeudExist = network.body.data.nodes.get(triplet.subject);
+        console.log(noeudExist)
+        if (noeudExist == null || noeudExist.length == 0) {
+        if (triplet.object.length > 40) {
+        network.body.data.nodes.add({
+        id: triplet.subject,
+        label: triplet.object.match(/.{1,40}/g).join("\n"),
+        //  shape: "box",
+        group: 0
+      });
+    } else {
+    var node = {
+    id: triplet.subject,
+    label: triplet.object,
+    type: triplet.type,
+    group: 0,
+  };
+  network.body.data.nodes.add(node);
+  if ((node.label.toLowerCase() == "depart") || (node.label.toLowerCase() == "départ")) {
+  //  console.log('trouve depart');
+  //var nodeDep = network.body.data.nodes.get(triplet.subject);
+  //console.log(nodeDep);
+  //nodeDep.color = {background:'pink', border:'purple'};
+  network.body.data.nodes.update({
+  id: triplet.subject,
+  color: {
+  background: 'pink',
+  border: 'purple'
+}
+})
+var nodeDep = network.body.data.nodes.get(triplet.subject);
+//nodeDep = network.body.data.nodes.get(triplet.subject);
+network.focus(nodeDep.id);
+network.fit();
+}
+
+}
+} else {
+
+network.body.data.nodes.update({
+id: triplet.subject,
+label: triplet.object,
+type: triplet.type,
+})
+}
+} else if (triplet.type == "shape") {
+console.log(triplet);
+network.body.data.nodes.update({
+id: triplet.subject,
+shape: triplet.object
+})
+}
+else if (triplet.type == "color") {
+console.log(triplet);
+network.body.data.nodes.update({
+id: triplet.subject,
+color: triplet.object
+})
+}       else {
+var edgeExist = [];
+edgeExist = network.body.data.edges.get(triplet.subject);
+if (edgeExist == null || edgeExist.length == 0) {
+var edge = {
+id: "",
+from: "",
+to: "",
+label: "",
+arrows: "to"
+};
+edge.id = triplet.subject;
+edge[triplet.predicate] = triplet.object;
+network.body.data.edges.add(edge);
+} else {
+var edge = edgeExist;
+edge[triplet.predicate] = triplet.object;
+network.body.data.edges.update(edge);
 }
 }
+} else {
+console.log("import terminé")
+//  network.focus(nodeDep);
+clearInterval(this.tickInterval);
+var app = this;
+console.log("revoir app.eyedata = app.network.body.data")
+
 }
+}*/
+}
+}
+
 
 
 

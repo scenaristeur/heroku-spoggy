@@ -191,7 +191,6 @@ io.sockets.on('connection', function (socket) {
             subject: data.id,
             predicate: "label",
             object: data.label,
-            type: "node",
           };
           triples.push(triple);
           var tripleG = {
@@ -200,12 +199,17 @@ io.sockets.on('connection', function (socket) {
             object: room
           };
           triples.push(tripleG);
+          var tripleT = {
+            subject: data.id,
+            predicate: 'type',
+            object: "node"
+          };
+          triples.push(tripleT);
           if(data.shape != undefined){
             var tripleShape = {
               subject: data.id,
               predicate: "shape",
-              object: data.shape,
-              type: "shape"
+              object: data.shape
             };
             triples.push(tripleShape);
           }
@@ -213,8 +217,7 @@ io.sockets.on('connection', function (socket) {
             var tripleColor = {
               subject: data.id,
               predicate: "color",
-              object: data.color,
-              type: "color"
+              object: data.color
             };
             triples.push(tripleColor);
           }
@@ -302,9 +305,13 @@ io.sockets.on('connection', function (socket) {
                     predicate: 'graph',
                     object: room
                   };
-
-                  var triples = [tripleLabel, tripleFrom, tripleTo, tripleG];
-                  console.log(triples);
+                  var tripleT = {
+                    subject: edge.id,
+                    predicate: 'type',
+                    object: 'edge'
+                  };
+                  var triples = [tripleLabel, tripleFrom, tripleTo, tripleG, tripleT];
+              //    console.log(triples);
                   currentGraph.put(triples, function(err) {
                     if(err){console.log(err)}else{console.log("added edge 1");}
                   });
@@ -320,10 +327,8 @@ io.sockets.on('connection', function (socket) {
                   }, function(err, listLabel) {
                     currentGraph.del(listLabel[0], function(err, deleted) {
                       if(err){console.log(err)}else{console.log("deleted");}
-
                     });
                     currentGraph.put(tripleLabel, function(err, putted) {
-
                       if(err){console.log(err)}else{console.log("added 2");}
                     });
                   });
