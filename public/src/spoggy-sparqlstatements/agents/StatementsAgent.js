@@ -4,7 +4,7 @@
 * @constructor
 * @extend eve.Agent
 */
-function SparqlAgent(id, app) {
+function StatementsAgent(id, app) {
   // execute super constructor
   eve.Agent.call(this, id);
   this.app = app;
@@ -13,24 +13,24 @@ function SparqlAgent(id, app) {
 }
 
 // extend the eve.Agent prototype
-SparqlAgent.prototype = Object.create(eve.Agent.prototype);
-SparqlAgent.prototype.constructor = SparqlAgent;
+StatementsAgent.prototype = Object.create(eve.Agent.prototype);
+StatementsAgent.prototype.constructor = StatementsAgent;
 
 /**
 * Send a greeting to an agent
 * @param {String} to
 */
-SparqlAgent.prototype.sayHello = function(to) {
+StatementsAgent.prototype.sayHello = function(to) {
   this.send(to, 'Hello ' + to + '!');
 };
 
 /**
 * Handle incoming greetings. This overloads the default receive,
-* so we can't use SparqlAgent.on(pattern, listener) anymore
+* so we can't use StatementsAgent.on(pattern, listener) anymore
 * @param {String} from     Id of the sender
 * @param {*} message       Received message, a JSON object (often a string)
 */
-SparqlAgent.prototype.receive = function(from, message) {
+StatementsAgent.prototype.receive = function(from, message) {
   console.log(from + ' said: ' + JSON.stringify(message) );
   this.app.prop1 = message;
 

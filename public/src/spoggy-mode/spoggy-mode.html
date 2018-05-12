@@ -44,42 +44,26 @@
 
 
 
-        <iron-ajax
-        id="status_req"
-        url="{{url_status}}"
-        method="GET"
-        content-type="application/text"
-        handle-as="text"
-        on-response="_handleUrlStatusResponse"
-        on-error="_handleUrlStatusError"
-        ></iron-ajax>
+    <iron-ajax
+    id="status_req"
+    url="{{url_status}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleUrlStatusResponse"
+    on-error="_handleUrlStatusError"
+    ></iron-ajax>
 
-        <iron-ajax
-        id="server_req"
-        url="{{url_server}}"
-        method="GET"
-        content-type="application/text"
-        handle-as="text"
-        on-response="_handleUrlServerResponse"
-        on-error="_handleUrlServerError"
-        ></iron-ajax>
+    <iron-ajax
+    id="server_req"
+    url="{{url_server}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleUrlServerResponse"
+    on-error="_handleUrlServerError"
+    ></iron-ajax>
 
-
-<!--
-        <spoggy-sparqlupdate
-        endpoint="{{endpoint}}"
-        dataset="{{dataset}}"
-        actionstosend="{{actionstosend}}"
-        status="{{status}}"
-        ></spoggy-sparqlupdate>
-
-        <spoggy-sparqlstatements
-        endpoint="{{endpoint}}"
-        requetes="{{requetes]]"
-        dataset="{{dataset}}"
-        status="{{status}}
-        " results="{{results}}"
-        ></spoggy-sparqlstatements>-->
 
 
 
@@ -134,19 +118,19 @@
       </div>
       <div hidden$="[[!modeIs(mode,'global')]]">
         <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
-        <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value={{endpoint::input}}></paper-input>
-        <paper-dropdown-menu hidden$="[[isEmpty(ping)]]"  label="Dataset" vertical-align="bottom" horizontal-align="left">
-          <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+        <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
+        <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+          <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
             <template is="dom-repeat" items="[[datasets]]">
-              <paper-item room="[[dataset]]" on-change="datasetChanged" value={{dataset::input}}>[[item.ds_name]]</paper-item>
+              <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
             </template>
           </paper-listbox>
         </paper-dropdown-menu>
 
-<!--
+        <!--
         <paper-input id="labelDataset" label="Dataset" on-change="datasetChanged" value={{dataset::input}}></paper-input>-->
         <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
-        <paper-button  dialog-dismiss raised >Valider</paper-button>
+        <paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
       </div>
       <br>
     </paper-dialog-scrollable>
@@ -195,8 +179,8 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
       },
       dataset: {
         type: String,
-        value: "spoggy",
-        observer: '_datasetChanged'
+        value: "",
+        //  observer: '_datasetChanged'
       },
       graph: {
         type: String,
@@ -222,21 +206,22 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
     //  this.initAgents()
 
   }
-
-
-_endpointChanged(){
-  this.url_status = this.endpoint+"/$/ping";
-    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
-    console.log(this.url_status);
-    this.$.status_req.generateRequest();
-}
-
-
   initAgents(){
     this.agentMode.send('agentHello', 'Hello agentHello!');
   }
 
+  //////////////////////////////////////////////////////
 
+  _endpointChanged(){
+    this.url_status = this.endpoint+"/$/ping";
+    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+    console.log(this.url_status);
+    this.$.status_req.generateRequest();
+  }
+
+  _datasetChanged(e){
+    this.dataset = e.model.item.ds_name;
+  }
   _modeChanged(newMode, oldMode){
     this.set('modeConfig.mode', newMode);
     this.mode = newMode;

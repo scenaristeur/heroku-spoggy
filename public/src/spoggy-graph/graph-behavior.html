@@ -20,6 +20,7 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
+
     importFromParam(params){
       var source = params.source;
       var network = this.network;
@@ -95,6 +96,79 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       }
     }
 
+    resultsFromSparql(results){
+      console.log("POPULATE From Sparql");
+      var app = this;
+      let network = this.network;
+      network.body.data.nodes.clear();
+      network.body.data.edges.clear();
+      if (results.length > 0) {
+        if (results.length % 100 < 5) {
+          /*
+          Rezoom tous les 100*/
+          network.fit();
+          network.redraw();
+        }
+        results.forEach(function(r){
+          console.log(r);
+          var s = r.subject.value;
+          var p = r.predicate.value;
+          var o = r.object.value;
+        //  console.log(s);
+        //  console.log(p);
+         console.log(o);
+      var sNode, oNode, pEdge = [];
+      //console.log(r.object.type)
+      if (s.split('#')[1] != undefined){
+          sNode = {id: s,label: s.split('#')[1], title: s, y:2*Math.random()};
+        }else{
+            sNode = {id: s,label: s, y:2*Math.random()};
+        }
+        if (o.split('#')[1] != undefined && r.object.type != "literal"){
+            oNode = {id: o, label: o.split('#')[1], title: o, y:2*Math.random()};
+          }else{
+              oNode = {id:o, label: o, y:2*Math.random()};
+          }
+
+  app.addNodeIfNotExist(network, sNode);
+
+    var existSujet = network.body.data.nodes.get({
+      filter: function(node){
+        return (node.id == sNode.id || node.label == sNode.label );
+      }
+    });
+
+    var existObjet = network.body.data.nodes.get({
+      filter: function(node){
+        return (node.id == oNode.id || node.label == oNode.label );
+      }
+    });
+    if (existObjet.length == 0){
+      app.addNodeIfNotExist(network, oNode);
+     existObjet = network.body.data.nodes.get({
+      filter: function(node){
+        return (node.id == oNode.id || node.label == oNode.label );
+      }
+    });
+  }
+    //console.log(existSujet[0].id);
+    //console.log(existObjet[0].id);
+    var sId = existSujet[0].id;
+    var oId = existObjet[0].id
+    if (p.split('#')[1] != undefined ){
+        pEdge[0] = {label: p.split('#')[1], title: p, from: sId, to: oId};
+      }else{
+          pEdge[0] = {label: p, from: sId, to: oId};
+      }
+
+    console.log(pEdge);
+    app.addEdgeIfNotExist(network, pEdge); // nécessite un tableau !! a revoir !
+
+
+
+        });
+      }
+    }
 
     populateVis(db) {
       console.log("POPULATE");
@@ -134,7 +208,7 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           }
         });
 
-console.log(network)
+        console.log(network)
 
         /*
         for (var i = 0; i < 10; i++) {

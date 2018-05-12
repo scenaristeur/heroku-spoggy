@@ -4,8 +4,8 @@ var ModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class ModeBehavior extends superClass {
     constructor() {
       super();
-    //  console.log("Mode behavior")
-    //  console.log(this.inputProp);
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
     }
 
     static get properties() {
@@ -22,57 +22,69 @@ var ModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.$.modePopup.toggle();
     }
 
+    _updateEndpoint(){
+      if (!this.isEmpty(this.ping)){
+        console.log("Envoi Ping")
+        console.log(this.dataset)
+        var endpointUrl = this.endpoint+this.dataset;
+        console.log(endpointUrl)
+        this.agentMode.send('agentSparql', {type: 'updateEndpoint', url: endpointUrl});
+      }else{
+        console.log("Ping vide")
+      }
+    }
 
-  //PING
-  _handleUrlStatusResponse(data){
-    console.log("ping ok");
-    this.$.labelEndpoint.label = "Endpoint : ping OK";
-    this.ping = data;
-    console.log(data);
-    this.status = data.detail.response;
-    console.log(this.status);
-    this.url_server = this.endpoint+"/$/server";
-    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
-    console.log(this.url_server);
-    this.$.server_req.generateRequest();
-  }
-  _handleUrlStatusError(data){
-    console.log("error ping");
+    //PING
+    _handleUrlStatusResponse(data){
+      console.log("ping ok");
+      this.$.labelEndpoint.label = "Endpoint : ping OK";
+      this.ping = data;
+      console.log(data);
+      this.status = data.detail.response;
+      console.log(this.status);
+      this.url_server = this.endpoint+"/$/server";
+      //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+      console.log(this.url_server);
+      this.$.server_req.generateRequest();
+    }
+    _handleUrlStatusError(data){
+      console.log("error ping");
       this.$.labelEndpoint.label = "Endpoint : ping Erreur"
       this.ping = "";
-    console.log(data);
-    console.log(data.detail);
-    console.log(data.detail.error);
-    console.log(data.detail.error.message);
-    console.log(data.detail.request);
-    console.log(data.detail.response);
-    console.log(data.detail.request.response);
-    this.status = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
-    console.log(this.status);
-    this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
-  }
-  //SERVER
-  _handleUrlServerResponse(data){
-    console.log("server ok");
-    console.log(data);
-    var clemodif = data.detail.response.replace(/ds\./g, "ds_")
-    this.server = JSON.parse(clemodif);
-    console.log(this.server);
-    this.datasets = this.server.datasets;
-    console.log(this.datasets);
-  }
-  _handleUrlServerError(data){
-    console.log("error server");
-    console.log(data);
-    console.log(data.detail);
-    console.log(data.detail.error);
-    console.log(data.detail.error.message);
-    console.log(data.detail.request);
-    console.log(data.detail.response);
-    console.log(data.detail.request.response);
-    this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
-    console.log(this.server);
-  }
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
+      this.status = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+      console.log(this.status);
+      this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+    }
+    //SERVER
+    _handleUrlServerResponse(data){
+      console.log("server ok");
+      console.log(data);
+      var clemodif = data.detail.response.replace(/ds\./g, "ds_")
+      this.server = JSON.parse(clemodif);
+      console.log(this.server);
+      this.datasets = this.server.datasets;
+      this.dataset = this.datasets[0].ds_name;
+      console.log(this.datasets);
+    }
+    _handleUrlServerError(data){
+      console.log("error server");
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
+      this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+      console.log(this.server);
+    }
 
 
   }

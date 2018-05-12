@@ -4,8 +4,8 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class SparqlBehavior extends superClass {
     constructor() {
       super();
-    //  console.log("Mode behavior")
-    //  console.log(this.inputProp);
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
     }
 
     static get properties() {
@@ -13,8 +13,25 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         inputProp: {
           type: String,
           value: 'modeB'
+        },
+        urls: {
+          type : Array,
+          value: []
         }
       };
+    }
+
+    updateUrls(url){
+      console.log(url);
+      this.set('urls.endpoint', url);
+      this.set('urls.upload', url+'/upload');//File Upload: http://5.51.110.50:3030/spoggy/upload
+      this.set('urls.data', url+'/data');//Graph Store Protocol: http://5.51.110.50:3030/spoggy/data
+      this.set('urls.read', url+'/get');//Graph Store Protocol (Read): http://5.51.110.50:3030/spoggy/get
+      this.set('urls.quads', url+'/');//HTTP Quads: http://5.51.110.50:3030/spoggy/
+      this.set('urls.query', url+'/query');//SPARQL Query: http://5.51.110.50:3030/spoggy/query
+      this.set('urls.sparql', url+'/sparql');//SPARQL Query: ttp://5.51.110.50:3030/spoggy/sparql
+      this.set('urls.update', url+'/update');//SPARQL Update: http://5.51.110.50:3030/spoggy/update
+      console.log(this.urls)
     }
 
 

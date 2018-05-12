@@ -4,6 +4,9 @@
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
 <script src="agents/SparqlAgent.js"></script>
 
+<link rel="import" href="../spoggy-sparqlupdate/spoggy-sparqlupdate.html">
+<link rel="import" href="../spoggy-sparqlstatements/spoggy-sparqlstatements.html">
+
 <dom-module id="spoggy-sparql">
   <template>
     <style>
@@ -11,6 +14,9 @@
         display: block;
       }
     </style>
+
+        <spoggy-sparqlupdate url = "{{urls.update}}" ></spoggy-sparqlupdate>
+        <spoggy-sparqlstatements url = "{{urls.query}}"></spoggy-sparqlstatements>
 
   </template>
 
