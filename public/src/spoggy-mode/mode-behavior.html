@@ -23,6 +23,58 @@ var ModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
+  //PING
+  _handleUrlStatusResponse(data){
+    console.log("ping ok");
+    this.$.labelEndpoint.label = "Endpoint : ping OK";
+    this.ping = data;
+    console.log(data);
+    this.status = data.detail.response;
+    console.log(this.status);
+    this.url_server = this.endpoint+"/$/server";
+    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+    console.log(this.url_server);
+    this.$.server_req.generateRequest();
+  }
+  _handleUrlStatusError(data){
+    console.log("error ping");
+      this.$.labelEndpoint.label = "Endpoint : ping Erreur"
+      this.ping = "";
+    console.log(data);
+    console.log(data.detail);
+    console.log(data.detail.error);
+    console.log(data.detail.error.message);
+    console.log(data.detail.request);
+    console.log(data.detail.response);
+    console.log(data.detail.request.response);
+    this.status = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+    console.log(this.status);
+    this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+  }
+  //SERVER
+  _handleUrlServerResponse(data){
+    console.log("server ok");
+    console.log(data);
+    var clemodif = data.detail.response.replace(/ds\./g, "ds_")
+    this.server = JSON.parse(clemodif);
+    console.log(this.server);
+    this.datasets = this.server.datasets;
+    console.log(this.datasets);
+  }
+  _handleUrlServerError(data){
+    console.log("error server");
+    console.log(data);
+    console.log(data.detail);
+    console.log(data.detail.error);
+    console.log(data.detail.error.message);
+    console.log(data.detail.request);
+    console.log(data.detail.response);
+    console.log(data.detail.request.response);
+    this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+    console.log(this.server);
+  }
+
+
   }
 });
 

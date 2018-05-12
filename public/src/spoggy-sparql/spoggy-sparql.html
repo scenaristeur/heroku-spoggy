@@ -1,5 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
+<link rel="import" href="./sparql-behavior.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/SparqlAgent.js"></script>
+
 <dom-module id="spoggy-sparql">
   <template>
     <style>
@@ -19,7 +23,7 @@
      * @polymer
      * @demo demo/index.html
      */
-    class SpoggySparql extends Polymer.Element {
+    class SpoggySparql extends SparqlBehaviorMixin(Polymer.Element) {
       static get is() { return 'spoggy-sparql'; }
       static get properties() {
         return {
@@ -29,6 +33,26 @@
           }
         };
       }
+
+
+        constructor(){
+          super();
+          this.agentSparql = new SparqlAgent('agentSparql', this);
+          Polymer.RenderStatus.afterNextRender(this, function() {
+            // When possible, use afterNextRender to defer non-critical
+            // work until after first paint.
+            this._deferred();
+
+          });
+        }
+        _deferred(){
+          //  console.log("agent DATA defered")
+          //    console.log(this.agentMode);
+          //  this.initAgents()
+      console.log(this.agentSparql);
+      this.agentSparql.send('agentHello', 'Hello, agentHello !')
+        }
+
     }
 
     window.customElements.define(SpoggySparql.is, SpoggySparql);

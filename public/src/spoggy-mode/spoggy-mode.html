@@ -12,6 +12,7 @@
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 
 <!--
@@ -39,6 +40,57 @@
       top: 70px;
     }
     </style>
+
+
+
+
+        <iron-ajax
+        id="status_req"
+        url="{{url_status}}"
+        method="GET"
+        content-type="application/text"
+        handle-as="text"
+        on-response="_handleUrlStatusResponse"
+        on-error="_handleUrlStatusError"
+        ></iron-ajax>
+
+        <iron-ajax
+        id="server_req"
+        url="{{url_server}}"
+        method="GET"
+        content-type="application/text"
+        handle-as="text"
+        on-response="_handleUrlServerResponse"
+        on-error="_handleUrlServerError"
+        ></iron-ajax>
+
+
+<!--
+        <spoggy-sparqlupdate
+        endpoint="{{endpoint}}"
+        dataset="{{dataset}}"
+        actionstosend="{{actionstosend}}"
+        status="{{status}}"
+        ></spoggy-sparqlupdate>
+
+        <spoggy-sparqlstatements
+        endpoint="{{endpoint}}"
+        requetes="{{requetes]]"
+        dataset="{{dataset}}"
+        status="{{status}}
+        " results="{{results}}"
+        ></spoggy-sparqlstatements>-->
+
+
+
+
+
+
+
+
+
+
+
     <paper-dialog id="modePopup" > <!--    on-iron-overlay-opened="_openModePopp"
       on-iron-overlay-closed="_closeModePopup"-->
       <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
@@ -49,6 +101,7 @@
         <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
           <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
           <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
+          <paper-checkbox name="global" >Global</paper-checkbox>
           <br>
           <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
         </iron-selector>
@@ -70,18 +123,7 @@
 
             <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
             <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
-
-
           </div>
-
-
-
-
-
-
-
-
-
           <!-- test de saisi + selection
           <paper-dropdown-input label="Rejoindre une room"
           items="[[rooms]]"
@@ -89,13 +131,22 @@
           >
           <paper-button on-tap="rejoindre">Rejoindre</paper-button>
         </paper-dropdown-input>-->
-
-
-
       </div>
-
       <div hidden$="[[!modeIs(mode,'global')]]">
-        conf global
+        <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
+        <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value={{endpoint::input}}></paper-input>
+        <paper-dropdown-menu hidden$="[[isEmpty(ping)]]"  label="Dataset" vertical-align="bottom" horizontal-align="left">
+          <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+            <template is="dom-repeat" items="[[datasets]]">
+              <paper-item room="[[dataset]]" on-change="datasetChanged" value={{dataset::input}}>[[item.ds_name]]</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+
+<!--
+        <paper-input id="labelDataset" label="Dataset" on-change="datasetChanged" value={{dataset::input}}></paper-input>-->
+        <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+        <paper-button  dialog-dismiss raised >Valider</paper-button>
       </div>
       <br>
     </paper-dialog-scrollable>
@@ -137,10 +188,20 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
         type: String,
         value: ""
       },
-
-      addToGraph: {
-        observer: '_addToGraphArrivedMode',
-        notify: true
+      endpoint: {
+        type: String,
+        value: 'http://5.51.110.50:3030',
+        observer: '_endpointChanged'
+      },
+      dataset: {
+        type: String,
+        value: "spoggy",
+        observer: '_datasetChanged'
+      },
+      graph: {
+        type: String,
+        value: "Default",
+        observer: '_graphChanged'
       }
     };
   }
@@ -157,10 +218,20 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
   }
   _deferred(){
     //  console.log("agent DATA defered")
-//    console.log(this.agentMode);
-  //  this.initAgents()
+    //    console.log(this.agentMode);
+    //  this.initAgents()
 
   }
+
+
+_endpointChanged(){
+  this.url_status = this.endpoint+"/$/ping";
+    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+    console.log(this.url_status);
+    this.$.status_req.generateRequest();
+}
+
+
   initAgents(){
     this.agentMode.send('agentHello', 'Hello agentHello!');
   }
@@ -197,13 +268,13 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
       break;
       case 'collab':
       console.log('deconnect socket');
-    //  this.socket.disconnect();
-        this.agentMode.send('agentSocket', {type: "disconnect"});
+      //  this.socket.disconnect();
+      this.agentMode.send('agentSocket', {type: "disconnect"});
       break;
       case 'global':
       console.log('deconnect endpoint');
       //this.socket.disconnect();
-        this.agentMode.send('agentSocket', {type: "disconnect"});
+      this.agentMode.send('agentSocket', {type: "disconnect"});
       break;
       default:
 
@@ -214,15 +285,15 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
     console.log(room);
     this.modeBtnText = room.substring(0, 6);
     //this.switchRoom(room);
-      this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
+    this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
     this.$.modePopup.toggle();
   }
 
   creer(){
     let room = this.newRoom;
     this.modeBtnText = room.substring(0, 6);
-  //  this.switchRoom(room);
-      this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
+    //  this.switchRoom(room);
+    this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
   }
 
 
