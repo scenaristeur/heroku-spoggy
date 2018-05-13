@@ -129,8 +129,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         //  this.catchTripletsV2(triplets, this.network);
 
         //      this.catchTriplet(messageCut, this.network);
-        this.agentInput.send('agentGraph', {type: "catchTriplet", triplet:messageCut}); // 
-          this.agentInput.send('agentSparqlUpdate', {type: "catchTriplet", triplet:messageCut});
+        this.agentInput.send('agentGraph', {type: "catchTriplet", triplet:messageCut}); //
+  //        this.agentInput.send('agentSparqlUpdate', {type: "catchTriplet", triplet:messageCut});
       }
     }
   }

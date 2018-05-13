@@ -124,67 +124,8 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             });
           }
         });
-
-/*
-        Object.entries(results).forEach(function(r){
-          console.log(r);
-          var s = r.subject.value;
-          var p = r.predicate.value;
-          var o = r.object.value;
-        //  console.log(s);
-        //  console.log(p);
-         console.log(o);
-      var sNode, oNode, pEdge = [];
-      //console.log(r.object.type)
-      if (s.split('#')[1] != undefined){
-          sNode = {id: s,label: s.split('#')[1], title: s, y:2*Math.random()};
-        }else{
-            sNode = {id: s,label: s, y:2*Math.random()};
-        }
-        if (o.split('#')[1] != undefined && r.object.type != "literal"){
-            oNode = {id: o, label: o.split('#')[1], title: o, y:2*Math.random()};
-          }else{
-              oNode = {id:o, label: o, y:2*Math.random()};
-          }
-
-  app.addNodeIfNotExist(network, sNode);
-
-    var existSujet = network.body.data.nodes.get({
-      filter: function(node){
-        return (node.id == sNode.id || node.label == sNode.label );
-      }
-    });
-
-    var existObjet = network.body.data.nodes.get({
-      filter: function(node){
-        return (node.id == oNode.id || node.label == oNode.label );
-      }
-    });
-    if (existObjet.length == 0){
-      app.addNodeIfNotExist(network, oNode);
-     existObjet = network.body.data.nodes.get({
-      filter: function(node){
-        return (node.id == oNode.id || node.label == oNode.label );
-      }
-    });
-  }
-    //console.log(existSujet[0].id);
-    //console.log(existObjet[0].id);
-    var sId = existSujet[0].id;
-    var oId = existObjet[0].id
-    if (p.split('#')[1] != undefined ){
-        pEdge[0] = {label: p.split('#')[1], title: p, from: sId, to: oId};
-      }else{
-          pEdge[0] = {label: p, from: sId, to: oId};
-      }
-
-    console.log(pEdge);
-    app.addEdgeIfNotExist(network, pEdge); // nécessite un tableau !! a revoir !
-
-
-
-});*/
-
+        network.fit();
+        network.redraw();
     }
 
     populateVis(db) {
@@ -359,10 +300,10 @@ catchTriplet(message){
   console.log(objetNode);
   // sinon, on les créé
   if (sujetNode.length == 0){
-    this.network.body.data.nodes.add({label: message[0] });
+    this.network.body.data.nodes.add({label: message[0], type: "node" });
   }
   if (objetNode.length == 0){
-    this.network.body.data.nodes.add({ label: message[2] });
+    this.network.body.data.nodes.add({ label: message[2], type: "node" });
   }
   // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
   sujetNode = this.network.body.data.nodes.get({
@@ -394,7 +335,8 @@ catchTriplet(message){
   this.network.body.data.edges.add({
     label: message[1],
     from : sujetNode[0].id,
-    to : objetNode[0].id
+    to : objetNode[0].id,
+    type: "edge",
   });
 
   //on récupère ce edge pour l'envoyer au serveur
@@ -412,6 +354,7 @@ catchTriplet(message){
   actionstosend.push(actionObjet);
   actionstosend.push(actionEdge);
   this.agentGraph.send('agentSocket', {type: "newActions", actions: actionstosend});
+    this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: actionstosend});
 
 
   //  actionsToSendTemp.push(actionEdge);

@@ -41,7 +41,7 @@ var SparqlStatementsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         switch(sr.predicate.value){
           case "http://www.w3.org/2000/01/rdf-schema#label":
           let id = sr.subject.value.replace('http://smag0.blogspot.fr/NS#_', '')
-          let node = {id: id, label: sr.object.value};
+          let node = {id: id, label: sr.object.value, y: 2*Math.random()};
           console.log("LABEL");
           console.log(node)
           if (!visRes.hasOwnProperty(id)){
@@ -50,6 +50,7 @@ var SparqlStatementsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           }else{
             console.log("un noeud existe --> maj du label")
             visRes[id].label = node.label;
+              visRes[id].y = 2*Math.random();
           }
 
           break;
@@ -78,7 +79,7 @@ if(sr.subject.value.startsWith("http://smag0.blogspot.fr/NS#_") && sr.object.val
   console.log("Liens en tre deux noeuds")
   let from =    sr.subject.value.replace('http://smag0.blogspot.fr/NS#_', '')
   let to =  sr.object.value.replace('http://smag0.blogspot.fr/NS#_', '')
-  let label  = sr.predicate.value.replace('http://smag0.blogspot.fr/NS#', '')
+  let label  = sr.predicate.value.replace('http://smag0.blogspot.fr/NS#', '').replace(/_/g, ' ');
   let edge = {from: from, to: to, label: label, type: "edge"};
   visRes.edges.push(edge);
 }else{
