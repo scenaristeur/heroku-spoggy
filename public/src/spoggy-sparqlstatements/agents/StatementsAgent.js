@@ -47,6 +47,12 @@ StatementsAgent.prototype.receive = function(from, message) {
     console.log("updateEndpoint");
     this.app.updateUrls(message.url);
     break;
+
+    case 'updateUrl':
+    console.log("updateUrl")
+    this.app.url = message.url;
+    console.log(this.app.url);
+    break;
     default:
     console.log(message);
   }

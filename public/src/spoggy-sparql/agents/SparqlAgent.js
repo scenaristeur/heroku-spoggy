@@ -46,7 +46,9 @@ SparqlAgent.prototype.receive = function(from, message) {
     case 'updateEndpoint':
     console.log("updateEndpoint");
     this.app.updateUrls(message.url);
+
     break;
+
     default:
     console.log(message);
   }

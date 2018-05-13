@@ -102,18 +102,31 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     resultsFromSparql(results){
       console.log("POPULATE From Sparql");
+      console.log(results)
       var app = this;
       let network = this.network;
       network.body.data.nodes.clear();
       network.body.data.edges.clear();
-      if (results.length > 0) {
-        if (results.length % 100 < 5) {
-          /*
-          Rezoom tous les 100*/
-          network.fit();
-          network.redraw();
-        }
-        results.forEach(function(r){
+      console.log(typeof results)
+
+
+        Object.keys(results).forEach(function(id) {
+          var data = results[id];
+          console.log(id);
+          console.log(data)
+          if (data.type == "node"){
+              network.body.data.nodes.update(data);
+          }
+          if (id == "edges"){
+            data.forEach(function(e){
+              console.log(e);
+              network.body.data.edges.update(e);
+            });
+          }
+        });
+
+/*
+        Object.entries(results).forEach(function(r){
           console.log(r);
           var s = r.subject.value;
           var p = r.predicate.value;
@@ -170,8 +183,8 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 
 
-        });
-      }
+});*/
+
     }
 
     populateVis(db) {
@@ -399,6 +412,7 @@ catchTriplet(message){
   actionstosend.push(actionObjet);
   actionstosend.push(actionEdge);
   this.agentGraph.send('agentSocket', {type: "newActions", actions: actionstosend});
+
 
   //  actionsToSendTemp.push(actionEdge);
   //console.log(actionsToSendTemp);

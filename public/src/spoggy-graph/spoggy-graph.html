@@ -519,6 +519,7 @@ revoir color picker -->
           action.data = node;
           console.log
           this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+              this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
           if( data.type == "graph"){
             console.log("nodeID");
             console.log(node.id);
@@ -551,6 +552,7 @@ revoir color picker -->
             actionNodeGraph.data = graphNode[0];
           //  this.addAction(actionNodeGraph);
             this.agentGraph.send('agentSocket', {type: "newActions", actions: [actionNodeGraph]});
+            this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [actionNodeGraph]});
             console.log(graphNode);
             console.log(node.id);
             var edgeGraph = {};
@@ -580,6 +582,7 @@ revoir color picker -->
             actionedgeGraph.data = graphEdge;
         //    this.addAction(actionedgeGraph);
                 this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+                this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
           }
           /*
           if( data.type == "graph"){
@@ -675,6 +678,7 @@ saveEdgeData (data, callback) {
   action.data = edge;
 //  this.addAction(action);
   this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
 }
 deleteNode (data, callback){
   var action = {};
@@ -682,6 +686,7 @@ deleteNode (data, callback){
   action.data = data;
 //  this.addAction(action);
   this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
   callback(data);
 }
 deleteEdge (data, callback){
@@ -690,6 +695,7 @@ deleteEdge (data, callback){
   action.data = data;
 //  this.addAction(action);
 this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
   callback(data);
 }
 

@@ -23,7 +23,7 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     updateUrls(url){
       console.log(url);
-      this.set('urls.endpoint', url);
+    /*  this.set('urls.endpoint', url);
       this.set('urls.upload', url+'/upload');//File Upload: http://5.51.110.50:3030/spoggy/upload
       this.set('urls.data', url+'/data');//Graph Store Protocol: http://5.51.110.50:3030/spoggy/data
       this.set('urls.read', url+'/get');//Graph Store Protocol (Read): http://5.51.110.50:3030/spoggy/get
@@ -32,6 +32,10 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.set('urls.sparql', url+'/sparql');//SPARQL Query: ttp://5.51.110.50:3030/spoggy/sparql
       this.set('urls.update', url+'/update');//SPARQL Update: http://5.51.110.50:3030/spoggy/update
       console.log(this.urls)
+    */
+this.agentSparql.send('agentStatements', {type:'updateUrl', url: url+'/query'});
+this.agentSparql.send('agentSparqlUpdate', {type: 'updateUrl', url: url+'/update'});
+
     }
 
 

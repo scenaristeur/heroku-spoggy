@@ -1,0 +1,130 @@
+
+<script>
+var SparqlUpdateBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class SparqlUpdateBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        },
+        urls: {
+          type : Array,
+          value: []
+        }
+      };
+    }
+
+    sendTripletToEndpoint(triplet){
+      console.log("J'envoi au endpoint");
+      console.log(triplet);
+      this.sujet = triplet[0];
+      this.propriete = triplet[1];
+      this.objet = triplet[2];
+
+      console.log(this.url);
+      console.log(this.sujet);
+      console.log(this.propriete);
+      console.log(this.objet);
+      this.$.ajaxupdate.generateRequest();
+    }
+
+    transformEdgeToTriplet(data){
+      var app = this;
+      console.log(data);
+      var subject = data[0].from;
+      var object = data[0].to;
+      var predicate = data[0].label
+
+      var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+      update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+      update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+      update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+      update += "INSERT DATA { \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+
+      //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+      update += "smag:_"+subject+"   smag:"+predicate+"   smag:_"+object+" . \n";
+
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+      update += " } \n";
+      console.log(update);
+      app.options.update = update;
+
+      console.log(app.options);
+      app.$.ajaxupdate.generateRequest();
+
+    }
+
+
+    transformNodeToTriplet(data){
+      var app = this;
+      console.log(data);
+      var subject = data.id;
+      var label = data.label;
+      var type = data.type;
+      var title = data.title;
+      var shape = data.shape;
+      var color = data.color;
+      var x = data.x;
+      var y = data.y;
+
+      var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+      update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+      update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+      update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+      update += "INSERT DATA { \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+
+      //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+      update += "smag:_"+subject+"   rdfs:label   \""+label+"\" . \n";
+      update += "smag:_"+subject+"   rdf:type   smag:"+type+" . \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+      update += " } \n";
+      console.log(update);
+      app.options.update = update;
+
+
+      //var propSend="smag:"+propriete+" ";
+      //if ((propriete == "type") || (propriete == "a")){
+      //  propSend="<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
+      //  }
+
+      console.log(app.options);
+      app.$.ajaxupdate.generateRequest();
+
+    }
+    sendToEndpoint(actions){
+      var app = this;
+      console.log("J'envoi au endpoint");
+      console.log(actions);
+      actions.forEach(function(a){
+        console.log(a);
+        switch(a.type){
+          case 'newNode':
+          console.log("Action NEW Node")
+          app.transformNodeToTriplet(a.data)
+          //  app.$.ajaxupdate.generateRequest();
+          break;
+
+          case 'newEdge':
+          console.log("Action NEW Edge")
+          app.transformEdgeToTriplet(a.data)
+
+          break;
+
+          default:
+          console.log(message);
+        }
+      });
+    }
+  }
+});
+
+</script>

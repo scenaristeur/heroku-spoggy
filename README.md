@@ -3,12 +3,21 @@
 
 [voir la doc en pleine page ](https://scenaristeur.github.io/heroku-spoggy/) ou  
 [voir le repo github](https://github.com/scenaristeur/heroku-spoggy)
-
+[Premiers pas et prise en mains de Spoggy](https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m)
 
 Spoggy est un outil de stockage de connaissances.
 Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vous foisonnez d'idées mais avez toujours du mal à vous faire comprendre par un public 'non initié', si vous devez travailler en équipe de manière 'collaborative', si le collègue que vous devez remplacer part à la retraite sans vous avoir donné toutes les clés de sa fonction, si vous voulez exprimer de manière simple une tension 'holocratique', Spoggy peut vous aider.
 # DEMO
-[DEMO plein écran](https://spoggy.herokuapp.com/)
+[Essayer Spoggy](https://spoggy.herokuapp.com/)
+
+
+[Un cours sur le RDF ?](https://perso.liris.cnrs.fr/pierre-antoine.champin/enseignement/semweb/rdf.html)
+[inférence W3C](https://www.w3.org/standards/semanticweb/inference)
+[OWl -inférence](https://fr.wikipedia.org/wiki/Web_Ontology_Language)
+[Qu'est-ce que l'inférence ?](http://www.csrdn.qc.ca/discas/MaterielDidactique/inferences.html)
+[catégories d'inférences](http://www-igm.univ-mlv.fr/~dr/XPOSE2009/Le%20Web%203.0/concepts.html#requetes)
+[OWL-reasoning-Protege](https://protege.stanford.edu/conference/2007/slides/owlTutorial-reasoning_dameron.pdf)
+[theory to reality](http://www.sce.carleton.ca/faculty/esfandiari/agents/OntologiesInPracticeLast2.pdf)
 
 # Intégrer Spoggy sur votre site Web ? Simple comme une iframe :
 <pre><code class="js">&lt;iframe  width="90%" height="700" src="https://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"&gt;&lt;/iframe&gt;</code></pre>

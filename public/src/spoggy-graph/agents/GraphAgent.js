@@ -44,9 +44,9 @@ GraphAgent.prototype.receive = function(from, message) {
 
   switch(message.type){
     case 'catchTriplet':
-    let triplets = message.triplets;
-    console.log(triplets)
-    this.app.catchTriplet(triplets);
+    let triplet = message.triplet;
+    console.log(triplet)
+    this.app.catchTriplet(triplet);
     break;
     case 'exportJson':
     this.app.exportJson();

@@ -129,7 +129,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         //  this.catchTripletsV2(triplets, this.network);
 
         //      this.catchTriplet(messageCut, this.network);
-        this.agentInput.send('agentGraph', {type: "catchTriplet", triplets:messageCut});
+        this.agentInput.send('agentGraph', {type: "catchTriplet", triplet:messageCut}); // 
+          this.agentInput.send('agentSparqlUpdate', {type: "catchTriplet", triplet:messageCut});
       }
     }
   }
@@ -189,6 +190,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log("new graph");
       //  this.newGraph(this.network, this);
       this.agentInput.send('agentGraph', {type: 'newGraph'})
+        this.agentInput.send('agentSparqlUpdate', {type: "newGraph"});
       break;
       case "/b":
       console.log("connection a la base levelgraph");
