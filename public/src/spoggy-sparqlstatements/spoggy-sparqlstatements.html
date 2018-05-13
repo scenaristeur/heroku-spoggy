@@ -8,12 +8,6 @@
 
 <dom-module id="spoggy-sparqlstatements">
   <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
-
     <iron-ajax
     id="ajaxget"
     url="{{url}}"
@@ -21,37 +15,6 @@
     handle-as="json"
     on-response="handleResponse"
     debounce-duration="300"></iron-ajax>
-
-
-
-
-    <table>
-      <!-- voir aussi https://saulis.github.io/iron-data-table/demo/columns.html -->
-      <tr>
-        <template is="dom-repeat" items="{{head}}">
-          <th>{{item}}</th>
-        </template>
-      </tr>
-      <template is="dom-repeat" items="{{results}}">
-        <tr>
-          <td>{{item.subject.value}}</td>
-          <td>{{item.predicate.value}}</td>
-          <td>{{item.object.value}}</td>
-        </tr>
-      </template>
-    </table>
-
-
-
-    {{data}}
-
-    <h2>Hello [[prop1]]!  [[url]] [[status]] </h2>
-    <paper-button
-    raised
-    on-tap="sendRequest">
-    <iron-icon icon="queue"></iron-icon> <!-- ne s'affiche pas ? -->
-    Envoyer la requete
-  </paper-button>
 </template>
 
 <script>

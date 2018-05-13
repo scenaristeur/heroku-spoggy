@@ -6,12 +6,6 @@
 
 <dom-module id="spoggy-sparqlupdate">
   <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
-
     <iron-ajax
     id="ajaxupdate"
     url="{{url}}"
@@ -21,43 +15,7 @@
     content-type="application/x-www-form-urlencoded"
     on-response="handleResponse">
   </iron-ajax>
-
-<!-- DEBUG -->
-  <div>Result : {{result}}</div>
-  <div>Requete : {{requete}}</div>
-
-
-
-<h2>update [[endpoint]] [[status]] [[dataset]]</h2>
-
-
-
-<!-- TRIPLET POPUP -->
-<paper-dialog id="tripletPopUp" backdrop transition="core-transition-bottom">
-  <div horizontal start-justified start layout >
-    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-    <div style="padding-left:20px" vertical start-justified start layout wrap>
-      <h2 id="TripletOperation" style="margin: 0;color: #0D578B;">Ajouter un triplet</h2>
-      <p >
-        <paper-input id="tripletSujet" label="Sujet" autofocus ></paper-input>
-        <paper-input id="tripletPredicat" label="Predicat"  ></paper-input>
-        <paper-input id="tripletObjet" label="Objet"  ></paper-input>
-      </p>
-      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-        <paper-button on-tap="saveTriplet" raised>ok</paper-button>
-        <paper-button on-tap="toggleTripletPopUp" raised>Annuler</paper-button>
-      </div>
-    </div>
-  </div>
-</paper-dialog>
-
-<paper-button on-tap="toggleTripletPopUp" raised>Ajouter un triplet</paper-button>
-
 </template>
-
-
-
-
 <script>
 /**
 * `spoggy-sparqlupdate`
@@ -232,24 +190,6 @@ update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   \""+triplet.
   }
 
   // CREER UN TRIPLET
-
-
-  saveTriplet(){
-    this.sujet  = this.$.tripletSujet.value;
-    this.propriete  = this.$.tripletPredicat.value;
-    this.objet  = this.$.tripletObjet.value;
-    console.log("create triplet "+this.sujet+" "+this.predicat+" "+this.objet);
-    //  this.createTriplet(sujet, predicat, objet);
-    this.sendUpdate();
-    this.toggleTripletPopUp();
-  }
-  toggleTripletPopUp(){
-    this.$.tripletPopUp.toggle();
-    this.$.tripletSujet.value="";
-    this.$.tripletPredicat.value="";
-    this.$.tripletObjet.value="";
-    this.$.tripletSujet.focus();
-  }
 
   _actionstosendChanged(){
     var app = this;
