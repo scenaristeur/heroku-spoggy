@@ -107,10 +107,14 @@ revoir color picker -->
               <paper-checkbox name="triangle">Triangle</paper-checkbox>
               <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
               <paper-checkbox name="square">Carré</paper-checkbox>
-              <!--          <paper-checkbox name="image" disabled>Image</paper-checkbox>
-              <paper-checkbox name="circularImage" disabled>Image Cercle</paper-checkbox>
-              <paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
+              <paper-checkbox name="image" >Image</paper-checkbox>
+              <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
+              <!--<paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
+
             </iron-selector>
+            <div hidden$="[[shapeIsImage(selectedShape)]]">
+              <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
+            </div>
           </fieldset>
         </div>
       </iron-collapse-button>
@@ -133,7 +137,7 @@ revoir color picker -->
       </iron-collapse-button>
 
 
-      <iron-collapse-button>
+<!--      <iron-collapse-button>
         <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
         <div slot="collapse-content">
           (developpements en cours)
@@ -148,7 +152,7 @@ revoir color picker -->
           </fieldset>
         </div>
       </iron-collapse-button>
-
+-->
       <div style="padding-top:10px" horizontal end-justified layout self-stretch>
         <paper-button id="nodeSaveButton"  raised>ok</paper-button>
         <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
@@ -204,7 +208,7 @@ revoir color picker -->
     Longueur des liens     <paper-slider  min="0" max="800" value="{{springLengthValue}}"   on-change="_changeSpringLength"></paper-slider>
     Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" on-change="_changeSpringConstant"></paper-slider>
     Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"  on-change="_changeNodeDistance"></paper-slider>
-    Souplesse           <paper-slider  min="0" max="2" value="{{dampingValue}}"  step="0.01"  on-change="_changeDamping"></paper-slider>
+    Amortissement         <paper-slider  min="0" max="1" value="{{dampingValue}}"  step="0.001"  on-change="_changeDamping"></paper-slider>
     <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
     <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
     <div style="padding-top:10px" horizontal end-justified layout self-stretch>
@@ -248,23 +252,23 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
       },
       centralGravityValueDefault :{
         type : Number,
-        value: 0 //0.001
+        value: 0.0001 //0.001
       },
       springLengthValueDefault :{
         type : Number,
-        value:  60//15 //220
+        value:  127//15 //220
       },
       springConstantValueDefault :{
         type : Number,
-        value: 0.05 //0.05
+        value: 0.1 //0.05
       },
       nodeDistanceValueDefault :{
         type : Number,
-        value: 280 //16 //400
+        value: 212 //16 //400
       },
       dampingValueDefault :{
         type : Number,
-        value: 0.1 //0.08
+        value: 0.08 //0.08
       },
       settinghidden:{
         type: Boolean,
@@ -298,6 +302,11 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     this.agentGraph.send('agentHello', 'Hello agentHello!');
   }
 
+  shapeIsImage(shape){
+    console.log(shape)
+    //  console.log(value.length)
+    return shape != "image" && shape != "circularImage";
+  }
 
   connectedCallback(){
     super.connectedCallback();
@@ -354,7 +363,8 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     nodes: nodes,
     edges: edges
   };*/
-  var data = this.init;
+//  var data = this.init;
+var data = {};
   var options = {
     locale: 'fr',
     edges:{
@@ -379,8 +389,8 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
         editNode: function (data, callback) {
           // filling in the popup DOM elements
           //document.getElementById('nodeOperation').innerHTML = "Edit Node";
-              data.edit = true; // signalement d'une edition pour sparql
-              console.log(data);
+          data.edit = true; // signalement d'une edition pour sparql
+          console.log(data);
           graphe.$.nodeOperation.innerHTML = "Edit Node";
           graphe.editNode(data, callback);
         },
@@ -466,6 +476,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     this.$.nodeLabel.value= data.label || "";
     this.selectedShape = data.shape || "ellipse";
     this.selectedType = data.type || "node";
+    this.imageUrl = data.image || "";
     if ((data.color != undefined) && (data.color.background != undefined)){
       this.colorValue = data.color.background
     }
@@ -503,6 +514,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     data.label = this.$.nodeLabel.value;
     data.shape = this.selectedShape;
     data.color = this.colorValue;
+    data.image = this.$.imgUrl.value;
 
     data.type = this.selectedType;
     if (data.label.length > 40){
