@@ -107,19 +107,19 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       let network = this.network;
       network.body.data.nodes.clear();
       network.body.data.edges.clear();
-      console.log(typeof results)
-
 
         Object.keys(results).forEach(function(id) {
           var data = results[id];
-          console.log(id);
-          console.log(data)
+        //  console.log(id);
+        //  console.log(data)
           if (data.type == "node"){
+          //  console.log("NONONONODE")
               network.body.data.nodes.update(data);
           }
           if (id == "edges"){
+            //    console.log("EDGEEDGEDGE")
             data.forEach(function(e){
-              console.log(e);
+            //  console.log(e);
               network.body.data.edges.update(e);
             });
           }

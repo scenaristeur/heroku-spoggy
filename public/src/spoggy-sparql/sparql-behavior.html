@@ -23,19 +23,26 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     testFuseki(endpoint){
       console.log(endpoint);
-      this.url_fuseki = endpoint+"/$/ping";
+      this.url_fuseki = endpoint;
+      this.url_fuseki_ping = endpoint+"/$/ping";
       //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
-      console.log(this.url_fuseki);
+      console.log(this.url_fuseki_ping);
       this.$.fusekiPing.generateRequest();
     }
     testVirtuoso(endpoint){
       console.log(endpoint);
+      this.url_virtuoso_ping = endpoint;//+"/sparql";
+      //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+      console.log(this.url_virtuoso_ping);
+      this.$.virtuosoPing.generateRequest();
     }
 
 
-    updateUrls(url){
-      console.log(url);
-    /*  this.set('urls.endpoint', url);
+    _updateUrl(){
+      console.log(this.url_fuseki);
+      console.log(this.dataset);
+      let url = this.url_fuseki+this.dataset;
+      /*  this.set('urls.endpoint', url);
       this.set('urls.upload', url+'/upload');//File Upload: http://5.51.110.50:3030/spoggy/upload
       this.set('urls.data', url+'/data');//Graph Store Protocol: http://5.51.110.50:3030/spoggy/data
       this.set('urls.read', url+'/get');//Graph Store Protocol (Read): http://5.51.110.50:3030/spoggy/get
@@ -44,29 +51,31 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.set('urls.sparql', url+'/sparql');//SPARQL Query: ttp://5.51.110.50:3030/spoggy/sparql
       this.set('urls.update', url+'/update');//SPARQL Update: http://5.51.110.50:3030/spoggy/update
       console.log(this.urls)
-    */
-this.agentSparql.send('agentStatements', {type:'updateUrl', url: url+'/query'});
-this.agentSparql.send('agentSparqlUpdate', {type: 'updateUrl', url: url+'/update'});
+      */
+      this.agentSparql.send('agentStatements', {type:'updateUrl', url: url+'/query'});
+      this.agentSparql.send('agentSparqlUpdate', {type: 'updateUrl', url: url+'/update'});
 
     }
 
     //PING
     _handleFusekiPing(data){
-      console.log("ping ok");
-      this.$.labelEndpoint.label = "Endpoint : ping OK";
-      this.ping = data;
+      console.log("ping  Fuseki ok");
+
+      this.pingFuseki = data;
       console.log(data);
       this.status = data.detail.response;
       console.log(this.status);
-      this.url_server = this.endpoint+"/$/server";
+      this.url_server = this.url_fuseki+"/$/server";
       //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
       console.log(this.url_server);
       this.$.server_req.generateRequest();
+      this.$.fusekiPopup.toggle();
+      this.$.labelEndpoint.label = "Endpoint : ping Fuseki OK";
     }
     _handleFusekiPingError(data){
-      console.log("error ping");
+      console.log("error ping  Fuseki");
       this.$.labelEndpoint.label = "Endpoint : ping Erreur"
-      this.ping = "";
+      this.pingFuseki = "";
       console.log(data);
       console.log(data.detail);
       console.log(data.detail.error);
@@ -78,6 +87,54 @@ this.agentSparql.send('agentSparqlUpdate', {type: 'updateUrl', url: url+'/update
       console.log(this.status);
       this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
     }
+
+
+    //PING
+    _handleVirtuosoPing(data){
+      console.log("ping Virtuoso ok");
+      this.$.labelEndpoint.label = "Endpoint : ping OK";
+      this.pingVirtuoso = data;
+      console.log(data);
+      this.status = data.detail.response;
+      console.log(this.status);
+      //  this.url_server = this.endpoint+"/$/server";
+      //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+      //  console.log(this.url_server);
+      //  this.$.server_req.generateRequest();
+    }
+    _handleVirtuosoPingError(data){
+      console.log("error ping Virtuoso");
+      this.$.labelEndpoint.label = "Endpoint : ping Virtuoso Erreur"
+      this.pingVirtuoso = "";
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
+      this.status = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+      console.log(this.status);
+      this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+    }
+
+
+    _datasetChanged(e){
+      this.dataset = e.model.item.ds_name;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     //SERVER
     _handleFusekiServer(data){
       console.log("server ok");

@@ -99,7 +99,7 @@
 
       <div hidden$="[[!modeIs(mode,'global')]]">
         <paper-input id="labelEndpoint" label="Endpoint" value="{{endpoint::input}}"></paper-input>
-        <paper-button on-tap="_testEndpoint" raised>Connecter</paper-button>
+        <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
       </div>
 
 
@@ -161,8 +161,8 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
       },
       endpoint: {
         type: String,
-        value: '',
-        //    observer: '_endpointChanged'
+        value: 'http://127.0.0.1:3030',
+
       },
 
       graph: {
@@ -195,12 +195,7 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
 
   //////////////////////////////////////////////////////
 
-  /*_endpointChanged(){
-  this.url_status = this.endpoint+"/$/ping";
-  //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
-  console.log(this.url_status);
-  this.$.status_req.generateRequest();
-}*/
+
 _testEndpoint(e){
   console.log(this.endpoint);
   this.agentMode.send('agentSparql', {type: 'testEndpoint', endpoint: this.endpoint});

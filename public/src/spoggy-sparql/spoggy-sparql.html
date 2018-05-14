@@ -1,6 +1,19 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
 <link rel="import" href="./sparql-behavior.html">
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
 <script src="agents/SparqlAgent.js"></script>
@@ -11,14 +24,14 @@
 <dom-module id="spoggy-sparql">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
 
     <iron-ajax
     id="fusekiPing"
-    url="{{url_fuseki}}"
+    url="{{url_fuseki_ping}}"
     method="GET"
     content-type="application/text"
     handle-as="text"
@@ -39,7 +52,7 @@
 
     <iron-ajax
     id="virtuosoPing"
-    url="{{url_virtuoso}}"
+    url="{{url_virtuoso_ping}}"
     method="GET"
     content-type="application/text"
     handle-as="text"
@@ -47,53 +60,75 @@
     on-error="_handleVirtuosoPingError"
     ></iron-ajax>
 
+    <paper-dialog  id="fusekiPopup" >
+      <paper-dialog-scrollable>
+        MODE pour Fuseki direct
+        <div hidden$="[[!modeIs(mode,'global')]]">
+          <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
+          <paper-input id="labelEndpoint" label="Endpoint" value="{{url_fuseki::change}}"></paper-input>
+          <paper-dropdown-menu hidden$="[[isEmpty(pingFuseki)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content" selected="0">
+              <template is="dom-repeat" items="[[datasets]]">
+                <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
 
-        <spoggy-sparqlupdate></spoggy-sparqlupdate>
-        <spoggy-sparqlstatements ></spoggy-sparqlstatements>
+
+          <paper-input label="Graph" hidden$="[[isEmpty(pingFuseki)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+          <paper-button  dialog-dismiss raised  on-tap="_updateUrl">Valider</paper-button>
+        </div>
+        <br>
+      </paper-dialog-scrollable>
+    </paper-dialog>
+
+
+    <spoggy-sparqlupdate></spoggy-sparqlupdate>
+    <spoggy-sparqlstatements ></spoggy-sparqlstatements>
 
   </template>
 
   <script>
-    /**
-     * `spoggy-sparql`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggySparql extends SparqlBehaviorMixin(Polymer.Element) {
-      static get is() { return 'spoggy-sparql'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-sparql'
-          }
-        };
-      }
-
-
-        constructor(){
-          super();
-          this.agentSparql = new SparqlAgent('agentSparql', this);
-          Polymer.RenderStatus.afterNextRender(this, function() {
-            // When possible, use afterNextRender to defer non-critical
-            // work until after first paint.
-            this._deferred();
-
-          });
+  /**
+  * `spoggy-sparql`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggySparql extends SparqlBehaviorMixin(Polymer.Element) {
+    static get is() { return 'spoggy-sparql'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-sparql'
         }
-        _deferred(){
-          //  console.log("agent DATA defered")
-          //    console.log(this.agentMode);
-          //  this.initAgents()
-      console.log(this.agentSparql);
-      this.agentSparql.send('agentHello', 'Hello, agentHello !')
-        }
-
+      };
     }
 
-    window.customElements.define(SpoggySparql.is, SpoggySparql);
+
+    constructor(){
+      super();
+      this.agentSparql = new SparqlAgent('agentSparql', this);
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+
+      });
+    }
+    _deferred(){
+      //  console.log("agent DATA defered")
+      //    console.log(this.agentMode);
+      //  this.initAgents()
+      console.log(this.agentSparql);
+      this.agentSparql.send('agentHello', 'Hello, agentHello !')
+    }
+
+  }
+
+  window.customElements.define(SpoggySparql.is, SpoggySparql);
   </script>
 </dom-module>

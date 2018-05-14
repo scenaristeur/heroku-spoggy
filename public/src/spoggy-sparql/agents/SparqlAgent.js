@@ -52,7 +52,7 @@ SparqlAgent.prototype.receive = function(from, message) {
     case 'testEndpoint':
     console.log("testEndpoint");
     this.app.testFuseki(message.endpoint);
-    this.app.testVirtuoso(message.endpoint);
+  //  this.app.testVirtuoso(message.endpoint);
     break;
 
     default:
