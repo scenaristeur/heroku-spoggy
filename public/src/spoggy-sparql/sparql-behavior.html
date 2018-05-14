@@ -21,6 +21,18 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
+    testFuseki(endpoint){
+      console.log(endpoint);
+      this.url_fuseki = endpoint+"/$/ping";
+      //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+      console.log(this.url_fuseki);
+      this.$.fusekiPing.generateRequest();
+    }
+    testVirtuoso(endpoint){
+      console.log(endpoint);
+    }
+
+
     updateUrls(url){
       console.log(url);
     /*  this.set('urls.endpoint', url);
@@ -36,6 +48,58 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 this.agentSparql.send('agentStatements', {type:'updateUrl', url: url+'/query'});
 this.agentSparql.send('agentSparqlUpdate', {type: 'updateUrl', url: url+'/update'});
 
+    }
+
+    //PING
+    _handleFusekiPing(data){
+      console.log("ping ok");
+      this.$.labelEndpoint.label = "Endpoint : ping OK";
+      this.ping = data;
+      console.log(data);
+      this.status = data.detail.response;
+      console.log(this.status);
+      this.url_server = this.endpoint+"/$/server";
+      //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+      console.log(this.url_server);
+      this.$.server_req.generateRequest();
+    }
+    _handleFusekiPingError(data){
+      console.log("error ping");
+      this.$.labelEndpoint.label = "Endpoint : ping Erreur"
+      this.ping = "";
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
+      this.status = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+      console.log(this.status);
+      this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+    }
+    //SERVER
+    _handleFusekiServer(data){
+      console.log("server ok");
+      console.log(data);
+      var clemodif = data.detail.response.replace(/ds\./g, "ds_")
+      this.server = JSON.parse(clemodif);
+      console.log(this.server);
+      this.datasets = this.server.datasets;
+      this.dataset = this.datasets[0].ds_name;
+      console.log(this.datasets);
+    }
+    _handleFusekiServerError(data){
+      console.log("error server");
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
+      this.server = data.detail.error.type + ", Veuillez vérifier l'accès au endpoint "+this.url_status;
+      console.log(this.server);
     }
 
 

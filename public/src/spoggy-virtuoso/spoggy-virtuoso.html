@@ -1,0 +1,61 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="./virtuoso-behavior.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/VirtuosoAgent.js"></script>
+
+
+<dom-module id="spoggy-virtuoso">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-virtuoso`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyVirtuoso extends VirtuosoBehaviorMixin(Polymer.Element) {
+      static get is() { return 'spoggy-virtuoso'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-virtuoso'
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        this.agentVirtuoso = new VirtuosoAgent('agentVirtuoso', this);
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+
+        });
+      }
+      _deferred(){
+        //  console.log("agent DATA defered")
+        //    console.log(this.agentMode);
+        //  this.initAgents()
+        console.log(this.agentVirtuoso);
+        this.agentVirtuoso.send('agentHello', 'Hello, agentHello !')
+      }
+    }
+
+    window.customElements.define(SpoggyVirtuoso.is, SpoggyVirtuoso);
+  </script>
+</dom-module>

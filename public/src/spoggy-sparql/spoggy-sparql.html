@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="./sparql-behavior.html">
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
@@ -15,7 +16,39 @@
       }
     </style>
 
-        <spoggy-sparqlupdate  ></spoggy-sparqlupdate>
+    <iron-ajax
+    id="fusekiPing"
+    url="{{url_fuseki}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleFusekiPing"
+    on-error="_handleFusekiPingError"
+    ></iron-ajax>
+
+    <iron-ajax
+    id="server_req"
+    url="{{url_server}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleFusekiServer"
+    on-error="_handleFusekiServerError"
+    ></iron-ajax>
+
+
+    <iron-ajax
+    id="virtuosoPing"
+    url="{{url_virtuoso}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleVirtuosoPing"
+    on-error="_handleVirtuosoPingError"
+    ></iron-ajax>
+
+
+        <spoggy-sparqlupdate></spoggy-sparqlupdate>
         <spoggy-sparqlstatements ></spoggy-sparqlstatements>
 
   </template>

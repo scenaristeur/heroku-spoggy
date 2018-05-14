@@ -4,7 +4,7 @@
 * @constructor
 * @extend eve.Agent
 */
-function SparqlAgent(id, app) {
+function VirtuosoAgent(id, app) {
   // execute super constructor
   eve.Agent.call(this, id);
   this.app = app;
@@ -13,24 +13,24 @@ function SparqlAgent(id, app) {
 }
 
 // extend the eve.Agent prototype
-SparqlAgent.prototype = Object.create(eve.Agent.prototype);
-SparqlAgent.prototype.constructor = SparqlAgent;
+VirtuosoAgent.prototype = Object.create(eve.Agent.prototype);
+VirtuosoAgent.prototype.constructor = VirtuosoAgent;
 
 /**
 * Send a greeting to an agent
 * @param {String} to
 */
-SparqlAgent.prototype.sayHello = function(to) {
+VirtuosoAgent.prototype.sayHello = function(to) {
   this.send(to, 'Hello ' + to + '!');
 };
 
 /**
 * Handle incoming greetings. This overloads the default receive,
-* so we can't use SparqlAgent.on(pattern, listener) anymore
+* so we can't use VirtuosoAgent.on(pattern, listener) anymore
 * @param {String} from     Id of the sender
 * @param {*} message       Received message, a JSON object (often a string)
 */
-SparqlAgent.prototype.receive = function(from, message) {
+VirtuosoAgent.prototype.receive = function(from, message) {
   console.log(from + ' said: ' + JSON.stringify(message) );
   this.app.prop1 = message;
 
@@ -48,13 +48,11 @@ SparqlAgent.prototype.receive = function(from, message) {
     this.app.updateUrls(message.url);
     break;
 
-  //  this.agentMode.send('agentSparql', {type: 'testEndpoint', endpoint: this.endpoint});
-    case 'testEndpoint':
-    console.log("testEndpoint");
-    this.app.testFuseki(message.endpoint);
-    this.app.testVirtuoso(message.endpoint);
+    case 'updateUrl':
+    console.log("updateUrl")
+    this.app.url = message.url;
+    console.log(this.app.url);
     break;
-
     default:
     console.log(message);
   }

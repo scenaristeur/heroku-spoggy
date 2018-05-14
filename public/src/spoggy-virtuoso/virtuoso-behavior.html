@@ -1,7 +1,7 @@
 
 <script>
-var ModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
-  return class ModeBehavior extends superClass {
+var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class VirtuosoBehavior extends superClass {
     constructor() {
       super();
       //  console.log("Mode behavior")
@@ -13,10 +13,6 @@ var ModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         inputProp: {
           type: String,
           value: 'modeB'
-        },
-        urls: {
-          type : Array,
-          value: []
         }
       };
     }

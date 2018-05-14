@@ -41,7 +41,9 @@
     }
     </style>
 
-<!--
+
+
+
     <iron-ajax
     id="status_req"
     url="{{url_status}}"
@@ -50,9 +52,17 @@
     handle-as="text"
     on-response="_handleUrlStatusResponse"
     on-error="_handleUrlStatusError"
-    ></iron-ajax>-->
+    ></iron-ajax>
 
-
+    <iron-ajax
+    id="server_req"
+    url="{{url_server}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleUrlServerResponse"
+    on-error="_handleUrlServerError"
+    ></iron-ajax>
 
 
     <paper-dialog id="modePopup" > <!--    on-iron-overlay-opened="_openModePopp"
@@ -96,35 +106,28 @@
           <paper-button on-tap="rejoindre">Rejoindre</paper-button>
         </paper-dropdown-input>-->
       </div>
-
       <div hidden$="[[!modeIs(mode,'global')]]">
-        <paper-input id="labelEndpoint" label="Endpoint" value="{{endpoint::input}}"></paper-input>
-        <paper-button on-tap="_testEndpoint" raised>Connecter</paper-button>
+        <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
+        <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
+        <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+          <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
+            <template is="dom-repeat" items="[[datasets]]">
+              <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+
+        <!--
+        <paper-input id="labelDataset" label="Dataset" on-change="datasetChanged" value={{dataset::input}}></paper-input>-->
+        <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+        <paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
       </div>
-
-
-      <!-- MODE pour Fuseki direct
-      <div hidden$="[[!modeIs(mode,'global')]]">
-      <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
-      <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
-      <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
-      <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
-      <template is="dom-repeat" items="[[datasets]]">
-      <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
-    </template>
-  </paper-listbox>
-</paper-dropdown-menu>
-
-
-<paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
-<paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
-</div>-->
-<br>
-</paper-dialog-scrollable>
-<!--
-<div style="padding-top:10px" horizontal end-justified layout self-stretch>
-<paper-button  dialog-dismiss raised>Fermer</paper-button>
-</div>-->
+      <br>
+    </paper-dialog-scrollable>
+    <!--
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+    <paper-button  dialog-dismiss raised>Fermer</paper-button>
+  </div>-->
 </paper-dialog>
 
 
@@ -161,10 +164,14 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
       },
       endpoint: {
         type: String,
-        value: '',
-        //    observer: '_endpointChanged'
+        value: 'http://5.51.110.50:3030',
+        observer: '_endpointChanged'
       },
-
+      dataset: {
+        type: String,
+        value: "",
+        //  observer: '_datasetChanged'
+      },
       graph: {
         type: String,
         value: "Default",
@@ -185,7 +192,7 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
   }
   _deferred(){
     //  console.log("agent DATA defered")
-    console.log(this.agentMode);
+    //    console.log(this.agentMode);
     //  this.initAgents()
 
   }
@@ -195,96 +202,95 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
 
   //////////////////////////////////////////////////////
 
-  /*_endpointChanged(){
-  this.url_status = this.endpoint+"/$/ping";
-  //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
-  console.log(this.url_status);
-  this.$.status_req.generateRequest();
-}*/
-_testEndpoint(e){
-  console.log(this.endpoint);
-  this.agentMode.send('agentSparql', {type: 'testEndpoint', endpoint: this.endpoint});
-}
-
-_modeChanged(newMode, oldMode){
-  this.set('modeConfig.mode', newMode);
-  this.mode = newMode;
-  this.modeBtnText = this.mode.substring(0, 6);
-  switch (newMode) {
-    case 'solo':
-    console.log('passage solo');
-    break;
-    case 'collab':
-    console.log('connexion socket');
-    //  this.connectSocket();
-    this.agentMode.send('agentSocket', {type: "connect"});
-    console.log("SPOG-SOCKET");
-    console.log(this.socket);
-
-
-    // expected output: "Mangoes and papayas are $2.79 a pound."
-    break;
-    case 'global':
-    console.log('connexion endpoint.');
-    // expected output: "Mangoes and papayas are $2.79 a pound."
-    break;
-    default:
-    console.log('Sorry, we are out of ' + newMode + '.');
+  _endpointChanged(){
+    this.url_status = this.endpoint+"/$/ping";
+    //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
+    console.log(this.url_status);
+    this.$.status_req.generateRequest();
   }
-  switch (oldMode) {
-    case 'solo':
-    console.log('quitte solo');
-    break;
-    case 'collab':
-    console.log('deconnect socket');
-    //  this.socket.disconnect();
-    this.agentMode.send('agentSocket', {type: "disconnect"});
-    break;
-    case 'global':
-    console.log('deconnect endpoint');
-    //this.socket.disconnect();
-    this.agentMode.send('agentSocket', {type: "disconnect"});
-    break;
-    default:
 
+  _datasetChanged(e){
+    this.dataset = e.model.item.ds_name;
   }
-}
-rejoindre(e){
-  let room = e.model.item;
-  console.log(room);
-  this.modeBtnText = room.substring(0, 6);
-  //this.switchRoom(room);
-  this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
-  this.$.modePopup.toggle();
-}
-
-creer(){
-  let room = this.newRoom;
-  this.modeBtnText = room.substring(0, 6);
-  //  this.switchRoom(room);
-  this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
-}
+  _modeChanged(newMode, oldMode){
+    this.set('modeConfig.mode', newMode);
+    this.mode = newMode;
+    this.modeBtnText = this.mode.substring(0, 6);
+    switch (newMode) {
+      case 'solo':
+      console.log('passage solo');
+      break;
+      case 'collab':
+      console.log('connexion socket');
+      //  this.connectSocket();
+      this.agentMode.send('agentSocket', {type: "connect"});
+      console.log("SPOG-SOCKET");
+      console.log(this.socket);
 
 
-/* TECHNICAL TOOLS */
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'global':
+      console.log('connexion endpoint.');
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      default:
+      console.log('Sorry, we are out of ' + newMode + '.');
+    }
+    switch (oldMode) {
+      case 'solo':
+      console.log('quitte solo');
+      break;
+      case 'collab':
+      console.log('deconnect socket');
+      //  this.socket.disconnect();
+      this.agentMode.send('agentSocket', {type: "disconnect"});
+      break;
+      case 'global':
+      console.log('deconnect endpoint');
+      //this.socket.disconnect();
+      this.agentMode.send('agentSocket', {type: "disconnect"});
+      break;
+      default:
 
-openChangeMode(){
-  console.log("changeMode");
-  this.$.modePopup.toggle();
-}
+    }
+  }
+  rejoindre(e){
+    let room = e.model.item;
+    console.log(room);
+    this.modeBtnText = room.substring(0, 6);
+    //this.switchRoom(room);
+    this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
+    this.$.modePopup.toggle();
+  }
 
-modeIs(mode, activeMode){
-  return mode == activeMode;
-}
-isEmpty(value){
-  //  console.log(value.length)
-  return value.length==0;
-}
-pseudoChanged(){
-  // test a faire pour voir si deconnecter ou changer de nom si deja connecté
-  console.log(this.pseudo)
-  this.agentMode.send('agentSocket', {type: "adduser", pseudo: this.pseudo});
-}
+  creer(){
+    let room = this.newRoom;
+    this.modeBtnText = room.substring(0, 6);
+    //  this.switchRoom(room);
+    this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
+  }
+
+
+  /* TECHNICAL TOOLS */
+
+  openChangeMode(){
+    console.log("changeMode");
+    this.$.modePopup.toggle();
+  }
+
+  modeIs(mode, activeMode){
+    return mode == activeMode;
+  }
+  isEmpty(value){
+    //  console.log(value.length)
+    return value.length==0;
+  }
+  pseudoChanged(){
+    // test a faire pour voir si deconnecter ou changer de nom si deja connecté
+    console.log(this.pseudo)
+    this.agentMode.send('agentSocket', {type: "adduser", pseudo: this.pseudo});
+  }
 }
 
 window.customElements.define(SpoggyMode.is, SpoggyMode);
