@@ -51,8 +51,13 @@ SparqlAgent.prototype.receive = function(from, message) {
   //  this.agentMode.send('agentSparql', {type: 'testEndpoint', endpoint: this.endpoint});
     case 'testEndpoint':
     console.log("testEndpoint");
-  //  this.app.testFuseki(message.endpoint);
-    this.app.testVirtuoso(message.endpoint);
+    if (message.endpointType == 'fuseki'){
+        this.app.testFuseki(message);
+    }else if (message.endpointType == 'virtuoso'){
+        this.app.testVirtuoso(message);
+    }else {
+      console.log("Je ne connais pas ce type de endpoint : "+message.endpointType);
+    }
     break;
 
     default:

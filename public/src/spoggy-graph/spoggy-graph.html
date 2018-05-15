@@ -137,28 +137,28 @@ revoir color picker -->
       </iron-collapse-button>
 
 
-<!--      <iron-collapse-button>
-        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
-        <div slot="collapse-content">
-          (developpements en cours)
-          <fieldset>
-            <legend>Type</legend>
-            <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
-              <paper-checkbox name="node">Node</paper-checkbox>
-              <paper-checkbox name="url">Url</paper-checkbox>
-              <paper-checkbox name="graph">Graphe</paper-checkbox>
-              <paper-checkbox name="source">Source</paper-checkbox>
-            </iron-selector>
-          </fieldset>
-        </div>
-      </iron-collapse-button>
+      <!--      <iron-collapse-button>
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
+      <div slot="collapse-content">
+      (developpements en cours)
+      <fieldset>
+      <legend>Type</legend>
+      <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
+      <paper-checkbox name="node">Node</paper-checkbox>
+      <paper-checkbox name="url">Url</paper-checkbox>
+      <paper-checkbox name="graph">Graphe</paper-checkbox>
+      <paper-checkbox name="source">Source</paper-checkbox>
+    </iron-selector>
+  </fieldset>
+</div>
+</iron-collapse-button>
 -->
-      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-        <paper-button id="nodeSaveButton"  raised>ok</paper-button>
-        <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
-      </div>
-    </div>
-  </div>
+<div style="padding-top:10px" horizontal end-justified layout self-stretch>
+  <paper-button id="nodeSaveButton"  raised>ok</paper-button>
+  <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
+</div>
+</div>
+</div>
 </paper-dialog>
 
 
@@ -316,6 +316,10 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     this.network.on("selectNode", function (params) {
       console.log('selectNode Event:', params);
       console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
+      let id = params.nodes[0];
+      var node = app.network.body.data.nodes.get(id);
+      console.log(node)
+      app.agentGraph.send('agentVirtuoso', {type:'describe', resource : node.title});
       //ne fonctionne pas pour mettre le label du node dans l'input ???
       //app.inputValueFromGraph = params.nodes[0];
       //  app.updateInputValue(params.nodes[0]);
@@ -363,8 +367,8 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     nodes: nodes,
     edges: edges
   };*/
-//  var data = this.init;
-var data = {};
+  //  var data = this.init;
+  var data = {};
   var options = {
     locale: 'fr',
     edges:{

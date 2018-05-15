@@ -17,7 +17,128 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
+    /**
+    * Execute la requete
+    */
+    sendRequest (){
+      if (this.url.length>0){
+        console.log(this.url);
+        this.$.ajaxget.generateRequest();
+      }
+    }
+    sendDescribe(){
+    //  if (this.url.length>0){
+        console.log(this.url);
+        this.$.describeGet.generateRequest();
+    //  }
+    }
 
+    _handleResponse(data){
+      console.log("Reponse DBPEDIA");
+      //  console.log(data);
+      //  console.log(data.detail);
+      //  console.log(data.detail.error);
+      //  console.log(data.detail.error.message);
+      //  console.log(data.detail.request);
+      console.log(data.detail.response); // -->
+      let response = JSON.parse(data.detail.response);
+      let link = response.head.link;
+      let vars = response.head.vars;
+      let results = response.results.bindings;
+      //  console.log(this.head);
+      console.log(results);
+
+      var visResults = this.conceptsDbPediaToVis(results);
+      console.log(visResults);
+      this.agentVirtuoso.send('agentGraph', {type: "resultsFromSparql", results: visResults})
+    }
+    _handleError(data){
+      console.log("error DBPEDIA");
+
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
+
+    }
+
+
+////////////////////describe
+_handleDescribeResponse(data){
+  console.log("Reponse Describe DBPEDIA");
+  //  console.log(data);
+  //  console.log(data.detail);
+  //  console.log(data.detail.error);
+  //  console.log(data.detail.error.message);
+  //  console.log(data.detail.request);
+//  console.log(data.detail.response); // -->
+  let response = JSON.parse(data.detail.response);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+//  console.log(results);
+
+  //var visResults = this.describeDbpediaToVis(results);
+  //console.log(visResults);
+  this.agentVirtuoso.send('agentGraph', {type: "describeFromDBpedia", results: results, resource: this.resource})
+}
+_handleDescribeError(data){
+  console.log("error DBPEDIA");
+
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+
+}
+/*
+describeDbpediaToVis(results){
+  var visRes = {nodes:[], edges:[]};
+  results.forEach(function(r){
+    console.log(r)
+let s = r.s.value;
+let p = r.p.value;
+let o = r.p.value;
+
+  });
+  return visRes;
+}*/
+
+////////////fin describe
+
+
+
+    conceptsDbPediaToVis(results){
+      var visRes = {nodes:[], edges:[]};
+      results.forEach(function(r){
+        let concept = r.Concept.value.trim();
+        console.log(concept);
+        let conceptCut = concept.split("#");
+        console.log(conceptCut);
+        let label = conceptCut[conceptCut.length-1];
+        if (label == concept){
+          conceptCut = concept.split("/");
+          console.log(conceptCut);
+          label = conceptCut[conceptCut.length-1];
+        }
+        console.log(label);
+        let node = {
+          uri: concept,
+          label: label,
+          type: 'concept',
+          y: 2*Math.random()
+        }
+        visRes.nodes.push(node);
+      });
+      return visRes;
+    }
 
 
 

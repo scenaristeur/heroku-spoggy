@@ -41,7 +41,7 @@
     }
     </style>
 
-<!--
+    <!--
     <iron-ajax
     id="status_req"
     url="{{url_status}}"
@@ -71,7 +71,7 @@
         </iron-selector>
 
 
-        <div hidden$="[[!modeIs(mode,'collab')]]">
+        <div hidden$="[[!isEqual(mode,'collab')]]">
           <paper-input label="Entrer un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
 
           <div hidden$="[[isEmpty(pseudo)]]">
@@ -97,14 +97,27 @@
         </paper-dropdown-input>-->
       </div>
 
-      <div hidden$="[[!modeIs(mode,'global')]]">
-        <paper-input id="labelEndpoint" label="Endpoint" value="{{endpoint::input}}"></paper-input>
+      <div hidden$="[[!isEqual(mode,'global')]]">
+        <br>
+        <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
+        <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
+        https://www.w3.org/wiki/SparqlEndpoints<br>
+        <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
+          <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
+          <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
+          <br>
+          <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
+        </iron-selector>
+        <paper-input id="labelEndpoint" label="Endpoint (http://)" value="{{endpoint::input}}"></paper-input>
+        <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
+        label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
+
         <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
       </div>
 
 
       <!-- MODE pour Fuseki direct
-      <div hidden$="[[!modeIs(mode,'global')]]">
+      <div hidden$="[[!isEqual(mode,'global')]]">
       <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
       <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
       <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
@@ -155,16 +168,23 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
         value: "solo",
         observer: '_modeChanged'
       },
+      selectedEndpoint: {
+        value: "virtuoso",
+        observer: '_endpointChanged'
+      },
       pseudo: {
         type: String,
         value: ""
       },
       endpoint: {
         type: String,
-        value: 'http://127.0.0.1:3030',
+        value: 'http://fr.dbpedia.org' //http://5.51.110.50:3030 'http://127.0.0.1:3030',
 
       },
-
+      resource:{
+        type: String,
+        value : 'Lyon'
+      },
       graph: {
         type: String,
         value: "Default",
@@ -195,93 +215,105 @@ class SpoggyMode extends ModeBehaviorMixin(Polymer.Element) {
 
   //////////////////////////////////////////////////////
 
-
-_testEndpoint(e){
-  console.log(this.endpoint);
-  this.agentMode.send('agentSparql', {type: 'testEndpoint', endpoint: this.endpoint});
-}
-
-_modeChanged(newMode, oldMode){
-  this.set('modeConfig.mode', newMode);
-  this.mode = newMode;
-  this.modeBtnText = this.mode.substring(0, 6);
-  switch (newMode) {
-    case 'solo':
-    console.log('passage solo');
-    break;
-    case 'collab':
-    console.log('connexion socket');
-    //  this.connectSocket();
-    this.agentMode.send('agentSocket', {type: "connect"});
-    console.log("SPOG-SOCKET");
-    console.log(this.socket);
-
-
-    // expected output: "Mangoes and papayas are $2.79 a pound."
-    break;
-    case 'global':
-    console.log('connexion endpoint.');
-    // expected output: "Mangoes and papayas are $2.79 a pound."
-    break;
-    default:
-    console.log('Sorry, we are out of ' + newMode + '.');
+  _endpointChanged(newValue){
+    console.log(newValue)
+    if (newValue == "fuseki"){
+      this.endpoint = 'http://5.51.110.50:3030'
+    }else{
+      this.endpoint = 'http://fr.dbpedia.org'
+    }
   }
-  switch (oldMode) {
-    case 'solo':
-    console.log('quitte solo');
-    break;
-    case 'collab':
-    console.log('deconnect socket');
-    //  this.socket.disconnect();
-    this.agentMode.send('agentSocket', {type: "disconnect"});
-    break;
-    case 'global':
-    console.log('deconnect endpoint');
-    //this.socket.disconnect();
-    this.agentMode.send('agentSocket', {type: "disconnect"});
-    break;
-    default:
+  _testEndpoint(e){
+    console.log(this.endpoint);
+    console.log(this.selectedEndpoint);
+    this.agentMode.send('agentSparql', {
+      type: 'testEndpoint',
+      endpoint: this.endpoint,
+      endpointType: this.selectedEndpoint,
+      resource: this.resource});
+    }
 
+    _modeChanged(newMode, oldMode){
+      this.set('modeConfig.mode', newMode);
+      this.mode = newMode;
+      this.modeBtnText = this.mode.substring(0, 6);
+      switch (newMode) {
+        case 'solo':
+        console.log('passage solo');
+        break;
+        case 'collab':
+        console.log('connexion socket');
+        //  this.connectSocket();
+        this.agentMode.send('agentSocket', {type: "connect"});
+        console.log("SPOG-SOCKET");
+        console.log(this.socket);
+
+
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
+        case 'global':
+        console.log('connexion endpoint.');
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
+        default:
+        console.log('Sorry, we are out of ' + newMode + '.');
+      }
+      switch (oldMode) {
+        case 'solo':
+        console.log('quitte solo');
+        break;
+        case 'collab':
+        console.log('deconnect socket');
+        //  this.socket.disconnect();
+        this.agentMode.send('agentSocket', {type: "disconnect"});
+        break;
+        case 'global':
+        console.log('deconnect endpoint');
+        //this.socket.disconnect();
+        this.agentMode.send('agentSocket', {type: "disconnect"});
+        break;
+        default:
+
+      }
+    }
+    rejoindre(e){
+      let room = e.model.item;
+      console.log(room);
+      this.modeBtnText = room.substring(0, 6);
+      //this.switchRoom(room);
+      this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
+      this.$.modePopup.toggle();
+    }
+
+    creer(){
+      let room = this.newRoom;
+      this.modeBtnText = room.substring(0, 6);
+      //  this.switchRoom(room);
+      this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
+    }
+
+
+    /* TECHNICAL TOOLS */
+
+    openChangeMode(){
+      console.log("changeMode");
+      this.$.modePopup.toggle();
+    }
+
+    isEqual(mode, activeMode){
+      return mode == activeMode;
+    }
+    isEmpty(value){
+      //  console.log(value.length)
+      return value.length==0;
+    }
+    pseudoChanged(){
+      // test a faire pour voir si deconnecter ou changer de nom si deja connecté
+      console.log(this.pseudo)
+      this.agentMode.send('agentSocket', {type: "adduser", pseudo: this.pseudo});
+    }
   }
-}
-rejoindre(e){
-  let room = e.model.item;
-  console.log(room);
-  this.modeBtnText = room.substring(0, 6);
-  //this.switchRoom(room);
-  this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
-  this.$.modePopup.toggle();
-}
 
-creer(){
-  let room = this.newRoom;
-  this.modeBtnText = room.substring(0, 6);
-  //  this.switchRoom(room);
-  this.agentMode.send('agentSocket', {type: "switchRoom", graph: room});
-}
-
-
-/* TECHNICAL TOOLS */
-
-openChangeMode(){
-  console.log("changeMode");
-  this.$.modePopup.toggle();
-}
-
-modeIs(mode, activeMode){
-  return mode == activeMode;
-}
-isEmpty(value){
-  //  console.log(value.length)
-  return value.length==0;
-}
-pseudoChanged(){
-  // test a faire pour voir si deconnecter ou changer de nom si deja connecté
-  console.log(this.pseudo)
-  this.agentMode.send('agentSocket', {type: "adduser", pseudo: this.pseudo});
-}
-}
-
-window.customElements.define(SpoggyMode.is, SpoggyMode);
+  window.customElements.define(SpoggyMode.is, SpoggyMode);
 </script>
 </dom-module>

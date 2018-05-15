@@ -9,53 +9,64 @@
 
 <dom-module id="spoggy-virtuoso">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
+    <iron-ajax
+    id="ajaxget"
+    url="{{url}}"
+    params="{{options}}"
+    handle-as="application/sparql-results+json"
+    on-response="_handleResponse"
+    on-error="_handleError"
+    debounce-duration="300"></iron-ajax>
+
+    <iron-ajax
+    id="describeGet"
+    url="{{url}}"
+    params="{{options}}"
+    handle-as="application/sparql-results+json"
+    on-response="_handleDescribeResponse"
+    on-error="_handleDescribeError"
+    debounce-duration="300"></iron-ajax>
   </template>
 
   <script>
-    /**
-     * `spoggy-virtuoso`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyVirtuoso extends VirtuosoBehaviorMixin(Polymer.Element) {
-      static get is() { return 'spoggy-virtuoso'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-virtuoso'
-          }
-        };
-      }
-
-      constructor(){
-        super();
-        this.agentVirtuoso = new VirtuosoAgent('agentVirtuoso', this);
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          // When possible, use afterNextRender to defer non-critical
-          // work until after first paint.
-          this._deferred();
-
-        });
-      }
-      _deferred(){
-        //  console.log("agent DATA defered")
-        //    console.log(this.agentMode);
-        //  this.initAgents()
-        console.log(this.agentVirtuoso);
-        this.agentVirtuoso.send('agentHello', 'Hello, agentHello !')
-      }
+  /**
+  * `spoggy-virtuoso`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyVirtuoso extends VirtuosoBehaviorMixin(Polymer.Element) {
+    static get is() { return 'spoggy-virtuoso'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-virtuoso'
+        },
+      };
     }
 
-    window.customElements.define(SpoggyVirtuoso.is, SpoggyVirtuoso);
+    constructor(){
+      super();
+      this.agentVirtuoso = new VirtuosoAgent('agentVirtuoso', this);
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+
+      });
+    }
+    _deferred(){
+      //  console.log("agent DATA defered")
+      //    console.log(this.agentMode);
+      //  this.initAgents()
+      console.log(this.agentVirtuoso);
+      this.agentVirtuoso.send('agentHello', 'Hello, agentHello !')
+    }
+  }
+
+  window.customElements.define(SpoggyVirtuoso.is, SpoggyVirtuoso);
   </script>
 </dom-module>

@@ -21,20 +21,23 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
-    testFuseki(endpoint){
-      console.log(endpoint);
-      this.url_fuseki = endpoint;
-      this.url_fuseki_ping = endpoint+"/$/ping";
+    testFuseki(mess){
+      console.log(mess);
+      this.url_fuseki = mess.endpoint;
+      this.url_fuseki_ping = mess.endpoint+"/$/ping";
       //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
       console.log(this.url_fuseki_ping);
       this.$.fusekiPing.generateRequest();
     }
-    testVirtuoso(endpoint){
-      console.log(endpoint);
-      this.url_virtuoso_ping = endpoint;//+"/sparql";
+    testVirtuoso(mess){
+      console.log(mess);
+      let endpoint = mess.endpoint;
+        this.agentSparql.send('agentVirtuoso', {type:'describe', url: endpoint+'/sparql', resource : mess.resource});
+    //  this.agentSparql.send('agentVirtuoso', {type:'updateUrl', url: endpoint+'/sparql', resource : mess.resource});
+      /* PAs trouvé moyen de faire un Ping ??this.url_virtuoso_ping = endpoint+"/sparql";
       //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
       console.log(this.url_virtuoso_ping);
-      this.$.virtuosoPing.generateRequest();
+      this.$.virtuosoPing.generateRequest();*/
     }
 
 

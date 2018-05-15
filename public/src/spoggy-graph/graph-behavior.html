@@ -108,24 +108,52 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       network.body.data.nodes.clear();
       network.body.data.edges.clear();
 
-        Object.keys(results).forEach(function(id) {
-          var data = results[id];
+      Object.keys(results).forEach(function(id) {
+        var data = results[id];
         //  console.log(id);
         //  console.log(data)
-          if (data.type == "node"){
+        if (data.type == "node"){
+          //A Modifier dans statements-behaviors pour envoyer dans un tableau de nodes !
           //  console.log("NONONONODE")
-              network.body.data.nodes.update(data);
-          }
-          if (id == "edges"){
-            //    console.log("EDGEEDGEDGE")
-            data.forEach(function(e){
+          network.body.data.nodes.update(data);
+        }
+        if (id == "edges"){
+          //    console.log("EDGEEDGEDGE")
+          data.forEach(function(e){
             //  console.log(e);
-              network.body.data.edges.update(e);
+            network.body.data.edges.update(e);
+          });
+        }
+        if (id == "nodes"){
+          //    console.log("EDGEEDGEDGE")
+          data.forEach(function(n){
+            //  console.log(e);
+            let type = n.type;
+
+            var ntype = network.body.data.nodes.get({
+              filter: function(node){
+                //    console.log(node);
+                return (node.label == n.type );
+              }
             });
-          }
-        });
-        network.fit();
-        network.redraw();
+            if (ntype.length == 0){
+              ntype[0] = network.body.data.nodes.add({label: n.type });
+            }
+            //  let ntypeId = network.body.data.nodes.update(n);
+            let nodeId = network.body.data.nodes.update(n);
+            let nZ = nodeId[0];
+            let tZ = ntype[0][0] || ntype[0].id;
+            console.log(nZ);
+            console.log(tZ);
+
+            let e = {from: nZ, to: tZ, label: 'type'};
+            console.log(e)
+            network.body.data.edges.update(e);
+          });
+        }
+      });
+      network.fit();
+      network.redraw();
     }
 
     populateVis(db) {
@@ -277,163 +305,256 @@ deleteFromServer (data){
   this.network.body.data.edges.remove(data.edges);
 }
 
-catchTriplet(message){
-  // A REVOIR ET REMPLACER PAR catchTripletsV2()
-  //  console.log(message.length);
-  //message=message.trim();
-  //  var tripletString = message.substring(2).trim().split(" ");
-  //  var tripletString = message.trim().split(" ");
-  // les noeuds existent-ils ?
-  var sujetNode = this.network.body.data.nodes.get({
-    filter: function(node){
-      //    console.log(node);
-      return (node.label == message[0] );
-    }
-  });
-  var objetNode = this.network.body.data.nodes.get({
-    filter: function(node){
-      //    console.log(node);
-      return (node.label == message[2]);
-    }
-  });
-  console.log(sujetNode);
-  console.log(objetNode);
-  // sinon, on les créé
-  if (sujetNode.length == 0){
-    this.network.body.data.nodes.add({label: message[0], type: "node" });
+describeFromDBpedia(results, resource){
+  let app = this;
+  console.log(results)
+  let res = resource.split("#");
+//  console.log(conceptCut);
+  let labelRes = res[res.length-1];
+  if (labelRes == resource){
+    res = resource.split("/");
+//console.log(conceptCut);
+    labelRes = res[res.length-1];
   }
-  if (objetNode.length == 0){
-    this.network.body.data.nodes.add({ label: message[2], type: "node" });
-  }
-  // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
-  sujetNode = this.network.body.data.nodes.get({
-    filter: function(node){
-      console.log(node);
-      return (node.label == message[0] );
+  results.forEach(function(r){
+    console.log(r);
+    let s,o;
+    let p = r.p.value;
+    if (r.s == undefined){
+      s = labelRes;
+    }else{
+      s  = r.s.value;
     }
-  });
-  objetNode = this.network.body.data.nodes.get({
-    filter: function(node){
-      console.log(node);
-      return (node.label == message[2]);
+    if (r.o == undefined){
+      o = labelRes;
+    }else{
+      o = r.o.value;
     }
-  });
-  var actionSujet = {};
-  actionSujet.type = "newNode";
-  actionSujet.data = sujetNode[0];
-  //  actionsToSendTemp.push(actionSujet);
-  //    this.addAction(actionSujet);
+    console.log(s +" "+p+" "+o)
 
-  var actionObjet = {};
-  actionObjet.type = "newNode";
-  actionObjet.data = objetNode[0];
-  //  actionsToSendTemp.push(actionObjet);
-  //  this.addAction(actionObjet);
+    //recherche de noeuds existants
+    var sujetNode = app.network.body.data.nodes.get({
+      filter: function(node){return (node.label == s );}})[0];
+      var objetNode = app.network.body.data.nodes.get({
+        filter: function(node){return (node.label == o);}})[0];
+
+        // sinon, on les créé
+        if (sujetNode == undefined){
+          let sArray = s.split("#");
+        //  console.log(conceptCut);
+          let labelS = sArray[sArray.length-1];
+          if (labelS == s){
+            sArray = s.split("/");
+        //console.log(conceptCut);
+            labelS = sArray[sArray.length-1];
+          }
+          sujetNode =  app.network.body.data.nodes.add({label: labelS, title: s, type: "node", y:2*Math.random() });
+        }
+        if (objetNode == undefined){
+          let labelO = o;
+          let shape = "ellipse";
+
+          if (r.o.type == 'uri'){
+          let oArray = o.split("#");
+        //  console.log(conceptCut);
+          labelO = oArray[oArray.length-1];
+          if (labelO == o){
+            oArray = o.split("/");
+        //console.log(conceptCut);
+            labelO = oArray[oArray.length-1];
+          }
+        }else{
+          //literal
+          shape ="box"
+           if (o.length > 40) {
+            labelO =  o.substring(0,40),
+            o = o.match(/.{1,40}/g).join("\n")
+
+          }
+        }
+          objetNode = app.network.body.data.nodes.add({label: labelO, title: o, type: "node", shape:shape, y:2*Math.random() });
+        }
+        console.log(sujetNode);
+        console.log(objetNode);
+        let pArray = p.split("#");
+      //  console.log(conceptCut);
+        let labelP = pArray[pArray.length-1];
+        if (labelP == p){
+          pArray = p.split("/");
+      //console.log(conceptCut);
+          labelP = pArray[pArray.length-1];
+        }
+        let edge = {
+          title: p,
+          label: labelP,
+          from : sujetNode[0] || sujetNode.id,
+          to : objetNode[0] || sujetNode.id,
+          type: "edge",
+        }
+        console.log(edge)
+        app.network.body.data.edges.add(edge);
 
 
-  // maintenant, on peut ajouter l'edge
-  this.network.body.data.edges.add({
-    label: message[1],
-    from : sujetNode[0].id,
-    to : objetNode[0].id,
-    type: "edge",
-  });
-
-  //on récupère ce edge pour l'envoyer au serveur
-  var edge = this.network.body.data.edges.get({
-    filter: function(edge) {
-      return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == message[1]);
+      });
     }
-  });
-  var actionEdge = {};
-  actionEdge.type = "newEdge";
-  actionEdge.data = edge;
-  //  this.addAction(actionEdge);
-  let actionstosend = [];
-  actionstosend.push(actionSujet);
-  actionstosend.push(actionObjet);
-  actionstosend.push(actionEdge);
-  this.agentGraph.send('agentSocket', {type: "newActions", actions: actionstosend});
-    this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: actionstosend});
+
+    catchTriplet(message){
+      // A REVOIR ET REMPLACER PAR catchTripletsV2() ??
+      //  console.log(message.length);
+      //message=message.trim();
+      //  var tripletString = message.substring(2).trim().split(" ");
+      //  var tripletString = message.trim().split(" ");
+      // les noeuds existent-ils ?
+      var sujetNode = this.network.body.data.nodes.get({
+        filter: function(node){
+          //    console.log(node);
+          return (node.label == message[0] );
+        }
+      });
+      var objetNode = this.network.body.data.nodes.get({
+        filter: function(node){
+          //    console.log(node);
+          return (node.label == message[2]);
+        }
+      });
+      console.log(sujetNode);
+      console.log(objetNode);
+      // sinon, on les créé
+      if (sujetNode.length == 0){
+        this.network.body.data.nodes.add({label: message[0], type: "node" });
+      }
+      if (objetNode.length == 0){
+        this.network.body.data.nodes.add({ label: message[2], type: "node" });
+      }
+      // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
+      sujetNode = this.network.body.data.nodes.get({
+        filter: function(node){
+          console.log(node);
+          return (node.label == message[0] );
+        }
+      });
+      objetNode = this.network.body.data.nodes.get({
+        filter: function(node){
+          console.log(node);
+          return (node.label == message[2]);
+        }
+      });
+      var actionSujet = {};
+      actionSujet.type = "newNode";
+      actionSujet.data = sujetNode[0];
+      //  actionsToSendTemp.push(actionSujet);
+      //    this.addAction(actionSujet);
+
+      var actionObjet = {};
+      actionObjet.type = "newNode";
+      actionObjet.data = objetNode[0];
+      //  actionsToSendTemp.push(actionObjet);
+      //  this.addAction(actionObjet);
 
 
-  //  actionsToSendTemp.push(actionEdge);
-  //console.log(actionsToSendTemp);
-  //  return actionsToSendTemp;
-}
+      // maintenant, on peut ajouter l'edge
+      this.network.body.data.edges.add({
+        label: message[1],
+        from : sujetNode[0].id,
+        to : objetNode[0].id,
+        type: "edge",
+      });
 
-exportJson() {
-  var network = this.network;
-  console.log(network)
-  var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
-  //  app.$.inputMessage.value = '';
-  if (filename == null || filename == "") {
-    txt = "User cancelled the prompt.";
-    return;
-  }
-  var textToWrite = "";
-  var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
-  var textFileAsBlob = "";
+      //on récupère ce edge pour l'envoyer au serveur
+      var edge = this.network.body.data.edges.get({
+        filter: function(edge) {
+          return (edge.from == sujetNode[0].id && edge.to == objetNode[0].id && edge.label == message[1]);
+        }
+      });
+      var actionEdge = {};
+      actionEdge.type = "newEdge";
+      actionEdge.data = edge;
+      //  this.addAction(actionEdge);
+      let actionstosend = [];
+      actionstosend.push(actionSujet);
+      actionstosend.push(actionObjet);
+      actionstosend.push(actionEdge);
+      this.agentGraph.send('agentSocket', {type: "newActions", actions: actionstosend});
+      this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: actionstosend});
 
-  console.log("export Json");
-  console.log(network.body.data);
-  var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
-  console.log(nodes_edges);
-  var nodes_edgesJSON = JSON.stringify(nodes_edges);
-  console.log(nodes_edgesJSON);
-  textFileAsBlob = new Blob([nodes_edgesJSON], {
-    type:
-    'application/json'
-  }
-);
-var downloadLink = document.createElement("a");
-downloadLink.download = fileNameToSaveAs;
-downloadLink.innerHTML = "Download File";
-if(navigator.userAgent.indexOf("Chrome") != -1)
-{
-  // Chrome allows the link to be clicked
-  // without actually adding it to the DOM.
-  console.log("CHROME");
-  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-} else
-{
+
+      //  actionsToSendTemp.push(actionEdge);
+      //console.log(actionsToSendTemp);
+      //  return actionsToSendTemp;
+    }
+
+    exportJson() {
+      var network = this.network;
+      console.log(network)
+      var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
+      //  app.$.inputMessage.value = '';
+      if (filename == null || filename == "") {
+        txt = "User cancelled the prompt.";
+        return;
+      }
+      var textToWrite = "";
+      var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
+      var textFileAsBlob = "";
+
+      console.log("export Json");
+      console.log(network.body.data);
+      var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
+      console.log(nodes_edges);
+      var nodes_edgesJSON = JSON.stringify(nodes_edges);
+      console.log(nodes_edgesJSON);
+      textFileAsBlob = new Blob([nodes_edgesJSON], {
+        type:
+        'application/json'
+      }
+    );
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if(navigator.userAgent.indexOf("Chrome") != -1)
+    {
+      // Chrome allows the link to be clicked
+      // without actually adding it to the DOM.
+      console.log("CHROME");
+      downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    } else
+    {
+      // Firefox requires the link to be added to the DOM
+      // before it can be clicked.
+      console.log("FF");
+      downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+      downloadLink.target="_blank";
+      //downloadLink.onclick = destroyClickedElement;
+      //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+      downloadLink.style.display = "none";
+      document.body.appendChild(downloadLink);
+      //  console.log(app.$.popupTtl);
+    }
+    console.log(downloadLink);
+    /*downloadLink.click();*/
+    /* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+    var event = document.createEvent("MouseEvents");
+    event.initMouseEvent(
+      "click", true, false, window, 0, 0, 0, 0, 0
+      , false, false, false, false, 0, null
+    );
+    downloadLink.dispatchEvent(event);
+    var app = this;
+    setTimeout(function(){
+      console.log(downloadLink.parentNode);
+      document.body.removeChild(downloadLink);
+      window.URL.revokeObjectURL(downloadLink);
+    }, 1000);
+    /*if (window.URL != null) {
+    // Chrome allows the link to be clicked
+    // without actually adding it to the DOM.
+    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  } else {
   // Firefox requires the link to be added to the DOM
   // before it can be clicked.
-  console.log("FF");
   downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-  downloadLink.target="_blank";
-  //downloadLink.onclick = destroyClickedElement;
-  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.onclick = destroyClickedElement;
   downloadLink.style.display = "none";
   document.body.appendChild(downloadLink);
-  //  console.log(app.$.popupTtl);
-}
-console.log(downloadLink);
-/*downloadLink.click();*/
-/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
-var event = document.createEvent("MouseEvents");
-event.initMouseEvent(
-  "click", true, false, window, 0, 0, 0, 0, 0
-  , false, false, false, false, 0, null
-);
-downloadLink.dispatchEvent(event);
-var app = this;
-setTimeout(function(){
-  console.log(downloadLink.parentNode);
-  document.body.removeChild(downloadLink);
-  window.URL.revokeObjectURL(downloadLink);
-}, 1000);
-/*if (window.URL != null) {
-// Chrome allows the link to be clicked
-// without actually adding it to the DOM.
-downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-} else {
-// Firefox requires the link to be added to the DOM
-// before it can be clicked.
-downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-downloadLink.onclick = destroyClickedElement;
-downloadLink.style.display = "none";
-document.body.appendChild(downloadLink);
 }
 downloadLink.click();*/
 }

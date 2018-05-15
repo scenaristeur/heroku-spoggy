@@ -21,12 +21,12 @@ var SparqlStatementsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       //  console.log(data);
       //  console.log(req);
       //  console.log(data.detail.response);
-      this.head=data.detail.response.head.vars;
-      this.results=data.detail.response.results.bindings;
+      let vars=data.detail.response.head.vars;
+      let results=data.detail.response.results.bindings;
       //  console.log(this.head);
-      console.log(this.results);
+      console.log(results);
 
-      var visResults = this.sparqlToVis(this.results);
+      var visResults = this.sparqlToVis(results);
       console.log(visResults);
       this.agentStatements.send('agentGraph', {type: "resultsFromSparql", results: visResults})
     }
