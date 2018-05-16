@@ -26,6 +26,7 @@
     "level-sublevel": "^6.6.1",
     "levelgraph": "^2.1.1",
     "npm": "^6.0.1",
-    "socket.io": "^2.1.0"
+    "socket.io": "^2.1.0",
+    "vis": "^4.21.0"
   }
 }

@@ -9,12 +9,15 @@
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 
+<link rel="import" href="../../bower_components/core-icon/core-icon.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
 <link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 
+<link rel="import" href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
+<link rel="import" href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
 
 <!--
 revoir color picker -->
@@ -50,28 +53,48 @@ revoir color picker -->
       right: 5px;
       top: 200px;
     }
-    </style>
-    <style is="custom-style"  include="vis-styles"></style>
+    #dial{
+      position: fixed;
+      right: 5px;
+      top: 200px;
+      /*--valle-speed-dial-action-fab-color: #d4f442;*/
+      --valle-speed-dial-backdrop-color: rgba(55, 55, 255, 0.5) ; /* rgba(200, 200, 10, 0.2), */
+    }
+    #dial-action .label {
+        display: inline-block;
+        left: -158px;
 
-    <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
-      on-iron-overlay-closed="_myClosedFunction" -->
-      <h3>Export au format turtle (RDF)
-        <!--<paper-button ontap="_pageAide">?</paper-button>-->
-        <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
+    }
+  }
+  </style>
+  <style is="custom-style"  include="vis-styles"></style>
 
-        <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-        <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
-        <paper-dialog-scrollable>
-          <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
-        </paper-dialog-scrollable>
-      </paper-dialog>
 
-      <!--    <paper-dialog id="eye">
-      <spog-eye ></spog-eye>
-      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-      <paper-button dialog-dismiss raised>Fermer</paper-button>
-    </div>
-  </paper-dialog>
+
+
+
+
+
+
+  <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
+    on-iron-overlay-closed="_myClosedFunction" -->
+    <h3>Export au format turtle (RDF)
+      <!--<paper-button ontap="_pageAide">?</paper-button>-->
+      <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
+
+      <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+      <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
+      <paper-dialog-scrollable>
+        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
+      </paper-dialog-scrollable>
+    </paper-dialog>
+
+    <!--    <paper-dialog id="eye">
+    <spog-eye ></spog-eye>
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+    <paper-button dialog-dismiss raised>Fermer</paper-button>
+  </div>
+</paper-dialog>
 -->
 
 
@@ -225,6 +248,27 @@ revoir color picker -->
 <paper-fab id="fabsetting" on-tap="_toggleSettings"  icon="settings" style="height: 50px; width:50px;"></paper-fab>
 <!-- style="height: 150px; width:150px;color: #0D578B;"-->
 <!--  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab> -->
+
+<!--  icon="https://uploaddeimagens.com.br/images/001/071/867/full/iconmonstr-fast-food-3-32.png"-->
+<valle-speed-dial id="dial" direction="down" label="Menu" backdrop>
+  <valle-speed-dial-action
+  class="dial-action"
+  label="settings"
+  on-tap="_toggleSettings"
+  label-direction="left"
+  icon="settings"
+  ></valle-speed-dial-action>
+  <valle-speed-dial-action
+  class="dial-action"
+  label="mode"
+  label-direction="left"
+  ></valle-speed-dial-action>
+  <valle-speed-dial-action
+  class="dial-action"
+  label="help"
+  label-direction="left"
+  ></valle-speed-dial-action>
+</valle-speed-dial>
 
 
 </template>
@@ -809,6 +853,7 @@ _toggleSettings(){
   //this.$.settings.hidden= !this.$.settings.hidden;
   //this.settinghidden = !this.settinghidden;
   this.$.settings.toggle();
+  this.$.dial.open=false;
 }
 _toggleEye(){
   console.log(this.$.eye.hidden);
