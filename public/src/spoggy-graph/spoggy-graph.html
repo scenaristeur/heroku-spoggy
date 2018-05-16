@@ -236,7 +236,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
 
 
   //////////////////////////////////////////////////////////////////
-  networkDivInitialize(container, graphe){
+  networkDivInitialize(container, app){
     // create an array with nodes
     var nodes = new vis.DataSet([
       {id: "node1", label: 'Spoggy', color: 'rgb(195,238,0)'},
@@ -294,19 +294,19 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
           // filling in the popup DOM elements
           data.label = "";
           //  console.log(this);
-          graphe.editNode(data, callback);
+          app.editNode(data, callback);
         },
         editNode: function (data, callback) {
           // filling in the popup DOM elements
           //document.getElementById('nodeOperation').innerHTML = "Edit Node";
           data.edit = true; // signalement d'une edition pour sparql
           console.log(data);
-          graphe.$.nodeOperation.innerHTML = "Edit Node";
-          graphe.editNode(data, callback);
+          app.$.dialogs.$.nodeOperation.innerHTML = "Edit Node";
+          app.editNode(data, callback);
         },
         deleteNode: function (data, callback) {
           // filling in the popup DOM elements
-          graphe.deleteNode(data, callback);
+          app.deleteNode(data, callback);
         },
         addEdge: function (data, callback) {
           if (data.from == data.to) {
@@ -317,20 +317,20 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
             }
           }
           //document.getElementById('edgeOperation').innerHTML = "Add Edge";
-          graphe.$.edgeOperation.innerHTML = "Add Edge";
-          graphe.editEdgeWithoutDrag(data, callback);
+          app.$.dialogs.$.edgeOperation.innerHTML = "Add Edge";
+          app.editEdgeWithoutDrag(data, callback);
         },
         editEdge: {
           editWithoutDrag: function(data, callback) {
             //document.getElementById('edgeOperation').innerHTML = "Edit Edge";
             data.edit = true; // signalement d'une edition pour sparql
             console.log(data);
-            graphe.$.edgeOperation.innerHTML = "Edit Edge";
-            graphe.editEdgeWithoutDrag(data,callback);
+            app.$.dialogs.$.edgeOperation.innerHTML = "Edit Edge";
+            app.editEdgeWithoutDrag(data,callback);
           }
         },
         deleteEdge: function(data,callback){
-          graphe.deleteEdge(data,callback);
+          app.deleteEdge(data,callback);
         }
       },
       physics:{
@@ -352,11 +352,11 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
           avoidOverlap: 0
         },
         repulsion: {
-          centralGravity: graphe.centralGravityValueDefault,  //0.001, //0.001 ? A quoi sert cette valeur ?
-          springLength: graphe.springLengthValueDefault,   // 220, //220 (//200 //300)
-          springConstant: graphe.springConstantValueDefault, //0.01, //0.01
-          nodeDistance:  graphe.nodeDistanceValueDefault, //150, //100 //350
-          damping: graphe.dampingValueDefault, ///0.08
+          centralGravity: app.centralGravityValueDefault,  //0.001, //0.001 ? A quoi sert cette valeur ?
+          springLength: app.springLengthValueDefault,   // 220, //220 (//200 //300)
+          springConstant: app.springConstantValueDefault, //0.01, //0.01
+          nodeDistance:  app.nodeDistanceValueDefault, //150, //100 //350
+          damping: app.dampingValueDefault, ///0.08
         },
         hierarchicalRepulsion: {
           centralGravity: 0.0,
