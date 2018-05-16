@@ -13,6 +13,10 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         inputProp: {
           type: String,
           value: 'modeB'
+        },
+        virtuosoActif: {
+          type: Boolean,
+          value: false
         }
       };
     }
@@ -27,10 +31,10 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       }
     }
     sendDescribe(){
-    //  if (this.url.length>0){
+      if (this.virtuosoActif == true){
         console.log(this.url);
         this.$.describeGet.generateRequest();
-    //  }
+      }
     }
 
     _handleResponse(data){

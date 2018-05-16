@@ -68,7 +68,6 @@ InputAgent.prototype.receive = function(from, message) {
     break;
 
     case 'updateInput':
-    console.log(message.resource);
     this.app.updateInput(message.resource.trim());
     break;
     default:

@@ -208,12 +208,12 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
   }
   updateInput(newInput){
+    newInput = newInput.replace(/<br\s*\/?>/mg,"");
     if (newInput.indexOf(' ') >= 0){
       newInput = '"'+newInput+'"';
     }
     newInput=newInput+" ";
-    console.log(newInput+'-');
-    this.$.inputMessage.value = newInput;
+    this.$.inputMessage.value += newInput;
   }
 
 
