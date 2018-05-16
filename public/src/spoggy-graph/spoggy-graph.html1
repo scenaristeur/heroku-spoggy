@@ -1,5 +1,4 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<!--
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
@@ -20,15 +19,18 @@
 <link rel="import" href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
 <link rel="import" href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
 
+<!--
+revoir color picker -->
 <link rel="import" href="../../bower_components/color-picker/color-picker.html">
 <link rel="import" href="../../bower_components/color-picker/color-element.html">
 <link rel="import" href="../../bower_components/paper-swatch-picker/paper-swatch-picker.html">
-<link rel="import" href="../../bower_components/neon-animation/web-animations.html">-->
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
 
 <!--<script src="../../bower_components/vis/dist/vis.min.js"></script> Prend la version non minifiée pour le français -->
 
-
-  <link rel="import" group="lazy" href="./graph-behavior.html">
+<link rel="import" href="./graph-behavior.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/GraphAgent.js"></script>
 <!-- suppression , passage aux agents
 <link rel="import" href="../spoggy-data/data-behavior.html">
 <link rel="import" href="../spoggy-input/input-behavior.html">
@@ -38,45 +40,7 @@
 <!-- en attente
 <link rel="import" href="../spog-eye/spog-eye.html">-->
 
-<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-
-
 <dom-module id="spoggy-graph">
-
-  <link rel="lazy-import" group="lazy" href="../spoggy-agent/spoggy-agent.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-button/paper-button.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-input/paper-input.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-slider/paper-slider.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-input/paper-textarea.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog/paper-dialog.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-selector/iron-selector.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-checkbox/paper-checkbox.html">
-
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/core-icon/core-icon.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-icon/iron-icon.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-fab/paper-fab.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-icons/iron-icons.html">
-
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
-
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
-
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-picker.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-element.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-swatch-picker/paper-swatch-picker.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/neon-animation/web-animations.html">
-
-
-
-
-
-
-
-
-
   <template>
     <style is="custom-style"  include="graphe-styles">
     #fabsetting {
@@ -318,7 +282,7 @@
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
+class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
   static get is() { return 'spoggy-graph'; }
   static get properties() {
     return {
@@ -367,23 +331,16 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
   }
   constructor(){
     super();
-
+    this.agentGraph = new GraphAgent('agentGraph', this);
     Polymer.RenderStatus.afterNextRender(this, function() {
       // When possible, use afterNextRender to defer non-critical
       // work until after first paint.
       this._deferred();
 
     });
-    console.log("GRAPH CHARGE")
   }
   _deferred(){
     //  this.initAgents()
-      console.log("GRAPH DEFER")
-    this.importLazyGroup('lazy').then((results) => {
-      console.log(results);
-      this.dispatchEvent(new CustomEvent('import-loaded', results));
-    });
-        this.agentGraph = new GraphAgent('agentGraph', this);
   }
   initAgents(){
     this.agentGraph.send('agentHello', 'Hello agentHello!');
@@ -602,8 +559,8 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
     console.log(data.type);
     data et callback apparaissent comme des events ?????
     {id: "38e05a49-feb0-4d65-a35f-c7c7d973390e", x: -518.5339336634761, y: -388.3170534287593, label: ""}
-    spoggy-graph.html:373 Event {isTrusted: false, detail: {…}, type: "tap", target: paper-button#nodeSaveButton, currentTarget: paper-button#nodeSaveButton, …}
-    spoggy-graph.html:374 {x: 138, y: 588, sourceEvent: MouseEvent, preventer: undefined}preventer: undefinedsourceEvent: MouseEvent {isTrusted: true, __polymerGesturesHandled: {…}, screenX: 2058, screenY: 654, clientX: 138, …}x: 138y: 588__proto__: Object
+    spoggy-graph.html:373 Event {isTrusted: false, detail: {…}, type: "tap", target: paper-button#nodeSaveButton, currentTarget: paper-button#nodeSaveButton, …}
+    spoggy-graph.html:374 {x: 138, y: 588, sourceEvent: MouseEvent, preventer: undefined}preventer: undefinedsourceEvent: MouseEvent {isTrusted: true, __polymerGesturesHandled: {…}, screenX: 2058, screenY: 654, clientX: 138, …}x: 138y: 588__proto__: Object
     spoggy-graph.html:378 tap
     */
 
