@@ -1,27 +1,29 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <!--<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">-->
 
-
+  <link rel="import" href="../spoggy-agent/spoggy-agent.html">
 <link rel="import" href="../spoggy-input/spoggy-input.html">
 <link rel="import" href="../spoggy-graph/spoggy-graph.html">
-<link rel="import" href="../spoggy-collab/spoggy-collab.html">
-<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+
 
 
 
 <dom-module id="spoggy-app">
   <!--<link rel="lazy-import" group="lazy" href="lazy-element.html">-->
+
   <link rel="lazy-import" group="lazy" href="../spoggy-data/spoggy-data.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
-<!--  <link rel="lazy-import" group="lazy" href="../spoggy-input/spoggy-input.html">
+  <!--  <link rel="lazy-import" group="lazy" href="../spoggy-input/spoggy-input.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph.html">
 -->  <link rel="lazy-import" group="lazy" href="../spoggy-mode/spoggy-mode.html">
-  <link rel="lazy-import" group="lazy" href="../spoggy-sparql/spoggy-sparql.html">
-  <!-- utile pour tester les agents>
-  <link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">
+<link rel="lazy-import" group="lazy" href="../spoggy-sparql/spoggy-sparql.html">
+<!-- utile pour tester les agents>
+<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">
 -->
 
 <template>
@@ -91,7 +93,6 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
 
   constructor(){
     super();
-    this.agentSocket = new SocketAgent('agentSocket', this);
     Polymer.RenderStatus.afterNextRender(this, function() {
       // When possible, use afterNextRender to defer non-critical
       // work until after first paint.

@@ -43,31 +43,13 @@
 
 <dom-module id="spoggy-graph">
 
-  <link rel="lazy-import" group="lazy" href="../spoggy-agent/spoggy-agent.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-button/paper-button.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-input/paper-input.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-slider/paper-slider.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-input/paper-textarea.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog/paper-dialog.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-selector/iron-selector.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="./graph-dialogs.html">
 
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/core-icon/core-icon.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-icon/iron-icon.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-fab/paper-fab.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-icons/iron-icons.html">
-
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 
   <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
   <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
 
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-picker.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-element.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-swatch-picker/paper-swatch-picker.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/neon-animation/web-animations.html">
+
 
 
 
@@ -106,178 +88,10 @@
   <style is="custom-style"  include="vis-styles"></style>
 
 
+<graph-dialogs id="dialogs"></graph-dialogs>
 
 
 
-
-
-
-  <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
-    on-iron-overlay-closed="_myClosedFunction" -->
-    <h3>Export au format turtle (RDF)
-      <!--<paper-button ontap="_pageAide">?</paper-button>-->
-      <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
-
-      <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-      <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
-      <paper-dialog-scrollable>
-        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
-      </paper-dialog-scrollable>
-    </paper-dialog>
-
-    <!--    <paper-dialog id="eye">
-    <spog-eye ></spog-eye>
-    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-    <paper-button dialog-dismiss raised>Fermer</paper-button>
-  </div>
-</paper-dialog>
--->
-
-
-<paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
-  <div horizontal start-justified start layout >
-    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-    <div style="padding-left:20px" vertical start-justified start layout wrap>
-
-      <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
-      <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
-      <p>
-        <paper-input id="nodeLabel" label="Nom du noeud"></paper-input>
-        <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
-      </p>
-
-
-      <iron-collapse-button>
-        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
-        <div slot="collapse-content">
-          <fieldset>
-            <legend>Forme</legend>
-            <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
-              <div>Label interne</div>
-              <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
-              <paper-checkbox name="circle">Cercle</paper-checkbox>
-              <paper-checkbox name="database">Database</paper-checkbox>
-              <paper-checkbox name="box">Box</paper-checkbox>
-              <paper-checkbox name="text">Texte</paper-checkbox>
-              <hr>
-              <div>Label externe</div>
-              <paper-checkbox name="diamond">Diamant</paper-checkbox>
-              <paper-checkbox name="star">Etoile</paper-checkbox>
-              <paper-checkbox name="triangle">Triangle</paper-checkbox>
-              <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
-              <paper-checkbox name="square">Carré</paper-checkbox>
-              <paper-checkbox name="image" >Image</paper-checkbox>
-              <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
-              <!--<paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
-
-            </iron-selector>
-            <div hidden$="[[shapeIsImage(selectedShape)]]">
-              <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
-            </div>
-          </fieldset>
-        </div>
-      </iron-collapse-button>
-
-      <iron-collapse-button>
-        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
-        <div slot="collapse-content">
-          <fieldset>
-            <legend>Couleur</legend>
-            <!--<paper-swatch-picker></paper-swatch-picker>-->
-            <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
-            <div class="horizontal-section-container result">
-              <!--  <div><code>hex</code>: <b>[[colorValue]]</b></div>
-              css-value="{{cssValue}}" alpha="{{alpha}}"
-              <div><code>alpha</code>: <b>[[alpha]]</b></div>
-              <div><code>css-value</code>: <b>[[cssValue]]</b></div>-->
-            </div>
-          </fieldset>
-        </div>
-      </iron-collapse-button>
-
-
-      <!--      <iron-collapse-button>
-      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
-      <div slot="collapse-content">
-      (developpements en cours)
-      <fieldset>
-      <legend>Type</legend>
-      <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
-      <paper-checkbox name="node">Node</paper-checkbox>
-      <paper-checkbox name="url">Url</paper-checkbox>
-      <paper-checkbox name="graph">Graphe</paper-checkbox>
-      <paper-checkbox name="source">Source</paper-checkbox>
-    </iron-selector>
-  </fieldset>
-</div>
-</iron-collapse-button>
--->
-<div style="padding-top:10px" horizontal end-justified layout self-stretch>
-  <paper-button id="nodeSaveButton"  raised>ok</paper-button>
-  <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
-</div>
-</div>
-</div>
-</paper-dialog>
-
-
-<paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
-  <div horizontal start-justified start layout >
-    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-    <div style="padding-left:20px" vertical start-justified start layout wrap>
-      <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
-      <p >  <paper-input id="edgeLabel" label="Nom du lien"></paper-input></p>
-      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-        <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" raised>ok</paper-button>
-        <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
-      </div>
-    </div>
-  </div>
-</paper-dialog>
-
-<paper-dialog id="importPopUp" backdrop transition="core-transition-bottom">
-  <div horizontal start-justified start layout >
-    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-    <div style="padding-left:20px" vertical start-justified start layout wrap>
-      <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
-      <p >
-        <fieldset>
-          <legend>Paramètres</legend>
-          <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
-          <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
-        </fieldset>
-      </p>
-      <p>
-        <fieldset>
-          <legend>Fichier</legend>
-          <input id="filepicker" type="file" multiple value="Importer"></input>
-        </fieldset>
-      </p>
-      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-        <paper-button id="importCancelButton" on-tap="_closeImportPopUp"  dialog-dismiss raised>Annuler</paper-button>
-      </div>
-    </div>
-  </div>
-</paper-dialog>
-
-
-<paper-dialog id="settings" >
-  <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
-    Gravité   <paper-slider  min="-10" max="10" value="{{centralGravityValue}}"  step="1" on-change="_changeGravity" ></paper-slider>
-    Longueur des liens     <paper-slider  min="0" max="800" value="{{springLengthValue}}"   on-change="_changeSpringLength"></paper-slider>
-    Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" on-change="_changeSpringConstant"></paper-slider>
-    Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"  on-change="_changeNodeDistance"></paper-slider>
-    Amortissement         <paper-slider  min="0" max="1" value="{{dampingValue}}"  step="0.001"  on-change="_changeDamping"></paper-slider>
-    <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
-    <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
-    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-      <paper-button  dialog-dismiss raised>Fermer</paper-button>
-    </div>
-  </div>
-  <div>
-    <!--<spog-source></spog-source>-->
-  </div>
-</paper-dialog>
 
 
 <div id="mynetwork"></div>
@@ -569,7 +383,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
   }
   editNode (data, callback) {
     console.log(data);
-    this.$.nodeLabel.value= data.label || "";
+    this.$.dialogs.$.nodeLabel.value= data.label || "";
     this.selectedShape = data.shape || "ellipse";
     this.selectedType = data.type || "node";
     this.imageUrl = data.image || "";
@@ -579,15 +393,15 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
     else{
       this.colorValue =   "rgb(173,208,255)";
     }
-    this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
-    this.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
-    this.$.nodePopUp.style.display = 'block';
-    this.$.nodeLabel.focus();
+    this.$.dialogs.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
+    this.$.dialogs.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
+    this.$.dialogs.$.nodePopUp.style.display = 'block';
+    this.$.dialogs.$.nodeLabel.focus();
   }
   clearNodePopUp () {
-    this.$.nodeSaveButton.onclick = null;
-    this.$.nodeCancelButton.onclick = null;
-    this.$.nodePopUp.style.display = 'none';
+    this.$.dialogs.$.nodeSaveButton.onclick = null;
+    this.$.dialogs.$.nodeCancelButton.onclick = null;
+    this.$.dialogs.$.nodePopUp.style.display = 'none';
   }
   cancelNodeEdit (callback) {
     this.clearNodePopUp(this);
@@ -607,10 +421,10 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
     spoggy-graph.html:378 tap
     */
 
-    data.label = this.$.nodeLabel.value;
+    data.label = this.$.dialogs.$.nodeLabel.value;
     data.shape = this.selectedShape;
     data.color = this.colorValue;
-    data.image = this.$.imgUrl.value;
+    data.image = this.$.dialogs.$.imgUrl.value;
 
     data.type = this.selectedType;
     if (data.label.length > 40){
@@ -755,17 +569,17 @@ this.nodes = this.network.body.data.nodes;*/
 }
 
 editEdgeWithoutDrag (data, callback) {
-  this.$.edgeLabel.value = data.label || "";
-  this.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
-  this.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
-  this.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
-  this.$.edgePopUp.style.display = 'block';
-  this.$.edgeLabel.focus();
+  this.$.dialogs.$.edgeLabel.value = data.label || "";
+  this.$.dialogs.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
+  this.$.dialogs.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
+  this.$.dialogs.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
+  this.$.dialogs.$.edgePopUp.style.display = 'block';
+  this.$.dialogs.$.edgeLabel.focus();
 }
 clearEdgePopUp () {
-  this.$.edgeSaveButton.onclick = null;
-  this.$.edgeCancelButton.onclick = null;
-  this.$.edgePopUp.style.display = 'none';
+  this.$.dialogs.$.edgeSaveButton.onclick = null;
+  this.$.dialogs.$.edgeCancelButton.onclick = null;
+  this.$.dialogs.$.edgePopUp.style.display = 'none';
 }
 cancelEdgeEdit (callback) {
   this.clearEdgePopUp();
@@ -776,7 +590,7 @@ saveEdgeData (data, callback) {
   data.to = data.to.id
   if (typeof data.from === 'object')
   data.from = data.from.id
-  data.label = this.$.edgeLabel.value;
+  data.label = this.$.dialogs.$.edgeLabel.value;
   this.clearEdgePopUp();
   callback(data);
   var edge = this.network.body.data.edges.get({
@@ -892,10 +706,10 @@ _inferedChanged(newInfered,oldinfered){
   this.populateFromInfered(newInfered, this.network)
 }
 _toggleSettings(){
-  console.log(this.$.settings.hidden);
-  //this.$.settings.hidden= !this.$.settings.hidden;
+  console.log(this.$.dialogs.$.settings.hidden);
+  //this.$.dialogs.$.settings.hidden= !this.$.dialogs.$.settings.hidden;
   //this.settinghidden = !this.settinghidden;
-  this.$.settings.toggle();
+  this.$.dialogs.$.settings.toggle();
   this.$.dial.open=false;
 }
 _toggleEye(){
@@ -1048,11 +862,11 @@ _toggleDesc() {
   this.network.cluster(clusterOptionsByData);
 }
 _closeImportPopUp(){
-  this.$.importPopUp.style.display = 'none';
+  this.$.dialogs.$.importPopUp.style.display = 'none';
 }
 _toogle() {
   console.log("clic");
-  this.$.nodePopUp.toggle();
+  this.$.dialogs.$.nodePopUp.toggle();
 }
 saveTextAsFile(){
   var textToWrite="";
@@ -1060,17 +874,17 @@ saveTextAsFile(){
   var textFileAsBlob="";
   var extension="ttl";
   var nomFichier="";
-  var data = this.$.inputTextToSave.value;
+  var data = this.$.dialogs.$.inputTextToSave.value;
   console.log(data);
   if((typeof data != "undefined")&& (data.length>0)){
     textToWrite=data;
   }else{
-    textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+    textToWrite = this.$.dialogs.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
   }
   if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
     fileNameToSaveAs = nomFichier+"."+extension;
   }else{
-    fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+    fileNameToSaveAs = this.$.dialogs.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
   }
   if ((typeof extension != "undefined") && (extension.length>0)){
     switch(extension){
@@ -1117,7 +931,7 @@ if(navigator.userAgent.indexOf("Chrome") != -1)
   //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
   downloadLink.style.display = "none";
   document.body.appendChild(downloadLink);
-  console.log(this.$.popupTtl);
+  console.log(this.$.dialogs.$.popupTtl);
 }
 console.log(downloadLink);
 /*downloadLink.click();*/
@@ -1133,8 +947,8 @@ setTimeout(function(){
   document.body.removeChild(downloadLink);
   window.URL.revokeObjectURL(downloadLink);
 }, 100);
-console.log(this.$.popupTtl);
-this.$.popupTtl.toggle();
+console.log(this.$.dialogs.$.popupTtl);
+this.$.dialogs.$.popupTtl.toggle();
 }
 
 
