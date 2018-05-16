@@ -421,10 +421,10 @@ describeFromDBpedia(results, resource){
       console.log(objetNode);
       // sinon, on les créé
       if (sujetNode.length == 0){
-        this.network.body.data.nodes.add({label: message[0], type: "node" });
+        this.network.body.data.nodes.add({label: message[0], type: "node", x:2*Math.random(), y:2*Math.random() });
       }
       if (objetNode.length == 0){
-        this.network.body.data.nodes.add({ label: message[2], type: "node" });
+        this.network.body.data.nodes.add({ label: message[2], type: "node", x:2*Math.random(), y:2*Math.random() });
       }
       // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
       sujetNode = this.network.body.data.nodes.get({

@@ -318,8 +318,13 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
       console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
       let id = params.nodes[0];
       var node = app.network.body.data.nodes.get(id);
-      console.log(node)
-      app.agentGraph.send('agentVirtuoso', {type:'describe', resource : node.title});
+      console.log(node);
+      let res = node.label;
+      if (node.title != undefined){
+        res = node.title;
+      }
+      app.agentGraph.send('agentVirtuoso', {type:'describe', resource : res});
+      app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
       //ne fonctionne pas pour mettre le label du node dans l'input ???
       //app.inputValueFromGraph = params.nodes[0];
       //  app.updateInputValue(params.nodes[0]);
