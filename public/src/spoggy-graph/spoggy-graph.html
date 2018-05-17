@@ -6,7 +6,6 @@
 
 <link rel="import" href="styles/vis-styles.html">
 
-<link rel="import" href="styles/graphe-styles.html">
 <!--  <link rel="import" href="./graph-dialogs.html">-->
 <!-- en attente
 <link rel="import" href="../spog-eye/spog-eye.html">-->
@@ -21,7 +20,19 @@
 
 
   <template>
-    <style is="custom-style"  include="graphe-styles">
+    <style is="custom-style">
+    #mynetwork {
+      /*      width: 99vw;
+      height: 90vh; */
+
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90vh;
+      bottom: 0px  !important;;
+      border: 1px solid lightgray;
+      background: linear-gradient(to bottom, rgba(55, 55, 255, 0.2), rgba(200, 200, 10, 0.2));
+    }
     #fabsetting {
       position: fixed;
       right: 5px;
