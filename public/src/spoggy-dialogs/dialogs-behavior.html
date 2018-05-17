@@ -1,21 +1,14 @@
-
 <script>
 /* @polymerMixin */
 var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class DialogsBehavior extends superClass {
     constructor() {
       super();
-      //  console.log("Mode behavior")
-      //  console.log(this.inputProp);
     }
 
     static get properties() {
       return {
-        inputProp: {
-          type: String,
-          value: 'modeB'
-        },
-        urls: {
+          urls: {
           type : Array,
           value: []
         },

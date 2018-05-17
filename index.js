@@ -133,7 +133,8 @@ var app = this;
 
 // rooms which are currently available in chat
 //var rooms = ['Agora','graph0', 'graph1','Personne','Tension', 'Organisation'];
-var freq = [{name: 'Agora', count: 0}, {name: 'Tension', count: 0}, {name: 'Organisation', count: 0}];
+var freq=[];
+var freqDef = [{name: 'Agora', count: 0}, {name: 'Tension', count: 0}, {name: 'Organisation', count: 0}];
 var users = [];
 
 io.sockets.on('connection', function (socket) {
@@ -142,23 +143,10 @@ io.sockets.on('connection', function (socket) {
 //  socket.room = rooms[0];
   // send client to room 1
 //  socket.join(socket.room);
+updateFreq();
 
-console.log(io.sockets.adapter.rooms)
-
-var ioRooms = io.sockets.adapter.rooms;
-for (var k in ioRooms) {
-  if(!users.includes(k)){
-    var count = ioRooms[k].length;
-    console.log(k+ " : "+count);
-    var f = {name:k, count:count};
-    freq.push(f);  // ou update
-  }else{
-    console.log("User "+ k+ " : "+ioRooms[k]);
-  }
-
-}
-console.log(freq)
-  socket.emit('initrooms', freq);
+  //socket.emit('initrooms', freq);
+  io.sockets.emit('initrooms', freq);
 
   // when the client emits 'adduser', this listens and executes
   socket.on('adduser', function(username, newroom){
@@ -184,7 +172,9 @@ console.log(freq)
     usernames[username] = username;
     //    socket.room = rooms[0];
     // send client to room 1
+    updateFreq();
 console.log(freq)
+io.sockets.emit('initrooms', freq);
     socket.emit('updaterooms', freq, socket.room);
     // echo to client they've connected
     socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+socket.room);
@@ -425,14 +415,16 @@ console.log(freq)
     socket.leave(socket.room);
     // join new room, received as function parameter
     socket.join(newroom);
-    socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
+    socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+ newroom);
     // sent message to OLD room
     socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', socket.username+' a quitté ce graphe');
     // update socket session room title
     socket.room = newroom;
     socket.broadcast.to(newroom).emit('updatechat', 'Spoggy', socket.username+' a rejoint ce graphe');
   // mise a jour de la socket   socket.emit('updaterooms', freq, newroom);
-    io.sockets.emit('updaterooms', freq, newroom); //mise à jour de tous les clients avec rooms et frequentation
+  updateFreq();
+
+    io.sockets.emit('initrooms', freq); //mise à jour de tous les clients avec rooms et frequentation
     //  io.sockets.emit('updaterooms', rooms, null);
     if (useLevelgraph){
       console.log('new graph '+socket.room);
@@ -455,6 +447,7 @@ console.log(freq)
 
   // when the user disconnects.. perform this
   socket.on('disconnect', function(){
+    console.log(socket)
     console.log("deconnecte "+socket.username)
     for (var i=users.length-1; i>=0; i--) {
     if (users[i] === socket.id) {
@@ -524,3 +517,37 @@ function initDb(socket){
     }
   }
 }
+ function updateFreq(){
+   console.log(io.sockets.adapter.rooms)
+   console.log("\n------------------------------")
+freq = freqDef;
+   var ioRooms = io.sockets.adapter.rooms;
+   for (var k in ioRooms) {
+     if(!users.includes(k)){
+       var count = ioRooms[k].length;
+       console.log(k+ " : "+count);
+       var exist = false;
+       freq.forEach(function (s){
+         console.log(s);
+         if (s.name == k){
+           exist = true;
+           console.log("update to "+ count)
+           s.count = count;
+   // trouver un moyen de sortir du foreach si on a trouvé ;-)
+         }
+       });
+       if (exist==false){
+         var f = {name:k, count:count};
+         console.log("ajoute "+JSON.stringify(f))
+         freq.push(f);  // ou update
+       }
+
+     }else{
+       console.log("User "+ k+ " : "+ioRooms[k]);
+     }
+
+   }
+   console.log(freq)
+   console.log("/////////////////////////////\n")
+
+ }

@@ -10,6 +10,25 @@ Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vo
 # DEMO
 [Essayer Spoggy](https://spoggy.herokuapp.com/)
 
+# Spoggy Aide-mémoire de SPOGGY INPUT
+- Saisir un message pour le chat
+Un message pour le chat ne doit ni commencer par / , ; .
+ni se terminer par , ; . sinon, il sera considéré comme un triplet
+
+- Saisir un triplet au format Turtle
+Une saisie qui ne se termine pas par . ou ; ou , n'est pas pris en compte comme un triplet
+David a man. -> triplet complet,
+David a man; -> indique de garder le sujet
+David a man, -> indique de garder sujet et propriete
+
+- Récupérer le dernier triplet saisi
+en commençant par . -> on récupère tout le dernier triplet
+en commençant par ; -> on récupère le sujet et la propriete
+en commençant par , -> on récupère seulement le dernier sujet
+
+- Saisir une commande
+le commandes commencent par / -> exemple /h pour afficher l'aide
+
 
 [Un cours sur le RDF ?](https://perso.liris.cnrs.fr/pierre-antoine.champin/enseignement/semweb/rdf.html)
 [inférence W3C](https://www.w3.org/standards/semanticweb/inference)

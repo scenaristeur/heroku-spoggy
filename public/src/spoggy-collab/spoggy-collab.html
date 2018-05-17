@@ -14,14 +14,6 @@
   */
   class SpoggyCollab extends Polymer.LazyImportsMixin(CollabBehaviorMixin(Polymer.Element)) {
     static get is() { return 'spoggy-collab'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'spoggy-collab'
-        }
-      };
-    }
     constructor(){
       super();
       Polymer.RenderStatus.afterNextRender(this, function() {

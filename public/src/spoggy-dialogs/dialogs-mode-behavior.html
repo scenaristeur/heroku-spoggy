@@ -5,16 +5,10 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class DialogsModeBehavior extends superClass {
     constructor() {
       super();
-      //  console.log("Mode behavior")
-      //  console.log(this.inputProp);
     }
 
     static get properties() {
       return {
-        inputProp: {
-          type: String,
-          value: 'modeB'
-        },
         mode: {
           type: String,
           value: 'solo'
@@ -61,8 +55,6 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         //  this.connectSocket();
         this.agentDialogs.send('agentSocket', {type: "connect"});
         console.log("SPOG-SOCKET");
-        console.log(this.socket);
-
 
         // expected output: "Mangoes and papayas are $2.79 a pound."
         break;
@@ -93,7 +85,7 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
     rejoindre(e){
       this.room = e.model.item.name;
-      console.log(room);
+      console.log(this.room);
       if (this.pseudo.length ==0){
         this.$.pseudoPopup.toggle();
       }else{

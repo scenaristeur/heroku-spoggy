@@ -25,9 +25,6 @@
   <link rel="lazy-import" group="lazy" href="./dialogs-import.html">
   <template>
     <style>
-    :host {
-      display: block;
-    }
     #operation {
       font-size:28px;
     }
@@ -63,10 +60,12 @@
     <!--
     <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
     <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-    <a href="https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m" target="_blank">Premiers pas avec Spoggy</a>
-    <paper-dialog-scrollable>
-
-
+<p> Avec ces 2 Tutoriels Vidéo (4 minutes), devenez maître du Spoggy :
+   <a href="https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m" target="_blank">Premiers pas avec Spoggy</a><br>
+   Vous pouvez compléter par <a href = "./?source=https://raw.githubusercontent.com/scenaristeur/heroku-spoggy/master/public/exemple_files/Spoggy_init.json" target="_blank" >
+      un aperçu des fonctionnalités de SPOGGY</a>  
+ </p>
+   <paper-dialog-scrollable>
       <iron-collapse-button>
         <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Le graphe</h3>
         <div slot="collapse-content">
@@ -112,8 +111,12 @@
 
 
                     <li>Avec la commande <b><i>/i</i></b> pouvez importer un fichier spoggy </li>
-                    <li>Vous pouvez également indiquer un paramètre "?source=" dans l'url de la page :
+                    <li>Vous pouvez également indiquer un paramètre "?source=" dans l'url de la page, avec un fichier stocké sur un autre serveur ou sur github :
                       <ul>
+                        <li><a href = "./?source=https://raw.githubusercontent.com/scenaristeur/heroku-spoggy/master/public/exemple_files/Spoggy_init.json" target="_blank" >
+                           Un exemple avec le fichier distant des fonctionnalités de Spoggy</a>
+                           (https://raw.githubusercontent.com/scenaristeur/heroku-spoggy/master/public/exemple_files/Spoggy_init.json)
+                        </li>
                         <li><a href="./?source=/exemple_files/NCC_2018.json" target="_blank"> La nuit du code 2018 (hackathon organisé par les Bricodeurs) </a>
                           (<a href="./exemple_files/NCC_2018.json" target="_blank">télécharger le fichier</a>)</li>
                           <li><a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" target="_blank" >l'application SPOGGY</a>
@@ -307,9 +310,8 @@
 
 
 
-                    <!--
-                    <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
-                    border="0" title="compteur de site" alt="compteur de site"> -->
+<img id="cpt" src="/doc/spoggy_ncc_vue2.png"  border="0" title="compteur de site" alt="compteur de visites">
+    <img id="cpt" src=""  border="0" title="compteur de site" alt="compteur de visites">
 
                     <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
                   </paper-dialog-scrollable>
@@ -587,6 +589,16 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
   initAgents(){
     //  console.log(this.agentInput)
     this.agentDialogs.send('agentHello', 'Hello agentHello!');
+    console.log(window.location.hostname);
+    if (window.location.hostname != "127.0.0.1"){
+      console.log(window.location.hostname);
+          this.$.cpt.src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n";
+    }else{
+        console.log(window.location.hostname);
+      this.$.cpt.src = "/doc/spoggy_ncc_vue3.png";
+    }
+
+
     //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
   }
 }
