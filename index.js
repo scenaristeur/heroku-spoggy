@@ -5,7 +5,7 @@
 var useLevelgraph = true; //possibilite d'utiliser LevelGRAPH DB : opérationnel (stocké dans daossier data) ne fonctionne pas sur tous les systemes
 
 /* IMPORTS NODE_MODULES  */
-
+var compression = require('compression')
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
@@ -74,6 +74,17 @@ server.listen(port, function() {
 });
 
 // Routing
+app.use(compression({filter: shouldCompress}))
+
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
 app.use(express.static(__dirname + '/public'));
 app.get('*', function(req, res){
   //  console.log(req.originalUrl);
