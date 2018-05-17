@@ -1,0 +1,65 @@
+
+
+
+<script>
+/* @polymerMixin */
+var GraphDialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class GraphDialogsBehavior extends superClass {
+    constructor() {
+      super();
+    }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'graph-dialogs'
+        },
+        centralGravityValueDefault :{
+          type : Number,
+          value: 0.0001 //0.001
+        },
+        springLengthValueDefault :{
+          type : Number,
+          value:  127//15 //220
+        },
+        springConstantValueDefault :{
+          type : Number,
+          value: 0.1 //0.05
+        },
+        nodeDistanceValueDefault :{
+          type : Number,
+          value: 120 //16 //400
+        },
+        dampingValueDefault :{
+          type : Number,
+          value: 0.08 //0.08,
+        },
+
+      };
+    }
+    _defaultPhysicValues(){
+      this.centralGravityValue = this.centralGravityValueDefault;
+      this.springLengthValue = this.springLengthValueDefault;
+      this.springConstantValue = this.springConstantValueDefault;
+      this.nodeDistanceValue = this.nodeDistanceValueDefault;
+      this.dampingValue = this.dampingValueDefault;
+      //this.sendSettings();
+
+    }
+
+  /*  sendSettings(){
+      this.agentGraphDialogs.send('agentGraph', {type: "updateNetworkSettings", repulsion:{
+        centralGravity: this.centralGravityValue ,
+        springLength: this.springLengthValue,
+        springConstant: this.springConstantValue ,
+        nodeDistance:    this.nodeDistanceValue ,
+        damping:   this.dampingValue
+      }
+    })
+  }*/
+
+
+}
+});
+
+</script>

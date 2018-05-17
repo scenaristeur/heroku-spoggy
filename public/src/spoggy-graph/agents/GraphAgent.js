@@ -73,12 +73,21 @@ GraphAgent.prototype.receive = function(from, message) {
     this.app.importFromParam(message.params);
     break;
     case 'resultsFromSparql':
-  //  console.log(message.results)
+    //  console.log(message.results)
     this.app.resultsFromSparql(message.results);
     break;
-      case 'describeFromDBpedia':
-      console.log(message.results)
-      this.app.describeFromDBpedia(message.results, message.resource);
+    case 'describeFromDBpedia':
+    console.log(message.results)
+    this.app.describeFromDBpedia(message.results, message.resource);
+    break;
+    case 'updateNetworkSettings':
+    console.log(message.repulsion)
+    this.app.updateNetworkSettings(message.repulsion);
+    break;
+    case 'exportJson':
+    console.log(message.type)
+    this.app.exportJson();
+    break;
 
     default:
     console.log(message);

@@ -1,4 +1,4 @@
-<script src="agents/InputAgent.js"></script>
+
 <script>
 /* @polymerMixin */
 var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
@@ -17,10 +17,14 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         }
       };
     }
-
+    updateInputValue(texte){
+      //merdique obligé de mettre ce behavior sur spoggy-graph pour cette fonction !
+      console.log("Element");
+      console.log(texte);
+      this.$.inputMessage.value = texte;
+    }
 
     traiteMessage(){
-      console.log(this.network)
       var message = this.$.inputMessage.value;
       message=message.trim();
       let firstChar = message.charAt(0);
@@ -141,26 +145,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     this.$.dialogs.$.helpPopUp.toggle();
   }
 
-  handleFileSelected(evt) {
-    var app = this;
-    var partageImport = app.$.dialogs.$.partageImport.checked;
-    var remplaceNetwork = app.$.dialogs.$.remplaceNetwork.checked;
-    var files = evt.target.files; // FileList object
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0; i < files.length; i++) {
-      // Code to execute for every file selected
-      var fichier = files[i];
-      console.log(fichier);
-      this.agentInput.send('agentGraph', {type: 'decortiqueFile', fichier: fichier, remplaceNetwork: remplaceNetwork});
-      //    this.decortiqueFile(fichier, this.network, remplaceNetwork);
-    }
-    console.log("fin");
-    // Code to execute after that
-    evt.target.files = null;
-    app.$.dialogs.$.importPopUp.style.display = 'none';
-    //  app.$.dialogs.$.inputMessage.value = '';
-  }
+
 
   catchCommande(commande){
     console.log(commande)
@@ -169,7 +154,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       case "/help":
       case "/aide":
       console.log(this.$.dialogs)
-      this.$.dialogs.$.helpPopUp.toggle();
+    //  this.$.dialogs.$.helpPopUp.toggle();
+      this.agentInput.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
       break;
       case "/e":
       case "/export":
@@ -179,13 +165,14 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       break;
       case "/t":
       //  this.exportTtl(this.network,this);
-      this.agentInput.send('agentGraph', {type: 'exportTtl'})
+      this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
       break;
       case "/i":
       case "/import":
       case "/importJson":
       //  importJson(network,app);
-      this.$.dialogs.$.importPopUp.toggle();
+      //this.$.dialogs.$.importPopUp.toggle();
+      this.agentInput.send('agentDialogs', {type: 'toggle', popup:'importPopUp'})
       //  this.$.dialogs.$.dialogs.openImport(this.network)
       break;
       case "/n":

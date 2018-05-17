@@ -1,0 +1,54 @@
+
+<script>
+/* @polymerMixin */
+var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class DialogsBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        },
+        urls: {
+          type : Array,
+          value: []
+        }
+      };
+    }
+
+    handleFileSelected(evt) {
+      var app = this;
+      var partageImport = app.$.partageImport.checked;
+      var remplaceNetwork = app.$.remplaceNetwork.checked;
+      var files = evt.target.files; // FileList object
+      // files is a FileList of File objects. List some properties.
+      var output = [];
+      for (var i = 0; i < files.length; i++) {
+        // Code to execute for every file selected
+        var fichier = files[i];
+        console.log(fichier);
+        this.agentDialogs.send('agentGraph', {type: 'decortiqueFile', fichier: fichier, remplaceNetwork: remplaceNetwork});
+        //    this.decortiqueFile(fichier, this.network, remplaceNetwork);
+      }
+      console.log("fin");
+      // Code to execute after that
+      evt.target.files = null;
+      app.$.importPopUp.toggle();
+      //  app.$.dialogs.$.inputMessage.value = '';
+    }
+
+
+
+
+
+
+  }
+});
+
+</script>

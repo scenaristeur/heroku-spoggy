@@ -22,33 +22,15 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
 
 
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
-<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-
-
-<!--
-<link rel="import" href="../spoggy-tools/spoggy-tools.html">-->
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/InputAgent.js"></script>
 <link rel="import" href="./input-behavior.html">
 
-
-<!--
-Suppression pour passage par les agents
-<link rel="import" href="../spoggy-data/data-behavior.html">
-<link rel="import" href="../spoggy-mode/spoggy-mode.html">-->
-
-
-
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<!--<link rel="import" href="../../bower_components/chat-window/chat-window.html">-->
 
 <link rel="import" href="./input-styles.html">
 <dom-module id="spoggy-input">
-
-
-  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
-
-  <link rel="lazy-import" group="lazy" href="../../bower_components/chat-window/chat-window.html">
-    <link rel="lazy-import" group="lazy" href="./input-dialogs.html">
-
-  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
   <template>
     <style is="custom-style" include="input-styles">
     .inputbtn{
@@ -60,19 +42,17 @@ Suppression pour passage par les agents
       right: 5px;
       top: 10px;
     }
-
     </style>
-
+<!--
     <style is="custom-style">
     chat-window.styled {
       font-size: small;
-      /*position: absolute;
-      top: 100px;*/
-
+      *position: absolute;
+      top: 100px;
       --chat-messages-height: 12em;
       --paper-input-container-input: {
         margin: 0 2px;
-      /*  z-index:100;*/
+        z-index:100;
       }
       --chat-message-text: {
         z-index:100;
@@ -86,15 +66,11 @@ Suppression pour passage par les agents
     }
   }
   </style>
+-->
 
-
-<input-dialogs id="dialogs"></input-dialogs>
 
 
   <!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
-
-
-
                 <paper-input id="inputMessage"
                 class="inputMessage"
                 on-change="traiteMessage"
@@ -102,8 +78,6 @@ Suppression pour passage par les agents
                 raised
                 autofocus>
               </paper-input>
-
-
         <!--    <chat-window
             id = "chat"
             class="styled"
@@ -113,7 +87,6 @@ Suppression pour passage par les agents
             messages="[[messages]]"
             on-send="sendMsg"
             ></chat-window>-->
-
 <!--
           <chat-input
           author="me"
@@ -136,16 +109,10 @@ Suppression pour passage par les agents
           auto-scroll="[[autoScroll]]">
         </chat-messages>
 -->
-
-
-
-
-
         <!--<div style="align:right">
         <paper-icon-button icon="help" on-tap="afficheAide"></paper-icon-button>
       </div>-->
       <paper-fab id="fabAide" on-tap="afficheAide"  icon="help" style="height: 50px; width:50px;"></paper-fab>
-
 
     </template>
 
@@ -162,15 +129,11 @@ Suppression pour passage par les agents
       static get is() { return 'spoggy-input'; }
       static get properties() {
         return {
-          prop1: {
-            type: String,
-            value: 'spoggy-input'
-          },
           commandHistory:{
             type : Array,
             value: []
           },
-          sources:{
+        /*  sources:{
             type: Array,
             notify: true
           },
@@ -193,7 +156,7 @@ Suppression pour passage par les agents
               { author: 'you', text: 'dummy msg 14', created: this.now - (14*24*60*60*1000) },
               { author: 'me', text: 'dummy msg 15', created: this.now - (14.5*24*60*60*1000) },
             ]
-          }
+          }*/
         };
       }
 
@@ -201,27 +164,15 @@ Suppression pour passage par les agents
         super();
         this.agentInput = new InputAgent('agentInput', this);
         Polymer.RenderStatus.afterNextRender(this, function() {
-          // When possible, use afterNextRender to defer non-critical
-          // work until after first paint.
           this._deferred();
-
         });
       }
       _deferred(){
-        this.importLazyGroup('lazy').then((results) => {
-          console.log(results);
-          this.dispatchEvent(new CustomEvent('import-loaded', results));
-        });
           this.initAgents()
       }
       initAgents(){
-        console.log(this.agentInput)
         this.agentInput.send('agentHello', 'Hello agentHello!');
       }
-      connectedCallback(){
-        //  console.log("agent DATA connected");
-      }
-
       sendMsg(e){
         // filtrer avant de passer en mode chat
         console.log(e.detail)
@@ -230,7 +181,6 @@ Suppression pour passage par les agents
         mess.type = "chat";
         mess.data = e.detail;
         this.agentInput.send('agentData', mess);
-
         this.$.chat.messages = this.messages;
         this.author = this.author == 'me' ? 'you' : 'me'; // For demo
         this.$.chat.push('messages',{
@@ -240,16 +190,6 @@ Suppression pour passage par les agents
         });
 
       }
-
-      updateInputValue(texte){
-
-        //merdique obligé de mettre ce behavior sur spoggy-graph pour cette fonction !
-        console.log("Element");
-        console.log(texte);
-
-        this.$.inputMessage.value = texte;
-      }
-
     }
 
     window.customElements.define(SpoggyInput.is, SpoggyInput);

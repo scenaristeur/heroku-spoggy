@@ -1,5 +1,5 @@
 <script src="./lib/vis.js"></script>
-<script src="agents/GraphAgent.js"></script>
+
 
 <script>
 /* @polymerMixin */
@@ -400,6 +400,16 @@ describeFromDBpedia(results, resource){
       });
     }
 
+
+    updateNetworkSettings(settings){
+      this.network.physics.options.repulsion.centralGravity = settings.centralGravity
+      this.network.physics.options.repulsion.springLength = settings.springLength;
+      this.network.physics.options.repulsion.springConstant = settings.springConstant;
+      this.network.physics.options.repulsion.nodeDistance = settings.nodeDistance;
+    }
+
+
+
     catchTriplet(message){
       // A REVOIR ET REMPLACER PAR catchTripletsV2() ??
       //  console.log(message.length);
@@ -413,31 +423,30 @@ describeFromDBpedia(results, resource){
           return (node.label == message[0] );
         }
       });
+      if (sujetNode.length == 0){
+        this.network.body.data.nodes.add({label: message[0], type: "node", x:10*Math.random(), y:10*Math.random() });
+      }
       var objetNode = this.network.body.data.nodes.get({
         filter: function(node){
           //    console.log(node);
           return (node.label == message[2]);
         }
       });
-      console.log(sujetNode);
-      console.log(objetNode);
+    //  console.log(sujetNode);
+    //  console.log(objetNode);
       // sinon, on les créé
-      if (sujetNode.length == 0){
-        this.network.body.data.nodes.add({label: message[0], type: "node", x:2*Math.random(), y:2*Math.random() });
-      }
+
       if (objetNode.length == 0){
-        this.network.body.data.nodes.add({ label: message[2], type: "node", x:2*Math.random(), y:2*Math.random() });
+        this.network.body.data.nodes.add({ label: message[2], type: "node", x:10*Math.random(), y:10*Math.random() });
       }
       // maintenant ils doivent exister, pas très po=ropre comme méthode , à revoir
       sujetNode = this.network.body.data.nodes.get({
         filter: function(node){
-          console.log(node);
           return (node.label == message[0] );
         }
       });
       objetNode = this.network.body.data.nodes.get({
         filter: function(node){
-          console.log(node);
           return (node.label == message[2]);
         }
       });
@@ -676,8 +685,8 @@ console.log("||||||||||||||||||||||--");
 //console.log(listeInfos);
 //console.log(listeComplementaire);
 //suppression des doublons
-listeInfos = uniq_fast(listeInfos.sort());
-listeComplementaire = uniq_fast(listeComplementaire.sort());
+listeInfos = this.uniq_fast(listeInfos.sort());
+listeComplementaire = this.uniq_fast(listeComplementaire.sort());
 // console.log (listeInfos);
 for (var k = 0; k < listeInfos.length; k++) {
   output = output + listeInfos[k];
@@ -695,6 +704,20 @@ this.$.dialogs.$.inputTextToSave.value = output; //     document.getElementById(
 this.$.dialogs.$.popupTtl.toggle();
 }
 
+uniq_fast(a) {
+  var seen = {};
+  var out = [];
+  var len = a.length;
+  var j = 0;
+  for(var i = 0; i < len; i++) {
+    var item = a[i];
+    if(seen[item] !== 1) {
+      seen[item] = 1;
+      out[j++] = item;
+    }
+  }
+  return out;
+}
 
 newGraph(){
   //network.body.data.nodes.clear();

@@ -1,60 +1,21 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<!--
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
-<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-
-<link rel="import" href="../../bower_components/core-icon/core-icon.html">
-<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-
-<link rel="import" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
-
-<link rel="import" href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
-<link rel="import" href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
-
-<link rel="import" href="../../bower_components/color-picker/color-picker.html">
-<link rel="import" href="../../bower_components/color-picker/color-element.html">
-<link rel="import" href="../../bower_components/paper-swatch-picker/paper-swatch-picker.html">
-<link rel="import" href="../../bower_components/neon-animation/web-animations.html">-->
-
-<!--<script src="../../bower_components/vis/dist/vis.min.js"></script> Prend la version non minifiée pour le français -->
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/GraphAgent.js"></script>
+<link rel="import" href="./graph-behavior.html">
 
 
-  <link rel="import" group="lazy" href="./graph-behavior.html">
-<!-- suppression , passage aux agents
-<link rel="import" href="../spoggy-data/data-behavior.html">
-<link rel="import" href="../spoggy-input/input-behavior.html">
--->
 <link rel="import" href="styles/vis-styles.html">
+
 <link rel="import" href="styles/graphe-styles.html">
+<!--  <link rel="import" href="./graph-dialogs.html">-->
 <!-- en attente
 <link rel="import" href="../spog-eye/spog-eye.html">-->
+<!--  <link rel="import"  href="./graph-dialogs.html">-->
 
-<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-
+  <link rel="import"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
+  <link rel="import"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
 
 <dom-module id="spoggy-graph">
-
-  <link rel="lazy-import" group="lazy" href="./graph-dialogs.html">
-
-
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
-
-
-
-
-
-
-
 
 
 
@@ -73,52 +34,48 @@
     }
     #dial{
       position: fixed;
-      right: 5px;
-      top: 200px;
+      left: 50%;
+      bottom: 20px;
       /*--valle-speed-dial-action-fab-color: #d4f442;*/
       --valle-speed-dial-backdrop-color: rgba(55, 55, 255, 0.5) ; /* rgba(200, 200, 10, 0.2), */
     }
     #dial-action .label {
-        display: inline-block;
-        left: -158px;
+      display: inline-block;
+      left: -158px;
 
     }
   }
   </style>
   <style is="custom-style"  include="vis-styles"></style>
+<!--<graph-dialogs id="dialogs"></graph-dialogs>-->
+<!--
+  <graph-dialogs id="dialogs"></graph-dialogs>-->
 
+  <div id="mynetwork"></div>
+  <paper-fab id="fabsetting" on-tap="_toggleSettings"  icon="settings" style="height: 50px; width:50px;"></paper-fab>
+  <!-- style="height: 150px; width:150px;color: #0D578B;"-->
+  <!--  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab> -->
 
-<graph-dialogs id="dialogs"></graph-dialogs>
-
-
-
-
-
-<div id="mynetwork"></div>
-<paper-fab id="fabsetting" on-tap="_toggleSettings"  icon="settings" style="height: 50px; width:50px;"></paper-fab>
-<!-- style="height: 150px; width:150px;color: #0D578B;"-->
-<!--  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab> -->
-
-<!--  icon="https://uploaddeimagens.com.br/images/001/071/867/full/iconmonstr-fast-food-3-32.png"-->
-<valle-speed-dial id="dial" direction="down" label="Menu" backdrop>
-  <valle-speed-dial-action
-  class="dial-action"
-  label="settings"
-  on-tap="_toggleSettings"
-  label-direction="left"
-  icon="settings"
-  ></valle-speed-dial-action>
-  <valle-speed-dial-action
-  class="dial-action"
-  label="mode"
-  label-direction="left"
-  ></valle-speed-dial-action>
-  <valle-speed-dial-action
-  class="dial-action"
-  label="help"
-  label-direction="left"
-  ></valle-speed-dial-action>
-</valle-speed-dial>
+  <!--  icon="https://uploaddeimagens.com.br/images/001/071/867/full/iconmonstr-fast-food-3-32.png"-->
+  <valle-speed-dial id="dial" direction="top" label="Menu" backdrop>
+    <valle-speed-dial-action
+    class="dial-action"
+    label="settings"
+    on-tap="_toggleSettings"
+    label-direction="right"
+    icon="settings"
+    ></valle-speed-dial-action>
+    <valle-speed-dial-action
+    class="dial-action"
+    label="mode"
+    label-direction="right"
+    ></valle-speed-dial-action>
+    <valle-speed-dial-action
+    class="dial-action"
+    label="help"
+    label-direction="right"
+    ></valle-speed-dial-action>
+  </valle-speed-dial>
 
 
 </template>
@@ -132,7 +89,7 @@
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
+class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
   static get is() { return 'spoggy-graph'; }
   static get properties() {
     return {
@@ -144,31 +101,12 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
         type: Object,
         notify: true
       },
-      centralGravityValueDefault :{
-        type : Number,
-        value: 0.0001 //0.001
-      },
-      springLengthValueDefault :{
-        type : Number,
-        value:  127//15 //220
-      },
-      springConstantValueDefault :{
-        type : Number,
-        value: 0.1 //0.05
-      },
-      nodeDistanceValueDefault :{
-        type : Number,
-        value: 120 //16 //400
-      },
-      dampingValueDefault :{
-        type : Number,
-        value: 0.08 //0.08
-      },
+
       settinghidden:{
         type: Boolean,
         value: true
       },
-      eyehidden:{
+    /*  eyehidden:{
         type: Boolean,
         value: true
       },
@@ -176,15 +114,16 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
         type: Array,
         value:[],
         observer: '_inferedChanged'
-      },
+      },*/
     };
   }
   constructor(){
     super();
-
+//    this.agentGraph = new GraphAgent('agentGraph', this);
     Polymer.RenderStatus.afterNextRender(this, function() {
       // When possible, use afterNextRender to defer non-critical
       // work until after first paint.
+        this.agentGraph = new GraphAgent('agentGraph', this);
       this._deferred();
 
     });
@@ -192,28 +131,15 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
   }
   _deferred(){
     //  this.initAgents()
-      console.log("GRAPH DEFER")
-    this.importLazyGroup('lazy').then((results) => {
+    console.log("GRAPH DEFER")
+  /*  this.importLazyGroup('lazy').then((results) => {
       console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
-    });
-        this.agentGraph = new GraphAgent('agentGraph', this);
-  }
-  initAgents(){
-    this.agentGraph.send('agentHello', 'Hello agentHello!');
-  }
+    });*/
 
-  shapeIsImage(shape){
-    console.log(shape)
-    //  console.log(value.length)
-    return shape != "image" && shape != "circularImage";
-  }
-
-  connectedCallback(){
-    super.connectedCallback();
     this.network = this.networkDivInitialize(this.$.mynetwork, this);
     let app = this;
-    this._defaultPhysicValues();
+    //  this._defaultPhysicValues();
     this.network.on("selectNode", function (params) {
       console.log('selectNode Event:', params);
       console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
@@ -230,9 +156,24 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
       //app.inputValueFromGraph = params.nodes[0];
       //  app.updateInputValue(params.nodes[0]);
     });
+
+
+
+
+
+
+
+
+  }
+  initAgents(){
+    this.agentGraph.send('agentHello', 'Hello agentHello!');
   }
 
-
+  shapeIsImage(shape){
+    console.log(shape)
+    //  console.log(value.length)
+    return shape != "image" && shape != "circularImage";
+  }
 
 
   //////////////////////////////////////////////////////////////////
@@ -277,6 +218,12 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
   var data = {};
   var options = {
     locale: 'fr',
+    /*configure: {
+      enabled: true,
+      filter: 'nodes,edges',
+      container: settings,
+      showButton: true
+    },*/
     edges:{
       arrows: {
         to:     {enabled: true, scaleFactor:1, type:'arrow'},
@@ -352,11 +299,11 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
           avoidOverlap: 0
         },
         repulsion: {
-          centralGravity: app.centralGravityValueDefault,  //0.001, //0.001 ? A quoi sert cette valeur ?
-          springLength: app.springLengthValueDefault,   // 220, //220 (//200 //300)
-          springConstant: app.springConstantValueDefault, //0.01, //0.01
-          nodeDistance:  app.nodeDistanceValueDefault, //150, //100 //350
-          damping: app.dampingValueDefault, ///0.08
+          centralGravity: 0.0001,  //0.001, //0.001 ? A quoi sert cette valeur ?
+          springLength: 127,   // 220, //220 (//200 //300)
+          springConstant: 0.1, //0.01, //0.01
+          nodeDistance:  120, //150, //100 //350
+          damping: 0.08, ///0.08
         },
         hierarchicalRepulsion: {
           centralGravity: 0.0,
@@ -395,13 +342,13 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.LazyImportsMixin(Polymer.El
     }
     this.$.dialogs.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
     this.$.dialogs.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
-    this.$.dialogs.$.nodePopUp.style.display = 'block';
+    this.$.dialogs.$.nodePopUp.toggle(); //style.display = 'block';
     this.$.dialogs.$.nodeLabel.focus();
   }
   clearNodePopUp () {
     this.$.dialogs.$.nodeSaveButton.onclick = null;
     this.$.dialogs.$.nodeCancelButton.onclick = null;
-    this.$.dialogs.$.nodePopUp.style.display = 'none';
+    this.$.dialogs.$.nodePopUp.toggle();//style.display = 'none';
   }
   cancelNodeEdit (callback) {
     this.clearNodePopUp(this);
@@ -573,13 +520,13 @@ editEdgeWithoutDrag (data, callback) {
   this.$.dialogs.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
   this.$.dialogs.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
   this.$.dialogs.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
-  this.$.dialogs.$.edgePopUp.style.display = 'block';
+  this.$.dialogs.$.edgePopUp.toggle(); //style.display = 'block';
   this.$.dialogs.$.edgeLabel.focus();
 }
 clearEdgePopUp () {
   this.$.dialogs.$.edgeSaveButton.onclick = null;
   this.$.dialogs.$.edgeCancelButton.onclick = null;
-  this.$.dialogs.$.edgePopUp.style.display = 'none';
+  this.$.dialogs.$.edgePopUp.toggle(); //style.display = 'none';
 }
 cancelEdgeEdit (callback) {
   this.clearEdgePopUp();
@@ -668,43 +615,7 @@ addNodeIfNotExist(network, data){
   }
 }
 
-_changeGravity(e){
-  console.log("G :"+this.centralGravityValue);
-  this.network.physics.options.repulsion.centralGravity = this.centralGravityValue;
-}
-_changeSpringLength(){
-  this.network.physics.options.repulsion.springLength = this.springLengthValue;
-  console.log("L :"+this.springLengthValue);
-}
-_changeSpringConstant(){
-  this.network.physics.options.repulsion.springConstant = this.springConstantValue;
-  console.log("F :"+this.springConstantValue);
-}
-_changeNodeDistance(){
-  this.network.physics.options.repulsion.nodeDistance = this.nodeDistanceValue;
-  console.log("D :"+this.nodeDistanceValue);
-}
-_changeDamping(){
-  this.network.physics.options.repulsion.damping = this.dampingValue;
-  console.log("S :"+this.dampingValue);
-}
-_defaultPhysicValues(){
-  this.centralGravityValue = this.centralGravityValueDefault;
-  this.springLengthValue = this.springLengthValueDefault;
-  this.springConstantValue = this.springConstantValueDefault;
-  this.nodeDistanceValue = this.nodeDistanceValueDefault;
-  this.dampingValue = this.dampingValueDefault;
-  this._changeGravity();
-  this._changeSpringLength();
-  this._changeSpringConstant();
-  this._changeNodeDistance();
-  this._changeDamping();
-}
-_inferedChanged(newInfered,oldinfered){
-  console.log("INFERED");
-  console.log(newInfered);
-  this.populateFromInfered(newInfered, this.network)
-}
+
 _toggleSettings(){
   console.log(this.$.dialogs.$.settings.hidden);
   //this.$.dialogs.$.settings.hidden= !this.$.dialogs.$.settings.hidden;
@@ -718,6 +629,14 @@ _toggleEye(){
   //this.eyehidden = !this.eyehidden;
   this.$.eye.toggle();
 }
+
+
+_inferedChanged(newInfered,oldinfered){
+  console.log("INFERED");
+  console.log(newInfered);
+  this.populateFromInfered(newInfered, this.network)
+}
+
 
 populateFromInfered(infered, network){
   if(network != undefined){
@@ -862,7 +781,7 @@ _toggleDesc() {
   this.network.cluster(clusterOptionsByData);
 }
 _closeImportPopUp(){
-  this.$.dialogs.$.importPopUp.style.display = 'none';
+  this.$.dialogs.$.importPopUp.toggle(); //.style.display = 'none';
 }
 _toogle() {
   console.log("clic");

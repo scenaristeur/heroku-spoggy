@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/InputDialogsAgent.js"></script>
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./input-dialogs-behavior.html">
 
@@ -14,350 +15,53 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-selector/iron-selector.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-    <template>
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+  <template>
 
+  
+              </template>
 
-        <paper-dialog id="helpPopUp" >
-
-          <h3>Aide <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h3>
-          <!--<paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button> -->
-          <!--
-          <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
-          <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-          <a href="https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m" target="_blank">Premiers pas avec Spoggy</a>
-          <paper-dialog-scrollable>
-
-
-            <iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Le graphe</h3>
-              <div slot="collapse-content">
-                <p>
-                  Spoggy est une application permettant la représentation de l'information, ou des connaissances
-                  sous forme de graphe.<br>
-                  Un graphe est composé de <b>NOEUDS</b> (nodes) et de <b>LIENS</b> (edges).
-                </p>
-                <p>
-                  Les noeuds représentent les concepts d'un domaine
-                  et les liens permettent de qualifier la relation entre deux concepts.<br>
-                  Les liens sont orientés et se terminent par une flèche.<br>
-                  L'ensemble de deux noeuds et du lien entre ces deux noeuds peut aussi être appelé un <b>TRIPLET</b>. </p>
-                  <p>Par exemple <b>{ David, habite, Lyon }</b>
-                    est un triplet dans lequel les termes 'David' et 'Lyon' sont des noeuds représenatnt
-                    respectivement une personne (le sujet du triplet) et une ville (l'objet du triplet),
-                    alors que 'habite' est la relation (aussi appelée 'propriété' ou 'predicat' ) qui relie les deux noeuds.</p>
-                    <p>
-                      Vous pouvez utiliser les boutons <b><i>'Edit / Add node'</i></b>
-                      pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.<br>
-                      Je vous laisse découvrir les fonctionnalités de 'Edit Node', 'Edit Edge', 'Delete Node', 'Delete Edge'... ;-)<br>
-                      Vous pouvez aussi utiliser la 'zone de saisie' pour saisir des triplets de manière plus rapide.
-                    </p>
-                  </div>
-                </iron-collapse-button>
-
-                <iron-collapse-button>
-                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">La zone de saisie</h3>
-                  <div slot="collapse-content">
-                    La zone de saisie est l'endroit où par défaut il est écrit "3 mots une virgule et Entrée". En cliquant dessus, vous pouvez :  <br>
-                    <b> - Saisir des commandes</b><br>
-                    les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide<br>
-                    <ul>
-                      <li>Pour afficher l'aide, tapez '/h' comme 'help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</li>
-                      <li> <b>/n</b> pour créer un nouveau graphe.</li>
-                      <li>Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter et l'envoyer par mail à vos collaborateurs. :
-                        <ul>
-                          <li>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></li>
-                          <li>Au format
-                            <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
-                            pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></li>
-                          </ul>
-
-
-                          <li>Avec la commande <b><i>/i</i></b> pouvez importer un fichier spoggy </li>
-                          <li>Vous pouvez également indiquer un paramètre "?source=" dans l'url de la page :
-                            <ul>
-                              <li><a href="./?source=/exemple_files/NCC_2018.json" target="_blank"> La nuit du code 2018 (hackathon organisé par les Bricodeurs) </a>
-                                (<a href="./exemple_files/NCC_2018.json" target="_blank">télécharger le fichier</a>)</li>
-                                <li><a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" target="_blank" >l'application SPOGGY</a>
-                                  (<a href="./exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" target="_blank">télécharger le fichier</a>)</li>
-                                  <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA.json" target="_blank" >
-                                    Donner du sens à l'IA (mission gouvernementale)</a>
-                                    (<a href="./exemple_files/Spoggy-Donner du sens à l'IA.json" target="_blank">télécharger le fichier</a>)</li>
-                                  </ul>
-                                </li>
-                              </li>
-                            </ul>
-                            <b>- Saisir des triplets</b><br>
-                            <p>
-                              ## Saisir un triplet au format Turtle<br>
-                              Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
-                              n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
-                              - David type Personne<b>.</b> -> triplet complet,<br>
-                              - David type Personne<b>;</b> -> indique de garder le sujet<br>
-                              - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
-                              - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
-                            </p>
-
-                            <p>
-                              ## Récupérer le dernier triplet saisi<br>
-                              - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
-                              - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
-                              - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
-                            </p>
-                            <b>- Chatter en mode collaboratif (voir Modes / Echelles)</b><br>
-                            <p> [développement en cours]
-                              ## Saisir un message pour le chat <br>
-                              Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
-                              ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
-                            </p>
-
-                          </div>
-                        </iron-collapse-button>
-
-
-
-
-                        <iron-collapse-button>
-                          <h3 slot="collapse-trigger" style="margin: 0; color: #0D578B;">Modes / Echelles</h3>
-                          <div slot="collapse-content">
-
-                            Spoggy est utilisable selon trois modes, du plus simple au plus complexe : solo, collaboratif, global.
-
-                            <iron-collapse-button>
-                              <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px; color: #0D578B;">Solo / Humain</h4>
-                              <div slot="collapse-content">
-                                <p>Spoggy gère l'information à l'échelle humaine, au sein de votre navigateur.
-                                  Vous choisissez quelles données exporter ou partager avec la commande <b><i>/e</i></b>.
-                                  En mode <b>'SOLO'</b> Par défaut, aucune information n'est enregistrée ou envoyée vers aucun serveur.</p>
-                                  <!--<p>[Un développement pour une option de stockage pérenne dans le navigateur est à l'étude (levelgraph)]</p>-->
-                                </div>
-                              </iron-collapse-button>
-                              <iron-collapse-button>
-                                <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px;  color: #0D578B;">Collaboratif / Groupe</h4>
-                                <div slot="collapse-content">
-                                  <p>En mode <b>'COLLABORATIF'</b>, Spoggy permet à un groupe de collaborer en temps réel.
-                                    On peut alors construire des graphes en parfaite synchronistaion et voir en temps réel les modifications effectuées par nos collaborateurs.
-                                    Le mode collaboratif se base sur les principes du 'chat' : des rooms ou salles pour discuter, sauf qu'ici, on fait un peu plus que discuter...<br>
-                                    Pour accéder au mode collaboratif de Spoggy, cliquez sur le bouton
-                                    <paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
-                                    ,
-                                    saisissez un pseudo, et selectionnez le nom de la room que vous souhaitez rejoindre ou créez une nouvelle room.</p>
-                                  </div>
-                                </iron-collapse-button>
-                                <iron-collapse-button>
-                                  <h4 slot="collapse-trigger" style="margin: 0;  margin-left: 40px; color: #0D578B;">Global / Monde</h4>
-                                  <div slot="collapse-content">
-                                    <p>
-                                      Des endpoints / triplestores et entrepots de données peuvent être ajoutés à Spoggy.
-                                      Ce sont de gros serveurs qui fournissent à Spoggy des espaces de stockage partagés.
-                                    </p>
-                                    <p>
-                                      Vous pouvez créer votre propre sparql endpoint en utilisant un serveur
-                                      <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>.
-                                    </p>
-                                    <p> Par défaut le endpoint global Fuseki est totalement ouvert :
-                                      N'importe qui peut insérer toute information,
-                                      mais aussi modifier ou supprimer les informations précédemment enregistrées par d'autres utilisateurs. <br>
-                                      Il n'est donc pas garanti que vos informations perdurent...<br>
-                                      Tout peut être effacé à tout moment !!! <br> Un peu comme une plage sur laquelle on construirait un château de sable :<br>
-                                      on n'est pas certain certain qu'il en restera quelque chose le lendemain, mais peut-être que le château aura été amélioré par un autre bâtisseur.
-                                    </p>
-                                    <p>En installant votre propre endpoint fuseki, vous pouvez aussi choisir de fiabiliser et garantir vos informations,
-                                      ceci peut-être utile par exemple pour une entreprise qui souhaiterait rendre sont catalogue disponible au format Spoggy
-                                      et permettre à ses clients de le parcourir de manière plus visuelle et ludique, sous forme de graphe...
-                                    </p>
-                                    <p>
-                                      Un bon (en)tendeur... <br>et ben... ça tient bien ;-)
-                                    </p>
-
-                                  </div>
-                                </iron-collapse-button>
-                              </div>
-                            </iron-collapse-button>
-
-
-                            <iron-collapse-button>
-                              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Sécurité</h3>
-                              <div slot="collapse-content">
-                                <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
-                                  Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
-                                </div>
-                              </iron-collapse-button>
-
-
-
-                              <iron-collapse-button>
-                                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Technique & navigateur</h3>
-                                <div slot="collapse-content">
-                                  <p>
-                                    Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> &
-                                    les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>,
-                                    mais ceux-ci ne sont pas nativement pris en compte par tous les navigateurs Web.
-                                  </p>
-                                  <p>
-                                    Spoggy fonctionne correctement avec les dernières versions de Chrome et Opéra.<br>
-                                    Firefox ne les prend en compte qu'à partir de la version 60.<br>
-                                    Vous pouvez vérifier la compatibilité de votre navigateur
-                                    au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a>
-                                  </p>
-                                  <p>
-                                    Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour :
-                                    <a href="standalone/interface.html">SPOGGY-STANDALONE</a>
-                                  </p>
-                                  <p>
-                                    Spoggy utilise également vis.js, socket.io, rdf-ext, levelgraph,... et fait travailler des tonnes de cellules grises...
-                                  </p>
-                                </div>
-                              </iron-collapse-button>
-
-
-                              <iron-collapse-button>
-                                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Contact</h3>
-                                <div slot="collapse-content">
-                                  <p>mail : scenaristeur@gmail.com</p>
-                                  <p>twitter : @dfaveris</p>
-                                </div>
-                              </iron-collapse-button>
-
-                              <iron-collapse-button>
-                                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Github / Source / Améliorer</h3>
-                                <div slot="collapse-content">
-                                  <p>Pour un complément de documentation sur Spoggy, c'est <a href="https://scenaristeur.github.io/heroku-spoggy/" target="_blank">https://scenaristeur.github.io/heroku-spoggy/</a>
-                                    <p>Pour obtenir les sources et plus d'informations sur Spoggy c'est
-                                      <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
-                                    </p>
-                                    <p> Pour proposer de nouvelles fonctionnalités ou contribuer au developpement de Spoggy, jetez un oeil à
-                                      <a href="https://github.com/scenaristeur/heroku-spoggy/projects/1" target="_blank">notre kanban</a>
-                                    </p>
-                                  </div>
-                                </iron-collapse-button>
-
-                                <iron-collapse-button>
-                                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Quelques docs, exemples</h3>
-                                  <div slot="collapse-content">
-                                    <p>
-                                      <a href="./doc/spoggy_ncc_vue0.png" target="_blank"><img width="100" height="100" src="./doc/spoggy_ncc_vue0.png" alt="spoggy_ncc_vue0.png"></img></a>
-                                      <a href="./doc/Donner_du_sens_ia.png" target="_blank"><img width="100" height="100" src="./doc/Donner_du_sens_ia.png" alt="Donner_du_sens_ia.png"></img></a>
-
-                                    </p>
-
-                                  </div>
-                                </iron-collapse-button>
-
-                                <iron-collapse-button>
-                                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Comment intégrer Spoggy à mon site Web ?</h3>
-                                  <div slot="collapse-content">
-                                    <p>
-                                      Vous pouvez intégrer Spoggy dans votre site Web en utilisant le code suivant :
-                                      <pre><code class="js">&lt;iframe  width="90%" height="700" src="https://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"&gt;&lt;/iframe&gt;</code></pre>
-                                      <br>
-                                      Un exemple <a href="./embed/" target="_blank">ici</a> avec un fichier source.
-                                    </p>
-                                  </div>
-                                </iron-collapse-button>
-
-                                <!--
-                                <iron-collapse-button>
-                                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Menu</h3>
-                                <div slot="collapse-content">
-                                en cours
-                              </div>
-                            </iron-collapse-button>
-                          -->
-
-
-
-
-
-                          <!--
-                          <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
-                          border="0" title="compteur de site" alt="compteur de site"> -->
-
-                          <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
-                        </paper-dialog-scrollable>
-                        <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>-->
-                        <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
-                        <!--  </div>-->
-                      </paper-dialog>
-
-                      <!--  on-iron-overlay-opened="_openImport"
-                      on-iron-overlay-closed="_closeImport"-->
-                      <paper-dialog id="importPopUp"
-                      backdrop transition="core-transition-bottom">
-                      <div horizontal start-justified start layout >
-                        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-                        <div style="padding-left:20px" vertical start-justified start layout wrap>
-                          <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
-                          <p >
-                            <fieldset>
-                              <legend>Paramètres</legend>
-                              <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
-                              <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
-                            </fieldset>
-                          </p>
-                          <p>
-                            <fieldset>
-                              <legend>Fichier</legend>
-                              <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
-                            </fieldset>
-                          </p>
-                          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                            <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
-                          </div>
-                        </div>
-                      </div>
-                    </paper-dialog>
-
-                  </template>
-
-                  <script>
-                  /**
-                  * `spoggy-input`
-                  *
-                  *
-                  * @customElement
-                  * @polymer
-                  * @demo demo/index.html
-                  */
-                  class InputDialogs extends InputDialogsBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
-                    static get is() { return 'input-dialogs'; }
-                    static get properties() {
-                      return {
-                        prop1: {
-                          type: String,
-                          value: 'input-dialogs'
-                        }
-                      };
+              <script>
+              /**
+              * `spoggy-map`
+              *
+              *
+              * @customElement
+              * @polymer
+              * @demo demo/index.html
+              */
+              class InputDialogs extends InputDialogsBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
+                static get is() { return 'input-dialogs'; }
+                static get properties() {
+                  return {
+                    prop1: {
+                      type: String,
+                      value: 'input-dialogs'
                     }
+                  };
+                }
 
-                    constructor(){
-                      super();
-                    //  this.agentInput = new InputAgent('agentInput', this);
-                      Polymer.RenderStatus.afterNextRender(this, function() {
-                        // When possible, use afterNextRender to defer non-critical
-                        // work until after first paint.
-                        this._deferred();
+                constructor(){
+                  super();
+                  this.agentInputDialogs = new InputDialogsAgent('agentInputDialogs', this);
+                  Polymer.RenderStatus.afterNextRender(this, function() {
+                    // When possible, use afterNextRender to defer non-critical
+                    // work until after first paint.
+                    this._deferred();
 
-                      });
-                    }
-                    _deferred(){
-                      this.importLazyGroup('lazy').then((results) => {
-                        console.log(results);
-                        this.dispatchEvent(new CustomEvent('import-loaded', results));
-                      });
-                      //  this.initAgents()
-                    }
-                  /*  initAgents(){
-                      console.log(this.agentInput)
-                      this.agentInput.send('agentHello', 'Hello agentHello!');
-                    }*/
-                    connectedCallback(){
-                      //  console.log("agent DATA connected");
-                    }
+                  });
+                }
+                _deferred(){
+                  this.importLazyGroup('lazy').then((results) => {
+                    console.log(results);
+                    this.dispatchEvent(new CustomEvent('import-loaded', results));
+                  });
 
+                  this.agentInputDialogs.send('agentHello', 'Hello agentHello!');
+                  //  this.initAgents()
+                }
+              }
 
-
-                  }
-
-                  window.customElements.define(InputDialogs.is, InputDialogs);
-                  </script>
-                </dom-module>
+              window.customElements.define(InputDialogs.is, InputDialogs);
+              </script>
+            </dom-module>
