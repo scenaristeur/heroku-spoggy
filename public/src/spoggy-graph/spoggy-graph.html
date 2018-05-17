@@ -1,30 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-
-
 <link rel="import" href="./graph-behavior.html">
-
-
-
 <link rel="import" href="styles/vis-styles.html">
-
-<!--  <link rel="import" href="./graph-dialogs.html">-->
-<!-- en attente
-<link rel="import" href="../spog-eye/spog-eye.html">-->
-<!--  <link rel="import"  href="./graph-dialogs.html">-->
-
-
 <dom-module id="spoggy-graph">
 <link rel="lazy-import" group="lazy" href="./graph-import.html">
-
-
-
   <template>
-    <style is="custom-style">
+    <style is="custom-style" include="vis-styles">
     #mynetwork {
-      /*      width: 99vw;
-      height: 90vh; */
-
       top: 0;
       left: 0;
       width: 100%;
@@ -33,30 +15,8 @@
       border: 1px solid lightgray;
       background: linear-gradient(to bottom, rgba(55, 55, 255, 0.2), rgba(200, 200, 10, 0.2));
     }
-    #fabsetting {
-      position: fixed;
-      right: 5px;
-      top: 130px; /* espace de 60 */
-    }
-    #fabEye {
-      position: fixed;
-      right: 5px;
-      top: 200px;
-    }
-
   </style>
-  <style is="custom-style"  include="vis-styles"></style>
-<!--<graph-dialogs id="dialogs"></graph-dialogs>-->
-<!--
-  <graph-dialogs id="dialogs"></graph-dialogs>-->
-
   <div id="mynetwork"></div>
-  <!--<paper-fab id="fabsetting" on-tap="_toggleSettings"  icon="settings" style="height: 50px; width:50px;"></paper-fab>-->
-  <!-- style="height: 150px; width:150px;color: #0D578B;"-->
-  <!--  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab> -->
-
-  <!--  icon="https://uploaddeimagens.com.br/images/001/071/867/full/iconmonstr-fast-food-3-32.png"-->
-
 
   <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
     <div horizontal start-justified start layout >
@@ -65,7 +25,7 @@
         <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
         <p >  <paper-input id="edgeLabel" label="Nom du lien" autofocus></paper-input></p>
         <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-          <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" raised>ok</paper-button>
+          <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" dialog-confirm raised>ok</paper-button>
           <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
         </div>
       </div>
@@ -76,15 +36,10 @@
     <div horizontal start-justified start layout >
       <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
       <div style="padding-left:20px" vertical start-justified start layout wrap>
-
-        <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
         <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
         <p>
           <paper-input id="nodeLabel" label="Nom du noeud" autofocus ></paper-input>
-          <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
         </p>
-
-
         <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
           <div slot="collapse-content">
@@ -106,8 +61,6 @@
                 <paper-checkbox name="square">Carré</paper-checkbox>
                 <paper-checkbox name="image" >Image</paper-checkbox>
                 <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
-                <!--<paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
-
               </iron-selector>
               <div hidden$="[[shapeIsImage(selectedShape)]]">
                 <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
@@ -115,28 +68,22 @@
             </fieldset>
           </div>
         </iron-collapse-button>
-
         <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
           <div slot="collapse-content">
             <fieldset>
               <legend>Couleur</legend>
-              <!--<paper-swatch-picker></paper-swatch-picker>-->
               <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
             </fieldset>
           </div>
         </iron-collapse-button>
-
         <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-          <paper-button id="nodeSaveButton"  raised>ok</paper-button>
+          <paper-button id="nodeSaveButton" dialog-confirm  raised>ok</paper-button>
           <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
         </div>
       </div>
     </div>
   </paper-dialog>
-
-
-
 </template>
 
 <script>
@@ -152,54 +99,45 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
   static get is() { return 'spoggy-graph'; }
   static get properties() {
     return {
-      prop1: {
-        type: String,
-        value: 'spoggy-graph'
-      },
       network : {
         type: Object,
         notify: true
       },
-
-      settinghidden:{
-        type: Boolean,
-        value: true
+      centralGravityValueDefault :{
+        type : Number,
+        value: 0.0001
       },
-    /*  eyehidden:{
-        type: Boolean,
-        value: true
+      springLengthValueDefault :{
+        type : Number,
+        value:  127
       },
-      infered:{
-        type: Array,
-        value:[],
-        observer: '_inferedChanged'
-      },*/
+      springConstantValueDefault :{
+        type : Number,
+        value: 0.05
+      },
+      nodeDistanceValueDefault :{
+        type : Number,
+        value: 120
+      },
+      dampingValueDefault :{
+        type : Number,
+        value: 0.08
+      }
     };
   }
   constructor(){
     super();
-//    this.agentGraph = new GraphAgent('agentGraph', this);
     Polymer.RenderStatus.afterNextRender(this, function() {
-      // When possible, use afterNextRender to defer non-critical
-      // work until after first paint.
-
       this._deferred();
-
     });
-    console.log("GRAPH CHARGE")
   }
   _deferred(){
-    //  this.initAgents()
-    console.log("GRAPH DEFER")
   this.importLazyGroup('lazy').then((results) => {
       console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentGraph = new GraphAgent('agentGraph', this);
-
-
     this.network = this.networkDivInitialize(this.$.mynetwork, this);
     let app = this;
-    //  this._defaultPhysicValues();
     this.network.on("selectNode", function (params) {
       console.log('selectNode Event:', params);
       console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
@@ -212,733 +150,9 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
       }
       app.agentGraph.send('agentVirtuoso', {type:'describe', resource : res});
       app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
-      //ne fonctionne pas pour mettre le label du node dans l'input ???
-      //app.inputValueFromGraph = params.nodes[0];
-      //  app.updateInputValue(params.nodes[0]);
     });
-
     });
-
-
-
-
-
-
   }
-  initAgents(){
-    this.agentGraph.send('agentHello', 'Hello agentHello!');
-  }
-
-  shapeIsImage(shape){
-    console.log(shape)
-    //  console.log(value.length)
-    return shape != "image" && shape != "circularImage";
-  }
-
-
-  //////////////////////////////////////////////////////////////////
-  networkDivInitialize(container, app){
-    // create an array with nodes
-    var nodes = new vis.DataSet([
-      {id: "node1", label: 'Spoggy', color: 'rgb(195,238,0)'},
-      {id: "node2", label: 'Application Web', color: 'rgba(97,238,195)'},
-      {id: "node3", label: 'David'},
-      /*  {id: "node4", label: 'Bob'},*/
-      {id: "node5", label: 'Graph', color: 'rgba(195,238,97)', cid:2},
-      {id: "node6", label: 'Spoggy est une application permettant la création de graphes.', color: 'rgba(238,97,195)', shape: 'box', cid:1},
-      /*    {id: "node7", label: 'Description', color: 'rgba(238,97,195,0.5)', cid:1},*/
-      {id: "node8", label: 'Un graphe est un ensemble de noeuds\n et de liens entre ces noeuds.', color: 'rgba(238,97,195)', shape: 'box', cid:1},
-      /*  {id: "node9", label: 'graph0', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph0'},
-      {id: "node10", label: 'graph1', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph1'},
-      {id: "node11", label: 'graph2', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph2'},
-      {id: "node12", label: 'Input', color: 'rgba(195,238,97,0.5)', cid:2},*/
-    ]);
-    // create an array with edges
-    var edges = new vis.DataSet([
-      {from: "node1", to: "node2", label: "type", array:"to"},
-      {from: "node1", to: "node3", label: "developpeur", array:"to"},
-      //  {from: "node3", to: "node4", label: "connait", array:"to"},
-      {from: "node1", to: "node5", label: "utilise", array:"to"},
-      //  {from: "node1", to: "node12", label: "hasPart", array:"to"},
-      {from: "node1", to: "node6", label: "description", array:"to"},
-      //   {from: "node6", to: "node7", label: "type", array:"to"},
-      {from: "node5", to: "node8", label: "description", array:"to"},
-      /*  {from: "node8", to: "node7", label: "type", array:"to"},
-      /    {from: "node9", to: "node5", label: "type", array:"to"},
-      {from: "node10", to: "node5", label: "type", array:"to"},
-      {from: "node11", to: "node5", label: "type", array:"to"},
-      {from: "node1", to: "node9", label: "first", array:"to"},*/
-
-    ]);
-    /*var data = {
-    nodes: nodes,
-    edges: edges
-  };*/
-  //  var data = this.init;
-  var data = {};
-  var options = {
-    locale: 'fr',
-    /*configure: {
-      enabled: true,
-      filter: 'nodes,edges',
-      container: settings,
-      showButton: true
-    },*/
-    edges:{
-      arrows: {
-        to:     {enabled: true, scaleFactor:1, type:'arrow'},
-        middle: {enabled: false, scaleFactor:1, type:'arrow'},
-        from:   {enabled: false, scaleFactor:1, type:'arrow'}
-      }},
-      interaction:{
-        navigationButtons: true,
-        //  keyboard: true  //incompatible avec rappel de commande en cours d'implémentation
-        multiselect: true,
-      },
-
-      manipulation: {
-        addNode: function (data, callback) {
-          // filling in the popup DOM elements
-          data.label = "";
-          //  console.log(this);
-          app.editNode(data, callback);
-        },
-        editNode: function (data, callback) {
-          // filling in the popup DOM elements
-          //document.getElementById('nodeOperation').innerHTML = "Edit Node";
-          data.edit = true; // signalement d'une edition pour sparql
-          console.log(data);
-          app.$.nodeOperation.innerHTML = "Edit Node";
-          app.editNode(data, callback);
-        },
-        deleteNode: function (data, callback) {
-          // filling in the popup DOM elements
-          app.deleteNode(data, callback);
-        },
-        addEdge: function (data, callback) {
-          if (data.from == data.to) {
-            var r = confirm("Êtes-vous certain de vouloir connecter le noeud à lui-même?");
-            if (r != true) {
-              callback(null);
-              return;
-            }
-          }
-          //document.getElementById('edgeOperation').innerHTML = "Add Edge";
-          app.$.edgeOperation.innerHTML = "Add Edge";
-          app.editEdgeWithoutDrag(data, callback);
-        },
-        editEdge: {
-          editWithoutDrag: function(data, callback) {
-            //document.getElementById('edgeOperation').innerHTML = "Edit Edge";
-            data.edit = true; // signalement d'une edition pour sparql
-            console.log(data);
-            app.$.edgeOperation.innerHTML = "Edit Edge";
-            app.editEdgeWithoutDrag(data,callback);
-          }
-        },
-        deleteEdge: function(data,callback){
-          app.deleteEdge(data,callback);
-        }
-      },
-      physics:{
-        enabled: true,
-        barnesHut: {
-          gravitationalConstant: -1,
-          centralGravity: 0.3,
-          springLength: 95,
-          springConstant: 0.04,
-          damping: 0.09,
-          avoidOverlap: 1
-        },
-        forceAtlas2Based: {
-          gravitationalConstant: -50,
-          centralGravity: 0.01,
-          springConstant: 0.08,
-          springLength: 100,
-          damping: 0.4,
-          avoidOverlap: 0
-        },
-        repulsion: {
-          centralGravity: 0.0001,  //0.001, //0.001 ? A quoi sert cette valeur ?
-          springLength: 127,   // 220, //220 (//200 //300)
-          springConstant: 0.1, //0.01, //0.01
-          nodeDistance:  120, //150, //100 //350
-          damping: 0.08, ///0.08
-        },
-        hierarchicalRepulsion: {
-          centralGravity: 0.0,
-          springLength: 100,
-          springConstant: 0.01,
-          nodeDistance: 120,
-          damping: 0.09
-        },
-        maxVelocity: 500, //50
-        minVelocity: 1, //0.1
-        solver: 'repulsion',
-        stabilization: {
-          enabled: true,
-          iterations: 1000,
-          updateInterval: 100,
-          onlyDynamicEdges: false,
-          fit: true
-        },
-        timestep: 0.5,
-        adaptiveTimestep: true
-      }
-    };
-    return new vis.Network(container, data, options);
-  }
-  editNode (data, callback) {
-    console.log(data);
-    this.$.nodeLabel.value= data.label || "";
-    this.selectedShape = data.shape || "ellipse";
-    this.selectedType = data.type || "node";
-    this.imageUrl = data.image || "";
-    if ((data.color != undefined) && (data.color.background != undefined)){
-      this.colorValue = data.color.background
-    }
-    else{
-      this.colorValue =   "rgb(173,208,255)";
-    }
-    this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
-    this.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
-
-    this.$.nodePopUp.toggle(); //style.display = 'block';
-  }
-
-
-
-
-  clearNodePopUp () {
-    this.$.nodeSaveButton.onclick = null;
-    this.$.nodeCancelButton.onclick = null;
-    this.$.nodePopUp.toggle();//style.display = 'none';
-  }
-  cancelNodeEdit (callback) {
-    this.clearNodePopUp(this);
-    callback(null);
-  }
-  saveNodeData (data, callback) {
-    /*
-    let dataTemp = data;
-    let cb = callback;
-    console.log(dataTemp);
-    console.log(cb);
-    console.log(data.type);
-    data et callback apparaissent comme des events ?????
-    {id: "38e05a49-feb0-4d65-a35f-c7c7d973390e", x: -518.5339336634761, y: -388.3170534287593, label: ""}
-    spoggy-graph.html:373 Event {isTrusted: false, detail: {…}, type: "tap", target: paper-button#nodeSaveButton, currentTarget: paper-button#nodeSaveButton, …}
-    spoggy-graph.html:374 {x: 138, y: 588, sourceEvent: MouseEvent, preventer: undefined}preventer: undefinedsourceEvent: MouseEvent {isTrusted: true, __polymerGesturesHandled: {…}, screenX: 2058, screenY: 654, clientX: 138, …}x: 138y: 588__proto__: Object
-    spoggy-graph.html:378 tap
-    */
-
-    data.label = this.$.nodeLabel.value;
-    data.shape = this.selectedShape;
-    data.color = this.colorValue;
-    data.image = this.$.imgUrl.value;
-
-    data.type = this.selectedType;
-    if (data.label.length > 40){
-      var titleTemp =data.label.match(/.{1,40}/g);
-      //  console.log(titleTemp);
-      data.title = titleTemp.join("<br>");
-      data.label = titleTemp[0]+'...';
-      data.shape = "box";
-      //  data.mass = 1/data.label.length
-    }
-    this.clearNodePopUp(this);
-    callback(data);
-    var node = this.network.body.data.nodes.get(data.id);
-    console.log(node);
-    var action = {};
-    action.type = "newNode";
-    action.data = node;
-    console.log
-    this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
-    this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
-    if( data.type == "graph"){
-      console.log("nodeID");
-      console.log(node.id);
-      var graphNode = this.network.body.data.nodes.get({
-        filter: function(node){
-          console.log(node);
-          return (node.label == "Graph" );
-        }
-      });
-      console.log(graphNode);
-      if (graphNode.length == 0){
-        console.log("creation du noeud graph");
-        var nodeGraph = {};
-        nodeGraph.label = "Graph";
-        nodeGraph.shape = "star";
-        nodeGraph.type = "node";
-        nodeGraph.color= "rgb(255,0,0)";
-        this.network.body.data.nodes.add(nodeGraph);
-      }else{
-        console.log("récupération du noeud graph");
-      }
-      graphNode = this.network.body.data.nodes.get({
-        filter: function(node){
-          console.log(node);
-          return (node.label == "Graph" );
-        }
-      });
-      var actionNodeGraph = {};
-      actionNodeGraph.type = "newNode";
-      actionNodeGraph.data = graphNode[0];
-      //  this.addAction(actionNodeGraph);
-      this.agentGraph.send('agentSocket', {type: "newActions", actions: [actionNodeGraph]});
-      this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [actionNodeGraph]});
-      console.log(graphNode);
-      console.log(node.id);
-      var edgeGraph = {};
-      edgeGraph.from = node.id;
-      edgeGraph.to = graphNode[0].id;
-      edgeGraph.label = "type";
-      var graphEdge = this.network.body.data.edges.get({
-        filter: function(edge){
-          console.log(edge);
-          return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
-        }
-      });
-      console.log(graphEdge);
-      if(graphEdge.length == 0){
-        this.network.body.data.edges.add(edgeGraph);
-      }
-      graphEdge = this.network.body.data.edges.get({
-        filter: function(edge){
-          console.log(edge);
-          return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
-        }
-      });
-      console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEee");
-      console.log(graphEdge);
-      var actionedgeGraph = {};
-      actionedgeGraph.type = "newEdge";
-      actionedgeGraph.data = graphEdge;
-      //    this.addAction(actionedgeGraph);
-      this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
-      this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
-    }
-    /*
-    if( data.type == "graph"){
-    var graphNode = this.network.body.data.nodes.get({
-    filter: function(node){
-    console.log(node);
-    return (node.label == "Graph" );
-  }
-});
-console.log(graphNode);
-var n ;
-if(graphNode.length==0){
-console.log("creation");
-// creation du noeud Graph
-var nodeGraph = {};
-nodeGraph.label = "Graph";
-nodeGraph.shape = "star";
-n= this.network.body.data.nodes.add(nodeGraph)[0];
-}else{
-console.log("exist");
-n = graphNode[0].id;
-}
-console.log(n);
-var actionTo = {};
-actionTo.type = "newNode";
-actionTo.data = this.network.body.data.nodes.get(n);
-console.log(actionTo);
-this.addAction(actionTo);
-var edgeGraph = {};
-edgeGraph.label = "type";
-edgeGraph.from = data.id;
-edgeGraph.to = n;
-this.addEdgeIfNotExist(this.network, edgeGraph);
-var edge;
-var existEdge = this.network.body.data.edges.get({
-filter: function(edge){
-return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
-}
-});
-console.log(existEdge);
-if(existEdge.length == 0){
-edge = this.network.body.data.edges.update(edgeGraph);
-}else{
-edge = existEdge[0];
-}
-console.log(edge);
-var actionGraph = {};
-actionGraph.type = "newEdge";
-//var e= this.network.body.data.edges.update(edgeGraph);
-var e = this.network.body.data.edges.get(edge[0]);
-console.log(e);
-actionGraph.data = e;
-console.log(actionGraph);
-this.addAction(actionGraph);
-*/
-//}
-/*this.nodes = [];
-this.nodes = this.network.body.data.nodes;*/
-}
-
-
-
-editEdgeWithoutDrag (data, callback) {
-  this.$.edgeLabel.value = data.label || "";
-  this.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
-  this.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
-  this.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
-  this.$.edgePopUp.toggle(); //style.display = 'block';
-}
-clearEdgePopUp () {
-  this.$.edgeSaveButton.onclick = null;
-  this.$.edgeCancelButton.onclick = null;
-  this.$.edgePopUp.toggle(); //style.display = 'none';
-}
-cancelEdgeEdit (callback) {
-  this.clearEdgePopUp();
-  callback(null);
-}
-saveEdgeData (data, callback) {
-  if (typeof data.to === 'object')
-  data.to = data.to.id
-  if (typeof data.from === 'object')
-  data.from = data.from.id
-  data.label = this.$.edgeLabel.value;
-  this.clearEdgePopUp();
-  callback(data);
-  var edge = this.network.body.data.edges.get({
-    filter: function(edge) {
-      return (edge.from == data.from && edge.to == data.to && edge.label == data.label);
-    }
-  });
-  var action = {};
-  action.type = "newEdge";
-  action.data = edge;
-  //  this.addAction(action);
-  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
-  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
-}
-deleteNode (data, callback){
-  var action = {};
-  action.type = "deleteNode";
-  action.data = data;
-  //  this.addAction(action);
-  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
-  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
-  callback(data);
-}
-deleteEdge (data, callback){
-  var action = {};
-  action.type = "deleteEdge";
-  action.data = data;
-  //  this.addAction(action);
-  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
-  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
-  callback(data);
-}
-
-addEdgeIfNotExist (network, data){
-  var existEdge = false;
-  console.log(data);
-  try {
-    existEdge = this.network.body.data.edges.get({
-      filter: function(edge){
-        return (edge.id == data[0].id);
-      }
-    });
-    if (existEdge.length == 0){
-      this.network.body.data.edges.add(data[0]);
-    }else{
-      this.network.body.data.edges.update({id: data[0].id, label: data[0].label});
-    }
-  }
-  catch (err) {
-    console.log(err);
-  }
-}
-addNodeIfNotExist(network, data){
-  var existNode = false;
-  console.log(data);
-  try{
-    existNode = this.network.body.data.nodes.get({
-      filter: function(node){
-        return (node.id == data.id || (node.label == data.label && node.title == node.label));
-      }
-    });
-    console.log(existNode);
-    if (existNode.length == 0){
-      console.log("n'existe pas")
-      this.network.body.data.nodes.add(data);
-    }else{
-      console.log("existe")
-      delete data.x;
-      delete data.y
-      this.network.body.data.nodes.update(data);
-    }
-  }
-  catch (err){
-    console.log(err);
-  }
-}
-
-
-
-
-_inferedChanged(newInfered,oldinfered){
-  console.log("INFERED");
-  console.log(newInfered);
-  this.populateFromInfered(newInfered, this.network)
-}
-
-
-populateFromInfered(infered, network){
-  if(network != undefined){
-    console.log(infered);
-    if(infered.length != 0){
-      infered.forEach(function(triplet){
-        //var triplet = infered.pop();
-        console.log(triplet);
-        if (triplet != undefined) {
-          console.log(infered.length);
-          var sujet = triplet[0].trim();
-          var propriete = triplet[1].trim();
-          var objet = triplet[2].trim();
-          var sujetExist = network.body.data.nodes.get({
-            filter: function(node){
-              //    console.log(node);
-              return (node.label == sujet );
-            }
-          });
-          var objetExist = network.body.data.nodes.get({
-            filter: function(node){
-              //    console.log(node);
-              return (node.label == objet );
-            }
-          });
-          if(sujetExist == null  || sujetExist.length == 0){
-            console.log("creation "+sujet);
-            var node = {
-              label: sujet,
-              group: 100, // règles
-              borderWidth: 2,
-              shape: "diamond",
-              color: "rgb(255,153,30)"
-            };
-            network.body.data.nodes.add(node);
-          }else{
-            console.log(sujet+ " exist");
-            console.log(sujetExist);
-            //  network.body.data.nodes.update({id: sujetExist[0].id, group: 1,borderWidth: 2,shape: "diamond"});
-          }
-          if(objetExist == null  || objetExist.length == 0){
-            console.log("creation "+objet);
-            var node = {
-              label: objet,
-              group: 100,
-              borderWidth: 2,
-              shape: "diamond",
-              color: "rgb(255,153,30)"
-            };
-            network.body.data.nodes.add(node);
-          }else{
-            console.log(objet+ " exist");
-            console.log(objetExist);
-            //  network.body.data.nodes.update({id: sujetExist[0].id, group: 1,borderWidth: 2,shape: "diamond"});
-          }
-          sujetExist = network.body.data.nodes.get({
-            filter: function(node){
-              //    console.log(node);
-              return (node.label == sujet );
-            }
-          });
-          objetExist = network.body.data.nodes.get({
-            filter: function(node){
-              //    console.log(node);
-              return (node.label == objet );
-            }
-          });
-          var edgeExist = network.body.data.edges.get({
-            filter: function(edge) {
-              return (edge.from == sujetExist[0].id && edge.to == objetExist[0].id && edge.label == propriete);
-            }
-          });
-          if (edgeExist == null || edgeExist.length == 0) {
-            var edge = {
-              from: sujetExist[0].id,
-              to: objetExist[0].id,
-              label: propriete,
-              group: 100, // règles
-              arrows: "to",
-              color: "rgb(255,153,30)"
-            };
-            //edge.id = triplet.subject;
-            //edge[triplet.predicate] = triplet.object;
-            console.log("add");
-            console.log(edge);
-            network.body.data.edges.add(edge);
-          } else {
-            console.log("update");
-            console.log(edgeExist);
-            //var edge = edgeExist;
-            //edge[triplet.predicate] = triplet.object;
-            //  network.body.data.edges.update(edge);
-          }
-        }
-      });
-    }
-    else{
-      console.log("suppression des inférences");
-      var edgesInferres = network.body.data.edges.get({
-        filter: function(edge){
-          //    console.log(node);
-          return (edge.group == 100 );
-        }
-      });
-      console.log(edgesInferres);
-      network.body.data.edges.remove(edgesInferres);
-      var nodesInferres = network.body.data.nodes.get({
-        filter: function(node){
-          //    console.log(node);
-          return (node.group == 100 );
-        }
-      });
-      console.log(nodesInferres);
-      network.body.data.nodes.remove(nodesInferres);
-    }
-  }
-}
-// CLUSTERS
-_toggleDesc() {
-  //  network.setData(data);
-  var clusterOptionsByData = {
-    joinCondition:function(childOptions) {
-      return childOptions.cid == 1;
-    },
-    processProperties: function (clusterOptions, childNodes) {
-      //clusterIndex = clusterIndex + 1;
-      var clusterIndex = 1
-      var childrenCount = 0;
-      for (var i = 0; i < childNodes.length; i++) {
-        childrenCount += childNodes[i].childrenCount || 1;
-      }
-      clusterOptions.childrenCount = childrenCount;
-      clusterOptions.label = "Description\n# " + childrenCount + "";
-      // clusterOptions.font = {size: childrenCount*5+30}
-      clusterOptions.id = 'cluster:' + clusterIndex;
-      clusterOptions.mass = 1/childrenCount;
-      // clusters.push({id:'cluster:' + clusterIndex, scale:scale});
-      return clusterOptions;
-    },
-    clusterNodeProperties: {id:'cidCluster',  color: 'rgba(97,238,195,0.5)', borderWidth:3, shape:'box'}
-  };
-  this.network.cluster(clusterOptionsByData);
-}
-_closeImportPopUp(){
-  this.$.importPopUp.toggle(); //.style.display = 'none';
-}
-/*_toogle() {
-  console.log("clic");
-  this.$.nodePopUp.toggle();
-}*/
-saveTextAsFile(){
-  var textToWrite="";
-  var fileNameToSaveAs="";
-  var textFileAsBlob="";
-  var extension="ttl";
-  var nomFichier="";
-  var data = this.$.inputTextToSave.value;
-  console.log(data);
-  if((typeof data != "undefined")&& (data.length>0)){
-    textToWrite=data;
-  }else{
-    textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
-  }
-  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
-    fileNameToSaveAs = nomFichier+"."+extension;
-  }else{
-    fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
-  }
-  if ((typeof extension != "undefined") && (extension.length>0)){
-    switch(extension){
-      case "ttl" :
-      textFileAsBlob = new Blob([textToWrite], {
-        type:
-        'text/turtle'
-      }
-    );
-    break;
-    case "rdf" :
-    //pas implementé pour l'instant
-    textFileAsBlob = new Blob([textToWrite], {
-      type:
-      'application/rdf+xml'
-    }
-  );
-  break;
-  default :
-  console.log("non traite  , extension : "+extension);
-  break;
-}
-}
-console.log(nomFichier+" : "+extension);
-var downloadLink = document.createElement("a");
-downloadLink.download = fileNameToSaveAs;
-downloadLink.innerHTML = "Download File";
-//console.log(window.URL);
-//if (window.URL != null)
-if(navigator.userAgent.indexOf("Chrome") != -1)
-{
-  // Chrome allows the link to be clicked
-  // without actually adding it to the DOM.
-  console.log("CHROME");
-  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-} else
-{
-  // Firefox requires the link to be added to the DOM
-  // before it can be clicked.
-  console.log("FF");
-  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-  downloadLink.target="_blank";
-  //downloadLink.onclick = destroyClickedElement;
-  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
-  downloadLink.style.display = "none";
-  document.body.appendChild(downloadLink);
-  console.log(this.$.popupTtl);
-}
-console.log(downloadLink);
-/*downloadLink.click();*/
-/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
-var event = document.createEvent("MouseEvents");
-event.initMouseEvent(
-  "click", true, false, window, 0, 0, 0, 0, 0
-  , false, false, false, false, 0, null
-);
-downloadLink.dispatchEvent(event);
-var app = this;
-setTimeout(function(){
-  document.body.removeChild(downloadLink);
-  window.URL.revokeObjectURL(downloadLink);
-}, 100);
-console.log(this.$.popupTtl);
-this.$.popupTtl.toggle();
-}
-
-
-
-recupParams(){
-  var params = (function(a) {
-    if (a == "") return {};
-    var b = {};
-    for (var i = 0; i < a.length; ++i)
-    {        var p=a[i].split('=', 2);
-    if (p.length == 1)
-    b[p[0]] = "";
-    else
-    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-  }
-  return b;
-})(window.location.search.substr(1).split('&'));
-return params;
-}
 }
 
 window.customElements.define(SpoggyGraph.is, SpoggyGraph);

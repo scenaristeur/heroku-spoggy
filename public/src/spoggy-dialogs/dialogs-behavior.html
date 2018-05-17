@@ -18,8 +18,68 @@ var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         urls: {
           type : Array,
           value: []
+        },
+        initPhase: {
+          type: Boolean,
+          value : true
         }
+
       };
+    }
+
+    _openSettings(){
+          this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    }
+
+    initOptions(optionsRepulsion){
+      this.initPhase = true;
+    //  console.log(optionsRepulsion)
+      this.set('centralGravity', optionsRepulsion.centralGravity);
+      this.set('springLength', optionsRepulsion.springLength);
+      this.set('springConstant', optionsRepulsion.springConstant);
+      this.set('nodeDistance', optionsRepulsion.nodeDistance);
+      this.set('damping', optionsRepulsion.damping);
+      this.initPhase = false;
+    }
+
+    _defaultPhysicValues(){
+this.agentDialogs.send('agentGraph', {type: "resetNetworkOptions"} );
+    }
+
+    _updateCentralGravity(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.centralGravity', v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateSpringLength(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.springLength',v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateSpringConstant(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.springConstant',v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateNodeDistance(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.nodeDistance', v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateDamping(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.damping', v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
     }
 
     handleFileSelected(evt) {
@@ -57,7 +117,7 @@ var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       //this.$.settings.hidden= !this.$.settings.hidden;
       //this.settinghidden = !this.settinghidden;
       this.$.helpPopUp.toggle();
-    //    this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
+      //    this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
       this.$.dial.open=false;
     }
     _toggleMode(){

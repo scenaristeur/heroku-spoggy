@@ -1,177 +1,56 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-<!--<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">-->
-<!--
-<link rel="import" href="../spoggy-input/spoggy-input.html">
-
-<link rel="import" href="../spoggy-data/spoggy-data.html">
-<link rel="import" href="../spoggy-collab/spoggy-collab.html">
-<link rel="import" href="../spoggy-mode/spoggy-mode.html">
-<link rel="import" href="../spoggy-sparql/spoggy-sparql.html">-->
-
-<!---->
-
-
-
-
 <dom-module id="spoggy-app">
-  <!--<link rel="import" href="lazy-element.html">-->
   <link rel="lazy-import" group="lazy" href="../spoggy-agent/spoggy-agent.html">
   <link rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-dialogs/spoggy-dialogs.html">
-  <link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">
+  <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
   <link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
+    <link rel="lazy-import" group="lazy" href="../spoggy-data/spoggy-data.html">
   <!--
-  <link rel="lazy-import" group="lazy" href="../spoggy-data/spoggy-data.html">
+
   <link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-mode/spoggy-mode.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-sparql/spoggy-sparql.html">-->
-
-  <!-- utile pour tester les agents>
-  <link rel="import" href="../spoggy-hello/spoggy-hello.html">
--->
-
 <template>
-  <style>
-  :host {
-    display: block;
-    /*    background: linear-gradient(to bottom, rgba(55, 55, 255, 0.2), rgba(200, 200, 10, 0.2)); */
-  }
-
-  </style>
-  <!--
-  <button on-click="buttonPressed">Upgrade Element</button>
-  <lazy-element>When upgraded, this element will have a red border</lazy-element>-->
-
-  <!--  <app-toolbar>-->
-  <!--  <paper-icon-button icon="menu"></paper-icon-button>
-  <div main-title>Spoggy</div>-->
-
-  <!--   <paper-icon-button icon="search"></paper-icon-button>-->
-  <!--</app-toolbar>-->
-
-  <!--<spoggy-ui network="{{network}}" socket="{{socket}}" ></spoggy-ui>-->
   <spoggy-input>
-    <!--
-    Chargement de SPOGGY en cours.<br>
-    Pendant ce temps, voici quelques indications qui vous feront gagner du temps :
-    <p>
-    Vous pouvez utiliser les boutons <b><i>'Edit / Add node'</i></b>
-    pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.
-  </p>
-  <p>  ou la zone de saisie # SPOGGY INPUT<br>
-  ## Saisir un message pour le chat<br>
-  Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
-  ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
-</p>
-<p>
-## Saisir un triplet au format Turtle<br>
-Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
-n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
-- David type Personne<b>.</b> -> triplet complet,<br>
-- David type Personne<b>;</b> -> indique de garder le sujet<br>
-- David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
-- David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
-</p>
-
-<p>
-## Récupérer le dernier triplet saisi<br>
-- en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
-- en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
-- en commençant par <b>,</b> -> on récupère seulement le dernier sujet
-</p>
-<p>
-## Saisir une commande<br>
-- les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide
-</p>
--->
-
-... Chargement du champ Input ... <br>
-
-
+  ... Chargement de l'interface  ... <br>
 </spoggy-input>
 <spoggy-graph>
-  ... Chargement du Graphe ... <br>
+  ... Chargement du système ... <br>
 </spoggy-graph>
-<spoggy-collab>
-</spoggy-collab>
-<spoggy-hello></spoggy-hello>
+<spoggy-collab></spoggy-collab>
+<!--<spoggy-hello></spoggy-hello>-->
 <spoggy-dialogs></spoggy-dialogs>
-
-
-
+<spoggy-data></spoggy-data>
 <!--
-
 <spoggy-mode></spoggy-mode>
 
-<spoggy-data></spoggy-data>
-
-
 <spoggy-sparql></spoggy-sparql>
-
-
-
 -->
-
-
-
-
-
-<!--  -->
-<!--
-<lrnapp-fab-menu>
-<lrnapp-fab-speed-dial-action icon="mail" color="red">Inbox</lrnapp-fab-speed-dial-action>
-<lrnapp-fab-speed-dial-action icon="line-weight" color="green">Content</lrnapp-fab-speed-dial-action>
-<lrnapp-fab-speed-dial-action icon="link" color="orange">Blog</lrnapp-fab-speed-dial-action>
-<lrnapp-fab-speed-dial-action icon="list">Studio</lrnapp-fab-speed-dial-action>
-</lrnapp-fab-menu>-->
-<!--
-<paper-fab-speed-dial>
-<paper-fab-speed-dial-action icon="icons:content-copy">Copy</paper-fab-speed-dial-action>
-<paper-fab-speed-dial-action icon="icons:print">Print</paper-fab-speed-dial-action>
-</paper-fab-speed-dial>
--->
-
 </template>
-
 <script>
-/**
-* @customElement
-* @polymer
-*/
 class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   static get is() { return 'spoggy-app'; }
   buttonPressed() {
     this.importLazyGroup('lazy').then((results) => {
-      console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
     });
   }
-
   constructor(){
     super();
     Polymer.RenderStatus.afterNextRender(this, function() {
-      // When possible, use afterNextRender to defer non-critical
-      // work until after first paint.
       this._deferred();
-
     });
   }
   _deferred(){
-    //  console.log("agent DATA defered")
-    //  console.log(this.agentSocket);
-    //  this.initAgents()
     this.importLazyGroup('lazy').then((results) => {
-      console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
     });
   }
 }
-
 window.customElements.define(SpoggyApp.is, SpoggyApp);
 </script>
 </dom-module>

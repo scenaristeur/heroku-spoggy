@@ -72,10 +72,15 @@ DialogsAgent.prototype.receive = function(from, message) {
     var id = message.id;
     var element = this.app.$[id];
     var value = message.value;
-  element.focus();
+    element.focus();
     console.log(element);
     break;
 
+    case 'initOptions':
+    //      app.agentGraph.send('agentDialogs', {type:'initOptions', repulsion : this.network.physics.options.repulsion});
+    console.log(message.repulsion);
+    this.app.initOptions(message.repulsion)
+    break;
     default:
     console.log(message);
   }

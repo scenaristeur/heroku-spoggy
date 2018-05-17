@@ -80,13 +80,22 @@ GraphAgent.prototype.receive = function(from, message) {
     console.log(message.results)
     this.app.describeFromDBpedia(message.results, message.resource);
     break;
-    case 'updateNetworkSettings':
+    case 'updateNetworkOptions':
     console.log(message.repulsion)
-    this.app.updateNetworkSettings(message.repulsion);
+    this.app.updateNetworkOptions(message.repulsion);
     break;
     case 'exportJson':
     console.log(message.type)
     this.app.exportJson();
+    break;
+    case 'askNetworkOptions':
+    console.log(this.app.network.physics.options.repulsion)
+    this.app.agentGraph.send('agentDialogs', {type:'initOptions', repulsion : this.app.network.physics.options.repulsion});
+    break;
+    case 'resetNetworkOptions':
+this.app.resetNetworkOptions();
+    console.log(this.app.network.physics.options.repulsion)
+    this.app.agentGraph.send('agentDialogs', {type:'initOptions', repulsion : this.app.network.physics.options.repulsion});
     break;
 
     default:

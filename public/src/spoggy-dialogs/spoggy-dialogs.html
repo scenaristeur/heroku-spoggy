@@ -393,16 +393,18 @@
 
 
 
-      <paper-dialog id="settings" >
+      <paper-dialog id="settings"  on-iron-overlay-opened="_openSettings" > <!--       on-iron-overlay-closed="_closeImport"-->
         <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
-          Gravité   <paper-slider  min="-10" max="10" value="{{centralGravityValue}}"  step="1"  ></paper-slider>
-          Longueur des liens     <paper-slider  min="0" max="800" value="{{springLengthValue}}"  ></paper-slider>
-          Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001"></paper-slider>
-          Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"></paper-slider>
-          Amortissement         <paper-slider  min="0" max="1" value="{{dampingValue}}"  step="0.001"></paper-slider>
-          <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
+          Gravité   <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
+          Longueur des liens     <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
+          Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstant}}"  step="0.001"></paper-slider>
+          Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
+          Amortissement         <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>
+
           <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
           <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+                <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+                <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
             <paper-button  dialog-dismiss raised>Fermer</paper-button>
           </div>
         </div>
@@ -515,20 +517,20 @@
 <valle-speed-dial id="dial" direction="top" label="Menu" backdrop >
   <valle-speed-dial-action
   class="dial-action"
-  label="settings"
+  label="Réglages"
   on-tap="_toggleSettings"
   label-direction="right"
   ></valle-speed-dial-action>
   <valle-speed-dial-action
   class="dial-action"
-  label="mode"
+  label="Mode"
   on-tap="_toggleMode"
   label-direction="right"
   ></valle-speed-dial-action>
   <valle-speed-dial-action
   class="dial-action"
   on-tap="_toggleHelp"
-  label="help"
+  label="Aide"
   label-direction="right"
   ></valle-speed-dial-action>
 </valle-speed-dial>
@@ -560,6 +562,27 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
         value: 'spoggy-dialogs'
       },
 
+      centralGravity: {
+        type: Number,
+        observer: "_updateCentralGravity"
+      },
+      springLength: {
+        type: Number,
+        observer: "_updateSpringLength"
+      },
+      springConstant: {
+        type: Number,
+      observer: "_updateSpringConstant"
+      },
+      nodeDistance: {
+        type: Number,
+        observer: "_updateNodeDistance"
+      },
+      damping: {
+        type: Number,
+        observer: "_updateDamping"
+      },
+
     };
   }
   constructor(){
@@ -584,6 +607,7 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
   initAgents(){
     //  console.log(this.agentInput)
     this.agentDialogs.send('agentHello', 'Hello agentHello!');
+  //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
   }
 }
 
