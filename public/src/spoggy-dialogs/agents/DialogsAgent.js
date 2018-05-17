@@ -48,6 +48,17 @@ DialogsAgent.prototype.receive = function(from, message) {
     this.app.current_room = message.current_room;
     console.log("update");
     break;
+
+  case 'initrooms':
+  this.app.rooms = message.rooms;
+
+  console.log("init rooms ");
+    console.log(message.rooms);
+  break;
+
+
+
+
     case 'toggle':
     console.log(message.popup);
     let popup = message.popup;

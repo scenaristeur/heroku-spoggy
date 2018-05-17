@@ -132,34 +132,64 @@ var numUsers = 0;
 var app = this;
 
 // rooms which are currently available in chat
-var rooms = ['Agora','graph0', 'graph1','Personne','Tension', 'Organisation'];
-
+//var rooms = ['Agora','graph0', 'graph1','Personne','Tension', 'Organisation'];
+var freq = [{name: 'Agora', count: 0}, {name: 'Tension', count: 0}, {name: 'Organisation', count: 0}];
+var users = [];
 
 io.sockets.on('connection', function (socket) {
-  console.log("connexion")
-
-  socket.room = rooms[0];
+  console.log("connexion de "+socket.id)
+  users.push(socket.id);
+//  socket.room = rooms[0];
   // send client to room 1
-  socket.join(socket.room);
-  // echo to client they've connected
-  socket.emit('updatechat', 'SERVER', 'Vous êtes connecté au graphe '+socket.room);
+//  socket.join(socket.room);
 
-  socket.emit('updaterooms', rooms, socket.room);
+console.log(io.sockets.adapter.rooms)
+
+var ioRooms = io.sockets.adapter.rooms;
+for (var k in ioRooms) {
+  if(!users.includes(k)){
+    var count = ioRooms[k].length;
+    console.log(k+ " : "+count);
+    var f = {name:k, count:count};
+    freq.push(f);  // ou update
+  }else{
+    console.log("User "+ k+ " : "+ioRooms[k]);
+  }
+
+}
+console.log(freq)
+  socket.emit('initrooms', freq);
 
   // when the client emits 'adduser', this listens and executes
-  socket.on('adduser', function(username){
+  socket.on('adduser', function(username, newroom){
+    username = username.trim();
+    newroom = newroom.trim();
     console.log("adduser "+username)
+    console.log("Room lors de l'adduser : "+newroom);
+
+    /*if (!rooms.includes(newroom)){
+      rooms.push(newroom)
+    }*/
+
+    // leave the current room (stored in session)
+    socket.leave(socket.room);
+    // join new room, received as function parameter
+    socket.join(newroom);
+
     // store the username in the socket session for this client
     socket.username = username;
     // store the room name in the socket session for this client
-
+    socket.room = newroom;
     // add the client's username to the global list
     usernames[username] = username;
-
+    //    socket.room = rooms[0];
+    // send client to room 1
+console.log(freq)
+    socket.emit('updaterooms', freq, socket.room);
     // echo to client they've connected
-    socket.emit('updatechat', 'SERVER', 'Vous êtes connecté au graphe '+socket.room);
+    socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+socket.room);
     // echo to room 1 that a person has connected to their room
-    socket.broadcast.to(socket.room).emit('updatechat', 'SERVEUR', username + ' vient de se connecter au graphe '+socket.room);
+    socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', username + ' vient de se connecter au graphe '+socket.room);
 
     initDb(socket);
   });
@@ -388,20 +418,21 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('switchRoom', function(newroom){
     console.log('switchroom '+ newroom)
-    if (!rooms.includes(newroom)){
+    /*if (!rooms.includes(newroom)){
       rooms.push(newroom)
-    }
+    }*/
     // leave the current room (stored in session)
     socket.leave(socket.room);
     // join new room, received as function parameter
     socket.join(newroom);
     socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
     // sent message to OLD room
-    socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
+    socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', socket.username+' a quitté ce graphe');
     // update socket session room title
     socket.room = newroom;
-    socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
-    socket.emit('updaterooms', rooms, newroom);
+    socket.broadcast.to(newroom).emit('updatechat', 'Spoggy', socket.username+' a rejoint ce graphe');
+  // mise a jour de la socket   socket.emit('updaterooms', freq, newroom);
+    io.sockets.emit('updaterooms', freq, newroom); //mise à jour de tous les clients avec rooms et frequentation
     //  io.sockets.emit('updaterooms', rooms, null);
     if (useLevelgraph){
       console.log('new graph '+socket.room);
@@ -424,12 +455,19 @@ io.sockets.on('connection', function (socket) {
 
   // when the user disconnects.. perform this
   socket.on('disconnect', function(){
+    console.log("deconnecte "+socket.username)
+    for (var i=users.length-1; i>=0; i--) {
+    if (users[i] === socket.id) {
+        users.splice(i, 1);
+         break;       //<-- Uncomment  if only the first term has to be removed
+    }
+}
     // remove the username from global usernames list
     delete usernames[socket.username];
     // update list of users in chat, client-side
     io.sockets.emit('updateusers', usernames);
     // echo globally that this client has left
-    socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+    socket.broadcast.emit('updatechat', 'Spoggy', socket.username + ' est déconnecté');
     socket.leave(socket.room);
   });
 });
@@ -455,20 +493,20 @@ function initDb(socket){
       });
     } else {
       currentGraph.search([{
-          subject: currentGraph.v("subject"),
-          predicate: "graph",
-          object: room,
+        subject: currentGraph.v("subject"),
+        predicate: "graph",
+        object: room,
 
-        }, {
-          subject: currentGraph.v("subject"),
-          predicate: currentGraph.v("predicate"),
-          object: currentGraph.v("object"),
-          type: currentGraph.v("type")
-        }], function(err, results) {
-          // this will print "[{ x: 'daniele', y: 'marco' }]"
-          console.log(results);
-          socket.emit('initDb', results);
-        });
+      }, {
+        subject: currentGraph.v("subject"),
+        predicate: currentGraph.v("predicate"),
+        object: currentGraph.v("object"),
+        type: currentGraph.v("type")
+      }], function(err, results) {
+        // this will print "[{ x: 'daniele', y: 'marco' }]"
+        console.log(results);
+        socket.emit('initDb', results);
+      });
 
 
 

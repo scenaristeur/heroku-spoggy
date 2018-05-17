@@ -105,6 +105,16 @@ sendMessage(message){
     //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
     });
 
+
+    this.socket.on('initrooms', function (rooms) {
+      console.log('initrooms ')
+      app.agentSocket.send('agentDialogs', {type: "initrooms", rooms: rooms});
+      //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+    //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
+    });
+
+
+
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     this.socket.on('updaterooms', function(rooms, current_room) {
       console.log('updaterooms ')

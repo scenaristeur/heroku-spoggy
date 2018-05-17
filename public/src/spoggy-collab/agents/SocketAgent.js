@@ -59,7 +59,7 @@ SocketAgent.prototype.receive = function(from, message) {
     }
     break;
     case 'adduser':
-    this.app.socket.emit('adduser', message.pseudo);
+    this.app.socket.emit('adduser', message.pseudo, message.room);
     break;
     case 'switchRoom':
     this.app.switchRoom(message.graph);
@@ -89,12 +89,8 @@ SocketAgent.prototype.receive = function(from, message) {
     default:
     console.log(message);
   }
-
   break;*/
   default:
   console.log(message);
 }
-
-
-
 };

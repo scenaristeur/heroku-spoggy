@@ -31,18 +31,9 @@
     #operation {
       font-size:28px;
     }
-    #nodePopUp {
-      position:absolute;
-      z-index:299;
-      background-color: #f9f9f9;
-      border-style:solid;
-      border-width:3px;
-      border-color: #5394ed;
-      padding:1px;
-    }
-    #edgePopUp {
-      position:absolute;
-      z-index:299;
+    .popup {
+      /*  position:absolute;
+      z-index:299;*/
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -65,7 +56,7 @@
   }
 
   </style>
-  <paper-dialog id="helpPopUp" >
+  <paper-dialog id="helpPopUp" class="popup">
 
     <h3>Aide <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h3>
     <!--<paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button> -->
@@ -329,8 +320,8 @@
 
                 <!--  on-iron-overlay-opened="_openImport"
                 on-iron-overlay-closed="_closeImport"-->
-                <paper-dialog id="importPopUp"
-                backdrop transition="core-transition-bottom">
+
+                <paper-dialog id="importPopUp" class="popup" backdrop transition="core-transition-bottom">
                 <div horizontal start-justified start layout >
                   <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
                   <div style="padding-left:20px" vertical start-justified start layout wrap>
@@ -356,7 +347,7 @@
               </paper-dialog>
 
 
-              <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
+              <paper-dialog id="popupTtl" class="popup" backdrop transition="core-transition-bottom"><!-- on-iron-overlay-opened="_myOpenFunction"
                 on-iron-overlay-closed="_myClosedFunction" -->
                 <h3>Export au format turtle (RDF)
                   <!--<paper-button ontap="_pageAide">?</paper-button>-->
@@ -393,7 +384,7 @@
 
 
 
-      <paper-dialog id="settings"  on-iron-overlay-opened="_openSettings" > <!--       on-iron-overlay-closed="_closeImport"-->
+      <paper-dialog id="settings"  class="popup" on-iron-overlay-opened="_openSettings" > <!--       on-iron-overlay-closed="_closeImport"-->
         <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
           Gravité   <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
           Longueur des liens     <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
@@ -403,8 +394,8 @@
 
           <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
           <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
-                <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
+            <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+            <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
             <paper-button  dialog-dismiss raised>Fermer</paper-button>
           </div>
         </div>
@@ -414,101 +405,90 @@
       </paper-dialog>
 
 
+      <paper-dialog id="pseudoPopup" class="popup" >
+            <paper-input label="Entrez un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
+            <paper-button raised dialog-confirm>Entrer</paper-button>
+      </paper-dialog>
 
-      <paper-dialog id="modePopup" > <!--    on-iron-overlay-opened="_openModePopp"
+
+      <paper-dialog id="modePopup" class="popup" withBackdrop transition="core-transition-bottom" autoFitOnAttach verticalAlign="middle"> <!--    on-iron-overlay-opened="_openModePopp"
         on-iron-overlay-closed="_closeModePopup"-->
         <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
         <!--
         <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
         <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-        <paper-dialog-scrollable>
+
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
           <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
             <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
             <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
             <paper-checkbox name="global" >Global</paper-checkbox>
-            <br>
-            <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
           </iron-selector>
+        </div>
 
-
+        <paper-dialog-scrollable>
           <div hidden$="[[!isEqual(mode,'collab')]]">
-
-            <paper-input label="Entrez un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
-            et choisissez le graphe que vous souhaitez rejoindre
+            Choisissez le graphe que vous souhaitez rejoindre
             <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
               <template is="dom-repeat" items="[[rooms]]">
-                <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+                <paper-item room="[[item.name]]" on-tap="rejoindre">[[item.name]] ([[item.count]])</paper-item>
               </template>
             </paper-listbox>
-
-            <paper-input label="ou créez un nouveau graphe" value={{newRoom::change}}></paper-input>
-            <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
-
-
-
-            <div hidden$="[[isEmpty(pseudo)]]">
-
-              <!--<paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
-                <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
-                  <template is="dom-repeat" items="[[rooms]]">
-                    <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
-                  </template>
-                </paper-listbox>
-              </paper-dropdown-menu> -->
-
-
-
+            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+              <paper-input label="ou créez un nouveau graphe" value={{newRoom::change}}></paper-input>
+              <paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+              <paper-button  dialog-dismiss raised>Fermer</paper-button>
+              <br>
             </div>
-            <!-- test de saisi + selection
-            <paper-dropdown-input label="Rejoindre une room"
-            items="[[rooms]]"
-            value={{room}}
-            >
-            <paper-button on-tap="rejoindre">Rejoindre</paper-button>
-          </paper-dropdown-input>-->
-        </div>
-
-        <div hidden$="[[!isEqual(mode,'global')]]">
-          <br>
-          <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
-          <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
-          https://www.w3.org/wiki/SparqlEndpoints<br>
-          <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
-            <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
-            <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
-            <br>
-            <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
-          </iron-selector>
-          <paper-input id="labelEndpoint" label="Endpoint (http://)" value="{{endpoint::input}}"></paper-input>
-          <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
-          label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
-
-          <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
-        </div>
+          </div>
+        </paper-dialog-scrollable>
 
 
-        <!-- MODE pour Fuseki direct
-        <div hidden$="[[!isEqual(mode,'global')]]">
-        <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
-        <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
-        <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
-        <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
-        <template is="dom-repeat" items="[[datasets]]">
-        <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+
+
+        <!--<paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
+        <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+        <template is="dom-repeat" items="[[rooms]]">
+        <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
       </template>
     </paper-listbox>
-  </paper-dropdown-menu>
+  </paper-dropdown-menu> -->
 
 
-  <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
-  <paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
+  <div hidden$="[[!isEqual(mode,'global')]]">
+    <br>
+    <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
+    <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
+    https://www.w3.org/wiki/SparqlEndpoints<br>
+    <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
+      <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
+      <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
+      <br>
+      <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
+    </iron-selector>
+    <paper-input id="labelEndpoint" label="Endpoint (http://)" value="{{endpoint::input}}"></paper-input>
+    <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
+    label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
+
+    <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
+    <!-- MODE pour Fuseki direct
+    <div hidden$="[[!isEqual(mode,'global')]]">
+    <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
+    <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
+    <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+    <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
+    <template is="dom-repeat" items="[[datasets]]">
+    <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+  </template>
+</paper-listbox>
+</paper-dropdown-menu>
+
+
+<paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+<paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
 </div>-->
-<br>
-</paper-dialog-scrollable>
-<!--
-<div style="padding-top:10px" horizontal end-justified layout self-stretch>
-<paper-button  dialog-dismiss raised>Fermer</paper-button>
-</div>-->
+</div>
+
 </paper-dialog>
 
 
@@ -572,7 +552,7 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
       },
       springConstant: {
         type: Number,
-      observer: "_updateSpringConstant"
+        observer: "_updateSpringConstant"
       },
       nodeDistance: {
         type: Number,
@@ -607,7 +587,7 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
   initAgents(){
     //  console.log(this.agentInput)
     this.agentDialogs.send('agentHello', 'Hello agentHello!');
-  //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
   }
 }
 

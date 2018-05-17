@@ -92,25 +92,35 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       }
     }
     rejoindre(e){
-      let room = e.model.item;
+      this.room = e.model.item.name;
       console.log(room);
-      this.modeBtnText = room.substring(0, 6);
-      //this.switchRoom(room);
-      this.agentDialogs.send('agentSocket', {type: "switchRoom", graph: room});
+      if (this.pseudo.length ==0){
+        this.$.pseudoPopup.toggle();
+      }else{
+
+        //  this.modeBtnText = room.substring(0, 6);
+        //this.switchRoom(room);
+        this.agentDialogs.send('agentSocket', {type: "switchRoom", graph: this.room});
+
+      }
       this.$.modePopup.toggle();
     }
 
     creer(){
-      let room = this.newRoom;
-      this.modeBtnText = room.substring(0, 6);
-      //  this.switchRoom(room);
-      this.agentDialogs.send('agentSocket', {type: "switchRoom", graph: room});
+      if (this.newRoom.length>0){
+        this.room = this.newRoom;
+        if (this.pseudo.length ==0){
+          this.$.pseudoPopup.toggle();
+        }else{
+          this.agentDialogs.send('agentSocket', {type: "switchRoom", graph: this.room});
+        }
+      }
     }
 
     pseudoChanged(){
       // test a faire pour voir si deconnecter ou changer de nom si deja connecté
       console.log(this.pseudo)
-      this.agentDialogs.send('agentSocket', {type: "adduser", pseudo: this.pseudo});
+      this.agentDialogs.send('agentSocket', {type: "adduser", pseudo: this.pseudo, room: this.room});
     }
 
     _endpointChanged(newValue){
@@ -131,22 +141,22 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         resource: this.resource});
       }
 
-    /* TECHNICAL TOOLS */
-    isEqual(mode, activeMode){
-      return mode == activeMode;
+      /* TECHNICAL TOOLS */
+      isEqual(mode, activeMode){
+        return mode == activeMode;
+      }
+      isEmpty(value){
+        //  console.log(value.length)
+        return value.length==0;
+      }
+
+
+
+
+
+
+
     }
-    isEmpty(value){
-      //  console.log(value.length)
-      return value.length==0;
-    }
-
-
-
-
-
-
-
-  }
-});
+  });
 
 </script>
