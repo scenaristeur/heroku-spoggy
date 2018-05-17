@@ -1,0 +1,152 @@
+
+<script>
+/* @polymerMixin */
+var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class DialogsModeBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        },
+        mode: {
+          type: String,
+          value: 'solo'
+        },
+        selectedMode: {
+          value: "solo",
+          observer: '_modeChanged'
+        },
+        selectedEndpoint: {
+          value: "virtuoso",
+          observer: '_endpointChanged'
+        },
+        pseudo: {
+          type: String,
+          value: ""
+        },
+        endpoint: {
+          type: String,
+          value: 'http://fr.dbpedia.org' //http://5.51.110.50:3030 'http://127.0.0.1:3030',
+
+        },
+        resource:{
+          type: String,
+          value : 'Lyon'
+        },
+        graph: {
+          type: String,
+          value: "Default",
+          observer: '_graphChanged'
+        }
+      };
+    }
+
+    _modeChanged(newMode, oldMode){
+      this.set('modeConfig.mode', newMode);
+      this.mode = newMode;
+      this.modeBtnText = this.mode.substring(0, 6);
+      switch (newMode) {
+        case 'solo':
+        console.log('passage solo');
+        break;
+        case 'collab':
+        console.log('connexion socket');
+        //  this.connectSocket();
+        this.agentDialogs.send('agentSocket', {type: "connect"});
+        console.log("SPOG-SOCKET");
+        console.log(this.socket);
+
+
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
+        case 'global':
+        console.log('connexion endpoint.');
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
+        default:
+        console.log('Sorry, we are out of ' + newMode + '.');
+      }
+      switch (oldMode) {
+        case 'solo':
+        console.log('quitte solo');
+        break;
+        case 'collab':
+        console.log('deconnect socket');
+        //  this.socket.disconnect();
+        this.agentDialogs.send('agentSocket', {type: "disconnect"});
+        break;
+        case 'global':
+        console.log('deconnect endpoint');
+        //this.socket.disconnect();
+        this.agentDialogs.send('agentSocket', {type: "disconnect"});
+        break;
+        default:
+
+      }
+    }
+    rejoindre(e){
+      let room = e.model.item;
+      console.log(room);
+      this.modeBtnText = room.substring(0, 6);
+      //this.switchRoom(room);
+      this.agentDialogs.send('agentSocket', {type: "switchRoom", graph: room});
+      this.$.modePopup.toggle();
+    }
+
+    creer(){
+      let room = this.newRoom;
+      this.modeBtnText = room.substring(0, 6);
+      //  this.switchRoom(room);
+      this.agentDialogs.send('agentSocket', {type: "switchRoom", graph: room});
+    }
+
+    pseudoChanged(){
+      // test a faire pour voir si deconnecter ou changer de nom si deja connecté
+      console.log(this.pseudo)
+      this.agentDialogs.send('agentSocket', {type: "adduser", pseudo: this.pseudo});
+    }
+
+    _endpointChanged(newValue){
+      console.log(newValue)
+      if (newValue == "fuseki"){
+        this.endpoint = 'http://5.51.110.50:3030'
+      }else{
+        this.endpoint = 'http://fr.dbpedia.org'
+      }
+    }
+    _testEndpoint(e){
+      console.log(this.endpoint);
+      console.log(this.selectedEndpoint);
+      this.agentDialogs.send('agentSparql', {
+        type: 'testEndpoint',
+        endpoint: this.endpoint,
+        endpointType: this.selectedEndpoint,
+        resource: this.resource});
+      }
+
+    /* TECHNICAL TOOLS */
+    isEqual(mode, activeMode){
+      return mode == activeMode;
+    }
+    isEmpty(value){
+      //  console.log(value.length)
+      return value.length==0;
+    }
+
+
+
+
+
+
+
+  }
+});
+
+</script>

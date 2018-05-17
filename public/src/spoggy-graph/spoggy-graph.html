@@ -1,7 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../spoggy-agent/spoggy-agent.html">
-<script src="agents/GraphAgent.js"></script>
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+
 <link rel="import" href="./graph-behavior.html">
+
 
 
 <link rel="import" href="styles/vis-styles.html">
@@ -11,11 +13,9 @@
 <link rel="import" href="../spog-eye/spog-eye.html">-->
 <!--  <link rel="import"  href="./graph-dialogs.html">-->
 
-  <link rel="import"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
-  <link rel="import"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
 
 <dom-module id="spoggy-graph">
-
+<link rel="lazy-import" group="lazy" href="./graph-import.html">
 
 
 
@@ -43,19 +43,7 @@
       right: 5px;
       top: 200px;
     }
-    #dial{
-      position: fixed;
-      left: 50%;
-      bottom: 20px;
-      /*--valle-speed-dial-action-fab-color: #d4f442;*/
-      --valle-speed-dial-backdrop-color: rgba(55, 55, 255, 0.5) ; /* rgba(200, 200, 10, 0.2), */
-    }
-    #dial-action .label {
-      display: inline-block;
-      left: -158px;
 
-    }
-  }
   </style>
   <style is="custom-style"  include="vis-styles"></style>
 <!--<graph-dialogs id="dialogs"></graph-dialogs>-->
@@ -63,30 +51,90 @@
   <graph-dialogs id="dialogs"></graph-dialogs>-->
 
   <div id="mynetwork"></div>
-  <paper-fab id="fabsetting" on-tap="_toggleSettings"  icon="settings" style="height: 50px; width:50px;"></paper-fab>
+  <!--<paper-fab id="fabsetting" on-tap="_toggleSettings"  icon="settings" style="height: 50px; width:50px;"></paper-fab>-->
   <!-- style="height: 150px; width:150px;color: #0D578B;"-->
   <!--  <paper-fab id="fabEye" on-tap="_toggleEye"  label="Eye"></paper-fab> -->
 
   <!--  icon="https://uploaddeimagens.com.br/images/001/071/867/full/iconmonstr-fast-food-3-32.png"-->
-  <valle-speed-dial id="dial" direction="top" label="Menu" backdrop>
-    <valle-speed-dial-action
-    class="dial-action"
-    label="settings"
-    on-tap="_toggleSettings"
-    label-direction="right"
-    icon="settings"
-    ></valle-speed-dial-action>
-    <valle-speed-dial-action
-    class="dial-action"
-    label="mode"
-    label-direction="right"
-    ></valle-speed-dial-action>
-    <valle-speed-dial-action
-    class="dial-action"
-    label="help"
-    label-direction="right"
-    ></valle-speed-dial-action>
-  </valle-speed-dial>
+
+
+  <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
+    <div horizontal start-justified start layout >
+      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+      <div style="padding-left:20px" vertical start-justified start layout wrap>
+        <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
+        <p >  <paper-input id="edgeLabel" label="Nom du lien" autofocus></paper-input></p>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" raised>ok</paper-button>
+          <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
+        </div>
+      </div>
+    </div>
+  </paper-dialog>
+
+  <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom" >
+    <div horizontal start-justified start layout >
+      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+      <div style="padding-left:20px" vertical start-justified start layout wrap>
+
+        <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
+        <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
+        <p>
+          <paper-input id="nodeLabel" label="Nom du noeud" autofocus ></paper-input>
+          <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
+        </p>
+
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
+          <div slot="collapse-content">
+            <fieldset>
+              <legend>Forme</legend>
+              <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
+                <div>Label interne</div>
+                <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
+                <paper-checkbox name="circle">Cercle</paper-checkbox>
+                <paper-checkbox name="database">Database</paper-checkbox>
+                <paper-checkbox name="box">Box</paper-checkbox>
+                <paper-checkbox name="text">Texte</paper-checkbox>
+                <hr>
+                <div>Label externe</div>
+                <paper-checkbox name="diamond">Diamant</paper-checkbox>
+                <paper-checkbox name="star">Etoile</paper-checkbox>
+                <paper-checkbox name="triangle">Triangle</paper-checkbox>
+                <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
+                <paper-checkbox name="square">Carré</paper-checkbox>
+                <paper-checkbox name="image" >Image</paper-checkbox>
+                <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
+                <!--<paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
+
+              </iron-selector>
+              <div hidden$="[[shapeIsImage(selectedShape)]]">
+                <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
+              </div>
+            </fieldset>
+          </div>
+        </iron-collapse-button>
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
+          <div slot="collapse-content">
+            <fieldset>
+              <legend>Couleur</legend>
+              <!--<paper-swatch-picker></paper-swatch-picker>-->
+              <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
+            </fieldset>
+          </div>
+        </iron-collapse-button>
+
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button id="nodeSaveButton"  raised>ok</paper-button>
+          <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
+        </div>
+      </div>
+    </div>
+  </paper-dialog>
+
 
 
 </template>
@@ -100,7 +148,7 @@
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
+class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
   static get is() { return 'spoggy-graph'; }
   static get properties() {
     return {
@@ -134,7 +182,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     Polymer.RenderStatus.afterNextRender(this, function() {
       // When possible, use afterNextRender to defer non-critical
       // work until after first paint.
-        this.agentGraph = new GraphAgent('agentGraph', this);
+
       this._deferred();
 
     });
@@ -143,10 +191,11 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
   _deferred(){
     //  this.initAgents()
     console.log("GRAPH DEFER")
-  /*  this.importLazyGroup('lazy').then((results) => {
+  this.importLazyGroup('lazy').then((results) => {
       console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
-    });*/
+        this.agentGraph = new GraphAgent('agentGraph', this);
+
 
     this.network = this.networkDivInitialize(this.$.mynetwork, this);
     let app = this;
@@ -168,7 +217,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
       //  app.updateInputValue(params.nodes[0]);
     });
 
-
+    });
 
 
 
@@ -259,7 +308,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
           //document.getElementById('nodeOperation').innerHTML = "Edit Node";
           data.edit = true; // signalement d'une edition pour sparql
           console.log(data);
-          app.$.dialogs.$.nodeOperation.innerHTML = "Edit Node";
+          app.$.nodeOperation.innerHTML = "Edit Node";
           app.editNode(data, callback);
         },
         deleteNode: function (data, callback) {
@@ -275,7 +324,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
             }
           }
           //document.getElementById('edgeOperation').innerHTML = "Add Edge";
-          app.$.dialogs.$.edgeOperation.innerHTML = "Add Edge";
+          app.$.edgeOperation.innerHTML = "Add Edge";
           app.editEdgeWithoutDrag(data, callback);
         },
         editEdge: {
@@ -283,7 +332,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
             //document.getElementById('edgeOperation').innerHTML = "Edit Edge";
             data.edit = true; // signalement d'une edition pour sparql
             console.log(data);
-            app.$.dialogs.$.edgeOperation.innerHTML = "Edit Edge";
+            app.$.edgeOperation.innerHTML = "Edit Edge";
             app.editEdgeWithoutDrag(data,callback);
           }
         },
@@ -341,7 +390,7 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
   }
   editNode (data, callback) {
     console.log(data);
-    this.$.dialogs.$.nodeLabel.value= data.label || "";
+    this.$.nodeLabel.value= data.label || "";
     this.selectedShape = data.shape || "ellipse";
     this.selectedType = data.type || "node";
     this.imageUrl = data.image || "";
@@ -351,15 +400,19 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     else{
       this.colorValue =   "rgb(173,208,255)";
     }
-    this.$.dialogs.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
-    this.$.dialogs.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
-    this.$.dialogs.$.nodePopUp.toggle(); //style.display = 'block';
-    this.$.dialogs.$.nodeLabel.focus();
+    this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
+    this.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
+
+    this.$.nodePopUp.toggle(); //style.display = 'block';
   }
+
+
+
+
   clearNodePopUp () {
-    this.$.dialogs.$.nodeSaveButton.onclick = null;
-    this.$.dialogs.$.nodeCancelButton.onclick = null;
-    this.$.dialogs.$.nodePopUp.toggle();//style.display = 'none';
+    this.$.nodeSaveButton.onclick = null;
+    this.$.nodeCancelButton.onclick = null;
+    this.$.nodePopUp.toggle();//style.display = 'none';
   }
   cancelNodeEdit (callback) {
     this.clearNodePopUp(this);
@@ -379,10 +432,10 @@ class SpoggyGraph extends GraphBehaviorMixin(Polymer.Element) {
     spoggy-graph.html:378 tap
     */
 
-    data.label = this.$.dialogs.$.nodeLabel.value;
+    data.label = this.$.nodeLabel.value;
     data.shape = this.selectedShape;
     data.color = this.colorValue;
-    data.image = this.$.dialogs.$.imgUrl.value;
+    data.image = this.$.imgUrl.value;
 
     data.type = this.selectedType;
     if (data.label.length > 40){
@@ -526,18 +579,19 @@ this.addAction(actionGraph);
 this.nodes = this.network.body.data.nodes;*/
 }
 
+
+
 editEdgeWithoutDrag (data, callback) {
-  this.$.dialogs.$.edgeLabel.value = data.label || "";
-  this.$.dialogs.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
-  this.$.dialogs.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
-  this.$.dialogs.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
-  this.$.dialogs.$.edgePopUp.toggle(); //style.display = 'block';
-  this.$.dialogs.$.edgeLabel.focus();
+  this.$.edgeLabel.value = data.label || "";
+  this.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
+  this.$.edgePopUp.toggle(); //style.display = 'block';
 }
 clearEdgePopUp () {
-  this.$.dialogs.$.edgeSaveButton.onclick = null;
-  this.$.dialogs.$.edgeCancelButton.onclick = null;
-  this.$.dialogs.$.edgePopUp.toggle(); //style.display = 'none';
+  this.$.edgeSaveButton.onclick = null;
+  this.$.edgeCancelButton.onclick = null;
+  this.$.edgePopUp.toggle(); //style.display = 'none';
 }
 cancelEdgeEdit (callback) {
   this.clearEdgePopUp();
@@ -548,7 +602,7 @@ saveEdgeData (data, callback) {
   data.to = data.to.id
   if (typeof data.from === 'object')
   data.from = data.from.id
-  data.label = this.$.dialogs.$.edgeLabel.value;
+  data.label = this.$.edgeLabel.value;
   this.clearEdgePopUp();
   callback(data);
   var edge = this.network.body.data.edges.get({
@@ -627,19 +681,6 @@ addNodeIfNotExist(network, data){
 }
 
 
-_toggleSettings(){
-  console.log(this.$.dialogs.$.settings.hidden);
-  //this.$.dialogs.$.settings.hidden= !this.$.dialogs.$.settings.hidden;
-  //this.settinghidden = !this.settinghidden;
-  this.$.dialogs.$.settings.toggle();
-  this.$.dial.open=false;
-}
-_toggleEye(){
-  console.log(this.$.eye.hidden);
-  //this.$.eye.hidden= !this.$.eye.hidden;
-  //this.eyehidden = !this.eyehidden;
-  this.$.eye.toggle();
-}
 
 
 _inferedChanged(newInfered,oldinfered){
@@ -792,29 +833,29 @@ _toggleDesc() {
   this.network.cluster(clusterOptionsByData);
 }
 _closeImportPopUp(){
-  this.$.dialogs.$.importPopUp.toggle(); //.style.display = 'none';
+  this.$.importPopUp.toggle(); //.style.display = 'none';
 }
-_toogle() {
+/*_toogle() {
   console.log("clic");
-  this.$.dialogs.$.nodePopUp.toggle();
-}
+  this.$.nodePopUp.toggle();
+}*/
 saveTextAsFile(){
   var textToWrite="";
   var fileNameToSaveAs="";
   var textFileAsBlob="";
   var extension="ttl";
   var nomFichier="";
-  var data = this.$.dialogs.$.inputTextToSave.value;
+  var data = this.$.inputTextToSave.value;
   console.log(data);
   if((typeof data != "undefined")&& (data.length>0)){
     textToWrite=data;
   }else{
-    textToWrite = this.$.dialogs.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+    textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
   }
   if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
     fileNameToSaveAs = nomFichier+"."+extension;
   }else{
-    fileNameToSaveAs = this.$.dialogs.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+    fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
   }
   if ((typeof extension != "undefined") && (extension.length>0)){
     switch(extension){
@@ -861,7 +902,7 @@ if(navigator.userAgent.indexOf("Chrome") != -1)
   //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
   downloadLink.style.display = "none";
   document.body.appendChild(downloadLink);
-  console.log(this.$.dialogs.$.popupTtl);
+  console.log(this.$.popupTtl);
 }
 console.log(downloadLink);
 /*downloadLink.click();*/
@@ -877,8 +918,8 @@ setTimeout(function(){
   document.body.removeChild(downloadLink);
   window.URL.revokeObjectURL(downloadLink);
 }, 100);
-console.log(this.$.dialogs.$.popupTtl);
-this.$.dialogs.$.popupTtl.toggle();
+console.log(this.$.popupTtl);
+this.$.popupTtl.toggle();
 }
 
 

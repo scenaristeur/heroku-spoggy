@@ -132,27 +132,35 @@ var numUsers = 0;
 var app = this;
 
 // rooms which are currently available in chat
-var rooms = ['defaut','graph0', 'graph1','Personne','Tension', 'Organisation'];
+var rooms = ['Agora','graph0', 'graph1','Personne','Tension', 'Organisation'];
 
 
 io.sockets.on('connection', function (socket) {
   console.log("connexion")
+
+  socket.room = rooms[0];
+  // send client to room 1
+  socket.join(socket.room);
+  // echo to client they've connected
+  socket.emit('updatechat', 'SERVER', 'Vous êtes connecté au graphe '+socket.room);
+
+  socket.emit('updaterooms', rooms, socket.room);
+
   // when the client emits 'adduser', this listens and executes
   socket.on('adduser', function(username){
     console.log("adduser "+username)
     // store the username in the socket session for this client
     socket.username = username;
     // store the room name in the socket session for this client
-    socket.room = rooms[0];
+
     // add the client's username to the global list
     usernames[username] = username;
-    // send client to room 1
-    socket.join(socket.room);
+
     // echo to client they've connected
-    socket.emit('updatechat', 'SERVER', 'you have connected to '+socket.room);
+    socket.emit('updatechat', 'SERVER', 'Vous êtes connecté au graphe '+socket.room);
     // echo to room 1 that a person has connected to their room
-    socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', username + ' has connected to this room');
-    socket.emit('updaterooms', rooms, socket.room);
+    socket.broadcast.to(socket.room).emit('updatechat', 'SERVEUR', username + ' vient de se connecter au graphe '+socket.room);
+
     initDb(socket);
   });
 

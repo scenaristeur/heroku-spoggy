@@ -1,7 +1,8 @@
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-<script src="agents/DialogsAgent.js"></script>
+
 <link rel="import" href="./dialogs-behavior.html">
+<link rel="import" href="./dialogs-mode-behavior.html">
 
 <dom-module id="spoggy-dialogs">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
@@ -15,463 +16,522 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-picker.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-element.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="lazy-import" group="lazy" href="./dialogs-import.html">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
+    #operation {
+      font-size:28px;
+    }
+    #nodePopUp {
+      position:absolute;
+      z-index:299;
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      padding:1px;
+    }
+    #edgePopUp {
+      position:absolute;
+      z-index:299;
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      padding:1px;
+    }
+    #dial{
+      position: fixed;
+      left: 50%;
+      bottom: 15px;
+
+      /*--valle-speed-dial-action-fab-color: #d4f442;*/
+      --valle-speed-dial-backdrop-color: rgba(55, 55, 255, 0.5) ; /* rgba(200, 200, 10, 0.2), */
+    }
+    #dial-action .label {
+      display: inline-block;
+      left: -158px;
+
+    }
+  }
+
+  </style>
+  <paper-dialog id="helpPopUp" >
+
+    <h3>Aide <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h3>
+    <!--<paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button> -->
+    <!--
+    <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
+    <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
+    <a href="https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m" target="_blank">Premiers pas avec Spoggy</a>
+    <paper-dialog-scrollable>
 
 
-          #operation {
-            font-size:28px;
-          }
-          #nodePopUp {
+      <iron-collapse-button>
+        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Le graphe</h3>
+        <div slot="collapse-content">
+          <p>
+            Spoggy est une application permettant la représentation de l'information, ou des connaissances
+            sous forme de graphe.<br>
+            Un graphe est composé de <b>NOEUDS</b> (nodes) et de <b>LIENS</b> (edges).
+          </p>
+          <p>
+            Les noeuds représentent les concepts d'un domaine
+            et les liens permettent de qualifier la relation entre deux concepts.<br>
+            Les liens sont orientés et se terminent par une flèche.<br>
+            L'ensemble de deux noeuds et du lien entre ces deux noeuds peut aussi être appelé un <b>TRIPLET</b>. </p>
+            <p>Par exemple <b>{ David, habite, Lyon }</b>
+              est un triplet dans lequel les termes 'David' et 'Lyon' sont des noeuds représenatnt
+              respectivement une personne (le sujet du triplet) et une ville (l'objet du triplet),
+              alors que 'habite' est la relation (aussi appelée 'propriété' ou 'predicat' ) qui relie les deux noeuds.</p>
+              <p>
+                Vous pouvez utiliser les boutons <b><i>'Edit / Add node'</i></b>
+                pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.<br>
+                Je vous laisse découvrir les fonctionnalités de 'Edit Node', 'Edit Edge', 'Delete Node', 'Delete Edge'... ;-)<br>
+                Vous pouvez aussi utiliser la 'zone de saisie' pour saisir des triplets de manière plus rapide.
+              </p>
+            </div>
+          </iron-collapse-button>
 
-            position:absolute;
-            z-index:299;
-            background-color: #f9f9f9;
-            border-style:solid;
-            border-width:3px;
-            border-color: #5394ed;
-            padding:1px;
-          }
-          #edgePopUp {
-
-            position:absolute;
-            z-index:299;
-            background-color: #f9f9f9;
-            border-style:solid;
-            border-width:3px;
-            border-color: #5394ed;
-            padding:1px;
-          }
-
-    </style>
-    <paper-dialog id="helpPopUp" >
-
-      <h3>Aide <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h3>
-      <!--<paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button> -->
-      <!--
-      <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
-      <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-      <a href="https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m" target="_blank">Premiers pas avec Spoggy</a>
-      <paper-dialog-scrollable>
-
-
-        <iron-collapse-button>
-          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Le graphe</h3>
-          <div slot="collapse-content">
-            <p>
-              Spoggy est une application permettant la représentation de l'information, ou des connaissances
-              sous forme de graphe.<br>
-              Un graphe est composé de <b>NOEUDS</b> (nodes) et de <b>LIENS</b> (edges).
-            </p>
-            <p>
-              Les noeuds représentent les concepts d'un domaine
-              et les liens permettent de qualifier la relation entre deux concepts.<br>
-              Les liens sont orientés et se terminent par une flèche.<br>
-              L'ensemble de deux noeuds et du lien entre ces deux noeuds peut aussi être appelé un <b>TRIPLET</b>. </p>
-              <p>Par exemple <b>{ David, habite, Lyon }</b>
-                est un triplet dans lequel les termes 'David' et 'Lyon' sont des noeuds représenatnt
-                respectivement une personne (le sujet du triplet) et une ville (l'objet du triplet),
-                alors que 'habite' est la relation (aussi appelée 'propriété' ou 'predicat' ) qui relie les deux noeuds.</p>
-                <p>
-                  Vous pouvez utiliser les boutons <b><i>'Edit / Add node'</i></b>
-                  pour ajouter un noeud ou '<b><i>Edit / Add Edge</i></b>' pour relier deux noeuds.<br>
-                  Je vous laisse découvrir les fonctionnalités de 'Edit Node', 'Edit Edge', 'Delete Node', 'Delete Edge'... ;-)<br>
-                  Vous pouvez aussi utiliser la 'zone de saisie' pour saisir des triplets de manière plus rapide.
-                </p>
-              </div>
-            </iron-collapse-button>
-
-            <iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">La zone de saisie</h3>
-              <div slot="collapse-content">
-                La zone de saisie est l'endroit où par défaut il est écrit "3 mots une virgule et Entrée". En cliquant dessus, vous pouvez :  <br>
-                <b> - Saisir des commandes</b><br>
-                les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide<br>
-                <ul>
-                  <li>Pour afficher l'aide, tapez '/h' comme 'help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</li>
-                  <li> <b>/n</b> pour créer un nouveau graphe.</li>
-                  <li>Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter et l'envoyer par mail à vos collaborateurs. :
-                    <ul>
-                      <li>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></li>
-                      <li>Au format
-                        <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
-                        pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></li>
-                      </ul>
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">La zone de saisie</h3>
+            <div slot="collapse-content">
+              La zone de saisie est l'endroit où par défaut il est écrit "3 mots une virgule et Entrée". En cliquant dessus, vous pouvez :  <br>
+              <b> - Saisir des commandes</b><br>
+              les commandes commencent par <b>/</b> -> exemple <b>/h</b> pour afficher l'aide<br>
+              <ul>
+                <li>Pour afficher l'aide, tapez '/h' comme 'help' suivi de la touche "Entrée" dans la barre de saisie tout en haut.</li>
+                <li> <b>/n</b> pour créer un nouveau graphe.</li>
+                <li>Lorsque vous avez créé un graph (bouton "Edit", ou via l'input), vous pouvez l'exporter et l'envoyer par mail à vos collaborateurs. :
+                  <ul>
+                    <li>Au format json pour pouvoir le ré-importer facilement ensuite : <b><i>/e</i></b></li>
+                    <li>Au format
+                      <a href='https://fr.wikipedia.org/wiki/Turtle_(syntaxe)' target="_blank" >turtle/RDF</a>
+                      pour pouvoir le retravailler avec <a href="https://protege.stanford.edu/" target="_blank">Protege 2000</a>: <b><i>/t</i></b></li>
+                    </ul>
 
 
-                      <li>Avec la commande <b><i>/i</i></b> pouvez importer un fichier spoggy </li>
-                      <li>Vous pouvez également indiquer un paramètre "?source=" dans l'url de la page :
-                        <ul>
-                          <li><a href="./?source=/exemple_files/NCC_2018.json" target="_blank"> La nuit du code 2018 (hackathon organisé par les Bricodeurs) </a>
-                            (<a href="./exemple_files/NCC_2018.json" target="_blank">télécharger le fichier</a>)</li>
-                            <li><a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" target="_blank" >l'application SPOGGY</a>
-                              (<a href="./exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" target="_blank">télécharger le fichier</a>)</li>
-                              <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA.json" target="_blank" >
-                                Donner du sens à l'IA (mission gouvernementale)</a>
-                                (<a href="./exemple_files/Spoggy-Donner du sens à l'IA.json" target="_blank">télécharger le fichier</a>)</li>
-                              </ul>
-                            </li>
+                    <li>Avec la commande <b><i>/i</i></b> pouvez importer un fichier spoggy </li>
+                    <li>Vous pouvez également indiquer un paramètre "?source=" dans l'url de la page :
+                      <ul>
+                        <li><a href="./?source=/exemple_files/NCC_2018.json" target="_blank"> La nuit du code 2018 (hackathon organisé par les Bricodeurs) </a>
+                          (<a href="./exemple_files/NCC_2018.json" target="_blank">télécharger le fichier</a>)</li>
+                          <li><a href="./?source=/exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" target="_blank" >l'application SPOGGY</a>
+                            (<a href="./exemple_files/Spoggy SPOGGY_spoggy_nodes_edges_1524403595490.json" target="_blank">télécharger le fichier</a>)</li>
+                            <li><a href="./?source=/exemple_files/Spoggy-Donner du sens à l'IA.json" target="_blank" >
+                              Donner du sens à l'IA (mission gouvernementale)</a>
+                              (<a href="./exemple_files/Spoggy-Donner du sens à l'IA.json" target="_blank">télécharger le fichier</a>)</li>
+                            </ul>
                           </li>
-                        </ul>
-                        <b>- Saisir des triplets</b><br>
-                        <p>
-                          ## Saisir un triplet au format Turtle<br>
-                          Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
-                          n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
-                          - David type Personne<b>.</b> -> triplet complet,<br>
-                          - David type Personne<b>;</b> -> indique de garder le sujet<br>
-                          - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
-                          - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
-                        </p>
-
-                        <p>
-                          ## Récupérer le dernier triplet saisi<br>
-                          - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
-                          - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
-                          - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
-                        </p>
-                        <b>- Chatter en mode collaboratif (voir Modes / Echelles)</b><br>
-                        <p> [développement en cours]
-                          ## Saisir un message pour le chat <br>
-                          Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
-                          ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
-                        </p>
-
-                      </div>
-                    </iron-collapse-button>
-
-
-
-
-                    <iron-collapse-button>
-                      <h3 slot="collapse-trigger" style="margin: 0; color: #0D578B;">Modes / Echelles</h3>
-                      <div slot="collapse-content">
-
-                        Spoggy est utilisable selon trois modes, du plus simple au plus complexe : solo, collaboratif, global.
-
-                        <iron-collapse-button>
-                          <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px; color: #0D578B;">Solo / Humain</h4>
-                          <div slot="collapse-content">
-                            <p>Spoggy gère l'information à l'échelle humaine, au sein de votre navigateur.
-                              Vous choisissez quelles données exporter ou partager avec la commande <b><i>/e</i></b>.
-                              En mode <b>'SOLO'</b> Par défaut, aucune information n'est enregistrée ou envoyée vers aucun serveur.</p>
-                              <!--<p>[Un développement pour une option de stockage pérenne dans le navigateur est à l'étude (levelgraph)]</p>-->
-                            </div>
-                          </iron-collapse-button>
-                          <iron-collapse-button>
-                            <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px;  color: #0D578B;">Collaboratif / Groupe</h4>
-                            <div slot="collapse-content">
-                              <p>En mode <b>'COLLABORATIF'</b>, Spoggy permet à un groupe de collaborer en temps réel.
-                                On peut alors construire des graphes en parfaite synchronistaion et voir en temps réel les modifications effectuées par nos collaborateurs.
-                                Le mode collaboratif se base sur les principes du 'chat' : des rooms ou salles pour discuter, sauf qu'ici, on fait un peu plus que discuter...<br>
-                                Pour accéder au mode collaboratif de Spoggy, cliquez sur le bouton
-                                <paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
-                                ,
-                                saisissez un pseudo, et selectionnez le nom de la room que vous souhaitez rejoindre ou créez une nouvelle room.</p>
-                              </div>
-                            </iron-collapse-button>
-                            <iron-collapse-button>
-                              <h4 slot="collapse-trigger" style="margin: 0;  margin-left: 40px; color: #0D578B;">Global / Monde</h4>
-                              <div slot="collapse-content">
-                                <p>
-                                  Des endpoints / triplestores et entrepots de données peuvent être ajoutés à Spoggy.
-                                  Ce sont de gros serveurs qui fournissent à Spoggy des espaces de stockage partagés.
-                                </p>
-                                <p>
-                                  Vous pouvez créer votre propre sparql endpoint en utilisant un serveur
-                                  <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>.
-                                </p>
-                                <p> Par défaut le endpoint global Fuseki est totalement ouvert :
-                                  N'importe qui peut insérer toute information,
-                                  mais aussi modifier ou supprimer les informations précédemment enregistrées par d'autres utilisateurs. <br>
-                                  Il n'est donc pas garanti que vos informations perdurent...<br>
-                                  Tout peut être effacé à tout moment !!! <br> Un peu comme une plage sur laquelle on construirait un château de sable :<br>
-                                  on n'est pas certain certain qu'il en restera quelque chose le lendemain, mais peut-être que le château aura été amélioré par un autre bâtisseur.
-                                </p>
-                                <p>En installant votre propre endpoint fuseki, vous pouvez aussi choisir de fiabiliser et garantir vos informations,
-                                  ceci peut-être utile par exemple pour une entreprise qui souhaiterait rendre sont catalogue disponible au format Spoggy
-                                  et permettre à ses clients de le parcourir de manière plus visuelle et ludique, sous forme de graphe...
-                                </p>
-                                <p>
-                                  Un bon (en)tendeur... <br>et ben... ça tient bien ;-)
-                                </p>
-
-                              </div>
-                            </iron-collapse-button>
-                          </div>
-                        </iron-collapse-button>
-
-
-                        <iron-collapse-button>
-                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Sécurité</h3>
-                          <div slot="collapse-content">
-                            <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
-                              Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
-                            </div>
-                          </iron-collapse-button>
-
-
-
-                          <iron-collapse-button>
-                            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Technique & navigateur</h3>
-                            <div slot="collapse-content">
-                              <p>
-                                Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> &
-                                les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>,
-                                mais ceux-ci ne sont pas nativement pris en compte par tous les navigateurs Web.
-                              </p>
-                              <p>
-                                Spoggy fonctionne correctement avec les dernières versions de Chrome et Opéra.<br>
-                                Firefox ne les prend en compte qu'à partir de la version 60.<br>
-                                Vous pouvez vérifier la compatibilité de votre navigateur
-                                au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a>
-                              </p>
-                              <p>
-                                Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour :
-                                <a href="standalone/interface.html">SPOGGY-STANDALONE</a>
-                              </p>
-                              <p>
-                                Spoggy utilise également vis.js, socket.io, rdf-ext, levelgraph,... et fait travailler des tonnes de cellules grises...
-                              </p>
-                            </div>
-                          </iron-collapse-button>
-
-
-                          <iron-collapse-button>
-                            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Contact</h3>
-                            <div slot="collapse-content">
-                              <p>mail : scenaristeur@gmail.com</p>
-                              <p>twitter : @dfaveris</p>
-                            </div>
-                          </iron-collapse-button>
-
-                          <iron-collapse-button>
-                            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Github / Source / Améliorer</h3>
-                            <div slot="collapse-content">
-                              <p>Pour un complément de documentation sur Spoggy, c'est <a href="https://scenaristeur.github.io/heroku-spoggy/" target="_blank">https://scenaristeur.github.io/heroku-spoggy/</a>
-                                <p>Pour obtenir les sources et plus d'informations sur Spoggy c'est
-                                  <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
-                                </p>
-                                <p> Pour proposer de nouvelles fonctionnalités ou contribuer au developpement de Spoggy, jetez un oeil à
-                                  <a href="https://github.com/scenaristeur/heroku-spoggy/projects/1" target="_blank">notre kanban</a>
-                                </p>
-                              </div>
-                            </iron-collapse-button>
-
-                            <iron-collapse-button>
-                              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Quelques docs, exemples</h3>
-                              <div slot="collapse-content">
-                                <p>
-                                  <a href="./doc/spoggy_ncc_vue0.png" target="_blank"><img width="100" height="100" src="./doc/spoggy_ncc_vue0.png" alt="spoggy_ncc_vue0.png"></img></a>
-                                  <a href="./doc/Donner_du_sens_ia.png" target="_blank"><img width="100" height="100" src="./doc/Donner_du_sens_ia.png" alt="Donner_du_sens_ia.png"></img></a>
-
-                                </p>
-
-                              </div>
-                            </iron-collapse-button>
-
-                            <iron-collapse-button>
-                              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Comment intégrer Spoggy à mon site Web ?</h3>
-                              <div slot="collapse-content">
-                                <p>
-                                  Vous pouvez intégrer Spoggy dans votre site Web en utilisant le code suivant :
-                                  <pre><code class="js">&lt;iframe  width="90%" height="700" src="https://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"&gt;&lt;/iframe&gt;</code></pre>
-                                  <br>
-                                  Un exemple <a href="./embed/" target="_blank">ici</a> avec un fichier source.
-                                </p>
-                              </div>
-                            </iron-collapse-button>
-
-                            <!--
-                            <iron-collapse-button>
-                            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Menu</h3>
-                            <div slot="collapse-content">
-                            en cours
-                          </div>
-                        </iron-collapse-button>
-                      -->
-
-
-
-
-
-                      <!--
-                      <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
-                      border="0" title="compteur de site" alt="compteur de site"> -->
-
-                      <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
-                    </paper-dialog-scrollable>
-                    <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>-->
-                    <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
-                    <!--  </div>-->
-                  </paper-dialog>
-
-                  <!--  on-iron-overlay-opened="_openImport"
-                  on-iron-overlay-closed="_closeImport"-->
-                  <paper-dialog id="importPopUp"
-                  backdrop transition="core-transition-bottom">
-                  <div horizontal start-justified start layout >
-                    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-                    <div style="padding-left:20px" vertical start-justified start layout wrap>
-                      <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
-                      <p >
-                        <fieldset>
-                          <legend>Paramètres</legend>
-                          <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
-                          <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
-                        </fieldset>
-                      </p>
+                        </li>
+                      </ul>
+                      <b>- Saisir des triplets</b><br>
                       <p>
-                        <fieldset>
-                          <legend>Fichier</legend>
-                          <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
-                        </fieldset>
+                        ## Saisir un triplet au format Turtle<br>
+                        Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
+                        n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
+                        - David type Personne<b>.</b> -> triplet complet,<br>
+                        - David type Personne<b>;</b> -> indique de garder le sujet<br>
+                        - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
+                        - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
                       </p>
-                      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                        <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
-                      </div>
+
+                      <p>
+                        ## Récupérer le dernier triplet saisi<br>
+                        - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
+                        - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
+                        - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
+                      </p>
+                      <b>- Chatter en mode collaboratif (voir Modes / Echelles)</b><br>
+                      <p> [développement en cours]
+                        ## Saisir un message pour le chat <br>
+                        Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
+                        ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
+                      </p>
+
+                    </div>
+                  </iron-collapse-button>
+
+
+
+
+                  <iron-collapse-button>
+                    <h3 slot="collapse-trigger" style="margin: 0; color: #0D578B;">Modes / Echelles</h3>
+                    <div slot="collapse-content">
+
+                      Spoggy est utilisable selon trois modes, du plus simple au plus complexe : solo, collaboratif, global.
+
+                      <iron-collapse-button>
+                        <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px; color: #0D578B;">Solo / Humain</h4>
+                        <div slot="collapse-content">
+                          <p>Spoggy gère l'information à l'échelle humaine, au sein de votre navigateur.
+                            Vous choisissez quelles données exporter ou partager avec la commande <b><i>/e</i></b>.
+                            En mode <b>'SOLO'</b> Par défaut, aucune information n'est enregistrée ou envoyée vers aucun serveur.</p>
+                            <!--<p>[Un développement pour une option de stockage pérenne dans le navigateur est à l'étude (levelgraph)]</p>-->
+                          </div>
+                        </iron-collapse-button>
+                        <iron-collapse-button>
+                          <h4 slot="collapse-trigger" style="margin: 0; margin-left: 40px;  color: #0D578B;">Collaboratif / Groupe</h4>
+                          <div slot="collapse-content">
+                            <p>En mode <b>'COLLABORATIF'</b>, Spoggy permet à un groupe de collaborer en temps réel.
+                              On peut alors construire des graphes en parfaite synchronistaion et voir en temps réel les modifications effectuées par nos collaborateurs.
+                              Le mode collaboratif se base sur les principes du 'chat' : des rooms ou salles pour discuter, sauf qu'ici, on fait un peu plus que discuter...<br>
+                              Pour accéder au mode collaboratif de Spoggy, cliquez sur le bouton
+                              <paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+                              ,
+                              saisissez un pseudo, et selectionnez le nom de la room que vous souhaitez rejoindre ou créez une nouvelle room.</p>
+                            </div>
+                          </iron-collapse-button>
+                          <iron-collapse-button>
+                            <h4 slot="collapse-trigger" style="margin: 0;  margin-left: 40px; color: #0D578B;">Global / Monde</h4>
+                            <div slot="collapse-content">
+                              <p>
+                                Des endpoints / triplestores et entrepots de données peuvent être ajoutés à Spoggy.
+                                Ce sont de gros serveurs qui fournissent à Spoggy des espaces de stockage partagés.
+                              </p>
+                              <p>
+                                Vous pouvez créer votre propre sparql endpoint en utilisant un serveur
+                                <a href="https://jena.apache.org/documentation/serving_data/" targget="_blank" >Fuseki</a>.
+                              </p>
+                              <p> Par défaut le endpoint global Fuseki est totalement ouvert :
+                                N'importe qui peut insérer toute information,
+                                mais aussi modifier ou supprimer les informations précédemment enregistrées par d'autres utilisateurs. <br>
+                                Il n'est donc pas garanti que vos informations perdurent...<br>
+                                Tout peut être effacé à tout moment !!! <br> Un peu comme une plage sur laquelle on construirait un château de sable :<br>
+                                on n'est pas certain certain qu'il en restera quelque chose le lendemain, mais peut-être que le château aura été amélioré par un autre bâtisseur.
+                              </p>
+                              <p>En installant votre propre endpoint fuseki, vous pouvez aussi choisir de fiabiliser et garantir vos informations,
+                                ceci peut-être utile par exemple pour une entreprise qui souhaiterait rendre sont catalogue disponible au format Spoggy
+                                et permettre à ses clients de le parcourir de manière plus visuelle et ludique, sous forme de graphe...
+                              </p>
+                              <p>
+                                Un bon (en)tendeur... <br>et ben... ça tient bien ;-)
+                              </p>
+
+                            </div>
+                          </iron-collapse-button>
+                        </div>
+                      </iron-collapse-button>
+
+
+                      <iron-collapse-button>
+                        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Sécurité</h3>
+                        <div slot="collapse-content">
+                          <h4>Attention, toutes les informations que vous saisirez dans Spoggy sont publiques et pourront être retenues contre vous ;-).</br>
+                            Elles peuvent également à tout moment être détournées ou supprimées, car sont modifiables par chacun.</h4>
+                          </div>
+                        </iron-collapse-button>
+
+
+
+                        <iron-collapse-button>
+                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Technique & navigateur</h3>
+                          <div slot="collapse-content">
+                            <p>
+                              Spoggy utilise <a href="https://www.polymer-project.org/" target="_blank" >Polymer 2</a> &
+                              les <a href="https://developer.mozilla.org/fr/docs/Web/Web_Components" target="_blank">Web Components</a>,
+                              mais ceux-ci ne sont pas nativement pris en compte par tous les navigateurs Web.
+                            </p>
+                            <p>
+                              Spoggy fonctionne correctement avec les dernières versions de Chrome et Opéra.<br>
+                              Firefox ne les prend en compte qu'à partir de la version 60.<br>
+                              Vous pouvez vérifier la compatibilité de votre navigateur
+                              au bas de <a href="https://www.webcomponents.org/" target="_blank">cette page</a>
+                            </p>
+                            <p>
+                              Une version dégradée de Spoggy (sans Polymer) existe aussi mais n'est peut-être pas à jour :
+                              <a href="standalone/interface.html">SPOGGY-STANDALONE</a>
+                            </p>
+                            <p>
+                              Spoggy utilise également vis.js, socket.io, rdf-ext, levelgraph,... et fait travailler des tonnes de cellules grises...
+                            </p>
+                          </div>
+                        </iron-collapse-button>
+
+
+                        <iron-collapse-button>
+                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Contact</h3>
+                          <div slot="collapse-content">
+                            <p>mail : scenaristeur@gmail.com</p>
+                            <p>twitter : @dfaveris</p>
+                          </div>
+                        </iron-collapse-button>
+
+                        <iron-collapse-button>
+                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Github / Source / Améliorer</h3>
+                          <div slot="collapse-content">
+                            <p>Pour un complément de documentation sur Spoggy, c'est <a href="https://scenaristeur.github.io/heroku-spoggy/" target="_blank">https://scenaristeur.github.io/heroku-spoggy/</a>
+                              <p>Pour obtenir les sources et plus d'informations sur Spoggy c'est
+                                <a href="https://github.com/scenaristeur/heroku-spoggy" target="_blank" >https://github.com/scenaristeur/heroku-spoggy</a>
+                              </p>
+                              <p> Pour proposer de nouvelles fonctionnalités ou contribuer au developpement de Spoggy, jetez un oeil à
+                                <a href="https://github.com/scenaristeur/heroku-spoggy/projects/1" target="_blank">notre kanban</a>
+                              </p>
+                            </div>
+                          </iron-collapse-button>
+
+                          <iron-collapse-button>
+                            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Quelques docs, exemples</h3>
+                            <div slot="collapse-content">
+                              <p>
+                                <a href="./doc/spoggy_ncc_vue0.png" target="_blank"><img width="100" height="100" src="./doc/spoggy_ncc_vue0.png" alt="spoggy_ncc_vue0.png"></img></a>
+                                <a href="./doc/Donner_du_sens_ia.png" target="_blank"><img width="100" height="100" src="./doc/Donner_du_sens_ia.png" alt="Donner_du_sens_ia.png"></img></a>
+
+                              </p>
+
+                            </div>
+                          </iron-collapse-button>
+
+                          <iron-collapse-button>
+                            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Comment intégrer Spoggy à mon site Web ?</h3>
+                            <div slot="collapse-content">
+                              <p>
+                                Vous pouvez intégrer Spoggy dans votre site Web en utilisant le code suivant :
+                                <pre><code class="js">&lt;iframe  width="90%" height="700" src="https://spoggy.herokuapp.com/?source=/exemple_files/NCC_2018.json"&gt;&lt;/iframe&gt;</code></pre>
+                                <br>
+                                Un exemple <a href="./embed/" target="_blank">ici</a> avec un fichier source.
+                              </p>
+                            </div>
+                          </iron-collapse-button>
+
+                          <!--
+                          <iron-collapse-button>
+                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Menu</h3>
+                          <div slot="collapse-content">
+                          en cours
+                        </div>
+                      </iron-collapse-button>
+                    -->
+
+
+
+
+
+                    <!--
+                    <img src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n"
+                    border="0" title="compteur de site" alt="compteur de site"> -->
+
+                    <!--        <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>-->
+                  </paper-dialog-scrollable>
+                  <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>-->
+                  <paper-button  dialog-dismiss raised>Fermer l'aide</paper-button>
+                  <!--  </div>-->
+                </paper-dialog>
+
+                <!--  on-iron-overlay-opened="_openImport"
+                on-iron-overlay-closed="_closeImport"-->
+                <paper-dialog id="importPopUp"
+                backdrop transition="core-transition-bottom">
+                <div horizontal start-justified start layout >
+                  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+                  <div style="padding-left:20px" vertical start-justified start layout wrap>
+                    <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+                    <p >
+                      <fieldset>
+                        <legend>Paramètres</legend>
+                        <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+                        <paper-checkbox id="partageImport" disabled >Partager Import</paper-checkbox>
+                      </fieldset>
+                    </p>
+                    <p>
+                      <fieldset>
+                        <legend>Fichier</legend>
+                        <input id="filepicker" type="file" multiple value="Importer" on-change="handleFileSelected"></input>
+                      </fieldset>
+                    </p>
+                    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+                      <paper-button id="importCancelButton" dialog-dismiss raised>Annuler</paper-button>
                     </div>
                   </div>
+                </div>
+              </paper-dialog>
+
+
+              <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
+                on-iron-overlay-closed="_myClosedFunction" -->
+                <h3>Export au format turtle (RDF)
+                  <!--<paper-button ontap="_pageAide">?</paper-button>-->
+                  <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
+
+                  <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+                  <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
+                  <paper-dialog-scrollable>
+                    <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
+                  </paper-dialog-scrollable>
                 </paper-dialog>
 
 
-                <paper-dialog id="popupTtl"> <!-- on-iron-overlay-opened="_myOpenFunction"
-                  on-iron-overlay-closed="_myClosedFunction" -->
-                  <h3>Export au format turtle (RDF)
-                    <!--<paper-button ontap="_pageAide">?</paper-button>-->
-                    <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
 
-                    <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-                    <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
-                    <paper-dialog-scrollable>
-                      <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
-                    </paper-dialog-scrollable>
-                  </paper-dialog>
-
-                  <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom">
-                    <div horizontal start-justified start layout >
-                      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-                      <div style="padding-left:20px" vertical start-justified start layout wrap>
-
-                        <!--<h1 style="margin: 0;color: #0D578B;">SUCCESS!</h1>-->
-                        <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
-                        <p>
-                          <paper-input id="nodeLabel" label="Nom du noeud"></paper-input>
-                          <!-- checkbox style : https://codepen.io/sevilayha/pen/jCmgE -->
-                        </p>
-
-
-                        <iron-collapse-button>
-                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
-                          <div slot="collapse-content">
-                            <fieldset>
-                              <legend>Forme</legend>
-                              <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
-                                <div>Label interne</div>
-                                <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
-                                <paper-checkbox name="circle">Cercle</paper-checkbox>
-                                <paper-checkbox name="database">Database</paper-checkbox>
-                                <paper-checkbox name="box">Box</paper-checkbox>
-                                <paper-checkbox name="text">Texte</paper-checkbox>
-                                <hr>
-                                <div>Label externe</div>
-                                <paper-checkbox name="diamond">Diamant</paper-checkbox>
-                                <paper-checkbox name="star">Etoile</paper-checkbox>
-                                <paper-checkbox name="triangle">Triangle</paper-checkbox>
-                                <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
-                                <paper-checkbox name="square">Carré</paper-checkbox>
-                                <paper-checkbox name="image" >Image</paper-checkbox>
-                                <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
-                                <!--<paper-checkbox name="icon" disabled>Icone</paper-checkbox>-->
-
-                              </iron-selector>
-                              <div hidden$="[[shapeIsImage(selectedShape)]]">
-                                <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
-                              </div>
-                            </fieldset>
-                          </div>
-                        </iron-collapse-button>
-
-                        <iron-collapse-button>
-                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
-                          <div slot="collapse-content">
-                            <fieldset>
-                              <legend>Couleur</legend>
-                              <!--<paper-swatch-picker></paper-swatch-picker>-->
-                              <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
-                            </fieldset>
-                          </div>
-                        </iron-collapse-button>
-
-                  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                    <paper-button id="nodeSaveButton"  raised>ok</paper-button>
-                    <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
-                  </div>
-                  </div>
-                  </div>
-                  </paper-dialog>
-
-
-                            <!--      <iron-collapse-button>
-                            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
-                            <div slot="collapse-content">
-                            (developpements en cours)
-                            <fieldset>
-                            <legend>Type</legend>
-                            <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
-                            <paper-checkbox name="node">Node</paper-checkbox>
-                            <paper-checkbox name="url">Url</paper-checkbox>
-                            <paper-checkbox name="graph">Graphe</paper-checkbox>
-                            <paper-checkbox name="source">Source</paper-checkbox>
-                          </iron-selector>
-                        </fieldset>
-                      </div>
-                      </iron-collapse-button>
-                      -->
-
-
-                  <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
-                    <div horizontal start-justified start layout >
-                      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-                      <div style="padding-left:20px" vertical start-justified start layout wrap>
-                        <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
-                        <p >  <paper-input id="edgeLabel" label="Nom du lien"></paper-input></p>
-                        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                          <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" raised>ok</paper-button>
-                          <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
-                        </div>
-                      </div>
-                    </div>
-                  </paper-dialog>
-
-
-
-                  <paper-dialog id="settings" >
-                    <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
-                      Gravité   <paper-slider  min="-10" max="10" value="{{centralGravityValue}}"  step="1"  ></paper-slider>
-                      Longueur des liens     <paper-slider  min="0" max="800" value="{{springLengthValue}}"  ></paper-slider>
-                      Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001"></paper-slider>
-                      Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"></paper-slider>
-                      Amortissement         <paper-slider  min="0" max="1" value="{{dampingValue}}"  step="0.001"></paper-slider>
-                      <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
-                      <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
-                      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                        <paper-button  dialog-dismiss raised>Fermer</paper-button>
-                      </div>
-                    </div>
-                    <div>
-                      <!--<spog-source></spog-source>-->
-                    </div>
-                  </paper-dialog>
+                <!--      <iron-collapse-button>
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
+                <div slot="collapse-content">
+                (developpements en cours)
+                <fieldset>
+                <legend>Type</legend>
+                <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
+                <paper-checkbox name="node">Node</paper-checkbox>
+                <paper-checkbox name="url">Url</paper-checkbox>
+                <paper-checkbox name="graph">Graphe</paper-checkbox>
+                <paper-checkbox name="source">Source</paper-checkbox>
+              </iron-selector>
+            </fieldset>
+          </div>
+        </iron-collapse-button>
+      -->
 
 
 
 
 
 
+      <paper-dialog id="settings" >
+        <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
+          Gravité   <paper-slider  min="-10" max="10" value="{{centralGravityValue}}"  step="1"  ></paper-slider>
+          Longueur des liens     <paper-slider  min="0" max="800" value="{{springLengthValue}}"  ></paper-slider>
+          Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001"></paper-slider>
+          Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"></paper-slider>
+          Amortissement         <paper-slider  min="0" max="1" value="{{dampingValue}}"  step="0.001"></paper-slider>
+          <paper-button raised  on-tap="_defaultPhysicValues">Defaut</paper-button>
+          <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button  dialog-dismiss raised>Fermer</paper-button>
+          </div>
+        </div>
+        <div>
+          <!--<spog-source></spog-source>-->
+        </div>
+      </paper-dialog>
+
+
+
+      <paper-dialog id="modePopup" > <!--    on-iron-overlay-opened="_openModePopp"
+        on-iron-overlay-closed="_closeModePopup"-->
+        <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
+        <!--
+        <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
+        <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
+        <paper-dialog-scrollable>
+          <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
+            <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
+            <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
+            <paper-checkbox name="global" >Global</paper-checkbox>
+            <br>
+            <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
+          </iron-selector>
+
+
+          <div hidden$="[[!isEqual(mode,'collab')]]">
+
+            <paper-input label="Entrez un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
+            et choisissez le graphe que vous souhaitez rejoindre
+            <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+              <template is="dom-repeat" items="[[rooms]]">
+                <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+              </template>
+            </paper-listbox>
+
+            <paper-input label="ou créez un nouveau graphe" value={{newRoom::change}}></paper-input>
+            <paper-button raised on-tap="creer" dialog-dismiss>Créer</paper-button>
+
+
+
+            <div hidden$="[[isEmpty(pseudo)]]">
+
+              <!--<paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
+                <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
+                  <template is="dom-repeat" items="[[rooms]]">
+                    <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+                  </template>
+                </paper-listbox>
+              </paper-dropdown-menu> -->
+
+
+
+            </div>
+            <!-- test de saisi + selection
+            <paper-dropdown-input label="Rejoindre une room"
+            items="[[rooms]]"
+            value={{room}}
+            >
+            <paper-button on-tap="rejoindre">Rejoindre</paper-button>
+          </paper-dropdown-input>-->
+        </div>
+
+        <div hidden$="[[!isEqual(mode,'global')]]">
+          <br>
+          <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
+          <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
+          https://www.w3.org/wiki/SparqlEndpoints<br>
+          <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
+            <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
+            <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
+            <br>
+            <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
+          </iron-selector>
+          <paper-input id="labelEndpoint" label="Endpoint (http://)" value="{{endpoint::input}}"></paper-input>
+          <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
+          label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
+
+          <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
+        </div>
+
+
+        <!-- MODE pour Fuseki direct
+        <div hidden$="[[!isEqual(mode,'global')]]">
+        <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
+        <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
+        <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+        <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
+        <template is="dom-repeat" items="[[datasets]]">
+        <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+      </template>
+    </paper-listbox>
+  </paper-dropdown-menu>
+
+
+  <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+  <paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
+</div>-->
+<br>
+</paper-dialog-scrollable>
+<!--
+<div style="padding-top:10px" horizontal end-justified layout self-stretch>
+<paper-button  dialog-dismiss raised>Fermer</paper-button>
+</div>-->
+</paper-dialog>
+
+
+
+
+<valle-speed-dial id="dial" direction="top" label="Menu" backdrop >
+  <valle-speed-dial-action
+  class="dial-action"
+  label="settings"
+  on-tap="_toggleSettings"
+  label-direction="right"
+  ></valle-speed-dial-action>
+  <valle-speed-dial-action
+  class="dial-action"
+  label="mode"
+  on-tap="_toggleMode"
+  label-direction="right"
+  ></valle-speed-dial-action>
+  <valle-speed-dial-action
+  class="dial-action"
+  on-tap="_toggleHelp"
+  label="help"
+  label-direction="right"
+  ></valle-speed-dial-action>
+</valle-speed-dial>
 
 
 
@@ -480,53 +540,53 @@
 
 
 
+</template>
 
+<script>
+/**
+* `spoggy-dialogs`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(DialogsBehaviorMixin(Polymer.Element))) {
+  static get is() { return 'spoggy-dialogs'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-dialogs'
+      },
 
+    };
+  }
+  constructor(){
+    super();
 
-  </template>
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
 
-  <script>
-    /**
-     * `spoggy-dialogs`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsBehaviorMixin(Polymer.Element)) {
-      static get is() { return 'spoggy-dialogs'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-dialogs'
-          }
-        };
-      }
-      constructor(){
-        super();
-        this.agentDialogs = new DialogsAgent('agentDialogs', this);
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          // When possible, use afterNextRender to defer non-critical
-          // work until after first paint.
-          this._deferred();
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      this.agentDialogs = new DialogsAgent('agentDialogs', this);
+      this.initAgents()
+    });
 
-        });
-      }
-      _deferred(){
-        this.importLazyGroup('lazy').then((results) => {
-          console.log(results);
-          this.dispatchEvent(new CustomEvent('import-loaded', results));
-        });
-          this.initAgents()
-      }
-      initAgents(){
-      //  console.log(this.agentInput)
-        this.agentDialogs.send('agentHello', 'Hello agentHello!');
-      }
-    }
+  }
+  initAgents(){
+    //  console.log(this.agentInput)
+    this.agentDialogs.send('agentHello', 'Hello agentHello!');
+  }
+}
 
-    window.customElements.define(SpoggyDialogs.is, SpoggyDialogs);
-  </script>
+window.customElements.define(SpoggyDialogs.is, SpoggyDialogs);
+</script>
 </dom-module>

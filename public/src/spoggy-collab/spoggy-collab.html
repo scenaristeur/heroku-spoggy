@@ -1,52 +1,56 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 
 <link rel="import" href="./collab-behavior.html">
 
-<script src="agents/SocketAgent.js"></script>
 
 <dom-module id="spoggy-collab">
+  <link rel="lazy-import" group="lazy" href="./collab-import.html">
 
   <script>
-    /**
-     * `spoggy-collab`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyCollab extends CollabBehaviorMixin(Polymer.Element) {
-      static get is() { return 'spoggy-collab'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-collab'
-          }
-        };
-      }
+  /**
+  * `spoggy-collab`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyCollab extends Polymer.LazyImportsMixin(CollabBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-collab'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-collab'
+        }
+      };
+    }
 
-      constructor(){
-        super();
+    constructor(){
+      super();
+
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentSocket = new SocketAgent('agentSocket', this);
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          // When possible, use afterNextRender to defer non-critical
-          // work until after first paint.
-          this._deferred();
-
-        });
-      }
-      _deferred(){
-      //  console.log("agent DATA defered")
-      //  console.log(this.agentSocket);
-      //  this.initAgents()
-      }
-      initAgents(){
-        this.agentSocket.send('agentHello', 'Hello agentHello!');
-      }
+        console.log(this.agentSocket);
+  this.agentSocket.send('agentHello', 'Hello agentHello!');
+      });
 
     }
 
-    window.customElements.define(SpoggyCollab.is, SpoggyCollab);
+
+  }
+
+  window.customElements.define(SpoggyCollab.is, SpoggyCollab);
   </script>
 </dom-module>

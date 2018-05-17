@@ -142,7 +142,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
   afficheAide()
   {
-    this.$.dialogs.$.helpPopUp.toggle();
+  //  this.$.dialogs.$.helpPopUp.toggle();
+    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
   }
 
 

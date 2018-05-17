@@ -46,17 +46,36 @@ DialogsAgent.prototype.receive = function(from, message) {
     case 'updaterooms':
     this.app.rooms = message.rooms;
     this.app.current_room = message.current_room;
-console.log("update");
+    console.log("update");
     break;
     case 'toggle':
-console.log(message.popup);
-let popup = message.popup;
-let pop = this.app.$[popup];
-console.log(pop);
-console.log();
-pop.toggle();
-
+    console.log(message.popup);
+    let popup = message.popup;
+    let pop = this.app.$[popup];
+    console.log(pop);
+    pop.toggle();
     break;
+
+    case 'updateValueById':
+    console.log(message.id + message.value);
+    var id = message.id;
+    var element = this.app.$[id];
+    var value = message.value;
+    console.log(element);
+    console.log(value);
+    element = value;
+    console.log(element);
+    break;
+
+    case 'setFocus':
+    console.log(message.id );
+    var id = message.id;
+    var element = this.app.$[id];
+    var value = message.value;
+  element.focus();
+    console.log(element);
+    break;
+
     default:
     console.log(message);
   }
