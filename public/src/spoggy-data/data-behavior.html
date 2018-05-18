@@ -3,30 +3,11 @@
 /* @polymerMixin */
 var DataBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class DataBehavior extends superClass {
-
     constructor() {
       super();
-      //  console.log("data behavior")
-      /* ENVOI des actions vers le serveur*/
-
-      /*  var tickInterval = setInterval(function() {
-      //  if (app.connected){
-      //  console.log("tick spoggy-app");
-      if (this.actionstosend.length > 0) {
-      console.log(this.actionstosend);
-      this.socket.emit('newActions', this.actionstosend);
-      this.actionstosend = [];
-      //}
-    }
-  }, this.tickDelay);*/
-
 }
 static get properties() {
   return {
-    test: {
-      type: String,
-      value: 'data behavior'
-    },
     actionstosend:{
       type : Array,
       value : []
