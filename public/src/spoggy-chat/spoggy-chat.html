@@ -8,6 +8,7 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-fab/paper-fab.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/chat-window/chat-window.html">
+    <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
   <template>
     <style>
     :host {
@@ -52,8 +53,23 @@ messages="[[messages]]"
 on-send="sendMsg"
 ></chat-window>
 
-<paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab> <!-- mettre une icon si nonlu = 0 et au début  -->
+ <!-- mettre une icon si nonlu = 0 et au début  -->
 
+
+<div  horizontal end-justified layout self-stretch>
+<paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab>
+<paper-label hidden$="[[!visible]]">[[room]]</paper-label>
+</div>
+
+<!--
+<valle-speed-dial-action
+id="action"
+class="dial-action"
+ label="blop"
+on-tap="_toggleChat"
+label-direction="direction"
+></valle-speed-dial-action>-->
+<!-- icon="{{icon}}" -->
 
 
 <!--
@@ -107,13 +123,21 @@ class SpoggyChat extends Polymer.LazyImportsMixin(ChatBehaviorMixin(Polymer.Elem
       messages : {
         type : Array,
         value : [
-          { author: 'Spoggy', text: 'Spoggy est prêt à être utilisé \nVous êtes en mode "Solo"', created: this.now - (60*1000) },
+          { author: 'Spoggy', text: 'Spoggy est prêt à être utilisé, \nVous êtes en mode "Solo"', created: this.now - (60*1000) },
           { author: 'Spoggy', text: 'Pour passer en mode collaboratif,\n utilisez le bouton de menu / Mode / Collaboratif', created: this.now - (3*60*1000) },
         ]
       },
       nonlu :{
         type: Number,
         value: 2
+      },
+      room :{
+        type:String,
+        value: 'Solo'
+      },
+      direction: {
+        type: String,
+        value: "left"
       }
 
     };

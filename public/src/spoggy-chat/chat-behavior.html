@@ -5,8 +5,6 @@ var ChatBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class ChatBehavior extends superClass {
     constructor() {
       super();
-      //  console.log("Mode behavior")
-      //  console.log(this.inputProp);
     }
 
     static get properties() {
@@ -23,9 +21,18 @@ var ChatBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     console.log(this.visible)
     this.nonlu = 0;
     this.icon = "icons:group-work";
+    var text = '';
+    if (this.visible){
+      text = '~~~~~chat ouvert~~~~~'
+    }else{
+      text = '^^^^^chat  fermé^^^^^'
+    }
+    this.$.chat.push('messages',{
+      author: 'me',
+      text: text,
+      created: Date.now()
+    });
   }
-
-
   }
 });
 

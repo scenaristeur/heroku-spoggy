@@ -62,7 +62,7 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     sendMessage(message){
-      console.log(message);
+      //  console.log(message);
       if (this.socket != undefined){
         this.socket.emit('sendchat', message);
       }
@@ -85,7 +85,6 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       }
     });
     // Register listeners to expose connection status
-    var app = this;
     this.socket.on('connect', () => this.status = 'connected');
     this.socket.on('disconnect', () => this.status = 'disconnected');
     this.socket.on('connect_error', () => this.status = 'disconnected');
@@ -94,127 +93,47 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     this.socket.on('error', e => {
       console.warn(`WebSocket error: ${JSON.stringify(e)}`);
     });
-    // listener, whenever the server emits 'updatechat', this updates the chat body
     this.socket.on('updatechat', function (username, data) {
       console.log('update chat '+ username +" - "+ data)
-      app.agentSocket.send('agentChat', {type: "updateChat", username: username, data: data, room: this.room});
-      //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
-      //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
+      console.log(app.room)
+console.log(app.socket.room)
+      app.agentSocket.send('agentChat', {type: "updateChat", username: username, data: data, room: app.room});
     });
-
-
     this.socket.on('initrooms', function (rooms) {
       console.log('initrooms ')
       app.agentSocket.send('agentDialogs', {type: "initrooms", rooms: rooms});
-      //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
-      //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
+    });
+    this.socket.on('updaterooms', function(rooms, current_room) {
+      app.agentSocket.send('agentDialogs', {type: "updaterooms", rooms: rooms, current_room: current_room});
+      app.agentSocket.send('agentChat', {type: "updaterooms", rooms: rooms, current_room: current_room});
     });
 
+    this.socket.on('tick', function(data){
+      console.log(data);
+      console.log("N'EST plus  utilisé ??? voir avec tick/snapshot du serveur ?")
+      //  app.set('addToGraph',data);
+      app.agentSocket.send('agentGraph', {type: "addToGraph", data: data});
+    });
 
-
-    // listener, whenever the server emits 'updaterooms', this updates the room the client is in
-    this.socket.on('updaterooms', function(rooms, current_room) {
-      console.log('updaterooms ')
-      console.log(rooms)
-
-      app.agentSocket.send('agentInput', {type: "updaterooms", rooms: rooms, current_room: current_room});
-      app.agentSocket.send('agentDialogs', {type: "updaterooms", rooms: rooms, current_room: current_room});
-      /*  app.rooms = rooms;
-      if(current_room != null){
-      app.current_room = current_room;
-      console.log("this room : "+current_room)
-    }*/
-
-    /*	$.each(rooms, function(key, value) {
-    if(value == current_room){
-    app.$.rooms.append('<div>' + value + '</div>');
+    this.socket.on('initDb', function(data){
+      console.log(data);
+      app.agentSocket.send('agentGraph', {type: "populateVis", data: data});
+    });
   }
-  else {
-  app.$.rooms.append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
-}
-});*/
-});
 
+  _datasend(){
+    let message = this.$.message.value;
+    this.$.message.value = "";
+    console.log(message);
+    this.socket.emit('sendchat', message);
+  }
 
-this.socket.on('tick', function(data){
-  console.log(data);
-  //  app.set('addToGraph',data);
-  app.agentSocket.send('agentGraph', {type: "addToGraph", data: data});
-  /*if (data.actions.length>0){
-  data.actions.forEach(function(action) {
-  console.log(action);
-  console.log(app.network)
-  switch(action.type) {
-  case "newNode":
-  if(app.network != undefined){
-  app.addNodeIfNotExist(app.network, action.data);
-}
-break;
-case "editNode":
-break;
-case "deleteNode":
-app.deleteFromServer(action.data);
-break;
-case "newEdge":
-if(app.network != undefined){
-app.addEdgeIfNotExist(app.network, action.data);
-}
-break;
-case "editEdge":
-break;
-case "deleteEdge":
-app.deleteFromServer(action.data);
-break;
-default:
-console.log("action non reconnue");
-console.log(action);
-}
-});
-}*/
-});
-
-
-this.socket.on('initDb', function(data){
-  console.log(data);
-  //app.db2populate = data;
-  //console.log(app.network);
-  app.agentSocket.send('agentGraph', {type: "populateVis", data: data});
-  //app.populateVis(app.db2populate, app.network);
-  //app.triplets2popLength = app.db2populate.length;
-
-});
-
-
-
-
-}
-
-_datasend(){
-  /*    <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
-  <div id="conversation"></div>
-  <input id="message" style="width:200px;" />
-  <input type="button" on-tap="_datasend" value="send" />
-  </div>
-  */
-  let message = this.$.message.value;
-  this.$.message.value = "";
-  console.log(message);
-  this.socket.emit('sendchat', message);
-}
-
-switchRoom(room){
-  /*  console.log(e)
-  console.log(e.model.item)
-  console.log(e.currentTarget.id)*/
-  //  let room = e.model.item;
-  this.socket.emit('switchRoom', room);
-}
-methodInBehavior() {
-  return "this method is defined in Behavior";
-}
-
-
-
+  switchRoom(room){
+    this.socket.emit('switchRoom', room);
+  }
+  methodInBehavior() {
+    return "this method is defined in Behavior";
+  }
 }
 });
 </script>

@@ -6,12 +6,8 @@
   <link rel="lazy-import" group="lazy" href="../spoggy-chat/spoggy-chat.html">
 
   <template>
-
-    <spoggy-chat  hidden$="[[!isConnected()]]"></spoggy-chat>
+    <spoggy-chat></spoggy-chat>
   </template>
-
-
-
   <script>
   /**
   * `spoggy-collab`
@@ -35,11 +31,6 @@
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentSocket = new SocketAgent('agentSocket', this);
       });
-    }
-    /* TECHNICAL TOOLS */
-    isConnected(){
-      console.log(this.room);
-      return this.room == undefined;
     }
   }
 
