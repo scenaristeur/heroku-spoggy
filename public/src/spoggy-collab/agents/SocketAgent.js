@@ -58,6 +58,10 @@ SocketAgent.prototype.receive = function(from, message) {
       this.app.switchRoom(graph);
     }
     break;
+  case 'newChatMess':
+  this.app.sendMessage(message.content);
+  break;
+
     case 'adduser':
     this.app.socket.emit('adduser', message.pseudo, message.room);
     break;

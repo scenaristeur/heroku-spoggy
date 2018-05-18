@@ -1,0 +1,55 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./chat-behavior.html">
+
+<dom-module id="spoggy-chat">
+    <link rel="lazy-import" group="lazy" href="./chat-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-chat`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyChat extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'spoggy-chat'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-chat'
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+        });
+      }
+      _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+          console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+            this.agentChat = new ChatAgent('agentChat', this);
+        });
+      }
+    }
+
+    window.customElements.define(SpoggyChat.is, SpoggyChat);
+  </script>
+</dom-module>

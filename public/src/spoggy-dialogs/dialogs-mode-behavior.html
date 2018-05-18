@@ -93,7 +93,7 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
     rejoindre(e){
       this.room = e.model.item.name;
-      console.log(room);
+      console.log(this.room);
       if (this.pseudo.length ==0){
         this.$.pseudoPopup.toggle();
       }else{

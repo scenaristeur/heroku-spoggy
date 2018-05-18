@@ -137,26 +137,7 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
             type: Array,
             notify: true
           },
-          messages : {
-            type : Array,
-            value : [
-              { author: 'you', text: 'dummy msg 1', created: this.now - (60*1000) },
-              { author: 'me', text: 'dummy msg 2', created: this.now - (3*60*1000) },
-              { author: 'you', text: 'dummy msg 3', created: this.now - (10*60*1000) },
-              { author: 'you', text: 'dummy msg 4', created: this.now - (60*60*1000) },
-              { author: 'me', text: 'dummy msg 5', created: this.now - (1.2*60*60*1000) },
-              { author: 'me', text: 'dummy msg 6', created: this.now - (1.5*60*60*1000) },
-              { author: 'you', text: 'dummy msg 7', created: this.now - (11.5*60*60*1000) },
-              { author: 'me', text: 'dummy msg 8', created: this.now - (12*60*60*1000) },
-              { author: 'you', text: 'dummy msg 9', created: this.now - (13*60*60*1000) },
-              { author: 'me', text: 'dummy msg 10', created: this.now - (1.5*24*60*60*1000) },
-              { author: 'you', text: 'dummy msg 11', created: this.now - (1.6*24*60*60*1000) },
-              { author: 'me', text: 'dummy msg 12', created: this.now - (4*24*60*60*1000) },
-              { author: 'me', text: 'dummy msg 13', created: this.now - (4.5*24*60*60*1000) },
-              { author: 'you', text: 'dummy msg 14', created: this.now - (14*24*60*60*1000) },
-              { author: 'me', text: 'dummy msg 15', created: this.now - (14.5*24*60*60*1000) },
-            ]
-          }*/
+        */
         };
       }
 
@@ -173,23 +154,7 @@ le commandes commencent par / -> exemple /h pour afficher l'aide
       initAgents(){
         this.agentInput.send('agentHello', 'Hello agentHello!');
       }
-      sendMsg(e){
-        // filtrer avant de passer en mode chat
-        console.log(e.detail)
-        //  this.agentInput.send('agentHello', 'Hello FROM CHAT '+e.detail);
-        var mess = {}
-        mess.type = "chat";
-        mess.data = e.detail;
-        this.agentInput.send('agentData', mess);
-        this.$.chat.messages = this.messages;
-        this.author = this.author == 'me' ? 'you' : 'me'; // For demo
-        this.$.chat.push('messages',{
-          author: this.author,
-          text: e.detail,
-          created: Date.now()
-        });
 
-      }
     }
 
     window.customElements.define(SpoggyInput.is, SpoggyInput);

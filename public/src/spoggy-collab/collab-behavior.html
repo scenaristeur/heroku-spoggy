@@ -6,7 +6,7 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class CollabBehavior extends superClass {
     constructor() {
       super();
-    //  console.log("COLLAB BEHAVIOR INIT");
+      //  console.log("COLLAB BEHAVIOR INIT");
     }
     static get properties() {
       return {
@@ -16,7 +16,7 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         status: {
           type: String,
           notify: true,
-            observer: '_consoleStatus'
+          observer: '_consoleStatus'
         },
         /**
         * Internal reference to the WebSocket
@@ -24,52 +24,52 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         socket: {Object,
           notify: true
         },
-          /**
-          * Registered _handlers by message type
-          * @type {<String, Function>[]}
-          */
-          _handlers: {
-            type: Object,
-            value: [],
-          },
-          retry: {
-            type: Number,
-            value:10
-          },
-          rooms: {
-            type: Array,
-            notify: true,
-            value: []
-          },
-          addToGraph: {
-            type: Array,
-            value: [],
-            notify: true
-          }
+        /**
+        * Registered _handlers by message type
+        * @type {<String, Function>[]}
+        */
+        _handlers: {
+          type: Object,
+          value: [],
+        },
+        retry: {
+          type: Number,
+          value:10
+        },
+        rooms: {
+          type: Array,
+          notify: true,
+          value: []
+        },
+        addToGraph: {
+          type: Array,
+          value: [],
+          notify: true
+        }
       };
     }
 
     _consoleStatus(newValue, oldValue){
       console.log(oldValue +" -> "+ newValue);
       if(oldValue == "reconnecting" && newValue =="disconnected"){
-      this.retry --;
-      console.log(this.retry);
-      if (this.retry <= 0){
-        this.socket.disconnect();
+        this.retry --;
+        console.log(this.retry);
+        if (this.retry <= 0){
+          this.socket.disconnect();
+        }
       }
     }
+
+    disconnectSocket(){
+      this.socket.disconnect();
     }
 
-disconnectSocket(){
-  this.socket.disconnect();
-}
-
-sendMessage(message){
-  console.log(message);
-  if (this.socket != undefined){
-    this.socket.emit('sendchat', message);
-  }
-}
+    sendMessage(message){
+      console.log(message);
+      if (this.socket != undefined){
+        this.socket.emit('sendchat', message);
+      }
+    }
 
     connectSocket(connectUri, token) {
       var app = this;
@@ -100,9 +100,9 @@ sendMessage(message){
     // listener, whenever the server emits 'updatechat', this updates the chat body
     this.socket.on('updatechat', function (username, data) {
       console.log('update chat '+ username +" - "+ data)
-        app.agentSocket.send('agentInput', {type: "updateChat", username: username, data: data, room: this.room});
+      app.agentSocket.send('agentChat', {type: "updateChat", username: username, data: data, room: this.room});
       //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
-    //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
+      //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
     });
 
 
@@ -110,7 +110,7 @@ sendMessage(message){
       console.log('initrooms ')
       app.agentSocket.send('agentDialogs', {type: "initrooms", rooms: rooms});
       //$('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
-    //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
+      //  app.$.conversation.append('<b>'+username + ':</b> ' + data + '<br>');
     });
 
 
@@ -120,67 +120,67 @@ sendMessage(message){
       console.log('updaterooms ')
       console.log(rooms)
 
-    app.agentSocket.send('agentInput', {type: "updaterooms", rooms: rooms, current_room: current_room});
+      app.agentSocket.send('agentInput', {type: "updaterooms", rooms: rooms, current_room: current_room});
       app.agentSocket.send('agentDialogs', {type: "updaterooms", rooms: rooms, current_room: current_room});
-    /*  app.rooms = rooms;
+      /*  app.rooms = rooms;
       if(current_room != null){
       app.current_room = current_room;
-          console.log("this room : "+current_room)
-}*/
+      console.log("this room : "+current_room)
+    }*/
 
-      /*	$.each(rooms, function(key, value) {
-      if(value == current_room){
-      app.$.rooms.append('<div>' + value + '</div>');
-    }
-    else {
-    app.$.rooms.append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+    /*	$.each(rooms, function(key, value) {
+    if(value == current_room){
+    app.$.rooms.append('<div>' + value + '</div>');
   }
+  else {
+  app.$.rooms.append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
+}
 });*/
 });
 
 
 this.socket.on('tick', function(data){
   console.log(data);
-//  app.set('addToGraph',data);
-      app.agentSocket.send('agentGraph', {type: "addToGraph", data: data});
+  //  app.set('addToGraph',data);
+  app.agentSocket.send('agentGraph', {type: "addToGraph", data: data});
   /*if (data.actions.length>0){
-    data.actions.forEach(function(action) {
-          console.log(action);
-          console.log(app.network)
-      switch(action.type) {
-        case "newNode":
-        if(app.network != undefined){
-          app.addNodeIfNotExist(app.network, action.data);
-        }
-        break;
-        case "editNode":
-        break;
-        case "deleteNode":
-        app.deleteFromServer(action.data);
-        break;
-        case "newEdge":
-        if(app.network != undefined){
-          app.addEdgeIfNotExist(app.network, action.data);
-        }
-        break;
-        case "editEdge":
-        break;
-        case "deleteEdge":
-        app.deleteFromServer(action.data);
-        break;
-        default:
-        console.log("action non reconnue");
-        console.log(action);
-      }
-    });
-  }*/
+  data.actions.forEach(function(action) {
+  console.log(action);
+  console.log(app.network)
+  switch(action.type) {
+  case "newNode":
+  if(app.network != undefined){
+  app.addNodeIfNotExist(app.network, action.data);
+}
+break;
+case "editNode":
+break;
+case "deleteNode":
+app.deleteFromServer(action.data);
+break;
+case "newEdge":
+if(app.network != undefined){
+app.addEdgeIfNotExist(app.network, action.data);
+}
+break;
+case "editEdge":
+break;
+case "deleteEdge":
+app.deleteFromServer(action.data);
+break;
+default:
+console.log("action non reconnue");
+console.log(action);
+}
+});
+}*/
 });
 
 
 this.socket.on('initDb', function(data){
   console.log(data);
   //app.db2populate = data;
-//console.log(app.network);
+  //console.log(app.network);
   app.agentSocket.send('agentGraph', {type: "populateVis", data: data});
   //app.populateVis(app.db2populate, app.network);
   //app.triplets2popLength = app.db2populate.length;
@@ -194,11 +194,11 @@ this.socket.on('initDb', function(data){
 
 _datasend(){
   /*    <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
-        <div id="conversation"></div>
-        <input id="message" style="width:200px;" />
-        <input type="button" on-tap="_datasend" value="send" />
-      </div>
-      */
+  <div id="conversation"></div>
+  <input id="message" style="width:200px;" />
+  <input type="button" on-tap="_datasend" value="send" />
+  </div>
+  */
   let message = this.$.message.value;
   this.$.message.value = "";
   console.log(message);
@@ -209,15 +209,15 @@ switchRoom(room){
   /*  console.log(e)
   console.log(e.model.item)
   console.log(e.currentTarget.id)*/
-//  let room = e.model.item;
+  //  let room = e.model.item;
   this.socket.emit('switchRoom', room);
 }
-    methodInBehavior() {
-      return "this method is defined in Behavior";
-    }
+methodInBehavior() {
+  return "this method is defined in Behavior";
+}
 
 
 
-  }
+}
 });
 </script>

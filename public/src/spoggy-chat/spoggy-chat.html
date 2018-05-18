@@ -1,0 +1,150 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./chat-behavior.html">
+
+<dom-module id="spoggy-chat">
+  <link rel="lazy-import" group="lazy" href="./chat-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/chat-window/chat-window.html">
+  <template>
+    <style>
+    :host {
+      position: fixed;
+      top: 110px;
+      right:10px;
+    }
+    </style>
+
+
+    <style is="custom-style">
+    chat-window.styled {
+      font-size: small;
+      *position: absolute;
+      top: 100px;
+      --chat-messages-height: 12em;
+      --paper-input-container-input: {
+        margin: 0 2px;
+        z-index:100;
+      }
+      --chat-message-text: {
+        z-index:100;
+        background-color: #f0f0f0;
+        padding: 6px 8px;
+        margin: 4px 0;
+        border-radius: 6px;
+      };
+
+    }
+  }
+}
+</style>
+
+<chat-window
+id = "chat"
+class="styled"
+author="me"
+single-line
+input-text="{{text}}"
+messages="[[messages]]"
+on-send="sendMsg"
+></chat-window>
+<!--
+<chat-input
+author="me"
+class="styled"
+single-line
+single-line="[[singleLine]]"
+icon="[[sendIcon]]"
+text="{{inputText}}"
+on-send="sendMsg"></chat-input>
+-->
+<!--
+<chat-messages
+class="styled"
+id = "chat"
+author="[[author]]"
+author-icon="[[authorIcon]]"
+others-icons="[[othersIcons]]"
+default-icon="[[defaultIcon]]"
+messages="[[messages]]"
+date-format="[[dateFormat]]"
+auto-scroll="[[autoScroll]]">
+</chat-messages> -->
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-chat`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyChat extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-chat'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-chat'
+      },
+      messages : {
+        type : Array,
+        value : [
+          { author: 'you', text: 'dummy msg 1', created: this.now - (60*1000) },
+          { author: 'me', text: 'dummy msg 2', created: this.now - (3*60*1000) },
+          { author: 'you', text: 'dummy msg 3', created: this.now - (10*60*1000) },
+          { author: 'you', text: 'dummy msg 4', created: this.now - (60*60*1000) },
+          { author: 'me', text: 'dummy msg 5', created: this.now - (1.2*60*60*1000) },
+          { author: 'me', text: 'dummy msg 6', created: this.now - (1.5*60*60*1000) },
+          { author: 'you', text: 'dummy msg 7', created: this.now - (11.5*60*60*1000) },
+          { author: 'me', text: 'dummy msg 8', created: this.now - (12*60*60*1000) },
+          { author: 'you', text: 'dummy msg 9', created: this.now - (13*60*60*1000) },
+          { author: 'me', text: 'dummy msg 10', created: this.now - (1.5*24*60*60*1000) },
+          { author: 'you', text: 'dummy msg 11', created: this.now - (1.6*24*60*60*1000) },
+          { author: 'me', text: 'dummy msg 12', created: this.now - (4*24*60*60*1000) },
+          { author: 'me', text: 'dummy msg 13', created: this.now - (4.5*24*60*60*1000) },
+          { author: 'you', text: 'dummy msg 14', created: this.now - (14*24*60*60*1000) },
+          { author: 'me', text: 'dummy msg 15', created: this.now - (14.5*24*60*60*1000) },
+        ]
+      }
+    };
+  }
+
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      this.agentChat = new ChatAgent('agentChat', this);
+    });
+  }
+
+  sendMsg(e){
+    // filtrer avant de passer en mode chat
+    console.log(e.detail)
+    var newMess = e.detail.trim();
+    if (newMess.length > 0){
+    this.agentChat.send('agentSocket', {type: "newChatMess", content: newMess});
+      //  this.agentInput.send('agentData', mess);
+
+    }
+
+
+  }
+
+}
+
+window.customElements.define(SpoggyChat.is, SpoggyChat);
+</script>
+</dom-module>
