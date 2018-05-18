@@ -113,6 +113,7 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       // test a faire pour voir si deconnecter ou changer de nom si deja connecté
       console.log(this.pseudo)
       this.agentDialogs.send('agentSocket', {type: "adduser", pseudo: this.pseudo, room: this.room});
+      this.agentDialogs.send('agentChat', {type: "changePseudo", pseudo: this.pseudo});
     }
 
     _endpointChanged(newValue){

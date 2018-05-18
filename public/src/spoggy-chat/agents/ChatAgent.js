@@ -52,15 +52,26 @@ ChatAgent.prototype.receive = function(from, message) {
       created: Date.now()
     });
     break;
+    this.agentDialogs.send('agentChat', {type: "changePseudo", pseudo: this.pseudo});
+    case 'changePseudo':
+    console.log('pseudo : '+message.pseudo);
+    this.app.pseudo = message.pseudo;
+    break;
 
     case 'updateChat':
     console.log(message.username);
     console.log(message.data);
-    console.log(message.room);
+  //  console.log(this.app.socket.username)
+    console.log(this.app.pseudo)
+    console.log(this.app.author)
     //  this.app.$.inputMessage.label = message.username +" : "+ message.data;
     this.app.$.chat.messages = this.app.messages;
     //test sur message.username
     this.app.author = this.app.author == 'me' ? 'you' : 'me'; // For demo
+
+    if (message.data.length > 40) {
+      message.data = message.data.match(/.{1,40}/g).join("\n")
+    }
     this.app.$.chat.push('messages',{
       author: message.username,
       text: message.data,
