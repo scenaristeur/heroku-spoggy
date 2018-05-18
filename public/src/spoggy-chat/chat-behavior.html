@@ -18,9 +18,12 @@ var ChatBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
-    ma_fonction(){
-        //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
-    }
+  _toggleChat(){
+    this.visible = !this.visible;
+    console.log(this.visible)
+    this.nonlu = 0;
+    this.icon = "icons:group-work";
+  }
 
 
   }

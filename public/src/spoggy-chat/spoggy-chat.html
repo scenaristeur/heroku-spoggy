@@ -6,6 +6,7 @@
   <link rel="lazy-import" group="lazy" href="./chat-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-fab/paper-fab.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/chat-window/chat-window.html">
   <template>
     <style>
@@ -41,14 +42,20 @@
 </style>
 
 <chat-window
+hidden$="[[!visible]]"
 id = "chat"
 class="styled"
 author="me"
 single-line
-input-text="{{text}}"
+input-text="{{newInput}}"
 messages="[[messages]]"
 on-send="sendMsg"
 ></chat-window>
+
+<paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab> <!-- mettre une icon si nonlu = 0 et au début  -->
+
+
+
 <!--
 <chat-input
 author="me"
@@ -85,7 +92,7 @@ auto-scroll="[[autoScroll]]">
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyChat extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
+class SpoggyChat extends Polymer.LazyImportsMixin(ChatBehaviorMixin(Polymer.Element)) {
   static get is() { return 'spoggy-chat'; }
   static get properties() {
     return {
@@ -93,13 +100,22 @@ class SpoggyChat extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Ele
         type: String,
         value: 'spoggy-chat'
       },
+      visible:{
+        type: Boolean,
+        value: false
+      },
       messages : {
         type : Array,
         value : [
           { author: 'Spoggy', text: 'Spoggy est prêt à être utilisé \nVous êtes en mode "Solo"', created: this.now - (60*1000) },
           { author: 'Spoggy', text: 'Pour passer en mode collaboratif,\n utilisez le bouton de menu / Mode / Collaboratif', created: this.now - (3*60*1000) },
         ]
+      },
+      nonlu :{
+        type: Number,
+        value: 2
       }
+
     };
   }
 
@@ -122,12 +138,14 @@ class SpoggyChat extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Ele
     console.log(e.detail)
     var newMess = e.detail.trim();
     if (newMess.length > 0){
-    this.agentChat.send('agentSocket', {type: "newChatMess", content: newMess});
+      this.agentChat.send('agentSocket', {type: "newChatMess", content: newMess});
       //  this.agentInput.send('agentData', mess);
-
+      this.newInput = ""
     }
-
-
+  }
+  isVisible(value){
+    //  console.log(value.length)
+    return value==true;
   }
 
 }

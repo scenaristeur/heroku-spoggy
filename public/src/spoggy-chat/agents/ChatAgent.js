@@ -59,26 +59,31 @@ ChatAgent.prototype.receive = function(from, message) {
     break;
 
     case 'updateChat':
-    console.log(message.username);
-    console.log(message.data);
-  //  console.log(this.app.socket.username)
-    console.log(this.app.pseudo)
-    console.log(this.app.author)
+  //  console.log("username "+message.username);
+  //  console.log(message.data);
+    //  console.log(this.app.socket.username)
+  //  console.log("pseudo "+this.app.pseudo)
+  //  console.log("author avant "+this.app.author)
     //  this.app.$.inputMessage.label = message.username +" : "+ message.data;
     this.app.$.chat.messages = this.app.messages;
     //test sur message.username
-    this.app.author = this.app.author == 'me' ? 'you' : 'me'; // For demo
-
-    if (message.data.length > 40) {
-      message.data = message.data.match(/.{1,40}/g).join("\n")
+    this.app.author = message.username == this.app.pseudo ? 'me' : 'you'; // For demo
+  //  console.log("author apres "+this.app.author)
+    if (this.app.author != 'me'){
+      message.data = message.username+": "+message.data;
+      if(!this.app.visible){
+        this.app.nonlu++;
+          this.app.icon = "";
+      }
     }
+    /*if (message.data.length > 40) {
+      message.data = message.data.match(/.{1,40}/g).join("\n")
+    }*/
     this.app.$.chat.push('messages',{
-      author: message.username,
+      author: this.app.author,
       text: message.data,
       created: Date.now()
     });
-
-
     break;
 
     default:
