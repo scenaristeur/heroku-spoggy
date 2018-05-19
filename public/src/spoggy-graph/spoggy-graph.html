@@ -3,7 +3,22 @@
 <link rel="import" href="./graph-behavior.html">
 <link rel="import" href="styles/vis-styles.html">
 <dom-module id="spoggy-graph">
-<link rel="lazy-import" group="lazy" href="./graph-import.html">
+  <link rel="lazy-import" group="lazy" href="./graph-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-slider/paper-slider.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-textarea.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-selector/iron-selector.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-picker.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-element.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
   <template>
     <style is="custom-style" include="vis-styles">
     #mynetwork {
@@ -16,163 +31,184 @@
       background: linear-gradient(to bottom, rgba(55, 55, 255, 0.2), rgba(200, 200, 10, 0.2));
     }
     #nodePopUp {
-      /*  position:absolute;
-      z-index:299;*/
+      position: absolute;
+      z-index: 10;
+      top: 2vw;
+      left: 2vw;
+       /*
+  visibility: hidden;*/
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
       border-color: #5394ed;
-      padding:1px;
-    }
+      padding-top:1px;
+      padding-bottom:1px;
+      }
     #edgePopUp {
-      /*  position:absolute;
-      z-index:299;*/
+      position: absolute;
+        z-index: 10;
+        top: 2vw;
+        left: 2vw;
+/*  visibility: hidden;*/
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
       border-color: #5394ed;
-      padding:1px;
+      padding-top:1px;
+      padding-bottom:1px;
     }
-  </style>
-  <div id="mynetwork"></div>
+    </style>
 
-  <paper-dialog id="edgePopUp" backdrop transition="core-transition-bottom">
-    <div horizontal start-justified start layout >
-      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-      <div style="padding-left:20px" vertical start-justified start layout wrap>
-        <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
-        <p >  <paper-input id="edgeLabel" label="Nom du lien" autofocus></paper-input></p>
-        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-          <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" dialog-confirm raised>ok</paper-button>
-          <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
+    <div id="mynetwork"></div>
+
+    <paper-dialog id="edgePopUp"> <!--  backdrop transition="core-transition-bottom" -->
+    <!--  <div horizontal start-justified start layout > -->
+      <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>-->
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
+            <paper-input id="edgeLabel" label="Nom du lien" autofocus></paper-input>
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" dialog-confirm raised>ok</paper-button>
+            <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
+          </div>
         </div>
-      </div>
-    </div>
-  </paper-dialog>
+    <!--  </div> -->
+    </paper-dialog>
 
-  <paper-dialog id="nodePopUp" backdrop transition="core-transition-bottom" >
-    <div horizontal start-justified start layout >
-      <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-      <div style="padding-left:20px" vertical start-justified start layout wrap>
-        <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
-        <p>
+    <paper-dialog id="nodePopUp"  backdrop transition="core-transition-bottom"  >
+    <!--  <div horizontal start-justified start layout > -->
+        <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon> -->
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
           <paper-input id="nodeLabel" label="Nom du noeud" autofocus ></paper-input>
-        </p>
-        <iron-collapse-button>
-          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
-          <div slot="collapse-content">
-            <fieldset>
-              <legend>Forme</legend>
-              <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
-                <div>Label interne</div>
-                <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
-                <paper-checkbox name="circle">Cercle</paper-checkbox>
-                <paper-checkbox name="database">Database</paper-checkbox>
-                <paper-checkbox name="box">Box</paper-checkbox>
-                <paper-checkbox name="text">Texte</paper-checkbox>
-                <hr>
-                <div>Label externe</div>
-                <paper-checkbox name="diamond">Diamant</paper-checkbox>
-                <paper-checkbox name="star">Etoile</paper-checkbox>
-                <paper-checkbox name="triangle">Triangle</paper-checkbox>
-                <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
-                <paper-checkbox name="square">Carré</paper-checkbox>
-                <paper-checkbox name="image" >Image</paper-checkbox>
-                <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
-              </iron-selector>
-              <div hidden$="[[shapeIsImage(selectedShape)]]">
-                <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
+
+          <paper-dialog-scrollable id="scrollNode">
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
+              <div slot="collapse-content">
+              <!--  <fieldset>
+                  <legend>Forme</legend> -->
+                  <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
+                    <div>Label interne</div>
+                    <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
+                    <paper-checkbox name="circle">Cercle</paper-checkbox>
+                    <paper-checkbox name="database">Database</paper-checkbox>
+                    <paper-checkbox name="box">Box</paper-checkbox>
+                    <paper-checkbox name="text">Texte</paper-checkbox>
+                    <hr>
+                    <div>Label externe</div>
+                    <paper-checkbox name="diamond">Diamant</paper-checkbox>
+                    <paper-checkbox name="star">Etoile</paper-checkbox>
+                    <paper-checkbox name="triangle">Triangle</paper-checkbox>
+                    <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
+                    <paper-checkbox name="square">Carré</paper-checkbox>
+                    <paper-checkbox name="image" >Image</paper-checkbox>
+                    <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
+                  </iron-selector>
+                  <div hidden$="[[shapeIsImage(selectedShape)]]">
+                    <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
+                  </div>
+              <!--  </fieldset>-->
               </div>
-            </fieldset>
+            </iron-collapse-button>
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
+              <div slot="collapse-content">
+              <!--  <fieldset>
+                  <legend>Couleur</legend>-->
+                  <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
+              <!--  </fieldset> -->
+              </div>
+            </iron-collapse-button>
+          </paper-dialog-scrollable>
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button id="nodeSaveButton" dialog-confirm  raised>ok</paper-button>
+            <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
           </div>
-        </iron-collapse-button>
-        <iron-collapse-button>
-          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
-          <div slot="collapse-content">
-            <fieldset>
-              <legend>Couleur</legend>
-              <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
-            </fieldset>
-          </div>
-        </iron-collapse-button>
-        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-          <paper-button id="nodeSaveButton" dialog-confirm  raised>ok</paper-button>
-          <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
         </div>
-      </div>
-    </div>
-  </paper-dialog>
-</template>
+      <!--</div>-->
+    </paper-dialog>
 
-<script>
-/**
-* `spoggy-graph`
-*
-*
-* @customElement
-* @polymer
-* @demo demo/index.html
-*/
-class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
-  static get is() { return 'spoggy-graph'; }
-  static get properties() {
-    return {
-      network : {
-        type: Object,
-        notify: true
-      },
-      centralGravityValueDefault :{
-        type : Number,
-        value: 0.0001
-      },
-      springLengthValueDefault :{
-        type : Number,
-        value:  127
-      },
-      springConstantValueDefault :{
-        type : Number,
-        value: 0.05
-      },
-      nodeDistanceValueDefault :{
-        type : Number,
-        value: 120
-      },
-      dampingValueDefault :{
-        type : Number,
-        value: 0.08
-      }
-    };
-  }
-  constructor(){
-    super();
-    Polymer.RenderStatus.afterNextRender(this, function() {
-      this._deferred();
-    });
-  }
-  _deferred(){
-  this.importLazyGroup('lazy').then((results) => {
-      console.log(results);
-      this.dispatchEvent(new CustomEvent('import-loaded', results));
+
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-graph`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-graph'; }
+    static get properties() {
+      return {
+        network : {
+          type: Object,
+          notify: true
+        },
+        centralGravityValueDefault :{
+          type : Number,
+          value: 0.0001
+        },
+        springLengthValueDefault :{
+          type : Number,
+          value:  127
+        },
+        springConstantValueDefault :{
+          type : Number,
+          value: 0.05
+        },
+        nodeDistanceValueDefault :{
+          type : Number,
+          value: 120
+        },
+        dampingValueDefault :{
+          type : Number,
+          value: 0.08
+        }
+      };
+    }
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+
+    }
+    _deferred(){
+      let app = this;
+      this.$.scrollNode.dialogElement = this.$.nodePopUp;
+
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+
         this.agentGraph = new GraphAgent('agentGraph', this);
-    this.network = this.networkDivInitialize(this.$.mynetwork, this);
-    let app = this;
-    this.network.on("selectNode", function (params) {
-      console.log('selectNode Event:', params);
-      console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
-      let id = params.nodes[0];
-      var node = app.network.body.data.nodes.get(id);
-      console.log(node);
-      let res = node.label;
-      if (node.title != undefined){
-        res = node.title;
-      }
-      app.agentGraph.send('agentVirtuoso', {type:'describe', resource : res});
-      app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
-    });
-    });
-  }
-}
 
-window.customElements.define(SpoggyGraph.is, SpoggyGraph);
+        this.network = this.networkDivInitialize(this.$.mynetwork, this);
+
+        this.network.on("selectNode", function (params) {
+          console.log('selectNode Event:', params);
+          console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
+          let id = params.nodes[0];
+          var node = app.network.body.data.nodes.get(id);
+          console.log(node);
+          let res = node.label;
+          if (node.title != undefined){
+            res = node.title;
+          }
+          app.agentGraph.send('agentVirtuoso', {type:'describe', resource : res});
+          app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
+        });
+      });
+        //  this.$.nodePopUp.style.visibility = 'visible';
+    }
+  }
+
+  window.customElements.define(SpoggyGraph.is, SpoggyGraph);
 </script>
 </dom-module>

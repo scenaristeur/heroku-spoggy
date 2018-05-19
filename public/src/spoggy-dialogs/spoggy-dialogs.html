@@ -19,10 +19,11 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
   <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-picker.html">
   <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-element.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
+
   <link rel="lazy-import" group="lazy" href="./dialogs-import.html">
   <template>
     <style>
@@ -30,8 +31,10 @@
       font-size:28px;
     }
     .popup {
-      /*  position:absolute;
-      z-index:299;*/
+      position: absolute;
+      z-index: 10;
+      top: 2vw;
+      left: 2vw;
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -40,7 +43,7 @@
     }
     #dial{
       position: fixed;
-      left: 50%;
+      left: 40%;
       bottom: 15px;
 
       /*--valle-speed-dial-action-fab-color: #d4f442;*/
@@ -444,7 +447,7 @@
                   </template>
                 </paper-listbox>
                 <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                  <paper-input label="ou créez un nouveau graphe" value={{newRoom::change}}></paper-input>
+                  <paper-input id="roomInput" label="ou créez un nouveau graphe" value={{newRoom}}></paper-input>
                   <paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
                   <paper-button  dialog-dismiss raised>Fermer</paper-button>
                   <br>

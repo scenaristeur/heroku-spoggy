@@ -99,8 +99,9 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     creer(){
-      if (this.newRoom.length>0){
-        this.room = this.newRoom;
+      if (this.$.roomInput.value.length>0){
+        this.room = this.$.roomInput.value;
+        this.$.roomInput.value = "";
         if (this.pseudo.length ==0){
           this.$.pseudoPopup.toggle();
         }else{

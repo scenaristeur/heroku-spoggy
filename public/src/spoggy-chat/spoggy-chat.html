@@ -13,8 +13,8 @@
     <style>
     :host {
       position: fixed;
-      top: 110px;
-      right:10px;
+      left: 10px;
+      bottom: 50px;
     }
     </style>
 
@@ -22,7 +22,7 @@
     <style is="custom-style">
     chat-window.styled {
       font-size: small;
-      *position: absolute;
+      /*position: absolute;*/
       top: 100px;
       --chat-messages-height: 12em;
       --paper-input-container-input: {
@@ -42,8 +42,10 @@
 }
 </style>
 
+
+
+<div hidden$="[[!visible]]">
 <chat-window
-hidden$="[[!visible]]"
 id = "chat"
 class="styled"
 author="me"
@@ -52,14 +54,17 @@ input-text="{{newInput}}"
 messages="[[messages]]"
 on-send="sendMsg"
 ></chat-window>
+</div>
+
+<div  horizontal end-justified layout self-stretch>
+  <paper-label hidden$="[[visible]]">[[room]]</paper-label>
+<paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab>
+</div>
 
  <!-- mettre une icon si nonlu = 0 et au début  -->
 
 
-<div  horizontal end-justified layout self-stretch>
-<paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab>
-<paper-label hidden$="[[!visible]]">[[room]]</paper-label>
-</div>
+
 
 <!--
 <valle-speed-dial-action
