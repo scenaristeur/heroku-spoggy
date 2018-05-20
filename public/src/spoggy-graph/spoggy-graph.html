@@ -2,13 +2,16 @@
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./graph-behavior.html">
 <link rel="import" href="styles/vis-styles.html">
+
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
 <dom-module id="spoggy-graph">
   <link rel="lazy-import" group="lazy" href="./graph-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-slider/paper-slider.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-textarea.html">
-  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
+
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-selector/iron-selector.html">
@@ -35,21 +38,18 @@
       z-index: 10;
       top: 2vw;
       left: 2vw;
-       /*
-  visibility: hidden;*/
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
       border-color: #5394ed;
       padding-top:1px;
       padding-bottom:1px;
-      }
+    }
     #edgePopUp {
       position: absolute;
-        z-index: 10;
-        top: 2vw;
-        left: 2vw;
-/*  visibility: hidden;*/
+      z-index: 10;
+      top: 2vw;
+      left: 2vw;
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -62,70 +62,70 @@
     <div id="mynetwork"></div>
 
     <paper-dialog id="edgePopUp"> <!--  backdrop transition="core-transition-bottom" -->
-    <!--  <div horizontal start-justified start layout > -->
+      <!--  <div horizontal start-justified start layout > -->
       <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>-->
-        <div style="padding-left:20px" vertical start-justified start layout wrap>
-          <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
-            <paper-input id="edgeLabel" label="Nom du lien" autofocus></paper-input>
-          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-            <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" dialog-confirm raised>ok</paper-button>
-            <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
-          </div>
+      <div style="padding-left:20px" vertical start-justified start layout wrap>
+        <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
+        <paper-input id="edgeLabel" label="Nom du lien" autofocus></paper-input>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" dialog-confirm raised>ok</paper-button>
+          <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
         </div>
-    <!--  </div> -->
+      </div>
+      <!--  </div> -->
     </paper-dialog>
 
     <paper-dialog id="nodePopUp"  backdrop transition="core-transition-bottom"  >
-    <!--  <div horizontal start-justified start layout > -->
-        <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon> -->
-        <div style="padding-left:20px" vertical start-justified start layout wrap>
-          <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
-          <paper-input id="nodeLabel" label="Nom du noeud" autofocus ></paper-input>
+      <!--  <div horizontal start-justified start layout > -->
+      <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon> -->
+      <div style="padding-left:20px" vertical start-justified start layout wrap>
+        <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
+        <paper-input id="nodeLabel" label="Nom du noeud" autofocus ></paper-input>
 
-          <paper-dialog-scrollable id="scrollNode">
-            <iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
-              <div slot="collapse-content">
+        <paper-dialog-scrollable id="scrollNode">
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Forme</h3>
+            <div slot="collapse-content">
               <!--  <fieldset>
-                  <legend>Forme</legend> -->
-                  <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
-                    <div>Label interne</div>
-                    <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
-                    <paper-checkbox name="circle">Cercle</paper-checkbox>
-                    <paper-checkbox name="database">Database</paper-checkbox>
-                    <paper-checkbox name="box">Box</paper-checkbox>
-                    <paper-checkbox name="text">Texte</paper-checkbox>
-                    <hr>
-                    <div>Label externe</div>
-                    <paper-checkbox name="diamond">Diamant</paper-checkbox>
-                    <paper-checkbox name="star">Etoile</paper-checkbox>
-                    <paper-checkbox name="triangle">Triangle</paper-checkbox>
-                    <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
-                    <paper-checkbox name="square">Carré</paper-checkbox>
-                    <paper-checkbox name="image" >Image</paper-checkbox>
-                    <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
-                  </iron-selector>
-                  <div hidden$="[[shapeIsImage(selectedShape)]]">
-                    <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
-                  </div>
+              <legend>Forme</legend> -->
+              <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
+                <div>Label interne</div>
+                <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
+                <paper-checkbox name="circle">Cercle</paper-checkbox>
+                <paper-checkbox name="database">Database</paper-checkbox>
+                <paper-checkbox name="box">Box</paper-checkbox>
+                <paper-checkbox name="text">Texte</paper-checkbox>
+                <hr>
+                <div>Label externe</div>
+                <paper-checkbox name="diamond">Diamant</paper-checkbox>
+                <paper-checkbox name="star">Etoile</paper-checkbox>
+                <paper-checkbox name="triangle">Triangle</paper-checkbox>
+                <paper-checkbox name="triangleDown">Triangle inverse</paper-checkbox>
+                <paper-checkbox name="square">Carré</paper-checkbox>
+                <paper-checkbox name="image" >Image</paper-checkbox>
+                <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
+              </iron-selector>
+              <div hidden$="[[shapeIsImage(selectedShape)]]">
+                <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
+              </div>
               <!--  </fieldset>-->
-              </div>
-            </iron-collapse-button>
-            <iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
-              <div slot="collapse-content">
+            </div>
+          </iron-collapse-button>
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Couleur</h3>
+            <div slot="collapse-content">
               <!--  <fieldset>
-                  <legend>Couleur</legend>-->
-                  <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
+              <legend>Couleur</legend>-->
+              <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
               <!--  </fieldset> -->
-              </div>
-            </iron-collapse-button>
-          </paper-dialog-scrollable>
-          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-            <paper-button id="nodeSaveButton" dialog-confirm  raised>ok</paper-button>
-            <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
-          </div>
+            </div>
+          </iron-collapse-button>
+        </paper-dialog-scrollable>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+          <paper-button id="nodeSaveButton" dialog-confirm  raised>ok</paper-button>
+          <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
         </div>
+      </div>
       <!--</div>-->
     </paper-dialog>
 
@@ -205,7 +205,6 @@
           app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
         });
       });
-        //  this.$.nodePopUp.style.visibility = 'visible';
     }
   }
 
