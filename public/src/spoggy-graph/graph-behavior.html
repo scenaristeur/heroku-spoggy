@@ -1110,8 +1110,7 @@ editNode (data, callback) {
     this.colorValue =   "rgb(173,208,255)";
   }
   this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
-  this.$.nodeCancelButton.onclick = this.clearNodePopUp.bind(this);
-
+  this.$.nodeCancelButton.onclick = this.cancelNodeEdit.bind(this, callback);
   this.$.nodePopUp.toggle(); //style.display = 'block';
 }
 
@@ -1125,7 +1124,7 @@ clearNodePopUp () {
 }
 cancelNodeEdit (callback) {
   this.clearNodePopUp(this);
-  callback(null);
+    callback(null);
 }
 saveNodeData (data, callback) {
   /*
