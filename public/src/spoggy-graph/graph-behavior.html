@@ -1095,7 +1095,11 @@ return new vis.Network(container, data, options);
 }
 editNode (data, callback) {
   console.log(data);
-  this.$.nodeLabel.value= data.label || "";
+  if (data.title != undefined){
+      this.$.nodeLabel.value= data.title.replace(/<br\s*\/?>/mg,"");
+  }else{
+      this.$.nodeLabel.value=  data.label || "";
+  }
   this.selectedShape = data.shape || "ellipse";
   this.selectedType = data.type || "node";
   this.imageUrl = data.image || "";

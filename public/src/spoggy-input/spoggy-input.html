@@ -7,10 +7,14 @@
 <link rel="import" href="./input-behavior.html">
 
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+
 <!--<link rel="import" href="../../bower_components/chat-window/chat-window.html">-->
 
 <link rel="import" href="./input-styles.html">
 <dom-module id="spoggy-input">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
   <template>
     <style is="custom-style" include="input-styles">
     .inputbtn{
@@ -48,8 +52,6 @@
   </style>
 -->
 
-
-
   <!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
                 <paper-input id="inputMessage"
                 class="inputMessage"
@@ -57,6 +59,8 @@
                 label="3 mots une virgule et Entrée"
                 raised
                 autofocus>
+
+  <paper-icon-button slot="suffix"  on-tap="clearInput" icon="clear"></paper-icon-button>
               </paper-input>
         <!--    <chat-window
             id = "chat"
