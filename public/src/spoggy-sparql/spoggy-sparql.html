@@ -1,35 +1,29 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-if.html">
-
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 
 <link rel="import" href="./sparql-behavior.html">
 
-<script src="agents/SparqlAgent.js"></script>
-
-<link rel="import" href="../spoggy-sparqlupdate/spoggy-sparqlupdate.html">
-<link rel="import" href="../spoggy-sparqlstatements/spoggy-sparqlstatements.html">
-<link rel="import" href="../spoggy-virtuoso/spoggy-virtuoso.html">
-
-
 <dom-module id="spoggy-sparql">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-ajax/iron-ajax.html">
+
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/polymer/lib/elements/dom-if.html">
+
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-selector/iron-selector.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-listbox/paper-listbox.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-item/paper-item.html">
+
+  <link rel="lazy-import" group="lazy"  href="../spoggy-sparqlupdate/spoggy-sparqlupdate.html">
+  <link rel="lazy-import" group="lazy"  href="../spoggy-sparqlstatements/spoggy-sparqlstatements.html">
+  <link rel="lazy-import" group="lazy"  href="../spoggy-virtuoso/spoggy-virtuoso.html">
   <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
 
     <iron-ajax
     id="fusekiPing"
@@ -100,7 +94,7 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggySparql extends SparqlBehaviorMixin(Polymer.Element) {
+  class SpoggySparql extends Polymer.LazyImportsMixin(SparqlBehaviorMixin(Polymer.Element)) {
     static get is() { return 'spoggy-sparql'; }
     static get properties() {
       return {
@@ -114,8 +108,7 @@
 
     constructor(){
       super();
-      this.agentSparql = new SparqlAgent('agentSparql', this);
-      Polymer.RenderStatus.afterNextRender(this, function() {
+          Polymer.RenderStatus.afterNextRender(this, function() {
         // When possible, use afterNextRender to defer non-critical
         // work until after first paint.
         this._deferred();
@@ -123,11 +116,17 @@
       });
     }
     _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+              this.agentSparql = new SparqlAgent('agentSparql', this);
+            console.log(this.agentSparql);
+        this.agentSparql.send('agentHello', 'Hello, agentHello !')
+      });
       //  console.log("agent DATA defered")
       //    console.log(this.agentMode);
       //  this.initAgents()
-      console.log(this.agentSparql);
-      this.agentSparql.send('agentHello', 'Hello, agentHello !')
+
     }
 
   }

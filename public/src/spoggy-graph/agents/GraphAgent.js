@@ -76,6 +76,10 @@ GraphAgent.prototype.receive = function(from, message) {
     //  console.log(message.results)
     this.app.resultsFromSparql(message.results);
     break;
+    case 'resultsFromPersee':
+    //  console.log(message.results)
+    this.app.resultsFromPersee(message);
+    break;
     case 'describeFromDBpedia':
     console.log(message.results)
     this.app.describeFromDBpedia(message.results, message.resource);

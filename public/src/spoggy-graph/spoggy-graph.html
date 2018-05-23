@@ -193,7 +193,7 @@
 
         this.network.on("selectNode", function (params) {
           console.log('selectNode Event:', params);
-          console.log ("TODO : Envoyer le label de '"+params.nodes[0]+"' dans l'input")
+        
           let id = params.nodes[0];
           var node = app.network.body.data.nodes.get(id);
           console.log(node);

@@ -17,7 +17,7 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         },
         virtuosoActif: {
           type: Boolean,
-          value: false
+          value: true
         }
       };
     }
@@ -26,14 +26,23 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     * Execute la requete
     */
     sendRequest (){
+      console.log(this.url);
       if (this.url.length>0){
-        console.log(this.url);
+
         this.$.ajaxget.generateRequest();
       }
     }
+    sendRequestPersee(){
+      console.log(this.url);
+      if (this.url.length>0){
+
+        this.$.ajaxPersee.generateRequest();
+      }
+    }
     sendDescribe(){
+      console.log(this.url);
       if (this.virtuosoActif == true){
-        console.log(this.url);
+
         this.$.describeGet.generateRequest();
       }
     }
@@ -71,46 +80,81 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
-////////////////////describe
-_handleDescribeResponse(data){
-  console.log("Reponse Describe DBPEDIA");
-  //  console.log(data);
-  //  console.log(data.detail);
-  //  console.log(data.detail.error);
-  //  console.log(data.detail.error.message);
-  //  console.log(data.detail.request);
-//  console.log(data.detail.response); // -->
-  let response = JSON.parse(data.detail.response);
-  let link = response.head.link;
-  let vars = response.head.vars;
-  let results = response.results.bindings;
-  //  console.log(this.head);
-//  console.log(results);
+    _handlePerseeResponse(data){
+      console.log("Reponse Persee");
+      //  console.log(data);
+      //  console.log(data.detail);
+      //  console.log(data.detail.error);
+      //  console.log(data.detail.error.message);
+      //  console.log(data.detail.request);
+      console.log(data.detail.response); // -->
+      let response = JSON.parse(data.detail.response);
+      let link = response.head.link;
+      let vars = response.head.vars;
+      let results = response.results.bindings;
+      //  console.log(this.head);
+      console.log(results);
 
-  //var visResults = this.describeDbpediaToVis(results);
-  //console.log(visResults);
-  this.agentVirtuoso.send('agentGraph', {type: "describeFromDBpedia", results: results, resource: this.resource})
-}
-_handleDescribeError(data){
-  console.log("error DBPEDIA");
+      var visResults = this.conceptsPerseeToVis(results);
+      console.log(visResults);
+      this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+    }
+    _handlePerseeError(data){
+      console.log("error Persee");
 
-  console.log(data);
-  console.log(data.detail);
-  console.log(data.detail.error);
-  console.log(data.detail.error.message);
-  console.log(data.detail.request);
-  console.log(data.detail.response);
-  console.log(data.detail.request.response);
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
 
-}
-/*
-describeDbpediaToVis(results){
-  var visRes = {nodes:[], edges:[]};
-  results.forEach(function(r){
+    }
+
+
+
+
+    ////////////////////describe
+    _handleDescribeResponse(data){
+      console.log("Reponse Describe DBPEDIA");
+      //  console.log(data);
+      //  console.log(data.detail);
+      //  console.log(data.detail.error);
+      //  console.log(data.detail.error.message);
+      //  console.log(data.detail.request);
+      //  console.log(data.detail.response); // -->
+      let response = JSON.parse(data.detail.response);
+      let link = response.head.link;
+      let vars = response.head.vars;
+      let results = response.results.bindings;
+      //  console.log(this.head);
+      //  console.log(results);
+
+      //var visResults = this.describeDbpediaToVis(results);
+      //console.log(visResults);
+      this.agentVirtuoso.send('agentGraph', {type: "describeFromDBpedia", results: results, resource: this.resource})
+    }
+    _handleDescribeError(data){
+      console.log("error DBPEDIA");
+
+      console.log(data);
+      console.log(data.detail);
+      console.log(data.detail.error);
+      console.log(data.detail.error.message);
+      console.log(data.detail.request);
+      console.log(data.detail.response);
+      console.log(data.detail.request.response);
+
+    }
+    /*
+    describeDbpediaToVis(results){
+    var visRes = {nodes:[], edges:[]};
+    results.forEach(function(r){
     console.log(r)
-let s = r.s.value;
-let p = r.p.value;
-let o = r.p.value;
+    let s = r.s.value;
+    let p = r.p.value;
+    let o = r.p.value;
 
   });
   return visRes;
@@ -118,37 +162,72 @@ let o = r.p.value;
 
 ////////////fin describe
 
-
-
-    conceptsDbPediaToVis(results){
-      var visRes = {nodes:[], edges:[]};
-      results.forEach(function(r){
-        let concept = r.Concept.value.trim();
-        console.log(concept);
-        let conceptCut = concept.split("#");
-        console.log(conceptCut);
-        let label = conceptCut[conceptCut.length-1];
-        if (label == concept){
-          conceptCut = concept.split("/");
-          console.log(conceptCut);
-          label = conceptCut[conceptCut.length-1];
-        }
-        console.log(label);
-        let node = {
-          uri: concept,
-          label: label,
-          type: 'concept',
-          y: 2*Math.random()
-        }
-        visRes.nodes.push(node);
-      });
-      return visRes;
+conceptsPerseeToVis(results){
+  var visRes = {nodes:[], edges:[]};
+  if (this.typeResource =='bibo:Collection'){
+  results.forEach(function(r){
+    console.log(r)
+  //  let title = r.p.value;
+    let label = r.p.value.replace('#Web',' ');
+    let node = {
+      //  uri: concept,
+      label: label,
+  //    title: title,
+      //  type: 'concept',
+      y: 2*Math.random()
     }
+    visRes.nodes.push(node);
+  });
+}else{
+  results.forEach(function(r){
+    console.log(r);
+    let node = {id: r.sub.value, label: r.sub.value}
+    let nodeD = {id: r.s.value, label: r.t.value}
+    let  e = {from : r.s.value, to: r.sub.value, label:'subject'}
+    visRes.nodes.push(node)
+      visRes.nodes.push(nodeD)
+      visRes.edges.push(e)
+
+    /*let node = {id: r.s.value, label: r.t.value}
+    let nodeS = {label: r.sub.value}
+    visRes.nodes.push(node)
+      visRes.nodes.push(nodeS)*/
+      //  visRes.edges.push({node})
+
+  });
+}
+  return visRes;
+}
+
+conceptsDbPediaToVis(results){
+  var visRes = {nodes:[], edges:[]};
+  results.forEach(function(r){
+    let concept = r.Concept.value.trim();
+    console.log(concept);
+    let conceptCut = concept.split("#");
+    console.log(conceptCut);
+    let label = conceptCut[conceptCut.length-1];
+    if (label == concept){
+      conceptCut = concept.split("/");
+      console.log(conceptCut);
+      label = conceptCut[conceptCut.length-1];
+    }
+    console.log(label);
+    let node = {
+      uri: concept,
+      label: label,
+      type: 'concept',
+      y: 2*Math.random()
+    }
+    visRes.nodes.push(node);
+  });
+  return visRes;
+}
 
 
 
 
-  }
+}
 });
 
 </script>

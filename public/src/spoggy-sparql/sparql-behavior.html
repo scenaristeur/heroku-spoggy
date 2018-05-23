@@ -1,3 +1,4 @@
+<script src="agents/SparqlAgent.js"></script>
 
 <script>
 /* @polymerMixin */
@@ -33,12 +34,29 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     testVirtuoso(mess){
       console.log(mess);
       let endpoint = mess.endpoint;
+      switch (endpoint) {
+        case 'http://data.persee.fr':
+        console.log('passage solo');
+          this.agentSparql.send('agentVirtuoso', {type:'explorePersee', url: endpoint+'/sparql', resource : mess.resource});
+        break;
+        case 'http://fr.dbpedia.org':
         this.agentSparql.send('agentVirtuoso', {type:'describe', url: endpoint+'/sparql', resource : mess.resource});
     //  this.agentSparql.send('agentVirtuoso', {type:'updateUrl', url: endpoint+'/sparql', resource : mess.resource});
       /* PAs trouvé moyen de faire un Ping ??this.url_virtuoso_ping = endpoint+"/sparql";
       //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
       console.log(this.url_virtuoso_ping);
       this.$.virtuosoPing.generateRequest();*/
+        break;
+
+        default:
+        console.log('On ne traite pas encore ' + endpoint + '.');
+      }
+
+
+
+
+
+
     }
 
 

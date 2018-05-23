@@ -437,9 +437,23 @@
               <br>
               <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
             </iron-selector>
-            <paper-input id="labelEndpoint" label="Endpoint (http://)" value="{{endpoint::input}}"></paper-input>
-            <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
-            label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
+            <paper-input id="labelEndpoint"
+              hidden$="[[!isEqual(selectedEndpoint,'fuseki')]]"
+               label="Endpoint (http://)"
+                value="{{endpoint::input}}"></paper-input>
+
+            <paper-dropdown-menu hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" label="Endpoint2" vertical-align="bottom" horizontal-align="left">
+            <paper-listbox slot="dropdown-content" hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" class="dropdown-content" selected="0">
+            <template is="dom-repeat" items="[[virtuosoEndpoints]]">
+            <paper-item room="[[virtuosoEndpoint]]" on-tap="_virtuosoEndpointChanged" value="{{item.url}}">[[item.name]]</paper-item>
+          </template>
+        </paper-listbox>
+        </paper-dropdown-menu>
+
+        <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
+        label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
+
+
 
             <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
             <!-- MODE pour Fuseki direct
@@ -485,14 +499,6 @@
   label-direction="right"
   ></valle-speed-dial-action>
 </valle-speed-dial>
-
-
-
-
-
-
-
-
 </template>
 
 <script>
@@ -533,6 +539,10 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
         type: Number,
         observer: "_updateDamping"
       },
+      virtuosoEndpoints:{
+        type: Array,
+        value: [{name: 'dbpedia', url:'http://fr.dbpedia.org'}, {name:'Persee', url: 'http://data.persee.fr'}]
+      }
 
     };
   }
@@ -569,6 +579,10 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
 
 
     //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+  }
+  _virtuosoEndpointChanged(e){
+    console.log(e.model.item)
+    this.endpoint = e.model.item.url;
   }
 }
 

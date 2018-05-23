@@ -66,64 +66,138 @@ VirtuosoAgent.prototype.receive = function(from, message) {
     this.app.sendRequest();
     break;
 
-
-
-    case 'describe':
-    console.log("describe")
+    case 'explorePersee':
+    console.log('explore Persee')
     console.log(message)
     console.log(message.resource);
-      console.log(message.url);
-    if(message.url!= undefined){
-  //au démarrage
+    console.log(message.url);
+    //    this.app.typeResource ='bibo:Collection'
     this.app.url = message.url;
-    this.app.resource = 'http://fr.dbpedia.org/resource/'+message.resource.trim();
-  }else{
-        //cas d'une demande depuis on(selectNode) de spoggy-graph --> prefix déjà présent
-      this.app.resource = message.resource;
-   }
-    console.log(this.app.url);
-    console.log(this.app.resource);
 
-    if (this.app.resource.length>0){
+
+    if (this.app.typeResource =='bibo:Collection'){
+      // test de parcours des collections
       this.app.options = {
-        //    query: 'DESCRIBE <http://fr.dbpedia.org/resource/'+resource+'> LIMIT 100',
-        query : 'SELECT ?s ?p ?o \
-        WHERE {\
-          { <'+this.app.resource+'> ?p ?o } \
-          UNION \
-          { ?s ?p <'+this.app.resource+'> } \
-        }   LIMIT 100',
-        output: 'application/sparql-results+json'
-      }
-      this.app.sendDescribe();
-    }else{
-      this.app.options = {
-        //  default-graph-uri:'http%3A%2F%2Fdbpedia.org',
-        query: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100',
+        query: 'select distinct ?p where {?p a '+this.app.typeResource+' }',
+        // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+
         format: 'application/sparql-results+json',
-        /*  CXML_redir_for_subjs: '121',
-        CXML_redir_for_hrefs: '',
-        timeout: 30000,
-        debug: 'on',
-        run: '+Run+Query+'*/
       }
+    }else{
+      //test sur les documents
+      /*  let query =['select distinct ?t ?pO ?tP ?s ?sub ?r',
+      'where {',
+      '  ?s ?p bibo:Document.',
+      '  ?s dcterms:subject ?sub.',
+      '  ?s dcterms:abstract ?r.',
+      '  ?s dcterms:title ?t.',
+      '  ?s dcterms:isPartOf ?pO.',
+      '  ?pO dcterms:title ?tP',
+      '  filter (lang(?r) = "" || langMatches(lang(?r), "fr"))',
+      '  filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))',
+      '}'
+    ].join("\n");*/
+  /*  let query =['select distinct ?t  ?s ?sub ', //?pO ?tP ?r
+    'where {',
+    '  ?s ?p bibo:Document.',
+    '  ?s dcterms:title ?t.',
+    '  ?s dcterms:subject ?sub.',
+    //'  ?s dcterms:abstract ?r.',
 
-      this.app.sendRequest();
-    }
-console.log(this.app.options)
-    break;
+    //'  ?s dcterms:isPartOf ?pO.',
+    //'  ?pO dcterms:title ?tP',
+    '  filter (lang(?t) = "" || langMatches(lang(?t), "fr"))',
+    // '  filter (lang(?r) = "" || langMatches(lang(?r), "fr"))',
+    '  filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))',
+    '} LIMIT 100'
+  ].join("\n");*/
 
 
+  let query = 'select distinct ?s ?t ?sub \
+    Where {\
+      ?s ?p bibo:Document.\
+      ?s dcterms:title ?t.\
+      ?s dcterms:subject ?sub.\
+    filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
+  } LIMIT 1000';
 
-
-
-
-
-
-
-    default:
-    console.log(message);
+  console.log(query)
+  this.app.options = {
+    //  query: 'select distinct ?p where {?p a '+this.app.typeResource+' }',
+    // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+    query: query,
+    format: 'application/sparql-results+json',
   }
+}
+
+
+console.log("sendRequest")
+this.app.sendRequestPersee();
+break;
+
+case 'describe':
+console.log("describe")
+console.log(message)
+console.log(message.resource);
+console.log(message.url);
+if(message.url!= undefined){
+  //au démarrage
+  this.app.url = message.url;
+  this.app.resource = 'http://fr.dbpedia.org/resource/'+message.resource.trim();
+}else{
+  //cas d'une demande depuis on(selectNode) de spoggy-graph --> prefix déjà présent
+  this.app.resource = message.resource;
+}
+console.log(this.app.url);
+console.log(this.app.resource);
+
+// A REVOIR , test rapide
+if (this.app.url == "http://data.persee.fr/sparql"){
+  this.app.options = {
+    //  default-graph-uri:'http%3A%2F%2Fdbpedia.org',
+    query: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100',
+    format: 'application/sparql-results+json',
+    /*  CXML_redir_for_subjs: '121',
+    CXML_redir_for_hrefs: '',
+    timeout: 30000,
+    debug: 'on',
+    run: '+Run+Query+'*/
+  }
+  console.log("getPerseeDetails")
+  this.app.getPerseeDetails();
+}else{
+  if (this.app.resource.length>0){
+    this.app.options = {
+      //    query: 'DESCRIBE <http://fr.dbpedia.org/resource/'+resource+'> LIMIT 100',
+      query : 'SELECT ?s ?p ?o \
+      WHERE {\
+        { <'+this.app.resource+'> ?p ?o } \
+        UNION \
+        { ?s ?p <'+this.app.resource+'> } \
+      }   LIMIT 100',
+      output: 'application/sparql-results+json'
+    }
+    console.log("sendRDescribe")
+    this.app.sendDescribe();
+  }else{
+    this.app.options = {
+      //  default-graph-uri:'http%3A%2F%2Fdbpedia.org',
+      query: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100',
+      format: 'application/sparql-results+json',
+      /*  CXML_redir_for_subjs: '121',
+      CXML_redir_for_hrefs: '',
+      timeout: 30000,
+      debug: 'on',
+      run: '+Run+Query+'*/
+    }
+    console.log("sendRequest")
+    this.app.sendRequest();
+  }}
+  console.log(this.app.options)
+  break;
+  default:
+  console.log(message);
+}
 
 
 };

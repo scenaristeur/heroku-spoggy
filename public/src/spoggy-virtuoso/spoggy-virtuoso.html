@@ -26,6 +26,15 @@
     on-response="_handleDescribeResponse"
     on-error="_handleDescribeError"
     debounce-duration="300"></iron-ajax>
+
+    <iron-ajax
+    id="ajaxPersee"
+    url="{{url}}"
+    params="{{options}}"
+    handle-as="application/sparql-results+json"
+    on-response="_handlePerseeResponse"
+    on-error="_handlePerseeError"
+    debounce-duration="300"></iron-ajax>
   </template>
 
   <script>
