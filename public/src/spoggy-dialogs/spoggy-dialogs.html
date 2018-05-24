@@ -438,41 +438,42 @@
               <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
             </iron-selector>
             <paper-input id="labelEndpoint"
-              hidden$="[[!isEqual(selectedEndpoint,'fuseki')]]"
-               label="Endpoint (http://)"
-                value="{{endpoint::input}}"></paper-input>
+            hidden$="[[!isEqual(selectedEndpoint,'fuseki')]]"
+            label="Endpoint (http://)"
+            value="{{endpoint::input}}">
+          </paper-input>
 
-            <paper-dropdown-menu hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" label="Endpoint2" vertical-align="bottom" horizontal-align="left">
-            <paper-listbox slot="dropdown-content" hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" class="dropdown-content" selected="0">
-            <template is="dom-repeat" items="[[virtuosoEndpoints]]">
-            <paper-item room="[[virtuosoEndpoint]]" on-tap="_virtuosoEndpointChanged" value="{{item.url}}">[[item.name]]</paper-item>
-          </template>
-        </paper-listbox>
-        </paper-dropdown-menu>
+          <paper-dropdown-menu hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" label="Endpoint2" vertical-align="bottom" horizontal-align="left">
+            <paper-listbox slot="dropdown-content" hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">
+              <template is="dom-repeat" items="[[virtuosoEndpoints]]">
+                <paper-item  value="{{item.url}}">[[item.name]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
 
-        <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
-        label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
-
-
-
-            <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
-            <!-- MODE pour Fuseki direct
-            <div hidden$="[[!isEqual(mode,'global')]]">
-            <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
-            <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
-            <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
-            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
-            <template is="dom-repeat" items="[[datasets]]">
-            <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
+          <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
+          label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
 
 
-      <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
-      <paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
-    </div>-->
-  </div>
+
+          <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
+          <!-- MODE pour Fuseki direct
+          <div hidden$="[[!isEqual(mode,'global')]]">
+          <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
+          <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
+          <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+          <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
+          <template is="dom-repeat" items="[[datasets]]">
+          <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+        </template>
+      </paper-listbox>
+    </paper-dropdown-menu>
+
+
+    <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+    <paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
+  </div>-->
+</div>
 
 </paper-dialog>
 
@@ -580,10 +581,10 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
 
     //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
   }
-  _virtuosoEndpointChanged(e){
-    console.log(e.model.item)
-    this.endpoint = e.model.item.url;
-  }
+  /*_virtuosoEndpointChanged(e){
+  console.log(e.model.item)
+  this.endpoint = e.model.item.url;
+}*/
 }
 
 window.customElements.define(SpoggyDialogs.is, SpoggyDialogs);

@@ -63,9 +63,9 @@
           <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
           <paper-input id="labelEndpoint" label="Endpoint" value="{{url_fuseki::change}}"></paper-input>
           <paper-dropdown-menu hidden$="[[isEmpty(pingFuseki)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
-            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content" selected="0">
+            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content"  attr-for-selected="value" selected="{{dataset}}">
               <template is="dom-repeat" items="[[datasets]]">
-                <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+                <paper-item  value="[[item.ds_name]]">[[item.ds_name]]</paper-item>
               </template>
             </paper-listbox>
           </paper-dropdown-menu>

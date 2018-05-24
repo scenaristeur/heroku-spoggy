@@ -52,11 +52,6 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         console.log('On ne traite pas encore ' + endpoint + '.');
       }
 
-
-
-
-
-
     }
 
 
@@ -141,8 +136,9 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
-    _datasetChanged(e){
-      this.dataset = e.model.item.ds_name;
+    _datasetChanged(){
+      console.log(this.dataset)
+    //  this.dataset = e.model.item.ds_name;
     }
 
 
@@ -165,8 +161,11 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.server = JSON.parse(clemodif);
       console.log(this.server);
       this.datasets = this.server.datasets;
-      this.dataset = this.datasets[0].ds_name;
+    if(this.dataset == undefined){
+       this.dataset = this.datasets[0].ds_name;
+    } 
       console.log(this.datasets);
+        console.log("selected "+this.dataset);
     }
     _handleFusekiServerError(data){
       console.log("error server");
