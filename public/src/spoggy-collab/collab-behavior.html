@@ -96,7 +96,7 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     this.socket.on('updatechat', function (username, data) {
       console.log('update chat '+ username +" - "+ data)
       console.log(app.room)
-console.log(app.socket.room)
+      console.log(app.socket.room)
       app.agentSocket.send('agentChat', {type: "updateChat", username: username, data: data, room: app.room});
     });
     this.socket.on('initrooms', function (rooms) {
@@ -128,9 +128,14 @@ console.log(app.socket.room)
     this.socket.emit('sendchat', message);
   }
 
-  switchRoom(room){
-    this.socket.emit('switchRoom', room);
+  switchRoom(message){
+    if (message.pseudo.length > 0){
+      this.socket.emit('adduser', message.pseudo, message.room);
+    }else{
+      this.socket.emit('switchRoom', message.room);
+    }
   }
+
   methodInBehavior() {
     return "this method is defined in Behavior";
   }

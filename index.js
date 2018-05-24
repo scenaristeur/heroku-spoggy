@@ -447,7 +447,7 @@ io.sockets.emit('initrooms', freq);
 
   // when the user disconnects.. perform this
   socket.on('disconnect', function(){
-    console.log(socket)
+  //  console.log(socket)
     console.log("deconnecte "+socket.username)
     for (var i=users.length-1; i>=0; i--) {
     if (users[i] === socket.id) {
@@ -461,6 +461,13 @@ io.sockets.emit('initrooms', freq);
     io.sockets.emit('updateusers', usernames);
     // echo globally that this client has left
     socket.broadcast.emit('updatechat', 'Spoggy', socket.username + ' est déconnecté');
+
+
+  // ne fonctionne pas , le mettre en fonction de status //  socket.emit('updatechat', 'Spoggy', 'Vous êtes déconnecté ');
+    // echo to room 1 that a person has connected to their room
+    socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', socket.username + ' est déconnecté de '+socket.room);
+
+
     socket.leave(socket.room);
   });
 });
