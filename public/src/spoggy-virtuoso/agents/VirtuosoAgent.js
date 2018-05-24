@@ -34,6 +34,10 @@ VirtuosoAgent.prototype.receive = function(from, message) {
   console.log(from + ' said: ' + JSON.stringify(message) );
   this.app.prop1 = message;
 
+if (!this.app.virtuosoActif){
+console.log("VIRTUOSO ACTIF = FALSE DANS VIRTUOSO BEHAVIOR A REVOIR ! ")
+  return
+}
 
   if (typeof message == String && message.indexOf('Hello') === 0) {
     // reply to the greeting
@@ -97,7 +101,7 @@ VirtuosoAgent.prototype.receive = function(from, message) {
       '  filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))',
       '}'
     ].join("\n");*/
-  /*  let query =['select distinct ?t  ?s ?sub ', //?pO ?tP ?r
+    /*  let query =['select distinct ?t  ?s ?sub ', //?pO ?tP ?r
     'where {',
     '  ?s ?p bibo:Document.',
     '  ?s dcterms:title ?t.',
@@ -114,10 +118,10 @@ VirtuosoAgent.prototype.receive = function(from, message) {
 
 
   let query = 'select distinct ?s ?t ?sub \
-    Where {\
-      ?s ?p bibo:Document.\
-      ?s dcterms:title ?t.\
-      ?s dcterms:subject ?sub.\
+  Where {\
+    ?s ?p bibo:Document.\
+    ?s dcterms:title ?t.\
+    ?s dcterms:subject ?sub.\
     filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
   } LIMIT 1000';
 
