@@ -415,16 +415,16 @@
                   <!--  <paper-dropdown-menu label="Endpoint2" vertical-align="bottom" horizontal-align="left">
                   <paper-listbox slot="dropdown-content" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">-->
                   <paper-dialog-scrollable id="scrollEndpoints">
-                    *  <template is="dom-repeat" items="[[endpoints]]">
+                    <template is="dom-repeat" items="[[endpoints]]">
                       <paper-item  value="{{item.url}}">
-                        <paper-checkbox checked="[[item.actif]]">
+                        <paper-checkbox checked="{{item.actif}}">
                         </paper-checkbox>
                         [[item.name]] / [[item.url]] / type: [[item.type]] read: [[item.read]] / write: [[item.write]] </paper-item>
                       </template>
                     </paper-dialog-scrollable>
                     <!--                        </paper-listbox>
                   </paper-dropdown-menu>-->
-                  <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
+                  <paper-button on-tap="_updateEndpoints" dialog-dismiss raised>Connecter</paper-button>
                 </div>
 
 
@@ -534,52 +534,72 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
       endpoints:{
         type: Array,
         value: [
-          {name: 'dbpedia', url:'http://fr.dbpedia.org', actif:true, type: 'virtuoso', read:true, write:false},
-          {name:'Persee', url: 'http://data.persee.fr', actif:true, type: 'virtuoso', read:true, write:false},
-          {name: 'Smag global', url: 'http://5.51', actif:true, type: 'fuseki', read: true, write: true},
-          {name: 'Semantic Forms', url: 'http://192...', actif:false, type: 'sf', read: true, write: true}]
-        }
-      };
-    }
-    constructor(){
-      super();
-
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        // When possible, use afterNextRender to defer non-critical
-        // work until after first paint.
-        this._deferred();
-
-      });
-    }
-    _deferred(){
-        this.$.scrollEndpoints.dialogElement = this.$.modePopup;
-      this.importLazyGroup('lazy').then((results) => {
-        console.log(results);
-        this.dispatchEvent(new CustomEvent('import-loaded', results));
-        this.agentDialogs = new DialogsAgent('agentDialogs', this);
-        this.initAgents()
-      });
-
-    }
-    initAgents(){
-      //  console.log(this.agentInput)
-      this.agentDialogs.send('agentHello', 'Hello agentHello!');
-      console.log(window.location.hostname);
-      if (window.location.hostname != "127.0.0.1"){
-        console.log(window.location.hostname);
-        this.$.cpt.src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n";
-      }else{
-        console.log(window.location.hostname);
-        this.$.cpt.src = "/doc/spoggy_ncc_vue3.png";
+          {name: 'dbpedia',
+          url:'http://fr.dbpedia.org',
+          actif: false,
+          type: 'virtuoso',
+          read:true,
+          write:false,
+          firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
+        },
+        {name:'Persee',
+        url: 'http://data.persee.fr',
+        actif: true,
+        type: 'virtuoso',
+        read:true, write:false,
+      /*  firstQuery: 'select distinct ?s ?t ?sub \
+        Where {\
+          ?s ?p bibo:Document.\
+          ?s dcterms:title ?t.\
+          ?s dcterms:subject ?sub.\
+          filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
+        } LIMIT 300'*/
+        firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
+      },
+        {name: 'Smag global', url: 'http://5.51.110.50:3030', actif: false, type: 'fuseki', read: true, write: true},
+        {name: 'Semantic Forms', url: 'http://192...', actif: false, type: 'sf', read: true, write: true}]
       }
+    };
+  }
+  constructor(){
+    super();
 
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
 
-      //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    });
+  }
+  _deferred(){
+    this.$.scrollEndpoints.dialogElement = this.$.modePopup;
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      this.agentDialogs = new DialogsAgent('agentDialogs', this);
+      this.initAgents()
+    });
+
+  }
+  initAgents(){
+    //  console.log(this.agentInput)
+    this.agentDialogs.send('agentHello', 'Hello agentHello!');
+    console.log(window.location.hostname);
+    if (window.location.hostname != "127.0.0.1"){
+      console.log(window.location.hostname);
+      this.$.cpt.src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n";
+    }else{
+      console.log(window.location.hostname);
+      this.$.cpt.src = "/doc/spoggy_ncc_vue3.png";
     }
-    /*_virtuosoEndpointChanged(e){
-    console.log(e.model.item)
-    this.endpoint = e.model.item.url;
-  }*/
+
+
+    //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+  }
+  /*_virtuosoEndpointChanged(e){
+  console.log(e.model.item)
+  this.endpoint = e.model.item.url;
+}*/
 }
 
 window.customElements.define(SpoggyDialogs.is, SpoggyDialogs);

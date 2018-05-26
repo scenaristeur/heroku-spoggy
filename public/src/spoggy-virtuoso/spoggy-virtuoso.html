@@ -9,6 +9,16 @@
 
 <dom-module id="spoggy-virtuoso">
   <template>
+
+    <iron-ajax
+    id="pingRequest"
+    url="{{url}}"
+    params="{{options}}"
+    handle-as="application/sparql-results+json"
+    on-response="_handleResponse"
+    on-error="_handlePingError"
+></iron-ajax>
+
     <iron-ajax
     id="ajaxget"
     url="{{url}}"
@@ -17,6 +27,8 @@
     on-response="_handleResponse"
     on-error="_handleError"
     debounce-duration="300"></iron-ajax>
+
+
 
     <iron-ajax
     id="describeGet"
@@ -34,7 +46,7 @@
     handle-as="application/sparql-results+json"
     on-response="_handlePerseeResponse"
     on-error="_handlePerseeError"
-    debounce-duration="300"></iron-ajax>
+></iron-ajax>
   </template>
 
   <script>

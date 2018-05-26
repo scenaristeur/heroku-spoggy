@@ -168,11 +168,11 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
               let nodeId = network.body.data.nodes.update(n);
               let nZ = nodeId[0];
               let tZ = ntype[0][0] || ntype[0].id;
-              console.log(nZ);
-              console.log(tZ);
+          //    console.log(nZ);
+            //  console.log(tZ);
 
               let e = {from: nZ, to: tZ, label: 'type'};
-              console.log(e)
+            //  console.log(e)
               network.body.data.edges.update(e);
             });
           }

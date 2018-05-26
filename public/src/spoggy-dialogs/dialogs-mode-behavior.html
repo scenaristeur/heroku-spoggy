@@ -127,14 +127,11 @@ var DialogsModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         this.endpoint = 'http://fr.dbpedia.org'
       }
     }
-    _testEndpoint(e){
-      console.log(this.endpoint);
-      console.log(this.selectedEndpoint);
+    _updateEndpoints(e){
+      console.log(this.endpoints);
       this.agentDialogs.send('agentSparql', {
-        type: 'testEndpoint',
-        endpoint: this.endpoint,
-        endpointType: this.selectedEndpoint,
-        resource: this.resource});
+        type: 'updateEndpoints',
+        endpoints: this.endpoints});
       }
 
       /* TECHNICAL TOOLS */

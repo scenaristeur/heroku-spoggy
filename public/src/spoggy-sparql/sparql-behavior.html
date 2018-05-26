@@ -23,35 +23,67 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
-    testFuseki(mess){
-      console.log(mess);
-      this.url_fuseki = mess.endpoint;
-      this.url_fuseki_ping = mess.endpoint+"/$/ping";
+
+    testEndpoints(endpoints){
+      let app = this;
+      this.endpoints = endpoints;
+      this.endpoints.forEach(function(endpoint){
+        console.log(endpoint);
+        if(endpoint.actif){
+          switch (endpoint.type) {
+            case 'virtuoso':
+            console.log('virtuoso');
+            console.log(endpoint)
+            app.testVirtuoso(endpoint)
+            break;
+            case 'fuseki':
+            console.log('fuseki');
+            console.log(endpoint)
+            app.testFuseki(endpoint)
+            break;
+            /*  case 'sf':
+            console.log('sf');
+            break;*/
+
+            default:
+            console.log('On ne traite pas encore ' + endpoint.type + '.');
+          }
+        }else{
+          console.log("inactif");
+        }
+      } );
+    }
+
+
+
+    testFuseki(endpoint){
+      console.log(endpoint);
+      this.url_fuseki = endpoint.url;
+      this.url_fuseki_ping = endpoint.url+"/$/ping";
       //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
       console.log(this.url_fuseki_ping);
       this.$.fusekiPing.generateRequest();
     }
-    testVirtuoso(mess){
-      console.log(mess);
-      let endpoint = mess.endpoint;
-      switch (endpoint) {
+    testVirtuoso(endpoint){
+      console.log(endpoint);
+        this.agentSparql.send('agentVirtuoso', {type:'testEndpoint', endpoint: endpoint, endpoints: this.endpoints});
+
+/*
+      switch (endpoint.url) {
         case 'http://data.persee.fr':
-        console.log('passage solo');
-          this.agentSparql.send('agentVirtuoso', {type:'explorePersee', url: endpoint+'/sparql', resource : mess.resource});
+        this.agentSparql.send('agentVirtuoso', {type:'explorePersee', url: endpoint.url+'/sparql'});
+        //        this.agentSparql.send('agentVirtuoso', {type:'explorePersee', url: endpoint.url+'/sparql', resource : mess.resource});
         break;
+
         case 'http://fr.dbpedia.org':
-        this.agentSparql.send('agentVirtuoso', {type:'describe', url: endpoint+'/sparql', resource : mess.resource});
-    //  this.agentSparql.send('agentVirtuoso', {type:'updateUrl', url: endpoint+'/sparql', resource : mess.resource});
-      /* PAs trouvé moyen de faire un Ping ??this.url_virtuoso_ping = endpoint+"/sparql";
-      //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };
-      console.log(this.url_virtuoso_ping);
-      this.$.virtuosoPing.generateRequest();*/
+        this.agentSparql.send('agentVirtuoso', {type:'describe', url: endpoint.url+'/sparql'});
+
         break;
 
         default:
         console.log('On ne traite pas encore ' + endpoint + '.');
       }
-
+*/
     }
 
 
@@ -138,7 +170,7 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     _datasetChanged(){
       console.log(this.dataset)
-    //  this.dataset = e.model.item.ds_name;
+      //  this.dataset = e.model.item.ds_name;
     }
 
 
@@ -161,11 +193,11 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.server = JSON.parse(clemodif);
       console.log(this.server);
       this.datasets = this.server.datasets;
-    if(this.dataset == undefined){
-       this.dataset = this.datasets[0].ds_name;
-    } 
+      if(this.dataset == undefined){
+        this.dataset = this.datasets[0].ds_name;
+      }
       console.log(this.datasets);
-        console.log("selected "+this.dataset);
+      console.log("selected "+this.dataset);
     }
     _handleFusekiServerError(data){
       console.log("error server");

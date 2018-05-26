@@ -34,10 +34,10 @@ VirtuosoAgent.prototype.receive = function(from, message) {
   console.log(from + ' said: ' + JSON.stringify(message) );
   this.app.prop1 = message;
 
-if (!this.app.virtuosoActif){
-console.log("VIRTUOSO ACTIF = FALSE DANS VIRTUOSO BEHAVIOR A REVOIR ! ")
-  return
-}
+  if (!this.app.virtuosoActif){
+    console.log("VIRTUOSO ACTIF = FALSE DANS VIRTUOSO BEHAVIOR A REVOIR ! ")
+    return
+  }
 
   if (typeof message == String && message.indexOf('Hello') === 0) {
     // reply to the greeting
@@ -52,6 +52,10 @@ console.log("VIRTUOSO ACTIF = FALSE DANS VIRTUOSO BEHAVIOR A REVOIR ! ")
     this.app.updateUrls(message.url);
     break;*/
 
+    case 'testEndpoint':
+    this.app.endpoints = message.endpoints;
+    this.app.sendPingRequest(message.endpoint);
+    break;
     case 'updateUrl':
     console.log("updateUrl")
     console.log(message)
@@ -123,7 +127,7 @@ console.log("VIRTUOSO ACTIF = FALSE DANS VIRTUOSO BEHAVIOR A REVOIR ! ")
     ?s dcterms:title ?t.\
     ?s dcterms:subject ?sub.\
     filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
-  } LIMIT 1000';
+  } LIMIT 100';
 
   console.log(query)
   this.app.options = {
@@ -138,7 +142,10 @@ console.log("VIRTUOSO ACTIF = FALSE DANS VIRTUOSO BEHAVIOR A REVOIR ! ")
 console.log("sendRequest")
 this.app.sendRequestPersee();
 break;
-
+case 'clickon':
+console.log(message);
+this.app.clickonNode(message.node);
+break;
 case 'describe':
 console.log("describe")
 console.log(message)
