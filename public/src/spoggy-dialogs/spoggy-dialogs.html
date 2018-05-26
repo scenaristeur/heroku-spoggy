@@ -17,12 +17,12 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-picker.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-element.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/color-picker/color-picker.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/color-picker/color-element.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
-  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
 
   <link rel="lazy-import" group="lazy" href="./dialogs-import.html">
   <template>
@@ -395,11 +395,7 @@
                 <paper-dialog-scrollable>
                   <div hidden$="[[!isEqual(mode,'collab')]]">
                     Choisissez le graphe que vous souhaitez rejoindre :
-
-
                     <paper-item  hidden$="[[!isEqual(rooms.length,0)]]" style="height:100px;" > Chargement de la liste des graphes</paper-item>
-
-
                     <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(rooms.length,0)]]" >
                       <template is="dom-repeat" items="[[rooms]]">
                         <paper-item room="[[item.name]]" on-tap="rejoindre">[[item.name]] ([[item.count]])</paper-item>
@@ -415,91 +411,82 @@
                 </paper-dialog-scrollable>
 
 
+                <div hidden$="[[!isEqual(mode,'global')]]">
+                  <!--  <paper-dropdown-menu label="Endpoint2" vertical-align="bottom" horizontal-align="left">
+                  <paper-listbox slot="dropdown-content" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">-->
+                  <paper-dialog-scrollable id="scrollEndpoints">
+                    *  <template is="dom-repeat" items="[[endpoints]]">
+                      <paper-item  value="{{item.url}}">
+                        <paper-checkbox checked="[[item.actif]]">
+                        </paper-checkbox>
+                        [[item.name]] / [[item.url]] / type: [[item.type]] read: [[item.read]] / write: [[item.write]] </paper-item>
+                      </template>
+                    </paper-dialog-scrollable>
+                    <!--                        </paper-listbox>
+                  </paper-dropdown-menu>-->
+                  <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
+                </div>
 
 
-                <!--<paper-dropdown-menu hidden$="[[isEmpty(pseudo)]]" label="Rejoindre une salle" vertical-align="bottom" horizontal-align="left">
-                <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0">
-                <template is="dom-repeat" items="[[rooms]]">
-                <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
-              </template>
-            </paper-listbox>
-          </paper-dropdown-menu> -->
+                <!--
+                <div hidden$="[[!isEqual(mode,'global')]]">
+                <br>
+                <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
+                <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
+                https://www.w3.org/wiki/SparqlEndpoints<br>
+                <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
+                <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
+                <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
+                <br>
 
+              </iron-selector>
+              <paper-input id="labelEndpoint"
+              hidden$="[[!isEqual(selectedEndpoint,'fuseki')]]"
+              label="Endpoint (http://)"
+              value="{{endpoint::input}}">
+            </paper-input>
 
-          <div hidden$="[[!isEqual(mode,'global')]]">
-            <br>
-            <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
-            <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
-            https://www.w3.org/wiki/SparqlEndpoints<br>
-            <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
-              <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
-              <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
-              <br>
-              <!--      <paper-checkbox name="global">Global</paper-checkbox> -->
-            </iron-selector>
-            <paper-input id="labelEndpoint"
-            hidden$="[[!isEqual(selectedEndpoint,'fuseki')]]"
-            label="Endpoint (http://)"
-            value="{{endpoint::input}}">
-          </paper-input>
-
-          <paper-dropdown-menu hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" label="Endpoint2" vertical-align="bottom" horizontal-align="left">
+            <paper-dropdown-menu hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" label="Endpoint2" vertical-align="bottom" horizontal-align="left">
             <paper-listbox slot="dropdown-content" hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">
-              <template is="dom-repeat" items="[[virtuosoEndpoints]]">
-                <paper-item  value="{{item.url}}">[[item.name]]</paper-item>
-              </template>
-            </paper-listbox>
-          </paper-dropdown-menu>
+            <template is="dom-repeat" items="[[virtuosoEndpoints]]">
+            <paper-item  value="{{item.url}}">[[item.name]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
 
-          <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
-          label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
-
-
-
-          <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
-          <!-- MODE pour Fuseki direct
-          <div hidden$="[[!isEqual(mode,'global')]]">
-          <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
-          <paper-input id="labelEndpoint" label="Endpoint" on-change="endpointChanged" value="{{endpoint::input}}"></paper-input>
-          <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
-          <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
-          <template is="dom-repeat" items="[[datasets]]">
-          <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
-        </template>
-      </paper-listbox>
-    </paper-dropdown-menu>
+      <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
+      label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
 
 
-    <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
-    <paper-button  dialog-dismiss raised  on-tap="_updateEndpoint">Valider</paper-button>
-  </div>-->
-</div>
 
-</paper-dialog>
+      <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
+    </div>-->
+
+  </paper-dialog>
 
 
 
 
-<valle-speed-dial id="dial" direction="top" label="Menu" backdrop >
-  <valle-speed-dial-action
-  class="dial-action"
-  label="Réglages"
-  on-tap="_toggleSettings"
-  label-direction="right"
-  ></valle-speed-dial-action>
-  <valle-speed-dial-action
-  class="dial-action"
-  label="Mode"
-  on-tap="_toggleMode"
-  label-direction="right"
-  ></valle-speed-dial-action>
-  <valle-speed-dial-action
-  class="dial-action"
-  on-tap="_toggleHelp"
-  label="Aide"
-  label-direction="right"
-  ></valle-speed-dial-action>
-</valle-speed-dial>
+  <valle-speed-dial id="dial" direction="top" label="Menu" backdrop >
+    <valle-speed-dial-action
+    class="dial-action"
+    label="Réglages"
+    on-tap="_toggleSettings"
+    label-direction="right"
+    ></valle-speed-dial-action>
+    <valle-speed-dial-action
+    class="dial-action"
+    label="Mode"
+    on-tap="_toggleMode"
+    label-direction="right"
+    ></valle-speed-dial-action>
+    <valle-speed-dial-action
+    class="dial-action"
+    on-tap="_toggleHelp"
+    label="Aide"
+    label-direction="right"
+    ></valle-speed-dial-action>
+  </valle-speed-dial>
 </template>
 
 <script>
@@ -542,49 +529,57 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
       },
       virtuosoEndpoints:{
         type: Array,
-        value: [{name: 'dbpedia', url:'http://fr.dbpedia.org'}, {name:'Persee', url: 'http://data.persee.fr'}]
+        value: [{name: 'dbpedia', url:'http://fr.dbpedia.org', type: 'virtuoso'}, {name:'Persee', url: 'http://data.persee.fr'}]
+      },
+      endpoints:{
+        type: Array,
+        value: [
+          {name: 'dbpedia', url:'http://fr.dbpedia.org', actif:true, type: 'virtuoso', read:true, write:false},
+          {name:'Persee', url: 'http://data.persee.fr', actif:true, type: 'virtuoso', read:true, write:false},
+          {name: 'Smag global', url: 'http://5.51', actif:true, type: 'fuseki', read: true, write: true},
+          {name: 'Semantic Forms', url: 'http://192...', actif:false, type: 'sf', read: true, write: true}]
+        }
+      };
+    }
+    constructor(){
+      super();
+
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+
+      });
+    }
+    _deferred(){
+        this.$.scrollEndpoints.dialogElement = this.$.modePopup;
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+        this.agentDialogs = new DialogsAgent('agentDialogs', this);
+        this.initAgents()
+      });
+
+    }
+    initAgents(){
+      //  console.log(this.agentInput)
+      this.agentDialogs.send('agentHello', 'Hello agentHello!');
+      console.log(window.location.hostname);
+      if (window.location.hostname != "127.0.0.1"){
+        console.log(window.location.hostname);
+        this.$.cpt.src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n";
+      }else{
+        console.log(window.location.hostname);
+        this.$.cpt.src = "/doc/spoggy_ncc_vue3.png";
       }
 
-    };
-  }
-  constructor(){
-    super();
 
-    Polymer.RenderStatus.afterNextRender(this, function() {
-      // When possible, use afterNextRender to defer non-critical
-      // work until after first paint.
-      this._deferred();
-
-    });
-  }
-  _deferred(){
-    this.importLazyGroup('lazy').then((results) => {
-      console.log(results);
-      this.dispatchEvent(new CustomEvent('import-loaded', results));
-      this.agentDialogs = new DialogsAgent('agentDialogs', this);
-      this.initAgents()
-    });
-
-  }
-  initAgents(){
-    //  console.log(this.agentInput)
-    this.agentDialogs.send('agentHello', 'Hello agentHello!');
-    console.log(window.location.hostname);
-    if (window.location.hostname != "127.0.0.1"){
-      console.log(window.location.hostname);
-      this.$.cpt.src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n";
-    }else{
-      console.log(window.location.hostname);
-      this.$.cpt.src = "/doc/spoggy_ncc_vue3.png";
+      //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
     }
-
-
-    //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
-  }
-  /*_virtuosoEndpointChanged(e){
-  console.log(e.model.item)
-  this.endpoint = e.model.item.url;
-}*/
+    /*_virtuosoEndpointChanged(e){
+    console.log(e.model.item)
+    this.endpoint = e.model.item.url;
+  }*/
 }
 
 window.customElements.define(SpoggyDialogs.is, SpoggyDialogs);
