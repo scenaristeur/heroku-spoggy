@@ -1,3 +1,4 @@
+test Polymer 3
 (En raison de l'utilisation des [web components](https://www.webcomponents.org/), SPOGGY fonctionne avec les dernières versions de Chrome & Opera, Le chargement dans Firefox < v60 est lent)
 # heroku-spoggy
 
