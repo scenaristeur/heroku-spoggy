@@ -26,35 +26,34 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     clickonNode(node){
       console.log(node);
       let app = this;
-      console.log(this.endpoints)
-      let options = {
-        //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
-        // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
-        //  <'+node.uri+'> rdfs:label ?label\
-        query:  'SELECT * \
-        WHERE {\
-          { <'+node.uri+'> ?p ?o .  <'+node.uri+'> rdfs:label ?label}\
-          UNION \
-          { ?s ?p <'+node.uri+'> . ?s rdfs:label ?label2} \
-        }   LIMIT 100',
+      if (this.endpoints != undefined){
+        console.log(this.endpoints)
+        let options = {
+          //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
+          // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+          //  <'+node.uri+'> rdfs:label ?label\
+          query:  'SELECT * \
+          WHERE {\
+            { <'+node.uri+'> ?p ?o .  <'+node.uri+'> rdfs:label ?label}\
+            UNION \
+            { ?s ?p <'+node.uri+'> . ?s rdfs:label ?label2} \
+          }   LIMIT 100',
 
-        format: 'application/sparql-results+json',
-      }
-      this.endpoints.forEach(function(e){
-        console.log(e);
-        if (e.actif){
-          app.$.ajaxPersee.url = e.url+'/sparql';
-          //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
-          app.$.ajaxPersee.params = options;
-          app.$.ajaxPersee.resource = node;
-          app.$.ajaxPersee.generateRequest()
-        }else{
-          console.log("inactif")
+          format: 'application/sparql-results+json',
         }
-      });
-
-
-
+        this.endpoints.forEach(function(e){
+          console.log(e);
+          if (e.actif){
+            app.$.ajaxPersee.url = e.url+'/sparql';
+            //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+            app.$.ajaxPersee.params = options;
+            app.$.ajaxPersee.resource = node;
+            app.$.ajaxPersee.generateRequest()
+          }else{
+            console.log("inactif")
+          }
+        });  
+      }
     }
 
 
