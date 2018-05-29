@@ -1,0 +1,62 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="./recherche-behavior.html">
+
+<dom-module id="spoggy-recherche">
+  <template>
+    <!--<style>
+    :host {
+     display: block;
+      width:50%;
+    }
+    </style>-->
+    <paper-input label="Recherche {en cours de dev}" autofocus style="width:800px; text-align:left;">
+      <paper-icon-button slot="prefix"  icon="search"></paper-icon-button>
+      <paper-icon-button slot="suffix"  on-tap="clearInput" icon="arrow-forward"></paper-icon-button>
+    </paper-input>
+
+
+<!--
+    <paper-input id="inputMessage"
+    class="inputMessage"
+    on-change="traiteMessage"
+    label="3 mots une virgule et Entrée"
+    raised
+    autofocus>
+  </paper-input>-->
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-recherche`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyRecherche extends Polymer.Element {
+    static get is() { return 'spoggy-recherche'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-recherche'
+        }
+      };
+    }
+  }
+
+  window.customElements.define(SpoggyRecherche.is, SpoggyRecherche);
+  </script>
+</dom-module>
