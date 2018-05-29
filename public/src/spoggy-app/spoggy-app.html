@@ -2,43 +2,43 @@
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
-  <link rel="import" href="../spoggy-graph/spoggy-graph.html">
+<link rel="import" href="../spoggy-graph/spoggy-graph.html">
 
 <dom-module id="spoggy-app">
-<link  rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
+  <link  rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
 
   <link rel="lazy-import" group="lazy" href="../spoggy-dialogs/spoggy-dialogs.html">
   <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
   <link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-data/spoggy-data.html">
-<link rel="lazy-import" group="lazy" href="../spoggy-sparql/spoggy-sparql.html">
-<link rel="lazy-import" group="lazy" href="../spoggy-recherche/spoggy-recherche.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-sparql/spoggy-sparql.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-recherche/spoggy-recherche.html">
   <!--
 
   <link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-mode/spoggy-mode.html">
-  -->
-  <template>
-<!--<center>    <spoggy-recherche></spoggy-recherche></center>-->
-    <spoggy-input>
-      ... Chargement de l'interface  ... <br>
-      Attendez jusqu'au chargement du cercle rose
-    </spoggy-input>
-    <spoggy-graph>
-      ... Chargement du système ... <br>
-    </spoggy-graph>
-    <spoggy-collab></spoggy-collab>
-    <!--<spoggy-hello></spoggy-hello>-->
-    <spoggy-dialogs></spoggy-dialogs>
-    <spoggy-data></spoggy-data>
-<spoggy-sparql></spoggy-sparql>
+-->
+<template>
+  <!--<center>    <spoggy-recherche></spoggy-recherche></center>-->
+  <spoggy-input>
+    ... Chargement de l'interface  ... <br>
+    Attendez jusqu'au chargement du cercle rose
+  </spoggy-input>
+  <spoggy-graph>
+    ... Chargement du système ... <br>
+  </spoggy-graph>
+  <spoggy-collab></spoggy-collab>
+  <!--<spoggy-hello></spoggy-hello>-->
+  <spoggy-dialogs></spoggy-dialogs>
+  <spoggy-data></spoggy-data>
+  <spoggy-sparql></spoggy-sparql>
 
 
-    <!--
-    <spoggy-mode></spoggy-mode>
+  <!--
+  <spoggy-mode></spoggy-mode>
 
 
-  -->
+-->
 </template>
 <script>
 class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
