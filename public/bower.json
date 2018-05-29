@@ -25,7 +25,8 @@
     "app-layout": "^2.1.0",
     "chat-window": "^0.6.1",
     "valle-speed-dial": "^1.1.0",
-    "lazy-imports": "^2.1.0"
+    "lazy-imports": "^2.1.0",
+    "paper-card": "PolymerElements/paper-card#^2.1.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
