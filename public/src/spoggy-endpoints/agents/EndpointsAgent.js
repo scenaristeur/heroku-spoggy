@@ -51,17 +51,25 @@ EndpointsAgent.prototype.receive = function(from, message) {
     this.app.prop1 = message;
   }
 
-
-
   switch(message.type){
     case 'recherche':
     console.log(message)
     this.app.lanceRecherche(message)
-    //  this.app.updateInput(message.resource.trim());
+    break;
+    case 'show':
+    //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
+    var el = message.element;
+    var element = this.app.$[el];
+    this.app.showEndpointsList(element);
+    break;
+    case 'hide':
+    //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
+    var el = message.element;
+    var element = this.app.$[el];
+    this.app.hideEndpointsList(element);
     break;
     default:
     console.log(message);
   }
-
 
 };

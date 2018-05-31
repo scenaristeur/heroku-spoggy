@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 
 <script src="agents/InputAgent.js"></script>
 <link rel="import" href="./input-behavior.html">
@@ -8,135 +9,197 @@
 
 <!--<link rel="import" href="../../bower_components/chat-window/chat-window.html">-->
 
-<link rel="import" href="./input-styles.html">
+<!--<link rel="import" href="./input-styles.html">-->
 <dom-module id="spoggy-input">
-  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
   <template>
-    <style is="custom-style" include="input-styles">
-    .inputbtn{
+    <style is="custom-style">
+    /*.inputbtn{
       @apply --layout-horizontal;
       @apply --layout-flex;
+    }*/
+    paper-input {
+      --paper-input-container {
+        padding : 0
+      }
     }
-    #fabAide {
-      position: fixed;
-      right: 5px;
-      top: 10px;
-    }
+
+
     </style>
-<!--
+    <!--
     <style is="custom-style">
     chat-window.styled {
-      font-size: small;
-      *position: absolute;
-      top: 100px;
-      --chat-messages-height: 12em;
-      --paper-input-container-input: {
-        margin: 0 2px;
-        z-index:100;
-      }
-      --chat-message-text: {
-        z-index:100;
-        background-color: #f0f0f0;
-        padding: 6px 8px;
-        margin: 4px 0;
-        border-radius: 6px;
-      };
-
-      }
-    }
+    font-size: small;
+    *position: absolute;
+    top: 100px;
+    --chat-messages-height: 12em;
+    --paper-input-container-input: {
+    margin: 0 2px;
+    z-index:100;
   }
-  </style>
+  --chat-message-text: {
+  z-index:100;
+  background-color: #f0f0f0;
+  padding: 6px 8px;
+  margin: 4px 0;
+  border-radius: 6px;
+};
+
+}
+}
+}
+</style>
 -->
 
-  <!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
-                <paper-input id="inputMessage"
-                class="inputMessage"
-                on-change="traiteMessage"
-                label="3 mots une virgule et Entrée"
-                autofocus>
+<!--  <spoggy-tools id='tools' lazyRegister sources="{{sources}}" network={{network}}></spoggy-tools> -->
+<!--    <paper-input id="inputMessage"
+class="inputMessage"
+on-change="traiteMessage"
+label="3 mots une virgule et Entrée"
+autofocus>
 
+<paper-icon-button slot="suffix"  on-tap="clearInput" icon="clear"></paper-icon-button>
+</paper-input>
+-->
+
+
+<center>
+  <paper-input id="inputMessage"
+  label="Recherche"
+  autofocus
+  style="max-width:800px;
+  text-align:left;"
+  on-keydown="checkForEnter"
+  on-change="traiteMessage">
+  <paper-icon-button slot="prefix" on-tap="toggleInput" icon="search"></paper-icon-button>
+  <paper-icon-button slot="prefix" on-tap="toggleInput" icon="create"></paper-icon-button>
   <paper-icon-button slot="suffix"  on-tap="clearInput" icon="clear"></paper-icon-button>
-              </paper-input>
-        <!--    <chat-window
-            id = "chat"
-            class="styled"
-            author="me"
-            single-line
-            input-text="{{text}}"
-            messages="[[messages]]"
-            on-send="sendMsg"
-            ></chat-window>-->
+  <paper-icon-button slot="suffix"  on-tap="traiteMessage" icon="arrow-forward"></paper-icon-button>
+</paper-input>
+</center>
+
+
+<!--    <chat-window
+id = "chat"
+class="styled"
+author="me"
+single-line
+input-text="{{text}}"
+messages="[[messages]]"
+on-send="sendMsg"
+></chat-window>-->
 <!--
-          <chat-input
-          author="me"
-          class="styled"
-          single-line
-          single-line="[[singleLine]]"
-          icon="[[sendIcon]]"
-          text="{{inputText}}"
-          on-send="sendMsg"></chat-input>
+<chat-input
+author="me"
+class="styled"
+single-line
+single-line="[[singleLine]]"
+icon="[[sendIcon]]"
+text="{{inputText}}"
+on-send="sendMsg"></chat-input>
 
-          <chat-messages
-          class="styled"
-          id = "chat"
-          author="[[author]]"
-          author-icon="[[authorIcon]]"
-          others-icons="[[othersIcons]]"
-          default-icon="[[defaultIcon]]"
-          messages="[[messages]]"
-          date-format="[[dateFormat]]"
-          auto-scroll="[[autoScroll]]">
-        </chat-messages>
+<chat-messages
+class="styled"
+id = "chat"
+author="[[author]]"
+author-icon="[[authorIcon]]"
+others-icons="[[othersIcons]]"
+default-icon="[[defaultIcon]]"
+messages="[[messages]]"
+date-format="[[dateFormat]]"
+auto-scroll="[[autoScroll]]">
+</chat-messages>
 -->
-        <!--<div style="align:right">
-        <paper-icon-button icon="help" on-tap="afficheAide"></paper-icon-button>
-      </div>-->
-      <!--<paper-fab id="fabAide" on-tap="afficheAide"  icon="help" style="height: 50px; width:50px;"></paper-fab>-->
+<!--<div style="align:right">
+<paper-icon-button icon="help" on-tap="afficheAide"></paper-icon-button>
+</div>-->
+<!--<paper-fab id="fabAide" on-tap="afficheAide"  icon="help" style="height: 50px; width:50px;"></paper-fab>-->
 
-    </template>
+</template>
 
-    <script>
-    /**
-    * `spoggy-input`
-    *
-    *
-    * @customElement
-    * @polymer
-    * @demo demo/index.html
+<script>
+/**
+* `spoggy-input`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyInput extends InputBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-input'; }
+  static get properties() {
+    return {
+      commandHistory:{
+        type : Array,
+        value: []
+      },
+      /*  sources:{
+      type: Array,
+      notify: true
+    },
     */
-    class SpoggyInput extends InputBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
-      static get is() { return 'spoggy-input'; }
-      static get properties() {
-        return {
-          commandHistory:{
-            type : Array,
-            value: []
-          },
-        /*  sources:{
-            type: Array,
-            notify: true
-          },
-        */
-        };
-      }
+  };
+}
 
-      constructor(){
-        super();
-        this.agentInput = new InputAgent('agentInput', this);
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          this._deferred();
-        });
-      }
-      _deferred(){
-          this.initAgents()
-      }
-      initAgents(){
-        this.agentInput.send('agentHello', 'Hello agentHello!');
-      }
+constructor(){
+  super();
+  this.agentInput = new InputAgent('agentInput', this);
+  Polymer.RenderStatus.afterNextRender(this, function() {
+    this._deferred();
+  });
+}
+_deferred(){
+  this.initAgents()
+    this.$.inputMessage.label = "Création : saisissez 3 mots, une virgule et Entrée";
+    this.mode = "create"
+}
+initAgents(){
+  this.agentInput.send('agentHello', 'Hello agentHello!');
+}
 
+checkForEnter(e) {
+  // check if 'enter' was pressed
+  if (e.keyCode === 13) {
+    // enter pressed!
+    if (this.mode == "search"){
+      this.traiteMessage();
     }
 
-    window.customElements.define(SpoggyInput.is, SpoggyInput);
-    </script>
-  </dom-module>
+  }
+}
+
+lanceRecherche(){
+  var texte = this.$.inputMessage.value;
+  this.$.inputMessage.value="";
+  console.log(texte)
+  this.agentInput.send('agentEndpoints', {type: 'recherche', texte: texte });
+}
+toggleInput(e){
+  this.mode = e.detail.sourceEvent.target.icon;
+  switch(this.mode){
+    case 'search':
+    this.agentInput.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
+    this.$.inputMessage.label = "Recherche";
+    break;
+    case 'create':
+    this.agentInput.send('agentEndpoints', {type: 'hide', element: 'endpointsList' });
+    this.$.inputMessage.label = "Création : saisissez 3 mots, une virgule et Entrée";
+    break;
+    default:
+    console.log('inconnu : '+this.mode)
+  }
+}
+
+
+
+}
+
+window.customElements.define(SpoggyInput.is, SpoggyInput);
+</script>
+</dom-module>

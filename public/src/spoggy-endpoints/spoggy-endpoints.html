@@ -9,7 +9,7 @@
 <script src="agents/EndpointsAgent.js"></script>
 <link rel="import" href="./endpoints-behavior.html">
 
-  <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 
@@ -33,12 +33,14 @@
 
   <template>
     <style include="shared-styles">
-    :host {
-      display: block;
+    /*:host {
+    display: block;
 
-      padding: 10px;
+    padding: 10px;
+    }*/
+    #endpointsList {
+      display: none;
     }
-
     .flex-wrap {
       @apply --layout-horizontal;
       @apply --layout-wrap;
@@ -123,8 +125,7 @@
   TEST
 </paper-input>-->
 <div id="endpointsList">
-  <paper-button raised  on-tap="hideEndpointsList">Passer en mode création</paper-button>
-
+  Activez les triplestore dans lesquels vous souhaitez effectuer vos recherches : 
   <div   class="container flex-wrap">
 
     <template is="dom-repeat" items="[[endpoints]]">
@@ -358,7 +359,7 @@ constructor(){
   });
 }
 _deferred(){
-    this.initAgents()
+  this.initAgents()
 }
 initAgents(){
   this.agentEndpoints.send('agentHello', 'Hello agentHello!');

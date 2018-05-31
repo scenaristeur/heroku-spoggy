@@ -21,15 +21,35 @@ var EndpointsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 
     lanceRecherche(message){
-      this.hideEndpointsList()
+      this.hideEndpointsList(this.$.endpointsList)
       console.log(message);
       console.log(this.endpoints)
     }
 
+    showEndpointsList(element){
 
+      element.style.display = "block";
+      //  this.app.updateInput(message.resource.trim());
+      const animation = element.animate([
+        {transform:'translateY(100%)', opacity: 1, easing: 'ease-out'},
+        {transform:'translateY(0%)', opacity: 1, easing: 'ease-in'},
+        {transform:'translateY(0%)', opacity: 1}
+      ],
+      {
+        duration: 1500,
+      });
 
-    hideEndpointsList(){
-      const animation = this.$.endpointsList.animate([
+      animation.finished.then(() => {
+        // Preserve end position of the animation
+        element.style.transform = 'translateY(0%)';
+        //  this.$.endpointsList.style.opacity = 0;
+        element.style.display = 'block';
+      });
+
+    }
+
+    hideEndpointsList(element){
+      const animation = element.animate([
         {transform:'translateY(0)', opacity: 1, easing: 'ease-out'},
         {transform:'translateY(100%)', opacity: 1, easing: 'ease-in'},
         {transform:'translateY(100%)', opacity: 0 }
@@ -40,18 +60,18 @@ var EndpointsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
       animation.finished.then(() => {
         // Preserve end position of the animation
-        this.$.endpointsList.style.transform = 'translateY(100%)';
+        element.style.transform = 'translateY(100%)';
         //  this.$.endpointsList.style.opacity = 0;
-        this.$.endpointsList.style.display = 'none';
+        element.style.display = 'none';
       });
     }
 
     /*updateInputValue(texte){
-      //merdique obligé de mettre ce behavior sur spoggy-graph pour cette fonction !
-      console.log("Element");
-      console.log(texte);
-      this.$.inputMessage.value = texte;
-    }*/
+    //merdique obligé de mettre ce behavior sur spoggy-graph pour cette fonction !
+    console.log("Element");
+    console.log(texte);
+    this.$.inputMessage.value = texte;
+  }*/
 
 
 }
