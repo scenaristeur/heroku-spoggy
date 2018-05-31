@@ -51,7 +51,9 @@ VirtuosoAgent.prototype.receive = function(from, message) {
     console.log("updateEndpoint");
     this.app.updateUrls(message.url);
     break;*/
-
+    case 'recherche':
+    this.app.recherche(message);
+    break;
     case 'testEndpoint':
     this.app.endpoints = message.endpoints;
     this.app.sendPingRequest(message.endpoint);

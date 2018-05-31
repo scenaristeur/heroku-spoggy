@@ -61,6 +61,9 @@ SparqlAgent.prototype.receive = function(from, message) {
       console.log("Je ne connais pas ce type de endpoint : "+message.endpointType);
     }*/
     break;
+    case 'recherche':
+    console.log('recherche');
+    this.app.recherche(message);
 
     default:
     console.log(message);

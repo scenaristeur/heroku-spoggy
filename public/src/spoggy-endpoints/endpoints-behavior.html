@@ -24,6 +24,7 @@ var EndpointsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.hideEndpointsList(this.$.endpointsList)
       console.log(message);
       console.log(this.endpoints)
+      this.agentEndpoints.send('agentSparql', {type: 'recherche', endpoints: this.endpoints, recherche: message.texte });
     }
 
     showEndpointsList(element){

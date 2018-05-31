@@ -17,7 +17,7 @@
     handle-as="application/sparql-results+json"
     on-response="_handleResponse"
     on-error="_handlePingError"
-></iron-ajax>
+    ></iron-ajax>
 
     <iron-ajax
     id="ajaxget"
@@ -45,8 +45,18 @@
     params="{{options}}"
     handle-as="application/sparql-results+json"
     on-response="_handlePerseeResponse"
-    on-error="_handlePerseeError"
-></iron-ajax>
+    on-error="_handlePerseeError"></iron-ajax>
+
+    <iron-ajax
+    id="ajaxRecherche"
+    url="{{url}}"
+    params="{{options}}"
+    handle-as="application/sparql-results+json"
+    on-response="_handleRechercheResponse"
+    on-error="_handleRechercheError"></iron-ajax>
+
+
+
   </template>
 
   <script>

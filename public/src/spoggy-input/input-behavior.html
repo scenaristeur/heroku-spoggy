@@ -24,6 +24,28 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.$.inputMessage.value = texte;
     }
 
+    lanceRecherche(){
+      var texte = this.$.inputMessage.value;
+      this.$.inputMessage.value="";
+      console.log(texte)
+      this.agentInput.send('agentEndpoints', {type: 'recherche', texte: texte });
+    }
+    toggleInput(e){
+      this.mode = e.detail.sourceEvent.target.icon;
+      switch(this.mode){
+        case 'search':
+        this.agentInput.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
+        this.$.inputMessage.label = "Recherche";
+        break;
+        case 'create':
+        this.agentInput.send('agentEndpoints', {type: 'hide', element: 'endpointsList' });
+        this.$.inputMessage.label = "Création : saisissez 3 mots, une virgule et Entrée";
+        break;
+        default:
+        console.log('inconnu : '+this.mode)
+      }
+    }
+
     traiteMessage(){
       if (this.mode == "search"){
         this.lanceRecherche();

@@ -23,6 +23,33 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
+    recherche(message){
+      console.log(message)
+      let app = this;
+      let e = message.endpoint;
+      let recherche = message.recherche;
+      // this.agentSparql.send('agentVirtuoso', {type:'recherche', endpoint: endpoint, recherche: recherche});
+      let options = {
+        //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
+        // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+        //  <'+node.uri+'> rdfs:label ?label\
+        query:  'SELECT * WHERE { ?s rdfs:label ?label . \
+          ?s rdf:type ?type . \
+          FILTER(bif:contains(?label, "'+recherche+'")) . \
+        }  LIMIT 100',
+
+        format: 'application/sparql-results+json',
+      }
+      console.log(options.query)
+      app.$.ajaxRecherche.url = e.url+'/sparql';
+      //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+      app.$.ajaxRecherche.params = options;
+      app.$.ajaxRecherche.resource = recherche;
+      app.$.ajaxRecherche.generateRequest()
+
+    }
+
+
     clickonNode(node){
       console.log(node);
       let app = this;
@@ -52,7 +79,7 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           }else{
             console.log("inactif")
           }
-        });  
+        });
       }
     }
 
@@ -186,6 +213,27 @@ _handlePingError(data){
   console.log(data.detail.request.response);
 }
 
+_handleRechercheResponse(data){
+  console.log("Reponse recherche")
+  //  console.log(data);
+  //  console.log(data.detail);
+  //  console.log(data.detail.error);
+  //  console.log(data.detail.error.message);
+  //  console.log(data.detail.request);
+  console.log(data.detail.response); // -->
+  let resource = data.path[0].resource;
+  console.log("Resource :"+ resource)
+  let response = JSON.parse(data.detail.response);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+
+  var visResults = this.rechercheToVis(results, resource);
+  console.log(visResults);
+  this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+}
 _handlePerseeResponse(data){
   console.log("Reponse Persee");
   //  console.log(data);
@@ -209,6 +257,20 @@ _handlePerseeResponse(data){
 }
 _handlePerseeError(data){
   console.log("error Persee");
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+
+}
+
+
+
+_handleRechercheError(data){
+  console.log("error Recherche");
   console.log(data);
   console.log(data.detail);
   console.log(data.detail.error);
@@ -288,6 +350,27 @@ resourcePerseeToVis(results){
     }
     visRes.nodes.push(node);
   });
+  return visRes;
+}
+
+rechercheToVis(results, recherche){
+  let app = this;
+  var visRes = {nodes:[], edges:[]};
+  console.log(recherche)
+  var nodeRecherche = {id: recherche, label: recherche};
+  !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    console.log(r);
+    let nS = {id: r.s.value, label: app.visLabel(r.s.value), uri: r.s.value}; // noeud sujet
+    let nType = {id: r.type.value, label: app.visLabel(r.type.value), uri: r.type.value}; //noeud type
+    console.log(nS);
+    let  e2 = {from : nS.id, to: nodeRecherche.id, label: "contient"}
+    let  eType = {from : nS.id, to: nType.id, label: "type"}
+    !visRes.nodes.includes(nS)&& visRes.nodes.push(nS);
+    !visRes.edges.includes(e2) && visRes.edges.push(e2);
+    !visRes.nodes.includes(nType)&& visRes.nodes.push(nType);
+    !visRes.edges.includes(eType) && visRes.edges.push(eType);
+  })
   return visRes;
 }
 
