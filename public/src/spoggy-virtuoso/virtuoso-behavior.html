@@ -52,7 +52,23 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
             app.$.ajaxPersee.params = options;
             app.$.ajaxPersee.resource = node;
-            app.$.ajaxPersee.generateRequest()
+            app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+            console.log(req)
+            console.log(req.response)
+            console.log(resp)
+            var data = req.response;
+            var endpointUrl = node.endpointUrl;
+            app._handlePerseeResponse(data, node, endpointUrl)
+              // succesful request, argument is iron-request element
+            //  ...
+            }, function(rejected) {
+              // failed request, argument is an object
+              let req = rejected.request;
+              let error = rejected.error;
+                console.log(req)
+                  console.log(error)
+            //  ...
+          });
           }
           else{
             console.log("inactif")
@@ -65,7 +81,29 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         app.$.ajaxPersee.params = options;
         console.log(options)
         app.$.ajaxPersee.resource = node;
-        app.$.ajaxPersee.generateRequest()
+        app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+        console.log(req)
+        console.log(req.response)
+        console.log(resp)
+        var data = req.response;
+        var endpointUrl = node.endpointUrl;
+        app._handlePerseeResponse(data, node, endpointUrl)
+          // succesful request, argument is iron-request element
+        //  ...
+        }, function(rejected) {
+          // failed request, argument is an object
+          let req = rejected.request;
+          let error = rejected.error;
+            console.log(req)
+              console.log(error)
+        //  ...
+      });
+
+
+        /*.then(
+      	request => console.log('success', request),
+        request => console.log('failure', request)
+      );*/
 
       }
     }
@@ -79,7 +117,10 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log(this.url);
       if (this.url.length>0){
 
-        this.$.ajaxget.generateRequest();
+        this.$.ajaxget.generateRequest().completes.then(
+      	request => console.log('success', request),
+        request => console.log('failure', request)
+      );
       }
     }
 
@@ -108,7 +149,10 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     this.$.pingRequest.url = endpoint.url+'/sparql';
     //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
     this.$.pingRequest.params = options;
-    this.$.pingRequest.generateRequest()
+    this.$.pingRequest.generateRequest().completes.then(
+      	request => console.log('success', request),
+        request => console.log('failure', request)
+      );
     //  }
     /*.completes.then(function (request){
     var rep = request.response;
@@ -127,13 +171,19 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 sendRequestPersee(){
   console.log(this.url);
   if (this.url.length>0){
-    this.$.ajaxPersee.generateRequest();
+    this.$.ajaxPersee.generateRequest().completes.then(
+      	request => console.log('success', request),
+        request => console.log('failure', request)
+      );
   }
 }
 sendDescribe(){
   console.log(this.url);
   if (this.virtuosoActif == true){
-    this.$.describeGet.generateRequest();
+    this.$.describeGet.generateRequest().completes.then(
+      	request => console.log('success', request),
+        request => console.log('failure', request)
+      );
   }
 }
 
@@ -223,17 +273,36 @@ recherche(message){
   app.$.ajaxRecherche.url = e.url+'/sparql';
   //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
   app.$.ajaxRecherche.params = options;
-  app.$.ajaxRecherche.resource = recherche;
-  app.$.ajaxRecherche.generateRequest()
+//  app.$.ajaxRecherche.resource = recherche;
+  app.$.ajaxRecherche.generateRequest().completes.then(function(req,resp) {
+  console.log(req)
+  console.log(req.response)
+  console.log(resp)
+  var data = req.response;
+  var endpointUrl = e.url+'/sparql'
+  app._handleRechercheResponse(data, recherche, endpointUrl)
+    // succesful request, argument is iron-request element
+  //  ...
+  }, function(rejected) {
+    // failed request, argument is an object
+    let req = rejected.request;
+    let error = rejected.error;
+      console.log(req)
+        console.log(error)
+  //  ...
+});
 
 }
 
-_handleRechercheResponse(data){
+_handleRechercheResponse(data, resource, endpointUrl){
+
   console.log("Reponse recherche")
 //  console.log(data.detail.response);
+/*console.log(data)
+console.log(req.detail)
   let resource = data.path[0].resource;
-  let endpointUrl = data.path[0].url;
-  let response = JSON.parse(data.detail.response);
+  let endpointUrl = data.path[0].url;*/
+  let response = JSON.parse(data);
   let link = response.head.link;
   let vars = response.head.vars;
   let results = response.results.bindings;
@@ -286,7 +355,7 @@ rechercheToVis(results, recherche, endpointUrl){
 }
 
 
-_handlePerseeResponse(data){
+_handlePerseeResponse(data, resource, endpointUrl){
   console.log("Reponse Persee");
   //  console.log(data);
   //  console.log(data.detail);
@@ -294,10 +363,10 @@ _handlePerseeResponse(data){
   //  console.log(data.detail.error.message);
   //  console.log(data.detail.request);
   //console.log(data.detail.response); // -->
-  let resource = data.path[0].resource;
-  let endpointUrl = data.path[0].url;
+  /*let resource = data.path[0].resource;
+  let endpointUrl = data.path[0].url;*/
   console.log("Resource :"+ resource)
-  let response = JSON.parse(data.detail.response);
+  let response = JSON.parse(data);
   let link = response.head.link;
   let vars = response.head.vars;
   let results = response.results.bindings;
