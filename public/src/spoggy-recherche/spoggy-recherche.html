@@ -1,18 +1,21 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
 <link rel="import" href="./recherche-behavior.html">
 
+<script src="agents/RechercheAgent.js"></script>
+
 
 <dom-module id="spoggy-recherche">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
   <template>
     <style>
     :host {
@@ -21,9 +24,9 @@
     }
     </style>
     <center>
-      <paper-input label="Recherche {en cours de dev}" autofocus style="width:800px; text-align:left;">
+      <paper-input id="input" label="Recherche" autofocus style="width:800px; text-align:left;" on-keydown="checkForEnter">
         <paper-icon-button slot="prefix"  icon="search"></paper-icon-button>
-        <paper-icon-button slot="suffix"  on-tap="clearInput" icon="arrow-forward"></paper-icon-button>
+        <paper-icon-button slot="suffix"  on-tap="lanceRecherche" icon="arrow-forward"></paper-icon-button>
       </paper-input>
     </center>
 
@@ -47,7 +50,7 @@
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyRecherche extends Polymer.Element {
+class SpoggyRecherche extends RechercheBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
   static get is() { return 'spoggy-recherche'; }
   static get properties() {
     return {
@@ -57,6 +60,35 @@ class SpoggyRecherche extends Polymer.Element {
       }
     };
   }
+
+  constructor(){
+    super();
+    this.agentRecherche = new RechercheAgent('agentRecherche', this);
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+      this.initAgents()
+  }
+  initAgents(){
+    this.agentRecherche.send('agentHello', 'Hello agentHello!');
+  }
+
+  checkForEnter(e) {
+    // check if 'enter' was pressed
+    if (e.keyCode === 13) {
+      // enter pressed!
+      this.lanceRecherche();
+    }
+  }
+  lanceRecherche(){
+    var texte = this.$.input.value;
+    this.$.input.value="";
+    console.log(texte)
+    this.agentRecherche.send('agentEndpoints', {type: 'recherche', texte: texte });
+  }
+
 }
 
 window.customElements.define(SpoggyRecherche.is, SpoggyRecherche);

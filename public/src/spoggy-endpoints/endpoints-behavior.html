@@ -1,0 +1,60 @@
+
+<script>
+/* @polymerMixin */
+var EndpointsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class EndpointsBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("*************************INPUT behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'recherche Beha'
+        }
+      };
+    }
+
+
+
+    lanceRecherche(message){
+      this.hideEndpointsList()
+      console.log(message);
+      console.log(this.endpoints)
+    }
+
+
+
+    hideEndpointsList(){
+      const animation = this.$.endpointsList.animate([
+        {transform:'translateY(0)', opacity: 1, easing: 'ease-out'},
+        {transform:'translateY(100%)', opacity: 1, easing: 'ease-in'},
+        {transform:'translateY(100%)', opacity: 0 }
+      ],
+      {
+        duration: 1500,
+      });
+
+      animation.finished.then(() => {
+        // Preserve end position of the animation
+        this.$.endpointsList.style.transform = 'translateY(100%)';
+        //  this.$.endpointsList.style.opacity = 0;
+        this.$.endpointsList.style.display = 'none';
+      });
+    }
+
+    /*updateInputValue(texte){
+      //merdique obligé de mettre ce behavior sur spoggy-graph pour cette fonction !
+      console.log("Element");
+      console.log(texte);
+      this.$.inputMessage.value = texte;
+    }*/
+
+
+}
+});
+
+</script>

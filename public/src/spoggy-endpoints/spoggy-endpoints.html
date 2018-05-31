@@ -1,29 +1,36 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../spoggy-agent/spoggy-agent.html">
-<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-<!-- import template repeater -->
-<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
-<!--
-<link rel="import" href="./dialogs-behavior.html">-->
 
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../../bower_components/iron-icons/communication-icons.html">
-<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
-<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+
+<script src="agents/EndpointsAgent.js"></script>
+<link rel="import" href="./endpoints-behavior.html">
+
+  <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
-
-
 
 
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="spoggy-endpoints">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse/iron-collapse.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/communication-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/social-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
+  <!-- WEB - web-animations https://medium.com/collaborne-engineering/polymer-2-0-replace-neon-animation-with-web-animations-api-e82d7bd82e6 -->
+
+
   <template>
     <style include="shared-styles">
     :host {
@@ -45,7 +52,10 @@
     }
     paper-card {
       max-width: 350px;
-      margin: 10px
+      margin: 10px;
+      --paper-card-header-image: {
+        width: 50%;
+      };
     }
     .horizontal {
       @apply --layout-horizontal;
@@ -106,12 +116,22 @@
   </style>
 
 
-  <div class="container flex-wrap">
+
+
+  <!--
+  <paper-input id="endpointsList" class="container flex-wrap">
+  TEST
+</paper-input>-->
+<div id="endpointsList">
+  <paper-button raised  on-tap="hideEndpointsList">Passer en mode création</paper-button>
+
+  <div   class="container flex-wrap">
+
     <template is="dom-repeat" items="[[endpoints]]">
       <!--  <paper-item  value="{{item.url}}">
     </paper-item>-->
 
-    <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible">
+    <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
       <div class="card-content">
         <div class="cafe-header">[[item.name]]
           <div class="cafe-location cafe-light">
@@ -175,7 +195,7 @@
 </template>
 
 <!-- PROPOSER ENDPOINT -->
-<div  class="card" image="http://placehold.it/350x150/FFC107/000000">
+<div  id="proposer" class="card" >
   <h2>Proposez votre propre Endpoint</h2>
   <div class="card-content">
     <p>Installer un Endpoint Sparql :
@@ -210,6 +230,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -221,7 +242,7 @@
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyEndpoints extends Polymer.Element {
+class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
   static get is() { return 'spoggy-endpoints'; }
   static get properties() {
     return {
@@ -244,6 +265,18 @@ class SpoggyEndpoints extends Polymer.Element {
             read: true,
             write: true
           },
+          {
+            name: 'Votre Endpoint',
+            description:'Utilisez votre endpoint local. \nPour installer votre endpoint, voir plus bas "Proposer votre Endpoint"',
+            url: 'http://127.0.0.1:3030',
+            image: '/images/spoggy.png',
+            actif: false,
+            type: 'fuseki',
+            read: true,
+            write: true
+          },
+
+
           {
             name: 'DBpedia FR',
             description: "DBpedia en français est le chapitre francophone de DBpedia,\
@@ -285,7 +318,10 @@ class SpoggyEndpoints extends Polymer.Element {
         },
         {
           name: 'Semantic Forms',
-          url: 'http://192...',
+          description: "Semantic_forms est une application générique à la fois de navigation du web sémantique et d'annotation,\
+          et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
+          plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
+          url: 'http://163.172.179.125:9111/',
           actif: false,
           type: 'sf',
           read: true,
@@ -314,6 +350,20 @@ class SpoggyEndpoints extends Polymer.Element {
 };
 }
 
+constructor(){
+  super();
+  this.agentEndpoints = new EndpointsAgent('agentEndpoints', this);
+  Polymer.RenderStatus.afterNextRender(this, function() {
+    this._deferred();
+  });
+}
+_deferred(){
+    this.initAgents()
+}
+initAgents(){
+  this.agentEndpoints.send('agentHello', 'Hello agentHello!');
+}
+
 isEmpty(value){
   return value == undefined || value.length == 0;
 }
@@ -325,6 +375,38 @@ image(value){
     return '/images/Rdf.png'
   }
 }
+
+/*hideEndpointsList(){
+//  this.$.endpointsList.animate({ transform: 'scale(0)', opacity: 0 }, 300);
+this.$.endpointsList.animate([
+{transform:'translateY(0)', opacity: 1, easing: 'ease-out'},
+{transform:'translateY(100%)', opacity: 1, easing: 'ease-in'},
+{transform:'translateY(100%)', opacity: 0 }
+],
+{
+duration: 1500,
+});
+
+}*/
+
+hideEndpointsList(){
+  const animation = this.$.endpointsList.animate([
+    {transform:'translateY(0)', opacity: 1, easing: 'ease-out'},
+    {transform:'translateY(100%)', opacity: 1, easing: 'ease-in'},
+    {transform:'translateY(100%)', opacity: 0 }
+  ],
+  {
+    duration: 1500,
+  });
+
+  animation.finished.then(() => {
+    // Preserve end position of the animation
+    this.$.endpointsList.style.transform = 'translateY(100%)';
+    //  this.$.endpointsList.style.opacity = 0;
+    this.$.endpointsList.style.display = 'none';
+  });
+}
+
 }
 
 window.customElements.define(SpoggyEndpoints.is, SpoggyEndpoints);
