@@ -389,23 +389,7 @@ duration: 1500,
 
 }*/
 
-hideEndpointsList(){
-  const animation = this.$.endpointsList.animate([
-    {transform:'translateY(0)', opacity: 1, easing: 'ease-out'},
-    {transform:'translateY(100%)', opacity: 1, easing: 'ease-in'},
-    {transform:'translateY(100%)', opacity: 0 }
-  ],
-  {
-    duration: 1500,
-  });
 
-  animation.finished.then(() => {
-    // Preserve end position of the animation
-    this.$.endpointsList.style.transform = 'translateY(100%)';
-    //  this.$.endpointsList.style.opacity = 0;
-    this.$.endpointsList.style.display = 'none';
-  });
-}
 
 }
 
