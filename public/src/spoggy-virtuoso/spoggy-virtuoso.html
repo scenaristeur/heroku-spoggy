@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 
 <link rel="import" href="./virtuoso-behavior.html">
 
@@ -9,6 +9,10 @@
 
 <dom-module id="spoggy-virtuoso">
   <template>
+
+    <template is="dom-if" if="{{loading}}">
+      <paper-progress id="progressBar"  indeterminate></paper-progress> <!--value ="{{progress}}"  -->
+    </template>
 
     <iron-ajax
     id="pingRequest"
@@ -39,10 +43,12 @@
     on-error="_handleDescribeError"
     debounce-duration="300"></iron-ajax>
 
+
     <iron-ajax
     id="ajaxPersee"
     url="{{url}}"
     params="{{options}}"
+    loading="{{loading}}"
     handle-as="application/sparql-results+json"></iron-ajax>
 <!--    on-response="_handlePerseeResponse"
     on-error="_handlePerseeError"-->
@@ -50,6 +56,7 @@
     id="ajaxRecherche"
     url="{{url}}"
     params="{{options}}"
+    loading="{{loading}}"
     handle-as="application/sparql-results+json"></iron-ajax>
     <!--on-response="_handleRechercheResponse"
     on-error="_handleRechercheError"-->
