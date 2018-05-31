@@ -31,9 +31,6 @@ GraphAgent.prototype.sayHello = function(to) {
 * @param {*} message       Received message, a JSON object (often a string)
 */
 GraphAgent.prototype.receive = function(from, message) {
-  console.log(from + ' said: ' + JSON.stringify(message) );
-  this.app.prop1 = message;
-
 
   if (typeof message == String && message.indexOf('Hello') === 0) {
     // reply to the greeting

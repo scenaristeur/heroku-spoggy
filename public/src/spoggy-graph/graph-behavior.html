@@ -108,19 +108,14 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       let network = this.network;
       network.body.data.nodes.clear();
       network.body.data.edges.clear();
-      console.log(message.results)
-      console.log(message.typeResource);
+    //  console.log(message.results)
+    //  console.log(message.typeResource);
       let nResource = {
         label: message.typeResource
       }
       let idRes = network.body.data.nodes.update(nResource)[0];
-
-      console.log(idRes);
-
-
       let nodes = message.results.nodes;
         network.body.data.nodes.update(nodes);
-
         network.body.data.edges.update(message.results.edges);
       }
 
@@ -130,8 +125,8 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         console.log(results)
         var app = this;
         let network = this.network;
-        network.body.data.nodes.clear();
-        network.body.data.edges.clear();
+      //  network.body.data.nodes.clear();
+      //  network.body.data.edges.clear();
 
         Object.keys(results).forEach(function(id) {
           var data = results[id];

@@ -31,9 +31,6 @@ SparqlAgent.prototype.sayHello = function(to) {
 * @param {*} message       Received message, a JSON object (often a string)
 */
 SparqlAgent.prototype.receive = function(from, message) {
-  console.log(from + ' said: ' + JSON.stringify(message) );
-  this.app.prop1 = message;
-
 
   if (typeof message == String && message.indexOf('Hello') === 0) {
     // reply to the greeting
@@ -43,28 +40,13 @@ SparqlAgent.prototype.receive = function(from, message) {
 
 
   switch(message.type){
-  /*  case 'updateEndpoint':
-    console.log("updateEndpoint");
-    this.app.updateUrls(message.url);
-    break;*/
-
-  //  this.agentMode.send('agentSparql', {type: 'testEndpoint', endpoint: this.endpoint});
     case 'updateEndpoints':
     console.log("updateEndpoints");
     console.log(message)
       this.app.testEndpoints(message.endpoints);
-  /*  if (message.endpointType == 'fuseki'){
-        this.app.testFuseki(message);
-    }else if (message.endpointType == 'virtuoso'){
-        this.app.testVirtuoso(message);
-    }else {
-      console.log("Je ne connais pas ce type de endpoint : "+message.endpointType);
-    }*/
     break;
     case 'recherche':
-    console.log('recherche');
     this.app.recherche(message);
-
     default:
     console.log(message);
   }

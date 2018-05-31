@@ -30,32 +30,24 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       let recherche = message.recherche;
       endpoints.forEach(function(endpoint){
         endpoint.description = null;
-        console.log(endpoint);
-
         if(endpoint.actif){
           switch (endpoint.type) {
             case 'virtuoso':
-            console.log('virtuoso');
             console.log(endpoint)
             app.rechercheVirtuoso(endpoint, recherche)
             break;
             case 'fuseki':
-            console.log('fuseki');
             console.log(endpoint)
             app.rechercheFuseki(endpoint, recherche)
             break;
             default:
             console.log('On ne traite pas encore ' + endpoint.type + '.');
           }
-        }else{
-          console.log("inactif");
         }
       } );
     }
 
     rechercheVirtuoso(endpoint, recherche){
-      console.log(endpoint);
-      console.log(recherche);
       this.agentSparql.send('agentVirtuoso', {type:'recherche', endpoint: endpoint, recherche: recherche});
     }
 

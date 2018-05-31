@@ -23,51 +23,28 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
-    recherche(message){
-      console.log(message)
+
+    clickonNode(node){
+      console.log(node);
+      console.log(this.endpoints)
       let app = this;
-      let e = message.endpoint;
-      let recherche = message.recherche;
-      // this.agentSparql.send('agentVirtuoso', {type:'recherche', endpoint: endpoint, recherche: recherche});
+
       let options = {
         //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
         // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
         //  <'+node.uri+'> rdfs:label ?label\
-        query:  'SELECT * WHERE { ?s rdfs:label ?label . \
-          ?s rdf:type ?type . \
-          FILTER(bif:contains(?label, "'+recherche+'")) . \
-        }  LIMIT 100',
+        query:  'SELECT * \
+        WHERE {\
+          { <'+node.uri+'> ?p ?o .  <'+node.uri+'> rdfs:label ?label}\
+          UNION \
+          { ?s ?p <'+node.uri+'> . ?s rdfs:label ?label2} \
+        }   LIMIT 300',
 
         format: 'application/sparql-results+json',
       }
-      console.log(options.query)
-      app.$.ajaxRecherche.url = e.url+'/sparql';
-      //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
-      app.$.ajaxRecherche.params = options;
-      app.$.ajaxRecherche.resource = recherche;
-      app.$.ajaxRecherche.generateRequest()
 
-    }
-
-
-    clickonNode(node){
-      console.log(node);
-      let app = this;
       if (this.endpoints != undefined){
         console.log(this.endpoints)
-        let options = {
-          //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
-          // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
-          //  <'+node.uri+'> rdfs:label ?label\
-          query:  'SELECT * \
-          WHERE {\
-            { <'+node.uri+'> ?p ?o .  <'+node.uri+'> rdfs:label ?label}\
-            UNION \
-            { ?s ?p <'+node.uri+'> . ?s rdfs:label ?label2} \
-          }   LIMIT 100',
-
-          format: 'application/sparql-results+json',
-        }
         this.endpoints.forEach(function(e){
           console.log(e);
           if (e.actif){
@@ -76,10 +53,20 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             app.$.ajaxPersee.params = options;
             app.$.ajaxPersee.resource = node;
             app.$.ajaxPersee.generateRequest()
-          }else{
+          }
+          else{
             console.log("inactif")
           }
         });
+      }else if (node.endpointUrl != undefined){
+        console.log("REcherche complementaire")
+        app.$.ajaxPersee.url = node.endpointUrl;
+        //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+        app.$.ajaxPersee.params = options;
+        console.log(options)
+        app.$.ajaxPersee.resource = node;
+        app.$.ajaxPersee.generateRequest()
+
       }
     }
 
@@ -213,16 +200,39 @@ _handlePingError(data){
   console.log(data.detail.request.response);
 }
 
+
+recherche(message){
+  console.log(message)
+  let app = this;
+  let e = message.endpoint;
+  let recherche = message.recherche;
+  // this.agentSparql.send('agentVirtuoso', {type:'recherche', endpoint: endpoint, recherche: recherche});
+  let options = {
+    //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
+    // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+    //  <'+node.uri+'> rdfs:label ?label\
+    query:  'SELECT distinct * WHERE { ?s rdfs:label ?label . \
+      ?s rdf:type ?type . \
+      OPTIONAL {   ?s dcterms:title ?title .} \
+      FILTER(bif:contains(?label, "'+recherche+'")) . \
+    }  LIMIT 100',
+
+    format: 'application/sparql-results+json',
+  }
+  console.log(options.query)
+  app.$.ajaxRecherche.url = e.url+'/sparql';
+  //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+  app.$.ajaxRecherche.params = options;
+  app.$.ajaxRecherche.resource = recherche;
+  app.$.ajaxRecherche.generateRequest()
+
+}
+
 _handleRechercheResponse(data){
   console.log("Reponse recherche")
-  //  console.log(data);
-  //  console.log(data.detail);
-  //  console.log(data.detail.error);
-  //  console.log(data.detail.error.message);
-  //  console.log(data.detail.request);
-  console.log(data.detail.response); // -->
+//  console.log(data.detail.response);
   let resource = data.path[0].resource;
-  console.log("Resource :"+ resource)
+  let endpointUrl = data.path[0].url;
   let response = JSON.parse(data.detail.response);
   let link = response.head.link;
   let vars = response.head.vars;
@@ -230,10 +240,52 @@ _handleRechercheResponse(data){
   //  console.log(this.head);
   console.log(results);
 
-  var visResults = this.rechercheToVis(results, resource);
+  var visResults = this.rechercheToVis(results, resource, endpointUrl);
   console.log(visResults);
   this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
 }
+
+rechercheToVis(results, recherche, endpointUrl){
+  let app = this;
+  var visRes = {nodes:[], edges:[]};
+//  console.log(recherche)
+  var nodeRecherche = {id: recherche, label: recherche};
+  !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    console.log(r);
+    var lab = r.label.value;
+    if (r.title != undefined){
+      //  if (r.title.value > 40) {
+      lab= r.title.value;
+
+      //  }else{
+      //  lab = app.visLabel(r.title.value)
+      //  }
+
+    }
+    lab = lab.match(/.{1,40}/g).join("\n");
+    let nS = {id: r.s.value, label: lab, shape: 'box', uri: r.s.value, endpointUrl: endpointUrl}; // noeud sujet
+    let nType = {id: r.type.value, label: app.visLabel(r.type.value), color: 'rgb(160,160,0)',uri: r.type.value}; //noeud type
+  //  console.log(nS);
+    //  let  e2 = {from : nType.id, to: nodeRecherche.id, label: "contient"}
+    let  eType = {from : nS.id, to: nType.id, label: "type"}
+    if(!visRes.nodes.includes(nS)) {
+      visRes.nodes.push(nS);
+    }
+    //  !visRes.edges.includes(e2) && visRes.edges.push(e2);
+    if (!visRes.nodes.includes(nType))
+    {
+       visRes.nodes.push(nType);
+    }
+
+    if (!visRes.edges.includes(eType)){
+      visRes.edges.push(eType)
+    }
+  })
+  return visRes;
+}
+
+
 _handlePerseeResponse(data){
   console.log("Reponse Persee");
   //  console.log(data);
@@ -241,8 +293,9 @@ _handlePerseeResponse(data){
   //  console.log(data.detail.error);
   //  console.log(data.detail.error.message);
   //  console.log(data.detail.request);
-  console.log(data.detail.response); // -->
+  //console.log(data.detail.response); // -->
   let resource = data.path[0].resource;
+  let endpointUrl = data.path[0].url;
   console.log("Resource :"+ resource)
   let response = JSON.parse(data.detail.response);
   let link = response.head.link;
@@ -251,7 +304,7 @@ _handlePerseeResponse(data){
   //  console.log(this.head);
   console.log(results);
 
-  var visResults = this.conceptsPerseeToVis(results, resource);
+  var visResults = this.conceptsPerseeToVis(results, resource, endpointUrl);
   console.log(visResults);
   this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
 }
@@ -353,41 +406,36 @@ resourcePerseeToVis(results){
   return visRes;
 }
 
-rechercheToVis(results, recherche){
-  let app = this;
-  var visRes = {nodes:[], edges:[]};
-  console.log(recherche)
-  var nodeRecherche = {id: recherche, label: recherche};
-  !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
-  results.forEach(function(r){
-    console.log(r);
-    let nS = {id: r.s.value, label: app.visLabel(r.s.value), uri: r.s.value}; // noeud sujet
-    let nType = {id: r.type.value, label: app.visLabel(r.type.value), uri: r.type.value}; //noeud type
-    console.log(nS);
-    let  e2 = {from : nS.id, to: nodeRecherche.id, label: "contient"}
-    let  eType = {from : nS.id, to: nType.id, label: "type"}
-    !visRes.nodes.includes(nS)&& visRes.nodes.push(nS);
-    !visRes.edges.includes(e2) && visRes.edges.push(e2);
-    !visRes.nodes.includes(nType)&& visRes.nodes.push(nType);
-    !visRes.edges.includes(eType) && visRes.edges.push(eType);
-  })
-  return visRes;
-}
 
 
-conceptsPerseeToVis(results, resource){
+
+conceptsPerseeToVis(results, resource, endpointUrl){
   let app = this;
   var visRes = {nodes:[], edges:[]};
   console.log(resource)
   !visRes.nodes.includes(resource) &&   visRes.nodes.push(resource);
   results.forEach(function(r){
-    console.log(r);
-    console.log(r.label);
-    console.log(r.label2)
+  //  console.log("###################################")
+  //  console.log(r);
+  //  console.log(r.label);
+  //  console.log(r.label2)
     if (r.s == undefined){
-      let nO = {id: r.o.value, label: r.label2 || app.visLabel(r.o.value), uri: r.o.value};
+      var lab2 = "";
+      if (r.o.type == 'literal'){
+        lab2 = r.o.value;
+      }else{
+        lab2 = app.visLabel(r.o.value);
+      }
+      if (r.label2 != undefined){
+        lab2 = r.label2.value
+      }
+      lab2 = lab2.match(/.{1,40}/g).join("\n");
+      let nO = {id: r.o.value, label: lab2 , uri: r.o.value, shape: 'box'};
+    //  console.log(nO)
       if (r.o.type =="literal"){
         nO.shape = "box"
+      }else{
+        nO.endpointUrl = endpointUrl;
       }
       if (r.o.value.endsWith('.png' || '.jpg')){
         nO.image = r.o.value;
@@ -397,8 +445,13 @@ conceptsPerseeToVis(results, resource){
       !visRes.nodes.includes(nO)&& visRes.nodes.push(nO);
       !visRes.edges.includes(e) &&    visRes.edges.push(e);
     }else if(r.o == undefined){
-      let nS = {id: r.s.value, label: r.label || app.visLabel(r.s.value), uri: r.s.value};
-
+      var lab = app.visLabel(r.s.value);
+      if (r.label2 != undefined){
+        lab = r.label2.value;
+      }
+      lab = lab.match(/.{1,40}/g).join("\n");
+      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpointUrl: endpointUrl};
+      //console.log(nS)
       let  e2 = {from : nS.id, to: resource.id, label: app.visLabel(r.p.value)}
       !visRes.nodes.includes(nS)&& visRes.nodes.push(nS);
       !visRes.edges.includes(e2) &&    visRes.edges.push(e2);
@@ -439,7 +492,14 @@ visLabel(texte){
     textCut = text.split("/");
     result = textCut[textCut.length-1];
   }
-  console.log(texte + "->"+result);
+  if (result == text){
+    textCut = text.split("/");
+    result = textCut[textCut.length-2];
+  }
+  if(result == undefined || result.length == 0){
+    result = text;
+  }
+//  console.log(texte + "->"+result);
   return result
 }
 
