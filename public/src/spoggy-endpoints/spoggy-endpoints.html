@@ -125,7 +125,7 @@
   TEST
 </paper-input>-->
 <div id="endpointsList">
-  Activez les triplestore dans lesquels vous souhaitez effectuer vos recherches : 
+  Activez les triplestore dans lesquels vous souhaitez effectuer vos recherches :
   <div   class="container flex-wrap">
 
     <template is="dom-repeat" items="[[endpoints]]">
@@ -315,16 +315,19 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             ?s dcterms:subject ?sub.\
             filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
           } LIMIT 300'*/
-          firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
+        /*  firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
         },
         {
           name: 'Semantic Forms',
           description: "Semantic_forms est une application générique à la fois de navigation du web sémantique et d'annotation,\
           et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
           plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
-          url: 'http://163.172.179.125:9111/',
+          url: 'http://163.172.179.125:9112',
+          firstQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+          PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+          SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 1000',
           actif: false,
-          type: 'sf',
+          type: 'virtuoso',
           read: true,
           write: true
         },
