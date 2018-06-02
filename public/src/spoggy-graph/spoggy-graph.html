@@ -200,12 +200,12 @@
           console.log(node);
           node.color = 'rgb(255,0,0)';
           app.network.body.data.nodes.update(node);
-              app.agentGraph.send('agentVirtuoso', {type:'clickon', node : node});
+          app.agentGraph.send('agentVirtuoso', {type:'clickon', node : node});
           let res = node.label;
           if (node.title != undefined){
             res = node.title;
           }
-
+          app.agentGraph.send('agentDetails', {type:'update', node : node});
           app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
         });
       });

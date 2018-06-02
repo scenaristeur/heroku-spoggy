@@ -44,7 +44,8 @@ DetailsAgent.prototype.receive = function(from, message) {
 
   switch(message.type){
     case 'update':
-  //  this.app.rooms = message.rooms;
+    console.log(message)
+    this.app.update(message.node) ;
   //  this.app.current_room = message.current_room;
     console.log("update");
     break;

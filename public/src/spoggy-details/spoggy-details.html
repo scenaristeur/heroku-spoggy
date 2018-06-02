@@ -10,6 +10,9 @@
 
     <a href="{{uri}}" target="_blank"> Ouvrir {{uri}} dans Persée</a>
     <iframe  width="100%" height="400px" src="{{uri}}"></iframe>
+    [[node.id]]
+    [[node.label]]
+    [[node.title]]
   </template>
 
   <script>
@@ -49,9 +52,14 @@
         this.mode = "create"
       }
       initAgents(){
-        this.agentInput.send('agentHello', 'Hello agentHello!');
+        this.agentDetails.send('agentHello', 'Hello agentHello!');
       }
 
+update(node){
+  console.log(node)
+  this.node = node;
+  this.nodeString=node.toString();
+}
 
     }
 
