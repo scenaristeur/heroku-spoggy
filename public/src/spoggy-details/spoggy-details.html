@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<script src="agents/DetailsAgent.js"></script>
+
+<dom-module id="spoggy-details">
+  <template>
+    <style>
+
+    </style>
+
+    <a href="{{uri}}" target="_blank"> Ouvrir {{uri}} dans Persée</a>
+    <iframe  width="100%" height="400px" src="{{uri}}"></iframe>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-details`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyDetails extends Polymer.Element {
+      static get is() { return 'spoggy-details'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-details'
+          },
+          uri: {
+            type: String,
+            value: 'http://data.persee.fr/person/228467.rdf'
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        this.agentDetails = new DetailsAgent('agentDetails', this);
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+        });
+      }
+      _deferred(){
+        this.initAgents()
+
+        this.mode = "create"
+      }
+      initAgents(){
+        this.agentInput.send('agentHello', 'Hello agentHello!');
+      }
+
+
+    }
+
+    window.customElements.define(SpoggyDetails.is, SpoggyDetails);
+  </script>
+</dom-module>

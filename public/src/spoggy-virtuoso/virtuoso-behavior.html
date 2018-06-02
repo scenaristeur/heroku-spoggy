@@ -255,6 +255,7 @@ _handlePingError(data){
 
 recherche(message){
   console.log(message)
+  this.group = 1;
   let app = this;
   let e = message.endpoint;
   let recherche = message.recherche;
@@ -377,7 +378,7 @@ rechercheToVis(results, recherche, endpointUrl){
   let app = this;
   var visRes = {nodes:[], edges:[]};
   //  console.log(recherche)
-  var nodeRecherche = {id: recherche, label: recherche};
+  var nodeRecherche = {id: recherche, label: recherche, cid: app.group};
   !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
   results.forEach(function(r){
     //console.log(r);
@@ -392,7 +393,7 @@ rechercheToVis(results, recherche, endpointUrl){
 
     }
     lab = lab.match(/.{1,40}/g).join("\n");
-    let nS = {id: r.s.value, label: lab, shape: 'box', uri: r.s.value, endpointUrl: endpointUrl}; // noeud sujet
+    let nS = {id: r.s.value, label: lab, shape: 'box', uri: r.s.value, endpointUrl: endpointUrl, cid: app.group}; // noeud sujet
     let nType = {id: r.type.value, label: app.visLabel(r.type.value), color: 'rgb(160,160,0)',uri: r.type.value}; //noeud type
     //  console.log(nS);
     //  let  e2 = {from : nType.id, to: nodeRecherche.id, label: "contient"}
@@ -416,6 +417,8 @@ rechercheToVis(results, recherche, endpointUrl){
 
 _handlePerseeResponse(data, resource, endpointUrl){
   console.log("Reponse Persee");
+  this.group++;
+  console.log(this.group)
   //  console.log(data);
   //  console.log(data.detail);
   //  console.log(data.detail.error);
@@ -515,6 +518,7 @@ return visRes;
 
 
 resourcePerseeToVis(results){
+  let app =this;
   var visRes = {nodes:[], edges:[]};
   results.forEach(function(r){
     //  console.log(r)
@@ -528,7 +532,8 @@ resourcePerseeToVis(results){
       label: label,
       //    title: title,
       //  type: 'concept',
-      y: 2*Math.random()
+      y: 2*Math.random(),
+      cid: app.group
     }
     visRes.nodes.push(node);
   });
@@ -559,7 +564,7 @@ conceptsPerseeToVis(results, resource, endpointUrl){
         lab2 = r.label2.value
       }
       lab2 = lab2.match(/.{1,40}/g).join("\n");
-      let nO = {id: r.o.value, label: lab2 , uri: r.o.value, shape: 'box'};
+      let nO = {id: r.o.value, label: lab2 , uri: r.o.value, shape: 'box', cid: app.group};
       //  console.log(nO)
       if (r.o.type =="literal"){
         nO.shape = "box"
@@ -579,7 +584,7 @@ conceptsPerseeToVis(results, resource, endpointUrl){
         lab = r.label2.value;
       }
       lab = lab.match(/.{1,40}/g).join("\n");
-      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpointUrl: endpointUrl};
+      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpointUrl: endpointUrl, cid: app.group};
       //console.log(nS)
       let  e2 = {from : nS.id, to: resource.id, label: app.visLabel(r.p.value)}
       !visRes.nodes.includes(nS)&& visRes.nodes.push(nS);

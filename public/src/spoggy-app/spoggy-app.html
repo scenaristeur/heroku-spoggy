@@ -13,11 +13,13 @@
   <link rel="lazy-import" group="lazy" href="../spoggy-data/spoggy-data.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-sparql/spoggy-sparql.html">
 
- <link rel="lazy-import" group="lazy" href="../spoggy-presentation/spoggy-presentation.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-presentation/spoggy-presentation.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-endpoints/spoggy-endpoints.html">
 
+  <link rel="lazy-import" group="lazy" href="../spoggy-details/spoggy-details.html">
 
-    <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
+
+  <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
   <!--
   <link rel="lazy-import" group="lazy" href="../spoggy-recherche/spoggy-recherche.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
@@ -31,12 +33,23 @@
     Attendez jusqu'au chargement du cercle rose
   </spoggy-input>
   <spoggy-sparql></spoggy-sparql>
-    <spoggy-presentation></spoggy-presentation>
-    <spoggy-endpoints></spoggy-endpoints>
+  <spoggy-presentation></spoggy-presentation>
+  <spoggy-endpoints></spoggy-endpoints>
+  <table>
+    <tr>
+      <td width="50%">
+        <spoggy-graph>
+          ... Chargement du système ... <br>
+        </spoggy-graph>
+      </td>
+      <td>
+        <spoggy-details></spoggy-details>
 
-  <spoggy-graph>
-    ... Chargement du système ... <br>
-  </spoggy-graph>
+      </td>
+    </tr>
+  </table>
+
+
   <spoggy-collab></spoggy-collab>
 
   <spoggy-dialogs></spoggy-dialogs>
@@ -45,7 +58,7 @@
 
 
 
-    <!--<spoggy-recherche></spoggy-recherche>-->
+  <!--<spoggy-recherche></spoggy-recherche>-->
   <!--<spoggy-hello></spoggy-hello>-->
   <!--
   <spoggy-mode></spoggy-mode>
@@ -56,6 +69,10 @@
 <script>
 class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   static get is() { return 'spoggy-app'; }
+  static get properties() {
+    return {
+    };
+  }
   buttonPressed() {
     this.importLazyGroup('lazy').then((results) => {
       this.dispatchEvent(new CustomEvent('import-loaded', results));
