@@ -34,7 +34,7 @@
           },
           uri: {
             type: String,
-            value: 'http://data.persee.fr/person/228467.rdf'
+            value: 'http://data.persee.fr/person/220618#Person'
           }
         };
       }
@@ -58,6 +58,7 @@
 update(node){
   console.log(node)
   this.node = node;
+  this.uri = node.uri;
   this.nodeString=node.toString();
 }
 
