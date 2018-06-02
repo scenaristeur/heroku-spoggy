@@ -196,7 +196,10 @@
 
           let id = params.nodes[0];
           var node = app.network.body.data.nodes.get(id);
+
           console.log(node);
+          node.color = 'rgb(255,0,0)';
+          app.network.body.data.nodes.update(node);
               app.agentGraph.send('agentVirtuoso', {type:'clickon', node : node});
           let res = node.label;
           if (node.title != undefined){
