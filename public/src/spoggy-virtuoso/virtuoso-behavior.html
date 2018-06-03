@@ -560,7 +560,7 @@ rechercheToVis4(results, recherche, endpointUrl, typerecherche){
     if (r.doc != undefined){
       var doc = r.doc.value.replace('#Web','').replace('#Print','').replace('#Person','');
       var title = r.title.value.match(/.{1,40}/g).join("\n");
-      var node = {id: doc, label: title+" 4", type: "http://xmlns.com/foaf/0.1/Person", shap:"box", endpoint: endpointUrl, uri: r.doc.value}
+      var node = {id: doc, label: title+" 4", type: "http://xmlns.com/foaf/0.1/Person", shape:"box", endpoint: endpointUrl, uri: r.doc.value}
       visRes.nodes.push(node);
       if (pers != recherche){
         let  eType = {from : nodeRecherche.id, to: node.id, label: typerecherche}
