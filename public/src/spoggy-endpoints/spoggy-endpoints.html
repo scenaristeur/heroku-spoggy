@@ -303,7 +303,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             Les interfaces de recherche actuelles permettent d’exploiter trois index (documents, illustrations et auteurs) \
             et elles sont dotées de fonctionnalités de tri, de facettes, etc.',
             plus: 'http://data.persee.fr/ressources/le-triplestore-de-persee/',
-            url: 'http://data.persee.fr',
+            url: 'http://up2.persee.fr', //  url: 'http://data.persee.fr',
             image: 'https://www.persee.fr/static/persee.png',
             actif: true,
             type: 'virtuoso',
@@ -315,7 +315,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             ?s dcterms:subject ?sub.\
             filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
           } LIMIT 300'*/
-        /*  firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
+          /*  firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
         },
         {
           name: 'Semantic Forms',

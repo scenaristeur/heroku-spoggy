@@ -45,6 +45,12 @@ SparqlAgent.prototype.receive = function(from, message) {
     console.log(message)
       this.app.testEndpoints(message.endpoints);
     break;
+//      this.agentGraph.send('agentSparql', {type: "uriEndpoint", params:params});
+case 'uriEndpoint':
+console.log(message)
+  this.agentSparql.send('agentVirtuoso', {type: "uriEndpoint", params:params});
+break;
+
     case 'recherche':
     this.app.recherche(message);
     default:

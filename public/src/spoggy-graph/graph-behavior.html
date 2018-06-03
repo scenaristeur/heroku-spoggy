@@ -28,42 +28,51 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 
     importFromParam(params){
-      var source = params.source;
-      var network = this.network;
-      var output = [];
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', source, true);
-      xhr.responseType = 'blob';
-      xhr.onload = function(e) {
-        //  console.log(e);
-        var reponse = e.target.response;
-        //  console.log(reponse);
-        var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
-        reader.addEventListener('load', function () {
-          //  console.log(reader.result);
-          // ajouter test en fonction du type de fichier, extension
-          var nodes = JSON.parse(reader.result).nodes;
-          //    console.log(nodes);
-          var edges = JSON.parse(reader.result).edges;
-          //    console.log(edges);
-          network.beforeImport = [];
-          network.beforeImport.nodes = network.body.data.nodes.get();
-          network.beforeImport.edges = network.body.data.edges.get();
-          network.body.data.nodes.update(nodes);
-          network.body.data.edges.update(edges);
-          try{
+      console.log(params);
+      if(params.uri != undefined && params.endpoint!= undefined){
+        console.log("URI = "+params.uri);
+        console.log("ENDPOINT: "+params.uri);
+        this.agentGraph.send('agentVirtuoso', {type: "uriEndpoint", params:params});
+      }else{
+        console.log("PARAMETRES");
+        console.log(params)
+        var source = params.source;
+        var network = this.network;
+        var output = [];
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', source, true);
+        xhr.responseType = 'blob';
+        xhr.onload = function(e) {
+          //  console.log(e);
+          var reponse = e.target.response;
+          //  console.log(reponse);
+          var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
+          reader.addEventListener('load', function () {
+            //  console.log(reader.result);
+            // ajouter test en fonction du type de fichier, extension
+            var nodes = JSON.parse(reader.result).nodes;
+            //    console.log(nodes);
+            var edges = JSON.parse(reader.result).edges;
+            //    console.log(edges);
+            network.beforeImport = [];
+            network.beforeImport.nodes = network.body.data.nodes.get();
+            network.beforeImport.edges = network.body.data.edges.get();
             network.body.data.nodes.update(nodes);
             network.body.data.edges.update(edges);
-          }
-          catch(e){
-            console.log(e);
-          }
-          //  console.log(network);
-          //  console.log(partageImport);
-        });
-        reader.readAsText(reponse);
-      };
-      xhr.send();
+            try{
+              network.body.data.nodes.update(nodes);
+              network.body.data.edges.update(edges);
+            }
+            catch(e){
+              console.log(e);
+            }
+            //  console.log(network);
+            //  console.log(partageImport);
+          });
+          reader.readAsText(reponse);
+        };
+        xhr.send();
+      }
     }
 
     addToGraph(data){
@@ -106,152 +115,152 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log("POPULATE From Persee");
       var app = this;
       let network = this.network;
-    //  network.body.data.nodes.clear();
-    //  network.body.data.edges.clear();
-    //  console.log(message.results)
-    //  console.log(message.typeResource);
+      //  network.body.data.nodes.clear();
+      //  network.body.data.edges.clear();
+      //  console.log(message.results)
+      //  console.log(message.typeResource);
       let nResource = {
         label: message.typeResource
       }
       let idRes = network.body.data.nodes.update(nResource)[0];
       let nodes = message.results.nodes;
-        network.body.data.nodes.update(nodes);
-        network.body.data.edges.update(message.results.edges);
-      }
+      network.body.data.nodes.update(nodes);
+      network.body.data.edges.update(message.results.edges);
+    }
 
 
-      resultsFromSparql(results){
-        console.log("POPULATE From Sparql");
-        console.log(results)
-        var app = this;
-        let network = this.network;
+    resultsFromSparql(results){
+      console.log("POPULATE From Sparql");
+      console.log(results)
+      var app = this;
+      let network = this.network;
       //  network.body.data.nodes.clear();
       //  network.body.data.edges.clear();
 
-        Object.keys(results).forEach(function(id) {
-          var data = results[id];
-          //  console.log(id);
-          //  console.log(data)
-          if (data.type == "node"){
-            //A Modifier dans statements-behaviors pour envoyer dans un tableau de nodes !
-            //  console.log("NONONONODE")
-            network.body.data.nodes.update(data);
-          }
-          if (id == "edges"){
-            //    console.log("EDGEEDGEDGE")
-            data.forEach(function(e){
-              //  console.log(e);
-              network.body.data.edges.update(e);
-            });
-          }
-          if (id == "nodes"){
-            //    console.log("EDGEEDGEDGE")
-            data.forEach(function(n){
-              //  console.log(e);
-              let type = n.type;
+      Object.keys(results).forEach(function(id) {
+        var data = results[id];
+        //  console.log(id);
+        //  console.log(data)
+        if (data.type == "node"){
+          //A Modifier dans statements-behaviors pour envoyer dans un tableau de nodes !
+          //  console.log("NONONONODE")
+          network.body.data.nodes.update(data);
+        }
+        if (id == "edges"){
+          //    console.log("EDGEEDGEDGE")
+          data.forEach(function(e){
+            //  console.log(e);
+            network.body.data.edges.update(e);
+          });
+        }
+        if (id == "nodes"){
+          //    console.log("EDGEEDGEDGE")
+          data.forEach(function(n){
+            //  console.log(e);
+            let type = n.type;
 
-              var ntype = network.body.data.nodes.get({
-                filter: function(node){
-                  //    console.log(node);
-                  return (node.label == n.type );
-                }
-              });
-              if (ntype.length == 0){
-                ntype[0] = network.body.data.nodes.add({label: n.type });
+            var ntype = network.body.data.nodes.get({
+              filter: function(node){
+                //    console.log(node);
+                return (node.label == n.type );
               }
-              //  let ntypeId = network.body.data.nodes.update(n);
-              let nodeId = network.body.data.nodes.update(n);
-              let nZ = nodeId[0];
-              let tZ = ntype[0][0] || ntype[0].id;
-          //    console.log(nZ);
+            });
+            if (ntype.length == 0){
+              ntype[0] = network.body.data.nodes.add({label: n.type });
+            }
+            //  let ntypeId = network.body.data.nodes.update(n);
+            let nodeId = network.body.data.nodes.update(n);
+            let nZ = nodeId[0];
+            let tZ = ntype[0][0] || ntype[0].id;
+            //    console.log(nZ);
             //  console.log(tZ);
 
-              let e = {from: nZ, to: tZ, label: 'type'};
+            let e = {from: nZ, to: tZ, label: 'type'};
             //  console.log(e)
-              network.body.data.edges.update(e);
-            });
-          }
-        });
-        network.fit();
-        network.redraw();
-      }
-
-      populateVis(db) {
-        console.log("POPULATE");
-        let network = this.network;
-        network.body.data.nodes.clear();
-        network.body.data.edges.clear();
-        if (db.length > 0) {
-          if (db.length % 100 < 5) {
-            /*
-            Rezoom tous les 100*/
-            network.fit();
-            network.redraw();
-          }
-          var nodes = [];
-          var edges = [];
-          var reste = [];
-          db.forEach(function(t){
-            if(t.predicate == "type" && t.object == "node"){
-              nodes.push(t.subject);
-              network.body.data.nodes.add({id: t.subject, type: t.object, y:2*Math.random()});
-            }else if(t.predicate == "type" && t.object == "edge"){
-              edges.push(t.subject);
-            }  else{ reste.push(t);  }
+            network.body.data.edges.update(e);
           });
-          reste.forEach(function(r){
-            if (nodes.includes(r.subject)){
-              var n = {id : r.subject}
-              n[r.predicate] = r.object;
-              network.body.data.nodes.update(n);
-            }else if(edges.includes(r.subject)){
-              var e = {id : r.subject}
-              e[r.predicate] = r.object;
-              network.body.data.edges.update(e);
-            }else{
-              console.log("Probleme non pris en compte : ")
-              console.log(r)
-            }
-          });
+        }
+      });
+      network.fit();
+      network.redraw();
+    }
 
-          console.log(network)
-
+    populateVis(db) {
+      console.log("POPULATE");
+      let network = this.network;
+      network.body.data.nodes.clear();
+      network.body.data.edges.clear();
+      if (db.length > 0) {
+        if (db.length % 100 < 5) {
           /*
-          for (var i = 0; i < 10; i++) {
-          var triplet = db.pop();
-          if (triplet != undefined) {
-          console.log(triplet);
-          if (triplet.predicate == "type"  && triplet.object == "node") {
-          console.log("NODE : "+triplet.subject);
-          var noeudExist = network.body.data.nodes.get(triplet.subject);
-          console.log(noeudExist)
-          if (noeudExist == null || noeudExist.length == 0) {
-          if (triplet.object.length > 40) {
-          network.body.data.nodes.add({
-          id: triplet.subject,
-          label: triplet.object.match(/.{1,40}/g).join("\n"),
-          //  shape: "box",
-          group: 0
+          Rezoom tous les 100*/
+          network.fit();
+          network.redraw();
+        }
+        var nodes = [];
+        var edges = [];
+        var reste = [];
+        db.forEach(function(t){
+          if(t.predicate == "type" && t.object == "node"){
+            nodes.push(t.subject);
+            network.body.data.nodes.add({id: t.subject, type: t.object, y:2*Math.random()});
+          }else if(t.predicate == "type" && t.object == "edge"){
+            edges.push(t.subject);
+          }  else{ reste.push(t);  }
         });
-      } else {
-      var node = {
-      id: triplet.subject,
-      label: triplet.object,
-      type: triplet.type,
-      group: 0,
-    };
-    network.body.data.nodes.add(node);
-    if ((node.label.toLowerCase() == "depart") || (node.label.toLowerCase() == "départ")) {
-    //  console.log('trouve depart');
-    //var nodeDep = network.body.data.nodes.get(triplet.subject);
-    //console.log(nodeDep);
-    //nodeDep.color = {background:'pink', border:'purple'};
-    network.body.data.nodes.update({
+        reste.forEach(function(r){
+          if (nodes.includes(r.subject)){
+            var n = {id : r.subject}
+            n[r.predicate] = r.object;
+            network.body.data.nodes.update(n);
+          }else if(edges.includes(r.subject)){
+            var e = {id : r.subject}
+            e[r.predicate] = r.object;
+            network.body.data.edges.update(e);
+          }else{
+            console.log("Probleme non pris en compte : ")
+            console.log(r)
+          }
+        });
+
+        console.log(network)
+
+        /*
+        for (var i = 0; i < 10; i++) {
+        var triplet = db.pop();
+        if (triplet != undefined) {
+        console.log(triplet);
+        if (triplet.predicate == "type"  && triplet.object == "node") {
+        console.log("NODE : "+triplet.subject);
+        var noeudExist = network.body.data.nodes.get(triplet.subject);
+        console.log(noeudExist)
+        if (noeudExist == null || noeudExist.length == 0) {
+        if (triplet.object.length > 40) {
+        network.body.data.nodes.add({
+        id: triplet.subject,
+        label: triplet.object.match(/.{1,40}/g).join("\n"),
+        //  shape: "box",
+        group: 0
+      });
+    } else {
+    var node = {
     id: triplet.subject,
-    color: {
-    background: 'pink',
-    border: 'purple'
-  }
+    label: triplet.object,
+    type: triplet.type,
+    group: 0,
+  };
+  network.body.data.nodes.add(node);
+  if ((node.label.toLowerCase() == "depart") || (node.label.toLowerCase() == "départ")) {
+  //  console.log('trouve depart');
+  //var nodeDep = network.body.data.nodes.get(triplet.subject);
+  //console.log(nodeDep);
+  //nodeDep.color = {background:'pink', border:'purple'};
+  network.body.data.nodes.update({
+  id: triplet.subject,
+  color: {
+  background: 'pink',
+  border: 'purple'
+}
 })
 var nodeDep = network.body.data.nodes.get(triplet.subject);
 //nodeDep = network.body.data.nodes.get(triplet.subject);

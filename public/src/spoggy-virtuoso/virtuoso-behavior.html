@@ -252,6 +252,57 @@ _handlePingError(data){
   console.log(data.detail.request.response);
 }
 
+urlEndpoint(message){
+  console.log(message);
+  let app = this;
+  var endpoint = message.endpoint;
+  var uri = message.uri;
+  let options = {
+    /*  query:  ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
+    ?s rdf:type ?type . \
+    OPTIONAL {   ?s dcterms:title ?title .} \
+    FILTER(bif:contains(?label, "'+recherche+'")) . \
+  }  LIMIT 100',*/
+  query: 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \
+  SELECT ?type ?label \
+  WHERE { \
+    <'+uri+'> rdf:type ?type. \
+    <'+uri+'> rdfs:label ?label. \
+  } \
+  ',
+
+  format: 'application/sparql-results+json',
+}
+
+
+console.log(options.query)
+app.$.ajaxRecherche.url = endpoint+'/sparql';
+//  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+app.$.ajaxRecherche.params = options;
+//  app.$.ajaxRecherche.resource = recherche;
+
+app.$.ajaxRecherche.generateRequest().completes.then(function(req,resp) {
+  //console.log(req)
+  //console.log(req.response)
+  //console.log(resp)
+  var data = req.response;
+  var endpointUrl = endpoint+'/sparql'
+  var nameEndpoint="fictif"
+  app.progress = 30;
+  app._handleRechercheResponse3(data, uri, endpointUrl, nameEndpoint)
+  // succesful request, argument is iron-request element
+  //  ...
+}, function(rejected) {
+  // failed request, argument is an object
+  let req = rejected.request;
+  let error = rejected.error;
+  console.log(req)
+  console.log(error)
+  //  ...
+});
+}
+
+
 
 recherche(message){
   console.log(message)
@@ -367,6 +418,41 @@ app.$.ajaxRecherche.generateRequest().completes.then(function(req,resp) {
 
 }
 
+
+_handleRechercheResponse3(data, resource, endpointUrl, endpointName){
+
+  console.log("Reponse recherche")
+  //  console.log(data.detail.response);
+  console.log(data)
+  /*console.log(req.detail)
+  let resource = data.path[0].resource;
+  let endpointUrl = data.path[0].url;*/
+  let response = JSON.parse(data);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+  this.progress = 60;
+  var visResults;
+  console.log(endpointName);
+  if (endpointName == "Semantic Forms"){
+    visResults = this.semanticFormsToVis(results, resource, endpointUrl);
+
+  }else{
+    // TEST PERSEE   visResults = this.rechercheToVis(results, resource, endpointUrl);
+    visResults = this.rechercheToVis3(results, resource, endpointUrl); //TEST PERSEE
+  }
+
+
+  console.log(visResults);
+  this.progress = 80;
+  //on envoie au graphe
+  this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+  // on envoie au spoggy-details
+  this.agentVirtuoso.send('agentDetails', {type: "resultsFromPersee", results: results, typeResource: this.typeResource})
+}
+
 _handleRechercheResponse(data, resource, endpointUrl, endpointName){
 
   console.log("Reponse recherche")
@@ -385,10 +471,10 @@ _handleRechercheResponse(data, resource, endpointUrl, endpointName){
   var visResults;
   console.log(endpointName);
   if (endpointName == "Semantic Forms"){
-      visResults = this.semanticFormsToVis(results, resource, endpointUrl);
+    visResults = this.semanticFormsToVis(results, resource, endpointUrl);
 
   }else{
-  // TEST PERSEE   visResults = this.rechercheToVis(results, resource, endpointUrl);
+    // TEST PERSEE   visResults = this.rechercheToVis(results, resource, endpointUrl);
     visResults = this.rechercheToVis2(results, resource, endpointUrl); //TEST PERSEE
   }
 
@@ -398,30 +484,32 @@ _handleRechercheResponse(data, resource, endpointUrl, endpointName){
   //on envoie au graphe
   this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
   // on envoie au spoggy-details
-    this.agentVirtuoso.send('agentDetails', {type: "resultsFromPersee", results: results, typeResource: this.typeResource})
+  this.agentVirtuoso.send('agentDetails', {type: "resultsFromPersee", results: results, typeResource: this.typeResource})
 }
 
 
 
-rechercheToVis2(results, recherche, endpointUrl){
+rechercheToVis3(results, recherche, endpointUrl){
   let app = this;
+  console.log(recherche)
+  conosle.log(endpointUrl)
   var visRes = {nodes:[], edges:[]};
   //  console.log(recherche)
   var nodeRecherche = {id: recherche, label: recherche, cid: app.group};
   !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
   results.forEach(function(r){
     console.log(r);
-// les noeuds, on recupere la valeur, voir la console javascript
+    // les noeuds, on recupere la valeur, voir la console javascript
     var nodeId = {id: r.identifier.value, label: app.visLabel(r.identifier.value),  borderWidth: 3, color:{border: 'rgb(255,0,0)'}}
     var nodeType = {id: r.TYPE.value, label: r.TYPE.value}
     //pour les longs labels, on coupe à 40 caractères et on donne la forme de box
     var abstract = r.abstract.value.match(/.{1,40}/g).join("\n");
     var nodeAbstract = {id: r.abstract.value, label: abstract, shape: "box"}
-// les liens
+    // les liens
     let  eType = {from : nodeId.id, to: nodeType.id, label: "type"}
     let  eAbstract = {from : nodeId.id, to: nodeAbstract.id, label: "abstract"}
 
-// on les ajoute ensuite aux resultat qu'on enverra au graphe
+    // on les ajoute ensuite aux resultat qu'on enverra au graphe
 
     visRes.nodes.push(nodeId);
     visRes.nodes.push(nodeType);
@@ -455,12 +543,76 @@ rechercheToVis2(results, recherche, endpointUrl){
   //  !visRes.edges.includes(e2) && visRes.edges.push(e2);
   //  if (!visRes.nodes.includes(nType))
   //{
-//  visRes.nodes.push(nType);
+  //  visRes.nodes.push(nType);
   //}
 
   /*if (!visRes.edges.includes(eType)){
+  visRes.edges.push(eType)
+}*/
+})
+return visRes;
+}
+
+
+
+rechercheToVis2(results, recherche, endpointUrl){
+  let app = this;
+  var visRes = {nodes:[], edges:[]};
+  //  console.log(recherche)
+  var nodeRecherche = {id: recherche, label: recherche, cid: app.group};
+  !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    console.log(r);
+    // les noeuds, on recupere la valeur, voir la console javascript
+    var nodeId = {id: r.identifier.value, label: app.visLabel(r.identifier.value),  borderWidth: 3, color:{border: 'rgb(255,0,0)'}}
+    var nodeType = {id: r.TYPE.value, label: r.TYPE.value}
+    //pour les longs labels, on coupe à 40 caractères et on donne la forme de box
+    var abstract = r.abstract.value.match(/.{1,40}/g).join("\n");
+    var nodeAbstract = {id: r.abstract.value, label: abstract, shape: "box"}
+    // les liens
+    let  eType = {from : nodeId.id, to: nodeType.id, label: "type"}
+    let  eAbstract = {from : nodeId.id, to: nodeAbstract.id, label: "abstract"}
+
+    // on les ajoute ensuite aux resultat qu'on enverra au graphe
+
+    visRes.nodes.push(nodeId);
+    visRes.nodes.push(nodeType);
+    visRes.nodes.push(nodeAbstract);
+
     visRes.edges.push(eType)
-  }*/
+    visRes.edges.push(eAbstract)
+
+
+    // ancien
+    /*  if (r.title != undefined){
+    //  if (r.title.value > 40) {
+    lab= r.title.value;
+
+    //  }else{
+    //  lab = app.visLabel(r.title.value)
+    //  }
+
+  }
+  lab = lab.match(/.{1,40}/g).join("\n");
+  let nS = {id: r.s.value, label: lab, shape: 'box', uri: r.s.value, endpointUrl: endpointUrl, cid: app.group}; // noeud sujet
+  let nType = {id: r.type.value, label: app.visLabel(r.type.value), color: 'rgb(160,160,0)',uri: r.type.value}; //noeud type
+  //  console.log(nS);
+  //  let  e2 = {from : nType.id, to: nodeRecherche.id, label: "contient"}
+  let  eType = {from : nS.id, to: nType.id, label: "type"}*/
+  //  if(!visRes.nodes.includes(nS)) {
+
+
+
+  //  }
+  //  !visRes.edges.includes(e2) && visRes.edges.push(e2);
+  //  if (!visRes.nodes.includes(nType))
+  //{
+  //  visRes.nodes.push(nType);
+  //}
+
+  /*if (!visRes.edges.includes(eType)){
+  visRes.edges.push(eType)
+}*/
 })
 return visRes;
 }

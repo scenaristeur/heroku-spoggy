@@ -71,6 +71,12 @@ VirtuosoAgent.prototype.receive = function(from, message) {
       debug: 'on',
       run: '+Run+Query+'*/
     }
+    //        this.agentGraph.send('agentVirtuoso', {type: "uriEndpoint", params:params});
+
+case 'uriEndpoint':
+console.log(message)
+this.app.urlEndpoint(message.params)
+break;
     this.app.url = message.url;
     console.log(this.app.url);
     this.app.sendRequest();
