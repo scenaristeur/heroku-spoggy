@@ -583,7 +583,7 @@ rechercheToVis3(results, recherche, endpointUrl){
   console.log(endpointUrl)
   var visRes = {nodes:[], edges:[]};
   //  console.log(recherche)
-  var nodeRecherche = {id: recherche, label: app.visLabel(recherche), borderWidth: 3, cid: app.group};
+  var nodeRecherche = {id: recherche, label: app.visLabel(recherche), borderWidth: 3, cid: app.group, uri: recherche, endpoint: endpointUrl};
   //  !visRes.nodes.includes(nodeRecherche) &&
   visRes.nodes.push(nodeRecherche);
   results.forEach(function(r){
