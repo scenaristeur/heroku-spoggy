@@ -29,9 +29,9 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log(this.endpoints)
       let app = this;
 
-if (node.type != undefined){
+      if (node.type != undefined){
 
-}
+      }
 
 
       let options = {
@@ -261,8 +261,8 @@ urlEndpoint(message){
   console.log(message);
   let app = this;
   var endpoint = message.endpoint;
-//  app.endpoint = message.endpoint
-var uri = message.uri.replace('#Web','').replace('#Print','').replace('#Person','');
+  //  app.endpoint = message.endpoint
+  var uri = message.uri.replace('#Web','').replace('#Print','').replace('#Person','');
   var uri = uri;
   let options = {
     /*  query:  ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
@@ -426,7 +426,7 @@ app.$.ajaxRecherche.generateRequest().completes.then(function(req,resp) {
 }
 
 
-_handleRechercheResponse4(data, resource, endpointUrl, endpointName){
+_handleRechercheResponse4(data, resource, endpointUrl, endpointName, typerecherche){
 
   console.log("Reponse recherche 4")
   //  console.log(data.detail.response);
@@ -448,7 +448,7 @@ _handleRechercheResponse4(data, resource, endpointUrl, endpointName){
 
   }else{
     // TEST PERSEE   visResults = this.rechercheToVis(results, resource, endpointUrl);
-    visResults = this.rechercheToVis4(results, resource, endpointUrl); //TEST PERSEE
+    visResults = this.rechercheToVis4(results, resource, endpointUrl, typerecherche); //TEST PERSEE
   }
 
 
@@ -533,32 +533,47 @@ _handleRechercheResponse(data, resource, endpointUrl, endpointName){
 }
 
 
-rechercheToVis4(results, recherche, endpointUrl){
+rechercheToVis4(results, recherche, endpointUrl, typerecherche){
   let app = this;
   console.log(recherche)
   console.log(endpointUrl)
   app.group=app.group+1
   var visRes = {nodes:[], edges:[]};
-  //  console.log(recherche)
-  var nodeRecherche = {id: recherche, label: app.visLabel(recherche), borderWidth: 3, cid: app.group};
+  //  console.log(recherche) // label: app.visLabel(recherche) +" 4"
+  var nodeRecherche = {id: recherche, borderWidth: 3, cid: app.group};
   //  !visRes.nodes.includes(nodeRecherche) &&
   visRes.nodes.push(nodeRecherche);
   results.forEach(function(r){
     console.log(r);
 
     // les noeuds, on recupere la valeur, voir la console javascript
-if (r.person.value != undefined){
-  var pers = r.person.value.replace('#Web','').replace('#Print','').replace('#Person','');
-  var node = {id: pers, label: r.name.value, type: "http://xmlns.com/foaf/0.1/Person", endpoint: endpointUrl, uri: r.person.value}
-    visRes.nodes.push(node);
-    let  eType = {from : nodeRecherche.id, to: node.id, label: "test"}
+    if (r.person != undefined){
+      var pers = r.person.value.replace('#Web','').replace('#Print','').replace('#Person','');
+      var node = {id: pers, label: r.name.value+" 4", type: "http://xmlns.com/foaf/0.1/Person", endpoint: endpointUrl, uri: r.person.value}
+      visRes.nodes.push(node);
+      if (pers != recherche){
+        let  eType = {from : nodeRecherche.id, to: node.id, label: typerecherche}
         visRes.edges.push(eType)
-}
+      }
+    }
+
+    if (r.doc != undefined){
+      var doc = r.doc.value.replace('#Web','').replace('#Print','').replace('#Person','');
+      var title = r.title.value.match(/.{1,40}/g).join("\n");
+      var node = {id: doc, label: title+" 4", type: "http://xmlns.com/foaf/0.1/Person", shap:"box", endpoint: endpointUrl, uri: r.doc.value}
+      visRes.nodes.push(node);
+      if (pers != recherche){
+        let  eType = {from : nodeRecherche.id, to: node.id, label: typerecherche}
+        visRes.edges.push(eType)
+      }
+
+    }
+
 
 
     //pour les longs labels, on coupe à 40 caractères et on donne la forme de box
-  //  nodeRecherche.label = r.label.value;
-  //  let  eType = {from : nodeRecherche.id, to: nodeType.id, label: "type"}
+    //  nodeRecherche.label = r.label.value;
+    //  let  eType = {from : nodeRecherche.id, to: nodeType.id, label: "type"}
     /*  var nodeAbstract = {id: r.abstract.value, label: abstract, shape: "box"}
     // les liens
     let  eType = {from : nodeId.id, to: nodeType.id, label: "type"}
@@ -566,14 +581,14 @@ if (r.person.value != undefined){
 
     // on les ajoute ensuite aux resultat qu'on enverra au graphe
 
-  //  visRes.nodes.push(nodeRecherche);
-  //  visRes.nodes.push(nodeType);
+    //  visRes.nodes.push(nodeRecherche);
+    //  visRes.nodes.push(nodeType);
 
 
 
 
-})
-return visRes;
+  })
+  return visRes;
 }
 
 
@@ -583,7 +598,7 @@ rechercheToVis3(results, recherche, endpointUrl){
   console.log(endpointUrl)
   var visRes = {nodes:[], edges:[]};
   //  console.log(recherche)
-  var nodeRecherche = {id: recherche, label: app.visLabel(recherche), borderWidth: 3, cid: app.group, uri: recherche, endpoint: endpointUrl};
+  var nodeRecherche = {id: recherche, label: app.visLabel(recherche)+ " 3", shape: "box", borderWidth: 3, cid: app.group, uri: recherche, endpoint: endpointUrl};
   //  !visRes.nodes.includes(nodeRecherche) &&
   visRes.nodes.push(nodeRecherche);
   results.forEach(function(r){
@@ -592,7 +607,8 @@ rechercheToVis3(results, recherche, endpointUrl){
     // les noeuds, on recupere la valeur, voir la console javascript
     var nodeType = {id: r.type.value, label: app.visLabel(r.type.value)}
     //pour les longs labels, on coupe à 40 caractères et on donne la forme de box
-    nodeRecherche.label = r.label.value;
+    var lab= r.label.value+ " -5";
+    nodeRecherche.label = lab.match(/.{1,40}/g).join("\n");
     let  eType = {from : nodeRecherche.id, to: nodeType.id, label: "type"}
     /*  var nodeAbstract = {id: r.abstract.value, label: abstract, shape: "box"}
     // les liens
@@ -606,33 +622,56 @@ rechercheToVis3(results, recherche, endpointUrl){
     visRes.edges.push(eType)
 
     var options = {
-    query: '',
-    format: 'application/sparql-results+json',
+      query: '',
+      format: 'application/sparql-results+json',
     }
-var rech = r.web.value;
+    var rech = r.web.value;
+    var typerecherche = ""
+var querys =[];
     switch(r.type.value){
 
-      case "http://data.perse.fr/ontology/persee-ontology/Article":
+    //  case "http://data.perse.fr/ontology/persee-ontology/Article":
+      case "http://purl.org/ontology/bibo/Document":
       console.log("article");
-      options.query = '   PREFIX dcterms: <http://purl.org/dc/terms/> \
+      querys.push({query: '   PREFIX dcterms: <http://purl.org/dc/terms/> \
       PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
       SELECT ?person ?name \
       WHERE { \
         <'+rech+'> dcterms:creator ?person. \
         ?person foaf:name ?name. \
-      }'
+      }',
+      typerecherche : "createur"
+
+    })
+
       break;
-//http://xmlns.com/foaf/0.1/Person
-case "http://xmlns.com/foaf/0.1/Person":
-console.log("personne");
-options.query = '   PREFIX dcterms: <http://purl.org/dc/terms/> \
-PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
-SELECT ?person ?name \
-WHERE { \
-  <'+rech+'> dcterms:creator ?person. \
-  ?person foaf:name ?name. \
-}'
-break;
+      //http://xmlns.com/foaf/0.1/Person
+      case "http://xmlns.com/foaf/0.1/Person":
+      console.log("personne");
+      querys.push({query:'   PREFIX dcterms: <http://purl.org/dc/terms/> \
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
+      SELECT DISTINCT ?person ?name \
+      WHERE { \
+        ?doc dcterms:creator <'+rech+'>. \
+        ?doc dcterms:creator ?person. \
+          ?person foaf:name ?name. \
+      }',
+        typerecherche : "co-auteur"
+      })
+      querys.push(
+        {query:'  PREFIX dcterms: <http://purl.org/dc/terms/> \
+          SELECT ?doc ?title \
+          WHERE { \
+              ?doc dcterms:creator <'+rech+'>. \
+              ?doc dcterms:title ?title. \
+          } \
+',
+
+            typerecherche : "a écrit"
+        }
+      )
+
+      break;
 
 
 
@@ -641,36 +680,46 @@ break;
     }
 
 
-    console.log(options.query)
-    console.log(endpointUrl)
-    if(options.query.length>0){
-      app.$.ajaxRechercheBis.url = endpointUrl;
-      //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
-      app.$.ajaxRechercheBis.params = options;
-      //  app.$.ajaxRecherche.resource = recherche;
 
-      app.$.ajaxRechercheBis.generateRequest().completes.then(function(req,resp) {
+querys.forEach(function(query){
+options.query = query.query;
+  console.log(options.query)
+  console.log(endpointUrl)
+  if(options.query.length>0){
+    app.$.ajaxRechercheBis.url = endpointUrl;
+    //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+    app.$.ajaxRechercheBis.params = options;
+    //  app.$.ajaxRecherche.resource = recherche;
+
+    app.$.ajaxRechercheBis.generateRequest().completes.then(function(req,resp) {
       //console.log(req)
       //console.log(req.response)
       //console.log(resp)
       var data = req.response;
-    //  var endpointUrl = endpointUrl
+      //  var endpointUrl = endpointUrl
       var nameEndpoint="fictif"
       app.progress = 30;
-      app._handleRechercheResponse4(data, recherche, endpointUrl, nameEndpoint)
+      app._handleRechercheResponse4(data, recherche, endpointUrl, nameEndpoint, query.typerecherche)
       // succesful request, argument is iron-request element
       //  ...
-      }, function(rejected) {
+    }, function(rejected) {
       // failed request, argument is an object
       let req = rejected.request;
       let error = rejected.error;
       console.log(req)
       console.log(error)
       //  ...
-      });
-    }else{
-      console.log('pas encore de query')
-    }
+    });
+  }else{
+    console.log('pas encore de query')
+  }
+
+
+
+})
+
+
+
 
 
 
