@@ -76,6 +76,7 @@ VirtuosoAgent.prototype.receive = function(from, message) {
 case 'uriEndpoint':
 console.log(message)
 this.app.urlEndpoint(message.params)
+this.app.endpoint = message.endpoint;
 break;
     this.app.url = message.url;
     console.log(this.app.url);
@@ -152,7 +153,10 @@ this.app.sendRequestPersee();
 break;
 case 'clickon':
 console.log(message);
-this.app.clickonNode(message.node);
+//this.app.clickonNode(message.node);
+//console.log(this.app.endpoint);
+//console.log(message)
+this.app.urlEndpoint(message.node)
 break;
 case 'describe':
 console.log("describe")
