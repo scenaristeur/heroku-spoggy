@@ -7,18 +7,16 @@
     <style>
 
     </style>
-    ID: [[identifier]]
+    <h1>[[label]] </h1>
+    ID: <a href="[[web]]">[[web]]</a>
     <br>
     type: [[type]] <br>
-    abstract: [[abstract]] <br>
-    [[bidule]]
+
 <br>
 <!--
     <a href="{{uri}}" target="_blank"> Ouvrir {{uri}} dans Persée</a>
     <iframe  width="100%" height="400px" src="{{uri}}"></iframe> -->
-    [[node.id]]
-    [[node.label]]
-    [[node.title]]
+
   </template>
 
   <script>
@@ -71,10 +69,10 @@
     updateDetails(results){
       console.log(results)
       let r = results[0]
-      this.identifier = r.identifier.value;
-      this.type = r.TYPE.value;
-      this.abstract = r.abstract.value;
-      this.bidule = 'machin'
+      this.web = r.web.value;
+      this.type = r.type.value;
+      this.label = r.label.value;
+
     }
 
   }
