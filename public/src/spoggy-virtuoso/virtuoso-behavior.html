@@ -274,6 +274,59 @@ recherche(message){
   if (e.firstQuery != undefined){
     options.query = e.firstQuery;
   }
+
+  //test requete editorialisée persee
+  options.query = 'PREFIX dcterms: <http://purl.org/dc/terms/>'+
+  'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>'+
+  'PREFIX rdam: <http://rdaregistry.info/Elements/m/> ' +
+  'PREFIX persee: <http://data.persee.fr/ontology/persee_ontology/> ' +
+  'PREFIX cito: <http://purl.org/spar/cito/> ' +
+  'PREFIX bibo: <http://purl.org/ontology/bibo/> ' +
+  'PREFIX rdau: <http://rdaregistry.info/Elements/u/> ' +
+  'PREFIX marcrel: <http://id.loc.gov/vocabulary/relators/> ' +
+  'select distinct ?doc ?identifier ?title ?dateOfPublication ?lang ?toc ?abstract ?doi ' +
+  '(SAMPLE(?type) AS ?TYPE) ' +
+  '(SAMPLE(?isPartOf) AS ?isPartOf) ' +
+  '(GROUP_CONCAT(?creator; SEPARATOR=", ") AS ?creators) ' +
+  '(GROUP_CONCAT(?citation; SEPARATOR=", ") AS ?citations) ' +
+  '(GROUP_CONCAT(?subject; SEPARATOR=", ") AS ?subjects)   ' +
+  'where { ' +
+  '    ?doc a bibo:Document. ' +
+  '    ?doc dcterms:title ?title. ' +
+  '    ?doc dcterms:identifier "http://www.persee.fr/doc/caf_2101-8081_2011_num_103_1_2575". ' +
+  '  	?doc dcterms:identifier ?identifier. ' +
+  '  	?doc rdf:type ?type. ' +
+  '  	?doc dcterms:language ?lang. ' +
+  '    optional { ' +
+  '        ?doc persee:dateOfPrintPublication ?dateOfPublication. ' +
+  '    } ' +
+  '    optional { ' +
+  '        ?doc dcterms:isPartOf ?isPartOf. ' +
+  '    } ' +
+  '    optional { ' +
+  '        ?doc marcrel:aut ?creator. ' +
+  '    } ' +
+  '  	optional { ' +
+  '  		?doc cito:cites ?citation. ' +
+  '  	} ' +
+  '  	optional { ' +
+  '  		?doc dcterms:tableOfContents ?toc. ' +
+  '  	} ' +
+  '  		?doc dcterms:abstract ?abstract. ' +
+  '  	optional { ' +
+  '  	} ' +
+  '  	optional { ' +
+  '  		?doc dcterms:subject ?subject. ' +
+  '  	} ' +
+  '  	optional { ' +
+  '    	?doc bibo:doi ?doi. ' +
+  '  	} ' +
+  '  	FILTER regex(str(?type), "ontology/persee-ontology/") ' +
+  '  	FILTER (lang(?abstract) = "fr") ' +
+  '} GROUP BY ?doc ?identifier ?title ?dateOfPublication ?lang ?toc ?abstract ?doi LIMIT 1';
+
+
+
   // this.agentSparql.send('agentVirtuoso', {type:'recherche', endpoint: endpoint, recherche: recherche});
   /*  let options = {
   //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
@@ -332,16 +385,98 @@ _handleRechercheResponse(data, resource, endpointUrl, endpointName){
   var visResults;
   console.log(endpointName);
   if (endpointName == "Semantic Forms"){
-    visResults = this.semanticFormsToVis(results, resource, endpointUrl);
+      visResults = this.semanticFormsToVis(results, resource, endpointUrl);
+
   }else{
-    visResults = this.rechercheToVis(results, resource, endpointUrl);
+  // TEST PERSEE   visResults = this.rechercheToVis(results, resource, endpointUrl);
+    visResults = this.rechercheToVis2(results, resource, endpointUrl); //TEST PERSEE
   }
 
 
   console.log(visResults);
   this.progress = 80;
+  //on envoie au graphe
   this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+  // on envoie au spoggy-details
+    this.agentVirtuoso.send('agentDetails', {type: "resultsFromPersee", results: results, typeResource: this.typeResource})
 }
+
+
+
+rechercheToVis2(results, recherche, endpointUrl){
+  let app = this;
+  var visRes = {nodes:[], edges:[]};
+  //  console.log(recherche)
+  var nodeRecherche = {id: recherche, label: recherche, cid: app.group};
+  !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    console.log(r);
+// les noeuds, on recupere la valeur, voir la console javascript
+    var nodeId = {id: r.identifier.value, label: app.visLabel(r.identifier.value),  borderWidth: 3, color:{border: 'rgb(255,0,0)'}}
+    var nodeType = {id: r.TYPE.value, label: r.TYPE.value}
+    //pour les longs labels, on coupe à 40 caractères et on donne la forme de box
+    var abstract = r.abstract.value.match(/.{1,40}/g).join("\n");
+    var nodeAbstract = {id: r.abstract.value, label: abstract, shape: "box"}
+// les liens
+    let  eType = {from : nodeId.id, to: nodeType.id, label: "type"}
+    let  eAbstract = {from : nodeId.id, to: nodeAbstract.id, label: "abstract"}
+
+// on les ajoute ensuite aux resultat qu'on enverra au graphe
+
+    visRes.nodes.push(nodeId);
+    visRes.nodes.push(nodeType);
+    visRes.nodes.push(nodeAbstract);
+
+    visRes.edges.push(eType)
+    visRes.edges.push(eAbstract)
+
+
+    // ancien
+    /*  if (r.title != undefined){
+    //  if (r.title.value > 40) {
+    lab= r.title.value;
+
+    //  }else{
+    //  lab = app.visLabel(r.title.value)
+    //  }
+
+  }
+  lab = lab.match(/.{1,40}/g).join("\n");
+  let nS = {id: r.s.value, label: lab, shape: 'box', uri: r.s.value, endpointUrl: endpointUrl, cid: app.group}; // noeud sujet
+  let nType = {id: r.type.value, label: app.visLabel(r.type.value), color: 'rgb(160,160,0)',uri: r.type.value}; //noeud type
+  //  console.log(nS);
+  //  let  e2 = {from : nType.id, to: nodeRecherche.id, label: "contient"}
+  let  eType = {from : nS.id, to: nType.id, label: "type"}*/
+  //  if(!visRes.nodes.includes(nS)) {
+
+
+
+  //  }
+  //  !visRes.edges.includes(e2) && visRes.edges.push(e2);
+  //  if (!visRes.nodes.includes(nType))
+  //{
+//  visRes.nodes.push(nType);
+  //}
+
+  /*if (!visRes.edges.includes(eType)){
+    visRes.edges.push(eType)
+  }*/
+})
+return visRes;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 semanticFormsToVis(results, recherche, endpointUrl){
   let app = this;
@@ -366,14 +501,19 @@ semanticFormsToVis(results, recherche, endpointUrl){
 
     }
     let  e2 = {from : nS.id, to: nO.id, label: r.p.value}
-       if (!visRes.edges.includes(e2)){
-         visRes.edges.push(e2)
-       }
+    if (!visRes.edges.includes(e2)){
+      visRes.edges.push(e2)
+    }
 
   });
 
   return visRes;
 }
+
+
+
+
+
 rechercheToVis(results, recherche, endpointUrl){
   let app = this;
   var visRes = {nodes:[], edges:[]};
@@ -381,7 +521,7 @@ rechercheToVis(results, recherche, endpointUrl){
   var nodeRecherche = {id: recherche, label: recherche, cid: app.group};
   !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
   results.forEach(function(r){
-    //console.log(r);
+    console.log(r);
     var lab = r.label.value;
     if (r.title != undefined){
       //  if (r.title.value > 40) {

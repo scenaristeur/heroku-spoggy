@@ -49,6 +49,11 @@ DetailsAgent.prototype.receive = function(from, message) {
   //  this.app.current_room = message.current_room;
     console.log("update");
     break;
+    //    this.agentVirtuoso.send('agentDetails', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+    case 'resultsFromPersee':
+    this.app.updateDetails(message.results)
+
+    break;
 
 
     default:

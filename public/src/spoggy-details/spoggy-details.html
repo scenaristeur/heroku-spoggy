@@ -7,7 +7,12 @@
     <style>
 
     </style>
-
+    ID: [[identifier]]
+    <br>
+    type: [[type]] <br>
+    abstract: [[abstract]] <br>
+    [[bidule]]
+<br>
     <a href="{{uri}}" target="_blank"> Ouvrir {{uri}} dans Persée</a>
     <iframe  width="100%" height="400px" src="{{uri}}"></iframe>
     [[node.id]]
@@ -16,54 +21,63 @@
   </template>
 
   <script>
-    /**
-     * `spoggy-details`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyDetails extends Polymer.Element {
-      static get is() { return 'spoggy-details'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-details'
-          },
-          uri: {
-            type: String,
-            value: 'http://data.persee.fr/person/220618#Person'
-          }
-        };
-      }
-
-      constructor(){
-        super();
-        this.agentDetails = new DetailsAgent('agentDetails', this);
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          this._deferred();
-        });
-      }
-      _deferred(){
-        this.initAgents()
-
-        this.mode = "create"
-      }
-      initAgents(){
-        this.agentDetails.send('agentHello', 'Hello agentHello!');
-      }
-
-update(node){
-  console.log(node)
-  this.node = node;
-  this.uri = node.uri;
-  this.nodeString=node.toString();
-}
-
+  /**
+  * `spoggy-details`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyDetails extends Polymer.Element {
+    static get is() { return 'spoggy-details'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-details'
+        },
+        uri: {
+          type: String,
+          value: 'http://data.persee.fr/person/220618#Person'
+        }
+      };
     }
 
-    window.customElements.define(SpoggyDetails.is, SpoggyDetails);
+    constructor(){
+      super();
+      this.agentDetails = new DetailsAgent('agentDetails', this);
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+    }
+    _deferred(){
+      this.initAgents()
+
+      this.mode = "create"
+    }
+    initAgents(){
+      this.agentDetails.send('agentHello', 'Hello agentHello!');
+    }
+
+    update(node){
+      console.log(node)
+      this.node = node;
+      this.uri = node.uri;
+      this.nodeString=node.toString();
+    }
+
+    updateDetails(results){
+      console.log(results)
+      let r = results[0]
+      this.identifier = r.identifier.value;
+      this.type = r.TYPE.value;
+      this.abstract = r.abstract.value;
+      this.bidule = 'machin'
+    }
+
+  }
+
+  window.customElements.define(SpoggyDetails.is, SpoggyDetails);
   </script>
 </dom-module>
