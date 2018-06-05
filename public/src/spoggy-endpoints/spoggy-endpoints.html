@@ -167,10 +167,10 @@
           <iron-collapse-button>
             <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Requêtes</h3>
             <div slot="collapse-content">
-              <paper-textarea label="Première Requête" value="[[item.firstQuery]]"></paper-textarea>
-              <paper-textarea label="Requête de recherche textuelle" value="[[item.searchQuery]]"></paper-textarea>
+              <paper-textarea label="Requête d'exploration" value="[[item.exploreQuery.query]]"></paper-textarea>
+              <paper-textarea label="Requête de recherche textuelle" value="[[item.searchQuery.query]]"></paper-textarea>
 
-              *  Click sur un noeud de type :
+              Et quand je clique sur un noeud de type :
               <template is="dom-repeat" items="[[item.clickonNode]]" as="clickonNode">
                 <iron-collapse-button>
                   <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> [[clickonNode.type]]</h3>
@@ -339,7 +339,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             type: 'virtuoso',
             read:true,
             write:false,
-            firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
+            exploreQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
           },
           {
             name:'Persee',
@@ -350,24 +350,69 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             Les interfaces de recherche actuelles permettent d’exploiter trois index (documents, illustrations et auteurs) \
             et elles sont dotées de fonctionnalités de tri, de facettes, etc.",
             plus: 'http://data.persee.fr/ressources/le-triplestore-de-persee/',
-            url: 'http://up2.persee.fr', //  url: 'http://data.persee.fr',
+            url: 'http://data.persee.fr/sparql', //  url: 'http://data.persee.fr',
             image: 'https://www.persee.fr/static/persee.png',
             actif: true,
             selectionnable: true,
             type: 'virtuoso',
             read:true, write:false,
-            firstQuery: 'SELECT DISTINCT ?s ?t ?sub \
-            WHERE {\
-              ?s ?p bibo:Document.\
-              ?s dcterms:title ?t.\
-              ?s dcterms:subject ?sub.\
-              filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
-            } LIMIT 300',
-            searchQuery : ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
-              ?s rdf:type ?type . \
-              OPTIONAL {   ?s dcterms:title ?title .} \
-              FILTER(bif:contains(?label, "RECHERCHE")) . \
-            }  LIMIT 100',
+            exploreQuery: {
+              query: 'SELECT DISTINCT ?s ?t ?sub \
+              WHERE {\
+                ?s ?p bibo:Document.\
+                ?s dcterms:title ?t.\
+                ?s dcterms:subject ?sub.\
+                filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
+              } LIMIT 100' ,
+              typeResource:'bibo:Document'
+            },
+            parseExploreQueryToVis : function(app, results, typeResource, endpointUrl){
+              //  var app = this;
+              var visRes = {nodes:[], edges:[]};
+              results.forEach(function(r){
+                console.log(r);
+                let node = {
+                  id: app.visId(r.s.value),
+                  type: typeResource,
+                  resourceType:null,
+                  uri: r.s.value,
+                  label: app.visLabelSplit(app.visLabel(r.t.value)),
+                  endpoint: endpointUrl,
+                  color: "rgb(76,0,74)",
+                  font: {
+                    color: 'rgb(255,255,255)'
+                  },
+                  y: 2*Math.random()
+                }
+                //visRes.nodes.push(node);
+                !visRes.nodes.includes(node) &&   visRes.nodes.push(node);
+                let nodeSub = {
+                  id: r.sub.value,
+                  type: r.sub.type+ " a virer",
+                  resourceType: r.sub.type,
+                  label: app.visLabelSplit(r.sub.value),
+                  endpoint: endpointUrl,
+                  color: "rgb(107,142,35)",
+                  shape: "box",
+                  y: 2*Math.random()
+                }
+                !visRes.nodes.includes(nodeSub) &&   visRes.nodes.push(nodeSub);
+
+                let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
+                if (!visRes.edges.includes(eType)){
+                  visRes.edges.push(eType)
+                }
+              });
+              return visRes;
+            } ,
+            searchQuery : {
+              query: ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
+                ?s rdf:type ?type . \
+                OPTIONAL {   ?s dcterms:title ?title .} \
+                FILTER(bif:contains(?label, "RECHERCHE")) . \
+              }  LIMIT 100',
+              typeResource:'bibo:Document'
+            },
             clickonNode: [
               {type : "Personne",
               detecteur: "http://xmlns.com/foaf/0.1/Person",
@@ -388,7 +433,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
           }
         ]
 
-        /*  firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
+        /*  exploreQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
       },
       {
         name: 'Semantic Forms',
@@ -396,7 +441,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
         et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
         plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
         url: 'http://163.172.179.125:9112',
-        firstQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+        exploreQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
         SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 1000',
         actif: false,

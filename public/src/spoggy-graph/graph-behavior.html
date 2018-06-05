@@ -141,7 +141,20 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             //    console.log("EDGEEDGEDGE")
             data.forEach(function(e){
               //  console.log(e);
-              network.body.data.edges.update(e);
+              //network.body.data.edges.update(e);
+
+              var edge = network.body.data.edges.get({
+                filter: function(edge) {
+                  return (edge.from == e.id && edge.to == e.id && edge.label == e);
+                }
+              });
+
+              if (edge.length == 0){
+                network.body.data.edges.update(e);
+              }else{
+                console.log('le lien existe déjà')
+              }
+
             });
           }
           if (id == "nodes"){
@@ -162,13 +175,14 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
               //  let ntypeId = network.body.data.nodes.update(n);
               let nodeId = network.body.data.nodes.update(n);
               let nZ = nodeId[0];
-              let tZ = ntype[0][0] || ntype[0].id;
+            let tZ = ntype[0][0] || ntype[0].id;
           //    console.log(nZ);
             //  console.log(tZ);
 
-              let e = {from: nZ, to: tZ, label: 'type'};
+          let e = {from: nZ, to: tZ, label: 'type'};
             //  console.log(e)
-              network.body.data.edges.update(e);
+            //   TEST  POR SUPPRIMER DOUBLONS TYPE
+               network.body.data.edges.update(e);
             });
           }
         });

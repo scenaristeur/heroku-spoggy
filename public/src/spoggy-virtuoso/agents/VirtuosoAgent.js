@@ -51,6 +51,9 @@ VirtuosoAgent.prototype.receive = function(from, message) {
     console.log("updateEndpoint");
     this.app.updateUrls(message.url);
     break;*/
+    case 'explore':
+    this.app.explore(message.endpoint);
+    break;
     case 'recherche':
     this.app.recherche(message);
     break;

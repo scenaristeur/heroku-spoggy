@@ -23,6 +23,24 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
+    explore(endpoint){
+      let app = this;
+      console.log(endpoint);
+      switch (endpoint.type) {
+        case 'virtuoso':
+        console.log(endpoint)
+        app.exploreVirtuoso(endpoint)
+        break;
+        case 'fuseki':
+        console.log(endpoint)
+        app.exploreFuseki(endpoint)
+        break;
+        default:
+        console.log('On ne traite pas encore ' + endpoint.type + '.');
+      }
+    }
+
+
     recherche(message){
       let app = this;
       console.log(message)
@@ -47,6 +65,10 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       } );
     }
 
+    exploreVirtuoso(endpoint){
+      this.agentSparql.send('agentVirtuoso', {type:'explore', endpoint: endpoint});
+    }
+
     rechercheVirtuoso(endpoint, recherche){
       this.agentSparql.send('agentVirtuoso', {type:'recherche', endpoint: endpoint, recherche: recherche});
     }
@@ -57,6 +79,11 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     }
 
+    exploreFuseki(endpoint){
+      console.log("EXPLORE");
+      console.log(endpoint);
+
+    }
 
     testEndpoints(endpoints){
       let app = this;

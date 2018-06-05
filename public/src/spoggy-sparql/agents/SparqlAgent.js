@@ -43,10 +43,16 @@ SparqlAgent.prototype.receive = function(from, message) {
     case 'updateEndpoints':
     console.log("updateEndpoints");
     console.log(message)
-      this.app.testEndpoints(message.endpoints);
+    this.app.testEndpoints(message.endpoints);
     break;
     case 'recherche':
     this.app.recherche(message);
+    break;
+    case 'explore':
+    console.log("explore");
+    console.log(message.endpoint)
+    this.app.explore(message.endpoint)
+    break;
     default:
     console.log(message);
   }
