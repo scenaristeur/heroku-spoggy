@@ -26,6 +26,7 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 
   <link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
   <!-- WEB - web-animations https://medium.com/collaborne-engineering/polymer-2-0-replace-neon-animation-with-web-animations-api-e82d7bd82e6 -->
@@ -53,7 +54,7 @@
       max-width: 400px;
     }
     paper-card {
-      max-width: 350px;
+      max-width: 450px;
       margin: 10px;
       --paper-card-header-image: {
         width: 50%;
@@ -148,49 +149,92 @@
           <iron-icon class="star" icon="star"></iron-icon>
         </div>
         <p>・[[item.url]] <br>・lecture: [[item.read]] / écriture: [[item.write]]</p>
-        <paper-checkbox checked="{{item.actif}}">Actif </paper-checkbox>
+        <div hidden$="[[!item.selectionnable]]">
+          <paper-checkbox checked="{{item.actif}}">Actif </paper-checkbox>
+        </div>
+        <div hidden$="[[item.selectionnable]]">
+          <paper-checkbox checked="{{item.actif}}" disabled >Actif </paper-checkbox>
+        </div>
         <p class="cafe-light">
           [[item.description]]</p>
           <p hidden$="[[isEmpty(item.plus)]]"><a href='{{item.plus}}' target="_blank">plus d'infos</a></p>
         </div>
+        <div class="horizontal justified">
+          <paper-button endpoint="[[item]]" class="cafe-reserve" on-tap="explorer">Explorer</paper-button>
+          <paper-button endpoint="[[item]]" class="cafe-reserve" on-tap="rechercher">Rechercher</paper-button>
+        </div>
         <div class="card-actions">
-          <!--          <p>Tonight's availability</p>-->
-          <div class="horizontal justified">
-            <paper-icon-button icon="icons:event"></paper-icon-button>
-            <!-- <paper-button>5:30PM</paper-button>
-            <paper-button>7:30PM</paper-button>
-            <paper-button>9:00PM</paper-button>-->
-            <paper-button class="cafe-reserve">Share</paper-button>
-            <paper-button class="cafe-reserve">Explore!</paper-button>
-          </div>
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Requêtes</h3>
+            <div slot="collapse-content">
+              <paper-textarea label="Première Requête" value="[[item.firstQuery]]"></paper-textarea>
+              <paper-textarea label="Requête de recherche textuelle" value="[[item.searchQuery]]"></paper-textarea>
 
-          <div class="horizontal justified">
-            <paper-icon-button icon="favorite"></paper-icon-button>
-            <paper-icon-button icon="bookmark"></paper-icon-button>
-            <paper-icon-button icon="social:share"></paper-icon-button>
+              *  Click sur un noeud de type :
+              <template is="dom-repeat" items="[[item.clickonNode]]" as="clickonNode">
+                <iron-collapse-button>
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> [[clickonNode.type]]</h3>
+                  <div slot="collapse-content">
+                    <!--<paper-item>-->
+                    <paper-input label="Detecteur" style="width:100%" value="{{clickonNode.detecteur}}"> </paper-input>
+                    <paper-textarea label="Requête" value="{{clickonNode.requete}}"></paper-textarea>
+                    <paper-input label="Lien créé" style="width:100%" value="{{clickonNode.lienCree}}"> </paper-input>
+                    <!--</paper-item>-->
+                  </div>
+                </iron-collapse-button>
+              </template>
 
-            <paper-icon-button icon="expand-more" title="more info" onclick="_toggle()" style="float:right;">
-            </paper-icon-button>
-            <iron-collapse id="more-info" style="width:100%;">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
-            </iron-collapse>
-          </div>
+
+
+              <!--  <fieldset>
+              <legend>Couleur</legend>-->
+
+              <!--  </fieldset> -->
+            </div>
+          </iron-collapse-button>
 
         </div>
-      </paper-card>
+        <!--  <div class="card-actions">
+
+        <p>Tonight's availability</p>
+        <div class="horizontal justified">
+        <paper-icon-button icon="icons:event"></paper-icon-button>
+        <paper-button>5:30PM</paper-button>
+        <paper-button>7:30PM</paper-button>
+        <paper-button>9:00PM</paper-button>
+        <paper-button class="cafe-reserve">Partager</paper-button>
+        <paper-button class="cafe-reserve">Explorer!</paper-button>
+      </div>
+
+      <div class="horizontal justified">
+      <paper-icon-button icon="favorite"></paper-icon-button>
+      <paper-icon-button icon="bookmark"></paper-icon-button>
+      <paper-icon-button icon="social:share"></paper-icon-button>
+
+
+      <paper-icon-button icon="expand-more" title="more info" onclick="_toggle()" style="float:right;">
+    </paper-icon-button>
+    <iron-collapse id="more-info" style="width:100%;">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
+  </iron-collapse>
+
+</div>
+
+</div> -->
+</paper-card>
 
 
 
 
-      <!--
-      <script>
-      function _toggle() {
-      var moreInfo = document.getElementById('more-info');
-      var iconButton = Polymer.dom(event).localTarget;
-      iconButton.icon = moreInfo.opened ? 'expand-more': 'expand-less';
-      moreInfo.toggle();
-    }
-  </script>
+<!--
+<script>
+function _toggle() {
+var moreInfo = document.getElementById('more-info');
+var iconButton = Polymer.dom(event).localTarget;
+iconButton.icon = moreInfo.opened ? 'expand-more': 'expand-less';
+moreInfo.toggle();
+}
+</script>
 -->
 
 </template>
@@ -214,23 +258,23 @@
         <paper-button disabled>Proposer</paper-button>
         <br>
         <paper-icon-button icon="social:share"></paper-icon-button>
-
+        <!--
         <paper-icon-button icon="expand-more" title="more info" onclick="_toggle()" style="float:right;">
-        </paper-icon-button>
-        <iron-collapse id="more-info" style="width:100%;">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
-        </iron-collapse>
-        <script>
-        function _toggle() {
-          var moreInfo = document.getElementById('more-info');
-          var iconButton = Polymer.dom(event).localTarget;
-          iconButton.icon = moreInfo.opened ? 'expand-more': 'expand-less';
-          moreInfo.toggle();
-        }
-        </script>
-      </div>
-    </div>
-  </div>
+      </paper-icon-button>
+      <iron-collapse id="more-info" style="width:100%;">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
+    </iron-collapse>
+    <script>
+    function _toggle() {
+    var moreInfo = document.getElementById('more-info');
+    var iconButton = Polymer.dom(event).localTarget;
+    iconButton.icon = moreInfo.opened ? 'expand-more': 'expand-less';
+    moreInfo.toggle();
+  }
+</script>-->
+</div>
+</div>
+</div>
 </div>
 </template>
 
@@ -262,6 +306,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             url: 'http://5.51.110.50:3030',
             image: '/images/spoggy.png',
             actif: false,
+            selectionnable: false,
             type: 'fuseki',
             read: true,
             write: true
@@ -272,6 +317,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             url: 'http://127.0.0.1:3030',
             image: '/images/spoggy.png',
             actif: false,
+            selectionnable: false,
             type: 'fuseki',
             read: true,
             write: true
@@ -289,6 +335,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             url:'http://fr.dbpedia.org',
             image: '/images/DBpediaLogo.svg',
             actif: false,
+            selectionnable: true,
             type: 'virtuoso',
             read:true,
             write:false,
@@ -296,62 +343,95 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
           },
           {
             name:'Persee',
-            description: 'Le portail Persée\n \
+            description: "Le portail Persée\n \
             Persée est un programme national de numérisation et de diffusion de collections de documents scientifiques.\
             Sur son portail (www.persee.fr) plus de 200 collections de revues publiées de 1820 à nos jours sont disponibles.\
             Le portail permet une recherche dans certaines métadonnées et le texte de plus de 700 000 documents et 500 000 illustrations. \
             Les interfaces de recherche actuelles permettent d’exploiter trois index (documents, illustrations et auteurs) \
-            et elles sont dotées de fonctionnalités de tri, de facettes, etc.',
+            et elles sont dotées de fonctionnalités de tri, de facettes, etc.",
             plus: 'http://data.persee.fr/ressources/le-triplestore-de-persee/',
-            url: 'http://data.persee.fr',
+            url: 'http://up2.persee.fr', //  url: 'http://data.persee.fr',
             image: 'https://www.persee.fr/static/persee.png',
             actif: true,
+            selectionnable: true,
             type: 'virtuoso',
             read:true, write:false,
-            /*  firstQuery: 'select distinct ?s ?t ?sub \
-            Where {\
-            ?s ?p bibo:Document.\
-            ?s dcterms:title ?t.\
-            ?s dcterms:subject ?sub.\
-            filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
-          } LIMIT 300'*/
+            firstQuery: 'SELECT DISTINCT ?s ?t ?sub \
+            WHERE {\
+              ?s ?p bibo:Document.\
+              ?s dcterms:title ?t.\
+              ?s dcterms:subject ?sub.\
+              filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
+            } LIMIT 300',
+            searchQuery : ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
+              ?s rdf:type ?type . \
+              OPTIONAL {   ?s dcterms:title ?title .} \
+              FILTER(bif:contains(?label, "RECHERCHE")) . \
+            }  LIMIT 100',
+            clickonNode: [
+              {type : "Personne",
+              detecteur: "http://xmlns.com/foaf/0.1/Person",
+              requete : 'PREFIX dcterms: <http://purl.org/dc/terms/> \
+              PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
+              SELECT DISTINCT ?person ?name \
+              WHERE { \
+                ?doc dcterms:creator <NODEID>. \
+                ?doc dcterms:creator ?person. \
+                ?person foaf:name ?name. \
+              }',
+              lienCree : "co-auteur"
+            },
+            {type : "Document",
+            detecteur: " a revoir",
+            requete : 'a revoir',
+            lienCree : "a revoir"
+          }
+        ]
+
         /*  firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
-        },
-        {
-          name: 'Semantic Forms',
-          description: "Semantic_forms est une application générique à la fois de navigation du web sémantique et d'annotation,\
-          et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
-          plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
-          url: 'http://163.172.179.125:9112',
-          firstQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
-          PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-          SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 1000',
-          actif: false,
-          type: 'virtuoso',
-          read: true,
-          write: true
-        },
-        {name: 'Data.culture.fr',
+      },
+      {
+        name: 'Semantic Forms',
+        description: "Semantic_forms est une application générique à la fois de navigation du web sémantique et d'annotation,\
+        et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
+        plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
+        url: 'http://163.172.179.125:9112',
+        firstQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+        SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 1000',
+        actif: false,
+        selectionnable: true,
+        type: 'virtuoso',
+        read: true,
+        write: true
+      },
+      {
+        name: 'Data.culture.fr',
         url: 'http://data.culture.fr/thesaurus'
       },
       {
         name: 'BaseKb',
-        plus: 'http://basekb.com/'
+        plus: 'http://basekb.com/',
+        selectionnable: false
       },{
         name: 'WikiData',
         description: 'https://www.wikidata.org/wiki/Wikidata:Data_access/fr',
         plus: 'https://www.wikidata.org/wiki/Wikidata:Main_Page',
-        url: 'https://wikidata.metaphacts.com/'
+        url: 'https://wikidata.metaphacts.com/',
+        selectionnable: false
       }
       ,{
         name : 'Data.gov',
-        plus: 'https://catalog.data.gov/dataset/public-art-inventory-d9c20/resource/84b37647-6f8e-4090-b046-fad1437c1d02'
+        plus: 'https://catalog.data.gov/dataset/public-art-inventory-d9c20/resource/84b37647-6f8e-4090-b046-fad1437c1d02',
+        selectionnable: false
       },
-      {name: 'Histropedia',
-      plus: 'http://histropedia.com/' }
-    ]
-  }
-};
+      {
+        name: 'Histropedia',
+        plus: 'http://histropedia.com/',
+        selectionnable: false }
+      ]
+    }
+  };
 }
 
 constructor(){
