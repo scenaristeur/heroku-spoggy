@@ -167,13 +167,13 @@
           <iron-collapse-button>
             <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Les Requêtes de Karl et Cécile</h3>
             <div slot="collapse-content">
-              <paper-textarea label="Requête d'exploration" value="[[item.exploreQuery.query]]"></paper-textarea>
-              <paper-textarea label="Requête de recherche textuelle" value="[[item.searchQuery.query]]"></paper-textarea>
+              <paper-textarea label="Requête d'exploration" value="{{item.exploreQuery.query}}"></paper-textarea>
+              <paper-textarea label="Requête de recherche textuelle" value="{{item.searchQuery.query}}"></paper-textarea>
 
               Et quand je clique sur un noeud de type :
               <template is="dom-repeat" items="[[item.clickonNode]]" as="clickonNode">
                 <iron-collapse-button>
-                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> [[clickonNode.type]]</h3>
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> {{clickonNode.type}}</h3>
                   <div slot="collapse-content">
                     <!--<paper-item>-->
                     <paper-input label="Detecteur" style="width:100%" value="{{clickonNode.detecteur}}"> </paper-input>
@@ -335,7 +335,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
             url:'http://fr.dbpedia.org',
             image: '/images/DBpediaLogo.svg',
             actif: false,
-            selectionnable: true,
+            selectionnable: false,
             type: 'virtuoso',
             read:true,
             write:false,
@@ -364,17 +364,20 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                 ?s dcterms:subject ?sub.\
                 filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
               } LIMIT 100' ,
-              typeResource:'bibo:Document'
+              typeResources:{
+                s: 'bibo:Document',
+                sub: 'Subjects'
+              }
             },
-            parseExploreQueryToVis : function(app, results, typeResource, endpointUrl){
+            parseExploreQueryToVis : function(app, results, typeResources, endpointUrl){
               //  var app = this;
               var visRes = {nodes:[], edges:[]};
               results.forEach(function(r){
                 console.log(r);
                 let node = {
                   id: app.visId(r.s.value),
-                  type: typeResource,
-                  resourceType:null,
+                  type: null,
+                  resourceType: typeResources.s,
                   uri: r.s.value,
                   label: app.visLabelSplit(app.visLabel(r.t.value)),
                   endpoint: endpointUrl,
@@ -384,25 +387,44 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                   },
                   y: 2*Math.random()
                 }
-                //visRes.nodes.push(node);
-                !visRes.nodes.includes(node) &&   visRes.nodes.push(node);
+                var trouveN = visRes.nodes.find(function(element){
+                  return node.id == element.id
+                });
+                if (trouveN) {
+                  console.log("TROUVE ")
+                  console.log(trouveN)
+                  node = trouveN;
+                }else{
+                  visRes.nodes.push(node);
+                }
+
                 let nodeSub = {
                   id: r.sub.value,
-                  type: r.sub.type+ " a virer",
-                  resourceType: r.sub.type,
+                  type: r.sub.type,
+                  resourceType: typeResources.sub,
                   label: app.visLabelSplit(r.sub.value),
                   endpoint: endpointUrl,
                   color: "rgb(107,142,35)",
                   shape: "box",
                   y: 2*Math.random()
                 }
-                !visRes.nodes.includes(nodeSub) &&   visRes.nodes.push(nodeSub);
+                var trouveS = visRes.nodes.find(function(element){
+                  return nodeSub.id == element.id
+                });
+                if (trouveS) {
+                  console.log("TROUVE ")
+                  console.log(trouveS)
+                  nodeSub = trouveS;
+                }else{
+                  visRes.nodes.push(nodeSub);
+                }
 
                 let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
                 if (!visRes.edges.includes(eType)){
                   visRes.edges.push(eType)
                 }
               });
+
               return visRes;
             } ,
             searchQuery : {
@@ -445,7 +467,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
         SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 1000',
         actif: false,
-        selectionnable: true,
+        selectionnable: false,
         type: 'virtuoso',
         read: true,
         write: true

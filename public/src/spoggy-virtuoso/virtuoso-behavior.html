@@ -39,7 +39,7 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       app.$.ajaxExplore.params = options;
       app.$.ajaxExplore.generateRequest().completes.then(function(req,resp) {
         var data = req.response;
-        app._handleExploreResponse(data, endpoint, exploreQuery.typeResource)
+        app._handleExploreResponse(data, endpoint, exploreQuery.typeResources)
       }, function(rejected) {
         let req = rejected.request;
         let error = rejected.error;
@@ -49,7 +49,7 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
-    _handleExploreResponse(data, endpoint, typeResource){
+    _handleExploreResponse(data, endpoint, typeResources){
       console.log("Reponse Exploration "+endpoint.name);
       console.log(data);
       //  console.log(data.detail);
@@ -63,171 +63,171 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       let results = response.results.bindings;
       //  console.log(this.head);
       console.log(results);
-    //  var visResults = this.exploreToVis(results, endpoint.url);
-    var visResults = endpoint.parseExploreQueryToVis(this, results, typeResource, endpoint.url);
+      //  var visResults = this.exploreToVis(results, endpoint.url);
+      var visResults = endpoint.parseExploreQueryToVis(this, results, typeResources, endpoint.url);
       console.log(visResults);
-      this.agentVirtuoso.send('agentGraph', {type: "resultsFromSparql", results: visResults})
+      this.agentVirtuoso.send('agentGraph', {type: "resultsFromExplore", results: visResults})
     }
 
 
     /*exploreToVis(results, endpointUrl){
-      var app = this;
-      var visRes = {nodes:[], edges:[]};
-      results.forEach(function(r){
-        console.log(r);
-      let node = {
-        id: app.visId(r.s.value),
-        type: r.sub.type,
-        resourceType:null,
-        uri: r.s.value,
-        label: app.visLabel(r.t.value),
-        endpoint: endpointUrl,
-        y: 2*Math.random()
-      }
-      //visRes.nodes.push(node);
-      !visRes.nodes.includes(node) &&   visRes.nodes.push(node);
+    var app = this;
+    var visRes = {nodes:[], edges:[]};
+    results.forEach(function(r){
+    console.log(r);
+    let node = {
+    id: app.visId(r.s.value),
+    type: r.sub.type,
+    resourceType:null,
+    uri: r.s.value,
+    label: app.visLabel(r.t.value),
+    endpoint: endpointUrl,
+    y: 2*Math.random()
+  }
+  //visRes.nodes.push(node);
+  !visRes.nodes.includes(node) &&   visRes.nodes.push(node);
 
-      let nodeSub = {
-        id: r.sub.value,
-        type: r.sub.type,
-        resourceType: null,
-        label: r.sub.value,
-        endpoint: endpointUrl,
-        y: 2*Math.random()
-      }
-      !visRes.nodes.includes(nodeSub) &&   visRes.nodes.push(nodeSub);
+  let nodeSub = {
+  id: r.sub.value,
+  type: r.sub.type,
+  resourceType: null,
+  label: r.sub.value,
+  endpoint: endpointUrl,
+  y: 2*Math.random()
+}
+!visRes.nodes.includes(nodeSub) &&   visRes.nodes.push(nodeSub);
 
-      let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
-      if (!visRes.edges.includes(eType)){
-        visRes.edges.push(eType)
-      }
+let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
+if (!visRes.edges.includes(eType)){
+visRes.edges.push(eType)
+}
 
 
 
-    });
-    return visRes;
-  }*/
+});
+return visRes;
+}*/
 
-  visId(id){
+visId(id){
   /// FONCTION GENERALISTE DE NETTOYAGE DES ID
-    return id.trim().replace('#Web','').replace('#Print','').replace('#Person',''); // Pour nettoyer les ressources Persee
-  }
+  return id.trim().replace('#Web','').replace('#Print','').replace('#Person',''); // Pour nettoyer les ressources Persee
+}
 
-  visLabel(texte){
+visLabel(texte){
   /// FONCTION GENERALISTE DE NETTOYAGE DES LABELS
-    let text = texte.trim();
-    text = text.replace('#Web','').replace('#Print','').replace('#Person',''); // Pour nettoyer les ressources Persee
-    let result = "";
-    let textCut = text.split("#");
+  let text = texte.trim();
+  text = text.replace('#Web','').replace('#Print','').replace('#Person',''); // Pour nettoyer les ressources Persee
+  let result = "";
+  let textCut = text.split("#");
+  result = textCut[textCut.length-1];
+  if (result == text){
+    textCut = text.split("/");
     result = textCut[textCut.length-1];
-    if (result == text){
-      textCut = text.split("/");
-      result = textCut[textCut.length-1];
-    }
-    if (result == text){
-      textCut = text.split("/");
-      result = textCut[textCut.length-2];
-    }
-    if(result == undefined || result.length == 0){
-      result = text;
-    }
-    //  console.log(texte + "->"+result);
-    return result
   }
-  visLabelSplit(texte){
-      return texte.match(/.{1,40}/g).join("\n");
+  if (result == text){
+    textCut = text.split("/");
+    result = textCut[textCut.length-2];
+  }
+  if(result == undefined || result.length == 0){
+    result = text;
+  }
+  //  console.log(texte + "->"+result);
+  return result
+}
+visLabelSplit(texte){
+  return texte.match(/.{1,40}/g).join("\n");
+}
+
+///////////////////////////////////////////////////////////////////////////
+//// ANCIENNES REQUETES A REVOIR
+//////////////////////////////////////////////////////////////////////////
+
+
+
+clickonNode(node){
+  console.log(node);
+  console.log(this.endpoints)
+  let app = this;
+
+  let options = {
+    //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
+    // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+    //  <'+node.uri+'> rdfs:label ?label\
+    query:  'SELECT * \
+    WHERE {\
+      { <'+node.uri+'> ?p ?o .  <'+node.uri+'> rdfs:label ?label}\
+      UNION \
+      { ?s ?p <'+node.uri+'> . ?s rdfs:label ?label2} \
+    }   LIMIT 300',
+
+    format: 'application/sparql-results+json',
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-  //// ANCIENNES REQUETES A REVOIR
-  //////////////////////////////////////////////////////////////////////////
-
-
-
-  clickonNode(node){
-    console.log(node);
+  if (this.endpoints != undefined){
     console.log(this.endpoints)
-    let app = this;
-
-    let options = {
-      //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
-      // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
-      //  <'+node.uri+'> rdfs:label ?label\
-      query:  'SELECT * \
-      WHERE {\
-        { <'+node.uri+'> ?p ?o .  <'+node.uri+'> rdfs:label ?label}\
-        UNION \
-        { ?s ?p <'+node.uri+'> . ?s rdfs:label ?label2} \
-      }   LIMIT 300',
-
-      format: 'application/sparql-results+json',
-    }
-
-    if (this.endpoints != undefined){
-      console.log(this.endpoints)
-      this.endpoints.forEach(function(e){
-        //console.log(e);
-        if (e.actif){
-          app.$.ajaxPersee.url = e.url+'/sparql';
-          //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
-          app.$.ajaxPersee.params = options;
-          app.$.ajaxPersee.resource = node;
-          app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
-            app.progress = 30;
-            //console.log(req)
-            //console.log(req.response)
-            //console.log(resp)
-            var data = req.response;
-            var endpointUrl = node.endpointUrl;
-            app._handlePerseeResponse(data, node, endpointUrl)
-            // succesful request, argument is iron-request element
-            //  ...
-          }, function(rejected) {
-            // failed request, argument is an object
-            let req = rejected.request;
-            let error = rejected.error;
-            console.log(req)
-            console.log(error)
-            //  ...
-          });
-        }
-        else{
-          console.log("inactif")
-        }
-      });
-    }else if (node.endpointUrl != undefined){
-      console.log("REcherche complementaire")
-      app.$.ajaxPersee.url = node.endpointUrl;
-      //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
-      app.$.ajaxPersee.params = options;
-      //  console.log(options)
-      app.$.ajaxPersee.resource = node;
-      app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
-        app.progress = 30;
-        //  console.log(req)
-        //  console.log(req.response)
-        //  console.log(resp)
-        var data = req.response;
-        var endpointUrl = node.endpointUrl;
-        app._handlePerseeResponse(data, node, endpointUrl)
-        // succesful request, argument is iron-request element
-        //  ...
-      }, function(rejected) {
-        // failed request, argument is an object
-        let req = rejected.request;
-        let error = rejected.error;
-        console.log(req)
-        console.log(error)
-        //  ...
-      });
+    this.endpoints.forEach(function(e){
+      //console.log(e);
+      if (e.actif){
+        app.$.ajaxPersee.url = e.url+'/sparql';
+        //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+        app.$.ajaxPersee.params = options;
+        app.$.ajaxPersee.resource = node;
+        app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+          app.progress = 30;
+          //console.log(req)
+          //console.log(req.response)
+          //console.log(resp)
+          var data = req.response;
+          var endpointUrl = node.endpointUrl;
+          app._handlePerseeResponse(data, node, endpointUrl)
+          // succesful request, argument is iron-request element
+          //  ...
+        }, function(rejected) {
+          // failed request, argument is an object
+          let req = rejected.request;
+          let error = rejected.error;
+          console.log(req)
+          console.log(error)
+          //  ...
+        });
+      }
+      else{
+        console.log("inactif")
+      }
+    });
+  }else if (node.endpointUrl != undefined){
+    console.log("REcherche complementaire")
+    app.$.ajaxPersee.url = node.endpointUrl;
+    //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+    app.$.ajaxPersee.params = options;
+    //  console.log(options)
+    app.$.ajaxPersee.resource = node;
+    app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+      app.progress = 30;
+      //  console.log(req)
+      //  console.log(req.response)
+      //  console.log(resp)
+      var data = req.response;
+      var endpointUrl = node.endpointUrl;
+      app._handlePerseeResponse(data, node, endpointUrl)
+      // succesful request, argument is iron-request element
+      //  ...
+    }, function(rejected) {
+      // failed request, argument is an object
+      let req = rejected.request;
+      let error = rejected.error;
+      console.log(req)
+      console.log(error)
+      //  ...
+    });
 
 
-      /*.then(
-      request => console.log('success', request),
-      request => console.log('failure', request)
-    );*/
+    /*.then(
+    request => console.log('success', request),
+    request => console.log('failure', request)
+  );*/
 
-  }
+}
 }
 
 

@@ -69,6 +69,10 @@ GraphAgent.prototype.receive = function(from, message) {
     console.log(message.params)
     this.app.importFromParam(message.params);
     break;
+    case 'resultsFromExplore':
+    //  console.log(message.results)
+    this.app.resultsFromExplore(message.results);
+    break;
     case 'resultsFromSparql':
     //  console.log(message.results)
     this.app.resultsFromSparql(message.results);

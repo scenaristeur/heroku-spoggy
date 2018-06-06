@@ -27,245 +27,310 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 
 
-    importFromParam(params){
-      var source = params.source;
-      var network = this.network;
-      var output = [];
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', source, true);
-      xhr.responseType = 'blob';
-      xhr.onload = function(e) {
-        //  console.log(e);
-        var reponse = e.target.response;
-        //  console.log(reponse);
-        var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
-        reader.addEventListener('load', function () {
-          //  console.log(reader.result);
-          // ajouter test en fonction du type de fichier, extension
-          var nodes = JSON.parse(reader.result).nodes;
-          //    console.log(nodes);
-          var edges = JSON.parse(reader.result).edges;
-          //    console.log(edges);
-          network.beforeImport = [];
-          network.beforeImport.nodes = network.body.data.nodes.get();
-          network.beforeImport.edges = network.body.data.edges.get();
+    /////////////////////////////////
+    ////// AVANT PERSEE , fonctions a nettoyer...
+    /////////////////////////////////
+
+    addResultsToGraph(network, results){
+      var app = this;
+      var nodes = results.nodes;
+      var edges = results.edges;
+      console.log(nodes);
+      console.log(edges);
+      nodes.forEach(function(n){
+        app.addNodeIfNotExist(app.network, n);
+      });
+      edges.forEach(function(e){
+        //  app.addEdgeIfNotExist(app.network, e)
+        var existEdge = false;
+        console.log(e);
+        try {
+          existEdge = app.network.body.data.edges.get({
+            filter: function(edge){
+              return (edge.id == e.id) || ((edge.from == e.from) && (edge.to == e.to) && (edge.label == e.label));
+            }
+          });
+          if (existEdge.length == 0){
+            app.network.body.data.edges.add(e);
+          }else{
+            //  this.network.body.data.edges.update({id: data[0].id, label: data[0].label});
+            console.log("le lien existe déjà ??? Dois-je augmenter son poids ?")
+          }
+        }
+        catch (err) {
+          console.log(err);
+        }
+      });
+    }
+
+    /////////////////////////////////
+    ////// APRES PERSEE
+    /////////////////////////////////
+
+
+    resultsFromExplore(results){
+      console.log("POPULATE From Sparql");
+      console.log(results)
+      var app = this;
+
+      this.addResultsToGraph(app.network, results)
+      //  network.body.data.nodes.clear();
+      //  network.body.data.edges.clear();
+      //app.addNodeIfNotExist(app.network, nodes);
+      //app.addEdgeIfNotExist(app.network, edges);
+
+      /*Object.keys(results).forEach(function(id) {
+
+    });*/
+  }
+
+
+
+
+
+
+  importFromParam(params){
+    var source = params.source;
+    var network = this.network;
+    var output = [];
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', source, true);
+    xhr.responseType = 'blob';
+    xhr.onload = function(e) {
+      //  console.log(e);
+      var reponse = e.target.response;
+      //  console.log(reponse);
+      var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
+      reader.addEventListener('load', function () {
+        //  console.log(reader.result);
+        // ajouter test en fonction du type de fichier, extension
+        var nodes = JSON.parse(reader.result).nodes;
+        //    console.log(nodes);
+        var edges = JSON.parse(reader.result).edges;
+        //    console.log(edges);
+        network.beforeImport = [];
+        network.beforeImport.nodes = network.body.data.nodes.get();
+        network.beforeImport.edges = network.body.data.edges.get();
+        network.body.data.nodes.update(nodes);
+        network.body.data.edges.update(edges);
+        try{
           network.body.data.nodes.update(nodes);
           network.body.data.edges.update(edges);
-          try{
-            network.body.data.nodes.update(nodes);
-            network.body.data.edges.update(edges);
-          }
-          catch(e){
-            console.log(e);
-          }
-          //  console.log(network);
-          //  console.log(partageImport);
-        });
-        reader.readAsText(reponse);
-      };
-      xhr.send();
-    }
+        }
+        catch(e){
+          console.log(e);
+        }
+        //  console.log(network);
+        //  console.log(partageImport);
+      });
+      reader.readAsText(reponse);
+    };
+    xhr.send();
+  }
 
-    addToGraph(data){
-      console.log(data)
-      var app = this;
-      if (data.actions.length>0){
-        data.actions.forEach(function(action) {
+  addToGraph(data){
+    console.log(data)
+    var app = this;
+    if (data.actions.length>0){
+      data.actions.forEach(function(action) {
+        console.log(action);
+        console.log(app.network)
+        switch(action.type) {
+          case "newNode":
+          if(app.network != undefined){
+            app.addNodeIfNotExist(app.network, action.data);
+          }
+          break;
+          case "editNode":
+          break;
+          case "deleteNode":
+          app.deleteFromServer(action.data);
+          break;
+          case "newEdge":
+          if(app.network != undefined){
+            app.addEdgeIfNotExist(app.network, action.data);
+          }
+          break;
+          case "editEdge":
+          break;
+          case "deleteEdge":
+          app.deleteFromServer(action.data);
+          break;
+          default:
+          console.log("action non reconnue");
           console.log(action);
-          console.log(app.network)
-          switch(action.type) {
-            case "newNode":
-            if(app.network != undefined){
-              app.addNodeIfNotExist(app.network, action.data);
-            }
-            break;
-            case "editNode":
-            break;
-            case "deleteNode":
-            app.deleteFromServer(action.data);
-            break;
-            case "newEdge":
-            if(app.network != undefined){
-              app.addEdgeIfNotExist(app.network, action.data);
-            }
-            break;
-            case "editEdge":
-            break;
-            case "deleteEdge":
-            app.deleteFromServer(action.data);
-            break;
-            default:
-            console.log("action non reconnue");
-            console.log(action);
-          }
-        });
-      }
+        }
+      });
     }
+  }
 
-    resultsFromPersee(message){
-      console.log("POPULATE From Persee");
-      var app = this;
-      let network = this.network;
+  resultsFromPersee(message){
+    console.log("POPULATE From Persee");
+    var app = this;
+    let network = this.network;
     //  network.body.data.nodes.clear();
     //  network.body.data.edges.clear();
     //  console.log(message.results)
     //  console.log(message.typeResource);
-      let nResource = {
-        label: message.typeResource
+    let nResource = {
+      label: message.typeResource
+    }
+    let idRes = network.body.data.nodes.update(nResource)[0];
+    let nodes = message.results.nodes;
+    network.body.data.nodes.update(nodes);
+    network.body.data.edges.update(message.results.edges);
+  }
+
+
+
+
+
+  resultsFromSparql(results){
+    console.log("POPULATE From Sparql");
+    console.log(results)
+    var app = this;
+    let network = this.network;
+    //  network.body.data.nodes.clear();
+    //  network.body.data.edges.clear();
+
+    Object.keys(results).forEach(function(id) {
+      var data = results[id];
+      //  console.log(id);
+      //  console.log(data)
+      if (data.type == "node"){
+        //A Modifier dans statements-behaviors pour envoyer dans un tableau de nodes !
+        //  console.log("NONONONODE")
+        network.body.data.nodes.update(data);
       }
-      let idRes = network.body.data.nodes.update(nResource)[0];
-      let nodes = message.results.nodes;
-        network.body.data.nodes.update(nodes);
-        network.body.data.edges.update(message.results.edges);
-      }
+      if (id == "edges"){
+        //    console.log("EDGEEDGEDGE")
+        data.forEach(function(e){
+          //  console.log(e);
+          //network.body.data.edges.update(e);
 
-
-      resultsFromSparql(results){
-        console.log("POPULATE From Sparql");
-        console.log(results)
-        var app = this;
-        let network = this.network;
-      //  network.body.data.nodes.clear();
-      //  network.body.data.edges.clear();
-
-        Object.keys(results).forEach(function(id) {
-          var data = results[id];
-          //  console.log(id);
-          //  console.log(data)
-          if (data.type == "node"){
-            //A Modifier dans statements-behaviors pour envoyer dans un tableau de nodes !
-            //  console.log("NONONONODE")
-            network.body.data.nodes.update(data);
-          }
-          if (id == "edges"){
-            //    console.log("EDGEEDGEDGE")
-            data.forEach(function(e){
-              //  console.log(e);
-              //network.body.data.edges.update(e);
-
-              var edge = network.body.data.edges.get({
-                filter: function(edge) {
-                  return (edge.from == e.id && edge.to == e.id && edge.label == e);
-                }
-              });
-
-              if (edge.length == 0){
-                network.body.data.edges.update(e);
-              }else{
-                console.log('le lien existe déjà')
-              }
-
-            });
-          }
-          if (id == "nodes"){
-            //    console.log("EDGEEDGEDGE")
-            data.forEach(function(n){
-              //  console.log(e);
-              let type = n.type;
-
-              var ntype = network.body.data.nodes.get({
-                filter: function(node){
-                  //    console.log(node);
-                  return (node.label == n.type );
-                }
-              });
-              if (ntype.length == 0){
-                ntype[0] = network.body.data.nodes.add({label: n.type });
-              }
-              //  let ntypeId = network.body.data.nodes.update(n);
-              let nodeId = network.body.data.nodes.update(n);
-              let nZ = nodeId[0];
-            let tZ = ntype[0][0] || ntype[0].id;
-          //    console.log(nZ);
-            //  console.log(tZ);
-
-          let e = {from: nZ, to: tZ, label: 'type'};
-            //  console.log(e)
-            //   TEST  POR SUPPRIMER DOUBLONS TYPE
-               network.body.data.edges.update(e);
-            });
-          }
-        });
-        network.fit();
-        network.redraw();
-      }
-
-      populateVis(db) {
-        console.log("POPULATE");
-        let network = this.network;
-        network.body.data.nodes.clear();
-        network.body.data.edges.clear();
-        if (db.length > 0) {
-          if (db.length % 100 < 5) {
-            /*
-            Rezoom tous les 100*/
-            network.fit();
-            network.redraw();
-          }
-          var nodes = [];
-          var edges = [];
-          var reste = [];
-          db.forEach(function(t){
-            if(t.predicate == "type" && t.object == "node"){
-              nodes.push(t.subject);
-              network.body.data.nodes.add({id: t.subject, type: t.object, y:2*Math.random()});
-            }else if(t.predicate == "type" && t.object == "edge"){
-              edges.push(t.subject);
-            }  else{ reste.push(t);  }
-          });
-          reste.forEach(function(r){
-            if (nodes.includes(r.subject)){
-              var n = {id : r.subject}
-              n[r.predicate] = r.object;
-              network.body.data.nodes.update(n);
-            }else if(edges.includes(r.subject)){
-              var e = {id : r.subject}
-              e[r.predicate] = r.object;
-              network.body.data.edges.update(e);
-            }else{
-              console.log("Probleme non pris en compte : ")
-              console.log(r)
+          var edge = network.body.data.edges.get({
+            filter: function(edge) {
+              return (edge.from == e.id && edge.to == e.id && edge.label == e);
             }
           });
 
-          console.log(network)
+          if (edge.length == 0){
+            network.body.data.edges.update(e);
+          }else{
+            console.log('le lien existe déjà')
+          }
 
-          /*
-          for (var i = 0; i < 10; i++) {
-          var triplet = db.pop();
-          if (triplet != undefined) {
-          console.log(triplet);
-          if (triplet.predicate == "type"  && triplet.object == "node") {
-          console.log("NODE : "+triplet.subject);
-          var noeudExist = network.body.data.nodes.get(triplet.subject);
-          console.log(noeudExist)
-          if (noeudExist == null || noeudExist.length == 0) {
-          if (triplet.object.length > 40) {
-          network.body.data.nodes.add({
-          id: triplet.subject,
-          label: triplet.object.match(/.{1,40}/g).join("\n"),
-          //  shape: "box",
-          group: 0
         });
-      } else {
-      var node = {
-      id: triplet.subject,
-      label: triplet.object,
-      type: triplet.type,
-      group: 0,
-    };
-    network.body.data.nodes.add(node);
-    if ((node.label.toLowerCase() == "depart") || (node.label.toLowerCase() == "départ")) {
-    //  console.log('trouve depart');
-    //var nodeDep = network.body.data.nodes.get(triplet.subject);
-    //console.log(nodeDep);
-    //nodeDep.color = {background:'pink', border:'purple'};
-    network.body.data.nodes.update({
-    id: triplet.subject,
-    color: {
-    background: 'pink',
-    border: 'purple'
+      }
+      if (id == "nodes"){
+        //    console.log("EDGEEDGEDGE")
+        data.forEach(function(n){
+          //  console.log(e);
+          let type = n.type;
+
+          var ntype = network.body.data.nodes.get({
+            filter: function(node){
+              //    console.log(node);
+              return (node.label == n.type );
+            }
+          });
+          if (ntype.length == 0){
+            ntype[0] = network.body.data.nodes.add({label: n.type });
+          }
+          //  let ntypeId = network.body.data.nodes.update(n);
+          let nodeId = network.body.data.nodes.update(n);
+          let nZ = nodeId[0];
+          let tZ = ntype[0][0] || ntype[0].id;
+          //    console.log(nZ);
+          //  console.log(tZ);
+
+          let e = {from: nZ, to: tZ, label: 'type'};
+          //  console.log(e)
+          //   TEST  POR SUPPRIMER DOUBLONS TYPE
+          network.body.data.edges.update(e);
+        });
+      }
+    });
+    network.fit();
+    network.redraw();
   }
+
+  populateVis(db) {
+    console.log("POPULATE");
+    let network = this.network;
+    network.body.data.nodes.clear();
+    network.body.data.edges.clear();
+    if (db.length > 0) {
+      if (db.length % 100 < 5) {
+        /*
+        Rezoom tous les 100*/
+        network.fit();
+        network.redraw();
+      }
+      var nodes = [];
+      var edges = [];
+      var reste = [];
+      db.forEach(function(t){
+        if(t.predicate == "type" && t.object == "node"){
+          nodes.push(t.subject);
+          network.body.data.nodes.add({id: t.subject, type: t.object, y:2*Math.random()});
+        }else if(t.predicate == "type" && t.object == "edge"){
+          edges.push(t.subject);
+        }  else{ reste.push(t);  }
+      });
+      reste.forEach(function(r){
+        if (nodes.includes(r.subject)){
+          var n = {id : r.subject}
+          n[r.predicate] = r.object;
+          network.body.data.nodes.update(n);
+        }else if(edges.includes(r.subject)){
+          var e = {id : r.subject}
+          e[r.predicate] = r.object;
+          network.body.data.edges.update(e);
+        }else{
+          console.log("Probleme non pris en compte : ")
+          console.log(r)
+        }
+      });
+
+      console.log(network)
+
+      /*
+      for (var i = 0; i < 10; i++) {
+      var triplet = db.pop();
+      if (triplet != undefined) {
+      console.log(triplet);
+      if (triplet.predicate == "type"  && triplet.object == "node") {
+      console.log("NODE : "+triplet.subject);
+      var noeudExist = network.body.data.nodes.get(triplet.subject);
+      console.log(noeudExist)
+      if (noeudExist == null || noeudExist.length == 0) {
+      if (triplet.object.length > 40) {
+      network.body.data.nodes.add({
+      id: triplet.subject,
+      label: triplet.object.match(/.{1,40}/g).join("\n"),
+      //  shape: "box",
+      group: 0
+    });
+  } else {
+  var node = {
+  id: triplet.subject,
+  label: triplet.object,
+  type: triplet.type,
+  group: 0,
+};
+network.body.data.nodes.add(node);
+if ((node.label.toLowerCase() == "depart") || (node.label.toLowerCase() == "départ")) {
+//  console.log('trouve depart');
+//var nodeDep = network.body.data.nodes.get(triplet.subject);
+//console.log(nodeDep);
+//nodeDep.color = {background:'pink', border:'purple'};
+network.body.data.nodes.update({
+id: triplet.subject,
+color: {
+background: 'pink',
+border: 'purple'
+}
 })
 var nodeDep = network.body.data.nodes.get(triplet.subject);
 //nodeDep = network.body.data.nodes.get(triplet.subject);
@@ -1398,26 +1463,48 @@ addEdgeIfNotExist (network, data){
 addNodeIfNotExist(network, data){
   var existNode = false;
   console.log(data);
+  var nodeId;
   try{
-    existNode = this.network.body.data.nodes.get({
-      filter: function(node){
-        return (node.id == data.id || (node.label == data.label && node.title == node.label));
+    existNode = network.body.data.nodes.get({
+      filter: function(n){
+        return (n.id == data.id || (n.label == data.label)); //  || n.title == data.label
       }
     });
     console.log(existNode);
     if (existNode.length == 0){
       console.log("n'existe pas")
-      this.network.body.data.nodes.add(data);
+      nodeId =   network.body.data.nodes.add(data)[0];
     }else{
       console.log("existe")
       delete data.x;
       delete data.y
-      this.network.body.data.nodes.update(data);
+      nodeId =  network.body.data.nodes.update(data)[0];
     }
   }
   catch (err){
     console.log(err);
   }
+/*  console.log("GESTION TYPE RESOURCE")
+  console.log(nodeId)
+  //AJOUT du noeud resourceType
+  if (data.resourceType != undefined){
+    console.log("ajout "+data.resourceType +" à "+ nodeId)
+    var nodeResource = {
+      label : data.resourceType
+    }
+    var nodeIdResourceType =  this.addNodeIfNotExist(network, nodeResource);
+
+        console.log("TYPE de  "+nodeId +" à "+ nodeIdResourceType)
+    var edge = {
+      from: nodeId,
+      to: nodeIdResourceType,
+      label: "type"
+    }
+    this.addEdgeIfNotExist(network,edge)
+  }
+
+return nodeId;*/
+
 }
 
 
