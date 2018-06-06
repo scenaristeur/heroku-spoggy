@@ -29,7 +29,9 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     explore(endpoint){
     //  console.log(endpoint);
       let app = this;
+      app.group ++;
       var exploreQuery = endpoint.exploreQuery;
+      var typeResource = endpoint.exploreQuery.typeResources;
       let options = {
         query: exploreQuery.query,
         format: 'application/sparql-results+json',
@@ -39,7 +41,15 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       app.$.ajaxExplore.params = options;
       app.$.ajaxExplore.generateRequest().completes.then(function(req,resp) {
         var data = req.response;
-        app._handleExploreResponse(data, endpoint, exploreQuery.typeResources)
+        let response = JSON.parse(data);
+        let link = response.head.link;
+        let vars = response.head.vars;
+        let results = response.results.bindings;
+
+      var visResults =   endpoint.exploreQuery.parseToVis(app, results, endpoint, typeResource, app.group)
+      app.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: typeResource})
+
+
       }, function(rejected) {
         let req = rejected.request;
         let error = rejected.error;

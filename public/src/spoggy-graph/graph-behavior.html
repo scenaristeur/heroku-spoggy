@@ -48,7 +48,7 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         //  this.network.setData(data);
           var clusterOptionsByData = {
               joinCondition:function(childOptions) {
-                  return childOptions.cid != cid;
+                  return childOptions.cid < cid || childOptions.cid == undefined;
               },
               clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
           };

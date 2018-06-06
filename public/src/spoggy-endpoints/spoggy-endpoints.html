@@ -367,68 +367,70 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
               typeResources:{
                 s: 'bibo:Document',
                 sub: 'Subjects'
+              },
+              parseToVis : function(app, results, typeResources, endpointUrl, group){
+                //  var app = this;
+
+                var visRes = {nodes:[], edges:[]};
+                results.forEach(function(r){
+                  console.log(r);
+                  let node = {
+                    id: app.visId(r.s.value),
+                    type: null,
+                    resourceType: typeResources.s,
+                    uri: r.s.value,
+                    label: app.visLabelSplit(app.visLabel(r.t.value)),
+                    endpoint: endpointUrl,
+                    color: "rgb(76,0,74)",
+                    font: {
+                      color: 'rgb(255,255,255)'
+                    },
+                    cid: group,
+                    y: 2*Math.random()
+                  }
+                  var trouveN = visRes.nodes.find(function(element){
+                    return node.id == element.id
+                  });
+                  if (trouveN) {
+                    //  console.log("TROUVE ")
+                    //  console.log(trouveN)
+                    node = trouveN;
+                  }else{
+                    visRes.nodes.push(node);
+                  }
+
+                  let nodeSub = {
+                    id: r.sub.value,
+                    type: r.sub.type,
+                    resourceType: typeResources.sub,
+                    label: app.visLabelSplit(r.sub.value),
+                    endpoint: endpointUrl,
+                    color: "rgb(107,142,35)",
+                    shape: "box",
+                    cid: group,
+                    y: 2*Math.random()
+                  }
+                  var trouveS = visRes.nodes.find(function(element){
+                    return nodeSub.id == element.id
+                  });
+                  if (trouveS) {
+                    //  console.log("TROUVE ")
+                    //  console.log(trouveS)
+                    nodeSub = trouveS;
+                  }else{
+                    visRes.nodes.push(nodeSub);
+                  }
+
+                  let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
+                  if (!visRes.edges.includes(eType)){
+                    visRes.edges.push(eType)
+                  }
+                });
+
+                return visRes;
               }
             },
-            parseExploreQueryToVis : function(app, results, typeResources, endpointUrl, group){
-              //  var app = this;
-              var visRes = {nodes:[], edges:[]};
-              results.forEach(function(r){
-                console.log(r);
-                let node = {
-                  id: app.visId(r.s.value),
-                  type: null,
-                  resourceType: typeResources.s,
-                  uri: r.s.value,
-                  label: app.visLabelSplit(app.visLabel(r.t.value)),
-                  endpoint: endpointUrl,
-                  color: "rgb(76,0,74)",
-                  font: {
-                    color: 'rgb(255,255,255)'
-                  },
-                  cid: group,
-                  y: 2*Math.random()
-                }
-                var trouveN = visRes.nodes.find(function(element){
-                  return node.id == element.id
-                });
-                if (trouveN) {
-                //  console.log("TROUVE ")
-                //  console.log(trouveN)
-                  node = trouveN;
-                }else{
-                  visRes.nodes.push(node);
-                }
 
-                let nodeSub = {
-                  id: r.sub.value,
-                  type: r.sub.type,
-                  resourceType: typeResources.sub,
-                  label: app.visLabelSplit(r.sub.value),
-                  endpoint: endpointUrl,
-                  color: "rgb(107,142,35)",
-                  shape: "box",
-                  cid: group,
-                  y: 2*Math.random()
-                }
-                var trouveS = visRes.nodes.find(function(element){
-                  return nodeSub.id == element.id
-                });
-                if (trouveS) {
-                //  console.log("TROUVE ")
-                //  console.log(trouveS)
-                  nodeSub = trouveS;
-                }else{
-                  visRes.nodes.push(nodeSub);
-                }
-
-                let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
-                if (!visRes.edges.includes(eType)){
-                  visRes.edges.push(eType)
-                }
-              });
-
-              return visRes;
-            } ,
             searchQuery : {
               query: ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
                 ?s rdf:type ?type . \
