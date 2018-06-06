@@ -78,6 +78,12 @@ VirtuosoAgent.prototype.receive = function(from, message) {
     console.log(this.app.url);
     this.app.sendRequest();
     break;
+    case 'params':
+    console.log("###############PARAMS");
+    console.log(message)
+    this.app.uriEndpoint(message.params)
+    this.app.endpoint = message.endpoint;
+    break;
 
     case 'explorePersee':
     console.log('explore Persee')

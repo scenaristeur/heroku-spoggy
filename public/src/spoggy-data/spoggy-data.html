@@ -50,6 +50,7 @@
         console.log(this.network)
         console.log(this.params);
         this.agentData.send('agentGraph', {type: 'importFromParam', params: this.params});
+        this.agentData.send('agentVirtuoso', {type: 'params', params: this.params});
         }
       });
     }

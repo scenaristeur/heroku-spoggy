@@ -48,6 +48,7 @@ SparqlAgent.prototype.receive = function(from, message) {
     case 'recherche':
     this.app.recherche(message);
     break;
+
     case 'explore':
     console.log("explore");
     console.log(message.endpoint)

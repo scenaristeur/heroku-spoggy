@@ -79,6 +79,13 @@
   <!--on-response="_handleRechercheResponse"
   on-error="_handleRechercheError"-->
 
+  <iron-ajax
+ id="ajaxRechercheBis"
+ url="{{url}}"
+ params="{{options}}"
+ loading="{{loading}}"
+handle-as="application/sparql-results+json"></iron-ajax>
+
 
 
 </template>
@@ -119,6 +126,7 @@ class SpoggyVirtuoso extends VirtuosoBehaviorMixin(Polymer.Element) {
     //  this.initAgents()
     console.log(this.agentVirtuoso);
     this.agentVirtuoso.send('agentHello', 'Hello, agentHello !')
+    this.agentVirtuoso.send('agentData', {type: 'getParams'})
   }
 }
 

@@ -118,7 +118,45 @@
 
 
                       <li>Avec la commande <b><i>/i</i></b> pouvez importer un fichier spoggy </li>
-                      <li>Vous pouvez également indiquer un paramètre "?source=" dans l'url de la page, avec un fichier stocké sur un autre serveur ou sur github :
+
+                    </ul>
+                    <b>- Saisir des triplets</b><br>
+                    <p>
+                      ## Saisir un triplet au format Turtle<br>
+                      Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
+                      n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
+                      - David type Personne<b>.</b> -> triplet complet,<br>
+                      - David type Personne<b>;</b> -> indique de garder le sujet<br>
+                      - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
+                      - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
+                    </p>
+
+                    <p>
+                      ## Récupérer le dernier triplet saisi<br>
+                      - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
+                      - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
+                      - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
+                    </p>
+                    <b>- Chatter en mode collaboratif (voir Modes / Echelles)</b><br>
+                    <p> [développement en cours]
+                      ## Saisir un message pour le chat <br>
+                      Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
+                      ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
+                    </p>
+
+                  </div>
+                </iron-collapse-button>
+
+
+
+
+                <iron-collapse-button>
+                  <h3 slot="collapse-trigger" style="margin: 0; color: #0D578B;">Les paramètres d'url de spoggy</h3>
+                  <div slot="collapse-content">
+
+                    <ul>
+
+                      <li>En ajoutant un paramètre "?source=" dans l'url de la page, vous pouvez alimenter Spoggy avec un fichier json stocké sur un autre serveur ou sur github :
                         <ul>
                           <li><a href = "./?source=https://raw.githubusercontent.com/scenaristeur/heroku-spoggy/master/public/exemple_files/Spoggy_init.json" target="_blank" >
                             Un exemple avec le fichier distant des fonctionnalités de Spoggy</a>
@@ -133,34 +171,23 @@
                                 (<a href="./exemple_files/Spoggy-Donner du sens à l'IA.json" target="_blank">télécharger le fichier</a>)</li>
                               </ul>
                             </li>
+                            <li>
+                              Spoggy permet également de recevoir directement comme paramètre l'adresse du triplestore (endpoint) et l'uri recherchée sous la forme '?endpoint=...&uri=...' : <br>
+                              Un exemple qui permet de consulter la ressource  http://data.persee.fr/person/220614 sur le endpoint de Persee :
+                              <a href="/?endpoint=http://data.persee.fr/sparql&uri=http://data.persee.fr/person/220614" target="_blank">(http://[adresseserveur]?endpoint=http://data.persee.fr/sparql&uri=http://data.persee.fr/person/220614)</a>
+                            </li>
                           </li>
                         </ul>
-                        <b>- Saisir des triplets</b><br>
-                        <p>
-                          ## Saisir un triplet au format Turtle<br>
-                          Une saisie qui ne se termine pas par <b>.</b> ou <b>;</b> ou <b>,</b> ou <b>-</b>
-                          n'est pas pris en compte comme un triplet, par contre, les exemples ci-dessous sont des triplets<br>
-                          - David type Personne<b>.</b> -> triplet complet,<br>
-                          - David type Personne<b>;</b> -> indique de garder le sujet<br>
-                          - David type Personne<b>,</b> -> indique de garder sujet et propriete<br>
-                          - David type Personne<b>-</b> -> indique de passer l'objet à la place du sujet
-                        </p>
-
-                        <p>
-                          ## Récupérer le dernier triplet saisi<br>
-                          - en commençant par <b>.</b> -> on récupère tout le dernier triplet<br>
-                          - en commençant par <b>;</b> -> on récupère le sujet et la propriete<br>
-                          - en commençant par <b>,</b> -> on récupère seulement le dernier sujet
-                        </p>
-                        <b>- Chatter en mode collaboratif (voir Modes / Echelles)</b><br>
-                        <p> [développement en cours]
-                          ## Saisir un message pour le chat <br>
-                          Un message pour le chat ne doit ni commencer par <b>/ , ; .</b><br>
-                          ni se terminer par <b>, ; . -</b> sinon, il sera considéré comme un triplet
-                        </p>
 
                       </div>
                     </iron-collapse-button>
+
+
+
+
+
+
+
 
 
 
@@ -550,58 +577,58 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
         actif: true,
         type: 'virtuoso',
         read:true, write:false,
-      /*  firstQuery: 'select distinct ?s ?t ?sub \
+        /*  firstQuery: 'select distinct ?s ?t ?sub \
         Where {\
-          ?s ?p bibo:Document.\
-          ?s dcterms:title ?t.\
-          ?s dcterms:subject ?sub.\
-          filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
-        } LIMIT 300'*/
-        firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
-      },
-        {name: 'Smag global', url: 'http://5.51.110.50:3030', actif: false, type: 'fuseki', read: true, write: true},
-        {name: 'Semantic Forms', url: 'http://192...', actif: false, type: 'sf', read: true, write: true}]
-      }
-    };
+        ?s ?p bibo:Document.\
+        ?s dcterms:title ?t.\
+        ?s dcterms:subject ?sub.\
+        filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
+      } LIMIT 300'*/
+      firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
+    },
+    {name: 'Smag global', url: 'http://5.51.110.50:3030', actif: false, type: 'fuseki', read: true, write: true},
+    {name: 'Semantic Forms', url: 'http://192...', actif: false, type: 'sf', read: true, write: true}]
   }
-  constructor(){
-    super();
+};
+}
+constructor(){
+  super();
 
-    Polymer.RenderStatus.afterNextRender(this, function() {
-      // When possible, use afterNextRender to defer non-critical
-      // work until after first paint.
-      this._deferred();
+  Polymer.RenderStatus.afterNextRender(this, function() {
+    // When possible, use afterNextRender to defer non-critical
+    // work until after first paint.
+    this._deferred();
 
-    });
-  }
-  _deferred(){
-    this.$.scrollEndpoints.dialogElement = this.$.modePopup;
-    this.importLazyGroup('lazy').then((results) => {
-      console.log(results);
-      this.dispatchEvent(new CustomEvent('import-loaded', results));
-      this.agentDialogs = new DialogsAgent('agentDialogs', this);
-      this.initAgents()
-    });
+  });
+}
+_deferred(){
+  this.$.scrollEndpoints.dialogElement = this.$.modePopup;
+  this.importLazyGroup('lazy').then((results) => {
+    console.log(results);
+    this.dispatchEvent(new CustomEvent('import-loaded', results));
+    this.agentDialogs = new DialogsAgent('agentDialogs', this);
+    this.initAgents()
+  });
 
-  }
-  initAgents(){
-    //  console.log(this.agentInput)
-    this.agentDialogs.send('agentHello', 'Hello agentHello!');
+}
+initAgents(){
+  //  console.log(this.agentInput)
+  this.agentDialogs.send('agentHello', 'Hello agentHello!');
+  console.log(window.location.hostname);
+  if (window.location.hostname != "127.0.0.1"){
     console.log(window.location.hostname);
-    if (window.location.hostname != "127.0.0.1"){
-      console.log(window.location.hostname);
-      this.$.cpt.src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n";
-    }else{
-      console.log(window.location.hostname);
-      this.$.cpt.src = "/doc/spoggy_ncc_vue3.png";
-    }
-
-
-    //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    this.$.cpt.src="https://counter10.allfreecounter.com/private/compteurdevisite.php?c=kap2qgssr21ur788587am4dra6chp35n";
+  }else{
+    console.log(window.location.hostname);
+    this.$.cpt.src = "/doc/spoggy_ncc_vue3.png";
   }
-  /*_virtuosoEndpointChanged(e){
-  console.log(e.model.item)
-  this.endpoint = e.model.item.url;
+
+
+  //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+}
+/*_virtuosoEndpointChanged(e){
+console.log(e.model.item)
+this.endpoint = e.model.item.url;
 }*/
 }
 

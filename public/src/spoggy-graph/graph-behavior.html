@@ -90,6 +90,13 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 
   importFromParam(params){
+    console.log(params);
+   if(params.uri != undefined && params.endpoint!= undefined){
+     console.log("URI = "+params.uri);
+     console.log("ENDPOINT: "+params.uri);
+     this.agentGraph.send('agentVirtuoso', {type: "uriEndpoint", params:params});
+   }else{
+     console.log("PARAMETRES");
     var source = params.source;
     var network = this.network;
     var output = [];
@@ -126,6 +133,7 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       reader.readAsText(reponse);
     };
     xhr.send();
+  }
   }
 
   addToGraph(data){
