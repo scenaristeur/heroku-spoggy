@@ -59,8 +59,10 @@
     }
     </style>
 
-    <div id="mynetwork"></div>
 
+    <div id="mynetwork"></div>
+    <paper-button  on-tap="clusterByCid"  raised>cluster by id</paper-button>
+    <paper-button   on-tap="clusterByHubsize"  raised>cluster by hubsize</paper-button>
     <paper-dialog id="edgePopUp"> <!--  backdrop transition="core-transition-bottom" -->
       <!--  <div horizontal start-justified start layout > -->
       <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>-->
@@ -193,17 +195,28 @@
 
         this.network.on("selectNode", function (params) {
           console.log('selectNode Event:', params);
+          if (params.nodes.length == 1) {
+            if (app.network.isCluster(params.nodes[0]) == true) {
+              app.network.openCluster(params.nodes[0]);
 
-          let id = params.nodes[0];
-          var node = app.network.body.data.nodes.get(id);
-          console.log(node);
+            }else{
+              let id = params.nodes[0];
+              var node = app.network.body.data.nodes.get(id);
+              console.log(node);
+              //app.clusterByHubsize()
+              app.clusterOtherCid(node.cid)
               app.agentGraph.send('agentVirtuoso', {type:'clickon', node : node});
-          let res = node.label;
-          if (node.title != undefined){
-            res = node.title;
-          }
+              let res = node.label;
+              if (node.title != undefined){
+                res = node.title;
+              }
 
-          app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
+              app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
+            }
+          }
+          else{
+            console.log("Plusieurs noeuds selectionnes")
+          }
         });
       });
     }

@@ -27,7 +27,7 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     //////////////////////////
 
     explore(endpoint){
-      console.log(endpoint);
+    //  console.log(endpoint);
       let app = this;
       var exploreQuery = endpoint.exploreQuery;
       let options = {
@@ -101,6 +101,8 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   _handleExploreResponse(data, endpoint, typeResources){
     console.log("Reponse Exploration "+endpoint.name);
     console.log(data);
+    this.group ++;
+    console.log(this.group)
     //  console.log(data.detail);
     //  console.log(data.detail.error);
     //  console.log(data.detail.error.message);
@@ -113,7 +115,8 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     //  console.log(this.head);
     console.log(results);
     //  var visResults = this.exploreToVis(results, endpoint.url);
-    var visResults = endpoint.parseExploreQueryToVis(this, results, typeResources, endpoint.url);
+
+    var visResults = endpoint.parseExploreQueryToVis(this, results, typeResources, endpoint.url, this.group);
     console.log(visResults);
     this.agentVirtuoso.send('agentGraph', {type: "resultsFromExplore", results: visResults})
   }
@@ -343,6 +346,8 @@ clickonNode(node){
   console.log(node);
   console.log(this.endpoints)
   let app = this;
+  app.group ++
+
 
   let options = {
     //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
@@ -404,7 +409,7 @@ clickonNode(node){
       //  console.log(resp)
       var data = req.response;
       var endpointUrl = node.endpoint;
-      app._handlePerseeResponse(data, node, endpointUrl)
+      app._handlePerseeResponse(data, node, endpointUrl, app.group)
       // succesful request, argument is iron-request element
       //  ...
     }, function(rejected) {
@@ -729,7 +734,7 @@ rechercheToVis(results, recherche, endpointUrl){
 }
 
 
-_handlePerseeResponse(data, resource, endpointUrl){
+_handlePerseeResponse(data, resource, endpointUrl, group){
   console.log("Reponse Persee");
   //  console.log(data);
   //  console.log(data.detail);
@@ -747,7 +752,7 @@ _handlePerseeResponse(data, resource, endpointUrl){
   //  console.log(this.head);
   console.log(results);
   this.progress = 60;
-  var visResults = this.conceptsPerseeToVis(results, resource, endpointUrl);
+  var visResults = this.conceptsPerseeToVis(results, resource, endpointUrl, group);
   console.log(visResults);
   this.progress = 80;
   this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
@@ -853,7 +858,7 @@ resourcePerseeToVis(results){
 
 
 
-conceptsPerseeToVis(results, resource, endpoint){
+conceptsPerseeToVis(results, resource, endpoint, group){
   let app = this;
   var visRes = {nodes:[], edges:[]};
   //  console.log(resource)
@@ -874,7 +879,7 @@ conceptsPerseeToVis(results, resource, endpoint){
         lab2 = r.label2.value
       }
       lab2 = lab2.match(/.{1,40}/g).join("\n");
-      let nO = {id: r.o.value, label: lab2 , uri: r.o.value, shape: 'box'};
+      let nO = {id: r.o.value, label: lab2 , uri: r.o.value, shape: 'box', cid: group};
       //  console.log(nO)
       if (r.o.type =="literal"){
         nO.shape = "box"
@@ -894,7 +899,7 @@ conceptsPerseeToVis(results, resource, endpoint){
         lab = r.label2.value;
       }
       lab = lab.match(/.{1,40}/g).join("\n");
-      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpoint: endpoint};
+      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpoint: endpoint, cid: group};
       //console.log(nS)
       let  e2 = {from : nS.id, to: resource.id, label: app.visLabel(r.p.value)}
       !visRes.nodes.includes(nS)&& visRes.nodes.push(nS);

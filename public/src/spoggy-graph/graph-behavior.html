@@ -31,6 +31,43 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     ////// AVANT PERSEE , fonctions a nettoyer...
     /////////////////////////////////
 
+
+  clusterByCid() {
+    console.log("CLUSTER BY ID")
+      //  this.network.setData(data);
+        var clusterOptionsByData = {
+            joinCondition:function(childOptions) {
+                return childOptions.cid == 1;
+            },
+            clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
+        };
+        this.network.cluster(clusterOptionsByData);
+    }
+    clusterOtherCid(cid) {
+      console.log("CLUSTER BY OTHER ID")
+        //  this.network.setData(data);
+          var clusterOptionsByData = {
+              joinCondition:function(childOptions) {
+                  return childOptions.cid != cid;
+              },
+              clusterNodeProperties: {id:'cidCluster', borderWidth:3, shape:'database'}
+          };
+          this.network.cluster(clusterOptionsByData);
+      }
+
+    clusterByHubsize() {
+    //  this.network.setData(data);
+      var clusterOptionsByData = {
+          processProperties: function(clusterOptions, childNodes) {
+            clusterOptions.label = "[" + childNodes.length + "]";
+            return clusterOptions;
+          },
+          clusterNodeProperties: {borderWidth:3, shape:'database', font:{size:30}}
+      };
+      this.network.clusterByHubsize(undefined, clusterOptionsByData);
+  }
+
+
     addResultsToGraph(network, results){
       var app = this;
       var nodes = results.nodes;
@@ -43,7 +80,7 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       edges.forEach(function(e){
         //  app.addEdgeIfNotExist(app.network, e)
         var existEdge = false;
-        console.log(e);
+      //  console.log(e);
         try {
           existEdge = app.network.body.data.edges.get({
             filter: function(edge){
@@ -1470,7 +1507,7 @@ addEdgeIfNotExist (network, data){
 }
 addNodeIfNotExist(network, data){
   var existNode = false;
-  console.log(data);
+  //console.log(data);
   var nodeId;
   try{
     existNode = network.body.data.nodes.get({
@@ -1478,12 +1515,12 @@ addNodeIfNotExist(network, data){
         return (n.id == data.id || (n.label == data.label)); //  || n.title == data.label
       }
     });
-    console.log(existNode);
+    //console.log(existNode);
     if (existNode.length == 0){
-      console.log("n'existe pas")
+    //  console.log("n'existe pas")
       nodeId =   network.body.data.nodes.add(data)[0];
     }else{
-      console.log("existe")
+    //  console.log("existe")
       delete data.x;
       delete data.y
       nodeId =  network.body.data.nodes.update(data)[0];

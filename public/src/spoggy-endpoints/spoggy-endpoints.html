@@ -369,7 +369,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                 sub: 'Subjects'
               }
             },
-            parseExploreQueryToVis : function(app, results, typeResources, endpointUrl){
+            parseExploreQueryToVis : function(app, results, typeResources, endpointUrl, group){
               //  var app = this;
               var visRes = {nodes:[], edges:[]};
               results.forEach(function(r){
@@ -385,14 +385,15 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                   font: {
                     color: 'rgb(255,255,255)'
                   },
+                  cid: group,
                   y: 2*Math.random()
                 }
                 var trouveN = visRes.nodes.find(function(element){
                   return node.id == element.id
                 });
                 if (trouveN) {
-                  console.log("TROUVE ")
-                  console.log(trouveN)
+                //  console.log("TROUVE ")
+                //  console.log(trouveN)
                   node = trouveN;
                 }else{
                   visRes.nodes.push(node);
@@ -406,14 +407,15 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                   endpoint: endpointUrl,
                   color: "rgb(107,142,35)",
                   shape: "box",
+                  cid: group,
                   y: 2*Math.random()
                 }
                 var trouveS = visRes.nodes.find(function(element){
                   return nodeSub.id == element.id
                 });
                 if (trouveS) {
-                  console.log("TROUVE ")
-                  console.log(trouveS)
+                //  console.log("TROUVE ")
+                //  console.log(trouveS)
                   nodeSub = trouveS;
                 }else{
                   visRes.nodes.push(nodeSub);

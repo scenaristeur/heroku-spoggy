@@ -25,10 +25,10 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     explore(endpoint){
       let app = this;
-      console.log(endpoint);
+    //  console.log(endpoint);
       switch (endpoint.type) {
         case 'virtuoso':
-        console.log(endpoint)
+      //  console.log(endpoint)
         app.exploreVirtuoso(endpoint)
         break;
         case 'fuseki':

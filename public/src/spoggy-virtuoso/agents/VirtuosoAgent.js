@@ -31,8 +31,8 @@ VirtuosoAgent.prototype.sayHello = function(to) {
 * @param {*} message       Received message, a JSON object (often a string)
 */
 VirtuosoAgent.prototype.receive = function(from, message) {
-  console.log(from + ' said: ' + JSON.stringify(message) );
-  this.app.prop1 = message;
+  /*console.log(from + ' said: ' + JSON.stringify(message) );
+  this.app.prop1 = message;*/
 
   if (!this.app.virtuosoActif){
     console.log("VIRTUOSO ACTIF = FALSE DANS VIRTUOSO BEHAVIOR A REVOIR ! ")
