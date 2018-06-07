@@ -229,7 +229,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       newInput = '"'+newInput+'"';
     }
     newInput=newInput+" ";
-    this.$.inputMessage.value += newInput;
+    this.$.inputMessage.value = newInput;
   }
 
   clearInput(){

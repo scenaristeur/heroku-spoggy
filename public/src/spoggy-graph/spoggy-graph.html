@@ -61,7 +61,7 @@
 
 
     <div id="mynetwork"></div>
-<!--    <paper-button  on-tap="clusterByCid"  raised>cluster by id</paper-button>
+    <!--    <paper-button  on-tap="clusterByCid"  raised>cluster by id</paper-button>
     <paper-button   on-tap="clusterByHubsize"  raised>cluster by hubsize</paper-button> -->
     <paper-dialog id="edgePopUp"> <!--  backdrop transition="core-transition-bottom" -->
       <!--  <div horizontal start-justified start layout > -->
@@ -205,14 +205,17 @@
               console.log(node);
               console.log("ICI option de mise en cluster")
               //app.clusterByHubsize()
-              app.clusterOtherCid(node.cid)
+              //app.clusterOtherCid(node.cid)
+
+              // DESACTIVE TEMP POUR VOIR CLUSTER
               app.agentGraph.send('agentVirtuoso', {type:'clickon', node : node});
               let res = node.label;
               if (node.title != undefined){
                 res = node.title;
               }
-
               app.agentGraph.send('agentInput', {type:'updateInput', resource : res});
+              app.agentGraph.send('agentHistorique', {type:'addHistorique', node : node});
+              app.clusterLessCid(node.cid, node.label)
             }
           }
           else{

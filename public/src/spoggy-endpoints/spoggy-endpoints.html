@@ -469,7 +469,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
         url: 'http://163.172.179.125:9112',
         exploreQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-        SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 1000',
+        SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 100',
         actif: false,
         selectionnable: false,
         type: 'virtuoso',

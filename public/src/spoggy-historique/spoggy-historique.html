@@ -7,57 +7,58 @@
 <link rel="import" href="./historique-behavior.html">
 
 <dom-module id="spoggy-historique">
-    <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <template>
-<!--    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>-->
-  </template>
+    <!--    <style>
+    :host {
+    display: block;
+  }
+</style>
+<h2>Hello [[prop1]]!</h2>-->
+</template>
 
-  <script>
-    /**
-     * `spoggy-historique`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyHistorique extends HistoriqueBehaviorMixin(Polymer.Element) {
-      static get is() { return 'spoggy-historique'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-historique'
-          }
-        };
-      }
+<script>
+/**
+* `spoggy-historique`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyHistorique extends HistoriqueBehaviorMixin(Polymer.Element) {
+  static get is() { return 'spoggy-historique'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-historique'
+      },
+
+    };
+  }
 
 
-        constructor(){
-          super();
-          this.agentHistorique = new HistoriqueAgent('agentHistorique', this);
-          Polymer.RenderStatus.afterNextRender(this, function() {
-            // When possible, use afterNextRender to defer non-critical
-            // work until after first paint.
-            this._deferred();
+  constructor(){
+    super();
+    this.agentHistorique = new HistoriqueAgent('agentHistorique', this);
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
 
-          });
-        }
-        _deferred(){
-          //  console.log("agent DATA defered")
-          //    console.log(this.agentMode);
-          //  this.initAgents()
-          console.log(this.agentHistorique);
-          this.agentHistorique.send('agentHello', 'Hello, agentHello !')
+    });
+  }
+  _deferred(){
+    //  console.log("agent DATA defered")
+    //    console.log(this.agentMode);
+    //  this.initAgents()
+    console.log(this.agentHistorique);
+    this.agentHistorique.send('agentHello', 'Hello, agentHello !')
 
-        }
-    }
+  }
+}
 
-    window.customElements.define(SpoggyHistorique.is, SpoggyHistorique);
-  </script>
+window.customElements.define(SpoggyHistorique.is, SpoggyHistorique);
+</script>
 </dom-module>

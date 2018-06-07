@@ -31,8 +31,8 @@
   * @param {*} message       Received message, a JSON object (often a string)
   */
  HistoriqueAgent.prototype.receive = function(from, message) {
-   console.log(from + ' said: ' + JSON.stringify(message) );
-      this.app.prop1 = message;
+   /*console.log(from + ' said: ' + JSON.stringify(message) );
+      this.app.prop1 = message;*/
 
 
         if (typeof message == String && message.indexOf('Hello') === 0) {
@@ -43,8 +43,9 @@
 
 
         switch(message.type){
-          case 'connect':
-
+          case 'addHistorique':
+        //  console.log("addHistorique")
+          this.app.addHistorique(message.node);
           break;
           default:
           console.log(message);
