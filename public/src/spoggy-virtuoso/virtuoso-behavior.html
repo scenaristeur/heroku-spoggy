@@ -27,7 +27,7 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     //////////////////////////
 
     explore(endpoint){
-    //  console.log(endpoint);
+      //  console.log(endpoint);
       let app = this;
       app.group ++;
       var exploreQuery = endpoint.exploreQuery;
@@ -46,8 +46,8 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         let vars = response.head.vars;
         let results = response.results.bindings;
 
-      var visResults =   endpoint.exploreQuery.parseToVis(app, results, endpoint, typeResource, app.group)
-      app.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: typeResource})
+        var visResults =   endpoint.exploreQuery.parseToVis(app, results, endpoint.url, typeResource, app.group)
+        app.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: typeResource})
 
 
       }, function(rejected) {
@@ -354,7 +354,7 @@ return visRes;
 
 clickonNode(node){
   console.log(node);
-  console.log(this.endpoints)
+  //  console.log(this.endpoints)
   let app = this;
   app.group ++
 
@@ -373,71 +373,72 @@ clickonNode(node){
     format: 'application/sparql-results+json',
   }
 
-  if (this.endpoints != undefined){
-    console.log(this.endpoints)
-    this.endpoints.forEach(function(e){
-      //console.log(e);
-      if (e.actif){
-        app.$.ajaxPersee.url = e.url;
-        //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
-        app.$.ajaxPersee.params = options;
-        app.$.ajaxPersee.resource = node;
-        app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
-          app.progress = 30;
-          //console.log(req)
-          //console.log(req.response)
-          //console.log(resp)
-          var data = req.response;
-          var endpointUrl = node.endpointUrl;
-          app._handlePerseeResponse(data, node, endpointUrl)
-          // succesful request, argument is iron-request element
-          //  ...
-        }, function(rejected) {
-          // failed request, argument is an object
-          let req = rejected.request;
-          let error = rejected.error;
-          console.log(req)
-          console.log(error)
-          //  ...
-        });
-      }
-      else{
-        console.log("inactif")
-      }
-    });
-  }else if (node.endpoint != undefined){
-    console.log("REcherche complementaire")
-    app.$.ajaxPersee.url = node.endpoint;
-    //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
-    app.$.ajaxPersee.params = options;
-    //  console.log(options)
-    app.$.ajaxPersee.resource = node;
-    app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
-      app.progress = 30;
-      //  console.log(req)
-      //  console.log(req.response)
-      //  console.log(resp)
-      var data = req.response;
-      var endpointUrl = node.endpoint;
-      app._handlePerseeResponse(data, node, endpointUrl, app.group)
-      // succesful request, argument is iron-request element
-      //  ...
-    }, function(rejected) {
-      // failed request, argument is an object
-      let req = rejected.request;
-      let error = rejected.error;
-      console.log(req)
-      console.log(error)
-      //  ...
-    });
-
-
-    /*.then(
-    request => console.log('success', request),
-    request => console.log('failure', request)
-  );*/
-
+  /*if (this.endpoints != undefined){
+  console.log(this.endpoints)
+  this.endpoints.forEach(function(e){
+  //console.log(e);
+  if (e.actif){
+  app.$.ajaxPersee.url = e.url;
+  //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+  app.$.ajaxPersee.params = options;
+  app.$.ajaxPersee.resource = node;
+  app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+  app.progress = 30;
+  //console.log(req)
+  //console.log(req.response)
+  //console.log(resp)
+  var data = req.response;
+  var endpointUrl = node.endpointUrl;
+  app._handlePerseeResponse(data, node, endpointUrl)
+  // succesful request, argument is iron-request element
+  //  ...
+}, function(rejected) {
+// failed request, argument is an object
+let req = rejected.request;
+let error = rejected.error;
+console.log(req)
+console.log(error)
+//  ...
+});
 }
+else{
+console.log("inactif")
+}
+});
+}else if (node.endpointUrl != undefined){*/
+console.log("REcherche complementaire")
+console.log(node);
+app.$.ajaxPersee.url = node.endpointUrl;
+//  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+app.$.ajaxPersee.params = options;
+console.log(options)
+//  app.$.ajaxPersee.resource = node.id;
+app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+  app.progress = 30;
+  //  console.log(req)
+  //  console.log(req.response)
+  //  console.log(resp)
+  var data = req.response;
+  //  var endpointUrl = node.endpoint;
+  app._handlePerseeResponse(data, node, app.group)
+  // succesful request, argument is iron-request element
+  //  ...
+}, function(rejected) {
+  // failed request, argument is an object
+  let req = rejected.request;
+  let error = rejected.error;
+  console.log(req)
+  console.log(error)
+  //  ...
+});
+
+
+/*.then(
+request => console.log('success', request),
+request => console.log('failure', request)
+);*/
+
+//}
 }
 
 
@@ -744,7 +745,7 @@ rechercheToVis(results, recherche, endpointUrl){
 }
 
 
-_handlePerseeResponse(data, resource, endpointUrl, group){
+_handlePerseeResponse(data, node, group){
   console.log("Reponse Persee");
   //  console.log(data);
   //  console.log(data.detail);
@@ -754,7 +755,7 @@ _handlePerseeResponse(data, resource, endpointUrl, group){
   //console.log(data.detail.response); // -->
   /*let resource = data.path[0].resource;
   let endpointUrl = data.path[0].url;*/
-  console.log("Resource :"+ resource)
+  console.log("Resultat de la recherche  :"+ node.id)
   let response = JSON.parse(data);
   let link = response.head.link;
   let vars = response.head.vars;
@@ -762,7 +763,7 @@ _handlePerseeResponse(data, resource, endpointUrl, group){
   //  console.log(this.head);
   console.log(results);
   this.progress = 60;
-  var visResults = this.conceptsPerseeToVis(results, resource, endpointUrl, group);
+  var visResults = this.conceptsPerseeToVis(results, node, group);
   console.log(visResults);
   this.progress = 80;
   this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
@@ -868,39 +869,38 @@ resourcePerseeToVis(results){
 
 
 
-conceptsPerseeToVis(results, resource, endpoint, group){
+conceptsPerseeToVis(results, node, group){
   let app = this;
   var visRes = {nodes:[], edges:[]};
   //  console.log(resource)
-  !visRes.nodes.includes(resource) &&   visRes.nodes.push(resource);
+  !visRes.nodes.includes(node) &&   visRes.nodes.push(node);
   results.forEach(function(r){
     //  console.log("###################################")
     //  console.log(r);
     //  console.log(r.label);
     //  console.log(r.label2)
     if (r.s == undefined){
-      var lab2 = "";
-      if (r.o.type == 'literal'){
-        lab2 = r.o.value;
-      }else{
-        lab2 = app.visLabel(r.o.value);
-      }
-      if (r.label2 != undefined){
-        lab2 = r.label2.value
-      }
-      lab2 = lab2.match(/.{1,40}/g).join("\n");
-      let nO = {id: r.o.value, label: lab2 , uri: r.o.value, shape: 'box', cid: group};
+      let nO = { cid: group};
       //  console.log(nO)
       if (r.o.type =="literal"){
-        nO.shape = "box"
+        nO.label = r.o.value.substring(0,40)+"...";
+        nO.title = r.o.value.match(/.{1,40}/g).join("\n");
+        nO.shape = "box";
+        nO.color= "rgb(107,142,35)";
+
       }else{
-        nO.endpoint = endpoint;
+        nO.id= r.o.value;
+        nO.label= app.visLabel(r.o.value).match(/.{1,40}/g).join("\n");
+        nO.endpointUrl= node.endpointUrl;
+        nO.color = "rgb(76,0,74)";
+        nO.font = {color: 'rgb(255,255,255)'};
+        nO.uri= r.o.value;
       }
       if (r.o.value.endsWith('.png' || '.jpg')){
         nO.image = r.o.value;
-        nO.shape = 'image'
+        nO.shape = 'image';
       }
-      let  e = {from : resource.id, to: nO.id, label: app.visLabel(r.p.value)}
+      let  e = {from : node.id, to: nO.id, label: app.visLabel(r.p.value)}
       !visRes.nodes.includes(nO)&& visRes.nodes.push(nO);
       !visRes.edges.includes(e) &&    visRes.edges.push(e);
     }else if(r.o == undefined){
@@ -909,9 +909,9 @@ conceptsPerseeToVis(results, resource, endpoint, group){
         lab = r.label2.value;
       }
       lab = lab.match(/.{1,40}/g).join("\n");
-      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpoint: endpoint, cid: group};
+      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpointUrl: node.endpointUrl, cid: group};
       //console.log(nS)
-      let  e2 = {from : nS.id, to: resource.id, label: app.visLabel(r.p.value)}
+      let  e2 = {from : nS.id, to: node.id, label: app.visLabel(r.p.value)}
       !visRes.nodes.includes(nS)&& visRes.nodes.push(nS);
       !visRes.edges.includes(e2) &&    visRes.edges.push(e2);
     }else{

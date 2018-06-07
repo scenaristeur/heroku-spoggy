@@ -211,11 +211,12 @@ var GraphBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
   resultsFromPersee(message){
     console.log("POPULATE From Persee");
+
     var app = this;
     let network = this.network;
     //  network.body.data.nodes.clear();
     //  network.body.data.edges.clear();
-    //  console.log(message.results)
+      console.log(message.results)
     //  console.log(message.typeResource);
     let nResource = {
       label: message.typeResource

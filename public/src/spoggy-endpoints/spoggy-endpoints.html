@@ -368,7 +368,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                 s: 'bibo:Document',
                 sub: 'Subjects'
               },
-              parseToVis : function(app, results, typeResources, endpointUrl, group){
+              parseToVis : function(app, results, endpointUrl,typeResources, group){
                 //  var app = this;
 
                 var visRes = {nodes:[], edges:[]};
@@ -380,7 +380,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                     resourceType: typeResources.s,
                     uri: r.s.value,
                     label: app.visLabelSplit(app.visLabel(r.t.value)),
-                    endpoint: endpointUrl,
+                    endpointUrl: endpointUrl,
                     color: "rgb(76,0,74)",
                     font: {
                       color: 'rgb(255,255,255)'
@@ -404,7 +404,7 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
                     type: r.sub.type,
                     resourceType: typeResources.sub,
                     label: app.visLabelSplit(r.sub.value),
-                    endpoint: endpointUrl,
+                    endpointUrl: endpointUrl,
                     color: "rgb(107,142,35)",
                     shape: "box",
                     cid: group,
