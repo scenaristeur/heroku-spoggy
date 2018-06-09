@@ -260,13 +260,18 @@ resultsFromPersee(message){
   //  network.body.data.edges.clear();
   console.log(message.results)
   //  console.log(message.typeResource);
-  let nResource = {
-    label: message.typeResource
+  for(var r in message.typeResource){
+    //  alert(propt + ': ' + obj[propt]);
+      let nResource = {
+        id: message.typeResource[r],
+        label: message.typeResource[r]
+      }
+      let idRes = network.body.data.nodes.update(nResource)[0];
   }
-  let idRes = network.body.data.nodes.update(nResource)[0];
   let nodes = message.results.nodes;
   network.body.data.nodes.update(nodes);
   network.body.data.edges.update(message.results.edges);
+  console.log(network.body.data);
 }
 
 
