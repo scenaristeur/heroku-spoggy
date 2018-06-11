@@ -23,10 +23,14 @@
     @apply --layout-horizontal;
     @apply --layout-flex;
     }*/
-    paper-input {
-      --paper-input-container {
-        padding : 0
-      }
+    :host {
+      --paper-input-container: {padding: 0px};
+    }
+    .prefix {
+
+    }
+    .suffix {
+
     }
 
 
@@ -40,8 +44,8 @@
       on-keydown="checkForEnter">
       <paper-icon-button slot="prefix" on-tap="toggleInput" icon="search"></paper-icon-button>
       <paper-icon-button slot="prefix" on-tap="toggleInput" icon="create"></paper-icon-button>
-      <paper-icon-button slot="suffix"  on-tap="clearInput" icon="clear"></paper-icon-button>
-      <paper-icon-button slot="suffix"  on-tap="traiteMessage" icon="arrow-forward"></paper-icon-button>
+      <paper-icon-button slot="suffix" on-tap="clearInput" icon="clear"></paper-icon-button>
+      <paper-icon-button slot="suffix" on-tap="traiteMessage" icon="arrow-forward"></paper-icon-button>
     </paper-input>
   </center>
 
