@@ -190,6 +190,7 @@
         this.dispatchEvent(new CustomEvent('import-loaded', results));
 
         this.agentGraph = new GraphAgent('agentGraph', this);
+        console.log(this.agentGraph);
 
         this.network = this.networkDivInitialize(this.$.mynetwork, this);
 

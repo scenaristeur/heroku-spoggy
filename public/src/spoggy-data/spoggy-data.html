@@ -8,7 +8,7 @@
 
 
 <dom-module id="spoggy-data">
-      <link rel="lazy-import" group="lazy" href="./data-import.html">
+  <link rel="lazy-import" group="lazy" href="./data-import.html">
   <script>
   /**
   * `spoggy-data`
@@ -41,21 +41,24 @@
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentData = new DataAgent('agentData', this);
-            this.agentData.send('agentHello', 'Hello agentHello!');
+        this.agentData.send('agentHello', 'Hello agentHello!');
         this.analyseUrl();
         this.params = this.recupParams();
         if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
         console.log("pas de param");
-        }else{
+      }else{
         console.log(this.network)
         console.log(this.params);
         this.agentData.send('agentGraph', {type: 'importFromParam', params: this.params});
-        this.agentData.send('agentVirtuoso', {type: 'params', params: this.params});
+        if (this.params.endpoint != undefined){
+          this.agentData.send('agentVirtuoso', {type: 'params', params: this.params});
         }
-      });
-    }
-  }
 
-  window.customElements.define(SpoggyData.is, SpoggyData);
+      }
+    });
+  }
+}
+
+window.customElements.define(SpoggyData.is, SpoggyData);
 </script>
 </dom-module>
