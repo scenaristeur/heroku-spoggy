@@ -254,6 +254,7 @@ addToGraph(data){
 resultsFromPersee(message){
   console.log("POPULATE From Persee");
 
+
   var app = this;
   let network = this.network;
   //  network.body.data.nodes.clear();
@@ -1291,7 +1292,7 @@ editNode (data, callback) {
     this.$.nodeLabel.value=  data.label || "";
   }
   this.selectedShape = data.shape || "ellipse";
-  this.selectedType = data.type || "node";
+  this.selectedType = data.type || "normal";
   this.imageUrl = data.image || "";
   if ((data.color != undefined) && (data.color.background != undefined)){
     this.colorValue = data.color.background
