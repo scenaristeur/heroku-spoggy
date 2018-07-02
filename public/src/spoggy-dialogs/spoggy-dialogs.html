@@ -416,9 +416,9 @@
 
                 <div style="padding-top:10px" horizontal end-justified layout self-stretch>
                   <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
-                    <paper-checkbox name="solo"  dialog-dismiss auto>Solo</paper-checkbox>
+                    <paper-checkbox name="solo"  dialog-dismiss>Solo</paper-checkbox>
                     <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
-                    <paper-checkbox name="global" >Global</paper-checkbox>
+                    <paper-checkbox name="global" auto >Global</paper-checkbox>
                   </iron-selector>
                 </div>
 
@@ -574,7 +574,7 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
         },
         {name:'Persee',
         url: 'http://data.persee.fr',
-        actif: true,
+        actif: false,
         type: 'virtuoso',
         read:true, write:false,
         /*  firstQuery: 'select distinct ?s ?t ?sub \
@@ -587,7 +587,8 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
       firstQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
     },
     {name: 'Smag global', url: 'http://5.51.110.50:3030', actif: false, type: 'fuseki', read: true, write: true},
-    {name: 'Semantic Forms', url: 'http://192...', actif: false, type: 'sf', read: true, write: true}]
+    {name: 'Semantic Forms', url: 'http://192...', actif: false, type: 'sf', read: true, write: true},
+    {name: 'Smag local', url: 'http://127.0.0.1:3030', actif: true, type: 'fuseki', read: true, write: true}]
   }
 };
 }
