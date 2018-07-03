@@ -860,40 +860,50 @@ objetWithPrefix = ':' + objetWithPrefix;
 var typedeProp = ["owl:AnnotationProperty", "owl:ObjectProperty", "owl:DatatypeProperty"];
 var indiceTypeDeProp = 1; // -1 pour ne pas ajouter la prop, sinon par defaut en annotationProperty, 1 pour Object, 2 pour Datatype --> revoir pour les datatypes
 
-if ((proprieteWithPrefix == "type") || (proprieteWithPrefix == ":type") || (proprieteWithPrefix == "rdf:type")) {
+if (
+  (proprieteWithPrefix == "type") ||
+(proprieteWithPrefix == ":type") ||
+(proprieteWithPrefix == "rdf:type") ||
+(proprieteWithPrefix == ":a") ||
+(proprieteWithPrefix == ":est_un") ||
+(proprieteWithPrefix == ":est_une") ||
+(proprieteWithPrefix == ":is_a")
+) {
   proprieteWithPrefix = "rdf:type";
   listeComplementaire.push(objetWithPrefix + " rdf:type owl:Class . \n");
   indiceTypeDeProp = 1;
-
-
 } else if ((proprieteWithPrefix == "subClassOf") || (proprieteWithPrefix == ":subClassOf") || (proprieteWithPrefix == "rdfs:subClassOf")) {
   proprieteWithPrefix = "rdfs:subClassOf";
-
 }
 else if ((proprieteWithPrefix == "sameAs") || (proprieteWithPrefix == ":sameAs")) {
   proprieteWithPrefix = "owl:sameAs";
   indiceTypeDeProp = -1;
 }
-else if ((proprieteWithPrefix.toLowerCase() == "ispartof") || (proprieteWithPrefix.toLowerCase() == "partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof") || (proprieteWithPrefix.toLowerCase() == ":partof") || (proprieteWithPrefix.toLowerCase() == ":ispartof")) {
-  proprieteWithPrefix = "smag:partOf";
-  indiceTypeDeProp = 1;
-
-} else if ((proprieteWithPrefix.toLowerCase() == "comment") || (proprieteWithPrefix.toLowerCase() == "commentaire") || (proprieteWithPrefix.toLowerCase() == "//") || (proprieteWithPrefix.toLowerCase() == "#")) {
-  proprieteWithPrefix = "rdfs:comment";
-  indiceTypeDeProp = -1;
-
-}
-
-
-if (indiceTypeDeProp >= 0) {
-  listeComplementaire.push(proprieteWithPrefix + " rdf:type " + typedeProp[indiceTypeDeProp] + " . \n");
-}
-var data = sujetWithPrefix + " " + proprieteWithPrefix + " " + objetWithPrefix + " . \n";
-data += sujetWithPrefix + " " + "rdfs:label \"" + sujetLabel + "\" . \n";
-data += objetWithPrefix + " " + "rdfs:label \"" + objetLabel + "\" . \n";
-listeInfos[i] = data;
-console.log(data);
-console.log("||||||||||||||||||||||--");
+else if (
+  (proprieteWithPrefix.toLowerCase() == "ispartof") ||
+  (proprieteWithPrefix.toLowerCase() == "partof") ||
+  (proprieteWithPrefix.toLowerCase() == ":partof") ||
+  (proprieteWithPrefix.toLowerCase() == ":ispartof")) {
+    proprieteWithPrefix = "smag:partOf";
+    indiceTypeDeProp = 1;
+  } else if (
+    (proprieteWithPrefix.toLowerCase() == "comment") ||
+     (proprieteWithPrefix.toLowerCase() == "commentaire") ||
+      (proprieteWithPrefix.toLowerCase() == "//") ||
+       (proprieteWithPrefix.toLowerCase() == "#")
+     ) {
+    proprieteWithPrefix = "rdfs:comment";
+    indiceTypeDeProp = -1;
+  }
+  if (indiceTypeDeProp >= 0) {
+    listeComplementaire.push(proprieteWithPrefix + " rdf:type " + typedeProp[indiceTypeDeProp] + " . \n");
+  }
+  var data = sujetWithPrefix + " " + proprieteWithPrefix + " " + objetWithPrefix + " . \n";
+  data += sujetWithPrefix + " " + "rdfs:label \"" + sujetLabel + "\" . \n";
+  data += objetWithPrefix + " " + "rdfs:label \"" + objetLabel + "\" . \n";
+  listeInfos[i] = data;
+  console.log(data);
+  console.log("||||||||||||||||||||||--");
 }
 //console.log(listeInfos);
 //console.log(listeComplementaire);
@@ -911,10 +921,12 @@ for (var l = 0; l < listeComplementaire.length; l++) {
   //  console.log(output);
 }
 
-
-this.$.dialogs.$.inputTextToSave.value = output; //     document.getElementById("inputTextToSave").value =output;
+//this.$.dialogs.$.inputTextToSave.value = output; //     document.getElementById("inputTextToSave").value =output;
 /*this.$.dialogs.$.popupTtl.fitInto = this.$.dialogs.$.menu;*/
-this.$.dialogs.$.popupTtl.toggle();
+//this.$.dialogs.$.popupTtl.toggle();
+console.log(output)
+
+this.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
 }
 
 uniq_fast(a) {

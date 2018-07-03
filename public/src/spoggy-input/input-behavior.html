@@ -192,7 +192,8 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       break;
       case "/t":
       //  this.exportTtl(this.network,this);
-      this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
+      this.agentInput.send('agentGraph', {type:'exportTtl'}); // , what: 'network', to: 'agentDialogs', where: 'inputTextToSave'
+  //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
       break;
       case "/i":
       case "/import":

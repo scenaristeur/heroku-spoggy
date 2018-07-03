@@ -98,9 +98,14 @@ GraphAgent.prototype.receive = function(from, message) {
     this.app.agentGraph.send('agentDialogs', {type:'initOptions', repulsion : this.app.network.physics.options.repulsion});
     break;
     case 'resetNetworkOptions':
-this.app.resetNetworkOptions();
+    this.app.resetNetworkOptions();
     console.log(this.app.network.physics.options.repulsion)
     this.app.agentGraph.send('agentDialogs', {type:'initOptions', repulsion : this.app.network.physics.options.repulsion});
+    break;
+    case 'exportTtl':
+    console.log('exportTtl')
+    this.exportTtl();
+  
     break;
 
     default:

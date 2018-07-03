@@ -49,16 +49,12 @@ DialogsAgent.prototype.receive = function(from, message) {
     console.log("update");
     break;
 
-  case 'initrooms':
-  this.app.rooms = message.rooms;
+    case 'initrooms':
+    this.app.rooms = message.rooms;
 
-  console.log("init rooms ");
+    console.log("init rooms ");
     console.log(message.rooms);
-  break;
-
-
-
-
+    break;
     case 'toggle':
     console.log(message.popup);
     let popup = message.popup;
@@ -92,6 +88,15 @@ DialogsAgent.prototype.receive = function(from, message) {
     console.log(message.repulsion);
     this.app.initOptions(message.repulsion)
     break;
+
+    case 'exportTtl':
+  //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
+    console.log(message);
+    this.app.$.popupTtl.toggle();
+    this.app.$.inputTextToSave.value = message.ttlData;
+    this.app.$.inputFileNameToSaveAs.value ="Spoggy-exportTTL_"+Date.now();
+    break;
+
     default:
     console.log(message);
   }

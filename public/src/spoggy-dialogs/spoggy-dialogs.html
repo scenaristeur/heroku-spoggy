@@ -62,7 +62,7 @@
   </style>
   <paper-dialog id="helpPopUp" class="popup">
 
-    <h3>Aide <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h3>
+    <h2 style="margin: 0;color: #0D578B;">Aide <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
     <!--<paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button> -->
     <!--
     <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
@@ -330,7 +330,7 @@
                         <div horizontal start-justified start layout >
                           <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
                           <div style="padding-left:20px" vertical start-justified start layout wrap>
-                            <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON</h2>
+                            <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON (ou ttl) <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
                             <p >
                               <fieldset>
                                 <legend>Paramètres</legend>
@@ -352,16 +352,28 @@
                       </paper-dialog>
 
 
-                      <paper-dialog id="popupTtl" class="popup" backdrop transition="core-transition-bottom"><!-- on-iron-overlay-opened="_myOpenFunction"
+                      <paper-dialog id="popupTtl" class="popup" backdrop transition="core-transition-bottom"  iron-overlay-opened="fillTextToSave"><!-- on-iron-overlay-opened="_myOpenFunction"
                         on-iron-overlay-closed="_myClosedFunction" -->
-                        <h3>Export au format turtle (RDF)
+                        <h2  style="margin: 0;color: #0D578B;"> Export au format turtle (RDF)
                           <!--<paper-button ontap="_pageAide">?</paper-button>-->
-                          <!--  <paper-button dialog-dismiss raised>X</paper-button> --></h3>
-                          <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-                          <paper-button raised on-tap="saveTextAsFile">Exporter le fichier Ttl</paper-button>
+                          <!--  <paper-button dialog-dismiss raised>X</paper-button> -->
+                          <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
+
                           <paper-dialog-scrollable>
                             <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
                           </paper-dialog-scrollable>
+
+                          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+
+                            <!--<paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+                            <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
+                            <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+                            <paper-button raised on-tap="saveTextAsFile" dialog-confirm>Exporter le fichier Ttl</paper-button>
+                            <br>
+                          </div>
+
+
+
                         </paper-dialog>
                         <!--      <iron-collapse-button>
                         <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
@@ -380,6 +392,7 @@
                 </iron-collapse-button>
               -->
               <paper-dialog id="settings"  class="popup" on-iron-overlay-opened="_openSettings" > <!--       on-iron-overlay-closed="_closeImport"-->
+                <h2 style="margin: 0;color: #0D578B;">Réglages <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
                 <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
                   <p>Déplacez les curseurs & bougez un noeud sur le graphe pour voir vos modifications s'appliquer</p>
                   Longueur des liens     <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
@@ -402,6 +415,9 @@
 
 
               <paper-dialog id="pseudoPopup" class="popup" >
+                <h2 style="margin: 0;color: #0D578B;">
+                  Choisissez un pseudo pour connection au graphe collaboratif : <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
+                </h2>
                 <paper-input label="Entrez un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
                 <paper-button raised dialog-confirm>Entrer</paper-button>
               </paper-dialog>
@@ -413,7 +429,10 @@
                 <!--
                 <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
                 <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-
+                <h2 style="margin: 0;color: #0D578B;">
+                  Choisissez un mode d'utilisation pour Spoggy
+                  <paper-icon-button icon="help-outline"></paper-icon-button><paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
+                </h2>
                 <div style="padding-top:10px" horizontal end-justified layout self-stretch>
                   <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
                     <paper-checkbox name="solo"  dialog-dismiss>Solo</paper-checkbox>
