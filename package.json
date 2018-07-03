@@ -23,6 +23,7 @@
     "bower": "^1.8.4",
     "compression": "^1.7.2",
     "express": "^4.16.2",
+    "fuseki": "github:scenaristeur/fuseki",
     "level": "^3.0.2",
     "level-sublevel": "^6.6.2",
     "levelgraph": "^2.1.1",
