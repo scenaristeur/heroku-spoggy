@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 
+<script src="agents/CollaboratifAgent.js"></script>
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
@@ -116,40 +117,82 @@
 
 
 
+  <div hidden$="[[!isEmpty(mode)]]">
+    <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+      <div class="card-content">
+        <div class="cafe-header">    <h2>[[prop1]]</h2>
+        </div>
 
-  <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
-    <div class="card-content">
-      <div class="cafe-header">    <h2>[[prop1]]</h2>
+        <p class="cafe-light">
+          Contribuez, collaborez, partagez en temps réel.
+        </p>
       </div>
+      <div class="horizontal justified">
+        <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaborez</paper-button>
+      </div>
+    </paper-card>
+  </div>
 
-      <p class="cafe-light">
-        Contribuez, collaborez, partagez en temps réel.
-      </p>
+    <div hidden$="[[!isEqual(mode, 'collaboratif')]]">
+collab
     </div>
-  </paper-card>
-  </template>
 
-  <script>
-    /**
-     * `spoggy-collaboratif`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyCollaboratif extends Polymer.Element {
-      static get is() { return 'spoggy-collaboratif'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'Spoggy Collaboratif'
-          }
-        };
+
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-collaboratif`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
+  static get is() { return 'spoggy-collaboratif'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'Spoggy Collaboratif'
+      },
+      mode: {
+        type: String,
+        notify: true
       }
-    }
+    };
+  }
 
-    window.customElements.define(SpoggyCollaboratif.is, SpoggyCollaboratif);
-  </script>
+  constructor(){
+    super();
+    this.agentCollaboratif = new CollaboratifAgent('agentCollaboratif', this);
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+    this.initAgents()
+  }
+  initAgents(){
+    this.agentCollaboratif.send('agentHello', 'Hello agentHello!');
+  }
+
+  isEmpty(value){
+    //  console.log(value)
+    return value == undefined || value.length == 0;
+  }
+  isEqual(mode, test){
+    return mode == test;
+  }
+  setmode(e){
+    this.mode = e.target.id;
+  }
+}
+
+window.customElements.define(SpoggyCollaboratif.is, SpoggyCollaboratif);
+</script>
 </dom-module>
