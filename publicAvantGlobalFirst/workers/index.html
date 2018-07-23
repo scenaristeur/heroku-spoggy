@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>DEMO WEB WORKER PARTAGE (SHAREDWORKER) HTML5 JAVASCRIPT</title>
+</head>
+<body>
+<h1>DEMO 6 <strong><u>WEB WORKER HTML5 JAVASCRIPT</u></strong></h1>
+<br>
+- <strong>Démarrer Worker</strong> : Démarrer ou redémarre le Worker après qu'il ait été suspendu.
+<br>
+- <strong>Suspendre Worker</strong> : Mettre le Worker en pause, l'instance du Worker est toujours présente. Il peut être redémarré via le bouton <strong>Démarrer Worker</strong>.
+<br>
+- <strong>Stopper Worker</strong> : Stopper le Worker, l'instance du Worker est détruite. Il ne peut être redémarré via le bouton <strong>Démarrer Worker</strong>.
+<br><br>
+<input type="button" id="boutonNouvelleIFrame" value="Nouvelle IFrame pour SharedWorker">
+<br><br>
+</body>
+<script>
+var worker;
+var numberOfDiv = 0;
+var boutonNouveauWorker = document.getElementById("boutonNouvelleIFrame");
+boutonNouveauWorker.onclick = function(e) {
+  numberOfDiv++;
+  var iframeTag = document.createElement("iframe");
+  iframeTag.id = numberOfDiv;
+  iframeTag.src = "innerHTMLIFrame.html";
+  document.body.appendChild(iframeTag);
+};
+</script>
+</html>

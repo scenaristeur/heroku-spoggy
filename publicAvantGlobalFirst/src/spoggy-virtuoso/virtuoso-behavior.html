@@ -1,0 +1,1103 @@
+
+<script>
+/* @polymerMixin */
+var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class VirtuosoBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        },
+        virtuosoActif: {
+          type: Boolean,
+          value: true
+        }
+      };
+    }
+
+    /////////////////////////
+    // NOUVELLES REQUETES NETTOYEES
+    //////////////////////////
+
+    explore(endpoint){
+      //  console.log(endpoint);
+      let app = this;
+      app.group ++;
+      var exploreQuery = endpoint.exploreQuery;
+      var typeResource = endpoint.exploreQuery.typeResources;
+      let options = {
+        query: exploreQuery.query,
+        format: 'application/sparql-results+json',
+      }
+      console.log(options.query)
+      app.$.ajaxExplore.url = endpoint.url;
+      app.$.ajaxExplore.params = options;
+      app.$.ajaxExplore.generateRequest().completes.then(function(req,resp) {
+        var data = req.response;
+        let response = JSON.parse(data);
+        let link = response.head.link;
+        let vars = response.head.vars;
+        let results = response.results.bindings;
+
+        var visResults =   endpoint.exploreQuery.parseToVis(app, results, endpoint.url, typeResource, app.group)
+        app.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: typeResource})
+
+
+      }, function(rejected) {
+        let req = rejected.request;
+        let error = rejected.error;
+        console.log(req)
+        console.log(error)
+      });
+    }
+
+    uriEndpoint(message){
+      console.log(message);
+      let app = this;
+      var endpointUrl = message.endpoint;
+      //  app.endpoint = message.endpoint
+      var uri = message.uri.replace('#Web','').replace('#Print','').replace('#Person','');
+      //  var uri = uri;
+      let options = {
+        /*  query:  ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
+        ?s rdf:type ?type . \
+        OPTIONAL {   ?s dcterms:title ?title .} \
+        FILTER(bif:contains(?label, "'+recherche+'")) . \
+      }  LIMIT 100',*/
+      query: 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \
+      SELECT ?type ?label ?web \
+      WHERE { \
+        <'+uri+'> foaf:focus ?web.  \
+        ?web rdf:type ?type. \
+        ?web rdfs:label ?label. \
+      } LIMIT 100 \
+      ',
+      format: 'application/sparql-results+json',
+    }
+    console.log(options.query)
+    app.$.ajaxRecherche.url = endpointUrl;
+    //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+    app.$.ajaxRecherche.params = options;
+    //  app.$.ajaxRecherche.resource = recherche;
+    app.$.ajaxRecherche.generateRequest().completes.then(function(req,resp) {
+      //console.log(req)
+      //console.log(req.response)
+      //console.log(resp)
+      var data = req.response;
+
+      var nameEndpoint="fictif"
+      app.progress = 30;
+      app._handleRechercheResponse3(data, uri, endpointUrl, nameEndpoint)
+      // succesful request, argument is iron-request element
+      //  ...
+    }, function(rejected) {
+      // failed request, argument is an object
+      let req = rejected.request;
+      let error = rejected.error;
+      console.log(req)
+      console.log(error)
+      //  ...
+    });
+  }
+
+
+  _handleExploreResponse(data, endpoint, typeResources){
+    console.log("Reponse Exploration "+endpoint.name);
+    console.log(data);
+    this.group ++;
+    console.log(this.group)
+    //  console.log(data.detail);
+    //  console.log(data.detail.error);
+    //  console.log(data.detail.error.message);
+    //  console.log(data.detail.request);
+    //    console.log(data.detail.response); // -->
+    let response = JSON.parse(data);
+    let link = response.head.link;
+    let vars = response.head.vars;
+    let results = response.results.bindings;
+    //  console.log(this.head);
+    console.log(results);
+    //  var visResults = this.exploreToVis(results, endpoint.url);
+
+    var visResults = endpoint.parseExploreQueryToVis(this, results, typeResources, endpoint.url, this.group);
+    console.log(visResults);
+    this.agentVirtuoso.send('agentGraph', {type: "resultsFromExplore", results: visResults})
+  }
+
+
+  /*exploreToVis(results, endpointUrl){
+  var app = this;
+  var visRes = {nodes:[], edges:[]};
+  results.forEach(function(r){
+  console.log(r);
+  let node = {
+  id: app.visId(r.s.value),
+  type: r.sub.type,
+  resourceType:null,
+  uri: r.s.value,
+  label: app.visLabel(r.t.value),
+  endpoint: endpointUrl,
+  y: 2*Math.random()
+}
+//visRes.nodes.push(node);
+!visRes.nodes.includes(node) &&   visRes.nodes.push(node);
+
+let nodeSub = {
+id: r.sub.value,
+type: r.sub.type,
+resourceType: null,
+label: r.sub.value,
+endpoint: endpointUrl,
+y: 2*Math.random()
+}
+!visRes.nodes.includes(nodeSub) &&   visRes.nodes.push(nodeSub);
+
+let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
+if (!visRes.edges.includes(eType)){
+visRes.edges.push(eType)
+}
+
+
+
+});
+return visRes;
+}*/
+
+visId(id){
+  /// FONCTION GENERALISTE DE NETTOYAGE DES ID
+  return id.trim().replace('#Web','').replace('#Print','').replace('#Person',''); // Pour nettoyer les ressources Persee
+}
+
+visLabel(texte){
+  /// FONCTION GENERALISTE DE NETTOYAGE DES LABELS
+  let text = texte.trim();
+  text = text.replace('#Web','').replace('#Print','').replace('#Person',''); // Pour nettoyer les ressources Persee
+  let result = "";
+  let textCut = text.split("#");
+  result = textCut[textCut.length-1];
+  if (result == text){
+    textCut = text.split("/");
+    result = textCut[textCut.length-1];
+  }
+  if (result == text){
+    textCut = text.split("/");
+    result = textCut[textCut.length-2];
+  }
+  if(result == undefined || result.length == 0){
+    result = text;
+  }
+  //  console.log(texte + "->"+result);
+  return result
+}
+visLabelSplit(texte){
+  return texte.match(/.{1,40}/g).join("\n");
+}
+
+///////////////////////////////////////////////////////////////////////////
+//// ANCIENNES REQUETES A REVOIR
+//////////////////////////////////////////////////////////////////////////
+
+
+
+_handleRechercheResponse3(data, resource, endpointUrl, endpointName){
+  console.log("Reponse recherche")
+  //  console.log(data.detail.response);
+  console.log(data)
+  /*console.log(req.detail)
+  let resource = data.path[0].resource;
+  let endpointUrl = data.path[0].url;*/
+  let response = JSON.parse(data);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+  this.progress = 60;
+  var visResults;
+  console.log(endpointName);
+  if (endpointName == "Semantic Forms"){
+    visResults = this.semanticFormsToVis(results, resource, endpointUrl);
+  }else{
+    // TEST PERSEE   visResults = this.rechercheToVis(results, resource, endpointUrl);
+    visResults = this.rechercheToVis3(results, resource, endpointUrl); //TEST PERSEE
+  }
+  console.log(visResults);
+  this.progress = 80;
+  //on envoie au graphe
+  this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+  // on envoie au spoggy-details
+  this.agentVirtuoso.send('agentDetails', {type: "resultsFromPersee", results: results, typeResource: this.typeResource})
+}
+
+
+
+rechercheToVis3(results, recherche, endpointUrl){
+  let app = this;
+  console.log(recherche)
+  console.log(endpointUrl)
+  var visRes = {nodes:[], edges:[]};
+  //  console.log(recherche)
+  var nodeRecherche = {id: recherche, label: app.visLabel(recherche)+ " 3", shape: "box", borderWidth: 3, cid: app.group, uri: recherche, endpoint: endpointUrl};
+  //  !visRes.nodes.includes(nodeRecherche) &&
+  visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    console.log(r);
+    // les noeuds, on recupere la valeur, voir la console javascript
+    var nodeType = {id: r.type.value, label: app.visLabel(r.type.value)}
+    //pour les longs labels, on coupe à 40 caractères et on donne la forme de box
+    var lab= r.label.value+ " -5";
+    nodeRecherche.label = lab.match(/.{1,40}/g).join("\n");
+    let  eType = {from : nodeRecherche.id, to: nodeType.id, label: "type"}
+    /*  var nodeAbstract = {id: r.abstract.value, label: abstract, shape: "box"}
+    // les liens
+    let  eType = {from : nodeId.id, to: nodeType.id, label: "type"}
+    let  eAbstract = {from : nodeId.id, to: nodeAbstract.id, label: "abstract"}*/
+    // on les ajoute ensuite aux resultat qu'on enverra au graphe
+    visRes.nodes.push(nodeRecherche);
+    visRes.nodes.push(nodeType);
+    visRes.edges.push(eType)
+    var options = {
+      query: '',
+      format: 'application/sparql-results+json',
+    }
+    var rech = r.web.value;
+    var typerecherche = ""
+    var querys =[];
+    switch(r.type.value){
+      //  case "http://data.perse.fr/ontology/persee-ontology/Article":
+      case "http://purl.org/ontology/bibo/Document":
+      console.log("article");
+      querys.push({query: '   PREFIX dcterms: <http://purl.org/dc/terms/> \
+      PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
+      SELECT ?person ?name \
+      WHERE { \
+        <'+rech+'> dcterms:creator ?person. \
+        ?person foaf:name ?name. \
+      }',
+      typerecherche : "createur"
+    })
+    break;
+    //http://xmlns.com/foaf/0.1/Person
+    case "http://xmlns.com/foaf/0.1/Person":
+    console.log("personne");
+    querys.push({query:'   PREFIX dcterms: <http://purl.org/dc/terms/> \
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
+    SELECT DISTINCT ?person ?name \
+    WHERE { \
+      ?doc dcterms:creator <'+rech+'>. \
+      ?doc dcterms:creator ?person. \
+      ?person foaf:name ?name. \
+    }',
+    typerecherche : "co-auteur"
+  })
+  querys.push(
+    {query:'  PREFIX dcterms: <http://purl.org/dc/terms/> \
+    SELECT ?doc ?title \
+    WHERE { \
+      ?doc dcterms:creator <'+rech+'>. \
+      ?doc dcterms:title ?title. \
+    } \
+    ',
+    typerecherche : "a écrit"
+  }
+)
+break;
+default:
+console.log(r.type.value);
+}
+querys.forEach(function(query){
+  options.query = query.query;
+  console.log(options.query)
+  console.log(endpointUrl)
+  if(options.query.length>0){
+    app.$.ajaxRechercheBis.url = endpointUrl;
+    //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+    app.$.ajaxRechercheBis.params = options;
+    //  app.$.ajaxRecherche.resource = recherche;
+    app.$.ajaxRechercheBis.generateRequest().completes.then(function(req,resp) {
+      //console.log(req)
+      //console.log(req.response)
+      //console.log(resp)
+      var data = req.response;
+      //  var endpointUrl = endpointUrl
+      var nameEndpoint="fictif"
+      app.progress = 30;
+      app._handleRechercheResponse4(data, recherche, endpointUrl, nameEndpoint, query.typerecherche)
+      // succesful request, argument is iron-request element
+      //  ...
+    }, function(rejected) {
+      // failed request, argument is an object
+      let req = rejected.request;
+      let error = rejected.error;
+      console.log(req)
+      console.log(error)
+      //  ...
+    });
+  }else{
+    console.log('pas encore de query')
+  }
+})
+
+})
+return visRes;
+}
+
+
+
+
+clickonNode(node){
+  console.log(node);
+  //  console.log(this.endpoints)
+  let app = this;
+  app.group ++
+
+
+  let options = {
+    //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
+    // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+    //  <'+node.uri+'> rdfs:label ?label\
+    query:  'SELECT * \
+    WHERE {\
+      { <'+node.uri+'> ?p ?o . \
+      OPTIONAL {<'+node.uri+'> rdfs:label ?label} \
+      OPTIONAL {<'+node.uri+'> foaf:name ?name} \
+      OPTIONAL {<'+node.uri+'> dcterms:title ?title } \
+    }\
+    UNION \
+    { ?s ?p <'+node.uri+'> . \
+    OPTIONAL {?s rdfs:label ?label2} \
+    OPTIONAL {?s foaf:name ?name} \
+    OPTIONAL {?s dcterms:title ?title } \
+  } \
+}   LIMIT 100',
+
+format: 'application/sparql-results+json',
+}
+
+/*if (this.endpoints != undefined){
+console.log(this.endpoints)
+this.endpoints.forEach(function(e){
+//console.log(e);
+if (e.actif){
+app.$.ajaxPersee.url = e.url;
+//  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+app.$.ajaxPersee.params = options;
+app.$.ajaxPersee.resource = node;
+app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+app.progress = 30;
+//console.log(req)
+//console.log(req.response)
+//console.log(resp)
+var data = req.response;
+var endpointUrl = node.endpointUrl;
+app._handlePerseeResponse(data, node, endpointUrl)
+// succesful request, argument is iron-request element
+//  ...
+}, function(rejected) {
+// failed request, argument is an object
+let req = rejected.request;
+let error = rejected.error;
+console.log(req)
+console.log(error)
+//  ...
+});
+}
+else{
+console.log("inactif")
+}
+});
+}else if (node.endpointUrl != undefined){*/
+console.log("REcherche complementaire")
+console.log(node);
+app.$.ajaxPersee.url = node.endpointUrl;
+//  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+app.$.ajaxPersee.params = options;
+console.log(options)
+//  app.$.ajaxPersee.resource = node.id;
+app.$.ajaxPersee.generateRequest().completes.then(function(req,resp) {
+  app.progress = 30;
+  //  console.log(req)
+  //  console.log(req.response)
+  //  console.log(resp)
+  var data = req.response;
+  //  var endpointUrl = node.endpoint;
+  app._handlePerseeResponse(data, node, app.group)
+  // succesful request, argument is iron-request element
+  //  ...
+}, function(rejected) {
+  // failed request, argument is an object
+  let req = rejected.request;
+  let error = rejected.error;
+  console.log(req)
+  console.log(error)
+  //  ...
+});
+
+
+/*.then(
+request => console.log('success', request),
+request => console.log('failure', request)
+);*/
+
+//}
+}
+
+
+
+/**
+* Execute la requete
+*/
+sendRequest (){
+  console.log(this.url);
+  if (this.url.length>0){
+
+    this.$.ajaxget.generateRequest().completes.then(
+      request => console.log('success', request),
+      request => console.log('failure', request)
+    );
+  }
+}
+
+sendPingRequest(endpoint){
+  let  options = {
+    //  default-graph-uri:'http%3A%2F%2Fdbpedia.org',
+    //  query: ,
+    query : endpoint.firstQuery,
+    format: 'application/sparql-results+json',
+    /*  CXML_redir_for_subjs: '121',
+    CXML_redir_for_hrefs: '',
+    timeout: 30000,
+    debug: 'on',
+    run: '+Run+Query+'*/
+  }
+  //this.url = endpoint.url+'/sparql'
+  //  console.log(this.app.url);
+  /*  if (endpoint.url == 'http://data.persee.fr'){
+  this.$.ajaxPersee.url = endpoint.url+'/sparql';
+  //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+  this.$.ajaxPersee.params = options;
+  this.$.ajaxPersee.resource = "Subject";
+  this.$.ajaxPersee.generateRequest()
+}else{*/
+console.log(options)
+this.$.pingRequest.url = endpoint.url;
+//  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+this.$.pingRequest.params = options;
+this.$.pingRequest.generateRequest().completes.then(
+  request => console.log('success', request),
+  request => console.log('failure', request)
+);
+//  }
+/*.completes.then(function (request){
+var rep = request.response;
+console.log(rep);
+console.log(endpoint)
+}, function(rejected) {
+// failed request, argument is an object
+let req = rejected.request;
+let error = rejected.error;
+console.log(error)
+});*/
+
+}
+
+
+sendRequestPersee(){
+  console.log(this.url);
+  if (this.url.length>0){
+    this.$.ajaxPersee.generateRequest().completes.then(
+      request => console.log('success', request),
+      request => console.log('failure', request)
+    );
+  }
+}
+sendDescribe(){
+  console.log(this.url);
+  if (this.virtuosoActif == true){
+    this.$.describeGet.generateRequest().completes.then(
+      request => console.log('success', request),
+      request => console.log('failure', request)
+    );
+  }
+}
+
+_handleResponse(data){
+  console.log("Reponse DBPEDIA");
+  //  console.log(data);
+  //  console.log(data.detail);
+  //  console.log(data.detail.error);
+  //  console.log(data.detail.error.message);
+  //  console.log(data.detail.request);
+  console.log(data.detail.response); // -->
+  let response = JSON.parse(data.detail.response);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+
+  var visResults = this.conceptsDbPediaToVis(results);
+  console.log(visResults);
+  this.agentVirtuoso.send('agentGraph', {type: "resultsFromSparql", results: visResults})
+}
+_handleError(data){
+  console.log("error DBPEDIA");
+
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+
+}
+
+_handlePingResponse(data){
+  console.log("Reponse PING virtuoso");
+  console.log(data)
+  console.log(data.detail)
+  console.log(data.detail.url)
+  console.log(data.path[0].endpoint)
+  console.log(data.detail.response); // -->
+  let response = JSON.parse(data.detail.response);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+  if (results.length == 1){
+    console.log("endpoint virutoso ok, on continue");
+
+  }else{
+    console.log("endpoint virutoso Probleme, on ne continue pas");
+  }
+}
+_handlePingError(data){
+  console.log("Erreur PING virtuoso");
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+}
+
+
+recherche(message){
+  console.log(message)
+  let app = this;
+  let e = message.endpoint;
+  let recherche = message.recherche;
+  let options = {
+    //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
+    // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+    //  <'+node.uri+'> rdfs:label ?label\
+    query:  ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
+      ?s rdf:type ?type . \
+      OPTIONAL {   ?s dcterms:title ?title .} \
+      FILTER(bif:contains(?label, "'+recherche+'")) . \
+    }  LIMIT 100',
+
+    format: 'application/sparql-results+json',
+  }
+  if (e.firstQuery != undefined){
+    options.query = e.firstQuery;
+  }
+  // this.agentSparql.send('agentVirtuoso', {type:'recherche', endpoint: endpoint, recherche: recherche});
+  /*  let options = {
+  //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
+  // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
+  //  <'+node.uri+'> rdfs:label ?label\
+  query:  'SELECT distinct * WHERE { ?s rdfs:label ?label . \
+  ?s rdf:type ?type . \
+  OPTIONAL {   ?s dcterms:title ?title .} \
+  FILTER(bif:contains(?label, "'+recherche+'")) . \
+}  LIMIT 100',
+
+format: 'application/sparql-results+json',
+}*/
+console.log(options.query)
+app.$.ajaxRecherche.url = e.url;
+//  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
+app.$.ajaxRecherche.params = options;
+//  app.$.ajaxRecherche.resource = recherche;
+
+app.$.ajaxRecherche.generateRequest().completes.then(function(req,resp) {
+  //console.log(req)
+  //console.log(req.response)
+  //console.log(resp)
+  var data = req.response;
+  var endpointUrl = e.url
+  app.progress = 30;
+  app._handleRechercheResponse(data, recherche, endpointUrl, e.name)
+  // succesful request, argument is iron-request element
+  //  ...
+}, function(rejected) {
+  // failed request, argument is an object
+  let req = rejected.request;
+  let error = rejected.error;
+  console.log(req)
+  console.log(error)
+  //  ...
+});
+
+}
+
+_handleRechercheResponse(data, resource, endpointUrl, endpointName){
+
+  console.log("Reponse recherche")
+  //  console.log(data.detail.response);
+  console.log(data)
+  /*console.log(req.detail)
+  let resource = data.path[0].resource;
+  let endpointUrl = data.path[0].url;*/
+  let response = JSON.parse(data);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+  this.progress = 60;
+  var visResults;
+  console.log(endpointName);
+  if (endpointName == "Semantic Forms"){
+    visResults = this.semanticFormsToVis(results, resource, endpointUrl);
+  }else{
+    visResults = this.rechercheToVis(results, resource, endpointUrl);
+  }
+
+
+  console.log(visResults);
+  this.progress = 80;
+  this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+}
+
+semanticFormsToVis(results, recherche, endpointUrl){
+  let app = this;
+  var visRes = {nodes:[], edges:[]};
+  //  console.log(recherche)
+  var nodeRecherche = {id: recherche, label: recherche};
+  !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    console.log(r);
+    let nS = {id: r.s.value, label: r.s.value, uri: r.s.value, endpointUrl: endpointUrl};
+    //  let nS = {id: r.s.value, label: app.visLabel(r.s.value) , uri: r.s.value, endpointUrl: endpointUrl};
+    if(!visRes.nodes.includes(nS)) {
+      visRes.nodes.push(nS);
+    }else{
+
+    }
+    let nO = {id: r.o.value, label: r.o.value, uri: r.o.value, endpointUrl: endpointUrl};
+    //  let nS = {id: r.s.value, label: app.visLabel(r.s.value) , uri: r.s.value, endpointUrl: endpointUrl};
+    if(!visRes.nodes.includes(nO)) {
+      visRes.nodes.push(nO);
+    }else{
+
+    }
+    let  e2 = {from : nS.id, to: nO.id, label: r.p.value}
+    if (!visRes.edges.includes(e2)){
+      visRes.edges.push(e2)
+    }
+
+  });
+
+  return visRes;
+}
+rechercheToVis(results, recherche, endpointUrl){
+  let app = this;
+  var visRes = {nodes:[], edges:[]};
+  //  console.log(recherche)
+  var nodeRecherche = {id: recherche, label: recherche};
+  !visRes.nodes.includes(nodeRecherche) &&   visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    //console.log(r);
+    var lab = r.label.value;
+    if (r.title != undefined){
+      //  if (r.title.value > 40) {
+      lab= r.title.value;
+
+      //  }else{
+      //  lab = app.visLabel(r.title.value)
+      //  }
+
+    }
+    lab = lab.match(/.{1,40}/g).join("\n");
+    let nS = {id: r.s.value, label: lab, shape: 'box', uri: r.s.value, endpointUrl: endpointUrl}; // noeud sujet
+    let nType = {id: r.type.value, label: app.visLabel(r.type.value), color: 'rgb(160,160,0)',uri: r.type.value}; //noeud type
+    //  console.log(nS);
+    //  let  e2 = {from : nType.id, to: nodeRecherche.id, label: "contient"}
+    let  eType = {from : nS.id, to: nType.id, label: "type"}
+    if(!visRes.nodes.includes(nS)) {
+      visRes.nodes.push(nS);
+    }
+    //  !visRes.edges.includes(e2) && visRes.edges.push(e2);
+    if (!visRes.nodes.includes(nType))
+    {
+      visRes.nodes.push(nType);
+    }
+
+    if (!visRes.edges.includes(eType)){
+      visRes.edges.push(eType)
+    }
+  })
+  return visRes;
+}
+
+
+_handlePerseeResponse(data, node, group){
+  console.log("Reponse Persee");
+  console.log(data);
+  //  console.log(data.detail);
+  //  console.log(data.detail.error);
+  //  console.log(data.detail.error.message);
+  //  console.log(data.detail.request);
+  //console.log(data.detail.response); // -->
+  /*let resource = data.path[0].resource;
+  let endpointUrl = data.path[0].url;*/
+  console.log("Resultat de la recherche  :"+ node.id)
+  let response = JSON.parse(data);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+  this.progress = 60;
+  var visResults = this.conceptsPerseeToVis(results, node, group);
+  console.log(visResults);
+  this.progress = 80;
+  this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+}
+_handlePerseeError(data){
+  console.log("error Persee");
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+
+}
+
+
+
+_handleRechercheError(data){
+  console.log("error Recherche");
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+
+}
+
+
+
+
+////////////////////describe
+_handleDescribeResponse(data){
+  console.log("Reponse Describe DBPEDIA");
+  //  console.log(data);
+  //  console.log(data.detail);
+  //  console.log(data.detail.error);
+  //  console.log(data.detail.error.message);
+  //  console.log(data.detail.request);
+  //  console.log(data.detail.response); // -->
+  let response = JSON.parse(data.detail.response);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  //  console.log(results);
+
+  //var visResults = this.describeDbpediaToVis(results);
+  //console.log(visResults);
+  this.agentVirtuoso.send('agentGraph', {type: "describeFromDBpedia", results: results, resource: this.resource})
+}
+_handleDescribeError(data){
+  console.log("error DBPEDIA");
+
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+
+}
+/*
+describeDbpediaToVis(results){
+var visRes = {nodes:[], edges:[]};
+results.forEach(function(r){
+console.log(r)
+let s = r.s.value;
+let p = r.p.value;
+let o = r.p.value;
+
+});
+return visRes;
+}*/
+
+////////////fin describe
+
+
+resourcePerseeToVis(results){
+  var visRes = {nodes:[], edges:[]};
+  results.forEach(function(r){
+    //  console.log(r)
+    //  console.log(r.s.value)
+    //  console.log(r.p2.value)
+    //  console.log(r.o.value)
+
+    let label = r.s.value.replace('#Web','');
+    let node = {
+      uri: r.s.value,
+      label: label,
+      //    title: title,
+      //  type: 'concept',
+      y: 2*Math.random()
+    }
+    visRes.nodes.push(node);
+  });
+  return visRes;
+}
+
+
+
+
+conceptsPerseeToVis(results, node, group){
+  let app = this;
+  var visRes = {nodes:[], edges:[]};
+  //  console.log(resource)
+  !visRes.nodes.includes(node) &&   visRes.nodes.push(node);
+  results.forEach(function(r){
+    //  console.log("###################################")
+      console.log(r);
+    //  console.log(r.label);
+    //  console.log(r.label2)
+    if (r.s == undefined){
+    //  console.log(r.o)
+
+      var lab = app.visLabel(r.o.value);
+      if (r.name != undefined){
+        lab = r.name.value;
+      }else
+      if (r.title != undefined){
+        lab = r.title.value;
+      }else if (r.label != undefined){
+        lab = r.label.value;
+      }
+      lab = lab.match(/.{1,40}/g).join("\n");
+
+      let nO = { cid: group};
+      //  console.log(nO)
+      if (r.o.type =="literal"){
+        nO.id = '_' + Math.random().toString(36).substr(2, 9); //random id
+        nO.label = lab.substring(0,40)+"...";
+        nO.title = lab;
+        nO.shape = "box";
+        nO.color= "rgb(107,142,35)";
+
+      }else{
+        nO.id= r.o.value;
+        nO.label= app.visLabel(r.o.value).match(/.{1,40}/g).join("\n");
+        nO.endpointUrl= node.endpointUrl;
+        nO.color = "rgb(76,0,74)";
+
+        nO.uri= r.o.value;
+        if (r.o.value.endsWith('.png' || '.jpg')){
+          nO.image = r.o.value;
+          nO.shape = 'image';
+        }else{
+          nO.font = {color: 'rgb(255,255,255)'};
+        }
+      }
+
+      let  e = {from : node.id, to: nO.id, label: app.visLabel(r.p.value)}
+      !visRes.nodes.includes(nO)&& visRes.nodes.push(nO);
+      !visRes.edges.includes(e) &&    visRes.edges.push(e);
+    }else if(r.o == undefined){
+    //  console.log(r.s)
+      // si r.o n'existe pas, on recupere la valeur de r.s sinon, la valeur de title, sinon la valeur de label2
+      var lab = app.visLabel(r.s.value);
+      if (r.name != undefined){
+        lab = r.name.value;
+      }else
+      if (r.title != undefined){
+        lab = r.title.value;
+      }else if (r.label2 != undefined){
+        lab = r.label2.value;
+      }
+      lab = lab.match(/.{1,40}/g).join("\n");
+      let nS = {id: r.s.value, label: lab  , uri: r.s.value, shape:'box', endpointUrl: node.endpointUrl, cid: group};
+      //console.log(nS)
+      let  e2 = {from : nS.id, to: node.id, label: app.visLabel(r.p.value)}
+      !visRes.nodes.includes(nS)&& visRes.nodes.push(nS);
+      !visRes.edges.includes(e2) &&    visRes.edges.push(e2);
+    }else{
+      console.log("HOUSTON, t'as un blème, hein ?")
+    }
+    /*  let node = {id: r.s.value, label: app.visLabel(r.s.value), uri: r.s.value,}; // let label = r..value.replace('#Web',''); // }
+    //  let nodeD = {id: resource.uri, label: app.visLabel(resource.label) uri};
+    let  e = {from : r.s.value, to: resource.uri, label: app.visLabel(r.p.value)}
+    !visRes.nodes.includes(node)&& visRes.nodes.push(node);
+    !visRes.edges.includes(e) &&    visRes.edges.push(e);
+
+    let nodeObj = {id: r.o.value, label: app.visLabel(r.o.value), uri: r.o.value};
+    let e2 = {from: r.s.value, to : r.o.value, label: app.visLabel(r.p2.value)}
+    !visRes.nodes.includes(nodeObj) && visRes.nodes.push(nodeObj);
+    !visRes.edges.includes(e2) &&   visRes.edges.push(e2);*/
+
+
+
+    /*let node = {id: r.s.value, label: r.t.value}
+    let nodeS = {label: r.sub.value}
+    visRes.nodes.push(node)
+    visRes.nodes.push(nodeS)*/
+    //  visRes.edges.push({node})
+
+  });
+
+  return visRes;
+}
+
+_handleRechercheResponse4(data, resource, endpointUrl, endpointName, typerecherche){
+
+  console.log("Reponse recherche 4")
+  //  console.log(data.detail.response);
+  console.log(data)
+  /*console.log(req.detail)
+  let resource = data.path[0].resource;
+  let endpointUrl = data.path[0].url;*/
+  let response = JSON.parse(data);
+  let link = response.head.link;
+  let vars = response.head.vars;
+  let results = response.results.bindings;
+  //  console.log(this.head);
+  console.log(results);
+  this.progress = 60;
+  var visResults;
+  console.log(endpointName);
+  if (endpointName == "Semantic Forms"){
+    visResults = this.semanticFormsToVis(results, resource, endpointUrl);
+
+  }else{
+    // TEST PERSEE   visResults = this.rechercheToVis(results, resource, endpointUrl);
+    visResults = this.rechercheToVis4(results, resource, endpointUrl, typerecherche); //TEST PERSEE
+  }
+
+
+  console.log(visResults);
+  this.progress = 80;
+  //on envoie au graphe
+  this.agentVirtuoso.send('agentGraph', {type: "resultsFromPersee", results: visResults, typeResource: this.typeResource})
+  // on envoie au spoggy-details
+  this.agentVirtuoso.send('agentDetails', {type: "resultsFromPersee", results: results, typeResource: this.typeResource})
+}
+
+
+rechercheToVis4(results, recherche, endpointUrl, typerecherche){
+  //UTUILISEE POUR LES REQUETES avec URL PARAMETREE : http://127.0.0.1:3000/?endpoint=http://data.persee.fr/sparql&uri=http://data.persee.fr/person/220614
+  let app = this;
+  console.log(recherche)
+  console.log(endpointUrl)
+  app.group=app.group+1
+  var visRes = {nodes:[], edges:[]};
+  //  console.log(recherche) // label: app.visLabel(recherche) +" 4"
+  var nodeRecherche = {id: recherche, borderWidth: 3, cid: app.group};
+  //  !visRes.nodes.includes(nodeRecherche) &&
+  visRes.nodes.push(nodeRecherche);
+  results.forEach(function(r){
+    console.log(r);
+
+    // les noeuds, on recupere la valeur, voir la console javascript
+    if (r.person != undefined){
+      var pers = r.person.value.replace('#Web','').replace('#Print','').replace('#Person','');
+      var node = {id: pers, label: r.name.value, type: "http://xmlns.com/foaf/0.1/Person", endpointUrl: endpointUrl, uri: r.person.value, cid: app.group}
+      visRes.nodes.push(node);
+      if (pers != recherche){
+        let  eType = {from : nodeRecherche.id, to: node.id, label: typerecherche}
+        visRes.edges.push(eType)
+      }
+    }
+
+    if (r.doc != undefined){
+      var doc = r.doc.value.replace('#Web','').replace('#Print','').replace('#Person','');
+      var title = r.title.value.match(/.{1,40}/g).join("\n");
+      var node = {id: doc, label: title, type: "http://purl.org/ontology/bibo/Document", shape:"box", endpointUrl: endpointUrl, uri: r.doc.value, cid: app.group}
+      visRes.nodes.push(node);
+      if (pers != recherche){
+        let  eType = {from : nodeRecherche.id, to: node.id, label: typerecherche}
+        visRes.edges.push(eType)
+      }
+
+    }
+
+
+
+    //pour les longs labels, on coupe à 40 caractères et on donne la forme de box
+    //  nodeRecherche.label = r.label.value;
+    //  let  eType = {from : nodeRecherche.id, to: nodeType.id, label: "type"}
+    /*  var nodeAbstract = {id: r.abstract.value, label: abstract, shape: "box"}
+    // les liens
+    let  eType = {from : nodeId.id, to: nodeType.id, label: "type"}
+    let  eAbstract = {from : nodeId.id, to: nodeAbstract.id, label: "abstract"}*/
+
+    // on les ajoute ensuite aux resultat qu'on enverra au graphe
+
+    //  visRes.nodes.push(nodeRecherche);
+    //  visRes.nodes.push(nodeType);
+
+
+
+
+  })
+  return visRes;
+}
+
+
+
+conceptsDbPediaToVis(results){
+  var visRes = {nodes:[], edges:[]};
+  results.forEach(function(r){
+    let concept = r.Concept.value.trim();
+    console.log(concept);
+    let conceptCut = concept.split("#");
+    console.log(conceptCut);
+    let label = conceptCut[conceptCut.length-1];
+    if (label == concept){
+      conceptCut = concept.split("/");
+      console.log(conceptCut);
+      label = conceptCut[conceptCut.length-1];
+    }
+    console.log(label);
+    let node = {
+      uri: concept,
+      label: label,
+      type: 'concept',
+      y: 2*Math.random()
+    }
+    visRes.nodes.push(node);
+  });
+  return visRes;
+}
+
+
+
+
+}
+});
+
+</script>

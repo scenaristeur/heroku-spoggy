@@ -1,0 +1,1487 @@
+
+
+io.to('some room').emit('some event'):
+                                     ~
+
+doc/socket.io.cheatsheet.js(29,37) error [parse-error] - Unexpected token :
+
+
+  return class DataBehavior extends superClass {
+                                    ~~~~~~~~~~
+
+src/spoggy-data/data-behavior.html(3,36) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class AgentBehavior extends superClass {
+                                     ~~~~~~~~~~
+
+src/spoggy-agent/agent-behavior.html(5,37) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class CollabBehavior extends superClass {
+                                      ~~~~~~~~~~
+
+src/spoggy-collab/collab-behavior.html(4,38) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class InputBehavior extends superClass {
+                                     ~~~~~~~~~~
+
+src/spoggy-input/input-behavior.html(3,37) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class GraphBehavior extends superClass {
+                                     ~~~~~~~~~~
+
+src/spoggy-graph/graph-behavior.html(4,37) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class ModeBehavior extends superClass {
+                                    ~~~~~~~~~~
+
+src/spoggy-mode/mode-behavior.html(3,36) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class SparqlBehavior extends superClass {
+                                      ~~~~~~~~~~
+
+src/spoggy-sparql/sparql-behavior.html(3,38) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class SparqlUpdateBehavior extends superClass {
+                                            ~~~~~~~~~~
+
+src/spoggy-sparqlupdate/sparql-update-behavior.html(3,44) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class SparqlStatementsBehavior extends superClass {
+                                                ~~~~~~~~~~
+
+src/spoggy-sparqlstatements/sparql-statements-behavior.html(3,48) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+  return class VirtuosoBehavior extends superClass {
+                                        ~~~~~~~~~~
+
+src/spoggy-virtuoso/virtuoso-behavior.html(3,40) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spog-eye/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-lite.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spog-eye/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spog-eye/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spog-eye/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-lite.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spog-eye/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spog-eye/test/spog-eye_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-lite.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spog-eye/test/spog-eye_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-agent/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-agent/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-agent/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-agent/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-agent/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-agent/test/spoggy-agent_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-agent/test/spoggy-agent_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-collab/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-collab/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-collab/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-collab/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-collab/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-collab/test/spoggy-collab_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-collab/test/spoggy-collab_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-data/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-data/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-data/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-data/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-data/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-data/test/spoggy-data_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-data/test/spoggy-data_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/test/spoggy-dbpedia_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/test/spoggy-dbpedia_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/test/spoggy-dialogs_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/test/spoggy-dialogs_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/test/spoggy-graph_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/test/spoggy-graph_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-hello/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-hello/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-hello/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-hello/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-hello/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-hello/test/spoggy-hello_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-hello/test/spoggy-hello_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-import-export/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-import-export/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-import-export/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-import-export/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-import-export/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-import-export/test/spoggy-import-export_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-import-export/test/spoggy-import-export_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/test/spoggy-input_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/test/spoggy-input_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/test/spoggy-levelgraph_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/test/spoggy-levelgraph_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+<link rel="import" href="../polymer/polymer-element.html">
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/spoggy-map.html(0,24) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/polymer/polymer-element.html'
+
+
+    class SpoggyMap extends Polymer.Element {
+                            ~~~~~~~~~~~~~~~
+
+src/spoggy-map/spoggy-map.html(21,28) warning [unknown-superclass] - Unable to resolve superclass Polymer.Element
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/test/spoggy-map_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-map/test/spoggy-map_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+  return class ModeBehavior extends superClass {
+                                    ~~~~~~~~~~
+
+src/spoggy-mode/mode-behavior1.html(3,36) warning [unknown-superclass] - Unable to resolve superclass superClass
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/test/spoggy-mode_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/test/spoggy-mode_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/test/spoggy-rdf-ext_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/test/spoggy-rdf-ext_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/test/spoggy-sparql_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/test/spoggy-sparql_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/test/spoggy-sparqlstatements_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/test/spoggy-sparqlstatements_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/test/spoggy-sparqlupdate_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/test/spoggy-sparqlupdate_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-ui/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-ui/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-ui/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-ui/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-ui/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-ui/test/spoggy-ui_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-ui/test/spoggy-ui_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/test/spoggy-virtuoso_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/test/spoggy-virtuoso_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/demo/index.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/demo/index.html(10,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-pages-shared-styles.html'
+
+
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/demo/index.html(11,28) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/iron-demo-helpers/demo-snippet.html'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/test/index.html(6,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/test/index.html(7,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/test/spoggy-vocabs_test.html(8,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/webcomponentsjs/webcomponents-loader.js'
+
+
+    <script src="../../web-component-tester/browser.js"></script>
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/test/spoggy-vocabs_test.html(9,16) error [could-not-load] - Unable to load import: ENOENT: no such file or directory, open '/home/dfaveris/dev/heroku-spoggy/public/src/web-component-tester/browser.js'
+
+
+                              <paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+                                                                                                               ~~~~~~~~~~~
+
+src/spoggy-input/spoggy-input.html(218,111) warning [databind-with-unknown-property] - modeBtnText is not declared or used more than once. Did you mean: innerText
+
+
+                              <paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/spoggy-input.html(218,30) warning [undefined-elements] - The element paper-fab is not defined
+
+
+                  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/spoggy-input.html(364,18) warning [undefined-elements] - The element core-icon is not defined
+
+
+      <paper-fab id="fabAide" on-tap="afficheAide"  icon="help" style="height: 50px; width:50px;"></paper-fab>
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-input/spoggy-input.html(437,6) warning [undefined-elements] - The element paper-fab is not defined
+
+
+            <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
+                                                            ~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(127,60) warning [databind-with-unknown-property] - colorValue is not declared or used more than once. Did you mean: _toogle
+
+
+    Gravité   <paper-slider  min="-10" max="10" value="{{centralGravityValue}}"  step="1" on-change="_changeGravity" ></paper-slider>
+                                                         ~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(206,57) warning [databind-with-unknown-property] - centralGravityValue is not declared or used more than once. Did you mean: centralGravityValueDefault
+
+
+    Longueur des liens     <paper-slider  min="0" max="800" value="{{springLengthValue}}"   on-change="_changeSpringLength"></paper-slider>
+                                                                     ~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(207,69) warning [databind-with-unknown-property] - springLengthValue is not declared or used more than once. Did you mean: springLengthValueDefault
+
+
+    Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstantValue}}"  step="0.001" on-change="_changeSpringConstant"></paper-slider>
+                                                                ~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(208,64) warning [databind-with-unknown-property] - springConstantValue is not declared or used more than once. Did you mean: springConstantValueDefault
+
+
+    Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistanceValue}}"  on-change="_changeNodeDistance"></paper-slider>
+                                                                             ~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(209,77) warning [databind-with-unknown-property] - nodeDistanceValue is not declared or used more than once. Did you mean: nodeDistanceValueDefault
+
+
+    Amortissement         <paper-slider  min="0" max="1" value="{{dampingValue}}"  step="0.001"  on-change="_changeDamping"></paper-slider>
+                                                                  ~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(210,66) warning [databind-with-unknown-property] - dampingValue is not declared or used more than once. Did you mean: dampingValueDefault
+
+
+    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(79,4) warning [undefined-elements] - The element core-icon is not defined
+
+
+    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(166,4) warning [undefined-elements] - The element core-icon is not defined
+
+
+    <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-graph/spoggy-graph.html(180,4) warning [undefined-elements] - The element core-icon is not defined
+
+
+                <template is="dom-repeat" items="[[rooms]]">
+                                                   ~~~~~
+
+src/spoggy-mode/spoggy-mode.html(80,51) warning [databind-with-unknown-property] - rooms is not declared or used more than once. Did you mean: mode
+
+
+            <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
+                                                                     ~~~~~~~
+
+src/spoggy-mode/spoggy-mode.html(87,69) warning [databind-with-unknown-property] - newRoom is not declared or used more than once. Did you mean: mode
+
+
+<paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+                                                                                 ~~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode.html(144,81) warning [databind-with-unknown-property] - modeBtnText is not declared or used more than once. Did you mean: innerText
+
+
+        observer: '_graphChanged'
+                   ~~~~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode.html(190,19) warning [databinding-calls-must-be-functions] - _graphChanged is not a known method on spoggy-mode
+
+
+                  <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+                              ~~~~
+
+src/spoggy-mode/spoggy-mode.html(81,30) warning [set-unknown-attribute] - paper-item elements do not have a property named room. Consider instead:  role$
+
+
+<paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode.html(144,0) warning [undefined-elements] - The element paper-fab is not defined
+
+
+    url="{{url_fuseki_ping}}"
+           ~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(35,11) warning [databind-with-unknown-property] - url_fuseki_ping is not declared or used more than once. Did you mean: lang
+
+
+    url="{{url_server}}"
+           ~~~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(45,11) warning [databind-with-unknown-property] - url_server is not declared or used more than once. Did you mean: _deferred
+
+
+    url="{{url_virtuoso_ping}}"
+           ~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(56,11) warning [databind-with-unknown-property] - url_virtuoso_ping is not declared or used more than once. Did you mean: prop1
+
+
+        <div hidden$="[[!modeIs(mode,'global')]]">
+                         ~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(67,25) warning [databind-with-unknown-property] - modeIs is not declared or used more than once. Did you mean: dir
+
+
+        <div hidden$="[[!modeIs(mode,'global')]]">
+                                ~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(67,32) warning [databind-with-unknown-property] - mode is not declared or used more than once. Did you mean: id
+
+
+          <paper-input id="labelEndpoint" label="Endpoint" value="{{url_fuseki::change}}"></paper-input>
+                                                                    ~~~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(69,68) warning [databind-with-unknown-property] - url_fuseki is not declared or used more than once. Did you mean: prop1
+
+
+          <paper-dropdown-menu hidden$="[[isEmpty(pingFuseki)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+                                          ~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(70,42) warning [databind-with-unknown-property] - isEmpty is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content" selected="0">
+                                                              ~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(71,62) warning [databind-with-unknown-property] - isEmpty is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+          <paper-input label="Graph" hidden$="[[isEmpty(pingFuseki)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+                                                ~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(79,48) warning [databind-with-unknown-property] - isEmpty is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+          <paper-dropdown-menu hidden$="[[isEmpty(pingFuseki)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+                                                  ~~~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(70,50) warning [databind-with-unknown-property] - pingFuseki is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content" selected="0">
+                                                                      ~~~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(71,70) warning [databind-with-unknown-property] - pingFuseki is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+          <paper-input label="Graph" hidden$="[[isEmpty(pingFuseki)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+                                                        ~~~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(79,56) warning [databind-with-unknown-property] - pingFuseki is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+              <template is="dom-repeat" items="[[datasets]]">
+                                                 ~~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(72,49) warning [databind-with-unknown-property] - datasets is not declared or used more than once. Did you mean: title
+
+
+          <paper-input label="Graph" hidden$="[[isEmpty(pingFuseki)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+                                                                                                                  ~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(79,114) warning [databind-with-unknown-property] - graph is not declared or used more than once. Did you mean: prop1
+
+
+        <div hidden$="[[!modeIs(mode,'global')]]">
+                         ~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(67,25) warning [databinding-calls-must-be-functions] - modeIs is not a known method on spoggy-sparql
+
+
+          <paper-dropdown-menu hidden$="[[isEmpty(pingFuseki)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+                                          ~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(70,42) warning [databinding-calls-must-be-functions] - isEmpty is not a known method on spoggy-sparql
+
+
+            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content" selected="0">
+                                                              ~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(71,62) warning [databinding-calls-must-be-functions] - isEmpty is not a known method on spoggy-sparql
+
+
+          <paper-input label="Graph" hidden$="[[isEmpty(pingFuseki)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+                                                ~~~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(79,48) warning [databinding-calls-must-be-functions] - isEmpty is not a known method on spoggy-sparql
+
+
+                <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+                            ~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(73,28) warning [set-unknown-attribute] - paper-item elements do not have a property named room. Consider instead:  role$
+
+
+                <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+                                                                        ~~~~~
+
+src/spoggy-sparql/spoggy-sparql.html(73,72) warning [set-unknown-attribute] - paper-item elements do not have a property named value. Consider instead:  role$
+
+
+    url="{{url}}"
+           ~~~
+
+src/spoggy-sparqlupdate/spoggy-sparqlupdate.html(10,11) warning [databind-with-unknown-property] - url is not declared or used more than once. Did you mean: dir
+
+
+        observer: "_endpointChanged"
+                   ~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/spoggy-sparqlupdate.html(37,19) warning [databinding-calls-must-be-functions] - _endpointChanged is not a known method on spoggy-sparqlupdate
+
+
+        observer: "_endpointChanged"
+                   ~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/spoggy-sparqlupdate.html(42,19) warning [databinding-calls-must-be-functions] - _endpointChanged is not a known method on spoggy-sparqlupdate
+
+
+    <iron-ajax
+    ~~~~~~~~~~
+    id="ajaxupdate"
+~~~~~~~~~~~~~~~~~~~
+    url="{{url}}"
+~~~~~~~~~~~~~~~~~
+    body="{{options}}"
+~~~~~~~~~~~~~~~~~~~~~~
+    method="POST"
+~~~~~~~~~~~~~~~~~
+    handle-as="document"
+~~~~~~~~~~~~~~~~~~~~~~~~
+    content-type="application/x-www-form-urlencoded"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    on-response="handleResponse">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/spoggy-sparqlupdate.html(8,4) warning [undefined-elements] - The element iron-ajax is not defined
+
+
+    observer: '_requetesChanged'
+               ~~~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/spoggy-sparqlstatements.html(87,15) warning [databinding-calls-must-be-functions] - _requetesChanged is not a known method on spoggy-sparqlstatements
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spog-eye/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+  last-error="{{serverErrorObj}}"
+                ~~~~~~~~~~~~~~
+
+src/spog-eye/spog-eye.html(67,16) warning [databind-with-unknown-property] - serverErrorObj is not declared or used more than once. Did you mean: serverSuccessObj
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-agent/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-agent/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-collab/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-collab/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-data/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-data/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-dbpedia/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-dialogs/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-graph/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-hello/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-hello/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-import-export/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-import-export/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-input/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-levelgraph/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-map/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-map/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    url="{{url_status}}"
+           ~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(48,11) warning [databind-with-unknown-property] - url_status is not declared or used more than once. Did you mean: translate
+
+
+    url="{{url_server}}"
+           ~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(58,11) warning [databind-with-unknown-property] - url_server is not declared or used more than once. Did you mean: creer
+
+
+                <template is="dom-repeat" items="[[rooms]]">
+                                                   ~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(90,51) warning [databind-with-unknown-property] - rooms is not declared or used more than once. Did you mean: mode
+
+
+            <paper-input label="ou créer une nouvelle salle" value={{newRoom::change}}></paper-input>
+                                                                     ~~~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(97,69) warning [databind-with-unknown-property] - newRoom is not declared or used more than once. Did you mean: mode
+
+
+        <paper-dropdown-menu hidden$="[[isEmpty(ping)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+                                                ~~~~
+
+src/spoggy-mode/spoggy-mode1.html(111,48) warning [databind-with-unknown-property] - ping is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+          <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(ping)]]"  class="dropdown-content" selected="0">
+                                                                    ~~~~
+
+src/spoggy-mode/spoggy-mode1.html(112,68) warning [databind-with-unknown-property] - ping is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+        <paper-input label="Graph" hidden$="[[isEmpty(ping)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+                                                      ~~~~
+
+src/spoggy-mode/spoggy-mode1.html(121,54) warning [databind-with-unknown-property] - ping is not declared and is only read from, never written to. If it's part of the element's API it should be a declared property.
+
+
+            <template is="dom-repeat" items="[[datasets]]">
+                                               ~~~~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(113,47) warning [databind-with-unknown-property] - datasets is not declared or used more than once. Did you mean: dataset
+
+
+<paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+                                                                                 ~~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(134,81) warning [databind-with-unknown-property] - modeBtnText is not declared or used more than once. Did you mean: innerText
+
+
+        observer: '_graphChanged'
+                   ~~~~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(177,19) warning [databinding-calls-must-be-functions] - _graphChanged is not a known method on spoggy-mode
+
+
+                  <paper-item room="[[item]]" on-tap="rejoindre">[[item]]</paper-item>
+                              ~~~~
+
+src/spoggy-mode/spoggy-mode1.html(91,30) warning [set-unknown-attribute] - paper-item elements do not have a property named room. Consider instead:  role$
+
+
+              <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+                          ~~~~
+
+src/spoggy-mode/spoggy-mode1.html(114,26) warning [set-unknown-attribute] - paper-item elements do not have a property named room. Consider instead:  role$
+
+
+              <paper-item room="[[dataset]]" on-tap="_datasetChanged" value="{{dataset}}">[[item.ds_name]]</paper-item>
+                                                                      ~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(114,70) warning [set-unknown-attribute] - paper-item elements do not have a property named value. Consider instead:  role$
+
+
+<paper-fab id="fabmode" on-tap="openChangeMode" icon="icons:group-work" label="{{modeBtnText}}" style="height: 50px; width:50px;"></paper-fab>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/spoggy-mode/spoggy-mode1.html(134,0) warning [undefined-elements] - The element paper-fab is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-mode/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-rdf-ext/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-sparql/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-sparqlstatements/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-sparqlupdate/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-ui/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-virtuoso/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+    <custom-style>
+    ~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/demo/index.html(14,4) warning [undefined-elements] - The element custom-style is not defined
+
+
+      <demo-snippet>
+      ~~~~~~~~~~~~~~
+
+src/spoggy-vocabs/demo/index.html(22,6) warning [undefined-elements] - The element demo-snippet is not defined
+
+
+Found 142 errors 103 warnings.

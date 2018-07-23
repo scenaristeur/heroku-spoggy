@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="spoggy-rdf-ext">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+  </template>
+
+  <script>
+    /**
+     * `spoggy-rdf-ext`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyRdfExt extends Polymer.Element {
+      static get is() { return 'spoggy-rdf-ext'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-rdf-ext'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyRdfExt.is, SpoggyRdfExt);
+  </script>
+</dom-module>

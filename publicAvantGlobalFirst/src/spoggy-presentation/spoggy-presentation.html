@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="spoggy-presentation">
+  <template>
+    <!--<style include="shared-styles">
+    :host {
+      display: block;
+
+      padding: 10px;
+    }
+    </style>-->
+    <div  hidden$="[[!affichePresentation]]"    class="card">
+      <h1><div class="circle">S</div>poggy</h1>
+      <p>S P O G G Y = > Sujet, Predicat, Objet, Graphe...</p>
+      <p>Spoggy est un outil d'exploration de données structurées.
+        Il permet de rechercher (la loupe juste au dessus) des ressources
+        dans les bases de connaissances présentées ci-dessous.</p>
+
+        <p> Vous pouvez aussi avoir un petit aperçu des
+          <a href="http://spoggy.herokuapp.com/?source=https://raw.githubusercontent.com/scenaristeur/heroku-spoggy/master/public/exemple_files/Spoggy_init.json"
+          target="_blank">fonctionnalités de SPOGGY en mode création de graphe</a>.</p>
+
+          <p>
+            <paper-checkbox
+            checked="{{affichePresentation}}">Afficher la présentation (prévoir localstorage pour 'à la prochaine ouverture')</paper-checkbox>
+          </p>
+        </div>
+      </template>
+
+      <script>
+      /**
+      * `spoggy-presentation`
+      *
+      *
+      * @customElement
+      * @polymer
+      * @demo demo/index.html
+      */
+      class SpoggyPresentation extends Polymer.Element {
+        static get is() { return 'spoggy-presentation'; }
+        static get properties() {
+          return {
+            prop1: {
+              type: String,
+              value: 'spoggy-presentation'
+            },
+            affichePresentation: {
+              type : Boolean,
+              value: false
+            }
+          };
+        }
+      }
+
+      window.customElements.define(SpoggyPresentation.is, SpoggyPresentation);
+      </script>
+    </dom-module>

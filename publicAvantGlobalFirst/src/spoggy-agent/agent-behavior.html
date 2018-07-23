@@ -1,0 +1,40 @@
+<script src="lib/eve.min.js"></script>
+ <!--AGENTS  EVE.JS  http://eve.almende.com/implementations/javascript/gettingstarted.html -->
+
+<script>
+/* @polymerMixin */
+var AgentBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class AgentBehavior extends superClass {
+    constructor() {
+      super();
+  //    console.log("AGENT behavior const")
+    //  console.log(this.agentProp);
+/*
+    eve.system.init({
+      transports: [
+        {
+          type: 'local'
+        }
+       ]
+    });
+  this.eve = eve;
+   console.log(this.eve)*/
+    }
+
+    static get properties() {
+      return {
+        agentProp: {
+          type: String,
+          value: 'Agent Behavior prop'
+        }
+      };
+    }
+
+    connectedCallback(){
+    //  console.log("agent DATA connected");
+    }
+
+    }
+});
+
+</script>

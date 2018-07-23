@@ -1,0 +1,33 @@
+
+<script>
+/* @polymerMixin */
+var HistoriqueBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class HistoriqueBehavior extends superClass {
+    constructor() {
+      super();
+    }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'histoB'
+        },
+        historique: {
+          type: Array,
+          value: [],
+        }
+      };
+    }
+    addHistorique(node){
+  //    console.log(node);
+      this.push('historique', node);
+      console.log(this.historique)
+
+    }
+
+
+
+
+  }
+});
+</script>

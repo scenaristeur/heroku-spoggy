@@ -1,0 +1,91 @@
+
+<script>
+/* @polymerMixin */
+var EndpointsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class EndpointsBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("*************************INPUT behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'recherche Beha'
+        }
+      };
+    }
+
+    explorer(e){
+      console.log(e.model.item)
+      var endpoint = e.model.item;
+      this.hideEndpointsList(this.$.endpointsList)
+      this.agentEndpoints.send('agentSparql', {type: 'explore', endpoint: endpoint });
+    }
+    rechercher(e){
+      console.log(e.model.item)
+    }
+
+
+
+    lanceRecherche(message){
+      this.hideEndpointsList(this.$.endpointsList)
+      console.log(message);
+      console.log(this.endpoints)
+      this.agentEndpoints.send('agentSparql', {type: 'recherche', endpoints: this.endpoints, recherche: message.texte });
+    }
+
+    showEndpointsList(element){
+
+      element.style.display = "block";
+      //  this.app.updateInput(message.resource.trim());
+      const animation = element.animate([
+        {transform:'translateY(100%)', opacity: 1, easing: 'ease-out'},
+        {transform:'translateY(0%)', opacity: 1, easing: 'ease-in'},
+        {transform:'translateY(0%)', opacity: 1}
+      ],
+      {
+        duration: 1500,
+      });
+
+      animation.finished.then(() => {
+        // Preserve end position of the animation
+        element.style.transform = 'translateY(0%)';
+        //  this.$.endpointsList.style.opacity = 0;
+        element.style.display = 'block';
+      });
+
+    }
+
+    hideEndpointsList(element){
+      const animation = element.animate([
+        {transform:'translateY(0)', opacity: 1, easing: 'ease-out'},
+        {transform:'translateY(100%)', opacity: 1, easing: 'ease-in'},
+        {transform:'translateY(100%)', opacity: 0 }
+      ],
+      {
+        duration: 1500,
+      });
+
+      animation.finished.then(() => {
+        // Preserve end position of the animation
+        element.style.transform = 'translateY(100%)';
+        //  this.$.endpointsList.style.opacity = 0;
+        element.style.display = 'none';
+      });
+    }
+
+    /*updateInputValue(texte){
+    //merdique obligé de mettre ce behavior sur spoggy-graph pour cette fonction !
+    console.log("Element");
+    console.log(texte);
+    this.$.inputMessage.value = texte;
+  }*/
+
+
+}
+});
+
+</script>

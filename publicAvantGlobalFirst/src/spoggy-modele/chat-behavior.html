@@ -1,0 +1,29 @@
+
+<script>
+/* @polymerMixin */
+var ChatBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class ChatBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        }
+      };
+    }
+
+    ma_fonction(){
+        //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    }
+
+
+  }
+});
+
+</script>

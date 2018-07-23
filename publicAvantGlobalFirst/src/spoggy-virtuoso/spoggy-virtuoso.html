@@ -1,0 +1,139 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+
+<link rel="import" href="./virtuoso-behavior.html">
+
+<script src="agents/VirtuosoAgent.js"></script>
+
+
+<dom-module id="spoggy-virtuoso">
+  <template>
+
+    <template is="dom-if" if="{{loading}}">
+      <paper-progress id="progressBar"  indeterminate></paper-progress> <!--value ="{{progress}}"  -->
+    </template>
+
+
+    <!-- NOUVELLES REQUETES -->
+
+    <iron-ajax
+    id="ajaxExplore"
+    url="{{url}}"
+    params="{{options}}"
+    loading="{{loading}}"
+    handle-as="application/sparql-results+json">
+  </iron-ajax>
+
+  <!-- FIN NOUVELLES REQUETES -->
+
+  <!-- ANCIENNES REQUETES A VOIR SI TOUJOURS URILES -->
+
+
+
+
+  <iron-ajax
+  id="pingRequest"
+  url="{{url}}"
+  params="{{options}}"
+  handle-as="application/sparql-results+json"
+  on-response="_handleResponse"
+  on-error="_handlePingError"
+  ></iron-ajax>
+
+  <iron-ajax
+  id="ajaxget"
+  url="{{url}}"
+  params="{{options}}"
+  handle-as="application/sparql-results+json"
+  on-response="_handleResponse"
+  on-error="_handleError"
+  debounce-duration="300"></iron-ajax>
+
+
+
+  <iron-ajax
+  id="describeGet"
+  url="{{url}}"
+  params="{{options}}"
+  handle-as="application/sparql-results+json"
+  on-response="_handleDescribeResponse"
+  on-error="_handleDescribeError"
+  debounce-duration="300"></iron-ajax>
+
+
+  <iron-ajax
+  id="ajaxPersee"
+  url="{{url}}"
+  params="{{options}}"
+  loading="{{loading}}"
+  handle-as="application/sparql-results+json"></iron-ajax>
+  <!--    on-response="_handlePerseeResponse"
+  on-error="_handlePerseeError"-->
+  <iron-ajax
+  id="ajaxRecherche"
+  url="{{url}}"
+  params="{{options}}"
+  loading="{{loading}}"
+  handle-as="application/sparql-results+json"></iron-ajax>
+  <!--on-response="_handleRechercheResponse"
+  on-error="_handleRechercheError"-->
+
+  <iron-ajax
+ id="ajaxRechercheBis"
+ url="{{url}}"
+ params="{{options}}"
+ loading="{{loading}}"
+handle-as="application/sparql-results+json"></iron-ajax>
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-virtuoso`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyVirtuoso extends VirtuosoBehaviorMixin(Polymer.Element) {
+  static get is() { return 'spoggy-virtuoso'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-virtuoso'
+      },
+      group: {
+        type: Number,
+        value: 0
+      }
+    };
+  }
+
+  constructor(){
+    super();
+    this.agentVirtuoso = new VirtuosoAgent('agentVirtuoso', this);
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
+
+    });
+  }
+  _deferred(){
+    //  console.log("agent DATA defered")
+    //    console.log(this.agentMode);
+    //  this.initAgents()
+    console.log(this.agentVirtuoso);
+    this.agentVirtuoso.send('agentHello', 'Hello, agentHello !')
+    this.agentVirtuoso.send('agentData', {type: 'getParams'})
+  }
+}
+
+window.customElements.define(SpoggyVirtuoso.is, SpoggyVirtuoso);
+</script>
+</dom-module>

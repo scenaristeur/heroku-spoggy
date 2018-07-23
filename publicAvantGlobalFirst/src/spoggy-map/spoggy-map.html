@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="spoggy-map">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-map`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyMap extends Polymer.Element {
+      static get is() { return 'spoggy-map'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-map'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyMap.is, SpoggyMap);
+  </script>
+</dom-module>

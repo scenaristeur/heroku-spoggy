@@ -1,0 +1,196 @@
+
+<script>
+/* @polymerMixin */
+var SparqlUpdateBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class SparqlUpdateBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        },
+        urls: {
+          type : Array,
+          value: []
+        }
+      };
+    }
+    sendToEndpoint(actions){
+      var app = this;
+      console.log("J'envoi au endpoint depuis le graphe");
+      console.log(actions);
+      actions.forEach(function(a){
+        console.log(a);
+        switch(a.type){
+          case 'newNode':
+          console.log("Action NEW Node")
+          app.transformNodeToTriplet(a.data)
+          //  app.$.ajaxupdate.generateRequest();
+          break;
+
+          case 'newEdge':
+          console.log("Action NEW Edge")
+          app.transformEdgeToTriplet(a.data)
+
+          break;
+
+          case 'deleteNode':
+          console.log("Action DELETE NodeS")
+          app.deleteNodeToSparql(a.data)
+
+          break;
+
+          default:
+          console.log("NON PRIS EN CHARGE");
+          console.log(actions);
+        }
+      });
+    }
+
+    deleteNodeToSparql(data){
+      console.log("Action DELETE NodeS")
+      console.log(("pas encore pris en compte plusieurs nodes et les edges !!!!"))
+      console.log(data)
+      let id = data.nodes[0];
+      console.log("REQUETE A REVOIR !");
+      var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+      update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+      update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+      update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+
+      update+=" DELETE { ?id ?p ?o }\n WHERE {\n smag:_"+id+" rdfs:label ?o . \n ?id ?p ?o \n} ; \n";
+      update+=" DELETE { ?s ?p ?id }\n WHERE {\n ?s ?p smag:_"+id+"  . \n ?s ?p smag:_"+id+" \n} ;\n";
+
+
+      /*  update += "INSERT DATA { \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+
+      //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+      update += "smag:_"+subject+"   smag:"+predicate+"   smag:_"+object+" . \n";
+
+
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+      update += " } \n";*/
+      console.log(update);
+      this.options.update = update;
+
+      console.log(this.options);
+      this.$.ajaxupdate.generateRequest();
+
+    }
+
+    /*  sendTripletToEndpoint(triplet){
+    console.log("J'envoi au endpoint depuis endpoint");
+    console.log(triplet);
+    this.sujet = triplet[0];
+    this.propriete = triplet[1];
+    this.objet = triplet[2];
+
+    var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+    update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+    update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+    update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+    update += "INSERT DATA { \n";
+    // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+
+    //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+    update += "smag:_"+triplet[0]+"   smag:"+triplet[1]+"   smag:_"+object+" . \n";
+
+    // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+    update += " } \n";
+    console.log(update);
+    app.options.update = update;
+
+    console.log(app.options);
+    app.$.ajaxupdate.generateRequest();
+
+  }*/
+
+  transformEdgeToTriplet(data){
+    var app = this;
+    console.log(data);
+    var subject = data[0].from;
+    var object = data[0].to;
+    var predicate = data[0].label.replace(/ /g, '_');
+    var type = data[0].type;
+
+    var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+    update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+    update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+    update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+    update += "INSERT DATA { \n";
+    // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+
+    //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+    update += "smag:_"+subject+"   smag:"+predicate+"   smag:_"+object+" . \n";
+
+
+    // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+    update += " } \n";
+    console.log(update);
+    app.options.update = update;
+
+    console.log(app.options);
+    app.$.ajaxupdate.generateRequest();
+
+  }
+
+
+  transformNodeToTriplet(data){
+    var app = this;
+    console.log(data);
+    var subject = data.id;
+    var label = data.label;
+    var type = data.type;
+    var title = data.title;
+    var shape = data.shape;
+    var color = data.color;
+    var x = data.x;
+    var y = data.y;
+    var edit = data.edit;
+
+
+
+
+    var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+    update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+    update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+    update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+
+
+
+    if (edit){
+      update+= "DELETE { ?s ?p ?o } \n";
+      update+= "INSERT { smag:_"+subject+"   rdfs:label   \""+label+"\" } \n";
+      update+= "WHERE { smag:_"+subject+" rdfs:label ?o . ?s ?p ?o } \n";
+    }else{
+      update += "INSERT DATA { \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+      update += "smag:_"+subject+"   rdfs:label   \""+label+"\" . \n";
+      update += "smag:_"+subject+"   rdf:type   smag:"+type+" . \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+      update += " } \n";
+    }
+    console.log(update);
+    app.options.update = update;
+
+
+    //var propSend="smag:"+propriete+" ";
+    //if ((propriete == "type") || (propriete == "a")){
+    //  propSend="<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
+    //  }
+
+    console.log(app.options);
+    app.$.ajaxupdate.generateRequest();
+
+  }
+}
+});
+
+</script>

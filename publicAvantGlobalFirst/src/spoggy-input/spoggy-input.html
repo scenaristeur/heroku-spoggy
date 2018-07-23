@@ -1,0 +1,150 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+<script src="agents/InputAgent.js"></script>
+<link rel="import" href="./input-behavior.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+
+<!--<link rel="import" href="../../bower_components/chat-window/chat-window.html">-->
+
+<!--<link rel="import" href="./input-styles.html">-->
+<dom-module id="spoggy-input">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
+  <template>
+    <style is="custom-style">
+    /*.inputbtn{
+    @apply --layout-horizontal;
+    @apply --layout-flex;
+    }*/
+    :host {
+      --paper-input-container: {padding: 0px};
+    }
+    .prefix {
+
+    }
+    .suffix {
+
+    }
+
+
+    </style>
+
+    <center>
+      <paper-input id="inputMessage"
+      label="Recherche"
+      autofocus
+      style="max-width:800px;text-align:left;"
+      on-keydown="checkForEnter">
+      <paper-icon-button slot="prefix" on-tap="toggleInput" icon="search"></paper-icon-button>
+      <paper-icon-button slot="prefix" on-tap="toggleInput" icon="create"></paper-icon-button>
+      <paper-icon-button slot="suffix" on-tap="clearInput" icon="clear"></paper-icon-button>
+      <paper-icon-button slot="suffix" on-tap="traiteMessage" icon="arrow-forward"></paper-icon-button>
+    </paper-input>
+  </center>
+
+
+  <!--    <chat-window
+  id = "chat"
+  class="styled"
+  author="me"
+  single-line
+  input-text="{{text}}"
+  messages="[[messages]]"
+  on-send="sendMsg"
+  ></chat-window>-->
+  <!--
+  <chat-input
+  author="me"
+  class="styled"
+  single-line
+  single-line="[[singleLine]]"
+  icon="[[sendIcon]]"
+  text="{{inputText}}"
+  on-send="sendMsg"></chat-input>
+
+  <chat-messages
+  class="styled"
+  id = "chat"
+  author="[[author]]"
+  author-icon="[[authorIcon]]"
+  others-icons="[[othersIcons]]"
+  default-icon="[[defaultIcon]]"
+  messages="[[messages]]"
+  date-format="[[dateFormat]]"
+  auto-scroll="[[autoScroll]]">
+</chat-messages>
+-->
+<!--<div style="align:right">
+<paper-icon-button icon="help" on-tap="afficheAide"></paper-icon-button>
+</div>-->
+<!--<paper-fab id="fabAide" on-tap="afficheAide"  icon="help" style="height: 50px; width:50px;"></paper-fab>-->
+
+</template>
+
+<script>
+/**
+* `spoggy-input`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyInput extends InputBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-input'; }
+  static get properties() {
+    return {
+      commandHistory:{
+        type : Array,
+        value: []
+      },
+      /*  sources:{
+      type: Array,
+      notify: true
+    },
+    */
+  };
+}
+
+constructor(){
+  super();
+  this.agentInput = new InputAgent('agentInput', this);
+  Polymer.RenderStatus.afterNextRender(this, function() {
+    this._deferred();
+  });
+}
+_deferred(){
+  this.initAgents()
+  this.$.inputMessage.label = "Création : saisissez 3 mots, une virgule et Entrée";
+  this.mode = "create"
+}
+initAgents(){
+  this.agentInput.send('agentHello', 'Hello agentHello!');
+}
+
+checkForEnter(e) {
+  // check if 'enter' was pressed
+  if (e.keyCode === 13) {
+    // enter pressed!
+  //  if (this.mode == "search"){
+      this.traiteMessage();
+    //}
+
+  }
+}
+
+
+
+
+}
+
+window.customElements.define(SpoggyInput.is, SpoggyInput);
+</script>
+</dom-module>
