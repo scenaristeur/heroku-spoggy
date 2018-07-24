@@ -52,21 +52,11 @@ CollaboratifAgent.prototype.receive = function(from, message) {
   }
 
   switch(message.type){
-    case 'recherche':
-    console.log(message)
-    this.app.lanceRecherche(message)
-    break;
-    case 'show':
-    //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
-    var el = message.element;
-    var element = this.app.$[el];
-    this.app.showEndpointsList(element);
-    break;
-    case 'hide':
-    //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
-    var el = message.element;
-    var element = this.app.$[el];
-    this.app.hideEndpointsList(element);
+    case 'initrooms':
+    this.app.rooms = message.rooms;
+
+    console.log("init rooms ");
+    console.log(message.rooms);
     break;
     default:
     console.log(message);

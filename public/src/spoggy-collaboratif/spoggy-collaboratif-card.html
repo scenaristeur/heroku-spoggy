@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 
 
+
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
@@ -166,7 +167,10 @@ class SpoggyCollaboratifCard extends Polymer.LazyImportsMixin(Polymer.Element) {
 
   constructor(){
     super();
-  //  this.agentCollaboratif = new CollaboratifAgent('agentCollaboratif', this);
+
+    //  this.agentCollaboratif = new CollaboratifAgent('agentCollaboratif', this);
+
+
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });

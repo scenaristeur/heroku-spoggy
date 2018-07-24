@@ -14,6 +14,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 
+<script src="agents/AppAgent.js"></script>
 
 <dom-module id="spoggy-app">
   <link  rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
@@ -207,81 +208,97 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
 
 
-  <!--<div hidden$="[[isEmpty(mode)]]" > -->
-  <app-drawer-layout fullbleed narrow="{{narrow}}">
-    <!-- Drawer content -->
-    <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-      <app-toolbar>Menu</app-toolbar>
-      <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-        <!--<a name="view1" href="[[rootPath]]view1">View One</a>
-        <a name="view2" href="[[rootPath]]view2">View Two</a>
-        <a name="view3" href="[[rootPath]]view3">View Three</a> -->
-        <paper-button id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</paper-button>
-        <paper-button id="solo" class="cafe-reserve" on-tap="setmode">Solo</paper-button>
-        <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif</paper-button>
-        <paper-button id="global" class="cafe-reserve" on-tap="setmode">Global</paper-button>
-      </iron-selector>
-
-    </app-drawer>
-
-    <!-- Main content -->
-    <app-header-layout has-scrolling-region>
-
-      <app-header slot="header" condenses reveals effects="waterfall">
-        <app-toolbar>
-          <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
-          <div main-title>Spoggy</div>
-          [[mode]]
-          <spoggy-input >
-            ... Chargement de l'interface  ... <br>
-            Attendez jusqu'au chargement du cercle rose
-          </spoggy-input>
-        </app-toolbar>
-      </app-header>
-      <div hidden$="[[!isEmpty(mode)]]">
-        <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
-          <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
-          <spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
-          <spoggy-global-card  mode={{mode}}></spoggy-global-card>
-        </div>
+<!--<div hidden$="[[isEmpty(mode)]]" > -->
+<app-drawer-layout fullbleed narrow="{{narrow}}">
+  <!-- Drawer content -->
+  <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+    <app-toolbar>Menu</app-toolbar>
+    <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+      <!--<a name="view1" href="[[rootPath]]view1">View One</a>
+      <a name="view2" href="[[rootPath]]view2">View Two</a>
+      <a name="view3" href="[[rootPath]]view3">View Three</a> -->
+      <paper-button id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</paper-button>
+      <paper-button id="solo" class="cafe-reserve" on-tap="setmode">Solo</paper-button>
+      <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif</paper-button>
+      <paper-button id="global" class="cafe-reserve" on-tap="setmode">Global</paper-button>
+    </iron-selector>
+    <fieldset hidden$="[[isEmpty(mode)]]">
+      <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
+      </legend>
+      <div hidden$="[[isEmpty(pseudo)]]">
+        - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
       </div>
-
-
-
-      <div hidden$="[[isEmpty(mode)]]">
-        <spoggy-sparql></spoggy-sparql>
-        <spoggy-presentation></spoggy-presentation>
-        <spoggy-endpoints></spoggy-endpoints>
-
-        <spoggy-graph>
-          ... Chargement du système ... <br>
-        </spoggy-graph>
-
-
-        <spoggy-dialogs></spoggy-dialogs>
-        <spoggy-data></spoggy-data>
-
-        <spoggy-preferences></spoggy-preferences>
-        <spoggy-historique></spoggy-historique>
+      <div hidden$="[[isEmpty(room)]]">
+        - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
       </div>
+    </fieldset>
+  </app-drawer>
 
-      <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
-      <spoggy-collaboratif  mode={{mode}} hidden$="[[!isEqual(mode,'collaboratif')]]"></spoggy-collaboratif>
-      <spoggy-global  mode={{mode}} hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
+  <!-- Main content -->
+  <app-header-layout has-scrolling-region>
 
-    </app-header-layout>
-  </app-drawer-layout>
+    <app-header slot="header" condenses reveals effects="waterfall">
+      <app-toolbar>
+        <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
+        <div main-title>Spoggy</div>
+        <spoggy-input >
+          ... Chargement de l'interface  ... <br>
+          Attendez jusqu'au chargement du cercle rose
+        </spoggy-input>
+      </app-toolbar>
+    </app-header>
+    <div hidden$="[[!isEmpty(mode)]]">
+      <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
+        <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
+        <spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
+        <spoggy-global-card  mode={{mode}}></spoggy-global-card>
+      </div>
+    </div>
 
-    <spoggy-collab></spoggy-collab>
-  <!--</div> -->
+    <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
+    <spoggy-collaboratif
+    mode={{mode}}
+    hidden$="[[!isEqual(mode,'collaboratif')]]"
+    pseudo="{{pseudo}}"
+    room="{{room}}"
+    hide-pseudo="{{hidePseudo}}"
+    hide-rejoindre="{{hideRejoindre}}"
+    hide-creer="{{hideCreer}}">
+  </spoggy-collaboratif>
+  <spoggy-global  mode={{mode}} hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
-  <!--
-  <spoggy-sparql></spoggy-sparql>
-  <spoggy-presentation></spoggy-presentation>
-  <spoggy-endpoints></spoggy-endpoints>
+  <div hidden$="[[isEmpty(mode)]]">
+    <spoggy-sparql></spoggy-sparql>
+    <spoggy-presentation></spoggy-presentation>
+    <spoggy-endpoints></spoggy-endpoints>
 
-  <spoggy-graph>
-  ... Chargement du système ... <br>
+    <spoggy-graph>
+      ... Chargement du système ... <br>
+    </spoggy-graph>
+
+
+    <spoggy-dialogs></spoggy-dialogs>
+    <spoggy-data></spoggy-data>
+
+    <spoggy-preferences></spoggy-preferences>
+    <spoggy-historique></spoggy-historique>
+  </div>
+
+
+
+</app-header-layout>
+</app-drawer-layout>
+
+<spoggy-collab></spoggy-collab>
+<!--</div> -->
+
+<!--
+<spoggy-sparql></spoggy-sparql>
+<spoggy-presentation></spoggy-presentation>
+<spoggy-endpoints></spoggy-endpoints>
+
+<spoggy-graph>
+... Chargement du système ... <br>
 </spoggy-graph>
 <spoggy-collab></spoggy-collab>
 
@@ -309,11 +326,24 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
       mode: {
         type: String,
         value: "",
-        notify:true
+        notify:true,
+        observer: "_modeChanged"
       },
       debuglevel: {
         type: Number,
         value: 0
+      },
+      hidePseudo: {
+        type: Boolean,
+        notify: true
+      },
+      hideRejoindre: {
+        type: Boolean,
+        notify: true
+      },
+      hideCreer: {
+        type: Boolean,
+        notify: true
       }
     }
   }
@@ -324,6 +354,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   }
   constructor(){
     super();
+    this.agentApp = new AppAgent('agentApp', this);
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });
@@ -332,6 +363,10 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     this.importLazyGroup('lazy').then((results) => {
       this.dispatchEvent(new CustomEvent('import-loaded', results));
     });
+    this.initAgents();
+  }
+  initAgents(){
+    this.agentApp.send('agentHello', 'Hello agentHello!');
   }
 
   setmode(e){
@@ -347,6 +382,60 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   }
   isEqual(mode, test){
     return mode == test;
+  }
+
+  roomEdit(){
+    this.hideRejoindre = false;
+    this.hideCreer = false;
+  }
+
+  pseudoEdit(){
+    this.hidePseudo = false;
+  }
+
+  _modeChanged(newMode, oldMode){
+    //  this.set('modeConfig.mode', newMode);
+    //  this.mode = newMode;
+    //  this.modeBtnText = this.mode.substring(0, 6);
+    if (newMode.length >0){
+      console.log(newMode)
+      switch (newMode) {
+        case 'solo':
+        console.log('passage solo');
+        break;
+        case 'collaboratif':
+        console.log('connexion socket');
+        //  this.connectSocket();
+        this.agentApp.send('agentSocket', {type: "connect"});
+        console.log("SPOG-SOCKET");
+
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
+        case 'global':
+        console.log('connexion endpoint.');
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
+        default:
+        console.log('Sorry, we are out of ' + newMode + '.');
+      }
+      switch (oldMode) {
+        case 'solo':
+        console.log('quitte solo');
+        break;
+        case 'collaboratif':
+        console.log('deconnect socket');
+        //  this.socket.disconnect();
+        this.room = "";
+        this.pseudo = "";
+        this.agentApp.send('agentSocket', {type: "disconnect"});
+        break;
+        case 'global':
+        console.log('deconnect endpoint');
+
+        break;
+        default:
+      }
+    }
   }
 }
 window.customElements.define(SpoggyApp.is, SpoggyApp);
