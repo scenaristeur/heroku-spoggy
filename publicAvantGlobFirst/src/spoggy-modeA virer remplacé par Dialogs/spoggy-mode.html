@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+<link rel="import" href="./mode-behavior.html">
+
+
+<dom-module id="spoggy-mode">
+  <link rel="lazy-import" group="lazy" href="./mode-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer/lib/elements/dom-if.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-selector/iron-selector.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-listbox/paper-listbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-item/paper-item.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<script>
+/**
+* `spoggy-mode`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyMode extends Polymer.LazyImportsMixin(ModeBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-mode'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-collab'
+      }
+    };
+  }
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      // When possible, use afterNextRender to defer non-critical
+      // work until after first paint.
+      this._deferred();
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      this.agentMode = new ModeAgent('agentMode', this);
+      console.log(this.agentMode);
+this.agentMode.send('agentHello', 'Hello agentHello!');
+    });
+
+
+  }
+
+    openChangeMode(){
+      console.log("changeMode");
+      this.$.modePopup.toggle();
+    }
+
+}
+
+
+  window.customElements.define(SpoggyMode.is, SpoggyMode);
+</script>
+</dom-module>

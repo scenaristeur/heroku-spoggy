@@ -1,0 +1,63 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+<script src="agents/PreferencesAgent.js"></script>
+<link rel="import" href="./preferences-behavior.html">
+
+<dom-module id="spoggy-preferences">
+      <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <template>
+    <!--  <style>
+      :host {
+        display: block;
+      }
+    </style>
+  <h2>Hello [[prop1]]!</h2>-->
+  </template>
+
+  <script>
+    /**
+     * `spoggy-preferences`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyPreferences extends PreferencesBehaviorMixin(Polymer.Element) {
+      static get is() { return 'spoggy-preferences'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-preferences'
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        this.agentPreferences = new PreferencesAgent('agentPreferences', this);
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+
+        });
+      }
+      _deferred(){
+        //  console.log("agent DATA defered")
+        //    console.log(this.agentMode);
+        //  this.initAgents()
+        console.log(this.agentPreferences);
+        this.agentPreferences.send('agentHello', 'Hello, agentHello !')
+
+      }
+
+
+    }
+
+    window.customElements.define(SpoggyPreferences.is, SpoggyPreferences);
+  </script>
+</dom-module>

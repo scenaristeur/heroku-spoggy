@@ -1,0 +1,43 @@
+
+<script>
+var ModeBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class ModeBehavior extends superClass {
+    constructor() {
+      super();
+      //  console.log("Mode behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        }
+      };
+    }
+
+    openChangeMode(){
+      console.log("changeMode");
+      this.$.modePopup.toggle();
+    }
+
+    _updateEndpoint(){
+      if (!this.isEmpty(this.ping)){
+        console.log("Envoi Ping")
+        console.log(this.dataset)
+        var endpointUrl = this.endpoint+this.dataset;
+        console.log(endpointUrl)
+        this.agentMode.send('agentSparql', {type: 'updateEndpoint', url: endpointUrl});
+      }else{
+        console.log("Ping vide")
+      }
+    }
+
+
+
+
+  }
+});
+
+</script>

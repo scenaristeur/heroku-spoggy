@@ -1,0 +1,137 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+<link rel="import" href="./sparql-behavior.html">
+  <link  rel="import"  href="../spoggy-virtuoso/spoggy-virtuoso.html">
+
+<dom-module id="spoggy-sparql">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-ajax/iron-ajax.html">
+
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/polymer/lib/elements/dom-if.html">
+
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-selector/iron-selector.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-listbox/paper-listbox.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/paper-item/paper-item.html">
+
+  <link rel="lazy-import" group="lazy"  href="../spoggy-sparqlupdate/spoggy-sparqlupdate.html">
+  <link rel="lazy-import" group="lazy"  href="../spoggy-sparqlstatements/spoggy-sparqlstatements.html">
+
+  <template>
+
+    <iron-ajax
+    id="fusekiPing"
+    url="{{url_fuseki_ping}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleFusekiPing"
+    on-error="_handleFusekiPingError"
+    ></iron-ajax>
+
+    <iron-ajax
+    id="server_req"
+    url="{{url_server}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleFusekiServer"
+    on-error="_handleFusekiServerError"
+    ></iron-ajax>
+
+
+    <iron-ajax
+    id="virtuosoPing"
+    url="{{url_virtuoso_ping}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleVirtuosoPing"
+    on-error="_handleVirtuosoPingError"
+    ></iron-ajax>
+
+    <paper-dialog  id="fusekiPopup" >
+      <paper-dialog-scrollable>
+        MODE pour Fuseki direct
+        <div hidden$="[[!modeIs(mode,'global')]]">
+          <a href="http://jena.apache.org/documentation/fuseki2/" target="_blank">Comment créer son endpoint avec Apache Fuseki</a>
+          <paper-input id="labelEndpoint" label="Endpoint" value="{{url_fuseki::change}}"></paper-input>
+          <paper-dropdown-menu hidden$="[[isEmpty(pingFuseki)]]" label="Dataset" vertical-align="bottom" horizontal-align="left">
+            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content"  attr-for-selected="value" selected="{{dataset}}">
+              <template is="dom-repeat" items="[[datasets]]">
+                <paper-item  value="[[item.ds_name]]">[[item.ds_name]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+
+
+          <paper-input label="Graph" hidden$="[[isEmpty(pingFuseki)]]" on-change="graphChanged" disabled value="{{graph::input}}"></paper-input>
+          <paper-button  dialog-dismiss raised  on-tap="_updateUrl">Valider</paper-button>
+        </div>
+        <br>
+      </paper-dialog-scrollable>
+    </paper-dialog>
+
+
+    <spoggy-sparqlupdate></spoggy-sparqlupdate>
+    <spoggy-sparqlstatements ></spoggy-sparqlstatements>
+    <spoggy-virtuoso ></spoggy-virtuoso>
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-sparql`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggySparql extends Polymer.LazyImportsMixin(SparqlBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-sparql'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-sparql'
+        }
+      };
+    }
+
+
+    constructor(){
+      super();
+          Polymer.RenderStatus.afterNextRender(this, function() {
+        // When possible, use afterNextRender to defer non-critical
+        // work until after first paint.
+        this._deferred();
+
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+              this.agentSparql = new SparqlAgent('agentSparql', this);
+            console.log(this.agentSparql);
+        this.agentSparql.send('agentHello', 'Hello, agentHello !')
+      });
+      //  console.log("agent DATA defered")
+      //    console.log(this.agentMode);
+      //  this.initAgents()
+
+    }
+
+  }
+
+  window.customElements.define(SpoggySparql.is, SpoggySparql);
+  </script>
+</dom-module>

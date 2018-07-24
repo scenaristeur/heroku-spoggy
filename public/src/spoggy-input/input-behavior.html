@@ -24,26 +24,14 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.$.inputMessage.value = texte;
     }
 
-    lanceRecherche(){
+
+    searchInput(e){
+      this.agentInput.send('agentApp', {type: 'setMode', value: 'global' });
+      this.agentInput.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
       var texte = this.$.inputMessage.value;
       this.$.inputMessage.value="";
       console.log(texte)
       this.agentInput.send('agentEndpoints', {type: 'recherche', texte: texte });
-    }
-    toggleInput(e){
-      this.mode = e.detail.sourceEvent.target.icon;
-      switch(this.mode){
-        case 'search':
-        this.agentInput.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
-        this.$.inputMessage.label = "Recherche";
-        break;
-        case 'create':
-        this.agentInput.send('agentEndpoints', {type: 'hide', element: 'endpointsList' });
-        this.$.inputMessage.label = "Création : saisissez 3 mots, une virgule et Entrée";
-        break;
-        default:
-        console.log('inconnu : '+this.mode)
-      }
     }
 
     traiteMessage(){
@@ -163,7 +151,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           //        this.agentInput.send('agentSparqlUpdate', {type: "catchTriplet", triplet:messageCut});
         }
       }
-   }
+    }
   }
 
   afficheAide()
@@ -193,7 +181,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       case "/t":
       //  this.exportTtl(this.network,this);
       this.agentInput.send('agentGraph', {type:'exportTtl'}); // , what: 'network', to: 'agentDialogs', where: 'inputTextToSave'
-  //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
+      //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
       break;
       case "/i":
       case "/import":

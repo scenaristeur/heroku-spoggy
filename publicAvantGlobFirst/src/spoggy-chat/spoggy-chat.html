@@ -1,0 +1,184 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./chat-behavior.html">
+
+<dom-module id="spoggy-chat">
+  <link rel="lazy-import" group="lazy" href="./chat-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-fab/paper-fab.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/chat-window/chat-window.html">
+    <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
+  <template>
+    <style>
+    :host {
+      position: fixed;
+      left: 10px;
+      bottom: 50px;
+    }
+    </style>
+
+
+    <style is="custom-style">
+    chat-window.styled {
+      font-size: small;
+      /*position: absolute;*/
+      top: 100px;
+      --chat-messages-height: 12em;
+      --paper-input-container-input: {
+        margin: 0 2px;
+        z-index:100;
+      }
+      --chat-message-text: {
+        z-index:100;
+        background-color: #f0f0f0;
+        padding: 6px 8px;
+        margin: 4px 0;
+        border-radius: 6px;
+      };
+
+    }
+  }
+}
+</style>
+
+
+
+<div hidden$="[[!visible]]">
+<chat-window
+id = "chat"
+class="styled"
+author="me"
+single-line
+input-text="{{newInput}}"
+messages="[[messages]]"
+on-send="sendMsg"
+></chat-window>
+</div>
+
+<div  horizontal end-justified layout self-stretch>
+  <paper-label hidden$="[[visible]]">[[room]]</paper-label>
+<paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab>
+</div>
+
+ <!-- mettre une icon si nonlu = 0 et au début  -->
+
+
+
+
+<!--
+<valle-speed-dial-action
+id="action"
+class="dial-action"
+ label="blop"
+on-tap="_toggleChat"
+label-direction="direction"
+></valle-speed-dial-action>-->
+<!-- icon="{{icon}}" -->
+
+
+<!--
+<chat-input
+author="me"
+class="styled"
+single-line
+single-line="[[singleLine]]"
+icon="[[sendIcon]]"
+text="{{inputText}}"
+on-send="sendMsg"></chat-input>
+-->
+<!--
+<chat-messages
+class="styled"
+id = "chat"
+author="[[author]]"
+author-icon="[[authorIcon]]"
+others-icons="[[othersIcons]]"
+default-icon="[[defaultIcon]]"
+messages="[[messages]]"
+date-format="[[dateFormat]]"
+auto-scroll="[[autoScroll]]">
+</chat-messages> -->
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-chat`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyChat extends Polymer.LazyImportsMixin(ChatBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-chat'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-chat'
+      },
+      visible:{
+        type: Boolean,
+        value: false
+      },
+      messages : {
+        type : Array,
+        value : [
+          { author: 'Spoggy', text: 'Spoggy est prêt à être utilisé, \nVous êtes en mode "Solo"', created: this.now - (60*1000) },
+          { author: 'Spoggy', text: 'Pour passer en mode collaboratif,\n utilisez le bouton de menu / Mode / Collaboratif', created: this.now - (3*60*1000) },
+        ]
+      },
+      nonlu :{
+        type: Number,
+        value: 2
+      },
+      room :{
+        type:String,
+        value: 'Solo'
+      },
+      direction: {
+        type: String,
+        value: "left"
+      }
+
+    };
+  }
+
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      this.agentChat = new ChatAgent('agentChat', this);
+    });
+  }
+
+  sendMsg(e){
+    // filtrer avant de passer en mode chat
+    console.log(e.detail)
+    var newMess = e.detail.trim();
+    if (newMess.length > 0){
+      this.agentChat.send('agentSocket', {type: "newChatMess", content: newMess});
+      //  this.agentInput.send('agentData', mess);
+      this.newInput = ""
+    }
+  }
+  isVisible(value){
+    //  console.log(value.length)
+    return value==true;
+  }
+
+}
+
+window.customElements.define(SpoggyChat.is, SpoggyChat);
+</script>
+</dom-module>

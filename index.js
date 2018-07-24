@@ -16,6 +16,7 @@ var io = require('socket.io')(server);
 
 
 /* CONFIGURATION DU SERVEUR WEB */
+//var port = process.env.PORT || 3000;
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
  ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
@@ -142,336 +143,340 @@ var users = [];
 io.sockets.on('connection', function (socket) {
   console.log("connexion de "+socket.id)
   users.push(socket.id);
-//  socket.room = rooms[0];
+  //  socket.room = rooms[0];
   // send client to room 1
-//  socket.join(socket.room);
-updateFreq();
+  //  socket.join(socket.room);
+  updateFreq();
 
   //socket.emit('initrooms', freq);
   io.sockets.emit('initrooms', freq);
 
   // when the client emits 'adduser', this listens and executes
   socket.on('adduser', function(username, newroom){
+    if (username != undefined && newroom != undefined){
     username = username.trim();
     newroom = newroom.trim();
     console.log("adduser "+username)
     console.log("Room lors de l'adduser : "+newroom);
 
     /*if (!rooms.includes(newroom)){
-      rooms.push(newroom)
-    }*/
+    rooms.push(newroom)
+  }*/
 
-    // leave the current room (stored in session)
-    socket.leave(socket.room);
-    // join new room, received as function parameter
-    socket.join(newroom);
+  // leave the current room (stored in session)
+  socket.leave(socket.room);
+  // join new room, received as function parameter
+  socket.join(newroom);
 
-    // store the username in the socket session for this client
-    socket.username = username;
-    // store the room name in the socket session for this client
-    socket.room = newroom;
-    // add the client's username to the global list
-    usernames[username] = username;
-    //    socket.room = rooms[0];
-    // send client to room 1
-    updateFreq();
-console.log(freq)
-io.sockets.emit('initrooms', freq);
-    socket.emit('updaterooms', freq, socket.room);
-    // echo to client they've connected
-    socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+socket.room);
-    // echo to room 1 that a person has connected to their room
-    socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', username + ' vient de se connecter au graphe '+socket.room);
+  // store the username in the socket session for this client
+  socket.username = username;
+  // store the room name in the socket session for this client
+  socket.room = newroom;
+  // add the client's username to the global list
+  usernames[username] = username;
+  //    socket.room = rooms[0];
+  // send client to room 1
+  updateFreq();
+  console.log(freq)
+  io.sockets.emit('initrooms', freq);
+  socket.emit('updaterooms', freq, socket.room);
+  // echo to client they've connected
+  socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+socket.room);
+  // echo to room 1 that a person has connected to their room
+  socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', username + ' vient de se connecter au graphe '+socket.room);
 
-    initDb(socket);
-  });
+  initDb(socket);
+}else{
+  console.log("GROBLEME")
+}
+});
 
-  // when the client emits 'sendchat', this listens and executes
-  socket.on('sendchat', function (data) {
-    console.log('sendchat');
-    console.log(data);
-    console.log(socket.room);
-    console.log(socket.username);
-    // we tell the client to execute 'updatechat' with 2 parameters
-    io.sockets.in(socket.room).emit('updatechat', socket.username, data);
-  });
+// when the client emits 'sendchat', this listens and executes
+socket.on('sendchat', function (data) {
+  console.log('sendchat');
+  console.log(data);
+  console.log(socket.room);
+  console.log(socket.username);
+  // we tell the client to execute 'updatechat' with 2 parameters
+  io.sockets.in(socket.room).emit('updatechat', socket.username, data);
+});
 
-  // de nouvelles actions à executer sont reçues d'un client
-  socket.on('newActions', function(actions) {
-    console.log("newActions");
-    // on ajoute à snapshot.Actions les actions reçues par le client
-    /*  var snapActions = snapshot.actions;
-    var newActions = snapActions.concat(actions);
-    snapshot.actions = newActions;*/
+// de nouvelles actions à executer sont reçues d'un client
+socket.on('newActions', function(actions) {
+  console.log("newActions");
+  // on ajoute à snapshot.Actions les actions reçues par le client
+  /*  var snapActions = snapshot.actions;
+  var newActions = snapActions.concat(actions);
+  snapshot.actions = newActions;*/
+  console.log(actions);
+  // RACCOURCIS POUR METTRE A JOUR LA ROOM SANS PASSER PAR LG
+  var data = {};
+  data.actions = actions;
+  io.sockets.in(socket.room).emit('tick', data);
+  data.actions = [];
+
+  console.log("ROOM & CURrent graph")
+  let room = socket.room;
+  console.log(room);
+  //console.log(currentGraph);
+  console.log(" FIN ROOM & CURrent graph")
+
+  if (useLevelgraph){
     console.log(actions);
-    // RACCOURCIS POUR METTRE A JOUR LA ROOM SANS PASSER PAR LG
-    var data = {};
-    data.actions = actions;
-    io.sockets.in(socket.room).emit('tick', data);
-    data.actions = [];
-
-    console.log("ROOM & CURrent graph")
-    let room = socket.room;
-    console.log(room);
-    //console.log(currentGraph);
-    console.log(" FIN ROOM & CURrent graph")
-
-    if (useLevelgraph){
-      console.log(actions);
-      actions.forEach(function(action) {
-        //pour chaque action reçue on effectue le boulot necéssaire selon son type
-        switch (action.type) {
-          case "newNode":
-          //nouveau node du graphe ou modification
-          console.log("newNode");
-          var data = action.data;
-          console.log(data);
-          //si newNode mais qu'il existe, c'est un renommage  donc on regarde s'il existe dans la base
-          var triples = [];
-          var triple = {
+    actions.forEach(function(action) {
+      //pour chaque action reçue on effectue le boulot necéssaire selon son type
+      switch (action.type) {
+        case "newNode":
+        //nouveau node du graphe ou modification
+        console.log("newNode");
+        var data = action.data;
+        console.log(data);
+        //si newNode mais qu'il existe, c'est un renommage  donc on regarde s'il existe dans la base
+        var triples = [];
+        var triple = {
+          subject: data.id,
+          predicate: "label",
+          object: data.label,
+        };
+        triples.push(triple);
+        var tripleG = {
+          subject: data.id,
+          predicate: 'graph',
+          object: room
+        };
+        triples.push(tripleG);
+        var tripleT = {
+          subject: data.id,
+          predicate: 'type',
+          object: "node"
+        };
+        triples.push(tripleT);
+        if(data.shape != undefined){
+          var tripleShape = {
             subject: data.id,
-            predicate: "label",
-            object: data.label,
+            predicate: "shape",
+            object: data.shape
           };
-          triples.push(triple);
-          var tripleG = {
+          triples.push(tripleShape);
+        }
+        if (data.color != undefined){
+          var tripleColor = {
             subject: data.id,
-            predicate: 'graph',
-            object: room
+            predicate: "color",
+            object: data.color
           };
-          triples.push(tripleG);
-          var tripleT = {
-            subject: data.id,
-            predicate: 'type',
-            object: "node"
-          };
-          triples.push(tripleT);
-          if(data.shape != undefined){
-            var tripleShape = {
-              subject: data.id,
-              predicate: "shape",
-              object: data.shape
-            };
-            triples.push(tripleShape);
+          triples.push(tripleColor);
+        }
+        console.log(triples);
+        currentGraph.get({
+          subject: data.id,
+          predicate: "label",
+          type: "node"
+        }, function(err, list) {
+          if (list.length == 0) {
+            //console.log("ajoute");
+            currentGraph.put(triples, function(err) {
+              console.log("added node 1");
+            });
+          } else {
+            // si le noeud existe, on le supprime et le recréé avec les nouvelles valeurs, c'est la méthode pour modifier
+            currentGraph.del(list[0], function(err, deleted) {
+              console.log("deleted");
+            });
+            currentGraph.put(triples, function(err, putted) {
+              console.log("added node 2");
+            });
           }
-          if (data.color != undefined){
-            var tripleColor = {
-              subject: data.id,
-              predicate: "color",
-              object: data.color
-            };
-            triples.push(tripleColor);
-          }
-          console.log(triples);
-          currentGraph.get({
-            subject: data.id,
-            predicate: "label",
-            type: "node"
-          }, function(err, list) {
-            if (list.length == 0) {
-              //console.log("ajoute");
-              currentGraph.put(triples, function(err) {
-                console.log("added node 1");
-              });
-            } else {
-              // si le noeud existe, on le supprime et le recréé avec les nouvelles valeurs, c'est la méthode pour modifier
-              currentGraph.del(list[0], function(err, deleted) {
-                console.log("deleted");
-              });
-              currentGraph.put(triples, function(err, putted) {
-                console.log("added node 2");
-              });
+        });
+        break;
+        case "deleteNode":
+        var nodeId = action.data.nodes;
+        var edges = action.data.edges;
+        currentGraph.get({
+          subject: nodeId
+        }, function(err, list) {
+          currentGraph.del(list, function(err, deleted) {
+
+            if(err){console.log(err)}else{
+              console.log("del list 1");
+              console.log(deleted)
             }
           });
-          break;
-          case "deleteNode":
-          var nodeId = action.data.nodes;
-          var edges = action.data.edges;
+        });
+        edges.forEach(function(edgeId) {
           currentGraph.get({
-            subject: nodeId
+            subject: edgeId
           }, function(err, list) {
+            if(err){console.log(err)}else{
+              console.log("3 list");
+              console.log(list)
+            }
             currentGraph.del(list, function(err, deleted) {
 
               if(err){console.log(err)}else{
-                console.log("del list 1");
+                console.log("del list 2");
                 console.log(deleted)
               }
             });
           });
-          edges.forEach(function(edgeId) {
-            currentGraph.get({
-              subject: edgeId
-            }, function(err, list) {
-              if(err){console.log(err)}else{
-                console.log("3 list");
-                console.log(list)
-              }
-              currentGraph.del(list, function(err, deleted) {
-
-                if(err){console.log(err)}else{
-                  console.log("del list 2");
-                  console.log(deleted)
-                }
-              });
-            });
-          });
-          break;
-          case "newEdge":
-          console.log(action);
-          //maj de la base
-          var edge = action.data[0] || action.data;
-          if (edge != undefined) {
-            currentGraph.get({
-              subject: edge.id
-            }, function(err, list) {
-              if(err){console.log(err)}else{
-                if (list.length == 0) {
-                  var tripleLabel = {
-                    subject: edge.id,
-                    predicate: "label",
-                    object: edge.label
-                  };
-                  var tripleFrom = {
-                    subject: edge.id,
-                    predicate: "from",
-                    object: edge.from
-                  };
-                  var tripleTo = {
-                    subject: edge.id,
-                    predicate: "to",
-                    object: edge.to
-                  };
-                  var tripleG = {
-                    subject: edge.id,
-                    predicate: 'graph',
-                    object: room
-                  };
-                  var tripleT = {
-                    subject: edge.id,
-                    predicate: 'type',
-                    object: 'edge'
-                  };
-                  var triples = [tripleLabel, tripleFrom, tripleTo, tripleG, tripleT];
-                  console.log(triples);
-                  currentGraph.put(triples, function(err) {
-                    if(err){console.log(err)}else{console.log("added edge 1");}
-                  });
-                } else {
-                  var tripleLabel = {
-                    subject: edge.id,
-                    predicate: "label",
-                    object: edge.label
-                  };
-                  currentGraph.get({
-                    subject: edge.id,
-                    predicate: "label"
-                  }, function(err, listLabel) {
-                    currentGraph.del(listLabel[0], function(err, deleted) {
-                      if(err){console.log(err)}else{console.log("deleted");}
-
-                    });
-                    currentGraph.put(tripleLabel, function(err, putted) {
-
-                      if(err){console.log(err)}else{console.log("added 2");}
-                    });
-                  });
-                }
-              }
-            });
-          } else {
-            console.log("pb pour creer le edge, quel id ?")
-          }
-          break;
-          case "editEdge":
-          //non utilisé , regroupé avec newEdge
-          console.log(action);
-          break;
-          case "deleteEdge":
-          console.log(action);
-          var edgeId = action.data.edges[0];
-          console.log(edgeId);
+        });
+        break;
+        case "newEdge":
+        console.log(action);
+        //maj de la base
+        var edge = action.data[0] || action.data;
+        if (edge != undefined) {
           currentGraph.get({
-            subject: edgeId
+            subject: edge.id
           }, function(err, list) {
-            console.log(" 4 list");
-            currentGraph.del(list, function(err, deleted) {
-              console.log("4  deleted");
-            });
+            if(err){console.log(err)}else{
+              if (list.length == 0) {
+                var tripleLabel = {
+                  subject: edge.id,
+                  predicate: "label",
+                  object: edge.label
+                };
+                var tripleFrom = {
+                  subject: edge.id,
+                  predicate: "from",
+                  object: edge.from
+                };
+                var tripleTo = {
+                  subject: edge.id,
+                  predicate: "to",
+                  object: edge.to
+                };
+                var tripleG = {
+                  subject: edge.id,
+                  predicate: 'graph',
+                  object: room
+                };
+                var tripleT = {
+                  subject: edge.id,
+                  predicate: 'type',
+                  object: 'edge'
+                };
+                var triples = [tripleLabel, tripleFrom, tripleTo, tripleG, tripleT];
+                console.log(triples);
+                currentGraph.put(triples, function(err) {
+                  if(err){console.log(err)}else{console.log("added edge 1");}
+                });
+              } else {
+                var tripleLabel = {
+                  subject: edge.id,
+                  predicate: "label",
+                  object: edge.label
+                };
+                currentGraph.get({
+                  subject: edge.id,
+                  predicate: "label"
+                }, function(err, listLabel) {
+                  currentGraph.del(listLabel[0], function(err, deleted) {
+                    if(err){console.log(err)}else{console.log("deleted");}
+
+                  });
+                  currentGraph.put(tripleLabel, function(err, putted) {
+
+                    if(err){console.log(err)}else{console.log("added 2");}
+                  });
+                });
+              }
+            }
           });
-          break;
-          default:
-          console.log("action non reconnue");
-          console.log(action);
+        } else {
+          console.log("pb pour creer le edge, quel id ?")
         }
-      });
-    }
+        break;
+        case "editEdge":
+        //non utilisé , regroupé avec newEdge
+        console.log(action);
+        break;
+        case "deleteEdge":
+        console.log(action);
+        var edgeId = action.data.edges[0];
+        console.log(edgeId);
+        currentGraph.get({
+          subject: edgeId
+        }, function(err, list) {
+          console.log(" 4 list");
+          currentGraph.del(list, function(err, deleted) {
+            console.log("4  deleted");
+          });
+        });
+        break;
+        default:
+        console.log("action non reconnue");
+        console.log(action);
+      }
+    });
+  }
 
+});
+
+socket.on('switchRoom', function(newroom){
+  console.log('switchroom '+ newroom)
+  /*if (!rooms.includes(newroom)){
+  rooms.push(newroom)
+}*/
+// leave the current room (stored in session)
+socket.leave(socket.room);
+// join new room, received as function parameter
+socket.join(newroom);
+socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+ newroom);
+// sent message to OLD room
+socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', socket.username+' a quitté ce graphe');
+// update socket session room title
+socket.room = newroom;
+socket.broadcast.to(newroom).emit('updatechat', 'Spoggy', socket.username+' a rejoint ce graphe');
+// mise a jour de la socket   socket.emit('updaterooms', freq, newroom);
+updateFreq();
+
+io.sockets.emit('initrooms', freq); //mise à jour de tous les clients avec rooms et frequentation
+//  io.sockets.emit('updaterooms', rooms, null);
+if (useLevelgraph){
+  console.log('new graph '+socket.room);
+  var triple = {
+    subject: socket.room,
+    predicate: "type",
+    object: "Graphe",
+    type: "graph"
+  };
+  currentGraph.put(triple, function(err,data) {
+    console.log(err);
+    console.log(data);
   });
 
-  socket.on('switchRoom', function(newroom){
-    console.log('switchroom '+ newroom)
-    /*if (!rooms.includes(newroom)){
-      rooms.push(newroom)
-    }*/
-    // leave the current room (stored in session)
-    socket.leave(socket.room);
-    // join new room, received as function parameter
-    socket.join(newroom);
-    socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+ newroom);
-    // sent message to OLD room
-    socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', socket.username+' a quitté ce graphe');
-    // update socket session room title
-    socket.room = newroom;
-    socket.broadcast.to(newroom).emit('updatechat', 'Spoggy', socket.username+' a rejoint ce graphe');
-  // mise a jour de la socket   socket.emit('updaterooms', freq, newroom);
-  updateFreq();
-
-    io.sockets.emit('initrooms', freq); //mise à jour de tous les clients avec rooms et frequentation
-    //  io.sockets.emit('updaterooms', rooms, null);
-    if (useLevelgraph){
-      console.log('new graph '+socket.room);
-      var triple = {
-        subject: socket.room,
-        predicate: "type",
-        object: "Graphe",
-        type: "graph"
-      };
-      currentGraph.put(triple, function(err,data) {
-        console.log(err);
-        console.log(data);
-      });
-
-      initDb(socket);
-    }
-
-
-  });
-
-  // when the user disconnects.. perform this
-  socket.on('disconnect', function(){
-  //  console.log(socket)
-    console.log("deconnecte "+socket.username)
-    for (var i=users.length-1; i>=0; i--) {
-    if (users[i] === socket.id) {
-        users.splice(i, 1);
-         break;       //<-- Uncomment  if only the first term has to be removed
-    }
+  initDb(socket);
 }
-    // remove the username from global usernames list
-    delete usernames[socket.username];
-    // update list of users in chat, client-side
-    io.sockets.emit('updateusers', usernames);
-    // echo globally that this client has left
-    socket.broadcast.emit('updatechat', 'Spoggy', socket.username + ' est déconnecté');
+
+
+});
+
+// when the user disconnects.. perform this
+socket.on('disconnect', function(){
+  //  console.log(socket)
+  console.log("deconnecte "+socket.username)
+  for (var i=users.length-1; i>=0; i--) {
+    if (users[i] === socket.id) {
+      users.splice(i, 1);
+      break;       //<-- Uncomment  if only the first term has to be removed
+    }
+  }
+  // remove the username from global usernames list
+  delete usernames[socket.username];
+  // update list of users in chat, client-side
+  io.sockets.emit('updateusers', usernames);
+  // echo globally that this client has left
+  socket.broadcast.emit('updatechat', 'Spoggy', socket.username + ' est déconnecté');
 
 
   // ne fonctionne pas , le mettre en fonction de status //  socket.emit('updatechat', 'Spoggy', 'Vous êtes déconnecté ');
-    // echo to room 1 that a person has connected to their room
-    socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', socket.username + ' est déconnecté de '+socket.room);
+  // echo to room 1 that a person has connected to their room
+  socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', socket.username + ' est déconnecté de '+socket.room);
 
 
-    socket.leave(socket.room);
-  });
+  socket.leave(socket.room);
+});
 });
 
 
@@ -526,37 +531,37 @@ function initDb(socket){
     }
   }
 }
- function updateFreq(){
-   console.log(io.sockets.adapter.rooms)
-   console.log("\n------------------------------")
-freq = freqDef;
-   var ioRooms = io.sockets.adapter.rooms;
-   for (var k in ioRooms) {
-     if(!users.includes(k)){
-       var count = ioRooms[k].length;
-       console.log(k+ " : "+count);
-       var exist = false;
-       freq.forEach(function (s){
-         console.log(s);
-         if (s.name == k){
-           exist = true;
-           console.log("update to "+ count)
-           s.count = count;
-   // trouver un moyen de sortir du foreach si on a trouvé ;-)
-         }
-       });
-       if (exist==false){
-         var f = {name:k, count:count};
-         console.log("ajoute "+JSON.stringify(f))
-         freq.push(f);  // ou update
-       }
+function updateFreq(){
+  console.log(io.sockets.adapter.rooms)
+  console.log("\n------------------------------")
+  freq = freqDef;
+  var ioRooms = io.sockets.adapter.rooms;
+  for (var k in ioRooms) {
+    if(!users.includes(k)){
+      var count = ioRooms[k].length;
+      console.log(k+ " : "+count);
+      var exist = false;
+      freq.forEach(function (s){
+        console.log(s);
+        if (s.name == k){
+          exist = true;
+          console.log("update to "+ count)
+          s.count = count;
+          // trouver un moyen de sortir du foreach si on a trouvé ;-)
+        }
+      });
+      if (exist==false){
+        var f = {name:k, count:count};
+        console.log("ajoute "+JSON.stringify(f))
+        freq.push(f);  // ou update
+      }
 
-     }else{
-       console.log("User "+ k+ " : "+ioRooms[k]);
-     }
+    }else{
+      console.log("User "+ k+ " : "+ioRooms[k]);
+    }
 
-   }
-   console.log(freq)
-   console.log("/////////////////////////////\n")
+  }
+  console.log(freq)
+  console.log("/////////////////////////////\n")
 
- }
+}

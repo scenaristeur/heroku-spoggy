@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="spoggy-cercle">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-cercle`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyCercle extends Polymer.Element {
+      static get is() { return 'spoggy-cercle'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-cercle'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyCercle.is, SpoggyCercle);
+  </script>
+</dom-module>

@@ -1,0 +1,67 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/InputDialogsAgent.js"></script>
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./input-dialogs-behavior.html">
+
+<dom-module id="input-dialogs">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-slider/paper-slider.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-textarea.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-selector/iron-selector.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+  <template>
+
+  
+              </template>
+
+              <script>
+              /**
+              * `spoggy-map`
+              *
+              *
+              * @customElement
+              * @polymer
+              * @demo demo/index.html
+              */
+              class InputDialogs extends InputDialogsBehaviorMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
+                static get is() { return 'input-dialogs'; }
+                static get properties() {
+                  return {
+                    prop1: {
+                      type: String,
+                      value: 'input-dialogs'
+                    }
+                  };
+                }
+
+                constructor(){
+                  super();
+                  this.agentInputDialogs = new InputDialogsAgent('agentInputDialogs', this);
+                  Polymer.RenderStatus.afterNextRender(this, function() {
+                    // When possible, use afterNextRender to defer non-critical
+                    // work until after first paint.
+                    this._deferred();
+
+                  });
+                }
+                _deferred(){
+                  this.importLazyGroup('lazy').then((results) => {
+                    console.log(results);
+                    this.dispatchEvent(new CustomEvent('import-loaded', results));
+                  });
+
+                  this.agentInputDialogs.send('agentHello', 'Hello agentHello!');
+                  //  this.initAgents()
+                }
+              }
+
+              window.customElements.define(InputDialogs.is, InputDialogs);
+              </script>
+            </dom-module>

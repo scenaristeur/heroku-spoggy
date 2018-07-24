@@ -700,7 +700,18 @@ describeFromDBpedia(results, resource){
       actionstosend.push(actionEdge);
       this.agentGraph.send('agentSocket', {type: "newActions", actions: actionstosend});
       this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: actionstosend});
-
+      console.log(sujetNode[0])
+      //this.network.redraw();
+      this.network.moveTo({    position: {x:0, y:0}});
+    /*  this.network.moveTo({
+  position: {x:sujetNode[0].x, y:sujetNode[0].y},
+  scale: 1,
+  offset: {x:20, y:20},
+  animation: {
+    duration: 3,
+    easingFunction: 'easeInOutCubic'
+  }
+});*/
 
       //  actionsToSendTemp.push(actionEdge);
       //console.log(actionsToSendTemp);
@@ -862,12 +873,12 @@ var indiceTypeDeProp = 1; // -1 pour ne pas ajouter la prop, sinon par defaut en
 
 if (
   (proprieteWithPrefix == "type") ||
-(proprieteWithPrefix == ":type") ||
-(proprieteWithPrefix == "rdf:type") ||
-(proprieteWithPrefix == ":a") ||
-(proprieteWithPrefix == ":est_un") ||
-(proprieteWithPrefix == ":est_une") ||
-(proprieteWithPrefix == ":is_a")
+  (proprieteWithPrefix == ":type") ||
+  (proprieteWithPrefix == "rdf:type") ||
+  (proprieteWithPrefix == ":a") ||
+  (proprieteWithPrefix == ":est_un") ||
+  (proprieteWithPrefix == ":est_une") ||
+  (proprieteWithPrefix == ":is_a")
 ) {
   proprieteWithPrefix = "rdf:type";
   listeComplementaire.push(objetWithPrefix + " rdf:type owl:Class . \n");
@@ -888,10 +899,10 @@ else if (
     indiceTypeDeProp = 1;
   } else if (
     (proprieteWithPrefix.toLowerCase() == "comment") ||
-     (proprieteWithPrefix.toLowerCase() == "commentaire") ||
-      (proprieteWithPrefix.toLowerCase() == "//") ||
-       (proprieteWithPrefix.toLowerCase() == "#")
-     ) {
+    (proprieteWithPrefix.toLowerCase() == "commentaire") ||
+    (proprieteWithPrefix.toLowerCase() == "//") ||
+    (proprieteWithPrefix.toLowerCase() == "#")
+  ) {
     proprieteWithPrefix = "rdfs:comment";
     indiceTypeDeProp = -1;
   }

@@ -1,0 +1,3 @@
+https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html
+ping : http://127.0.0.1:3030/$/ping
+dataseets : http://127.0.0.1:3030/$/datasets

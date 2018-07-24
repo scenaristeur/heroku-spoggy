@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="spoggy-vocabs">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+  </template>
+
+  <script>
+    /**
+     * `spoggy-vocabs`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyVocabs extends Polymer.Element {
+      static get is() { return 'spoggy-vocabs'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-vocabs'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyVocabs.is, SpoggyVocabs);
+  </script>
+</dom-module>

@@ -1,0 +1,144 @@
+<script>
+/* @polymerMixin */
+var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class CollabBehavior extends superClass {
+    constructor() {
+      super();
+    }
+    static get properties() {
+      return {
+        /**
+        * Current connection status. Can be "connected", "disconnected", or "reconnecting".
+        */
+        status: {
+          type: String,
+          notify: true,
+          observer: '_consoleStatus'
+        },
+        /**
+        * Internal reference to the WebSocket
+        */
+        socket: {Object,
+          notify: true
+        },
+        /**
+        * Registered _handlers by message type
+        * @type {<String, Function>[]}
+        */
+        _handlers: {
+          type: Object,
+          value: [],
+        },
+        retry: {
+          type: Number,
+          value:10
+        },
+        rooms: {
+          type: Array,
+          notify: true,
+          value: []
+        },
+        addToGraph: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+      };
+    }
+
+    _consoleStatus(newValue, oldValue){
+      console.log(oldValue +" -> "+ newValue);
+      if(oldValue == "reconnecting" && newValue =="disconnected"){
+        this.retry --;
+        console.log(this.retry);
+        if (this.retry <= 0){
+          this.socket.disconnect();
+        }
+      }
+    }
+
+    disconnectSocket(){
+      this.socket.disconnect();
+    }
+
+    sendMessage(message){
+      //  console.log(message);
+      if (this.socket != undefined){
+        this.socket.emit('sendchat', message);
+      }
+    }
+
+    connectSocket(connectUri, token) {
+      var app = this;
+      /*this.socket = io(connectUri, {
+      'query': `token=${token}`,
+      timeout: 2000,
+    });*/
+    this.socket = io();
+    // Parse response messages retrieving 'type'
+    this.socket.on('message', message => {
+      // Execute all handlers that are registered for this namespace
+      for (let handler of this._handlers) {
+        if (message.type.startsWith(handler.messageType)) {
+          handler.handler(message);
+        }
+      }
+    });
+    // Register listeners to expose connection status
+    this.socket.on('connect', () => this.status = 'connected');
+    this.socket.on('disconnect', () => this.status = 'disconnected');
+    this.socket.on('connect_error', () => this.status = 'disconnected');
+    this.socket.on('reconnecting', () => this.status = 'reconnecting');
+    this.socket.on('reconnect', () => this.status = 'connected');
+    this.socket.on('error', e => {
+      console.warn(`WebSocket error: ${JSON.stringify(e)}`);
+    });
+    this.socket.on('updatechat', function (username, data) {
+      console.log('update chat '+ username +" - "+ data)
+      console.log(app.room)
+      console.log(app.socket.room)
+      app.agentSocket.send('agentChat', {type: "updateChat", username: username, data: data, room: app.room});
+    });
+    this.socket.on('initrooms', function (rooms) {
+      console.log('initrooms ')
+      app.agentSocket.send('agentDialogs', {type: "initrooms", rooms: rooms});
+    });
+    this.socket.on('updaterooms', function(rooms, current_room) {
+      app.agentSocket.send('agentDialogs', {type: "updaterooms", rooms: rooms, current_room: current_room});
+      app.agentSocket.send('agentChat', {type: "updaterooms", rooms: rooms, current_room: current_room});
+    });
+
+    this.socket.on('tick', function(data){
+      console.log(data);
+      console.log("N'EST plus  utilisé ??? voir avec tick/snapshot du serveur ?")
+      //  app.set('addToGraph',data);
+      app.agentSocket.send('agentGraph', {type: "addToGraph", data: data});
+    });
+
+    this.socket.on('initDb', function(data){
+      console.log(data);
+      app.agentSocket.send('agentGraph', {type: "populateVis", data: data});
+    });
+  }
+
+  _datasend(){
+    let message = this.$.message.value;
+    this.$.message.value = "";
+    console.log(message);
+    this.socket.emit('sendchat', message);
+  }
+
+  switchRoom(message){
+    if (message.pseudo.length > 0){
+      this.socket.emit('adduser', message.pseudo, message.room);
+    }else{
+      this.socket.emit('switchRoom', message.room);
+    }
+  }
+
+  methodInBehavior() {
+    return "this method is defined in Behavior";
+  }
+}
+});
+</script>

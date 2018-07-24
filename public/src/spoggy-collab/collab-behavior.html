@@ -101,7 +101,8 @@ var CollabBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     });
     this.socket.on('initrooms', function (rooms) {
       console.log('initrooms ')
-      app.agentSocket.send('agentDialogs', {type: "initrooms", rooms: rooms});
+      //app.agentSocket.send('agentDialogs', {type: "initrooms", rooms: rooms});
+      app.agentSocket.send('agentCollaboratif', {type: "initrooms", rooms: rooms});
     });
     this.socket.on('updaterooms', function(rooms, current_room) {
       app.agentSocket.send('agentDialogs', {type: "updaterooms", rooms: rooms, current_room: current_room});

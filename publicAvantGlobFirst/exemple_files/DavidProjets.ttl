@@ -1,0 +1,123 @@
+@prefix : <http://smag0.blogspot.fr/spoggy#> . 
+@prefix owl: <http://www.w3.org/2002/07/owl#> . 
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . 
+@prefix xml: <http://www.w3.org/XML/1998/namespace> . 
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> . 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
+@prefix smag: <http://smag0.blogspot.fr/spoggy#> . 
+@base <http://smag0.blogspot.fr/spoggy> . 
+<http://smag0.blogspot.fr/spoggy> rdf:type owl:Ontology ;  
+                    owl:versionIRI <http://smag0.blogspot.fr/spoggy/1.0.0> . 
+ 
+owl:Class rdfs:subClassOf owl:Thing .  
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 :utilité :fe765b2f-fda1-416d-802c-4b3dd0919a10 . 
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 rdfs:label "socket.io" . 
+:fe765b2f-fda1-416d-802c-4b3dd0919a10 rdfs:label "temps réel" . 
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 rdf:type :846f4f8e-b0fb-4d25-a3da-0a926c877acc . 
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 rdfs:label "socket.io" . 
+:846f4f8e-b0fb-4d25-a3da-0a926c877acc rdfs:label "node_module" . 
+:4ed56086-1f08-4e5a-aa25-4336b879ff92 rdf:type :846f4f8e-b0fb-4d25-a3da-0a926c877acc . 
+:4ed56086-1f08-4e5a-aa25-4336b879ff92 rdfs:label "express" . 
+:846f4f8e-b0fb-4d25-a3da-0a926c877acc rdfs:label "node_module" . 
+:52010a74-e0a1-444a-97ca-a5a67174eefa rdf:type :6cb6542e-198c-4816-951a-2946d86a822d . 
+:52010a74-e0a1-444a-97ca-a5a67174eefa rdfs:label "Pcduino" . 
+:6cb6542e-198c-4816-951a-2946d86a822d rdfs:label "CarteElectronique" . 
+:56abceb1-6e56-4800-826d-4f432c33197d :développeur :f8fa7655-6782-4fdb-9d63-fd6ae66778ef . 
+:56abceb1-6e56-4800-826d-4f432c33197d rdfs:label "SmagYun" . 
+:f8fa7655-6782-4fdb-9d63-fd6ae66778ef rdfs:label "David" . 
+:56abceb1-6e56-4800-826d-4f432c33197d :préparation de  :7ccf9cba-1a93-4f6d-a547-f95273aecadc . 
+:56abceb1-6e56-4800-826d-4f432c33197d rdfs:label "SmagYun" . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc rdfs:label "Arduino Yun" . 
+:56abceb1-6e56-4800-826d-4f432c33197d rdf:type :271479b0-8c19-478f-9465-0d15cc97eeec . 
+:56abceb1-6e56-4800-826d-4f432c33197d rdfs:label "SmagYun" . 
+:271479b0-8c19-478f-9465-0d15cc97eeec rdfs:label "Projet" . 
+:61f5fc8e-a30b-41d5-b13f-f06cf65ea0b6 rdf:type :846f4f8e-b0fb-4d25-a3da-0a926c877acc . 
+:61f5fc8e-a30b-41d5-b13f-f06cf65ea0b6 rdfs:label "Visjs" . 
+:846f4f8e-b0fb-4d25-a3da-0a926c877acc rdfs:label "node_module" . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc :hasPart :69073b46-999f-4495-addb-b89498205bec . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc rdfs:label "Arduino Yun" . 
+:69073b46-999f-4495-addb-b89498205bec rdfs:label "Linux" . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc :hasPart :76925cab-6236-4f15-baa7-db8d11ff2da2 . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc rdfs:label "Arduino Yun" . 
+:76925cab-6236-4f15-baa7-db8d11ff2da2 rdfs:label "Hotspot" . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc :marque :a1332de6-ef13-4f2d-a9c4-56f3e3d4e9e9 . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc rdfs:label "Arduino Yun" . 
+:a1332de6-ef13-4f2d-a9c4-56f3e3d4e9e9 rdfs:label "Arduino" . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc rdf:type :6cb6542e-198c-4816-951a-2946d86a822d . 
+:7ccf9cba-1a93-4f6d-a547-f95273aecadc rdfs:label "Arduino Yun" . 
+:6cb6542e-198c-4816-951a-2946d86a822d rdfs:label "CarteElectronique" . 
+:80226c3b-4628-4d72-bfe7-b88ccfabf60d :utilise :52010a74-e0a1-444a-97ca-a5a67174eefa . 
+:80226c3b-4628-4d72-bfe7-b88ccfabf60d rdfs:label "PcDuinoBot" . 
+:52010a74-e0a1-444a-97ca-a5a67174eefa rdfs:label "Pcduino" . 
+:80226c3b-4628-4d72-bfe7-b88ccfabf60d rdf:type :271479b0-8c19-478f-9465-0d15cc97eeec . 
+:80226c3b-4628-4d72-bfe7-b88ccfabf60d rdfs:label "PcDuinoBot" . 
+:271479b0-8c19-478f-9465-0d15cc97eeec rdfs:label "Projet" . 
+:846f4f8e-b0fb-4d25-a3da-0a926c877acc :modulePour :d6612906-c3b6-4b28-97ec-795f937734b2 . 
+:846f4f8e-b0fb-4d25-a3da-0a926c877acc rdfs:label "node_module" . 
+:d6612906-c3b6-4b28-97ec-795f937734b2 rdfs:label "nodejs" . 
+:9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 :utilise :20c22160-f64d-4ce9-a571-ecbf8bd288f9 . 
+:9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 rdfs:label "ServeurWeb" . 
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 rdfs:label "socket.io" . 
+:9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 :utilise :4ed56086-1f08-4e5a-aa25-4336b879ff92 . 
+:9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 rdfs:label "ServeurWeb" . 
+:4ed56086-1f08-4e5a-aa25-4336b879ff92 rdfs:label "express" . 
+:9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 :utilise :d6612906-c3b6-4b28-97ec-795f937734b2 . 
+:9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 rdfs:label "ServeurWeb" . 
+:d6612906-c3b6-4b28-97ec-795f937734b2 rdfs:label "nodejs" . 
+:d736839b-7a3e-4d97-842b-85a13668cd23 :is :fb11a2da-0a2c-4c03-b61a-13d7943559aa . 
+:d736839b-7a3e-4d97-842b-85a13668cd23 rdfs:label "this" . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdfs:label "Spoggy" . 
+:ecc46705-6381-4ac5-8bda-8efb6022d093 :utilise :20c22160-f64d-4ce9-a571-ecbf8bd288f9 . 
+:ecc46705-6381-4ac5-8bda-8efb6022d093 rdfs:label "Graphe" . 
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 rdfs:label "socket.io" . 
+:ecc46705-6381-4ac5-8bda-8efb6022d093 :utilise :61f5fc8e-a30b-41d5-b13f-f06cf65ea0b6 . 
+:ecc46705-6381-4ac5-8bda-8efb6022d093 rdfs:label "Graphe" . 
+:61f5fc8e-a30b-41d5-b13f-f06cf65ea0b6 rdfs:label "Visjs" . 
+:f8fa7655-6782-4fdb-9d63-fd6ae66778ef :github :ac8a9346-30d9-4757-84b7-004f22d249e1 . 
+:f8fa7655-6782-4fdb-9d63-fd6ae66778ef rdfs:label "David" . 
+:ac8a9346-30d9-4757-84b7-004f22d249e1 rdfs:label "https://github.com/scenaristeur" . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa :documentation :f87babf4-0913-409e-bc24-c9455094d7c8 . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdfs:label "Spoggy" . 
+:f87babf4-0913-409e-bc24-c9455094d7c8 rdfs:label "http://smag0.blogspot.fr/2017/11/avec-sp
+oggy-prenez-des-notes-et.html" . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa :développeur :f8fa7655-6782-4fdb-9d63-fd6ae66778ef . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdfs:label "Spoggy" . 
+:f8fa7655-6782-4fdb-9d63-fd6ae66778ef rdfs:label "David" . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa :hasPart :9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdfs:label "Spoggy" . 
+:9cdf1ba6-f6ab-49df-b3ec-bde9db73ab95 rdfs:label "ServeurWeb" . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa :hasPart :fdd33f66-0dae-492e-91df-b4f91dcf9cd9 . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdfs:label "Spoggy" . 
+:fdd33f66-0dae-492e-91df-b4f91dcf9cd9 rdfs:label "SpoggyPublic" . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa :utilise :2370da6f-c2f3-4918-8744-000298d1e530 . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdfs:label "Spoggy" . 
+:2370da6f-c2f3-4918-8744-000298d1e530 rdfs:label "Polymer" . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdf:type :271479b0-8c19-478f-9465-0d15cc97eeec . 
+:fb11a2da-0a2c-4c03-b61a-13d7943559aa rdfs:label "Spoggy" . 
+:271479b0-8c19-478f-9465-0d15cc97eeec rdfs:label "Projet" . 
+:fb9c5866-4c0a-400b-8bb8-175a7f2c651f :utilise :20c22160-f64d-4ce9-a571-ecbf8bd288f9 . 
+:fb9c5866-4c0a-400b-8bb8-175a7f2c651f rdfs:label "Chat" . 
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 rdfs:label "socket.io" . 
+:fdd33f66-0dae-492e-91df-b4f91dcf9cd9 :hasPart :ecc46705-6381-4ac5-8bda-8efb6022d093 . 
+:fdd33f66-0dae-492e-91df-b4f91dcf9cd9 rdfs:label "SpoggyPublic" . 
+:ecc46705-6381-4ac5-8bda-8efb6022d093 rdfs:label "Graphe" . 
+:fdd33f66-0dae-492e-91df-b4f91dcf9cd9 :hasPart :fb9c5866-4c0a-400b-8bb8-175a7f2c651f . 
+:fdd33f66-0dae-492e-91df-b4f91dcf9cd9 rdfs:label "SpoggyPublic" . 
+:fb9c5866-4c0a-400b-8bb8-175a7f2c651f rdfs:label "Chat" . 
+:fdd33f66-0dae-492e-91df-b4f91dcf9cd9 :utilise :20c22160-f64d-4ce9-a571-ecbf8bd288f9 . 
+:fdd33f66-0dae-492e-91df-b4f91dcf9cd9 rdfs:label "SpoggyPublic" . 
+:20c22160-f64d-4ce9-a571-ecbf8bd288f9 rdfs:label "socket.io" . 
+:271479b0-8c19-478f-9465-0d15cc97eeec rdf:type owl:Class . 
+:6cb6542e-198c-4816-951a-2946d86a822d rdf:type owl:Class . 
+:846f4f8e-b0fb-4d25-a3da-0a926c877acc rdf:type owl:Class . 
+:documentation rdf:type owl:ObjectProperty . 
+:développeur rdf:type owl:ObjectProperty . 
+:github rdf:type owl:ObjectProperty . 
+:hasPart rdf:type owl:ObjectProperty . 
+:is rdf:type owl:ObjectProperty . 
+:marque rdf:type owl:ObjectProperty . 
+:modulePour rdf:type owl:ObjectProperty . 
+:préparation de  rdf:type owl:ObjectProperty . 
+:utilise rdf:type owl:ObjectProperty . 
+:utilité rdf:type owl:ObjectProperty . 
+rdf:type rdf:type owl:ObjectProperty . 

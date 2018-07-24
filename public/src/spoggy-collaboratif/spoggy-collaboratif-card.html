@@ -1,0 +1,199 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+
+
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="spoggy-collaboratif-card">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-card/paper-card.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/color.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/typography.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse/iron-collapse.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/communication-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/social-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
+  <template>
+
+    <style include="shared-styles">
+    /* STYLES A NETTOYER car récupéré tel quel DE SPOGGY-ENDPOINT */
+    /*:host {
+    display: block;
+
+    padding: 10px;
+    }*/
+    #endpointsList {
+      display: none;
+    }
+    .flex-wrap {
+      @apply --layout-horizontal;
+      @apply --layout-wrap;
+      /*  @apply --layout-fit;*/
+      @apply --layout-center-justified;
+
+    }
+
+    .vertical-section-container {
+      max-width: 400px;
+    }
+    paper-card {
+      max-width: 450px;
+      margin: 10px;
+      --paper-card-header-image: {
+        width: 50%;
+      };
+    }
+    .horizontal {
+      @apply --layout-horizontal;
+    }
+    .flex {
+      @apply --layout-flex;
+    }
+    .justified {
+      @apply --layout-justified;
+    }
+    .amber {
+      background: var(--paper-amber-900);
+    }
+    .lime {
+      background: var(--paper-lime-500);
+    }
+    .cyan {
+      background: var(--paper-cyan-500);
+    }
+    .dark {
+      background: var(--paper-blue-grey-500);
+    }
+    paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
+      color: white;
+      --paper-card-header-color: white;
+    }
+    paper-checkbox {
+      display: block;
+      margin-bottom: 4px;
+      --paper-checkbox-label-color: green;
+      --paper-checkbox-unchecked-color: red;
+    }
+    paper-icon-button {
+      color: var(--paper-grey-600);
+    }
+    paper-icon-button.white {
+      color: white !important;
+    }
+
+
+  }
+  </style>
+  <style is="custom-style">
+  .cafe-header { @apply --paper-font-headline; }
+  .cafe-light { color: var(--paper-grey-600); }
+  .cafe-location {
+    float: right;
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  .cafe-reserve { color: var(--google-blue-500); }
+  iron-icon.star {
+    --iron-icon-width: 16px;
+    --iron-icon-height: 16px;
+    color: var(--paper-amber-500);
+  }
+  iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+  </style>
+
+
+
+
+    <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+      <div class="card-content">
+        <div class="cafe-header">    <h2>[[prop1]]</h2>
+        </div>
+
+        <p class="cafe-light">
+          Contribuez, collaborez, partagez en temps réel.
+        </p>
+      </div>
+      <div class="horizontal justified">
+        <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaborez</paper-button>
+      </div>
+    </paper-card>
+
+
+
+
+
+
+
+
+</template>
+
+<script>
+/**
+* `spoggy-collaboratif`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyCollaboratifCard extends Polymer.LazyImportsMixin(Polymer.Element) {
+  static get is() { return 'spoggy-collaboratif-card'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'Spoggy Collaboratif'
+      },
+      mode: {
+        type: String,
+        notify: true
+      }
+    };
+  }
+
+  constructor(){
+    super();
+
+    //  this.agentCollaboratif = new CollaboratifAgent('agentCollaboratif', this);
+
+
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+  //  this.initAgents()
+  }
+  initAgents(){
+    this.agentCollaboratif.send('agentHello', 'Hello agentHello!');
+  }
+
+  isEmpty(value){
+    //  console.log(value)
+    return value == undefined || value.length == 0;
+  }
+  isEqual(mode, test){
+    return mode == test;
+  }
+  setmode(e){
+    this.mode = e.target.id;
+  }
+}
+
+window.customElements.define(SpoggyCollaboratifCard.is, SpoggyCollaboratifCard);
+</script>
+</dom-module>

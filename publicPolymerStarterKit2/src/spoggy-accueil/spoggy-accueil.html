@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="spoggy-accueil">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-accueil`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyAccueil extends Polymer.Element {
+      static get is() { return 'spoggy-accueil'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-accueil'
+          }
+        };
+      }
+      ready(){
+        console.log('accueil')
+      }
+    }
+
+    window.customElements.define(SpoggyAccueil.is, SpoggyAccueil);
+  </script>
+</dom-module>

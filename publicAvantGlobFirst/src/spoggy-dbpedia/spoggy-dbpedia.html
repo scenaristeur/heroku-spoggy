@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="spoggy-dbpedia">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+  </template>
+
+  <script>
+    /**
+     * `spoggy-dbpedia`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyDbpedia extends Polymer.Element {
+      static get is() { return 'spoggy-dbpedia'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-dbpedia'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyDbpedia.is, SpoggyDbpedia);
+  </script>
+</dom-module>

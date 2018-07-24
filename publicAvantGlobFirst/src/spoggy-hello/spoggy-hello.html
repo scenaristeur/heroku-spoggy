@@ -1,0 +1,43 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<script src="agents/HelloAgent.js"></script>
+<script src="agents/RequestAgent.js"></script>
+<dom-module id="spoggy-hello">
+  <template>
+    <spoggy-agent></spoggy-agent>
+  </template>
+  <script>
+  class SpoggyHello extends Polymer.Element {
+    static get is() { return 'spoggy-hello'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-hello'
+        }
+      };
+    }
+    constructor(){
+      super();
+      this.agentHello = new HelloAgent('agentHello', this);
+      this.agent1 = new RequestAgent('agent1');
+      this.agent2 = new RequestAgent('agent2');
+      Polymer.RenderStatus.afterNextRender(this, function() {
+    this.initAgents();
+      });
+    }
+    initAgents(){
+          this.agentHello.send('agentHello', 'Hello agentHello!');
+            this.agentHello.send('agentData', 'Hello agentData!');
+            this.agentHello.send('agentSocket', 'Hello agentData!');
+            this.agentHello.send('agentInput', 'Hello agentInput!');
+            // send a request to agent 1, await the response
+            this.agent2.request('agent1', 'Hello agent1!')
+                .then(function(reply) {
+                  console.log('reply: ' + reply);
+                });
+    }
+  }
+  window.customElements.define(SpoggyHello.is, SpoggyHello);
+  </script>
+</dom-module>

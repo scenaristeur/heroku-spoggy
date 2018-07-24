@@ -1,0 +1,371 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<script src="../../bower_components/loglevel-debug/dist/loglevel-debug.js"></script>
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+<link rel="import" href="../spoggy-graph/spoggy-graph.html">
+<link rel="import"  href="../spoggy-sparql/spoggy-sparql.html">
+
+<script src="agents/AppAgent.js"></script>
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="import" href="../shared-styles.html">
+
+
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<!--<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html"> -->
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<!--<link rel="import" href="my-icons.html"> -->
+
+
+
+
+
+
+
+<dom-module id="spoggy-app">
+
+
+
+<link rel="lazy-import" group="lazy" href="../../bower_components/paper-card/paper-card.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/color.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/typography.html">
+
+<link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse/iron-collapse.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/communication-icons.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/social-icons.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+<link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
+
+
+<link rel="lazy-import" group="lazy" href="../spoggy-global/spoggy-global.html">
+<link rel="lazy-import" group="lazy" href="../spoggy-collaboratif/spoggy-collaboratif.html">
+<link rel="lazy-import" group="lazy"  href="../spoggy-solo/spoggy-solo.html">
+
+<link  rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
+
+<link rel="lazy-import" group="lazy" href="../spoggy-dialogs/spoggy-dialogs.html">
+
+<link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
+<link rel="lazy-import" group="lazy" href="../spoggy-data/spoggy-data.html">
+
+
+<link rel="lazy-import" group="lazy" href="../spoggy-presentation/spoggy-presentation.html">
+<link rel="lazy-import" group="lazy" href="../spoggy-endpoints/spoggy-endpoints.html">
+<link rel="lazy-import" group="lazy" href="../spoggy-preferences/spoggy-preferences.html">
+<link rel="lazy-import" group="lazy" href="../spoggy-historique/spoggy-historique.html">
+
+
+<template>
+  <style>
+  :host {
+    --app-primary-color: #4285f4;
+    --app-secondary-color: black;
+
+    /*display: block;*/
+  }
+
+  app-drawer-layout:not([narrow]) [drawer-toggle] {
+    display: none;
+  }
+
+  app-header {
+    color: #fff;
+    background-color: var(--app-primary-color);
+  }
+
+  app-header paper-icon-button {
+    --paper-icon-button-ink-color: white;
+  }
+
+  .drawer-list {
+    margin: 0 20px;
+  }
+
+  .drawer-list a {
+    display: block;
+    padding: 0 16px;
+    text-decoration: none;
+    color: var(--app-secondary-color);
+    line-height: 40px;
+  }
+
+  .drawer-list a.iron-selected {
+    color: black;
+    font-weight: bold;
+  }
+  </style>
+  <style include="shared-styles">
+  /* STYLES A NETTOYER car récupéré tel quel DE SPOGGY-ENDPOINT */
+  /*:host {
+  display: block;
+
+  padding: 10px;
+  }*/
+
+  .flex-wrap {
+    @apply --layout-horizontal;
+    @apply --layout-wrap;
+    /*  @apply --layout-fit;*/
+    @apply --layout-center-justified;
+
+  }
+
+  .vertical-section-container {
+    max-width: 400px;
+  }
+  paper-card {
+    max-width: 450px;
+    margin: 10px;
+    --paper-card-header-image: {
+      width: 50%;
+    };
+  }
+  .horizontal {
+    @apply --layout-horizontal;
+  }
+  .flex {
+    @apply --layout-flex;
+  }
+  .justified {
+    @apply --layout-justified;
+  }
+  .amber {
+    background: var(--paper-amber-900);
+  }
+  .lime {
+    background: var(--paper-lime-500);
+  }
+  .cyan {
+    background: var(--paper-cyan-500);
+  }
+  .dark {
+    background: var(--paper-blue-grey-500);
+  }
+  paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
+    color: white;
+    --paper-card-header-color: white;
+  }
+  paper-checkbox {
+    display: block;
+    margin-bottom: 4px;
+    --paper-checkbox-label-color: green;
+    --paper-checkbox-unchecked-color: red;
+  }
+  paper-icon-button {
+    color: var(--paper-grey-600);
+  }
+  paper-icon-button.white {
+    color: white !important;
+  }
+
+
+}
+</style>
+<style>
+app-drawer-layout:not([narrow]) [drawer-toggle] {
+  display: none;
+}
+
+app-header {
+  color: #fff;
+  background-color: var(--app-primary-color);
+}
+
+app-header paper-icon-button {
+  --paper-icon-button-ink-color: white;
+}
+
+.drawer-list {
+  margin: 0 20px;
+}
+
+.drawer-list a {
+  display: block;
+  padding: 0 16px;
+  text-decoration: none;
+  color: var(--app-secondary-color);
+  line-height: 40px;
+}
+
+.drawer-list a.iron-selected {
+  color: black;
+  font-weight: bold;
+}
+</style>
+<style is="custom-style">
+.cafe-header { @apply --paper-font-headline; }
+.cafe-light { color: var(--paper-grey-600); }
+.cafe-location {
+  float: right;
+  font-size: 15px;
+  vertical-align: middle;
+}
+.cafe-reserve { color: var(--google-blue-500); }
+iron-icon.star {
+  --iron-icon-width: 16px;
+  --iron-icon-height: 16px;
+  color: var(--paper-amber-500);
+}
+iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+</style>
+
+
+<paper-button raised  hidden$="[[isEmpty(mode)]]" id="null" on-tap="delmode">[[mode]]</paper-button>
+<div class="container flex-wrap">
+  <spoggy-global  mode={{mode}}></spoggy-global>
+  <spoggy-collaboratif  mode={{mode}}></spoggy-collaboratif>
+  <spoggy-solo  mode={{mode}}></spoggy-solo>
+</div>
+
+
+<div hidden$="[[isEmpty(mode)]]" >
+
+  <app-drawer-layout fullbleed narrow="{{narrow}}">
+    <!-- Drawer content -->
+    <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+      <app-toolbar>Menu</app-toolbar>
+      <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+        <!--<a name="view1" href="[[rootPath]]view1">View One</a>
+        <a name="view2" href="[[rootPath]]view2">View Two</a>
+        <a name="view3" href="[[rootPath]]view3">View Three</a> -->
+        <paper-button id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</paper-button>
+        <paper-button id="solo" class="cafe-reserve" on-tap="setmode">Solo</paper-button>
+        <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif</paper-button>
+        <paper-button id="global" class="cafe-reserve" on-tap="setmode">Global</paper-button>
+      </iron-selector>
+          <spoggy-collab></spoggy-collab>
+    </app-drawer>
+
+    <!-- Main content -->
+    <app-header-layout has-scrolling-region>
+
+      <app-header slot="header" condenses reveals effects="waterfall">
+        <app-toolbar>
+          <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
+          <div main-title>Spoggy</div>
+          [[mode]]
+          <spoggy-input >
+            ... Chargement de l'interface  ... <br>
+            Attendez jusqu'au chargement du cercle rose
+          </spoggy-input>
+        </app-toolbar>
+      </app-header>
+
+
+<div>
+      <spoggy-sparql></spoggy-sparql>
+      <spoggy-presentation></spoggy-presentation>
+      <spoggy-endpoints></spoggy-endpoints>
+
+
+
+
+      <spoggy-dialogs></spoggy-dialogs>
+      <spoggy-data></spoggy-data>
+
+    <spoggy-preferences></spoggy-preferences>
+    <spoggy-historique></spoggy-historique>
+  </div>
+
+<!--
+      <iron-pages
+          selected="[[page]]"
+          attr-for-selected="name"
+          fallback-selection="view404"
+          role="main">
+        <my-view1 name="view1"></my-view1>
+        <my-view2 name="view2"></my-view2>
+        <my-view3 name="view3"></my-view3>
+        <my-view404 name="view404"></my-view404>
+      </iron-pages> -->
+    </app-header-layout>
+  </app-drawer-layout>
+
+
+
+</div>
+
+<script>
+function _toggle() {
+var moreInfo = document.getElementById('more-info');
+var iconButton = Polymer.dom(event).localTarget;
+iconButton.icon = moreInfo.opened ? 'expand-more': 'expand-less';
+moreInfo.toggle();
+}
+</script>
+
+</template>
+<script>
+class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
+  static get is() { return 'spoggy-app'; }
+  static get properties() {
+    return {
+      mode: {
+        type: String,
+        value: "",
+        notify:true
+      },
+      debuglevel: {
+        type: Number,
+        value: 0
+      }
+    }
+  }
+
+
+
+  buttonPressed() {
+    this.importLazyGroup('lazy').then((results) => {
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+    });
+  }
+  isEmpty(value){
+  //  console.log(value)
+    return value == undefined || value.length == 0;
+  }
+  constructor(){
+    super();
+        this.agentApp = new AppAgent('agentApp', this);
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+    });
+      this.initAgents();
+  }
+  initAgents(){
+    this.agentApp.send('agentHello', 'Hello agentHello!');
+  }
+  setmode(e){
+    this.mode = e.target.id;
+  }
+
+  delmode(e){
+    this.mode = "";
+  }
+
+
+}
+window.customElements.define(SpoggyApp.is, SpoggyApp);
+</script>
+</dom-module>

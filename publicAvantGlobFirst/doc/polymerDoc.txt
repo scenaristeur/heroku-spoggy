@@ -1,0 +1,10 @@
+https://github.com/googlearchive/polymer-patterns
+
+
+# recuperer le champ 'etape d'un bouton' : 
+
+_setEtape(event, detail, sender){
+  let newEtape = event.currentTarget.getAttribute('etape');
+  console.log(newEtape);
+  this.etape = newEtape;
+}

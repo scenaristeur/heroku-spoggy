@@ -1,0 +1,464 @@
+<script src="lib/import-export.js"></script>
+<script>
+/* @polymerMixin */
+var DataBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class DataBehavior extends superClass {
+    constructor() {
+      super();
+}
+static get properties() {
+  return {
+    actionstosend:{
+      type : Array,
+      value : []
+    },
+    tickDelay: {
+      type: Number,
+      value: 1000       // 15ms selon source, tempo pour envoi du snapshot par le serveur pour un jeu
+    },
+  };
+}
+
+methodInBehavior() {
+  return "this method is defined in Behavior";
+}
+
+
+
+recupParams(){
+  var params = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {        var p=a[i].split('=', 2);
+    if (p.length == 1)
+    b[p[0]] = "";
+    else
+    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+  }
+  return b;
+})(window.location.search.substr(1).split('&'));
+return params;
+}
+
+analyseUrl(){
+  let url = window.location;
+  url.protocol; //(http:)
+  url.hostname; //(www.example.com)
+  url.pathname; //(/some/path)
+  url.search; // (?name=value)
+  url.hash; //(#anchor)
+  console.log("REST " +url.pathname);
+  let pathname = url.pathname.split("/");
+  console.log(pathname);
+  if(pathname[1] == 'graph' || pathname[1] == 'graphe'){
+    let graph = pathname[2];
+    let node = pathname[3];
+    console.log("on tente d'afficher les infos du graph "+graph+" sur le noeud "+node);
+    this.agentData.send('agentSocket', "Hello agentHello! on tente d'afficher les infos du graph "+graph+" sur le noeud "+node);
+    this.agentData.send('agentSocket', {type: "connect", graph:graph, node:node, pseudo: "anonyme"});
+
+  }
+}
+
+addAction1(action){
+  /*  var actionstosendTemp = this.actionstosend;
+  this.actionstosend = [];
+  actionstosendTemp.push(action);
+  this.actionstosend = actionstosendTemp;
+  console.log(this.actionstosend);*/
+  console.log(action);
+  if (this.socket != undefined){
+    console.log(this.socket)
+    this.actionstosend.push(action);
+    this.socket.emit('newActions', this.actionstosend);
+    this.actionstosend = [];
+  }else{
+    console.log("socket n'est pas défini")
+  }
+  //  this.socket.emit('sendchat', this.actionstosend);
+}
+
+addActionAgent(action){
+  console.log(action);
+  console.log(this.socket)
+  this.actionstosend.push(action);
+  this.agentData.send('agentSocket', {type: "newActions", actions: this.actionstosend});
+  this.actionstosend = [];
+}
+
+
+
+
+catchTripletsV2(triplets, network){
+  var app = this;
+  console.log( "test pour voir si c'est une query ou une update");
+  let sens = "update";
+  if(triplets[0].s.startsWith('?') || triplets[0].p.startsWith('?') || triplets[0].o.startsWith('?')  ){
+    sens = "query";
+  }else{
+    this.catchTriplet(triplets[0], network)
+  }
+  /*  app.sources.forEach(function(s){
+  if (s.actif){
+  app.applyTriplets(s, triplets, sens)
+}
+})*/
+}
+
+
+
+
+
+
+
+
+connectBase(network,app){
+  console.log(app.socket);
+  app.socket.emit('initDb');
+  app.$.inputMessage.value = "";
+
+  /*  //document.getElementById('importPopUp').style.display = 'block';
+  app.$.importPopUp.style.display = 'block';
+
+  var filepicker = app.$.filepicker;
+  filepicker.addEventListener('change', handleFileSelect.bind(app), false);
+  filepicker.network = network;*/
+}
+
+
+applyTriplets(source, triplets, sens){
+  console.log(source)
+  console.log(triplets)
+  console.log(sens)
+  switch (source.type) {
+    case 'sparql':
+    let server = source.endpointUrl;
+    let dataset = source.currentDataset;
+    let endpoint = server+dataset;
+
+    //let store = new SparqlStore({endpointUrl: endpoint+"/sparql",   updateUrl : endpoint+"/update" })
+
+    if(sens == "update"){
+      this.urlUpdate = endpoint+"/update";
+      this.options = this.computeUpdateTriplets(triplets);
+      //  console.log(source.store.server.datasets[0].name)
+      //  console.log("update sparql "+urlUpdate)
+      //const query = 'INSERT DATA{GRAPH<http://example.org/graph>{<http://example.org/subject> <http://example.org/predicate> "object" .\n}}'
+      const update = 'PREFIX dc: <http://purl.org/dc/elements/1.1/> INSERT DATA {   <http://example/book1> dc:title "A new book" ;  dc:creator "A.N.Other" .}'
+      this.$.ajaxUpdate.generateRequest().completes.then(function (request) {
+        var html = request.response.getElementsByTagName("html")[0];
+        var body=html.getElementsByTagName("body")[0];
+        var resultat=body.getElementsByTagName("h1")[0].firstChild.nodeValue;
+        console.log(resultat);
+      });
+    }else{
+      let urlQuery = endpoint+"/sparql?query="
+      console.log("query sparql "+ urlQuery)
+      this.urlQuery = endpoint+"/sparql"
+      this.options = this.computeQueryTriplets(triplets);
+      this.$.ajaxGet.generateRequest().completes.then(function (request){
+        var rep = request.response;
+        console.log(rep);
+      }, function(rejected) {
+        // failed request, argument is an object
+        let req = rejected.request;
+        let error = rejected.error;
+        console.log(error)
+      });
+    }
+    break;
+    case 'vis':
+    if(sens == "update"){
+      console.log("update vis")
+    }else{
+      console.log("query vis")
+    }
+    break;
+    case 'levelgraph':
+    if(sens == "update"){
+      console.log("update levelgraph")
+    }else{
+      console.log("query levelgraph")
+    }
+    // expected output: "Mangoes and papayas are $2.79 a pound."
+    break;
+    case 'input':
+    //  s.lg = {'lg'};
+    // expected output: "Mangoes and papayas are $2.79 a pound."
+    break;
+    case 'socket':
+    if(sens == "update"){
+      console.log("update socket")
+    }else{
+      console.log("query socket")
+    }
+    // expected output: "Mangoes and papayas are $2.79 a pound."
+    break;
+    default:
+    console.log( source.type + 'non traité');
+  }
+  /*  triplets.forEach(function(t){
+  console.log(t);
+
+});*/
+}
+
+
+
+
+
+computeUpdateTriplets (triplets){
+  var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+  update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+  update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+  update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+  update += "INSERT DATA { \n";
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+  triplets.forEach(function(triplet) {
+    //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+    update += "smag:"+triplet.s+"   smag:"+triplet.p+"   \""+triplet.o+"\" . \n";
+  });
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+  update += " } \n";
+  console.log(update);
+  //  this.requete=update;
+  return {update: update};
+}
+
+computeQueryTriplets (triplets){
+  var   query = "SELECT * WHERE { \n";
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  query += "GRAPH <http://smag0.blogspot.fr/Sparqlquery>{ \n";
+  triplets.forEach(function(triplet) {
+    //  query += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+    query += triplet.s+" "+triplet.p+" "+triplet.o+". \n";
+  });
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   query += " } \n";
+  query += " } \n";
+  console.log(query);
+  //  this.requete=query;
+  return {query: query, output: "json"};
+}
+
+
+
+
+
+
+
+consolideSource(sources){
+  let app = this;
+  sources.forEach(function(s){
+    console.log(s);
+    switch (s.type) {
+      case 'sparql':
+      s =app.consolideSparql(s,app)
+      break;
+      case 'vis':
+      console.log(app.network)
+      s.network = {};
+      break;
+      case 'levelgraph':
+      s.lg = {};
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'input':
+      //  s.lg = {'lg'};
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      case 'socket':
+      s.socket = {};
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+      default:
+      console.log( s.type + 'non traité');
+    }
+  });
+  return sources
+}
+
+consolideSparql(s,app){
+  /* STATS
+  //https://codyburleson.com/display/ldn/SPARQL+examples+-+count+all+statements
+  //https://gist.github.com/yayamamo/8052bd4620c1c58adff8
+  */
+
+  app.$.get_ping.url = s.endpointUrl+"/$/ping";
+  app.$.get_server.url = s.endpointUrl+"/$/server";
+  let pingRequest = app.$.get_ping.generateRequest();
+  let serverRequest = app.$.get_server.generateRequest();
+
+  Promise.all([pingRequest.completes, serverRequest.completes]).then(function (requests) {
+    var ping = requests[0].response;
+    var server = requests[1].response;
+    s.ping = ping;
+    let serverCorrige  = JSON.parse(JSON.stringify(server).replace(/ds\./g, '').replace(/srv\./g, '')); //les cles fuseki possèdent des points ! GRRRR
+    s.server = serverCorrige   //  app.set('s.server', serverCorrige)
+    s.currentDataset =   s.server.datasets[0].name
+
+  });
+}
+deleteFromServer (network, data){
+  //Pour suppression, on recupere le noeud et ses liens envoyés par le serveur
+  network.body.data.nodes.remove(data.nodes);
+  network.body.data.edges.remove(data.edges);
+}
+addNodeIfNotExist(network, data){
+  var existNode = false;
+  //  console.log(data);
+  try{
+    existNode = network.body.data.nodes.get({
+      filter: function(node){
+        //    console.log(node);
+        return (node.id == data.id );
+      }
+    });
+    //  console.log(existNode);
+    if (existNode.length == 0){
+      network.body.data.nodes.add(data);
+    }else{
+      //s'il existe déjà, ne serait-ce pas un renommage ?
+      //  console.log("renomme");
+      //  console.log(data);
+      //existNode[0].label = data.label;
+      //  editNode(data, null);
+      //  console.log(this.network.body.data.nodes);
+      network.body.data.nodes.update(data);
+    }
+  }
+  catch (err){
+    console.log(err);
+  }
+  /*  this.nodes = [];
+  this.nodes = this.network.body.data.nodes;*/
+}
+
+addEdgeIfNotExist (network, data){
+  var existEdge = false;
+  try {
+    existEdge = network.body.data.edges.get({
+      filter: function(edge){
+        return (edge.id == data[0].id);
+      }
+    });
+    if (existEdge.length == 0){
+      network.body.data.edges.add(data[0]);
+    }else{
+      //s'il existe déjà, ne serait-ce pas un renommage ?
+      //  console.log("renomme");
+      //  console.log(data);
+      //existNode[0].label = data.label;
+      //  editNode(data, null);
+      //    console.log(this.network.body.data.edges);
+      network.body.data.edges.update({id: data[0].id, label: data[0].label});
+      //  console.log(this.network.body.data.edges);
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+
+saveTextAsFile(){
+  var textToWrite="";
+  var fileNameToSaveAs="";
+  var textFileAsBlob="";
+  var extension="ttl";
+  var nomFichier="";
+  var data = this.$.inputTextToSave.value;
+  console.log(data);
+  if((typeof data != "undefined")&& (data.length>0)){
+    textToWrite=data;
+  }else{
+    textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+  }
+  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+    fileNameToSaveAs = nomFichier+"."+extension;
+  }else{
+    fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+  }
+  if ((typeof extension != "undefined") && (extension.length>0)){
+    switch(extension){
+      case "ttl" :
+      textFileAsBlob = new Blob([textToWrite], {
+        type:
+        'text/turtle'
+      }
+    );
+    break;
+    case "rdf" :
+    //pas implementé pour l'instant
+    textFileAsBlob = new Blob([textToWrite], {
+      type:
+      'application/rdf+xml'
+    }
+  );
+  break;
+  default :
+  console.log("non traite  , extension : "+extension);
+  break;
+}
+}
+console.log(nomFichier+" : "+extension);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+//console.log(window.URL);
+//if (window.URL != null)
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  console.log("FF");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  console.log(this.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 100);
+}
+
+recupParams(){
+  var params = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {        var p=a[i].split('=', 2);
+    if (p.length == 1)
+    b[p[0]] = "";
+    else
+    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+  }
+  return b;
+})(window.location.search.substr(1).split('&'));
+return params;
+}
+
+
+
+}
+});
+</script>

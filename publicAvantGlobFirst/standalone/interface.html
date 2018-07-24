@@ -1,0 +1,926 @@
+<!-- https://www.w3schools.com/css/css_navbar.asp -->
+<!-- http://epicadesign.fr/creer-un-site-one-page-la-navigation/ -->
+<!-- http://scriptura.github.io/Pages/StyleGuide.html#index-ajax -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Spoggy</title>
+  <script type="text/javascript" src="js/levelgraph.min.js"></script>
+  <script type="text/javascript" src="js/vis.min.js"></script>
+  <link href="js/vis-network.min.css" rel="stylesheet" type="text/css" />
+  <style type="text/css">
+  /*navbar*/
+  body {
+    font-size: 28px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    background-color: #111;
+  }
+
+  .active {
+    background-color: #4CAF50;
+  }
+  section div {
+    float:none;
+  }
+  /* fin navbar */
+
+  /*vis */
+  #mynetwork {
+    width: 1000px;
+    height: 500px;
+    border: 1px solid lightgray;
+  }
+  #operation {
+    font-size:28px;
+  }
+  #node-popUp {
+    display:none;
+    position:absolute;
+    top:350px;
+    left:170px;
+    z-index:299;
+    width:250px;
+    height:120px;
+    background-color: #f9f9f9;
+    border-style:solid;
+    border-width:3px;
+    border-color: #5394ed;
+    padding:10px;
+    text-align: center;
+  }
+  #edge-popUp {
+    display:none;
+    position:absolute;
+    top:350px;
+    left:170px;
+    z-index:299;
+    width:250px;
+    height:90px;
+    background-color: #f9f9f9;
+    border-style:solid;
+    border-width:3px;
+    border-color: #5394ed;
+    padding:10px;
+    text-align: center;
+  }
+  /* fin vis */
+  /* triplets*/
+  .tripletsDiv{
+    float: none;
+    /*  position:absolute;*/
+  }
+  .inputdiv {
+    height:30px;
+    width:200px;
+    float: left;
+    margin: 0 1em;
+    position:relative;
+  }
+
+  .inputimg {
+    height:15px;
+    position:absolute;
+    right:0;
+    top:5px;
+  }
+
+  .inputinput {
+    width:100%;
+  }
+  /* fin triplets*/
+</style>
+</head>
+<body onload="init()">
+
+  <div class="header">
+    <h2>Spoggy</h2>
+    <p>
+      Outil de création de vocabulaire sous forme de graphe.<br>
+      Instanciation des graphes.
+    </p>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <ul>
+      <li><a class="active" href="#expressionLibre" onclick="showExpressionLibre()">Expression Libre</a></li>
+      <li><a href="#triplets" onclick="showTriplets()">Triplets</a></li>
+      <li><a href="#graph" onclick="showGraph()">Graph</a></li>
+      <li><a href="#options" onclick="showOptions()">Options</a></li>
+      <li><a href="#news" onclick="showNews()">News</a></li>
+      <li><a href="#contact" onclick="showContact()">Contact</a></li>
+      <li><a href="#About" onclick="showAbout()">About</a></li>
+    </ul>
+  </nav>
+  <!-- FIN NAVIGATION -->
+
+  <!-- SECTION EXPRESSION LIBRE -->
+  <section id="expressionLibreSection" style="display:none">
+    <h1>ExpressionLibre</h1>
+    <p>Pour commencer, saisissez une note dans l'espace "Expression Libre", et cliquez sur le bouton "Envoyer Info!"</p>
+    <textarea rows="4" cols="50" id="zone_texte" autofocus placeholder="Ici c'est l'espace |Expression Libre| "></textarea>
+    <br>
+    <button type="button" id="envoyerBtn" onclick="envoyerInfo()">Envoyer Info !</button>
+    <label for="nodeTypeSelect">Type:</label>
+    <select id="nodeTypeSelect" type="text" >
+
+      <option value="Texte" selected >Texte (Défaut)</option>
+      <!--HOLACRACY -->
+      <option value="Tension">Tension</option>
+      <option value="Cercle">Cercle</option>
+      <option value="Role">Role</option>
+      <option value="Acteur">Acteur</option>
+      <option value="PremierLien">PremierLien</option>
+      <option value="SecondLien">SecondLien</option>
+      <option value="Organisation">Organisation</option>
+      <!--rdf-ext-->
+      <option value="Term">Term</option>
+      <option value="NamedNode">NamedNode</option>
+      <option value="BlankNode">BlankNode</option>
+      <option value="Literal">Literal</option>
+      <option value="Variable">Variable</option>
+      <option value="DefaultGraph">DefaultGraph</option>
+      <option value="Triple">Triple</option>
+      <option value="Quad">Quad</option>
+      <option value="DataFactory">DataFactory</option>
+      <option value="Stream">Stream</option>
+      <option value="Source">Source</option>
+      <option value="Sink">Sink</option>
+      <option value="Store">Store</option>
+    </select>
+  </section>
+  <!-- FIN SECTION EXPRESSION LIBRE -->
+  <!-- SECTION TRIPLETS -->
+  <section id="tripletsSection" style="display:none">
+    <h1>Triplets</h1>
+    <div class="tripletsDiv">
+      <!--<button type="button" id="objetBtn" onclick="clicObjetBtn()">Objet</button>
+      <button type="button" id="sujetBtn" onclick="clicSujetBtn()">Sujet</button>
+      <button type="button" id="proprieteBtn" onclick="clicProprieteBtn()">propriete</button>
+      <input type="text" id="sujetInput" onclick="clicSujetInput()" placeholder="Sujet ?"></input>
+      <input type="text" id="proprieteInput" onclick="clicProprieteInput()" placeholder="propriete ?"></input>
+    -->
+    <div class="inputdiv" id="divSujetInput">
+      <img class="inputimg" src="img/close.png"  onclick="clearSujet()" alt="">
+      <input type="text" class="inputinput" id="sujetInput" oninput="inputSujetInput()" placeholder="Sujet ?"></input>
+    </div>
+    <div class="inputdiv" id="divProprieteInput">
+      <img class="inputimg" src="img/close.png"  onclick="clearPropriete()" alt="">
+      <input type="text" class="inputinput" id="proprieteInput" oninput="inputProprieteInput()" placeholder="propriete ?"></input>
+    </div>
+    <div class="inputdiv" id="divObjetInput">
+      <img class="inputimg" src="img/close.png"  onclick="clearObject()" alt="">
+      <input type="text" class="inputinput" id="objetInput" oninput="inputObjetInput()" placeholder="Objet ?"></input>
+    </div>
+    <div class="inputdiv" id="divGraphInput">
+      <img class="inputimg" src="img/close.png"  onclick="clearGraph()" alt="">
+      <input type="text" class="inputinput" id="graphInput" oninput="inputGraphInput()" placeholder="DefaultGraph"></input>
+    </div>
+    <div class="inputdiv">
+      <button type="button" id="ajouterBtn" onclick="clicAjouterBtn()">+</button>
+      <button type="button" id="envoyerBtn" onclick="clicEnvoyerBtn()">Envoyer</button>
+    </div>
+  </div>
+</p>
+</section>
+<!-- SECTION TRIPLETS -->
+<!-- SECTION GRAPH -->
+<section id="graphSection" style="display:none">
+  <h1>Graph</h1>
+  <p>Du contenu sur un thème pour ce titre</p>
+  <div>
+    <button type="button" id="recevoirBtn" onclick="recevoirInfo()">Recevoir Info !</button>
+    <button type="button" onclick="resultatsSuivants()">Résultats suivants !</button>
+    <button id="reglagesBtn" onclick="openReglages()">Afficher Réglages</button>
+  </div>
+  <!--reglagesRecevoir -->
+  <div id="reglagesRecevoir" style="display:none">
+    <label for="ordre">Ordre:</label>
+    <select id="ordre" type="text" >
+      <option value="DESC" selected >Descendant (les plus récents)</option>
+      <option value="ASC">Ascendant (les plus anciens)</option>
+    </select>
+    <label for="limite">Nombre de résultats (LIMIT):</label>
+    <input type="number" id="limite"  value=25>
+    <label for="offset">A partir du (OPFFSET):</label>
+    <input type="number" id="offset"  value=0>
+    <label for="effacerNetwork">Effacer Network:</label>
+    <select id="effacerNetwork" type="text" >
+      <option value="non" selected>Non</option>
+      <option value="oui" >Oui</option>
+    </select>
+    <button type="button" id="retablirDefaut" onclick="retablirDefaut()">Rétablir Défault !</button>
+  </div>
+  <!-- NETWORK -->
+  <div id="node-popUp">
+    <span id="node-operation">node</span> <br>
+    <table style="margin:auto;">
+      <tr>
+        <td>id</td><td><input id="node-id" value="new value" /></td>
+      </tr>
+      <tr>
+        <td>label</td><td><input id="node-label" value="new value" autiofocus /></td>
+      </tr>
+    </table>
+    <input type="button" value="save" id="node-saveButton" />
+    <input type="button" value="cancel" id="node-cancelButton" />
+  </div>
+
+  <div id="edge-popUp">
+    <span id="edge-operation">edge</span> <br>
+    <table style="margin:auto;">
+      <tr>
+        <td>label</td><td><input id="edge-label" value="new value" autofocus /></td>
+      </tr></table>
+      <input type="button" value="save" id="edge-saveButton" />
+      <input type="button" value="cancel" id="edge-cancelButton" />
+    </div>
+
+    <br />
+    <div id="mynetwork"></div>
+    <!-- FIN NETWORK -->
+  </section>
+  <!-- SECTION GRAPH -->
+  <!-- SECTION OPTIONS -->
+  <section id="optionsSection" style="display:none">
+    <h1>Options</h1>
+    <p>Du contenu sur un thème pour ce titre</p>
+    <div>
+    <ol>
+      <li>
+        Fonctionnement Général:
+        <ol>
+          <li>levelgraph
+            <ol>
+              <li>Nom de la base</li>
+            </ol>
+          </li>
+          <li>Optionnel
+            <ol>
+              <li>Enpoint
+              <ol>
+                <li>Adresse Endpoint</li>
+              </ol>
+            </li>
+              <li>Collaboratif</li>
+            </ol>
+
+          </li>
+        </ol>
+      </li>
+    </ol>
+    <!--par defaut, fonctionnement levelgraph :     nom de base levelgraph<br>
+    par option,-->
+</div>
+  </section >
+  <!-- FIN SECTION OPTIONS -->
+  <!-- SECTION NEWS -->
+  <section id="newsSection" style="display:none">
+    <h1>News</h1>
+    <p>Du contenu sur un thème pour ce titre</p>
+    <div id="zone_affichage">emplacement recevoir info</div>
+  </section >
+  <!-- FIN SECTION NEWS -->
+  <!-- SECTION CONTACT -->
+  <section id="contactSection" style="display:none">
+    <h1>Contact</h1>
+    <p>scenaristeur@gmail.com</p>
+  </section>
+  <!-- FIN SECTION CONTACT -->
+  <!-- SECTION ABOUT -->
+  <section id="aboutSection" style="display:none">
+    <h1>About</h1>
+    <p><a href="https://github.com/scenaristeur/spoggy" target="_blank">https://github.com/scenaristeur/spoggy</a></p>
+  </section>
+  <!-- FIN SECTION ABOUT -->
+
+  <div>
+    <h3>Sticky Navigation Bar Example</h3>
+    <p>The navbar will <strong>stick</strong> to the top when you reach its scroll position.</p>
+    <p><strong>Note:</strong> Internet Explorer, Edge 15 and earlier versions do not support sticky positioning. Safari requires a -webkit- prefix.</p>
+    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+  </div>
+
+  <script>
+  /*NAVIGATION*/
+  function showExpressionLibre(){
+    document.getElementById("expressionLibreSection").style.display = "block";
+    document.getElementById("tripletsSection").style.display = "none";
+    document.getElementById("graphSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("newsSection").style.display = "none";
+    document.getElementById("contactSection").style.display = "none";
+    document.getElementById("aboutSection").style.display = "none";
+  }
+  function showTriplets(){
+    document.getElementById("expressionLibreSection").style.display = "none";
+    document.getElementById("tripletsSection").style.display = "block";
+    document.getElementById("graphSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("newsSection").style.display = "none";
+    document.getElementById("contactSection").style.display = "none";
+    document.getElementById("aboutSection").style.display = "none";
+  }
+  function showGraph(){
+    document.getElementById("expressionLibreSection").style.display = "none";
+    document.getElementById("tripletsSection").style.display = "none";
+    document.getElementById("graphSection").style.display = "block";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("newsSection").style.display = "none";
+    document.getElementById("contactSection").style.display = "none";
+    document.getElementById("aboutSection").style.display = "none";
+  }
+  function showOptions(){
+    document.getElementById("expressionLibreSection").style.display = "none";
+    document.getElementById("tripletsSection").style.display = "none";
+    document.getElementById("graphSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "block";
+    document.getElementById("newsSection").style.display = "none";
+    document.getElementById("contactSection").style.display = "none";
+    document.getElementById("aboutSection").style.display = "none";
+  }
+  function showNews(){
+    document.getElementById("expressionLibreSection").style.display = "none";
+    document.getElementById("tripletsSection").style.display = "none";
+    document.getElementById("graphSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("newsSection").style.display = "block";
+    document.getElementById("contactSection").style.display = "none";
+    document.getElementById("aboutSection").style.display = "none";
+  }
+  function showContact(){
+    document.getElementById("expressionLibreSection").style.display = "none";
+    document.getElementById("tripletsSection").style.display = "none";
+    document.getElementById("graphSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("newsSection").style.display = "none";
+    document.getElementById("contactSection").style.display = "block";
+    document.getElementById("aboutSection").style.display = "none";
+  }
+  function showAbout(){
+    document.getElementById("expressionLibreSection").style.display = "none";
+    document.getElementById("tripletsSection").style.display = "none";
+    document.getElementById("graphSection").style.display = "none";
+    document.getElementById("optionsSection").style.display = "none";
+    document.getElementById("newsSection").style.display = "none";
+    document.getElementById("contactSection").style.display = "none";
+    document.getElementById("aboutSection").style.display = "block";
+  }
+  /*FIN NAVIGATION */
+</script>
+
+
+<script type="text/javascript">
+var db = levelgraph(level("test"));
+var sujetActif = false;
+var proprieteActif = false;
+var objetActif = false;
+
+var adresseServeur = "http://127.0.0.1:3030";
+var datasetName = "ds";
+
+// create an array with nodes
+var nodes = new vis.DataSet([
+  {id: 1, label: 'Node 1'},
+  {id: 2, label: 'Node 2'},
+  {id: 3, label: 'Node 3'},
+  {id: 4, label: 'Node 4'},
+  {id: 5, label: 'Node 5'},
+  {id: 6, label: 'Node 6'},
+  {id: 7, label: 'Node 7'},
+  {id: 8, label: 'Node 8'}
+]);
+
+// create an array with edges
+var edges = new vis.DataSet([
+  {from: 1, to: 8, arrows:'to', dashes:true},
+  {from: 1, to: 3, arrows:'to'},
+  {from: 1, to: 2, arrows:'to, from'},
+  {from: 2, to: 4, arrows:'to, middle'},
+  {from: 2, to: 5, arrows:'to, middle, from'},
+  {from: 5, to: 6, arrows:{to:{scaleFactor:2}}},
+  {from: 6, to: 7, arrows:{middle:{scaleFactor:0.5},from:true}}
+]);
+
+// create a network
+var container = document.getElementById('mynetwork');
+var data = {
+  nodes: nodes,
+  edges: edges
+};
+var options = {
+  edges:{
+    arrows: 'to'
+  },
+  interaction: {
+    dragNodes:true,
+    dragView: true,
+    hideEdgesOnDrag: false,
+    hideNodesOnDrag: false,
+    hover: false,
+    hoverConnectedEdges: true,
+    keyboard: {
+      enabled: true,
+      speed: {x: 10, y: 10, zoom: 0.02},
+      bindToWindow: true
+    },
+    multiselect: false,
+    navigationButtons: true,
+    selectable: true,
+    selectConnectedEdges: true,
+    tooltipDelay: 300,
+    zoomView: true
+
+  },
+
+  manipulation: {
+    addNode: function (data, callback) {
+      // filling in the popup DOM elements
+      document.getElementById('node-operation').innerHTML = "Add Node";
+      editNode(data, clearNodePopUp, callback);
+    },
+    editNode: function (data, callback) {
+      // filling in the popup DOM elements
+      document.getElementById('node-operation').innerHTML = "Edit Node";
+      editNode(data, cancelNodeEdit, callback);
+    },
+    addEdge: function (data, callback) {
+      if (data.from == data.to) {
+        var r = confirm("Do you want to connect the node to itself?");
+        if (r != true) {
+          callback(null);
+          return;
+        }
+      }
+      document.getElementById('edge-operation').innerHTML = "Add Edge";
+      editEdgeWithoutDrag(data, callback);
+    },
+    editEdge: {
+      editWithoutDrag: function(data, callback) {
+        document.getElementById('edge-operation').innerHTML = "Edit Edge";
+        editEdgeWithoutDrag(data,callback);
+      }
+    }
+  }
+}
+
+var network = new vis.Network(container, data, options);
+
+
+//Fonction ENVOYER INFO
+function envoyerInfo() {
+  var adresseEnvoi = [adresseServeur, datasetName, "update"].join('/');
+  console.log(adresseEnvoi);
+  var contenuZone = document.getElementById("zone_texte").value;
+  var nodeType = document.getElementById("nodeTypeSelect").value;
+
+  contenuZone = contenuZone.replace(/(?:\r\n|\r|\n)/g, '\\n'); //replace(/\n/g, '\\n');
+  if (contenuZone.length > 0){
+    var triplet = {};
+    triplet.sujet = "_"+Date.now();
+    triplet.propriete = "contenu";
+    triplet.objet = contenuZone;
+    console.log(triplet);
+
+    var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ";
+    update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#>";
+    update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#>";
+    update+= "INSERT DATA {";
+    update += "smag:"+triplet.sujet+"    smag:"+triplet.propriete+"         \""+triplet.objet+"\" .";
+    update += "smag:"+triplet.sujet+"    rdf:type         smag:"+nodeType+" .";
+    update+= "}";
+    console.log(update);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        //  console.log(this.responseText);
+        //  alert(this.responseText);
+        recevoirInfo();
+      }
+      else if (this.readyState == 4 && this.status >= 400){
+        console.log(this.readyState+", "+this.status+", "+this.responseText);
+        alert("STATE : "+this.readyState+"\nSTATUS : "+this.status+"\nREPONSE :  "+this.responseText);
+      }
+      else{
+        console.log(this.readyState+", "+this.status+", "+this.responseText);
+      }
+    };
+    xhttp.open("POST", adresseEnvoi+"?update="+encodeURIComponent(update), true);
+    //Send the proper header information along with the request
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+  }
+}
+function resultatsSuivants(){
+  var limite = document.getElementById('limite').value;
+  var offset = document.getElementById('offset').value;
+  document.getElementById('offset').value = parseInt(offset) + parseInt(limite);
+  recevoirInfo()
+}
+
+// Fonction recevoir INFO
+function recevoirInfo() {
+  var adresseInterrogation = [adresseServeur, datasetName, "query"].join('/');
+  console.log(adresseInterrogation);
+  var affichageZone = document.getElementById("zone_affichage");
+  var ordre =  document.getElementById('ordre').value;
+  var limite = document.getElementById('limite').value;
+  var offset = document.getElementById('offset').value;
+  var effacerNetwork = document.getElementById('effacerNetwork').value;
+
+  console.log(ordre);
+  console.log(limite);
+  console.log(effacerNetwork);
+  var requete = "SELECT ?sujet ?propriete ?objet WHERE { ?sujet ?propriete ?objet }";
+  requete  += " ORDER BY "+ordre + " (?sujet) ";
+  if (limite>0){
+    requete += " LIMIT "+limite;
+  }
+  if (offset>0){
+    requete += " OFFSET "+offset;
+  }
+  console.log(requete);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+      if (effacerNetwork == "oui"){
+        console.log("efface network");
+        network.body.data.nodes.clear();
+        network.body.data.edges.clear();
+      }
+      affichageZone.innerHTML = formatReponse(this.responseText);
+      reponseToNetwork(this.responseText);
+    }else{
+      console.log(this.readyState+", "+this.status+", "+this.responseText);
+    }
+  };
+  xhttp.open("GET", adresseInterrogation+"?query="+encodeURIComponent(requete), true);
+  //Send the proper header information along with the request
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+}
+
+
+
+function reponseToNetwork(reponse){
+  var affichageZone = document.getElementById("zone_affichage");
+  //http://visjs.org/docs/data/dataset.html
+  var nodesTemp = [];
+  var edgesTemp = [];
+  var reponseJSON= eval('(' + reponse+ ')');
+  //  console.log(reponseJSON);
+  var results = reponseJSON.results.bindings;
+  if (results.length> 0){
+    results.forEach(function(r){
+      //  console.log(r);
+      var node_sujet_id = addNodeIfNotExist(r.sujet);
+      var node_objet_id = addNodeIfNotExist(r.objet);
+      addEdgeIfNotExist(node_sujet_id, node_objet_id, r.propriete);
+    });
+    affichageZone.innerHTML = results.length + " Resultats retournés <br><br>"+affichageZone.innerHTML;
+  }
+  else {
+    var message = [
+      "Aucun résultat retourné",
+      "Peut-être les réglages de recherche sont-ils érronés :",
+      "<button type='button' onclick='retablirDefaut(true)'>Rétablir limit, offset et relancer la recherche !</button>",
+      " ", " "
+    ].join("<br>");
+    affichageZone.innerHTML = message
+  }
+}
+
+function addNodeIfNotExist(node){
+  // if node exist, get node_id
+  var id;
+  //  console.log("recherche "+node.value)
+  var items = network.body.data.nodes.get({
+    filter: function (item) {
+      return item.label == node.value;
+    }
+  });
+  if (items.length > 0){
+    id = items[0].id;
+    //  console.log("trouvé "+id);
+  }
+  //else create node and get id
+  else{
+    //  console.log(node);
+    var n = {label:node.value};
+    if (node.type == "literal"){
+      n.shape = "box";
+    }
+    id = network.body.data.nodes.add(n)[0];
+    //  console.log("creation "+id);
+  }
+  return id;
+}
+
+function addEdgeIfNotExist (id_sujet, id_objet, propriete){
+  //  console.log("recherche "+id_sujet+" "+id_objet+" "+propriete)
+  var items = network.body.data.edges.get({
+    filter: function (item) {
+      return item.from == id_sujet && item.to == id_objet && item.label == propriete.value;
+    }
+  });
+  if (items.length > 0){
+    id = items[0].id;
+    //  console.log("trouvé "+id);
+  }
+  //else create node and get id
+  else{
+    id = network.body.data.edges.add({from: id_sujet, to: id_objet, label: propriete.value})[0];
+    //  console.log("creation "+id);
+  }
+}
+
+function formatReponse(reponse){
+  var reponseFormatee = "";
+  var reponseJSON= eval('(' + reponse+ ')');
+  //  console.log(reponseJSON);
+  var data = reponseJSON.results.bindings;
+  data.forEach(function(d){
+    //  console.log(d);
+    reponseFormatee+="SUJET : "+d.sujet.value+" --> PROPRIETE : "+d.propriete.value+" --> OBJET : "+d.objet.value+"<br>"
+  });
+  return reponseFormatee
+}
+
+
+
+
+//functions serveur Endpoint
+function testServeur(){
+  //console.log("ping vers serveur");
+  var adresseInterrogation = [adresseServeur, '$', "ping"].join('/');
+  var affichageZone = document.getElementById("zone_affichage");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //  console.log(this.responseText);
+      affichageZone.innerHTML = "Ping serveur OK : "+this.responseText;
+      document.getElementById("envoyerBtn").disabled = false;
+      document.getElementById("recevoirBtn").disabled = false;
+    }else{
+      //console.log(this.readyState+", "+this.status+", "+this.responseText);
+      affichageZone.innerHTML = [
+        "L'adresse '"+adresseInterrogation+"' ne répond pas.",
+        "Le serveur '"+adresseServeur+"' ne semble pas accessible.",
+        "Consultez la <a href='interface.odt'>doc pour installer un serveur Fuseki</a>.",
+        "Ou modifiez l'adresse du serveur :",
+        "<button type='button' onclick='modifierServeur()'>Modifier l'adresse du serveur !</button>",
+        " ", " "
+      ].join("<br>");
+      document.getElementById("envoyerBtn").disabled = true;
+      document.getElementById("recevoirBtn").disabled = true;
+    }
+  };
+  xhttp.open("GET", adresseInterrogation, true);
+  //Send the proper header information along with the request
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+}
+
+function modifierServeur(){
+  var nouveauServeur = prompt("Entrez une adresse correcte pour le serveur :", adresseServeur);
+  if (nouveauServeur != null && nouveauServeur != "") {
+    adresseServeur = nouveauServeur;
+    testServeur()
+  }
+}
+
+function openReglages() {
+  var x = document.getElementById("reglagesRecevoir");
+  var btn = document.getElementById("reglagesBtn");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    btn.innerHTML = "Cacher Réglages";
+  } else {
+    x.style.display = "none";
+    btn.innerHTML = "Afficher Réglages";
+  }
+}
+function retablirDefaut(relance){
+  document.getElementById("ordre").value = "DESC";
+  document.getElementById("limite").value = 25;
+  document.getElementById("offset").value = 0;
+  document.getElementById("effacerNetwork").value = "non";
+  if (relance){
+    recevoirInfo();
+  }
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// TRIPLETS
+//////////////////////////////////////////////////////////////////////
+function clearSujet(){
+  document.getElementById("sujetInput").value="";
+}
+function clearPropriete(){
+  document.getElementById("proprieteInput").value="";
+}
+function clearObject(){
+  document.getElementById("objetInput").value="";
+}
+function clearGraph(){
+  document.getElementById("graphInput").value="";
+}
+function inputSujetInput(){
+  console.log(document.getElementById("sujetInput").value);
+}
+function inputProprieteInput(){
+  console.log(document.getElementById("proprieteInput").value);
+}
+function inputObjetInput(){
+  console.log(document.getElementById("objetInput").value);
+}
+function inputGraphInput(){
+  console.log(document.getElementById("graphInput").value);
+}
+function clicAjouterBtn(){
+
+}
+function clicEnvoyerBtn(){
+  var rechercheMode = false;
+  var sujetValue = document.getElementById("sujetInput").value.trim();
+  var proprieteValue = document.getElementById("proprieteInput").value.trim();
+  var objetValue = document.getElementById("objetInput").value.trim();
+  var graphValue = document.getElementById("graphInput").value.trim();
+  if (sujetValue.length == 0 || proprieteValue.length == 0 || objetValue.length == 0){
+    rechercheMode =  true;
+  }
+  if (graphValue.length == 0){
+    graphValue = "DefaultGraph"
+  }
+  console.log("-"+sujetValue+"-"+proprieteValue+"-"+objetValue+"-"+graphValue+"- Recherche Mode :"+rechercheMode);
+  if (rechercheMode == false){
+    var triple = { subject: sujetValue, predicate: proprieteValue, object: objetValue, graph: graphValue };
+    db.put(triple, function() {
+      db.get({ subject: sujetValue }, function(err, list) {
+        console.log(list);
+      });
+    });
+  }else{
+    // recherche dans le graph courant
+    console.log("Recherche de :"+"-"+sujetValue+"-"+proprieteValue+"-"+objetValue+"-"+graphValue+"-" );
+    showGraph()
+
+    //parcours d'autres graphes si option activés, selon limites définies, endpoints et sources accessibles
+  }
+}
+
+
+</script>
+
+<script>
+
+db.put([{
+  subject: "matteo",
+  predicate: "friend",
+  object: "daniele"
+}, {
+  subject: "daniele",
+  predicate: "friend",
+  object: "matteo"
+}, {
+  subject: "daniele",
+  predicate: "friend",
+  object: "marco"
+}, {
+  subject: "lucio",
+  predicate: "friend",
+  object: "matteo"
+}, {
+  subject: "lucio",
+  predicate: "friend",
+  object: "marco"
+}, {
+  subject: "marco",
+  predicate: "friend",
+  object: "davide"
+}], function () {
+  var stream = db.searchStream([{
+    subject: "matteo",
+    predicate: "friend",
+    object: db.v("x")
+  }, {
+    subject: db.v("x"),
+    predicate: "friend",
+    object: db.v("y")
+  }, {
+    subject: db.v("y"),
+    predicate: "friend",
+    object: "davide"
+  }]);
+  stream.on("data", function(data) {
+    console.log(data);
+  });
+});
+</script>
+
+<script>
+// INIT
+function init(){
+  showExpressionLibre();
+    testServeur();
+    sujetActif = false;
+    proprieteActif = false;
+    objetActif = false;
+}
+</script>
+
+<script>
+/* fonctionnalités VIS JS  http://visjs.org/examples/network/other/manipulationEditEdgeNoDrag.html*/
+function editNode(data, cancelAction, callback) {
+  document.getElementById('node-label').value = data.label;
+  document.getElementById('node-saveButton').onclick = saveNodeData.bind(this, data, callback);
+  document.getElementById('node-cancelButton').onclick = cancelAction.bind(this, callback);
+  document.getElementById('node-popUp').style.display = 'block';
+}
+
+// Callback passed as parameter is ignored
+function clearNodePopUp() {
+  document.getElementById('node-saveButton').onclick = null;
+  document.getElementById('node-cancelButton').onclick = null;
+  document.getElementById('node-popUp').style.display = 'none';
+}
+
+function cancelNodeEdit(callback) {
+  clearNodePopUp();
+  callback(null);
+}
+
+function saveNodeData(data, callback) {
+  data.label = document.getElementById('node-label').value;
+  clearNodePopUp();
+  callback(data);
+}
+
+function editEdgeWithoutDrag(data, callback) {
+  // filling in the popup DOM elements
+  document.getElementById('edge-label').value = data.label;
+  document.getElementById('edge-saveButton').onclick = saveEdgeData.bind(this, data, callback);
+  document.getElementById('edge-cancelButton').onclick = cancelEdgeEdit.bind(this,callback);
+  document.getElementById('edge-popUp').style.display = 'block';
+}
+
+function clearEdgePopUp() {
+  document.getElementById('edge-saveButton').onclick = null;
+  document.getElementById('edge-cancelButton').onclick = null;
+  document.getElementById('edge-popUp').style.display = 'none';
+}
+
+function cancelEdgeEdit(callback) {
+  clearEdgePopUp();
+  callback(null);
+}
+
+function saveEdgeData(data, callback) {
+  if (typeof data.to === 'object')
+  data.to = data.to.id
+  if (typeof data.from === 'object')
+  data.from = data.from.id
+  data.label = document.getElementById('edge-label').value;
+  clearEdgePopUp();
+  callback(data);
+}
+/* FIN FONCTIONNALITES VIS JS */
+</script>
+
+</body>
+</html>

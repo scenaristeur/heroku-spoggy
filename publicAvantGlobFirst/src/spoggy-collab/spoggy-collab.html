@@ -1,0 +1,39 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./collab-behavior.html">
+<dom-module id="spoggy-collab">
+  <link rel="lazy-import" group="lazy" href="./collab-import.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-chat/spoggy-chat.html">
+
+  <template>
+    <spoggy-chat></spoggy-chat>
+  </template>
+  <script>
+  /**
+  * `spoggy-collab`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyCollab extends Polymer.LazyImportsMixin(CollabBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-collab'; }
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+        this.agentSocket = new SocketAgent('agentSocket', this);
+      });
+    }
+  }
+
+  window.customElements.define(SpoggyCollab.is, SpoggyCollab);
+  </script>
+</dom-module>

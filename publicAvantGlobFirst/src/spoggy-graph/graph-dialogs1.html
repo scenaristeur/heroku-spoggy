@@ -1,0 +1,109 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!--<script src="agents/GraphDialogsAgent.js"></script>-->
+<!--<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">-->
+<!--<link rel="import" href="./graph-dialogs-behavior.html">-->
+
+<link rel="import"  href="../../bower_components/paper-button/paper-button.html">
+<link rel="import"  href="../../bower_components/paper-input/paper-input.html">
+<link rel="import"  href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import"  href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import"  href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import"  href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import"  href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import"  href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import"  href="../../bower_components/paper-checkbox/paper-checkbox.html">
+
+<link rel="import"  href="../../bower_components/core-icon/core-icon.html">
+<link rel="import"  href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import"  href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import"  href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import"  href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+
+<link rel="import"  href="../../bower_components/paper-swatch-picker/paper-swatch-picker.html">
+<link rel="import"  href="../../bower_components/neon-animation/web-animations.html">
+
+<link rel="import" href="styles/graphe-styles.html">
+
+<dom-module id="graph-dialogs">
+
+  <template>
+
+
+
+
+
+        <!--    <paper-dialog id="eye">
+        <spog-eye ></spog-eye>
+        <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+        <paper-button dialog-dismiss raised>Fermer</paper-button>
+      </div>
+    </paper-dialog>
+    -->
+
+
+
+  </template>
+
+  <script>
+    /**
+     * `spoggy-map`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class GraphDialogs extends Polymer.Element {
+      static get is() { return 'graph-dialogs'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'graph-dialogs'
+          },
+            centralGravityValue: {
+                    type: Number,
+                    observer: "sendSettings"
+                  },
+                  springLengthValue: {
+                    type: Number,
+                    observer: "sendSettings"
+                  },
+                  springConstantValue: {
+                    type: Number,
+                    observer: "sendSettings"
+                  },
+                  nodeDistanceValue: {
+                    type: Number,
+                    observer: "sendSettings"
+                  },
+                  dampingValue: {
+                    type: Number,
+                    observer: "sendSettings"
+                  }
+        };
+      }
+      constructor(){
+        super();
+      //  this.agentGraphdialogs = new GraphdialogsAgent('agentGraphialogs', this);
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+
+        });
+      }
+      _deferred(){
+      /*  this.importLazyGroup('lazyGraphDialogs').then((results) => {
+          console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+        });*/
+          //    this._defaultPhysicValues();
+        //  this.initAgents()
+      }
+    }
+
+    window.customElements.define(GraphDialogs.is, GraphDialogs);
+  </script>
+</dom-module>
