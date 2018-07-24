@@ -77,7 +77,7 @@
     margin: 0 20px;
   }
 
-  .drawer-list a {
+  .drawer-list paper-button {
     display: block;
     padding: 0 16px;
     text-decoration: none;
@@ -85,7 +85,7 @@
     line-height: 40px;
   }
 
-  .drawer-list a.iron-selected {
+  .drawer-list paper-button.iron-selected {
     color: black;
     font-weight: bold;
   }
@@ -212,7 +212,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 <app-drawer-layout fullbleed narrow="{{narrow}}">
   <!-- Drawer content -->
   <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-    <app-toolbar>Menu</app-toolbar>
+    <app-toolbar>  <div main-title>Spoggy</div></app-toolbar>
     <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
       <!--<a name="view1" href="[[rootPath]]view1">View One</a>
       <a name="view2" href="[[rootPath]]view2">View Two</a>
@@ -237,16 +237,18 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   <!-- Main content -->
   <app-header-layout has-scrolling-region>
 
-    <app-header slot="header" condenses reveals effects="waterfall">
+    <app-header slot="header" condenses fixed effects="waterfall">
       <app-toolbar>
         <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
-        <div main-title>Spoggy</div>
+
         <spoggy-input >
           ... Chargement de l'interface  ... <br>
           Attendez jusqu'au chargement du cercle rose
         </spoggy-input>
       </app-toolbar>
+
     </app-header>
+
     <div hidden$="[[!isEmpty(mode)]]">
       <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
         <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
@@ -270,9 +272,9 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   <div hidden$="[[isEmpty(mode)]]">
     <spoggy-sparql></spoggy-sparql>
     <spoggy-presentation></spoggy-presentation>
-    <spoggy-endpoints></spoggy-endpoints>
+    <spoggy-endpoints  hidden$="[[!isEqual(mode,'global')]]"></spoggy-endpoints>
 
-    <spoggy-graph>
+    <spoggy-graph hidden$="[[hideGraph(hidePseudo,hideRejoindre, hideCreer)]]">
       ... Chargement du système ... <br>
     </spoggy-graph>
 
@@ -364,6 +366,9 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
       this.dispatchEvent(new CustomEvent('import-loaded', results));
     });
     this.initAgents();
+    this.hidePseudo = true;
+    this.hideRejoindre = true;
+    this.hideCreer = true;
   }
   initAgents(){
     this.agentApp.send('agentHello', 'Hello agentHello!');
@@ -382,6 +387,10 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   }
   isEqual(mode, test){
     return mode == test;
+  }
+  hideGraph(hidePseudo, hidRejoindre, hideCreer){
+    var hide = !(this.hidePseudo && this.hideRejoindre && this.hideCreer);
+    return hide;
   }
 
   roomEdit(){
@@ -409,6 +418,10 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         this.agentApp.send('agentSocket', {type: "connect"});
         console.log("SPOG-SOCKET");
 
+        this.hidePseudo = false;
+        this.hideRejoindre = false;
+        this.hideCreer = false;
+
         // expected output: "Mangoes and papayas are $2.79 a pound."
         break;
         case 'global':
@@ -428,6 +441,9 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         this.room = "";
         this.pseudo = "";
         this.agentApp.send('agentSocket', {type: "disconnect"});
+        this.hidePseudo = true;
+        this.hideRejoindre = true;
+        this.hideCreer = true;
         break;
         case 'global':
         console.log('deconnect endpoint');

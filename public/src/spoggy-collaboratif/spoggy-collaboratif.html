@@ -119,16 +119,17 @@
 
 
 
+
   <paper-card hidden$="[[hidePseudo]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
     <div class="card-content">
       <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Choisissez un pseudo :  </h2>
       </div>
 
-      <paper-input label="Entrez un pseudo" on-change="pseudoChanged" value={{pseudo::change}}></paper-input>
+      <paper-input label="Entrez un pseudo" id="pseudoInput" value={{pseudo}}></paper-input>
     </div>
     <div class="horizontal justified">
 
-        <paper-button class="cafe-reserve"  >Suivant</paper-button>
+        <paper-button class="cafe-reserve" on-tap="pseudoChanged">Enregistrer</paper-button>
     </div>
   </paper-card>
 
@@ -195,7 +196,7 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
       },
       pseudo: {
         type: String,
-        value: " ",
+        value: "",
         notify: true
       },
       hidePseudo: {
@@ -251,12 +252,15 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
 
   pseudoChanged(){
     // test a faire pour voir si deconnecter ou changer de nom si deja connecté
+    this.pseudo = this.$.pseudoInput.value;
     console.log(this.pseudo)
+  this.hidePseudo = true;
     if (this.pseudo.length == 0 || this.pseudo == undefined){
     //  this.$.pseudoPopup.toggle();
+      console.log(this.pseudo)
     this.hidePseudo = false;
     }else{
-      this.hidePseudo = true;
+      console.log(this.pseudo)
     this.agentCollaboratif.send('agentSocket', {type: "adduser", pseudo: this.pseudo, room: this.room});
     this.agentCollaboratif.send('agentChat', {type: "changePseudo", pseudo: this.pseudo});
   }

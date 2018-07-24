@@ -52,9 +52,15 @@ AppAgent.prototype.receive = function(from, message) {
   }
 
   switch(message.type){
-    case 'recherche':
+    case 'setMode':
     console.log(message)
-    this.app.lanceRecherche(message)
+
+    if (this.app.mode == ""){
+      console.log(this.app.mode)
+        this.app.mode = message.value;
+    }
+
+  //  this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
     break;
     case 'show':
     //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });

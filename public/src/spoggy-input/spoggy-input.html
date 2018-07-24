@@ -32,53 +32,130 @@
     .suffix {
 
     }
+    paper-input {
+      display: block;
+      /*box-sizing: border-box;
+      border: solid 1px gray;
+
+      --paper-input-container: {
+      border: none;
+      padding: 15px 20px;
+    };
+
+    --paper-font-subhead: {
+    font-size: 100%;
+  };
+
+  --paper-input-container-color: rgb(64, 64, 64);
+  --paper-input-container-focus-color: rgb(64, 64, 64);
+
+  --paper-input-container-underline-focus: {
+  display: none;
+};
+
+--paper-input-container-underline: {
+display: none;
+};
+
+--paper-font-caption: {
+display: none;
+};
+
+--paper-input-error: {
+display: block;
+color: red;
+top: 1.5em;
+right: -20px !important;
+left: -20px !important;
+font-size: 16px;
+};*/
+
+--paper-input-container-label: {
+  color: red;
+};
+/*
+--paper-input-container-label-floating: {
+-webkit-transform: none;
+transform: none;
+width: var(--comps-input-label-width, 100px);
+};*/
+/*
+--paper-transition-easing: {
+-webkit-transform: none;
+transform: none;
+-webkit-transition: 0 0;
+transition: 0 0;
+
+-webkit-transform-origin: 50% 50% 0;
+transform-origin: 50% 50% 0;
+width: var(--comps-input-label-width, 100px);
+}
+
+--paper-input-container-input: {
+width: calc(100% - var(--comps-input-label-width, 100px));
+line-height: inherit;
+};
+
+--paper-input-container-invalid-color: red;*/
+--paper-input-container-input: {
+  background-color: rgb(255,255,255,0.3);
+}
+
+@apply(--comps-input);
+}
+/*
+paper-input[focused] {
+border: solid 1px blue;
+}*/
 
 
-    </style>
-
-    <center>
-      <paper-input id="inputMessage"
-      label="Recherche"
-      autofocus
-      style="max-width:800px;text-align:left;"
-      on-keydown="checkForEnter">
-      <paper-icon-button slot="prefix" on-tap="toggleInput" icon="search"></paper-icon-button>
-      <paper-icon-button slot="prefix" on-tap="toggleInput" icon="create"></paper-icon-button>
-      <paper-icon-button slot="suffix" on-tap="clearInput" icon="clear"></paper-icon-button>
-      <paper-icon-button slot="suffix" on-tap="traiteMessage" icon="arrow-forward"></paper-icon-button>
-    </paper-input>
-  </center>
+</style>
 
 
-  <!--    <chat-window
-  id = "chat"
-  class="styled"
-  author="me"
-  single-line
-  input-text="{{text}}"
-  messages="[[messages]]"
-  on-send="sendMsg"
-  ></chat-window>-->
-  <!--
-  <chat-input
-  author="me"
-  class="styled"
-  single-line
-  single-line="[[singleLine]]"
-  icon="[[sendIcon]]"
-  text="{{inputText}}"
-  on-send="sendMsg"></chat-input>
+  <!--     style="max-width:800px;text-align:left;" -->
+  <paper-input id="inputMessage"
+  class="inputMessage"
+  label="Recherche"
+  autofocus
+  style="text-align:left;  min-width: 500px;"
+  on-keydown="checkForEnter">
+  <paper-icon-button slot="suffix" on-tap="traiteMessage" icon="create"></paper-icon-button>
+  <paper-icon-button slot="suffix" on-tap="searchInput" icon="search"></paper-icon-button>
+  <paper-icon-button slot="suffix" on-tap="clearInput" icon="clear"></paper-icon-button>
+</paper-input>
 
-  <chat-messages
-  class="styled"
-  id = "chat"
-  author="[[author]]"
-  author-icon="[[authorIcon]]"
-  others-icons="[[othersIcons]]"
-  default-icon="[[defaultIcon]]"
-  messages="[[messages]]"
-  date-format="[[dateFormat]]"
-  auto-scroll="[[autoScroll]]">
+
+
+
+<!--    <chat-window
+id = "chat"
+class="styled"
+author="me"
+single-line
+input-text="{{text}}"
+messages="[[messages]]"
+on-send="sendMsg"
+></chat-window>-->
+<!--
+<chat-input
+author="me"
+class="styled"
+single-line
+single-line="[[singleLine]]"
+icon="[[sendIcon]]"
+text="{{inputText}}"
+on-send="sendMsg"></chat-input>
+
+<chat-messages
+class="styled"
+id = "chat"
+author="[[author]]"
+author-icon="[[authorIcon]]"
+others-icons="[[othersIcons]]"
+default-icon="[[defaultIcon]]"
+messages="[[messages]]"
+date-format="[[dateFormat]]"
+auto-scroll="[[autoScroll]]">
 </chat-messages>
 -->
 <!--<div style="align:right">
@@ -122,7 +199,7 @@ constructor(){
 }
 _deferred(){
   this.initAgents()
-  this.$.inputMessage.label = "Création : saisissez 3 mots, une virgule et Entrée";
+  this.$.inputMessage.label = "3 mots, une virgule et Entrée";
   this.mode = "create"
 }
 initAgents(){
@@ -133,8 +210,9 @@ checkForEnter(e) {
   // check if 'enter' was pressed
   if (e.keyCode === 13) {
     // enter pressed!
-  //  if (this.mode == "search"){
-      this.traiteMessage();
+    //  if (this.mode == "search"){
+    this.traiteMessage();
+    this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
     //}
 
   }
