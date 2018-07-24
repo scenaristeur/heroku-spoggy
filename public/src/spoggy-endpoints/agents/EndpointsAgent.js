@@ -54,7 +54,7 @@ EndpointsAgent.prototype.receive = function(from, message) {
   switch(message.type){
     case 'recherche':
     console.log(message)
-  //  this.app.lanceRecherche(message)
+    this.app.lanceRecherche(message)
     break;
     case 'show':
     //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });

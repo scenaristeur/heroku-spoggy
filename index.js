@@ -16,7 +16,10 @@ var io = require('socket.io')(server);
 
 
 /* CONFIGURATION DU SERVEUR WEB */
-var port = process.env.PORT || 3000;
+//var port = process.env.PORT || 3000;
+/* CONFIGURATION DU SERVEUR WEB */
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+ ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 
 if (useLevelgraph){
@@ -69,8 +72,9 @@ var nbLastMessages = 10; // nombre de messages à afficher pour les nouveaux con
 var limitInit = 0 // nbre d'elements à recuperer dans la base lors du login d'un user, 0 pour sans limite
 
 
-server.listen(port, function() {
-  console.log('Server listening at port %d', port);
+server.listen(port, ip, function() {
+  console.log('Server running on http://%s:%s', ip, port);
+//  console.log('Server listening at port %d', port);
 });
 
 // Routing
