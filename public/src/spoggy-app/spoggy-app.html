@@ -1,21 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<script src="../../bower_components/loglevel-debug/dist/loglevel-debug.js"></script>
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
-<!--<link rel="import" href="../spoggy-graph/spoggy-graph.html">
-<link rel="import"  href="../spoggy-sparql/spoggy-sparql.html">-->
-
-<script src="agents/AppAgent.js"></script>
-
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/paper-styles/color.html">
-<link rel="import" href="../../bower_components/paper-styles/typography.html">
-
-<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../spoggy-graph/spoggy-graph.html">
+<link rel="import"  href="../spoggy-sparql/spoggy-sparql.html">
 
 <dom-module id="spoggy-app">
-  <!--<link  rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
+  <link  rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
 
   <link rel="lazy-import" group="lazy" href="../spoggy-dialogs/spoggy-dialogs.html">
 
@@ -27,117 +18,17 @@
   <link rel="lazy-import" group="lazy" href="../spoggy-endpoints/spoggy-endpoints.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-preferences/spoggy-preferences.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-historique/spoggy-historique.html">
+
+
+  <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
+  <!--
+  <link rel="lazy-import" group="lazy" href="../spoggy-recherche/spoggy-recherche.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-collab/spoggy-collab.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-mode/spoggy-mode.html">
 -->
-
-<link rel="lazy-import" group="lazy" href="../../bower_components/paper-card/paper-card.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/color.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/typography.html">
-
-<link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse/iron-collapse.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/communication-icons.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/social-icons.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
-
-<link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
-
-
-<link rel="lazy-import" group="lazy" href="../spoggy-global/spoggy-global.html">
-<link rel="lazy-import" group="lazy" href="../spoggy-collaboratif/spoggy-collaboratif.html">
-<link rel="lazy-import" group="lazy"  href="../spoggy-solo/spoggy-solo.html">
-
-
 <template>
-  <style include="shared-styles">
-  /* STYLES A NETTOYER car récupéré tel quel DE SPOGGY-ENDPOINT */
-  /*:host {
-  display: block;
-
-  padding: 10px;
-  }*/
-
-  .flex-wrap {
-    @apply --layout-horizontal;
-    @apply --layout-wrap;
-    /*  @apply --layout-fit;*/
-    @apply --layout-center-justified;
-
-  }
-
-  .vertical-section-container {
-    max-width: 400px;
-  }
-  paper-card {
-    max-width: 450px;
-    margin: 10px;
-    --paper-card-header-image: {
-      width: 50%;
-    };
-  }
-  .horizontal {
-    @apply --layout-horizontal;
-  }
-  .flex {
-    @apply --layout-flex;
-  }
-  .justified {
-    @apply --layout-justified;
-  }
-  .amber {
-    background: var(--paper-amber-900);
-  }
-  .lime {
-    background: var(--paper-lime-500);
-  }
-  .cyan {
-    background: var(--paper-cyan-500);
-  }
-  .dark {
-    background: var(--paper-blue-grey-500);
-  }
-  paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
-    color: white;
-    --paper-card-header-color: white;
-  }
-  paper-checkbox {
-    display: block;
-    margin-bottom: 4px;
-    --paper-checkbox-label-color: green;
-    --paper-checkbox-unchecked-color: red;
-  }
-  paper-icon-button {
-    color: var(--paper-grey-600);
-  }
-  paper-icon-button.white {
-    color: white !important;
-  }
 
 
-}
-</style>
-<style is="custom-style">
-.cafe-header { @apply --paper-font-headline; }
-.cafe-light { color: var(--paper-grey-600); }
-.cafe-location {
-  float: right;
-  font-size: 15px;
-  vertical-align: middle;
-}
-.cafe-reserve { color: var(--google-blue-500); }
-iron-icon.star {
-  --iron-icon-width: 16px;
-  --iron-icon-height: 16px;
-  color: var(--paper-amber-500);
-}
-iron-icon.star:last-of-type { color: var(--paper-grey-500); }
-</style>
-
-<!--  avant GlobalFirst -->
-<!--
   <spoggy-input>
     ... Chargement de l'interface  ... <br>
     Attendez jusqu'au chargement du cercle rose
@@ -156,68 +47,27 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
 <spoggy-preferences></spoggy-preferences>
 <spoggy-historique></spoggy-historique>
+
+
+
+  <!--<spoggy-recherche></spoggy-recherche>-->
+  <!--<spoggy-hello></spoggy-hello>-->
+  <!--
+  <spoggy-mode></spoggy-mode>
+
+
 -->
-<!-- Fin avant GlobalFirst -->
-
-
-
-<paper-button raised  hidden$="[[isEmpty(mode)]]" id="null" on-tap="delmode">[[mode]]</paper-button>
-<div class="container flex-wrap">
-
-
-  <spoggy-global  mode={{mode}}></spoggy-global>
-  <spoggy-collaboratif  mode={{mode}}></spoggy-collaboratif>
-  <spoggy-solo  mode={{mode}}></spoggy-solo>
-
-<!--
-<script>
-function _toggle() {
-var moreInfo = document.getElementById('more-info');
-var iconButton = Polymer.dom(event).localTarget;
-iconButton.icon = moreInfo.opened ? 'expand-more': 'expand-less';
-moreInfo.toggle();
-}
-</script>
--->
-
-<!--</template>-->
-
-</div>
-
-
-
 </template>
 <script>
 class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   static get is() { return 'spoggy-app'; }
-  static get properties() {
-    return {
-      mode: {
-        type: String,
-        value: "",
-        notify:true
-      },
-      debuglevel: {
-        type: Number,
-        value: 0
-      }
-    }
-  }
-
-
-
   buttonPressed() {
     this.importLazyGroup('lazy').then((results) => {
       this.dispatchEvent(new CustomEvent('import-loaded', results));
     });
   }
-  isEmpty(value){
-  //  console.log(value)
-    return value == undefined || value.length == 0;
-  }
   constructor(){
     super();
-        this.agentApp = new AppAgent('agentApp', this);
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });
@@ -226,17 +76,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     this.importLazyGroup('lazy').then((results) => {
       this.dispatchEvent(new CustomEvent('import-loaded', results));
     });
-      this.initAgents();
   }
-  initAgents(){
-    this.agentApp.send('agentHello', 'Hello agentHello!');
-  }
-
-  delmode(e){
-    this.mode = "";
-  }
-
-
 }
 window.customElements.define(SpoggyApp.is, SpoggyApp);
 </script>

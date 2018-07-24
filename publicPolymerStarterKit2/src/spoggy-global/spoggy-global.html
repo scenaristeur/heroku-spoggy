@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="spoggy-global">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-global`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyGlobal extends Polymer.Element {
+      static get is() { return 'spoggy-global'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-global'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(SpoggyGlobal.is, SpoggyGlobal);
+  </script>
+</dom-module>
