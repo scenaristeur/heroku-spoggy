@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY appliSmag0rdf "http://smag0.blogspot.fr/NS/appliSmag0rdf#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://smag0.blogspot.fr/NS/appliSmag0rdf#"
+     xml:base="http://smag0.blogspot.fr/NS/appliSmag0rdf"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:appliSmag0rdf="http://smag0.blogspot.fr/NS/appliSmag0rdf#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://smag0.blogspot.fr/NS/appliSmag0rdf">
+        <owl:versionIRI rdf:resource="http://smag0.blogspot.fr/NS/appliSmag0rdf/1.0.0"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#hasComposant -->
+
+    <owl:ObjectProperty rdf:about="&appliSmag0rdf;hasComposant"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#hasFirst -->
+
+    <owl:ObjectProperty rdf:about="&appliSmag0rdf;hasFirst"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#hasNext -->
+
+    <owl:ObjectProperty rdf:about="&appliSmag0rdf;hasNext"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#hasUseCase -->
+
+    <owl:ObjectProperty rdf:about="&appliSmag0rdf;hasUseCase"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Action -->
+
+    <owl:Class rdf:about="&appliSmag0rdf;Action">
+        <rdfs:subClassOf rdf:resource="&appliSmag0rdf;Noeud_A_cacher_pour_une_meilleure_Visualisation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Application -->
+
+    <owl:Class rdf:about="&appliSmag0rdf;Application"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#DepartGraphe -->
+
+    <owl:Class rdf:about="&appliSmag0rdf;DepartGraphe"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Noeud_A_cacher_pour_une_meilleure_Visualisation -->
+
+    <owl:Class rdf:about="&appliSmag0rdf;Noeud_A_cacher_pour_une_meilleure_Visualisation"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Projet -->
+
+    <owl:Class rdf:about="&appliSmag0rdf;Projet"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#UseCase -->
+
+    <owl:Class rdf:about="&appliSmag0rdf;UseCase"/>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur -->
+
+    <owl:Class rdf:about="&appliSmag0rdf;Utilisateur"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#ApplicationCreator -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;ApplicationCreator">
+        <rdf:type rdf:resource="&appliSmag0rdf;Application"/>
+        <rdf:type rdf:resource="&appliSmag0rdf;Projet"/>
+        <hasUseCase rdf:resource="&appliSmag0rdf;Utilisateur_Desire_Une_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Acteurs -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Acteurs">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Environnement"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Vues"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Actions -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Actions">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;UseCase"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Acteurs"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Actions"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Chaque_Ecran"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Enchainement_Ecran"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Environnement"/>
+        <hasFirst rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Fonctionnalites"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Fonctionnalites"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Prerequis"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Procedure"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Sources"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Vues"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Visualise_Application"/>
+        <hasComposant rdf:resource="&appliSmag0rdf;Utilisateur_decrit_Ressources"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Chaque_Ecran -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Chaque_Ecran">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Visualise_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Enchainement_Ecran -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Enchainement_Ecran">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Chaque_Ecran"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Environnement -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Environnement">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Acteurs"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Vues"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Fonctionnalites -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Fonctionnalites">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Procedure"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Prerequis -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Prerequis">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Procedure -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Procedure">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Acteurs"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Resultat_Attendu -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Resultat_Attendu">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Enchainement_Ecran"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Sources -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Sources">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Resultat_Attendu"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Decrit_Vues -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Decrit_Vues">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Sources"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_decrit_Ressources"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Desire_Une_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Desire_Une_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;DepartGraphe"/>
+        <rdf:type rdf:resource="&appliSmag0rdf;UseCase"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Met_en_place_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Met_en_place_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Modifie_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Modifie_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Modifie_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Partage_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Partage_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Telecharge_ou_Publie_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Telecharge_ou_Publie_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;UseCase"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Met_en_place_Application"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Partage_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Valide_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Valide_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;UseCase"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Telecharge_ou_Publie_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_Visualise_Application -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_Visualise_Application">
+        <rdf:type rdf:resource="&appliSmag0rdf;UseCase"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Application"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Valide_Application"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://smag0.blogspot.fr/NS/appliSmag0rdf#Utilisateur_decrit_Ressources -->
+
+    <owl:NamedIndividual rdf:about="&appliSmag0rdf;Utilisateur_decrit_Ressources">
+        <rdf:type rdf:resource="&appliSmag0rdf;Action"/>
+        <hasNext rdf:resource="&appliSmag0rdf;Utilisateur_Decrit_Resultat_Attendu"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.0) http://owlapi.sourceforge.net -->
+
