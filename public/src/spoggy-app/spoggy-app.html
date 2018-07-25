@@ -209,7 +209,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
 
 <!--<div hidden$="[[isEmpty(mode)]]" > -->
-<app-drawer-layout fullbleed narrow="{{narrow}}" >
+<app-drawer-layout fullbleed narrow="{{narrow}}">
   <!-- Drawer content -->
   <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
     <app-toolbar>  <div main-title>Spoggy</div></app-toolbar>
@@ -225,19 +225,20 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
       <paper-button id="global" class="cafe-reserve" on-tap="_toggleHelp">Aide</paper-button>
 
     </iron-selector>
+
     <fieldset hidden$="[[isEmpty(mode)]]">
       <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
       </legend>
       <div hidden$="[[isEmpty(pseudo)]]">
-        - Pseudo : [[pseudo]] <paper-icon-button   icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
+        - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
       </div>
       <div hidden$="[[isEmpty(room)]]">
-        - Graphe : [[room]] <paper-icon-button   icon="icons:create" on-tap="roomEdit"></paper-icon-button>
+        - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
       </div>
-    </fieldset>
-
-
-
+      <div hidden$="[[isEmpty(endpointName)]]">
+        - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
+      </div>
+</fieldset>
 
     <iron-collapse-button>
       <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages</h3>
@@ -307,10 +308,6 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
     </div>
 
   </fieldset>
-
-
-
-
 </app-drawer>
 
 <!-- Main content -->
@@ -346,7 +343,11 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   hide-rejoindre="{{hideRejoindre}}"
   hide-creer="{{hideCreer}}">
 </spoggy-collaboratif>
-<spoggy-global  mode={{mode}} hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
+
+<spoggy-global
+ mode={{mode}}
+  hide-endpoints="{{hideEndpoints}}"
+  hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
 <div hidden$="[[isEmpty(mode)]]">
   <spoggy-sparql></spoggy-sparql>
@@ -425,6 +426,15 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
       hideCreer: {
         type: Boolean,
         notify: true
+      },
+      hideEndpoints: {
+        type: Boolean,
+        notify: true,
+        value: false
+      },
+      endpointName: {
+        type: String,
+        value: ""
       }
     }
   }
@@ -476,15 +486,13 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     this.hideRejoindre = false;
     this.hideCreer = false;
   }
+  endpointEdit(){
+    console.log(this.hideEndpoints)
+    this.hideEndpoints = false;
+  }
 
   pseudoEdit(){
     this.hidePseudo = false;
-  }
-  _toggleHelp(){
-    if (this.mode.length == 0){
-      this.mode = "solo";
-    }
-    this.agentApp.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
   }
 
   _modeChanged(newMode, oldMode){
@@ -532,7 +540,8 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         break;
         case 'global':
         console.log('deconnect endpoint');
-
+        this.hideEndpoints = true;
+        this.endpointName = "";
         break;
         default:
       }
