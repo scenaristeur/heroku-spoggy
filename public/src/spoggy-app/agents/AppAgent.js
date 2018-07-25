@@ -61,7 +61,12 @@ AppAgent.prototype.receive = function(from, message) {
 
   //  this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
     break;
-    case 'show':
+      //this.agentGlobal.send('agentApp', {type: 'setEndpoint', endpoint: this.endpoint.name });
+case 'setEndpoint' :
+
+this.app.endpointName = message.value.name;
+      break;
+  /*  case 'show':
     //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
     var el = message.element;
     var element = this.app.$[el];
@@ -72,7 +77,7 @@ AppAgent.prototype.receive = function(from, message) {
     var el = message.element;
     var element = this.app.$[el];
     this.app.hideEndpointsList(element);
-    break;
+    break; */
     default:
     console.log(message);
   }

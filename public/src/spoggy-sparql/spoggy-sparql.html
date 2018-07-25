@@ -3,7 +3,8 @@
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 
 <link rel="import" href="./sparql-behavior.html">
-  <link  rel="import"  href="../spoggy-virtuoso/spoggy-virtuoso.html">
+<link  rel="import"  href="../spoggy-virtuoso/spoggy-virtuoso.html">
+<link  rel="import"  href="../spoggy-fuseki/spoggy-fuseki.html">
 
 <dom-module id="spoggy-sparql">
   <link rel="lazy-import" group="lazy"  href="../../bower_components/iron-ajax/iron-ajax.html">
@@ -83,6 +84,7 @@
     <spoggy-sparqlupdate></spoggy-sparqlupdate>
     <spoggy-sparqlstatements ></spoggy-sparqlstatements>
     <spoggy-virtuoso ></spoggy-virtuoso>
+    <spoggy-fuseki></spoggy-fuseki>
 
   </template>
 
@@ -109,7 +111,7 @@
 
     constructor(){
       super();
-          Polymer.RenderStatus.afterNextRender(this, function() {
+      Polymer.RenderStatus.afterNextRender(this, function() {
         // When possible, use afterNextRender to defer non-critical
         // work until after first paint.
         this._deferred();
@@ -120,8 +122,8 @@
       this.importLazyGroup('lazy').then((results) => {
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
-              this.agentSparql = new SparqlAgent('agentSparql', this);
-            console.log(this.agentSparql);
+        this.agentSparql = new SparqlAgent('agentSparql', this);
+        console.log(this.agentSparql);
         this.agentSparql.send('agentHello', 'Hello, agentHello !')
       });
       //  console.log("agent DATA defered")

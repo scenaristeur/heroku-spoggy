@@ -115,14 +115,162 @@
   }
   iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   </style>
+  <div hidden$="[[hideEndpoints]]">
+    <paper-card   image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+      <div class="card-content">
+        <div class="cafe-header"> <h2 style="margin: 0;color: #0D578B;">Selectionner un endpoint :</h2>
+        </div>
+
+        <paper-item  hidden$="[[!isEqual(endpoints.length,0)]]" style="height:100px;" > Chargement de la liste des endpoints</paper-item>
+        <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(endpoints.length,0)]]" >
+          <template is="dom-repeat" items="[[endpoints]]">
+            <paper-item endpoint="[[item.name]]" on-tap="_showDetails">
+              <!--<paper-checkbox checked="{{item.actif}}" disabled></paper-checkbox>--> [[item.name]] ([[item.courte]])<!-- (status)-->
+            </paper-item>
+          </template>
+        </paper-listbox>
+      </div>
+    </paper-card>
+
+
+    <paper-card hidden$="[[isEmpty(endpoint.name)]]" image="[[image(endpoint.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+      <div class="card-content">
+        <div class="cafe-header">[[endpoint.name]]
+          <div class="cafe-location cafe-light">
+            <iron-icon icon="communication:location-on"></iron-icon>
+            <span>type: [[endpoint.type]]</span>
+          </div>
+        </div>
+        <div class="cafe-rating">
+          <iron-icon class="star" icon="star"></iron-icon>
+          <iron-icon class="star" icon="star"></iron-icon>
+          <iron-icon class="star" icon="star"></iron-icon>
+          <iron-icon class="star" icon="star"></iron-icon>
+          <iron-icon class="star" icon="star"></iron-icon>
+        </div>
+        <p>・[[endpoint.url]] <br>・lecture: [[endpoint.read]] / écriture: [[endpoint.write]]</p>
+        <paper-checkbox checked="{{endpoint.actif}}">Actif </paper-checkbox>
+        <p class="cafe-light">
+          [[endpoint.description]]</p>
+          <p hidden$="[[isEmpty(endpoint.plus)]]"><a href='{{endpoint.plus}}' target="_blank">plus d'infos</a></p>
+        </div>
+        <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
+          <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Explorer</paper-button>
+          <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="rechercher">Rechercher</paper-button>
+        </div>
+
+        <div class="card-actions">
+          <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'fuseki')]]">
+            <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Lister les datasets</paper-button>
+          </div>
 
 
 
+          <iron-collapse-button hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Les Requêtes de Karl et Cécile</h3>
+            <div slot="collapse-content">
+              <paper-textarea label="Requête d'exploration" value="{{endpoint.exploreQuery.query}}"></paper-textarea>
+              <paper-textarea label="Requête de recherche textuelle" value="{{endpoint.searchQuery.query}}"></paper-textarea>
+
+              Et quand je clique sur un noeud de type :
+              <template is="dom-repeat" endpoints="[[endpoint.clickonNode]]" as="clickonNode">
+                <iron-collapse-button>
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> {{clickonNode.type}}</h3>
+                  <div slot="collapse-content">
+                    <!--<paper-item>-->
+                    <paper-input label="Detecteur" style="width:100%" value="{{clickonNode.detecteur}}"> </paper-input>
+                    <paper-textarea label="Requête" value="{{clickonNode.requete}}"></paper-textarea>
+                    <paper-input label="Lien créé" style="width:100%" value="{{clickonNode.lienCree}}"> </paper-input>
+                    <!--</paper-item>-->
+                  </div>
+                </iron-collapse-button>
+              </template>
+            </div>
+          </iron-collapse-button>
+
+        </div>
+        <!--  <div class="card-actions">
+
+        <p>Tonight's availability</p>
+        <div class="horizontal justified">
+        <paper-icon-button icon="icons:event"></paper-icon-button>
+        <paper-button>5:30PM</paper-button>
+        <paper-button>7:30PM</paper-button>
+        <paper-button>9:00PM</paper-button>
+        <paper-button class="cafe-reserve">Partager</paper-button>
+        <paper-button class="cafe-reserve">Explorer!</paper-button>
+      </div>
+
+      <div class="horizontal justified">
+      <paper-icon-button icon="favorite"></paper-icon-button>
+      <paper-icon-button icon="bookmark"></paper-icon-button>
+      <paper-icon-button icon="social:share"></paper-icon-button>
 
 
+      <paper-icon-button icon="expand-more" title="more info" onclick="_toggle()" style="float:right;">
+    </paper-icon-button>
+    <iron-collapse id="more-info" style="width:100%;">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
+  </iron-collapse>
 
+</div>
+
+</div> -->
+</paper-card>
+
+<div hidden$="[[hideDatasets]]">
+  <paper-card   image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+    <div class="card-content">
+      <div class="cafe-header">Selectionner un dataset :
+      </div>
+      [[error]]
+      <paper-item  hidden$="[[!isEqual(datasets.length,0)]]" style="height:100px;" > Chargement de la liste des datasets</paper-item>
+      <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content"  attr-for-selected="value" selected="{{dataset}}">
+        <template is="dom-repeat" items="[[datasets]]">
+          <paper-item  value="[[item.ds_name]]" on-tap="_updateUrl">[[item.ds_name]]</paper-item>
+        </template>
+      </paper-listbox>
+    </div>
+    ping: [[ping]]
+  </paper-card>
+</div>
+
+<div  id="proposer" class="card" >
+  <h2>Proposez votre propre Endpoint</h2>
+  <div class="card-content">
+    <p>Installer un Endpoint Sparql :
+      <ul>
+        <li><a href="https://jena.apache.org/documentation/fuseki2/index.html"
+          target="_blank">Fuseki</a></li>
+          <li><a href="https://virtuoso.openlinksw.com/howto/" target="_blank">Virtuoso</a></li>
+          <li><a href="https://wiki.blazegraph.com/wiki/index.php/Main_Page" target="_blank">BlazeGraph</a></li>
+        </ul></p>
+        <paper-input label="Url Sparql"></paper-input>
+        type : fuseki, ...
+      </div>
+      <div class="card-actions">
+        <paper-button>Verifier</paper-button>
+        <paper-button disabled>Proposer</paper-button>
+        <br>
+        <paper-icon-button icon="social:share"></paper-icon-button>
+        <!--
+        <paper-icon-button icon="expand-more" title="more info" onclick="_toggle()" style="float:right;">
+      </paper-icon-button>
+      <iron-collapse id="more-info" style="width:100%;">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
+    </iron-collapse>
+    <script>
+    function _toggle() {
+    var moreInfo = document.getElementById('more-info');
+    var iconButton = Polymer.dom(event).localTarget;
+    iconButton.icon = moreInfo.opened ? 'expand-more': 'expand-less';
+    moreInfo.toggle();
+  }
+</script>-->
+</div>
+</div>
+</div>
 </template>
-
 <script>
 /**
 * `spoggy-global`
@@ -156,60 +304,322 @@ class SpoggyGlobal extends Polymer.LazyImportsMixin(Polymer.Element) {
           "smagGlobal",
           "liste sur github des endpoints"
         ]
+      },
+      hideEndpoints: {
+        type: Boolean,
+        notify: true,
+        value: false
+      },
+      hideDatasets: {
+        type: Boolean,
+        value: true
+      },
+      endpoint:{
+        type: Object,
+        value: {}
+      },
+      endpoints:{
+        type: Array,
+        value: [
+          {
+            name: 'Smag global',
+            description:'Pas toujours allumé.\nSmag Global est le endpoint général-global de Spoggy.\
+            Disponible en lecture & en écriture.\n \
+            Idéal pour partager vos informations',
+            courte: 'serveur général',
+            url: 'http://5.51.110.50:3030',
+            image: '/images/spoggy.png',
+            actif: false,
+            type: 'fuseki',
+            read: true,
+            write: true
+          },
+          {
+            name: 'Votre Endpoint',
+            description:'Utilisez votre endpoint local. \nPour installer votre endpoint, voir plus bas "Proposer votre Endpoint"',
+            url: 'http://127.0.0.1:3030',
+            courte: 'endpoint local',
+            image: '/images/spoggy.png',
+            actif: false,
+            type: 'fuseki',
+            read: true,
+            write: true
+          },
+          {
+            name: 'DBpedia FR',
+            description: "DBpedia en français est le chapitre francophone de DBpedia,\
+            il s'inscrit dans l'effort d'internationalisation de DBpedia dont le but\
+            est de maintenir des données structurées extraites de différents chapitres de Wikipedia.\n \
+            Le développement de DBpedia en français est mené dans le cadre de la plateforme Sémanticpédia \
+            dont les partenaires sont : l'équipe Wimmics commune à Inria et au laboratoire I3S (UNS / CNRS).\
+            le Ministère de la Culture et de la Communication.",
+            courte: 'Wikipedia',
+            url:'http://fr.dbpedia.org',
+            image: '/images/DBpediaLogo.svg',
+            actif: false,
+            type: 'virtuoso',
+            read:true,
+            write:false,
+            exploreQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
+          },
+          {
+            name:'Persee',
+            description: "Le portail Persée\n \
+            Persée est un programme national de numérisation et de diffusion de collections de documents scientifiques.\
+            Sur son portail (www.persee.fr) plus de 200 collections de revues publiées de 1820 à nos jours sont disponibles.\
+            Le portail permet une recherche dans certaines métadonnées et le texte de plus de 700 000 documents et 500 000 illustrations. \
+            Les interfaces de recherche actuelles permettent d’exploiter trois index (documents, illustrations et auteurs) \
+            et elles sont dotées de fonctionnalités de tri, de facettes, etc.",
+            courte: 'documents scientifiques',
+            plus: 'http://data.persee.fr/ressources/le-triplestore-de-persee/',
+            url: 'http://data.persee.fr/sparql', //  url: 'http://data.persee.fr',
+            image: 'https://www.persee.fr/static/persee.png',
+            actif: true,
+            type: 'virtuoso',
+            read:true, write:false,
+            exploreQuery: {
+              query: 'SELECT DISTINCT ?s ?t ?sub \
+              WHERE {\
+                ?s ?p bibo:Document.\
+                ?s dcterms:title ?t.\
+                ?s dcterms:subject ?sub.\
+                filter (lang(?sub) = "" || langMatches(lang(?sub), "fr"))\
+              } LIMIT 100' ,
+              typeResources:{
+                s: 'bibo:Document',
+                sub: 'Subjects'
+              },
+              parseToVis : function(app, results, endpointUrl,typeResources, group){
+                //  var app = this;
+
+                var visRes = {nodes:[], edges:[]};
+                results.forEach(function(r){
+                  console.log(r);
+                  let node = {
+                    id: app.visId(r.s.value),
+                    type: null,
+                    resourceType: typeResources.s,
+                    uri: r.s.value,
+                    label: app.visLabelSplit(app.visLabel(r.t.value)),
+                    endpointUrl: endpointUrl,
+                    color: "rgb(76,0,74)",
+                    font: {
+                      color: 'rgb(255,255,255)'
+                    },
+                    cid: group,
+                    y: 2*Math.random()
+                  }
+                  var trouveN = visRes.nodes.find(function(element){
+                    return node.id == element.id
+                  });
+                  if (trouveN) {
+                    //  console.log("TROUVE ")
+                    //  console.log(trouveN)
+                    node = trouveN;
+                  }else{
+                    visRes.nodes.push(node);
+                  }
+
+                  let nodeSub = {
+                    id: r.sub.value,
+                    type: r.sub.type,
+                    resourceType: typeResources.sub,
+                    label: app.visLabelSplit(r.sub.value),
+                    endpointUrl: endpointUrl,
+                    color: "rgb(107,142,35)",
+                    shape: "box",
+                    cid: group,
+                    y: 2*Math.random()
+                  }
+                  var trouveS = visRes.nodes.find(function(element){
+                    return nodeSub.id == element.id
+                  });
+                  if (trouveS) {
+                    //  console.log("TROUVE ")
+                    //  console.log(trouveS)
+                    nodeSub = trouveS;
+                  }else{
+                    visRes.nodes.push(nodeSub);
+                  }
+
+                  let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
+                  if (!visRes.edges.includes(eType)){
+                    visRes.edges.push(eType)
+                  }
+                });
+
+                return visRes;
+              }
+            },
+
+            searchQuery : {
+              query: ' SELECT distinct * WHERE { ?s rdfs:label ?label . \
+                ?s rdf:type ?type . \
+                OPTIONAL {   ?s dcterms:title ?title .} \
+                FILTER(bif:contains(?label, "RECHERCHE")) . \
+              }  LIMIT 100',
+              typeResource:'bibo:Document'
+            },
+            clickonNode: [
+              {type : "Personne",
+              detecteur: "http://xmlns.com/foaf/0.1/Person",
+              requete : 'PREFIX dcterms: <http://purl.org/dc/terms/> \
+              PREFIX foaf: <http://xmlns.com/foaf/0.1/> \
+              SELECT DISTINCT ?person ?name \
+              WHERE { \
+                ?doc dcterms:creator <NODEID>. \
+                ?doc dcterms:creator ?person. \
+                ?person foaf:name ?name. \
+              }',
+              lienCree : "co-auteur"
+            },
+            {type : "Document",
+            detecteur: " a revoir",
+            requete : 'a revoir',
+            lienCree : "a revoir"
+          }
+        ]
+
+        /*  exploreQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
+      },
+      {
+        name: 'Semantic Forms',
+        description: "Semantic_forms est une application générique à la fois de navigation du web sémantique et d'annotation,\
+        et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
+        courte: 'endpoint Assemblée Virtuelle',
+        plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
+        url: 'http://163.172.179.125:9112',
+        exploreQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+        SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 100',
+        actif: false,
+        type: 'virtuoso',
+        read: true,
+        write: true
+      },
+      {
+        name: 'Data.culture.fr',
+        url: 'http://data.culture.fr/thesaurus'
+      },
+      {
+        name: 'BaseKb',
+        plus: 'http://basekb.com/',
+      },{
+        name: 'WikiData',
+        description: 'https://www.wikidata.org/wiki/Wikidata:Data_access/fr',
+        plus: 'https://www.wikidata.org/wiki/Wikidata:Main_Page',
+        url: 'https://wikidata.metaphacts.com/',
       }
-    };
-  }
+      ,{
+        name : 'Data.gov',
+        plus: 'https://catalog.data.gov/dataset/public-art-inventory-d9c20/resource/84b37647-6f8e-4090-b046-fad1437c1d02',
 
-  constructor(){
-    super();
-      /*this.log = loglevelDebug('worker:spoggy-global');
-      loglevelDebug.enable('worker:*')*/
-/* SYSTEME DE LOG */
+      },
+      {
+        name: 'Histropedia',
+        plus: 'http://histropedia.com/' }
+      ]
+    }
+  };
+}
 
-    //  loglevelDebug.enable('worker:*')
-    // type loglevelDebug.enable('worker:*'); in
-    // the console and refresh :)
-/*var app = this;
-    var b = loglevelDebug('worker:b');
-    setInterval(function(){
-      app.log('doing some work');
-    }, 1000);
-    setInterval(function(){
-      b('doing some work');
-    }, 1200);*/
+constructor(){
+  super();
+  /*this.log = loglevelDebug('worker:spoggy-global');
+  loglevelDebug.enable('worker:*')*/
+  /* SYSTEME DE LOG */
+
+  //  loglevelDebug.enable('worker:*')
+  // type loglevelDebug.enable('worker:*'); in
+  // the console and refresh :)
+  /*var app = this;
+  var b = loglevelDebug('worker:b');
+  setInterval(function(){
+  app.log('doing some work');
+}, 1000);
+setInterval(function(){
+b('doing some work');
+}, 1200);*/
 
 
 
-    this.agentGlobal = new GlobalAgent('agentGlobal', this);
-    Polymer.RenderStatus.afterNextRender(this, function() {
-      this._deferred();
-    });
-  }
-  _deferred(){
-    this.initAgents()
-  }
-  initAgents(){
-    this.agentGlobal.send('agentHello', 'Hello agentHello!');
-    var app = this;
-    this.initSteps.forEach(function(s){
-      console.log(s);
-      var resultAction = "OK"
+this.agentGlobal = new GlobalAgent('agentGlobal', this);
+Polymer.RenderStatus.afterNextRender(this, function() {
+  this._deferred();
+});
+}
+_deferred(){
+  this.initAgents()
+}
+initAgents(){
+  this.agentGlobal.send('agentHello', 'Hello agentHello!');
+  var app = this;
+  this.initSteps.forEach(function(s){
+    console.log(s);
+    var resultAction = "OK"
     //  app.log( resultAction+":"+s);
-    })
+  })
 
 
+}
+
+isEmpty(value){
+  //  console.log(value)
+  return value == undefined || value.length == 0;
+}
+isEqual(mode, test){
+  return mode == test;
+}
+setmode(e){
+  this.mode = e.target.id;
+}
+_showDetails(e){
+  this.endpoint = e.model.item;
+  console.log(this.endpoint);
+  this.hideDatasets = true;
+  this.datasets = [];
+}
+
+explorer(){
+  console.log(this.endpoint);
+  if (this.endpoint.type == "virtuoso"){
+    this.hideEndpoints = true;
+  }else{
+    this.hideDatasets = false;
   }
 
-  isEmpty(value){
-    //  console.log(value)
-    return value == undefined || value.length == 0;
-  }
-  isEqual(mode, test){
-    return mode == test;
-  }
-  setmode(e){
-    this.mode = e.target.id;
-  }
+  /*
+  console.log(e.model.item)
+  var endpoint = e.model.item;
+  this.hideEndpointsList(this.$.endpointsList)*/
+  this.agentGlobal.send('agentSparql', {type: 'explore', endpoint: this.endpoint });
+  this.agentGlobal.send('agentApp', {type: 'setEndpoint', value: this.endpoint });
+}
+rechercher(e){
+  console.log(e.model.item)
+}
+
+_updateUrl(e){
+  console.log(e.model.item)
+  var ds = e.model.item.ds_name;
+  console.log(ds)
+  //  console.log(this.dataset);
+  let url = this.endpoint.url+ds;
+  /*  this.set('urls.endpoint', url);
+  this.set('urls.upload', url+'/upload');//File Upload: http://5.51.110.50:3030/spoggy/upload
+  this.set('urls.data', url+'/data');//Graph Store Protocol: http://5.51.110.50:3030/spoggy/data
+  this.set('urls.read', url+'/get');//Graph Store Protocol (Read): http://5.51.110.50:3030/spoggy/get
+  this.set('urls.quads', url+'/');//HTTP Quads: http://5.51.110.50:3030/spoggy/
+  this.set('urls.query', url+'/query');//SPARQL Query: http://5.51.110.50:3030/spoggy/query
+  this.set('urls.sparql', url+'/sparql');//SPARQL Query: ttp://5.51.110.50:3030/spoggy/sparql
+  this.set('urls.update', url+'/update');//SPARQL Update: http://5.51.110.50:3030/spoggy/update
+  console.log(this.urls)
+  */
+  this.agentGlobal.send('agentGraph', {type:'clear'});
+  this.agentGlobal.send('agentStatements', {type:'updateUrl', url: url+'/query'});
+  this.agentGlobal.send('agentSparqlUpdate', {type: 'updateUrl', url: url+'/update'});
+  this.hideEndpoints = true;
+}
 }
 
 window.customElements.define(SpoggyGlobal.is, SpoggyGlobal);

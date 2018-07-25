@@ -1,0 +1,83 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+
+<link rel="import" href="./fuseki-behavior.html">
+
+<link href="../../bower_components/iron-ajax/iron-ajax.html">
+<script src="agents/FusekiAgent.js"></script>
+
+
+
+<dom-module id="spoggy-fuseki">
+  <template>
+    <!--<style>
+      :host {
+        display: block;
+      }
+    </style>-->
+
+    <iron-ajax
+    id="fusekiPing"
+    url="{{url_fuseki_ping}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleFusekiPing"
+    on-error="_handleFusekiPingError"
+    ></iron-ajax>
+
+    <iron-ajax
+    id="server_req"
+    url="{{url_server}}"
+    method="GET"
+    content-type="application/text"
+    handle-as="text"
+    on-response="_handleFusekiServer"
+    on-error="_handleFusekiServerError"
+    ></iron-ajax>
+
+  </template>
+
+  <script>
+    /**
+     * `spoggy-fuseki`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyFuseki extends FusekiBehaviorMixin(Polymer.Element) {
+      static get is() { return 'spoggy-fuseki'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-fuseki'
+          }
+        };
+      }
+      constructor(){
+        super();
+        this.agentFuseki = new FusekiAgent('agentFuseki', this);
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          // When possible, use afterNextRender to defer non-critical
+          // work until after first paint.
+          this._deferred();
+
+        });
+      }
+      _deferred(){
+        //  console.log("agent DATA defered")
+        //    console.log(this.agentMode);
+        //  this.initAgents()
+        console.log(this.agentFuseki);
+        this.agentFuseki.send('agentHello', 'Hello, agentHello !')
+      //  this.agentFuseki.send('agentData', {type: 'getParams'})
+      }
+    }
+
+    window.customElements.define(SpoggyFuseki.is, SpoggyFuseki);
+  </script>
+</dom-module>
