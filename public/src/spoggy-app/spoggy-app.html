@@ -213,36 +213,41 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 <!--<div hidden$="[[isEmpty(mode)]]" > -->
 <app-drawer-layout fullbleed narrow="{{narrow}}">
   <!-- Drawer content -->
-  <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+  <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]" >
     <app-toolbar>  Spoggy    <paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide"></paper-icon-button>
- </app-toolbar>
-    <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-      <!--<a name="view1" href="[[rootPath]]view1">View One</a>
-      <a name="view2" href="[[rootPath]]view2">View Two</a>
-      <a name="view3" href="[[rootPath]]view3">View Three</a> -->
-      <paper-button id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</paper-button>
-      <paper-button id="solo" class="cafe-reserve" on-tap="setmode">Solo</paper-button>
-      <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif</paper-button>
-      <paper-button id="global" class="cafe-reserve" on-tap="setmode">Global</paper-button>
+    </app-toolbar>
+    <div style="height: 80%; overflow-y: auto;"> <!-- make drawer scrollable -->
+
+      <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+        <!--<a name="view1" href="[[rootPath]]view1">View One</a>
+        <a name="view2" href="[[rootPath]]view2">View Two</a>
+        <a name="view3" href="[[rootPath]]view3">View Three</a> -->
+        <paper-button id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</paper-button>
+        <paper-button id="solo" class="cafe-reserve" on-tap="setmode">Solo</paper-button>
+        <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif</paper-button>
+        <paper-button id="global" class="cafe-reserve" on-tap="setmode">Global</paper-button>
 
 
-    </iron-selector>
-    <spoggy-graph-reglages></spoggy-graph-reglages>
-    <fieldset hidden$="[[isEmpty(mode)]]">
-      <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
-      </legend>
-      <div hidden$="[[isEmpty(pseudo)]]">
-        - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
-      </div>
-      <div hidden$="[[isEmpty(room)]]">
-        - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
-      </div>
-      <div hidden$="[[isEmpty(endpointName)]]">
-        - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
-      </div>
-    </fieldset>
-    <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-    </iron-selector>
+      </iron-selector>
+      <spoggy-graph-reglages></spoggy-graph-reglages>
+      <fieldset hidden$="[[isEmpty(mode)]]">
+        <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
+        </legend>
+        <div hidden$="[[isEmpty(pseudo)]]">
+          - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
+        </div>
+        <div hidden$="[[isEmpty(room)]]">
+          - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
+        </div>
+        <div hidden$="[[isEmpty(endpointName)]]">
+          - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
+        </div>
+      </fieldset>
+      <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+      </iron-selector>
+
+    </div>
+
 
 
 </app-drawer>
