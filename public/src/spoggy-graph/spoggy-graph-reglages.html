@@ -1,0 +1,217 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./graph-behavior.html">
+<script src="agents/GraphReglagesAgent.js"></script>
+
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<dom-module id="spoggy-graph-reglages">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-slider/paper-slider.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-textarea.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-selector/iron-selector.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-picker.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/color-picker/color-element.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
+  <template>
+
+    <iron-collapse-button>
+    <!--  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages</h3> -->
+    m
+    <paper-icon-button slot="collapse-trigger" on-tap="clearInput" icon="settings"></paper-icon-button>
+    k
+      <div slot="collapse-content">
+        <table>
+          <tr>
+            <td>
+              Longueur des <br> liens
+            </td>
+            <td>
+              <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Force des liens
+            </td>
+            <td>
+              <paper-slider  min="0" max="0.2" value="{{springConstant}}"  step="0.001"></paper-slider>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Distance entre deux noeuds
+            </td>
+            <td>
+              <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Gravité
+            </td>
+            <td>
+              <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Amortissement
+            </td>
+            <td>
+              <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>
+            </td>
+          </tr>
+        </table>
+          <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+      </div>
+      <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
+
+
+    </iron-collapse-button>
+  <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+      <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+      <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
+      <paper-button  dialog-dismiss raised>Fermer</paper-button>
+    </div>-->
+
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-graph`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyGraphReglages extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-graph-reglages'; }
+    static get properties() {
+      return {
+        network : {
+          type: Object,
+          notify: true
+        },
+        centralGravityValueDefault :{
+          type : Number,
+          value: 0.0001
+        },
+        springLengthValueDefault :{
+          type : Number,
+          value:  127
+        },
+        springConstantValueDefault :{
+          type : Number,
+          value: 0.04 // 0.05
+        },
+        nodeDistanceValueDefault :{
+          type : Number,
+          value: 260 //120
+        },
+        dampingValueDefault :{
+          type : Number,
+          value: 0.5 // 0,08
+        },
+        centralGravity: {
+          type: Number,
+          observer: "_updateCentralGravity"
+        },
+        springLength: {
+          type: Number,
+          observer: "_updateSpringLength"
+        },
+        springConstant: {
+          type: Number,
+          observer: "_updateSpringConstant"
+        },
+        nodeDistance: {
+          type: Number,
+          observer: "_updateNodeDistance"
+        },
+        damping: {
+          type: Number,
+          observer: "_updateDamping"
+        }
+      };
+    }
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+
+    }
+    _deferred(){
+      let app = this;
+      console.log( "REGLAGES ")
+      this.agentReglagesGraph = new GraphReglagesAgent('agentReglagesGraph', this);
+      console.log(this.agentReglagesGraph);
+    }
+    initOptions(optionsRepulsion){
+    //  this.initPhase = true;
+        console.log(optionsRepulsion)
+      this.set('centralGravity', optionsRepulsion.centralGravity);
+      this.set('springLength', optionsRepulsion.springLength);
+      this.set('springConstant', optionsRepulsion.springConstant);
+      this.set('nodeDistance', optionsRepulsion.nodeDistance);
+      this.set('damping', optionsRepulsion.damping);
+    //  this.initPhase = false;
+    }
+    _defaultPhysicValues(){
+      this.agentReglagesGraph.send('agentGraph', {type: "resetNetworkOptions"} );
+    }
+
+    _updateCentralGravity(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.centralGravity', v);
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateSpringLength(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.springLength',v);
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateSpringConstant(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.springConstant',v);
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateNodeDistance(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.nodeDistance', v);
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateDamping(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.damping', v);
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+  }
+
+  window.customElements.define(SpoggyGraphReglages.is, SpoggyGraphReglages);
+</script>
+</dom-module>

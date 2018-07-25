@@ -249,6 +249,8 @@
             console.log("Plusieurs noeuds selectionnes")
           }
         });
+        this.agentGraph.send('agentReglagesGraph', {type:'initOptions', repulsion : this.network.physics.options.repulsion});
+
       });
     }
   }
