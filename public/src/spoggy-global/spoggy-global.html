@@ -154,12 +154,19 @@
           [[endpoint.description]]</p>
           <p hidden$="[[isEmpty(endpoint.plus)]]"><a href='{{endpoint.plus}}' target="_blank">plus d'infos</a></p>
         </div>
-        <div class="horizontal justified">
+        <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
           <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Explorer</paper-button>
           <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="rechercher">Rechercher</paper-button>
         </div>
+
         <div class="card-actions">
-          <iron-collapse-button>
+          <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'fuseki')]]">
+            <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Lister les datasets</paper-button>
+          </div>
+
+
+
+          <iron-collapse-button hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
             <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Les Requêtes de Karl et Cécile</h3>
             <div slot="collapse-content">
               <paper-textarea label="Requête d'exploration" value="{{endpoint.exploreQuery.query}}"></paper-textarea>
@@ -178,13 +185,6 @@
                   </div>
                 </iron-collapse-button>
               </template>
-
-
-
-              <!--  <fieldset>
-              <legend>Couleur</legend>-->
-
-              <!--  </fieldset> -->
             </div>
           </iron-collapse-button>
 
@@ -218,17 +218,6 @@
 </div> -->
 </paper-card>
 
-
-
-
-
-
-
-
-
-
-
-
 <div hidden$="[[hideDatasets]]">
   <paper-card   image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
     <div class="card-content">
@@ -245,12 +234,6 @@
     ping: [[ping]]
   </paper-card>
 </div>
-
-
-
-
-
-
 
 <div  id="proposer" class="card" >
   <h2>Proposez votre propre Endpoint</h2>
@@ -286,27 +269,8 @@
 </script>-->
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
 </template>
-
 <script>
 /**
 * `spoggy-global`
@@ -612,6 +576,8 @@ setmode(e){
 _showDetails(e){
   this.endpoint = e.model.item;
   console.log(this.endpoint);
+  this.hideDatasets = true;
+  this.datasets = [];
 }
 
 explorer(){
