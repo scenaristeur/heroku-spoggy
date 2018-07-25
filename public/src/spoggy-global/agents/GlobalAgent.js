@@ -68,6 +68,14 @@ GlobalAgent.prototype.receive = function(from, message) {
     var element = this.app.$[el];
     this.app.hideEndpointsList(element);
     break;
+    case 'updateEndpointData':
+    //    app.agentFuseki.send('agentGlobal', {type: "updateEndpointData", ping: this.status})
+    console.log(message)
+    if(message.error != undefined){this.app.error = message.error;}else if(message.ping != undefined){this.app.ping = message.ping;}
+    if(message.server != undefined && message.server.datasets != undefined){this.app.datasets = message.server.datasets;}
+    if(message.server != undefined && message.server.dataset != undefined){this.app.selected = message.server.selected;}
+
+    break;
     default:
     console.log(message);
   }

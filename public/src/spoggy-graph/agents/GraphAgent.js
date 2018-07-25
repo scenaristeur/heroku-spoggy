@@ -45,6 +45,9 @@ GraphAgent.prototype.receive = function(from, message) {
     console.log(triplet)
     this.app.catchTriplet(triplet);
     break;
+    case 'clear':
+    this.app.clear();
+    break;
     case 'exportJson':
     this.app.exportJson();
     break;
@@ -105,7 +108,7 @@ GraphAgent.prototype.receive = function(from, message) {
     case 'exportTtl':
     console.log('exportTtl')
     this.exportTtl();
-  
+
     break;
 
     default:

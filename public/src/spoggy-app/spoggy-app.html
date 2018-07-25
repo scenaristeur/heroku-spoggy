@@ -231,6 +231,9 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
       <div hidden$="[[isEmpty(room)]]">
         - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
       </div>
+      <div hidden$="[[isEmpty(endpointName)]]">
+        - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
+      </div>
     </fieldset>
   </app-drawer>
 
@@ -267,7 +270,11 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
     hide-rejoindre="{{hideRejoindre}}"
     hide-creer="{{hideCreer}}">
   </spoggy-collaboratif>
-  <spoggy-global  mode={{mode}} hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
+
+  <spoggy-global
+  mode={{mode}}
+  hide-endpoints="{{hideEndpoints}}"
+  hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
   <div hidden$="[[isEmpty(mode)]]">
     <spoggy-sparql></spoggy-sparql>
@@ -346,6 +353,15 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
       hideCreer: {
         type: Boolean,
         notify: true
+      },
+      hideEndpoints: {
+        type: Boolean,
+        notify: true,
+        value: false
+      },
+      endpointName: {
+        type: String,
+        value: ""
       }
     }
   }
@@ -397,6 +413,10 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     this.hideRejoindre = false;
     this.hideCreer = false;
   }
+  endpointEdit(){
+    console.log(this.hideEndpoints)
+    this.hideEndpoints = false;
+  }
 
   pseudoEdit(){
     this.hidePseudo = false;
@@ -447,7 +467,8 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         break;
         case 'global':
         console.log('deconnect endpoint');
-
+        this.hideEndpoints = true;
+        this.endpointName = "";
         break;
         default:
       }

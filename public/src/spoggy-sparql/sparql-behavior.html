@@ -82,6 +82,7 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     exploreFuseki(endpoint){
       console.log("EXPLORE");
       console.log(endpoint);
+      this.agentSparql.send('agentFuseki', {type:'explore', endpoint: endpoint});
 
     }
 
