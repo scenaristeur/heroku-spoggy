@@ -26,19 +26,24 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
   <template>
 
+<style is="custom-style">
+         paper-slider {
+           width: 148px;
+         }
+</style>
     <iron-collapse-button>
     <!--  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages</h3> -->
-    m
+
     <paper-icon-button slot="collapse-trigger" on-tap="clearInput" icon="settings"></paper-icon-button>
-    k
+
       <div slot="collapse-content">
         <table>
           <tr>
             <td>
-              Longueur des <br> liens
+              Distance entre deux noeuds
             </td>
             <td>
-              <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
+              <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
             </td>
           </tr>
           <tr>
@@ -51,12 +56,14 @@
           </tr>
           <tr>
             <td>
-              Distance entre deux noeuds
+              Longueur des  liens
             </td>
             <td>
-              <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
+              <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
             </td>
           </tr>
+
+
           <tr>
             <td>
               Gravité
@@ -74,7 +81,7 @@
             </td>
           </tr>
         </table>
-          <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+          <paper-button raised  on-tap="_defaultPhysicValues">réinitialiser</paper-button>
       </div>
       <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
 
