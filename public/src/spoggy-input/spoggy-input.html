@@ -112,18 +112,20 @@ border: solid 1px blue;
 </style>
 
 
-  <!--     style="max-width:800px;text-align:left;" -->
-  <paper-input id="inputMessage"
-  class="inputMessage"
-  label="Recherche"
-  autofocus
-  style="text-align:left;  min-width: 70vw;"
-  on-keydown="checkForEnter">
-
-</paper-input>
+<!--     style="max-width:800px;text-align:left;" -->
+<paper-input id="inputMessage"
+class="inputMessage"
+label="Recherche"
+autofocus
+style="text-align:left;  min-width: 70vw;"
+on-keydown="checkForEnter">
 <paper-icon-button slot="suffix" on-tap="traiteMessage" icon="create"></paper-icon-button>
 <paper-icon-button slot="suffix" on-tap="searchInput" icon="search"></paper-icon-button>
 <paper-icon-button slot="suffix" on-tap="clearInput" icon="clear"></paper-icon-button>
+<paper-icon-button slot="suffix" on-tap="_toggleHelp" icon="help" label="Aide"></paper-icon-button>
+</paper-input>
+
+
 
 
 
@@ -206,13 +208,18 @@ initAgents(){
   this.agentInput.send('agentHello', 'Hello agentHello!');
 }
 
+_toggleHelp(){
+  this.agentInput.send('agentApp', {type:'setMode', value: 'solo'})
+  this.agentInput.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
+}
+
 checkForEnter(e) {
   // check if 'enter' was pressed
   if (e.keyCode === 13) {
     // enter pressed!
     //  if (this.mode == "search"){
     this.traiteMessage();
-    this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
+
     //}
 
   }

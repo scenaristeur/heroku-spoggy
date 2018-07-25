@@ -35,6 +35,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     traiteMessage(){
+          this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
       if (this.mode == "search"){
         this.lanceRecherche();
       }else{

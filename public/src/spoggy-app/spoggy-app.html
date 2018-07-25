@@ -217,10 +217,13 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
       <!--<a name="view1" href="[[rootPath]]view1">View One</a>
       <a name="view2" href="[[rootPath]]view2">View Two</a>
       <a name="view3" href="[[rootPath]]view3">View Three</a> -->
-      <paper-button id="collaboratif" class="cafe-reserve" on-tap="delmode" >Accueil</paper-button>
-      <paper-button id="solo" class="cafe-reserve" on-tap="setmode" >Solo</paper-button>
-      <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode" >Collaboratif</paper-button>
-      <paper-button id="global" class="cafe-reserve" on-tap="setmode" >Global</paper-button>
+      <paper-button id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</paper-button>
+      <paper-button id="solo" class="cafe-reserve" on-tap="setmode">Solo</paper-button>
+      <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif</paper-button>
+      <paper-button id="global" class="cafe-reserve" on-tap="setmode">Global</paper-button>
+      <hr>
+      <paper-button id="global" class="cafe-reserve" on-tap="_toggleHelp">Aide</paper-button>
+
     </iron-selector>
     <fieldset hidden$="[[isEmpty(mode)]]">
       <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
@@ -232,59 +235,135 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
         - Graphe : [[room]] <paper-icon-button   icon="icons:create" on-tap="roomEdit"></paper-icon-button>
       </div>
     </fieldset>
-  </app-drawer>
 
-  <!-- Main content -->
-  <app-header-layout has-scrolling-region>
 
-    <app-header slot="header" condenses fixed effects="waterfall">
-      <app-toolbar>
-        <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
 
-        <spoggy-input >
-          ... Chargement de l'interface  ... <br>
-          Attendez jusqu'au chargement du cercle rose
-        </spoggy-input>
-      </app-toolbar>
 
-    </app-header>
+    <iron-collapse-button>
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages</h3>
+      <div slot="collapse-content">
+        <table>
+          <tr>
+            <td>
+              Longueur des <br> liens
+            </td>
+            <td>
+              2
+            </td>
+          </tr>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              2
+            </td>
+          </tr>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              2
+            </td>
+          </tr>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              2
+            </td>
+          </tr>
+          <tr>
+            <td>
+              1
+            </td>
+            <td>
+              2
+            </td>
+          </tr>
+        </table>
+      </div>
+    </iron-collapse-button>
 
-    <div hidden$="[[!isEmpty(mode)]]">
-      <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
-        <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
-        <spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
-        <spoggy-global-card  mode={{mode}}></spoggy-global-card>
+
+
+    <legend> Réglages</legend>
+    <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
+      <p>Déplacez les curseurs & bougez un noeud sur le graphe pour voir vos modifications s'appliquer</p>
+      Longueur des liens     <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
+      Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstant}}"  step="0.001"></paper-slider>
+      Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
+      Gravité   <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
+      Amortissement         <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>
+
+      <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
+      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+        <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+        <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
+        <paper-button  dialog-dismiss raised>Fermer</paper-button>
       </div>
     </div>
 
-    <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
-    <spoggy-collaboratif
-    mode={{mode}}
-    hidden$="[[!isEqual(mode,'collaboratif')]]"
-    pseudo="{{pseudo}}"
-    room="{{room}}"
-    hide-pseudo="{{hidePseudo}}"
-    hide-rejoindre="{{hideRejoindre}}"
-    hide-creer="{{hideCreer}}">
-  </spoggy-collaboratif>
-  <spoggy-global  mode={{mode}} hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
-
-  <div hidden$="[[isEmpty(mode)]]">
-    <spoggy-sparql></spoggy-sparql>
-    <spoggy-presentation></spoggy-presentation>
-    <spoggy-endpoints  hidden$="[[!isEqual(mode,'global')]]"></spoggy-endpoints>
-
-    <spoggy-graph hidden$="[[hideGraph(hidePseudo,hideRejoindre, hideCreer)]]">
-      ... Chargement du système ... <br>
-    </spoggy-graph>
+  </fieldset>
 
 
-    <spoggy-dialogs></spoggy-dialogs>
-    <spoggy-data></spoggy-data>
 
-    <spoggy-preferences></spoggy-preferences>
-    <spoggy-historique></spoggy-historique>
+
+</app-drawer>
+
+<!-- Main content -->
+<app-header-layout has-scrolling-region>
+
+  <app-header slot="header" condenses fixed effects="waterfall">
+    <app-toolbar>
+      <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
+
+      <spoggy-input >
+        ... Chargement de l'interface  ... <br>
+        Attendez jusqu'au chargement du cercle rose
+      </spoggy-input>
+    </app-toolbar>
+
+  </app-header>
+
+  <div hidden$="[[!isEmpty(mode)]]">
+    <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
+      <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
+      <spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
+      <spoggy-global-card  mode={{mode}}></spoggy-global-card>
+    </div>
   </div>
+
+  <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
+  <spoggy-collaboratif
+  mode={{mode}}
+  hidden$="[[!isEqual(mode,'collaboratif')]]"
+  pseudo="{{pseudo}}"
+  room="{{room}}"
+  hide-pseudo="{{hidePseudo}}"
+  hide-rejoindre="{{hideRejoindre}}"
+  hide-creer="{{hideCreer}}">
+</spoggy-collaboratif>
+<spoggy-global  mode={{mode}} hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
+
+<div hidden$="[[isEmpty(mode)]]">
+  <spoggy-sparql></spoggy-sparql>
+  <spoggy-presentation></spoggy-presentation>
+  <spoggy-endpoints  hidden$="[[!isEqual(mode,'global')]]"></spoggy-endpoints>
+
+  <spoggy-graph hidden$="[[hideGraph(hidePseudo,hideRejoindre, hideCreer)]]">
+    ... Chargement du système ... <br>
+  </spoggy-graph>
+
+
+  <spoggy-dialogs></spoggy-dialogs>
+  <spoggy-data></spoggy-data>
+
+  <spoggy-preferences></spoggy-preferences>
+  <spoggy-historique></spoggy-historique>
+</div>
 
 
 
@@ -400,6 +479,12 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
 
   pseudoEdit(){
     this.hidePseudo = false;
+  }
+  _toggleHelp(){
+    if (this.mode.length == 0){
+      this.mode = "solo";
+    }
+    this.agentApp.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
   }
 
   _modeChanged(newMode, oldMode){
