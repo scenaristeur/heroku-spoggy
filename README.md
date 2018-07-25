@@ -1,9 +1,11 @@
 (En raison de l'utilisation des [web components](https://www.webcomponents.org/), SPOGGY fonctionne avec les dernières versions de Chrome & Opera, Le chargement dans Firefox < v60 est lent)
 # heroku-spoggy
 
-[voir la doc en pleine page ](https://scenaristeur.github.io/heroku-spoggy/) ou  
+[voir la doc en pleine page avec demo de Spoggy intégré sur votre site web](https://scenaristeur.github.io/heroku-spoggy/) ou  
+
 [voir le repo github](https://github.com/scenaristeur/heroku-spoggy)
-[Premiers pas et prise en mains de Spoggy](https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m)
+
+[Devenez un PRO de Spoggy en 4 minutes](https://www.youtube.com/watch?v=5BHIoRyPIWc&list=PLmnJTs7YASPO61OzacKf4atmLObMFMD3m)
 
 Spoggy est un outil de stockage de connaissances.
 Si vous êtes expert d'un domaine et souhaitez partager vos connaissances, si vous foisonnez d'idées mais avez toujours du mal à vous faire comprendre par un public 'non initié', si vous devez travailler en équipe de manière 'collaborative', si le collègue que vous devez remplacer part à la retraite sans vous avoir donné toutes les clés de sa fonction, si vous voulez exprimer de manière simple une tension 'holocratique', Spoggy peut vous aider.
