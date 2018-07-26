@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "engines": {
-   "node": "10.5.0",
-   "npm": "6.2.0"
- },
+    "node": "10.5.0",
+    "npm": "6.2.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
@@ -27,6 +27,7 @@
     "bower": "^1.8.4",
     "compression": "^1.7.3",
     "express": "^4.16.2",
+    "fuseki": "github:scenaristeur/fuseki",
     "level": "^3.0.2",
     "level-sublevel": "^6.6.5",
     "levelgraph": "^2.1.1",

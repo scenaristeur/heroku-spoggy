@@ -44,7 +44,7 @@
   <link rel="lazy-import" group="lazy" href="../spoggy-global/spoggy-global-card.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-collaboratif/spoggy-collaboratif-card.html">
 
-<link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph-reglages.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph-reglages.html">
   <!--<link rel="import" href="../shared-styles.html">-->
 
   <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
@@ -223,114 +223,179 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
         <a name="view2" href="[[rootPath]]view2">View Two</a>
         <a name="view3" href="[[rootPath]]view3">View Three</a> -->
         <a name="accueil" id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</a>
-        <a name = "solo" id="solo" class="cafe-reserve" on-tap="setmode">Solo</a>
-        <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif</a>
-        <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global</a>
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Fichier</h3>
+
+          <div slot="collapse-content">
+            <a name = "solo" id="solo" class="cafe-reserve" on-tap="import">Importer</a>
+            <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="export">Exporter</a>
+            <a name="global" id="global" class="cafe-reserve" on-tap="exportTtl">Exporter (.ttl)</a>
+          </div>
+        </iron-collapse-button>
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Modes</h3>
+
+          <div slot="collapse-content">
+
+            <a name = "solo" id="solo" class="cafe-reserve" on-tap="setmode">Solo <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
+              <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
+                <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
+                </div>
+              </iron-collapse-button>
 
 
-      </iron-selector>
-      <spoggy-graph-reglages></spoggy-graph-reglages>
-      <fieldset hidden$="[[isEmpty(mode)]]">
-        <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
-        </legend>
-        <div hidden$="[[isEmpty(pseudo)]]">
-          - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
+
+
+            </iron-selector>
+            <spoggy-graph-reglages></spoggy-graph-reglages>
+            <fieldset hidden$="[[isEmpty(mode)]]">
+              <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
+              </legend>
+              <div hidden$="[[isEmpty(pseudo)]]">
+                - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
+              </div>
+              <div hidden$="[[isEmpty(room)]]">
+                - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
+              </div>
+              <div hidden$="[[isEmpty(endpointName)]]">
+                - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
+              </div>
+            </fieldset>
+
+
+          </div>
+
+            <!--  buy me a coffe -->
+          <style>
+          .bmc-button img{
+            width: 27px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+          }
+          .bmc-button{
+            line-height: 36px !important;
+            height:37px !important;
+            text-decoration: none !important;
+            display:inline-flex !important;
+            color:#ffffff !important;background-color:#000000 !important;
+            border-radius: 3px !important;
+            border: 1px solid transparent !important;
+            padding: 1px 9px !important;
+            font-size: 23px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family:'Cookie', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+          }
+          .bmc-button:hover,
+          .bmc-button:active,
+          .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color:#ffffff !important;
+          }
+          </style>
+          <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+          <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/SqdOnMgfw">
+            <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee">
+            <span style="margin-left:5px">Buy me a coffee</span>
+          </a>
+          <!-- fin buy me a coffe -->
+        </app-drawer>
+
+        <!-- Main content -->
+        <app-header-layout has-scrolling-region>
+
+          <app-header slot="header" condenses fixed effects="waterfall">
+            <app-toolbar>
+              <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
+
+              <spoggy-input >
+                ... Chargement de l'interface  ... <br>
+                Attendez jusqu'au chargement du cercle rose
+              </spoggy-input>
+            </app-toolbar>
+
+          </app-header>
+
+          <div hidden$="[[!isEmpty(mode)]]">
+            <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
+              <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
+              <spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
+              <spoggy-global-card  mode={{mode}}></spoggy-global-card>
+            </div>
+          </div>
+
+          <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
+          <spoggy-collaboratif
+          mode={{mode}}
+          hidden$="[[!isEqual(mode,'collaboratif')]]"
+          pseudo="{{pseudo}}"
+          room="{{room}}"
+          hide-pseudo="{{hidePseudo}}"
+          hide-rejoindre="{{hideRejoindre}}"
+          hide-creer="{{hideCreer}}">
+        </spoggy-collaboratif>
+
+        <spoggy-global
+        mode={{mode}}
+        hide-endpoints="{{hideEndpoints}}"
+        hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
+
+        <div hidden$="[[isEmpty(mode)]]">
+          <spoggy-sparql></spoggy-sparql>
+          <spoggy-presentation></spoggy-presentation>
+          <spoggy-endpoints  hidden$="[[!isEqual(mode,'global')]]"></spoggy-endpoints>
+
+          <spoggy-graph hidden$="[[hideGraph(hidePseudo,hideRejoindre, hideCreer)]]">
+            ... Chargement du système ... <br>
+          </spoggy-graph>
+
+
+          <spoggy-dialogs></spoggy-dialogs>
+          <spoggy-data></spoggy-data>
+
+          <spoggy-preferences></spoggy-preferences>
+          <spoggy-historique></spoggy-historique>
         </div>
-        <div hidden$="[[isEmpty(room)]]">
-          - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
-        </div>
-        <div hidden$="[[isEmpty(endpointName)]]">
-          - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
-        </div>
-      </fieldset>
-      <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-      </iron-selector>
-
-    </div>
 
 
 
-</app-drawer>
+      </app-header-layout>
+    </app-drawer-layout>
 
-<!-- Main content -->
-<app-header-layout has-scrolling-region>
+    <spoggy-collab></spoggy-collab>
+    <!--</div> -->
 
-  <app-header slot="header" condenses fixed effects="waterfall">
-    <app-toolbar>
-      <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
+    <!--
+    <spoggy-sparql></spoggy-sparql>
+    <spoggy-presentation></spoggy-presentation>
+    <spoggy-endpoints></spoggy-endpoints>
 
-      <spoggy-input >
-        ... Chargement de l'interface  ... <br>
-        Attendez jusqu'au chargement du cercle rose
-      </spoggy-input>
-    </app-toolbar>
-
-  </app-header>
-
-  <div hidden$="[[!isEmpty(mode)]]">
-    <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
-      <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
-      <spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
-      <spoggy-global-card  mode={{mode}}></spoggy-global-card>
-    </div>
-  </div>
-
-  <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
-  <spoggy-collaboratif
-  mode={{mode}}
-  hidden$="[[!isEqual(mode,'collaboratif')]]"
-  pseudo="{{pseudo}}"
-  room="{{room}}"
-  hide-pseudo="{{hidePseudo}}"
-  hide-rejoindre="{{hideRejoindre}}"
-  hide-creer="{{hideCreer}}">
-</spoggy-collaboratif>
-
-<spoggy-global
-mode={{mode}}
-hide-endpoints="{{hideEndpoints}}"
-hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
-
-<div hidden$="[[isEmpty(mode)]]">
-  <spoggy-sparql></spoggy-sparql>
-  <spoggy-presentation></spoggy-presentation>
-  <spoggy-endpoints  hidden$="[[!isEqual(mode,'global')]]"></spoggy-endpoints>
-
-  <spoggy-graph hidden$="[[hideGraph(hidePseudo,hideRejoindre, hideCreer)]]">
+    <spoggy-graph>
     ... Chargement du système ... <br>
   </spoggy-graph>
-
+  <spoggy-collab></spoggy-collab>
 
   <spoggy-dialogs></spoggy-dialogs>
   <spoggy-data></spoggy-data>
 
   <spoggy-preferences></spoggy-preferences>
   <spoggy-historique></spoggy-historique>
-</div>
-
-
-
-</app-header-layout>
-</app-drawer-layout>
-
-<spoggy-collab></spoggy-collab>
-<!--</div> -->
-
-<!--
-<spoggy-sparql></spoggy-sparql>
-<spoggy-presentation></spoggy-presentation>
-<spoggy-endpoints></spoggy-endpoints>
-
-<spoggy-graph>
-... Chargement du système ... <br>
-</spoggy-graph>
-<spoggy-collab></spoggy-collab>
-
-<spoggy-dialogs></spoggy-dialogs>
-<spoggy-data></spoggy-data>
-
-<spoggy-preferences></spoggy-preferences>
-<spoggy-historique></spoggy-historique>
 -->
 
 
@@ -407,6 +472,9 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
 
   setmode(e){
     this.mode = e.target.id;
+    if (this.mode == 'global'){
+      this.hideEndpoints = false;
+    }
   }
 
   delmode(e){
@@ -461,6 +529,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         break;
         case 'global':
         console.log('connexion endpoint.');
+        this.hideEndpoints = false;
         // expected output: "Mangoes and papayas are $2.79 a pound."
         break;
         default:
@@ -490,10 +559,25 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     }
   }
   _toggleHelp(){
-    if (this.mode.length == 0){
-    this.mode='solo';
-  }
+    this.makeAmode();
     this.agentApp.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'});
+  }
+  import(){
+    this.makeAmode();
+    this.agentApp.send('agentDialogs', {type: 'toggle', popup:'importPopUp'})
+  }
+  export(){
+    this.makeAmode();
+    this.agentApp.send('agentGraph', {type: 'exportJson'})
+  }
+  exportTtl(){
+    this.makeAmode();
+    this.agentApp.send('agentGraph', {type: 'exportTtl'})
+  }
+  makeAmode(){
+    if (this.mode.length == 0){
+      this.mode='solo';
+    }
   }
 
 }

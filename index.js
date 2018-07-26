@@ -3,6 +3,7 @@
 */
 
 var useLevelgraph = true; //possibilite d'utiliser LevelGRAPH DB : opérationnel (stocké dans daossier data) ne fonctionne pas sur tous les systemes
+var useLocalEndpoint = true; // lance un endpoint fuseki local (https://github.com/scenaristeur/fuseki)
 
 /* IMPORTS NODE_MODULES  */
 var compression = require('compression')
@@ -14,11 +15,19 @@ var io = require('socket.io')(server);
 //http://psitsmike.com/2011/10/node-js-and-socket-io-multiroom-chat-tutorial/
 //https://www.codementor.io/codementorteam/socketio-player-matchmaking-system-pdxz4apty
 
+if (useLocalEndpoint){
+  // lancement serveur fuseki
+  require('shelljs/global');
+  var path = require('path');
+  console.log(__dirname);
+  var lance_fuseki = path.join(__dirname, '/fuseki/fuseki start');
+  exec(lance_fuseki)
+}
 
 /* CONFIGURATION DU SERVEUR WEB */
 //var port = process.env.PORT || 3000;
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
- ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 
 
 if (useLevelgraph){
@@ -73,7 +82,7 @@ var limitInit = 0 // nbre d'elements à recuperer dans la base lors du login d'u
 
 server.listen(port, ip, function() {
   console.log('Server running on http://%s:%s', ip, port);
-//  console.log('Server listening at port %d', port);
+  //  console.log('Server listening at port %d', port);
 });
 
 // Routing
@@ -154,41 +163,41 @@ io.sockets.on('connection', function (socket) {
   // when the client emits 'adduser', this listens and executes
   socket.on('adduser', function(username, newroom){
     if (username != undefined && newroom != undefined){
-    username = username.trim();
-    newroom = newroom.trim();
-    console.log("adduser "+username)
-    console.log("Room lors de l'adduser : "+newroom);
+      username = username.trim();
+      newroom = newroom.trim();
+      console.log("adduser "+username)
+      console.log("Room lors de l'adduser : "+newroom);
 
-    /*if (!rooms.includes(newroom)){
-    rooms.push(newroom)
-  }*/
+      /*if (!rooms.includes(newroom)){
+      rooms.push(newroom)
+    }*/
 
-  // leave the current room (stored in session)
-  socket.leave(socket.room);
-  // join new room, received as function parameter
-  socket.join(newroom);
+    // leave the current room (stored in session)
+    socket.leave(socket.room);
+    // join new room, received as function parameter
+    socket.join(newroom);
 
-  // store the username in the socket session for this client
-  socket.username = username;
-  // store the room name in the socket session for this client
-  socket.room = newroom;
-  // add the client's username to the global list
-  usernames[username] = username;
-  //    socket.room = rooms[0];
-  // send client to room 1
-  updateFreq();
-  console.log(freq)
-  io.sockets.emit('initrooms', freq);
-  socket.emit('updaterooms', freq, socket.room);
-  // echo to client they've connected
-  socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+socket.room);
-  // echo to room 1 that a person has connected to their room
-  socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', username + ' vient de se connecter au graphe '+socket.room);
+    // store the username in the socket session for this client
+    socket.username = username;
+    // store the room name in the socket session for this client
+    socket.room = newroom;
+    // add the client's username to the global list
+    usernames[username] = username;
+    //    socket.room = rooms[0];
+    // send client to room 1
+    updateFreq();
+    console.log(freq)
+    io.sockets.emit('initrooms', freq);
+    socket.emit('updaterooms', freq, socket.room);
+    // echo to client they've connected
+    socket.emit('updatechat', 'Spoggy', 'Vous êtes connecté au graphe '+socket.room);
+    // echo to room 1 that a person has connected to their room
+    socket.broadcast.to(socket.room).emit('updatechat', 'Spoggy', username + ' vient de se connecter au graphe '+socket.room);
 
-  initDb(socket);
-}else{
-  console.log("GROBLEME")
-}
+    initDb(socket);
+  }else{
+    console.log("GROBLEME")
+  }
 });
 
 // when the client emits 'sendchat', this listens and executes

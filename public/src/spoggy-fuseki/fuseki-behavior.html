@@ -40,10 +40,10 @@ var FusekiBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     explore(endpoint){
       console.log(endpoint);
       let app = this;
-      this.pingFuseki(endpoint)
+      this.ping_Fuseki(endpoint)
     }
 
-    pingFuseki(endpoint){
+    ping_Fuseki(endpoint){
       this.url_fuseki = endpoint.url;
       this.url_fuseki_ping = endpoint.url+"/$/ping";
       //  this.$.status_req.body = { "email": "abc@gmail.com", "password": "password" };

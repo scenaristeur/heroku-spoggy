@@ -115,80 +115,108 @@
   }
   iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   </style>
+
+
+
   <div hidden$="[[hideEndpoints]]">
     <paper-card   image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
       <div class="card-content">
-        <div class="cafe-header"> <h2 style="margin: 0;color: #0D578B;">Selectionner un endpoint :</h2>
-        </div>
+        <iron-collapse-button id="collapse_endpoint" opened>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Selectionner un endpoint</h3>
 
-        <paper-item  hidden$="[[!isEqual(endpoints.length,0)]]" style="height:100px;" > Chargement de la liste des endpoints</paper-item>
-        <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(endpoints.length,0)]]" >
-          <template is="dom-repeat" items="[[endpoints]]">
-            <paper-item endpoint="[[item.name]]" on-tap="_showDetails">
-              <!--<paper-checkbox checked="{{item.actif}}" disabled></paper-checkbox>--> [[item.name]] ([[item.courte]])<!-- (status)-->
-            </paper-item>
-          </template>
-        </paper-listbox>
+          <div slot="collapse-content">
+            <paper-item  hidden$="[[!isEqual(endpoints.length,0)]]" style="height:100px;" > Chargement de la liste des endpoints</paper-item>
+            <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(endpoints.length,0)]]" >
+              <template is="dom-repeat" items="[[endpoints]]">
+                <paper-item endpoint="[[item.name]]" on-tap="_showDetails">
+                  <!--<paper-checkbox checked="{{item.actif}}" disabled></paper-checkbox>--> [[item.name]] ([[item.courte]])<!-- (status)-->
+                </paper-item>
+              </template>
+            </paper-listbox>
+          </div>
+        </iron-collapse-button>
       </div>
     </paper-card>
 
 
     <paper-card hidden$="[[isEmpty(endpoint.name)]]" image="[[image(endpoint.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
       <div class="card-content">
-        <div class="cafe-header">[[endpoint.name]]
-          <div class="cafe-location cafe-light">
-            <iron-icon icon="communication:location-on"></iron-icon>
-            <span>type: [[endpoint.type]]</span>
-          </div>
-        </div>
-        <div class="cafe-rating">
-          <iron-icon class="star" icon="star"></iron-icon>
-          <iron-icon class="star" icon="star"></iron-icon>
-          <iron-icon class="star" icon="star"></iron-icon>
-          <iron-icon class="star" icon="star"></iron-icon>
-          <iron-icon class="star" icon="star"></iron-icon>
-        </div>
-        <p>・[[endpoint.url]] <br>・lecture: [[endpoint.read]] / écriture: [[endpoint.write]]</p>
-        <paper-checkbox checked="{{endpoint.actif}}">Actif </paper-checkbox>
-        <p class="cafe-light">
-          [[endpoint.description]]</p>
-          <p hidden$="[[isEmpty(endpoint.plus)]]"><a href='{{endpoint.plus}}' target="_blank">plus d'infos</a></p>
-        </div>
-        <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
-          <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Explorer</paper-button>
-          <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="rechercher">Rechercher</paper-button>
-        </div>
+        <iron-collapse-button id="collapse_detail">
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">[[endpoint.name]]</h3>
+          <div slot="collapse-content">
+            <div class="cafe-location cafe-light">
+              <iron-icon icon="communication:location-on"></iron-icon>
+              <span>type: [[endpoint.type]] <br> ping: [[ping]]</span>
+            </div>
+            <div class="cafe-rating">
+              <iron-icon class="star" icon="star"></iron-icon>
+              <iron-icon class="star" icon="star"></iron-icon>
+              <iron-icon class="star" icon="star"></iron-icon>
+              <iron-icon class="star" icon="star"></iron-icon>
+              <iron-icon class="star" icon="star"></iron-icon>
+            </div>
 
-        <div class="card-actions">
-          <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'fuseki')]]">
-            <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Lister les datasets</paper-button>
-          </div>
+            <p>・[[endpoint.url]] <br>・lecture: [[endpoint.read]] / écriture: [[endpoint.write]]</p>
+            <paper-checkbox checked="{{endpoint.actif}}">Actif </paper-checkbox>
+
+            <div hidden$="[[!isEqual(endpoint.type, 'fuseki')]]">
+              <div class="cafe-header">Selectionner un dataset :
+              </div>
+              [[error]]
+              <paper-item  hidden$="[[!isEqual(datasets.length,0)]]" style="height:100px;" > Chargement de la liste des datasets</paper-item>
+              <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content"  attr-for-selected="value" selected="{{dataset}}">
+                <template is="dom-repeat" items="[[datasets]]">
+                  <paper-item  value="[[item.ds_name]]" on-tap="_updateUrl">[[item.ds_name]]</paper-item>
+                </template>
+              </paper-listbox>
+            </div>
 
 
 
-          <iron-collapse-button hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Les Requêtes de Karl et Cécile</h3>
-            <div slot="collapse-content">
-              <paper-textarea label="Requête d'exploration" value="{{endpoint.exploreQuery.query}}"></paper-textarea>
-              <paper-textarea label="Requête de recherche textuelle" value="{{endpoint.searchQuery.query}}"></paper-textarea>
 
-              Et quand je clique sur un noeud de type :
-              <template is="dom-repeat" endpoints="[[endpoint.clickonNode]]" as="clickonNode">
-                <iron-collapse-button>
-                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> {{clickonNode.type}}</h3>
+
+            <p class="cafe-light">
+              [[endpoint.description]]</p>
+              <p hidden$="[[isEmpty(endpoint.plus)]]"><a href='{{endpoint.plus}}' target="_blank">plus d'infos</a></p>
+
+              <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
+                <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Explorer</paper-button>
+                <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="rechercher">Rechercher</paper-button>
+              </div>
+
+
+
+              <div class="card-actions">
+
+                <iron-collapse-button hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
+                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Les Requêtes de Karl et Cécile</h3>
                   <div slot="collapse-content">
-                    <!--<paper-item>-->
-                    <paper-input label="Detecteur" style="width:100%" value="{{clickonNode.detecteur}}"> </paper-input>
-                    <paper-textarea label="Requête" value="{{clickonNode.requete}}"></paper-textarea>
-                    <paper-input label="Lien créé" style="width:100%" value="{{clickonNode.lienCree}}"> </paper-input>
-                    <!--</paper-item>-->
+                    <paper-textarea label="Requête d'exploration" value="{{endpoint.exploreQuery.query}}"></paper-textarea>
+                    <paper-textarea label="Requête de recherche textuelle" value="{{endpoint.searchQuery.query}}"></paper-textarea>
+
+                    Et quand je clique sur un noeud de type :
+                    <template is="dom-repeat" endpoints="[[endpoint.clickonNode]]" as="clickonNode">
+                      <iron-collapse-button>
+                        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> {{clickonNode.type}}</h3>
+                        <div slot="collapse-content">
+                          <!--<paper-item>-->
+                          <paper-input label="Detecteur" style="width:100%" value="{{clickonNode.detecteur}}"> </paper-input>
+                          <paper-textarea label="Requête" value="{{clickonNode.requete}}"></paper-textarea>
+                          <paper-input label="Lien créé" style="width:100%" value="{{clickonNode.lienCree}}"> </paper-input>
+                          <!--</paper-item>-->
+                        </div>
+                      </iron-collapse-button>
+                    </template>
                   </div>
                 </iron-collapse-button>
-              </template>
+
+              </div>
+
+
             </div>
           </iron-collapse-button>
-
         </div>
+
         <!--  <div class="card-actions">
 
         <p>Tonight's availability</p>
@@ -218,22 +246,7 @@
 </div> -->
 </paper-card>
 
-<div hidden$="[[hideDatasets]]">
-  <paper-card   image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
-    <div class="card-content">
-      <div class="cafe-header">Selectionner un dataset :
-      </div>
-      [[error]]
-      <paper-item  hidden$="[[!isEqual(datasets.length,0)]]" style="height:100px;" > Chargement de la liste des datasets</paper-item>
-      <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content"  attr-for-selected="value" selected="{{dataset}}">
-        <template is="dom-repeat" items="[[datasets]]">
-          <paper-item  value="[[item.ds_name]]" on-tap="_updateUrl">[[item.ds_name]]</paper-item>
-        </template>
-      </paper-listbox>
-    </div>
-    ping: [[ping]]
-  </paper-card>
-</div>
+
 
 <div  id="proposer" class="card" >
   <h2>Proposez votre propre Endpoint</h2>
@@ -310,10 +323,6 @@ class SpoggyGlobal extends Polymer.LazyImportsMixin(Polymer.Element) {
         notify: true,
         value: false
       },
-      hideDatasets: {
-        type: Boolean,
-        value: true
-      },
       endpoint:{
         type: Object,
         value: {}
@@ -335,7 +344,7 @@ class SpoggyGlobal extends Polymer.LazyImportsMixin(Polymer.Element) {
             write: true
           },
           {
-            name: 'Votre Endpoint',
+            name: 'Localhost',
             description:'Utilisez votre endpoint local. \nPour installer votre endpoint, voir plus bas "Proposer votre Endpoint"',
             url: 'http://127.0.0.1:3030',
             courte: 'endpoint local',
@@ -549,7 +558,8 @@ Polymer.RenderStatus.afterNextRender(this, function() {
 });
 }
 _deferred(){
-  this.initAgents()
+  this.initAgents();
+
 }
 initAgents(){
   this.agentGlobal.send('agentHello', 'Hello agentHello!');
@@ -576,16 +586,19 @@ setmode(e){
 _showDetails(e){
   this.endpoint = e.model.item;
   console.log(this.endpoint);
-  this.hideDatasets = true;
   this.datasets = [];
+  this.error = [];
+  this.$.collapse_detail.open();
+  this.$.collapse_endpoint.close();
+  if (this.endpoint.type == 'fuseki'){
+    this.explorer();
+  }
 }
 
 explorer(){
   console.log(this.endpoint);
   if (this.endpoint.type == "virtuoso"){
     this.hideEndpoints = true;
-  }else{
-    this.hideDatasets = false;
   }
 
   /*

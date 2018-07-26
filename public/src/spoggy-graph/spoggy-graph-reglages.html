@@ -26,199 +26,210 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
   <template>
 
-<style is="custom-style">
-         paper-slider {
-           width: 148px;
-         }
-</style>
-    <iron-collapse-button>
-    <!--  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages</h3> -->
-
-    <paper-icon-button slot="collapse-trigger" on-tap="clearInput" icon="settings"></paper-icon-button>
-
-      <div slot="collapse-content">
-        <table>
-          <tr>
-            <td>
-              Distance entre deux noeuds
-            </td>
-            <td>
-              <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Force des liens
-            </td>
-            <td>
-              <paper-slider  min="0" max="0.2" value="{{springConstant}}"  step="0.001"></paper-slider>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Longueur des  liens
-            </td>
-            <td>
-              <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
-            </td>
-          </tr>
+    <style is="custom-style">
+    paper-slider {
+      width: 148px;
+    }
+  </style>
+  <iron-collapse-button>
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages <paper-icon-button slot="collapse-trigger" on-tap="clearInput" icon="settings"></paper-icon-button></h3> 
 
 
-          <tr>
-            <td>
-              Gravité
-            </td>
-            <td>
-              <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Amortissement
-            </td>
-            <td>
-              <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>
-            </td>
-          </tr>
-        </table>
-          <paper-button raised  on-tap="_defaultPhysicValues">réinitialiser</paper-button>
-      </div>
-      <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
+
+    <div slot="collapse-content">
+      <table>
+        <tr>
+          <td>
+            Distance entre deux noeuds
+          </td>
+          <td>
+            <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Force des liens
+          </td>
+          <td>
+            <paper-slider  min="0" max="0.2" value="{{springConstant}}"  step="0.001"></paper-slider>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Longueur des  liens
+          </td>
+          <td>
+            <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
+          </td>
+        </tr>
 
 
-    </iron-collapse-button>
+        <tr>
+          <td>
+            Gravité
+          </td>
+          <td>
+            <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Amortissement
+          </td>
+          <td>
+            <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>
+          </td>
+        </tr>
+      </table>
+      <paper-button raised  on-tap="_defaultPhysicValues">réinitialiser</paper-button>
+    </div>
+    <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
+
+
+  </iron-collapse-button>
   <!--  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-      <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
-      <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
-      <paper-button  dialog-dismiss raised>Fermer</paper-button>
-    </div>-->
+  <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+  <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
+  <paper-button  dialog-dismiss raised>Fermer</paper-button>
+</div>-->
 
 
-  </template>
+</template>
 
-  <script>
-  /**
-  * `spoggy-graph`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class SpoggyGraphReglages extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'spoggy-graph-reglages'; }
-    static get properties() {
-      return {
-        network : {
-          type: Object,
-          notify: true
-        },
-        centralGravityValueDefault :{
-          type : Number,
-          value: 0.0001
-        },
-        springLengthValueDefault :{
-          type : Number,
-          value:  127
-        },
-        springConstantValueDefault :{
-          type : Number,
-          value: 0.04 // 0.05
-        },
-        nodeDistanceValueDefault :{
-          type : Number,
-          value: 260 //120
-        },
-        dampingValueDefault :{
-          type : Number,
-          value: 0.5 // 0,08
-        },
-        centralGravity: {
-          type: Number,
-          observer: "_updateCentralGravity"
-        },
-        springLength: {
-          type: Number,
-          observer: "_updateSpringLength"
-        },
-        springConstant: {
-          type: Number,
-          observer: "_updateSpringConstant"
-        },
-        nodeDistance: {
-          type: Number,
-          observer: "_updateNodeDistance"
-        },
-        damping: {
-          type: Number,
-          observer: "_updateDamping"
-        }
-      };
-    }
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this._deferred();
-      });
-
-    }
-    _deferred(){
-      let app = this;
-      console.log( "REGLAGES ")
-      this.agentReglagesGraph = new GraphReglagesAgent('agentReglagesGraph', this);
-      console.log(this.agentReglagesGraph);
-    }
-    initOptions(optionsRepulsion){
-    //  this.initPhase = true;
-        console.log(optionsRepulsion)
-      this.set('centralGravity', optionsRepulsion.centralGravity);
-      this.set('springLength', optionsRepulsion.springLength);
-      this.set('springConstant', optionsRepulsion.springConstant);
-      this.set('nodeDistance', optionsRepulsion.nodeDistance);
-      this.set('damping', optionsRepulsion.damping);
-    //  this.initPhase = false;
-    }
-    _defaultPhysicValues(){
-      this.agentReglagesGraph.send('agentGraph', {type: "resetNetworkOptions"} );
-    }
-
-    _updateCentralGravity(v){
-      if (!this.initPhase){
-        this.graphSettings = [];
-        this.set('graphSettings.centralGravity', v);
-        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+<script>
+/**
+* `spoggy-graph`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyGraphReglages extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-graph-reglages'; }
+  static get properties() {
+    return {
+      network : {
+        type: Object,
+        notify: true
+      },
+      centralGravityValueDefault :{
+        type : Number,
+        value: 0.0001
+      },
+      springLengthValueDefault :{
+        type : Number,
+        value:  127
+      },
+      springConstantValueDefault :{
+        type : Number,
+        value: 0.04 // 0.05
+      },
+      nodeDistanceValueDefault :{
+        type : Number,
+        value: 260 //120
+      },
+      dampingValueDefault :{
+        type : Number,
+        value: 0.5 // 0,08
+      },
+      centralGravity: {
+        type: Number,
+        observer: "_updateCentralGravity"
+      },
+      springLength: {
+        type: Number,
+        observer: "_updateSpringLength"
+      },
+      springConstant: {
+        type: Number,
+        observer: "_updateSpringConstant"
+      },
+      nodeDistance: {
+        type: Number,
+        observer: "_updateNodeDistance"
+      },
+      damping: {
+        type: Number,
+        observer: "_updateDamping"
       }
-    }
-    _updateSpringLength(v){
-      if (!this.initPhase){
-        this.graphSettings = [];
-        this.set('graphSettings.springLength',v);
-        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-      }
-    }
-    _updateSpringConstant(v){
-      if (!this.initPhase){
-        this.graphSettings = [];
-        this.set('graphSettings.springConstant',v);
-        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-      }
-    }
-    _updateNodeDistance(v){
-      if (!this.initPhase){
-        this.graphSettings = [];
-        this.set('graphSettings.nodeDistance', v);
-        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-      }
-    }
-    _updateDamping(v){
-      if (!this.initPhase){
-        this.graphSettings = [];
-        this.set('graphSettings.damping', v);
+    };
+  }
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+
+  }
+  _deferred(){
+    let app = this;
+    console.log( "REGLAGES ")
+    this.agentReglagesGraph = new GraphReglagesAgent('agentReglagesGraph', this);
+    console.log(this.agentReglagesGraph);
+    this._defaultPhysicValues();
+  }
+  initOptions(optionsRepulsion){
+    this.initPhase = true;
+    //  console.log(optionsRepulsion)
+    this.set('centralGravity', optionsRepulsion.centralGravity);
+    this.set('springLength', optionsRepulsion.springLength);
+    this.set('springConstant', optionsRepulsion.springConstant);
+    this.set('nodeDistance', optionsRepulsion.nodeDistance);
+    this.set('damping', optionsRepulsion.damping);
+    this.initPhase = false;
+  }
+  _defaultPhysicValues(){
+    this.agentReglagesGraph.send('agentGraph', {type: "resetNetworkOptions"} );
+  }
+
+  _updateCentralGravity(v){
+    if (!this.initPhase){
+      this.graphSettings = [];
+      this.set('graphSettings.centralGravity', v);
+      if (this.agentReglagesGraph != undefined){
         this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
       }
     }
   }
+  _updateSpringLength(v){
+    if (!this.initPhase){
+      this.graphSettings = [];
+      this.set('graphSettings.springLength',v);
+      if (this.agentReglagesGraph != undefined){
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+  }
+  _updateSpringConstant(v){
+    if (!this.initPhase){
+      this.graphSettings = [];
+      this.set('graphSettings.springConstant',v);
+      if (this.agentReglagesGraph != undefined){
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+  }
+  _updateNodeDistance(v){
+    if (!this.initPhase){
+      this.graphSettings = [];
+      this.set('graphSettings.nodeDistance', v);
+      if (this.agentReglagesGraph != undefined){
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+  }
+  _updateDamping(v){
+    if (!this.initPhase){
+      this.graphSettings = [];
+      this.set('graphSettings.damping', v);
+      if (this.agentReglagesGraph != undefined){
+        this.agentReglagesGraph.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+  }
+}
 
-  window.customElements.define(SpoggyGraphReglages.is, SpoggyGraphReglages);
+window.customElements.define(SpoggyGraphReglages.is, SpoggyGraphReglages);
 </script>
 </dom-module>
