@@ -64,9 +64,9 @@ var SparqlUpdateBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
       update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
 
-      update+=" DELETE { ?id ?p ?o }\n WHERE {\n smag:_"+id+" rdfs:label ?o . \n ?id ?p ?o \n} ; \n";
-      update+=" DELETE { ?s ?p ?id }\n WHERE {\n ?s ?p smag:_"+id+"  . \n ?s ?p smag:_"+id+" \n} ;\n";
-
+      update+=" DELETE { ?id ?p ?o }\n WHERE {\n smag:_"+id+" ?p ?o . \n ?id ?p ?o \n} ; \n";
+      update+=" DELETE { ?s ?p ?id }\n WHERE {\n ?s ?p smag:_"+id+"  . \n ?s ?p ?id \n} ;\n";
+//DELETE { ?id ?p ?o } WHERE { smag:_732afff7-e287-4357-9bea-83e732760f3a rdfs:label ?o . ?id ?p ?o } ; DELETE { ?s ?p ?id } WHERE { ?s ?p smag:_732afff7-e287-4357-9bea-83e732760f3a . ?s ?p smag:_732afff7-e287-4357-9bea-83e732760f3a }
 
       /*  update += "INSERT DATA { \n";
       // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
@@ -119,20 +119,33 @@ var SparqlUpdateBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     var object = data[0].to;
     var predicate = data[0].label.replace(/ /g, '_');
     var type = data[0].type;
+    var edit = data[0].edit;
+    var oldLabel = data[0].oldLabel;
+
 
     var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
     update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
     update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
     update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
-    update += "INSERT DATA { \n";
-    // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
-
-    //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
-    update += "smag:_"+subject+"   smag:"+predicate+"   smag:_"+object+" . \n";
 
 
-    // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
-    update += " } \n";
+    if (edit){
+
+      update+= "DELETE { ?s ?p ?o } \n";
+      update+= "INSERT { smag:_"+subject+"    smag:"+predicate+"   smag:_"+object+" } \n";
+      update+= "WHERE { smag:_"+subject+" rdfs:label ?o . ?s ?p ?o } \n";
+    }else{
+      update += "INSERT DATA { \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+      //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+      update += "smag:_"+subject+"   smag:"+predicate+"   smag:_"+object+" . \n";
+      // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+      update += " } \n";
+    }
+
+
+console.log( "REQUETE EDIT EDGE A REVOIR POUR LA SUPPRESSION")
+
     console.log(update);
     app.options.update = update;
 

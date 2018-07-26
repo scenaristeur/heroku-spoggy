@@ -220,6 +220,12 @@
 
         this.network = this.networkDivInitialize(this.$.mynetwork, this);
 
+        /*this.network.on("selectEdge", function (params){
+          console.log('dernier edge selectionné: ', params)
+          app.lastEdgeSelected = params.edges[0];
+          console.log(app.lastEdgeSelected)
+        })*/
+
         this.network.on("selectNode", function (params) {
           console.log('selectNode Event:', params);
           if (params.nodes.length == 1) {
@@ -235,7 +241,7 @@
               //app.clusterOtherCid(node.cid)
 
               // DESACTIVE TEMP POUR VOIR CLUSTER
-              app.agentGraph.send('agentVirtuoso', {type:'clickon', node : node});
+              app.agentGraph.send('agentSparql', {type:'clickon', node : node});
               let res = node.label;
               if (node.title != undefined){
                 res = node.title;

@@ -59,6 +59,11 @@ SparqlAgent.prototype.receive = function(from, message) {
     console.log(message);
     this.app.create_ds(message.endpoint, message.ds_name, message.ds_type)
     break;
+    case 'clickon':
+    //    app.agentGraph.send('agentVirtuoso', {type:'clickon', node : node});
+    this.app.clickon(message);
+    break;
+
     default:
     console.log(message);
   }

@@ -24,7 +24,7 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     create_ds(endpoint, ds_name, ds_type){
-var app = this;
+      var app = this;
       //https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html
       //  https://github.com/scenaristeur/fuseki/blob/master/index.js
       /*     method: 'post',
@@ -76,6 +76,7 @@ var app = this;
 
   explore(endpoint){
     let app = this;
+    this.endpoint = endpoint;
     //  console.log(endpoint);
     switch (endpoint.type) {
       case 'virtuoso':
@@ -90,6 +91,18 @@ var app = this;
       console.log('On ne traite pas encore ' + endpoint.type + '.');
     }
   }
+
+  clickon(message){
+    console.log(message)
+    console.log(this.endpoint)
+    if (this.endpoint.type == 'virtuoso'){
+      app.agentGraph.send('agentVirtuoso', {type:'clickon', node : message.node});
+    }else{
+      console.log("CLICK");
+    }
+
+  }
+
 
 
   recherche(message){

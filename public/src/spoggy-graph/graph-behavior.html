@@ -1256,6 +1256,7 @@ edges:{
         //document.getElementById('edgeOperation').innerHTML = "Edit Edge";
         data.edit = true; // signalement d'une edition pour sparql
         console.log(data);
+        data.oldLabel = data.label;
         app.$.edgeOperation.innerHTML = "Editer le lien";
         app.editEdgeWithoutDrag(data,callback);
       }
@@ -1532,6 +1533,7 @@ saveEdgeData (data, callback) {
   data.from = data.from.id
   data.label = this.$.edgeLabel.value;
   this.clearEdgePopUp();
+  console.log(callback)
   callback(data);
   var edge = this.network.body.data.edges.get({
     filter: function(edge) {

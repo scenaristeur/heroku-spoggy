@@ -130,6 +130,7 @@
               <template is="dom-repeat" items="[[endpoints]]">
                 <paper-item endpoint="[[item.name]]" on-tap="_showDetails">
                   <!--<paper-checkbox checked="{{item.actif}}" disabled></paper-checkbox>--> [[item.name]] ([[item.courte]])<!-- (status)-->
+                  <iron-icon class="star" icon="star"></iron-icon>
                 </paper-item>
               </template>
             </paper-listbox>
@@ -148,13 +149,13 @@
               <iron-icon icon="communication:location-on"></iron-icon>
               <span>type: [[endpoint.type]] <br> ping: [[ping]]</span>
             </div>
-            <div class="cafe-rating">
+            <!--<div class="cafe-rating">
               <iron-icon class="star" icon="star"></iron-icon>
               <iron-icon class="star" icon="star"></iron-icon>
               <iron-icon class="star" icon="star"></iron-icon>
               <iron-icon class="star" icon="star"></iron-icon>
               <iron-icon class="star" icon="star"></iron-icon>
-            </div>
+            </div> -->
 
             <p>・[[endpoint.url]] <br>・lecture: [[endpoint.read]] / écriture: [[endpoint.write]]</p>
             <paper-checkbox checked="{{endpoint.actif}}">Actif </paper-checkbox>
