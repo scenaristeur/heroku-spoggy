@@ -54,6 +54,11 @@ SparqlAgent.prototype.receive = function(from, message) {
     console.log(message.endpoint)
     this.app.explore(message.endpoint)
     break;
+    case 'create_ds':
+    //this.agentGlobal.send('agentSparql', {type: 'create_ds', endpoint: this.endpoint, ds_name: ds_name });
+    console.log(message);
+    this.app.create_ds(message.endpoint, message.ds_name, message.ds_type)
+    break;
     default:
     console.log(message);
   }

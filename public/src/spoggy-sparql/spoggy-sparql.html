@@ -58,6 +58,14 @@
     on-error="_handleVirtuosoPingError"
     ></iron-ajax>
 
+    <iron-ajax
+    id="ajaxCreateDs"
+    url="{{url}}"
+    method="POST"
+    params="{{options}}"
+    loading="{{loading}}"   > <!-- handle-as="application/sparql-results+json" -->
+  </iron-ajax>
+
     <paper-dialog  id="fusekiPopup" >
       <paper-dialog-scrollable>
         MODE pour Fuseki direct

@@ -60,5 +60,6 @@ typings/
 # database
 data/smagBoose
 
-# servuer fuseki
-fuseki 
+# serveur fuseki et data fuseki
+fuseki
+run

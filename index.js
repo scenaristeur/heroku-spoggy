@@ -15,14 +15,29 @@ var io = require('socket.io')(server);
 //http://psitsmike.com/2011/10/node-js-and-socket-io-multiroom-chat-tutorial/
 //https://www.codementor.io/codementorteam/socketio-player-matchmaking-system-pdxz4apty
 
+/*if (useLocalEndpoint){
+// lancement serveur fuseki
+require('shelljs/global');
+var path = require('path');
+console.log(__dirname);
+var lance_fuseki = path.join(__dirname, '/fuseki/fuseki start');
+exec(lance_fuseki)
+}*/
+console.log()
 if (useLocalEndpoint){
-  // lancement serveur fuseki
-  require('shelljs/global');
   var path = require('path');
-  console.log(__dirname);
-  var lance_fuseki = path.join(__dirname, '/fuseki/fuseki start');
-  exec(lance_fuseki)
+
+  var serverHome =  path.join(__dirname, '/fuseki/');
+  console.log(serverHome)
+  var FusekiServer = require('fuseki');
+  var fusekiServer = new FusekiServer({'home': serverHome });
+  console.log(fusekiServer)
+  fusekiServer.start();
+  //console.log(fusekiServer)
+  //console.log(fusekiServer.datasets())
 }
+
+
 
 /* CONFIGURATION DU SERVEUR WEB */
 //var port = process.env.PORT || 3000;

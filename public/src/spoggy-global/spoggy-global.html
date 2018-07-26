@@ -169,6 +169,13 @@
                   <paper-item  value="[[item.ds_name]]" on-tap="_updateUrl">[[item.ds_name]]</paper-item>
                 </template>
               </paper-listbox>
+
+              <div class="horizontal justified">
+                <paper-input id="newDatasetName" label="Nom du dataset"></paper-input>
+                <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="create_ds">Creer un nouveau dataset</paper-button>
+              </div>
+
+
             </div>
 
 
@@ -608,6 +615,16 @@ explorer(){
   this.agentGlobal.send('agentSparql', {type: 'explore', endpoint: this.endpoint });
   this.agentGlobal.send('agentApp', {type: 'setEndpoint', value: this.endpoint });
 }
+
+create_ds(){
+  var ds_name = this.$.newDatasetName.value;
+
+  if (ds_name.length > 0){
+    this.agentGlobal.send('agentSparql', {type: 'create_ds', endpoint: this.endpoint, ds_name: ds_name, ds_type: 'tdb' }); // type : tdb ou mem https://jena.apache.org/documentation/fuseki2/fuseki-server-protocol.html
+    this.$.newDatasetName.value = "";
+  }
+}
+
 rechercher(e){
   console.log(e.model.item)
 }
