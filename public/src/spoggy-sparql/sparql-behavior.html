@@ -94,13 +94,14 @@ var SparqlBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
   clickon(message){
     console.log(message)
-    console.log(this.endpoint)
-    if (this.endpoint.type == 'virtuoso'){
-      app.agentGraph.send('agentVirtuoso', {type:'clickon', node : message.node});
-    }else{
-      console.log("CLICK");
+    if (this.endpoint != undefined){
+      console.log(this.endpoint)
+      if (this.endpoint.type == 'virtuoso'){
+        this.agentSparql.send('agentVirtuoso', {type:'clickon', node : message.node});
+      }else{
+        console.log("CLICK");
+      }
     }
-
   }
 
 

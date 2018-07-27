@@ -122,14 +122,11 @@
               <!--  </fieldset> -->
             </div>
           </iron-collapse-button>
-          <iron-collapse-button>
+        <!--  <iron-collapse-button>
             <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type de noeud</h3>
             <div slot="collapse-content">
               nb : ces fonctionnalités sont en cours de developpement :
               <a href="https://github.com/scenaristeur/heroku-spoggy/projects/1#card-10985683" target="_blank">kanban</a>
-
-              <!--  <fieldset>
-              <legend>Couleur</legend>-->
               <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
                 <div>Noeuds particuliers</div>
                 <paper-checkbox name="normal">Normal</paper-checkbox>
@@ -145,10 +142,11 @@
                 <paper-checkbox name="condition">Condition</paper-checkbox>
                 <paper-checkbox name="fonction">Fonction</paper-checkbox>
               </iron-selector>
-              <!--  </fieldset> -->
             </div>
           </iron-collapse-button>
+        -->
         </paper-dialog-scrollable>
+      </br>
         <div style="padding-top:10px" horizontal end-justified layout self-stretch>
           <paper-button id="nodeSaveButton" dialog-confirm  raised>ok</paper-button>
           <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
@@ -196,7 +194,7 @@
         },
         dampingValueDefault :{
           type : Number,
-          value: 0.5 // 0,08
+          value: 0.08 // 0,08
         }
       };
     }

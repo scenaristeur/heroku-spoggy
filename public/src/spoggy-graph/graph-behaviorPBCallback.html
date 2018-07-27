@@ -1534,10 +1534,7 @@ saveEdgeData (data, callback) {
   data.label = this.$.edgeLabel.value;
   this.clearEdgePopUp();
   console.log(callback)
-  if (typeof callback == 'function'){
-      callback(data);
-  }
-
+  callback(data);
   var edge = this.network.body.data.edges.get({
     filter: function(edge) {
       return (edge.from == data.from && edge.to == data.to && edge.label == data.label);

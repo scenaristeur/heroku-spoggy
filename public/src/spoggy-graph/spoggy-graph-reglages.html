@@ -28,14 +28,11 @@
 
     <style is="custom-style">
     paper-slider {
-      width: 148px;
+      width: 140px;
     }
   </style>
   <iron-collapse-button>
-      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages <paper-icon-button slot="collapse-trigger" on-tap="clearInput" icon="settings"></paper-icon-button></h3> 
-
-
-
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Réglages <paper-icon-button slot="collapse-trigger" on-tap="clearInput" icon="settings"></paper-icon-button></h3>
     <div slot="collapse-content">
       <table>
         <tr>
@@ -74,7 +71,7 @@
         </tr>
         <tr>
           <td>
-            Amortissement
+            Résistance
           </td>
           <td>
             <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>

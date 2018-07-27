@@ -146,110 +146,113 @@
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">[[endpoint.name]]</h3>
           <div slot="collapse-content">
             <div class="cafe-location cafe-light">
-              <iron-icon icon="communication:location-on"></iron-icon>
-              <span>type: [[endpoint.type]] <br> ping: [[ping]]</span>
+              <!--<iron-icon icon="communication:location-on"></iron-icon>-->
+              <div>type: [[endpoint.type]]</div>
+              <div hidden$="[[!ping]]" title="[[ping]]">ping Ok</div>
+              <div hidden$="[[!error]]" style="color:red">[[error]]</div>
+              <div><span hidden$="[[!endpoint.read]]">lecture</span> <span hidden$="[[!endpoint.write]]">ecriture</span></div>
             </div>
             <!--<div class="cafe-rating">
-              <iron-icon class="star" icon="star"></iron-icon>
-              <iron-icon class="star" icon="star"></iron-icon>
-              <iron-icon class="star" icon="star"></iron-icon>
-              <iron-icon class="star" icon="star"></iron-icon>
-              <iron-icon class="star" icon="star"></iron-icon>
-            </div> -->
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+          </div> -->
 
-            <p>・[[endpoint.url]] <br>・lecture: [[endpoint.read]] / écriture: [[endpoint.write]]</p>
-            <paper-checkbox checked="{{endpoint.actif}}">Actif </paper-checkbox>
+          <p>・[[endpoint.url]] <br>・<a href="[[endpoint.link]]" target="_blank">[[endpoint.link]]</a> </p>
+          <paper-checkbox checked="{{endpoint.actif}}">Actif </paper-checkbox>
 
-            <div hidden$="[[!isEqual(endpoint.type, 'fuseki')]]">
-              <div class="cafe-header">Selectionner un dataset :
-              </div>
-              [[error]]
-              <paper-item  hidden$="[[!isEqual(datasets.length,0)]]" style="height:100px;" > Chargement de la liste des datasets</paper-item>
-              <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content"  attr-for-selected="value" selected="{{dataset}}">
-                <template is="dom-repeat" items="[[datasets]]">
-                  <paper-item  value="[[item.ds_name]]" on-tap="_updateUrl">[[item.ds_name]]</paper-item>
-                </template>
-              </paper-listbox>
+          <div hidden$="[[!isEqual(endpoint.type, 'fuseki')]]">
+            <div class="cafe-header">Selectionner un dataset :
+            </div>
 
-              <div class="horizontal justified">
-                <paper-input id="newDatasetName" label="Nom du dataset"></paper-input>
-                <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="create_ds">Creer un dataset</paper-button>
+            <paper-item  hidden$="[[!isEqual(datasets.length,0)]]" style="height:100px;" > Chargement de la liste des datasets</paper-item>
+            <paper-listbox slot="dropdown-content" hidden$="[[isEmpty(pingFuseki)]]"  class="dropdown-content"  attr-for-selected="value" selected="{{dataset}}">
+              <template is="dom-repeat" items="[[datasets]]">
+                <paper-item  value="[[item.ds_name]]" on-tap="_updateUrl">[[item.ds_name]]</paper-item>
+              </template>
+            </paper-listbox>
 
-              </div>
+            <div class="horizontal justified">
+              <paper-input id="newDatasetName" label="Nom du dataset"></paper-input>
+              <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="create_ds">Creer un dataset</paper-button>
+
+            </div>
             <!--
-              <paper-button item="[[endpoint]]" class="cafe-reserve" disabled on-tap="">Charger un fichier de données</paper-button> -->
+            <paper-button item="[[endpoint]]" class="cafe-reserve" disabled on-tap="">Charger un fichier de données</paper-button> -->
 
+          </div>
+
+
+
+
+
+          <p class="cafe-light">
+            [[endpoint.description]]</p>
+            <p hidden$="[[isEmpty(endpoint.plus)]]"><a href='{{endpoint.plus}}' target="_blank">plus d'infos</a></p>
+
+            <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
+              <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Explorer</paper-button>
+              <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="rechercher">Rechercher</paper-button>
             </div>
 
 
 
+            <div class="card-actions">
 
+              <iron-collapse-button hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Les Requêtes de Karl et Cécile</h3>
+                <div slot="collapse-content">
+                  <paper-textarea label="Requête d'exploration" value="{{endpoint.exploreQuery.query}}"></paper-textarea>
+                  <paper-textarea label="Requête de recherche textuelle" value="{{endpoint.searchQuery.query}}"></paper-textarea>
 
-            <p class="cafe-light">
-              [[endpoint.description]]</p>
-              <p hidden$="[[isEmpty(endpoint.plus)]]"><a href='{{endpoint.plus}}' target="_blank">plus d'infos</a></p>
-
-              <div class="horizontal justified" hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
-                <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="explorer">Explorer</paper-button>
-                <paper-button item="[[endpoint]]" class="cafe-reserve" on-tap="rechercher">Rechercher</paper-button>
-              </div>
-
-
-
-              <div class="card-actions">
-
-                <iron-collapse-button hidden$="[[!isEqual(endpoint.type, 'virtuoso')]]">
-                  <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Les Requêtes de Karl et Cécile</h3>
-                  <div slot="collapse-content">
-                    <paper-textarea label="Requête d'exploration" value="{{endpoint.exploreQuery.query}}"></paper-textarea>
-                    <paper-textarea label="Requête de recherche textuelle" value="{{endpoint.searchQuery.query}}"></paper-textarea>
-
-                    Et quand je clique sur un noeud de type :
-                    <template is="dom-repeat" endpoints="[[endpoint.clickonNode]]" as="clickonNode">
-                      <iron-collapse-button>
-                        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> {{clickonNode.type}}</h3>
-                        <div slot="collapse-content">
-                          <!--<paper-item>-->
-                          <paper-input label="Detecteur" style="width:100%" value="{{clickonNode.detecteur}}"> </paper-input>
-                          <paper-textarea label="Requête" value="{{clickonNode.requete}}"></paper-textarea>
-                          <paper-input label="Lien créé" style="width:100%" value="{{clickonNode.lienCree}}"> </paper-input>
-                          <!--</paper-item>-->
-                        </div>
-                      </iron-collapse-button>
-                    </template>
-                  </div>
-                </iron-collapse-button>
-
-              </div>
-
+                  Et quand je clique sur un noeud de type :
+                  <template is="dom-repeat" endpoints="[[endpoint.clickonNode]]" as="clickonNode">
+                    <iron-collapse-button>
+                      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;"> {{clickonNode.type}}</h3>
+                      <div slot="collapse-content">
+                        <!--<paper-item>-->
+                        <paper-input label="Detecteur" style="width:100%" value="{{clickonNode.detecteur}}"> </paper-input>
+                        <paper-textarea label="Requête" value="{{clickonNode.requete}}"></paper-textarea>
+                        <paper-input label="Lien créé" style="width:100%" value="{{clickonNode.lienCree}}"> </paper-input>
+                        <!--</paper-item>-->
+                      </div>
+                    </iron-collapse-button>
+                  </template>
+                </div>
+              </iron-collapse-button>
 
             </div>
-          </iron-collapse-button>
-        </div>
 
-        <!--  <div class="card-actions">
 
-        <p>Tonight's availability</p>
-        <div class="horizontal justified">
-        <paper-icon-button icon="icons:event"></paper-icon-button>
-        <paper-button>5:30PM</paper-button>
-        <paper-button>7:30PM</paper-button>
-        <paper-button>9:00PM</paper-button>
-        <paper-button class="cafe-reserve">Partager</paper-button>
-        <paper-button class="cafe-reserve">Explorer!</paper-button>
+          </div>
+        </iron-collapse-button>
       </div>
 
+      <!--  <div class="card-actions">
+
+      <p>Tonight's availability</p>
       <div class="horizontal justified">
-      <paper-icon-button icon="favorite"></paper-icon-button>
-      <paper-icon-button icon="bookmark"></paper-icon-button>
-      <paper-icon-button icon="social:share"></paper-icon-button>
+      <paper-icon-button icon="icons:event"></paper-icon-button>
+      <paper-button>5:30PM</paper-button>
+      <paper-button>7:30PM</paper-button>
+      <paper-button>9:00PM</paper-button>
+      <paper-button class="cafe-reserve">Partager</paper-button>
+      <paper-button class="cafe-reserve">Explorer!</paper-button>
+    </div>
+
+    <div class="horizontal justified">
+    <paper-icon-button icon="favorite"></paper-icon-button>
+    <paper-icon-button icon="bookmark"></paper-icon-button>
+    <paper-icon-button icon="social:share"></paper-icon-button>
 
 
-      <paper-icon-button icon="expand-more" title="more info" onclick="_toggle()" style="float:right;">
-    </paper-icon-button>
-    <iron-collapse id="more-info" style="width:100%;">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
-  </iron-collapse>
+    <paper-icon-button icon="expand-more" title="more info" onclick="_toggle()" style="float:right;">
+  </paper-icon-button>
+  <iron-collapse id="more-info" style="width:100%;">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent enim ante, tempus eget volutpat ac, cursus ac ante. Nulla facilisi. Praesent sed lacinia ligula. Donec malesuada nisl eget quam iaculis, vel placerat justo cursus.
+</iron-collapse>
 
 </div>
 
@@ -373,13 +376,87 @@ class SpoggyGlobal extends Polymer.LazyImportsMixin(Polymer.Element) {
             dont les partenaires sont : l'équipe Wimmics commune à Inria et au laboratoire I3S (UNS / CNRS).\
             le Ministère de la Culture et de la Communication.",
             courte: 'Wikipedia',
-            url:'http://fr.dbpedia.org',
+            url:'https://dbpedia.org/sparql',
+            link: 'http://fr.dbpedia.org',
             image: '/images/DBpediaLogo.svg',
             actif: false,
             type: 'virtuoso',
             read:true,
             write:false,
-            exploreQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'
+            /*http://dbpedia.org/data/Louis-Abraham_van_Loo*/
+            /*http://fr.dbpedia.org/data/Carte_heuristique*/
+            /*OPTIONAL {?s ?p ?o . ?s  ?p "Holon (philosophie)" @fr}.
+OPTIONAL {?s ?p ?o . ?s ?p "Resource Description Framework" @fr}
+*/
+/* http://dbpedia.org/fct/facet.vsp?sid=30365&cmd=next&offset=&limit=20 */
+            exploreQuery: {
+              query : 'select distinct ?s ?p ?o where {?s ?p "Resource Description Framework" @fr} LIMIT 100',
+              typeResources:{
+                s: 'bibo:Document',
+                sub: 'Subjects'
+              },
+              parseToVis : function(app, results, endpointUrl,typeResources, group){
+                //  var app = this;
+
+                var visRes = {nodes:[], edges:[]};
+                results.forEach(function(r){
+                  console.log(r);
+                  let node = {
+                    id: app.visId(r.s.value),
+                    type: null,
+                    resourceType: typeResources.s,
+                    uri: r.s.value,
+                    label: app.visLabelSplit(app.visLabel(r.t.value)),
+                    endpointUrl: endpointUrl,
+                    color: "rgb(76,0,74)",
+                    font: {
+                      color: 'rgb(255,255,255)'
+                    },
+                    cid: group,
+                    y: 2*Math.random()
+                  }
+                  var trouveN = visRes.nodes.find(function(element){
+                    return node.id == element.id
+                  });
+                  if (trouveN) {
+                    //  console.log("TROUVE ")
+                    //  console.log(trouveN)
+                    node = trouveN;
+                  }else{
+                    visRes.nodes.push(node);
+                  }
+
+                  let nodeSub = {
+                    id: r.sub.value,
+                    type: r.sub.type,
+                    resourceType: typeResources.sub,
+                    label: app.visLabelSplit(r.sub.value),
+                    endpointUrl: endpointUrl,
+                    color: "rgb(107,142,35)",
+                    shape: "box",
+                    cid: group,
+                    y: 2*Math.random()
+                  }
+                  var trouveS = visRes.nodes.find(function(element){
+                    return nodeSub.id == element.id
+                  });
+                  if (trouveS) {
+                    //  console.log("TROUVE ")
+                    //  console.log(trouveS)
+                    nodeSub = trouveS;
+                  }else{
+                    visRes.nodes.push(nodeSub);
+                  }
+
+                  let  eType = {from : node.id, to: nodeSub.id, label: "subject"}
+                  if (!visRes.edges.includes(eType)){
+                    visRes.edges.push(eType)
+                  }
+                });
+
+                return visRes;
+              }
+            }
           },
           {
             name:'Persee',
@@ -598,6 +675,7 @@ _showDetails(e){
   console.log(this.endpoint);
   this.datasets = [];
   this.error = [];
+  this.ping = false;
   this.$.collapse_detail.open();
   this.$.collapse_endpoint.close();
   if (this.endpoint.type == 'fuseki'){
