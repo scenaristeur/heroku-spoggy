@@ -192,7 +192,7 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
       },
       hidePseudo: {
         type: Boolean,
-        value: false,
+        value: true,
         notify: true
       },
       hideRejoindre: {
@@ -227,7 +227,7 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
   }
   initAgents(){
     this.agentCollaboratif.send('agentHello', 'Hello agentHello!');
-
+  this.hidePseudo = true;
   }
 
   isEmpty(value){
@@ -244,17 +244,17 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
   pseudoChanged(){
     // test a faire pour voir si deconnecter ou changer de nom si deja connecté
     this.pseudo = this.$.pseudoInput.value;
-    console.log(this.pseudo)
+    console.log('changePseu',this.pseudo)
   this.hidePseudo = true;
     if (this.pseudo.length == 0 || this.pseudo == undefined){
     //  this.$.pseudoPopup.toggle();
       console.log(this.pseudo)
     this.hidePseudo = false;
-    }else{
+  }else{
       console.log(this.pseudo)
     this.agentCollaboratif.send('agentSocket', {type: "adduser", pseudo: this.pseudo, room: this.room});
     this.agentCollaboratif.send('agentChat', {type: "changePseudo", pseudo: this.pseudo});
-  }
+ }
   }
 
   rejoindre(e){
