@@ -1,0 +1,21 @@
+
+const endpointUrl = 'https://query.wikidata.org/sparql',
+      sparqlQuery = `SELECT ?ordinateur ?ordinateurLabel WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  ?ordinateur wdt:P279 wd:Q68.
+}
+LIMIT 100`,
+      fullUrl = endpointUrl + '?query=' + encodeURIComponent( sparqlQuery ),
+      headers = { 'Accept': 'application/sparql-results+json' };
+
+fetch( fullUrl, { headers } ).then( body => body.json() ).then( json => {
+    const { head: { vars }, results } = json;
+    for ( const result of results.bindings ) {
+        for ( const variable of vars ) {
+            console.log( '%s: %o', variable, result[variable] );
+        }
+        console.log( '---' );
+    }
+} );
+
+https://query.wikidata.org/#SELECT%20%3Fordinateur%20%3FordinateurLabel%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fordinateur%20wdt%3AP279%20wd%3AQ68.%0A%7D%0ALIMIT%20100

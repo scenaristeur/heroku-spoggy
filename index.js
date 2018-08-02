@@ -30,11 +30,14 @@ if (useLocalEndpoint){
   var serverHome =  path.join(__dirname, '/fuseki/');
   console.log(serverHome)
   var FusekiServer = require('fuseki');
-  var fusekiServer = new FusekiServer({'home': serverHome });
-  console.log(fusekiServer)
-  fusekiServer.start();
+  var fusekiServer = new FusekiServer({'home': serverHome , 'url': 'http://127.0.0.1:3030'});
   //console.log(fusekiServer)
-  //console.log(fusekiServer.datasets())
+  fusekiServer.start().then(function(s){
+    //  console.log(fusekiServer)
+      console.log(fusekiServer.datasets())
+  });
+
+
 }
 
 
