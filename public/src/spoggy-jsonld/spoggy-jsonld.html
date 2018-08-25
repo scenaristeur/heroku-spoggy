@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./jsonld-behavior.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="spoggy-jsonld">
+    <link rel="lazy-import" group="lazy" href="./jsonld-import.html">
+  <template>
+
+    <iron-ajax
+    id="fetch"
+    url="{{url}}"
+    params="{{options}}"
+    loading="{{loading}}"
+    handle-as="application/sparql-results+json"
+    >
+  </iron-ajax>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-jsonld`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyJsonld extends Polymer.LazyImportsMixin(JsonldBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'spoggy-jsonld'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-jsonld'
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        console.log("chargement "+this.prop1)
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+        });
+      }
+      _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+          console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+            this.agentJsonld = new JsonldAgent('agentJsonld', this);
+        });
+      }
+
+    }
+
+    window.customElements.define(SpoggyJsonld.is, SpoggyJsonld);
+  </script>
+</dom-module>

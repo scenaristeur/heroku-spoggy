@@ -27,7 +27,7 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     //////////////////////////
 
     explore(endpoint){
-      //  console.log(endpoint);
+        console.log(endpoint);
       let app = this;
       app.group ++;
       var exploreQuery = endpoint.exploreQuery;
@@ -35,11 +35,14 @@ var VirtuosoBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       let options = {
         query: exploreQuery.query,
         format: 'application/sparql-results+json',
+      //  format: 'json',
       }
       console.log(options)
       app.$.ajaxExplore.url = endpoint.url;
       app.$.ajaxExplore.params = options;
       app.$.ajaxExplore.generateRequest().completes.then(function(req,resp) {
+        console.log(req);
+        console.log(resp);
         console.log(req.response)
         var data = req.response;
         let response = JSON.parse(data);
@@ -364,7 +367,8 @@ clickonNode(node){
     //  query: 'select distinct * where {?s ?p <'+node.uri+'>. ?s ?p2 ?o } LIMIT 100',
     // SELECT ?s ?p ?o  WHERE { ?s ?p ?o .FILTER regex(str(?s), "alice") .}
     //  <'+node.uri+'> rdfs:label ?label\
-    query:  'SELECT * \
+    query:  'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \
+    SELECT * \
     WHERE {\
       { <'+node.uri+'> ?p ?o . \
       OPTIONAL {<'+node.uri+'> rdfs:label ?label} \
@@ -417,6 +421,7 @@ console.log("inactif")
 }else if (node.endpointUrl != undefined){*/
 console.log("REcherche complementaire")
 console.log(node);
+
 app.$.ajaxPersee.url = node.endpointUrl;
 //  this.$.pingRequest.endpoint = endpoint.url+'/sparql';
 app.$.ajaxPersee.params = options;

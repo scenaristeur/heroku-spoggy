@@ -462,14 +462,16 @@ class SpoggyEndpoints extends EndpointsBehaviorMixin(Polymer.LazyImportsMixin(Po
         /*  exploreQuery: 'select distinct ?Concept where {[] a ?Concept} LIMIT 100'*/
       },
       {
-        name: 'Semantic Forms',
+        name: 'Semantic Forms 1',
         description: "Semantic_forms est une application générique à la fois de navigation du web sémantique et d'annotation,\
         et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
         plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
         url: 'http://163.172.179.125:9112',
-        exploreQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-        SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 100',
+        exploreQuery: {
+          query: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+          PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+          SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 100 OFFSET 100'
+        },
         actif: false,
         selectionnable: false,
         type: 'virtuoso',

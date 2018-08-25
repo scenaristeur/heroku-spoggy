@@ -386,9 +386,9 @@ class SpoggyGlobal extends Polymer.LazyImportsMixin(Polymer.Element) {
             /*http://dbpedia.org/data/Louis-Abraham_van_Loo*/
             /*http://fr.dbpedia.org/data/Carte_heuristique*/
             /*OPTIONAL {?s ?p ?o . ?s  ?p "Holon (philosophie)" @fr}.
-OPTIONAL {?s ?p ?o . ?s ?p "Resource Description Framework" @fr}
-*/
-/* http://dbpedia.org/fct/facet.vsp?sid=30365&cmd=next&offset=&limit=20 */
+            OPTIONAL {?s ?p ?o . ?s ?p "Resource Description Framework" @fr}
+            */
+            /* http://dbpedia.org/fct/facet.vsp?sid=30365&cmd=next&offset=&limit=20 */
             exploreQuery: {
               query : 'select distinct ?s ?p ?o where {?s ?p "Resource Description Framework" @fr} LIMIT 100',
               typeResources:{
@@ -584,39 +584,155 @@ OPTIONAL {?s ?p ?o . ?s ?p "Resource Description Framework" @fr}
         et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
         courte: 'endpoint Assemblée Virtuelle',
         plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
-        url: 'http://163.172.179.125:9112',
-        exploreQuery: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-        SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } LIMIT 100',
-        actif: false,
-        type: 'virtuoso',
-        read: true,
-        write: true
-      },
-      {
-        name: 'Data.culture.fr',
-        url: 'http://data.culture.fr/thesaurus'
-      },
-      {
-        name: 'BaseKb',
-        plus: 'http://basekb.com/',
-      },{
-        name: 'WikiData',
-        description: 'https://www.wikidata.org/wiki/Wikidata:Data_access/fr',
-        plus: 'https://www.wikidata.org/wiki/Wikidata:Main_Page',
-        url: 'https://wikidata.metaphacts.com/',
-      }
-      ,{
-        name : 'Data.gov',
-        plus: 'https://catalog.data.gov/dataset/public-art-inventory-d9c20/resource/84b37647-6f8e-4090-b046-fad1437c1d02',
+        url: 'http://163.172.179.125:9112/sparql',
+        exploreQuery: {
+        /*  query: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
+          PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+          SELECT ?g ?s ?label ?subj WHERE { GRAPH ?g {\
+            ?s rdf:type <http://rdfs.org/sioc/ns#Post> .\
+            ?s rdfs:label ?label. \
+            ?s <http://purl.org/dc/terms/subject> ?subj.\
+          } }',*/
+          query: 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>\
+CONSTRUCT { ?S ?P ?O . } WHERE { GRAPH ?G { ?S ?P ?O . } } LIMIT 10',
+          // LIMIT 400',
+          //  SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } ORDER BY DESC(?o) LIMIT 100'
+          //SELECT * WHERE { GRAPH ?G {?S <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Organization>. } } LIMIT 1000
 
-      },
-      {
-        name: 'Histropedia',
-        plus: 'http://histropedia.com/' }
-      ]
-    }
-  };
+          parseToVis : function(app, results, endpointUrl,typeResources, group){
+            //  var app = this;
+
+            var visRes = {nodes:[], edges:[]};
+            results.forEach(function(r){
+              console.log(r);
+              let node = {
+                id: r.s.value,
+                type: "http://rdfs.org/sioc/ns#Post",
+                //  resourceType: typeResources.s,
+                uri: r.s.value,
+                label: r.label.value,
+                title: r.s.value,
+                endpointUrl: endpointUrl,
+                color: "rgb(76,0,74)",
+                font: {
+                  color: 'rgb(255,255,255)'
+                },
+                cid: group,
+                y: 2*Math.random()
+              }
+              var trouveN = visRes.nodes.find(function(element){
+                return node.id == element.id
+              });
+              if (trouveN) {
+                //  console.log("TROUVE ")
+                //  console.log(trouveN)
+                node = trouveN;
+              }else{
+                visRes.nodes.push(node);
+              }
+
+              let nodeSub = {
+                id: r.subj.value ,
+                type: r.subj.type ,
+                //  resourceType: typeResources.sub,
+                uri: r.subj.value,
+                label: app.visLabel(r.subj.value),
+                endpointUrl: endpointUrl,
+                color: "rgb(107,142,35)",
+                shape: "box",
+                cid: group,
+                y: 2*Math.random()
+              }
+              var trouveS = visRes.nodes.find(function(element){
+                return nodeSub.id == element.id
+              });
+              if (trouveS) {
+                //  console.log("TROUVE ")
+                //  console.log(trouveS)
+                nodeSub = trouveS;
+              }else{
+                visRes.nodes.push(nodeSub);
+              }
+
+              let  eType = {from : node.id, to: nodeSub.id, label: "subject"};
+              var trouveE = visRes.edges.find(function(e){
+                return eType.from == e.from && eType.to == e.to && eType.label == e.label;
+              })
+              if(trouveE){
+                eType = trouveE;
+              } else{
+                visRes.edges.push(eType);
+              }
+
+            let nodeGraph = {
+              id: r.g.value ,
+              type: r.g.type ,
+              //  resourceType: typeResources.sub,
+              label: app.visLabel(r.g.value),
+              uri: r.g.value,
+              endpointUrl: endpointUrl,
+              color: "rgb(107,142,35)",
+              shape: "box",
+              cid: group,
+              y: 2*Math.random()
+            }
+            var trouveS = visRes.nodes.find(function(element){
+              return nodeGraph.id == element.id
+            });
+            if (trouveS) {
+              //  console.log("TROUVE ")
+              //  console.log(trouveS)
+              nodeGraph = trouveS;
+            }else{
+              visRes.nodes.push(nodeGraph);
+            }
+
+            let  e2Type = {from : node.id, to: nodeGraph.id, label: "graph"};
+            var trouveE2 = visRes.edges.find(function(e){
+              return e2Type.from == e.from && e2Type.to == e.to && e2Type.label == e.label;
+            })
+            if(trouveE2){
+              e2Type = trouveE2;
+            } else{
+              visRes.edges.push(e2Type);
+            }
+
+        });
+
+        return visRes;
+      }
+    } ,
+    actif: false,
+    type: 'virtuoso',
+    read: true,
+    write: true
+  },
+  {
+    name: 'Data.culture.fr',
+    url: 'http://data.culture.fr/thesaurus'
+  },
+  {
+    name: 'BaseKb',
+    plus: 'http://basekb.com/',
+  },{
+    name: 'WikiData',
+    description: 'https://www.wikidata.org/wiki/Wikidata:Data_access/fr',
+    plus: 'https://www.wikidata.org/wiki/Wikidata:Main_Page',
+    url: 'https://wikidata.metaphacts.com/',
+  }
+  ,{
+    name : 'Data.gov',
+    plus: 'https://catalog.data.gov/dataset/public-art-inventory-d9c20/resource/84b37647-6f8e-4090-b046-fad1437c1d02',
+
+  },
+  {
+    name: 'Histropedia',
+    plus: 'http://histropedia.com/' }
+  ]
+}
+};
 }
 
 constructor(){

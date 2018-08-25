@@ -3,7 +3,7 @@
 */
 
 var useLevelgraph = true; //possibilite d'utiliser LevelGRAPH DB : opérationnel (stocké dans daossier data) ne fonctionne pas sur tous les systemes
-var useLocalEndpoint = true; // lance un endpoint fuseki local (https://github.com/scenaristeur/fuseki)
+var useLocalEndpoint = false; // lance un endpoint fuseki local (https://github.com/scenaristeur/fuseki)
 
 /* IMPORTS NODE_MODULES  */
 var compression = require('compression')
