@@ -46,9 +46,11 @@ JsonldAgent.prototype.receive = function(from, message) {
     if (message.params.endpoint != undefined && message.params.uri != undefined){
       this.app.requestJsonLd(message.params);
     }else{
-        this.app.loadJsonLd(message.params.jsonld);
+      this.app.loadJsonLd(message.params);
     }
-
+    break;
+    case 'complementaire':
+    this.app.complementaire(message.node);
     break;
     case 'updaterooms':
     this.app.rooms = message.rooms;

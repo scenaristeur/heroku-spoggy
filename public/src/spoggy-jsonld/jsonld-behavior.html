@@ -18,9 +18,6 @@ var JsonldBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
-    ma_fonction(){
-      //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
-    }
     requestJsonLd(params){
       //exemple    http://127.0.0.1:8080/?format=jsonld&endpoint=http://163.172.179.125:9112/sparql&uri=http://semantic-forms.cc:9112/ldp/1507730036573-23410983362747940
       console.log(params);
@@ -47,33 +44,72 @@ var JsonldBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
-    loadJsonLd(url){
-      // exemple  http://127.0.0.1:8080/?jsonld=http%3A%2F%2Fsemantic-forms.cc%3A9112%2Fldp%2F1507730036573-23410983362747940
-      if (url != null) {
-        console.log(url);
-        this.rdfURL2SimpleArray(url)
-      } else
-      console.log("No url= in jsonld ");
+    complementaire(node){
+      console.log(node);
+      if(node.type == "Literal"){
+        console.log("Node est un Literal");
+      }else{
+        let options = {
+          /*  query: 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
+          PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\
+          PREFIX foaf: <http://xmlns.com/foaf/0.1/>\
+          CONSTRUCT { ?S ?P ?O . } WHERE { GRAPH ?G { ?S ?P ?O . } } LIMIT 10',*/
+          query:  'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \
+          SELECT * \
+          WHERE {\
+            { <'+node.url+'> ?p ?o . \
+          }\
+          UNION \
+          { ?s ?p <'+node.url+'> . \
+        } \
+      }   LIMIT 100',
+      unionDefaultGraph: 'on',
+    //  format: 'application/sparql-results+json',
+      //  format: 'json',
     }
-
-    /*    loadJsonLd(url){
-    if (url != null) {
-    console.log(url);
-
-    let options = {
-    //  query: exploreQuery.query,
-    format: 'application/sparql-results+json',
-    //  format: 'json',
+    console.log(options)
+    this.$.fetch.url = node.sparql+"/sparql";
+    this.$.fetch.params = options;
+    this.$.fetch.generateRequest().completes.then(function(req,resp) {
+      console.log(req);
+      console.log(resp);
+      console.log(req.response)
+      var data = req.response;
+      let response = JSON.parse(data);
+    });
   }
-  console.log(options)
-  this.$.fetch.url = url;
-  this.$.fetch.params = options;
-  this.$.fetch.generateRequest().completes.then(function(req,resp) {
-  console.log(req);
-  console.log(resp);
-  console.log(req.response)
-  var data = req.response;
-  let response = JSON.parse(data);
+}
+
+
+loadJsonLd(data){
+  var url = data.url;
+  this.sparql = data.sparql;
+  // exemple  http://127.0.0.1:8080/?jsonld=http%3A%2F%2Fsemantic-forms.cc%3A9112%2Fldp%2F1507730036573-23410983362747940
+  if (url != null) {
+    console.log(url);
+    this.rdfURL2SimpleArray(url)
+  } else
+  console.log("No url= in jsonld ");
+}
+
+/*    loadJsonLd(url){
+if (url != null) {
+console.log(url);
+
+let options = {
+//  query: exploreQuery.query,
+format: 'application/sparql-results+json',
+//  format: 'json',
+}
+console.log(options)
+this.$.fetch.url = url;
+this.$.fetch.params = options;
+this.$.fetch.generateRequest().completes.then(function(req,resp) {
+console.log(req);
+console.log(resp);
+console.log(req.response)
+var data = req.response;
+let response = JSON.parse(data);
 });
 */
 
@@ -103,21 +139,22 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
       var p = q.predicate;
       var o = q.object;
       var g = q.graph;
-    //  console.log(r);
       let node = {
         id: s.value,
-      //  type: "http://rdfs.org/sioc/ns#Post",
+        type: s.termType,
         //  resourceType: typeResources.s,
-        uri: s.value,
+        url: s.value,
         label: app.visLabel(s.value),
-      //  title: r.s.value,
-      //  endpointUrl: endpointUrl,
+        sparql: app.sparql,
+        //  title: r.s.value,
+        //  endpointUrl: endpointUrl,
         color: "rgb(76,0,74)",
         font: {
           color: 'rgb(255,255,255)'
         },
-      //  cid: group,
-        y: 2*Math.random()
+        //  cid: group,
+        y: 100,
+        x:100,
       }
       var trouveN = visRes.nodes.find(function(element){
         return node.id == element.id
@@ -130,19 +167,45 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
         visRes.nodes.push(node);
       }
 
+
+
       let nodeO = {
         id: o.value ,
-        //type: r.subj.type ,
+        type: o.termType ,
         //  resourceType: typeResources.sub,
-        uri: o.value,
+        url: o.value,
+        sparql: app.sparql,
         //label: app.visLabel(r.subj.value),
-        label : app.visLabel(o.value),
-      //  endpointUrl: endpointUrl,
-        color: "rgb(107,142,35)",
-        shape: "box",
+        //  label : ,
+        //  endpointUrl: endpointUrl,
+
+
         //cid: group,
-        y: 2*Math.random()
+        //  y: 2*Math.random()
       }
+      if (app.visLabel(o.value).length > 40){
+        var lab = app.visLabelSplit(app.visLabel(o.value))
+        nodeO.label = lab.substr(0, 37)+" ...";
+        nodeO.title = lab;
+      }else{
+        nodeO.label = app.visLabel(o.value);
+      }
+      if (o.termType == "Literal"){
+        nodeO.color= "rgb(107,142,35)";
+        nodeO.shape= "box";
+      }else{
+        if (nodeO.id.includes("ldp")){
+          nodeO.color= "rgb(76,0,74)";
+        }else{
+          nodeO.color= "rgba(76,0,74,.5)";
+        }
+
+        nodeO.font= {};
+        nodeO.font.color = 'rgb(255,255,255)';
+        //  nodeO.shape = "ellipse";
+        console.log(nodeO);
+      }
+
       var trouveO = visRes.nodes.find(function(element){
         return nodeO.id == element.id
       });
@@ -154,7 +217,7 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
         visRes.nodes.push(nodeO);
       }
 
-      let  eType = {from : node.id, to: nodeO.id, label: app.visLabel(p.value)};
+      let  eType = {from : node.id, to: nodeO.id, label: app.visLabel(p.value), type: p.termType};
       var trouveE = visRes.edges.find(function(e){
         return eType.from == e.from && eType.to == e.to && eType.label == e.label;
       })
@@ -165,9 +228,9 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
       }
 
 
-  });
+    });
 
-  return visRes;
+    return visRes;
   }
 
   visLabel(texte){
@@ -192,7 +255,12 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
     return result
   }
   visLabelSplit(texte){
-    return texte.match(/.{1,40}/g).join("\n");
+    if (texte.length > 40){
+      //  texte = texte.split("<br>").join("\n").split("&nbsp;").join(" ");
+      return texte.match(/.{1,40}/g).join("\n");
+    }else{
+      return texte;
+    }
   }
 
 }
