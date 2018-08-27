@@ -58,7 +58,10 @@
       padding-bottom:1px;
     }
     </style>
-
+    <div id="action" hidden$="[[actionHide]]">
+      <paper-button on-tap="_cacheAction">Action</paper-button>
+      <paper-button on-tap="_cacheAction">Action 2</paper-button>
+    </div>
 
     <div id="mynetwork"></div>
     <!--    <paper-button  on-tap="clusterByCid"  raised>cluster by id</paper-button>
@@ -203,7 +206,10 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });
-
+    this.actionHide = true;
+  }
+  _cacheAction(){
+    this.actionHide = true;
   }
   _deferred(){
     let app = this;
@@ -225,6 +231,7 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
     })*/
 
     this.network.on("selectNode", function (params) {
+      app.actionHide = false;
       console.log('selectNode Event:', params);
       if (params.nodes.length == 1) {
         if (app.network.isCluster(params.nodes[0]) == true) {
