@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./accueil-behavior.html">
+<link rel="import" href="../../bower_components/lang-picker/lang-picker.html">
+
+
+<dom-module id="spoggy-accueil">
+  <link rel="lazy-import" group="lazy" href="./accueil-import.html">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+    <lang-picker selected="{{lang}}"></lang-picker>
+  </template>
+
+  <script>
+    /**
+     * `spoggy-accueil`
+     *
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class SpoggyAccueil extends Polymer.LazyImportsMixin(AccueilBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'spoggy-accueil'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'spoggy-accueil'
+          },
+          lang: {
+            type: String,
+            observer: '_changeLang',
+            notify: true
+          },
+          mode: {
+            type: String,
+            notify: true
+          }
+        };
+      }
+
+      constructor(){
+        super();
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+        });
+        this.lang = (navigator.language || navigator.userLanguage ). substring(0,2);
+        console.log(this.lang);
+      }
+      _deferred(){
+        this.importLazyGroup('lazy').then((results) => {
+          console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+          this.agentAccueil = new AccueilAgent('agentAccueil', this);
+        });
+      }
+      _changeLang(){
+        console.log(this.lang);
+        this.mode = "solo";
+      }
+    }
+
+    window.customElements.define(SpoggyAccueil.is, SpoggyAccueil);
+  </script>
+</dom-module>

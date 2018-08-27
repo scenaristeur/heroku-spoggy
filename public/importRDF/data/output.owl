@@ -1,0 +1,4341 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://smag0.blogspot.fr/NS/RobotBase#"
+xml:base="http://smag0.blogspot.fr/NS/RobotBase"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://smag0.blogspot.fr/NS/RobotBase">
+        <owl:versionIRI rdf:resource="http://smag0.blogspot.fr/NS/RobotBase/1.0.0"/>
+    </owl:Ontology>
+
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robot -->
+
+<owl:Class rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robot" /> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aaubot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aaubot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#createur -->
+<owl:ObjectProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#createur"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Createur -->
+<owl:Class rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aalborg_University -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aalborg_University">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aaubot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aaubot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Aalborg_University"/> 
+</owl:NamedIndividual> 
+
+<owl:DatatypeProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#year"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aaubot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aaubot" > 
+<year>2010</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#origin -->
+<owl:ObjectProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#origin"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Origin -->
+<owl:Class rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Denmark -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Denmark">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aaubot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aaubot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Denmark"/> 
+</owl:NamedIndividual> 
+
+<owl:DatatypeProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#website"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aaubot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aaubot" > 
+<website>http://www.aaubot.aau.dk/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#usage -->
+<owl:ObjectProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#usage"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Usage -->
+<owl:Class rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Research -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Research">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aaubot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aaubot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Actroid -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Actroid" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Osaka_University -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Osaka_University">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Actroid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Actroid" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Osaka_University"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Actroid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Actroid" > 
+<year>2003</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Japan -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Japan">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Actroid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Actroid" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Actroid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Actroid" > 
+<website>http://www.kokoro-dreams.co.jp/english/rt_tokutyu/actroid.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Entertainment -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Entertainment">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Actroid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Actroid" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Entertainment"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboken -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboken">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Roboken"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue" > 
+<year>2009</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Assistant -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Assistant">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aero_Blue" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aida -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aida" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Audy___MIT -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Audy___MIT">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aida -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aida" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Audy___MIT"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aida -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aida" > 
+<year>2009</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aida -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aida" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aida -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aida" > 
+<website>http://senseable.mit.edu/aida/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artificial_Intelligence -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artificial_Intelligence">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aida -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aida" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Artificial_Intelligence"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aida -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aida" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Aisoy"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Spain -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Spain">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Spain"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<website>http://www.aisoy.com/?lang=en</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Entertainment"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Education -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Education">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<owl:DatatypeProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#size"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<size>22.30x16.30x15.60cm</size> 
+</owl:NamedIndividual> 
+
+<owl:DatatypeProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#weight"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<weight>1.5kg</weight> 
+</owl:NamedIndividual> 
+
+<owl:DatatypeProperty rdf:about="http://smag0.blogspot.fr/NS/RobotBase#price"/>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aisoy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aisoy" > 
+<price>Btw €340 &amp; €440</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#SK_Telecom -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#SK_Telecom">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#SK_Telecom"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Korea -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Korea">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<website>http://www.sktelecom.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Entertainment"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Albert -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Albert" > 
+<price>€300</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Cybedroid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Cybedroid">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Cybedroid"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#France -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#France">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<website>http://www.cybedroid.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<size>165cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<weight>30kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aria" > 
+<price>€ 7 000</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artemis -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artemis" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Tmsuk -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Tmsuk">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artemis -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artemis" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Tmsuk"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artemis -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artemis" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artemis -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artemis" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artemis -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artemis" > 
+<website>http://www.gizmag.com/go/2635/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Security -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Security">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artemis -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artemis" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Security"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Honda -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Honda">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Honda"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<year>2000</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<website>http://world.honda.com/ASIMO/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<size>130x45x37cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<weight>48kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Asimo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Asimo" > 
+<price>N/A</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rethink_Robotics -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rethink_Robotics">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Rethink_Robotics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#USA -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#USA">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<website>http://www.rethinkrobotics.com/products/baxter/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Industrial -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Industrial">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Cobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Cobot">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Cobot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<size>155x242cm to 185xx242cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<weight>75kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baxter -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baxter" > 
+<price>€ 19000</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Boston_Dynamics -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Boston_Dynamics">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Boston_Dynamics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<website>http://www.bostondynamics.com/robot_bigdog.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Army -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Army">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Army"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<size>91x76cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Big_Dog -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Big_Dog" > 
+<weight>109kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Botiful -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Botiful" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Claire -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Claire">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Botiful -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Botiful" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Claire"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Botiful -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Botiful" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Botiful -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Botiful" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Botiful -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Botiful" > 
+<website>https://www.kickstarter.com/projects/1452620607/botiful-telepresence-robot-for-android</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Botiful -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Botiful" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Entertainment"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Botiful -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Botiful" > 
+<price>€ 200</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Buddy -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Buddy" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#BlueFrog_Robotics -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#BlueFrog_Robotics">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Buddy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Buddy" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#BlueFrog_Robotics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Buddy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Buddy" > 
+<year>2015</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Buddy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Buddy" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Buddy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Buddy" > 
+<website>http://www.bluefrogrobotics.com/en/home/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Personal_Assistant -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Personal_Assistant">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Buddy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Buddy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Personal_Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robotis -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robotis">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robotis"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<website>http://www.robotis.com/xe/darwin_en</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Darwin-op -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Darwin-op" > 
+<price>€ 10 500</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Docent -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Docent" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Corbell -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Corbell">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Docent -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Docent" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Corbell"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Docent -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Docent" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Docent -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Docent" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Docent -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Docent" > 
+<website>http://www.corebell.co.kr/page/SUB3_1</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Docent -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Docent" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#EOS_innovation -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#EOS_innovation">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#EOS_innovation"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<website>http://www.eos-innovation.eu/eos</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Telepresence -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Telepresence">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Telepresence"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<size>60cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#E-One -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#E-One" > 
+<weight>22lbs</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Emox -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Emox" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Awabot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Awabot">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Emox -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Emox" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Awabot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Emox -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Emox" > 
+<year>2012</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Emox -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Emox" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Emox -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Emox" > 
+<website>http://www.emox-robot.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Emox -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Emox" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Emox -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Emox" > 
+<price>Btw N/A (?1000 before)</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Enon -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Enon" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Fujitsu -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Fujitsu">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Enon -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Enon" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Fujitsu"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Japon -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Japon">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Enon -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Enon" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japon"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Enon -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Enon" > 
+<website>http://www.fujitsu.com/global/about/resources/news/press-releases/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Enon -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Enon" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Personal_Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Future_Robot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Future_Robot">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Future_Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<year>2010</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<website>http://www.myfuro.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<size>160x65cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<weight>65kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#FURo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#FURo" > 
+<price>€ 48 000</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Future_Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<website>http://www.myfuro.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Healthcare -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Healthcare">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<size>25x36cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Furo-i -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Furo-i" > 
+<weight>7kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#European_Community_s_Framework_Programme_Seven__FP7_ -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#European_Community_s_Framework_Programme_Seven__FP7_">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#European_Community_s_Framework_Programme_Seven__FP7_"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Europe -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Europe">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Europe"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus" > 
+<website>http://www.giraffplus.eu/index.php?option=com_content&amp;view=frontpage&amp;Itemid=54&amp;lang=en</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Security"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#GiraffPlus" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Telepresence"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HRP-4 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HRP-4" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kawada -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kawada">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HRP-4 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HRP-4" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Kawada"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HRP-4 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HRP-4" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japon"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HRP-4 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HRP-4" > 
+<website>http://global.kawada.jp/mechatronics/hrp4.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HRP-4 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HRP-4" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HRP-4 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HRP-4" > 
+<size>1.58m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HRP-4 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HRP-4" > 
+<weight>39kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hal -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hal" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Cyberdyne -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Cyberdyne">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hal -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hal" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Cyberdyne"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hal -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hal" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japon"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hal -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hal" > 
+<website>http://www.cyberdyne.jp/english/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hal -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hal" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hector -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hector" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#CompanionAble -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#CompanionAble">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hector -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hector" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#CompanionAble"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hector -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hector" > 
+<year>2011</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#EU -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#EU">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hector -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hector" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#EU"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hector -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hector" > 
+<website>http://www.companionable.net/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hector -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hector" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiwr -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiwr" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Worldline -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Worldline">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiwr -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiwr" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Worldline"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiwr -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiwr" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiwr -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiwr" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiwr -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiwr" > 
+<website>http://hiwr.io</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiwr -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiwr" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiwr -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiwr" > 
+<weight>"1,4kg"</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#DogbuRobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#DogbuRobot">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#DogbuRobot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<website>http://www.bigrobots.com/fr/mobile/174-hovis-genie.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Companion -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Companion">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Companion"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<size>41x25x24cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<weight>"3,2kg"</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hovis_Genie" > 
+<price>€ 1 500</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#IfBot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#IfBot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Business_Design_Lab_ -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Business_Design_Lab_">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#IfBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#IfBot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Business_Design_Lab_"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#IfBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#IfBot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#IfBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#IfBot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#GostaÇi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#GostaÇi">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#GostaÇi"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<website>http://www.gostai.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Telepresence"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<size>100x41x35cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<weight>8kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jazz -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jazz" > 
+<price>€ 7 500</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jibo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jibo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#MIT -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#MIT">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jibo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#MIT"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jibo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jibo" > 
+<website>http://www.myjibo.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jibo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jimmy -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jimmy" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Intel -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Intel">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jimmy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jimmy" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Intel"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jimmy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jimmy" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jimmy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jimmy" > 
+<website>http://www.intel.com/content/www/us/en/corporate-responsibility/better-future/21st-century-robot-program.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Jimmy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Jimmy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RobotSoft -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RobotSoft">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#RobotSoft"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<year>2016</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<website>http://www.robosoft.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<size>"1,20m"</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<weight>40kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#KampaÇi-2" > 
+<price>To be announced</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dentsu -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dentsu">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Dentsu"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<website>http://kibo-robo.jp/en/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Companion"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<size>34x18x15cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<weight>1kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kibo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kibo" > 
+<price>N/A</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboDynamics -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboDynamics">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#RoboDynamics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<website>http://robodynamics.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Companion"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<size>157x56cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<weight>30kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Luna -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Luna" > 
+<price>€ 1 000</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Dentsu"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<website>http://kibo-robo.jp/en/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Sports -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Sports">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Sports"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<size>34x18x15cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mirata -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mirata" > 
+<weight>1kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#MorpHex -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#MorpHex" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Zenta_Robotics_Creation -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Zenta_Robotics_Creation">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#MorpHex -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#MorpHex" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Zenta_Robotics_Creation"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Norway -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Norway">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#MorpHex -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#MorpHex" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Norway"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#MorpHex -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#MorpHex" > 
+<website>http://robot-kits.org/2012/04/02/morphex-video-part-iii/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#MorpHex -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#MorpHex" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#MorpHex -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#MorpHex" > 
+<price>N/A</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aldebaran -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aldebaran">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Aldebaran"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<website>http://www.aldebaran-robotics.com/fr/Accueil/bienvenue.html?language=fr-FR</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Personal_Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<size>58cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<weight>4.3kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nao -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nao" > 
+<price>€ 1 200</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Zenta_Robotics_Creation"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<website>http://www.nec.co.jp/products/robot/en/functions/index.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Companion"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<size>38x28x25cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<weight>6.5kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#PaPeRo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#PaPeRo" > 
+<price>N/A</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Paro -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Paro" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#AIST -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#AIST">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Paro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Paro" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#AIST"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Paro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Paro" > 
+<year>2001</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Paro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Paro" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Paro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Paro" > 
+<website>http://www.parorobots.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Paro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Paro" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Boston_Dynamics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<website>http://www.bostondynamics.com/robot_petman.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Army"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<size>1.75m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Petman -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Petman" > 
+<weight>80kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Inria -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Inria">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Inria"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<website>http://www.poppy-project.org/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<size>84cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<weight>3.5kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poppy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poppy" > 
+<price>€ 7 500</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Anybots -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Anybots">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Anybots"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<website>https://www.anybots.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Telepresence"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<size>183cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<weight>14.5kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qb -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qb" > 
+<price>€ 9 700</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#The_Corpora -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#The_Corpora">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#The_Corpora"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Spain"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<website>http://thecorpora.com/blog/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<size>46x31x29cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<weight>11kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Qbo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Qbo" > 
+<price>€ 4 540</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Pal_Robotics -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Pal_Robotics">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Pal_Robotics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Spain"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<website>http://pal-robotics.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Companion"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<size>170cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#REEM -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#REEM" > 
+<weight>90kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robopec -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robopec">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robopec"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<website>http://www.reeti.fr</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<size>44cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<weight>5kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Reeti -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Reeti" > 
+<price>€ 4 990</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rewalk -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rewalk" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#ReWalk_Robotics -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#ReWalk_Robotics">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rewalk -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rewalk" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#ReWalk_Robotics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rewalk -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rewalk" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rewalk -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rewalk" > 
+<website>http://rewalk.com</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rewalk -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rewalk" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rewalk -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rewalk" > 
+<size>160-190 cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboThespian -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboThespian" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Engineered_Arts -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Engineered_Arts">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboThespian -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboThespian" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Engineered_Arts"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboThespian -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboThespian" > 
+<year>2008</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#England -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#England">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboThespian -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboThespian" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#England"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboThespian -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboThespian" > 
+<website>https://www.engineeredarts.co.uk/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboThespian -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboThespian" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Companion"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RoboThespian -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RoboThespian" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Personal_Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Artificial_Intelligence_Laboratory -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Artificial_Intelligence_Laboratory">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Artificial_Intelligence_Laboratory"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<year>2012</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Germany -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Germany">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Germany"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<website>http://www.roboy.org/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Companion"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roboy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roboy" > 
+<size>120cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Romo"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<website>http://romotive.com/meet-romo</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Entertainment"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<size>11x15x7.6cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<weight>242g</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romo" > 
+<price>$149</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Aldebaran"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<website>http://www.aldebaran-robotics.com/fr/Accueil/bienvenue.html?language=fr-FR</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Personnal_Assistant -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Personnal_Assistant">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Personnal_Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<size>140cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Romeo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Romeo" > 
+<weight>40.5kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#iRobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#iRobot">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#iRobot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<year>2002</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<website>http://www.irobot.com/For-the-Home/Vacuum-Cleaning/Roomba.aspx</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<size>34cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<weight>"3,6kg"</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Roomba -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Roomba" > 
+<price>Btw $300 and $900</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robo_Garage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robo_Garage">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robo_Garage"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<website>http://www.robo-garage.com/en/prd/index.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Entertainment"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<size>38cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ropid -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ropid" > 
+<weight>1.6kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#iRobot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita" > 
+<website>http://www.irobot.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Teleassistance -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Teleassistance">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Teleassistance"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Rp-Vita" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Sami -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Sami" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Criif -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Criif">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Sami -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Sami" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Criif"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Sami -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Sami" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Sami -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Sami" > 
+<website>http://criif.fr/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Sami -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Sami" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#SaviOne -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#SaviOne" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Savioke -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Savioke">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#SaviOne -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#SaviOne" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Savioke"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#SaviOne -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#SaviOne" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#SaviOne -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#SaviOne" > 
+<website>http://www.savioke.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#SaviOne -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#SaviOne" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Assistant"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scarobot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scarobot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Berkeley_University -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Berkeley_University">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scarobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scarobot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Berkeley_University"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scarobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scarobot" > 
+<year>2009</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scarobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scarobot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scarobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scarobot" > 
+<website>http://www.bypassbrowser.com/a-cockroach-robot-to-spy-on-the-enemy.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scarobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scarobot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scarobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scarobot" > 
+<size>Cockroach size</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Metra -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Metra">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Metra"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Spain"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<website>http://www.metralabs.com/index.php?option=com_content&amp;view=article&amp;id=77&amp;Itemid=59</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<size>58x74x150cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<weight>75kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Scitos -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Scitos" > 
+<price>$36300</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Smartbot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Smartbot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#ODR -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#ODR">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Smartbot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Smartbot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#ODR"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Smartbot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Smartbot" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Smartbot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Smartbot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Smartbot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Smartbot" > 
+<website>http://www.overdriverobotics.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Smartbot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Smartbot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Entertainment"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Smartbot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Smartbot" > 
+<price>€ 160</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#NASA -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#NASA">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#NASA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<website>http://www.theroboticschallenge.org/node/59</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Army"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<size>1.90m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Valkyrie -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Valkyrie" > 
+<weight>130kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Vgo -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Vgo" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#_VGo_Communications__Inc__ -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#_VGo_Communications__Inc__">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Vgo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Vgo" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#_VGo_Communications__Inc__"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Vgo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Vgo" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Vgo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Vgo" > 
+<website>http://www.vgocom.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Vgo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Vgo" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Telepresence"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Vgo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Vgo" > 
+<size>1.21m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Mitsubishi_Heavy_Industry -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Mitsubishi_Heavy_Industry">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Mitsubishi_Heavy_Industry"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japon"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<website>https://www.mitsubishi.com/mpac/e/monitor/back/0602/story.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<size>1m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<weight>30kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wakamaru -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wakamaru" > 
+<price>€ 12 000</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walk-Man -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walk-Man" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#European_Commission -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#European_Commission">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walk-Man -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walk-Man" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#European_Commission"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walk-Man -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walk-Man" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walk-Man -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walk-Man" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Europe"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walk-Man -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walk-Man" > 
+<website>http://walk-man.eu/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walk-Man -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walk-Man" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walk-Man -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walk-Man" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Army"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Festo -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Festo">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Festo"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere" > 
+<website>http://www.festo.com/cms/en_corp/13705.htm</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#eMotionSphere" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Tomy_USA -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Tomy_USA">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Tomy_USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<website>http://www.isobotrobot.com/eng/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<size>16.5x9.7x6.6cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<weight>340g</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#i-Sobot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#i-Sobot" > 
+<price>€ 80</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#iCub -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#iCub" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#EU_Commision -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#EU_Commision">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#iCub -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#iCub" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#EU_Commision"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#iCub -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#iCub" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Europe"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#iCub -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#iCub" > 
+<website>http://www.icub.org/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#iCub -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#iCub" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#iCub -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#iCub" > 
+<price>€ 270 000</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dassault_Aviation -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dassault_Aviation">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Dassault_Aviation"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<year>2005</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#_France__Italy__Spain__Sweden__Greece_et_Swiss_ -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#_France__Italy__Spain__Sweden__Greece_et_Swiss_">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#_France__Italy__Spain__Sweden__Greece_et_Swiss_"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<website>http://www.airforce-technology.com/projects/neuron/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Army"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<size>12.5mx9.2m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#nEUROn -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#nEUROn" > 
+<weight>"4,500kg to 6,000kg"</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Terminator -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Terminator" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#James_Cameron_and_Gale_Anne_Hurd -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#James_Cameron_and_Gale_Anne_Hurd">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Terminator -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Terminator" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#James_Cameron_and_Gale_Anne_Hurd"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Terminator -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Terminator" > 
+<year>1984</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Terminator -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Terminator" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Terminator -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Terminator" > 
+<website>http://www.terminatormovie.com/#home</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wall-e -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wall-e" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Walt_Disney -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Walt_Disney">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wall-e -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wall-e" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Walt_Disney"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wall-e -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wall-e" > 
+<year>2008</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wall-e -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wall-e" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Wall-e -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Wall-e" > 
+<website>http://disney.fr/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Eve -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Eve" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Eve -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Eve" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Walt_Disney"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Eve -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Eve" > 
+<year>2008</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Eve -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Eve" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Eve -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Eve" > 
+<website>http://disney.fr/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#R2D2 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#R2D2" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Georges_Lucas -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Georges_Lucas">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#R2D2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#R2D2" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Georges_Lucas"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#R2D2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#R2D2" > 
+<year>1977</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#R2D2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#R2D2" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#R2D2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#R2D2" > 
+<website>http://www.starwars.com/databank/r2-d2</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#R2D2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#R2D2" > 
+<size>1.09m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#R2D2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#R2D2" > 
+<weight>32kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#C-3PO -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#C-3PO" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#C-3PO -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#C-3PO" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Georges_Lucas"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#C-3PO -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#C-3PO" > 
+<year>1977</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#C-3PO -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#C-3PO" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#C-3PO -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#C-3PO" > 
+<website>http://starwars.wikia.com/wiki/C-3PO/Legends</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#C-3PO -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#C-3PO" > 
+<size>1.67m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#C-3PO -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#C-3PO" > 
+<weight>75kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#BB8 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#BB8" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#BB8 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#BB8" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Walt_Disney"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#BB8 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#BB8" > 
+<year>2015</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#BB8 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#BB8" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#BB8 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#BB8" > 
+<website>http://starwars.wikia.com/wiki/BB8</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#BB8 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#BB8" > 
+<size>0.67m</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Osamu_Tezuka -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Osamu_Tezuka">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Osamu_Tezuka"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy" > 
+<year>1952</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Astro_Boy" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bender -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bender" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Matt_Groening -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Matt_Groening">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bender -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bender" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Matt_Groening"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bender -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bender" > 
+<year>1999</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bender -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bender" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bender -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bender" > 
+<website>http://futurama.wikia.com/wiki/Bender_Bending_Rodr%C3%ADguez</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baymax -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baymax" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Marvel_Comics -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Marvel_Comics">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baymax -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baymax" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Marvel_Comics"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baymax -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baymax" > 
+<year>1998</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baymax -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baymax" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Baymax -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Baymax" > 
+<website>http://disney.wikia.com/wiki/Baymax</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva_Systems -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva_Systems">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Kiva_Systems"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva" > 
+<year>2003</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva" > 
+<website>https://www.amazonrobotics.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kiva -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kiva" > 
+<price>N/A</price> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#ASC-CSA___NASA -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#ASC-CSA___NASA">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#ASC-CSA___NASA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<year>2008</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Canada -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Canada">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Canada"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<website>https://www.amazonrobotics.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Maintenance -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Maintenance">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Maintenance"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Space -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Space">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dextre -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dextre" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Space"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Titan -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Titan" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Kuka -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Kuka">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Titan -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Titan" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Kuka"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Titan -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Titan" > 
+<year>2007</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Titan -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Titan" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Germany"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Titan -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Titan" > 
+<website>http://www.kuka-robotics.com/en/products/industrial_robots/heavy/kr1000_titan/kr1000/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Titan -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Titan" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Titan -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Titan" > 
+<weight>4950kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ladybird -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ladybird" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Sydney_University -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Sydney_University">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ladybird -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ladybird" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Sydney_University"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ladybird -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ladybird" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Australia -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Australia">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ladybird -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ladybird" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Australia"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Farming -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Farming">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ladybird -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ladybird" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Farming"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Ladybird -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Ladybird" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Waseda_University -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Waseda_University">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Waseda_University"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<year>2008</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<website>http://www.takanishi.mech.waseda.ac.jp/top/research/music/saxophone/was_2/index.htm</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Music -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Music">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Music"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Was-2 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Was-2" > 
+<size>140x40x80cm</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#ABB -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#ABB">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#ABB"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Swiss___Sweden -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Swiss___Sweden">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Swiss___Sweden"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<website>http://new.abb.com/products/robotics/yumi</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Watchmaking -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Watchmaking">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Watchmaking"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yumi -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yumi" > 
+<weight>38kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#AirBot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#AirBot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Akka_Technologies -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Akka_Technologies">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#AirBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#AirBot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Akka_Technologies"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#AirBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#AirBot" > 
+<year>2015</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#AirBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#AirBot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#AirBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#AirBot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Aviation -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Aviation">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#AirBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#AirBot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Aviation"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Link_Go -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Link_Go" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Link_Go -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Link_Go" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Akka_Technologies"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Link_Go -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Link_Go" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Link_Go -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Link_Go" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Link_Go -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Link_Go" > 
+<website>http://www.industrie-techno.com/link-go-2-0-le-vehicule-urbain-autonome-et-communicant-d-akka-technologies.28631</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Logistic -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Logistic">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Usage"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Link_Go -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Link_Go" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Logistic"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Dan_Granett -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Dan_Granett">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Dan_Granett"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler" > 
+<website>http://www.bugjuggler.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Bugjuggler" > 
+<size>70ft	</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Gocart -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Gocart" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yujin_Robot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yujin_Robot">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Gocart -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Gocart" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Yujin_Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Gocart -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Gocart" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Gocart -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Gocart" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Korea"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Gocart -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Gocart" > 
+<website>https://www.amazonrobotics.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Gocart -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Gocart" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Logistic"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Gocart -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Gocart" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hobbit -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hobbit" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robot_Care_for_Old_People -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robot_Care_for_Old_People">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hobbit -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hobbit" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot_Care_for_Old_People"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hobbit -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hobbit" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Austria___Sweden -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Austria___Sweden">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hobbit -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hobbit" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Austria___Sweden"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hobbit -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hobbit" > 
+<website>http://hobbit.acin.tuwien.ac.at/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hobbit -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hobbit" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Yaskawa -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Yaskawa">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Yaskawa"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#CSDA_10F" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Topio -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Topio" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Tosy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Tosy">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Topio -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Topio" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Tosy"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Topio -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Topio" > 
+<year>2005</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Vietnam -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Vietnam">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Topio -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Topio" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Vietnam"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Topio -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Topio" > 
+<website>http://www.robotcenter.co.uk/products/topio</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Topio -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Topio" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#RB3D -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#RB3D">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#RB3D"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<year>2012</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<website>http://www.rb3d.com/produits/cobots/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Cobot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#A7_15 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#A7_15" > 
+<weight>150kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#VNII_Transmash -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#VNII_Transmash">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#VNII_Transmash"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1" > 
+<year>1970</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#URSS -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#URSS">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#URSS"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lunokhob_1" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Space"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lugimovea -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lugimovea" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Eisenmann -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Eisenmann">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lugimovea -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lugimovea" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Eisenmann"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lugimovea -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lugimovea" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lugimovea -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lugimovea" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Germany"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lugimovea -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lugimovea" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Logistic"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Lugimovea -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Lugimovea" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Kawada"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<year>2012</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<website>http://global.kawada.jp/mechatronics/hiro.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Cobot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<size>"1,570x500x500mm"</size> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Hiro -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Hiro" > 
+<weight>85kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#ActiveLink -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#ActiveLink">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#ActiveLink"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite" > 
+<website>http://gocart.yujinrobot.com/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Power_Loader_Lite" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#OmniRob -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#OmniRob" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#OmniRob -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#OmniRob" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Kuka"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#OmniRob -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#OmniRob" > 
+<year>2015</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#OmniRob -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#OmniRob" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Germany"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#OmniRob -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#OmniRob" > 
+<website>http://www.kuka-robotics.com/germany/en/pressevents/news/NN_100615_omniRob.htm</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#OmniRob -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#OmniRob" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HitchBot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HitchBot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Toronto_University -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Toronto_University">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HitchBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HitchBot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Toronto_University"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HitchBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HitchBot" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HitchBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HitchBot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Canada"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HitchBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HitchBot" > 
+<website>http://mir1.hitchbot.me/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#HitchBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#HitchBot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Curiosity -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Curiosity" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Curiosity -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Curiosity" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#NASA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Curiosity -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Curiosity" > 
+<year>2012</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Curiosity -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Curiosity" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Curiosity -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Curiosity" > 
+<website>https://www.nasa.gov/mission_pages/msl/index.html</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Curiosity -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Curiosity" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Curiosity -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Curiosity" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Space"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Kawada"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<year>2013</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Japan"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<website>http://nextage.kawada.jp/en/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Cobot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Nextage -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Nextage" > 
+<weight>29kg</weight> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TX_200 -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TX_200" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Staubli -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Staubli">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TX_200 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TX_200" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Staubli"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TX_200 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TX_200" > 
+<year>2008</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Swiss -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Swiss">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TX_200 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TX_200" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Swiss"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TX_200 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TX_200" > 
+<website>http://www.staubli.com/fr/robotique/robots-4-et-6-axes/robots-gros-porteurs/tx200/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TX_200 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TX_200" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TX_200 -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TX_200" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Logistic"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robo-K -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robo-K" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Project_Robo-K -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Project_Robo-K">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robo-K -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robo-K" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Project_Robo-K"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robo-K -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robo-K" > 
+<year>2012</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robo-K -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robo-K" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#France"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robo-K -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robo-K" > 
+<website>http://www.robo-k.fr/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Robo-K -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Robo-K" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Healthcare"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poseidrone -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poseidrone" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Pontedora_Biorobotics_Institut -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Pontedora_Biorobotics_Institut">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poseidrone -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poseidrone" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Pontedora_Biorobotics_Institut"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poseidrone -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poseidrone" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Italy -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Italy">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Origin"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poseidrone -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poseidrone" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Italy"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poseidrone -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poseidrone" > 
+<website>http://sssa.bioroboticsinstitute.it/projects/PoseiDRONE</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poseidrone -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poseidrone" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Industrial"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Poseidrone -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Poseidrone" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Research"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot -->
+
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot" > 
+<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Robot"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#Agilic -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#Agilic">
+	<rdf:type rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Createur"/>
+</owl:NamedIndividual>
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot" > 
+<createur rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Agilic"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot" > 
+<year>2014</year> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot" > 
+<origin rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#USA"/> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot" > 
+<website>http://www.pibot.org/tiddlybot/</website> 
+</owl:NamedIndividual> 
+
+<!-- http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot -->
+<owl:NamedIndividual rdf:about="http://smag0.blogspot.fr/NS/RobotBase#TiddlyBot" > 
+<usage rdf:resource="http://smag0.blogspot.fr/NS/RobotBase#Education"/> 
+</owl:NamedIndividual> 
+
+</rdf:RDF> 
+
+<!-- Generated by the Smag0 xls2rdf converter (version 0.0.1) http://smag0.blogspot.fr. For more info or question plug my twitter : @DFaveris-->

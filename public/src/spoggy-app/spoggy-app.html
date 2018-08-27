@@ -46,6 +46,7 @@
   <link rel="lazy-import" group="lazy"  href="../spoggy-solo/spoggy-solo-card.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-global/spoggy-global-card.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-collaboratif/spoggy-collaboratif-card.html">
+    <link rel="lazy-import" group="lazy" href="../spoggy-accueil/spoggy-accueil.html">
 
   <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph-reglages.html">
   <!--<link rel="import" href="../shared-styles.html">-->
@@ -225,7 +226,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
         <!--<a name="view1" href="[[rootPath]]view1">View One</a>
         <a name="view2" href="[[rootPath]]view2">View Two</a>
         <a name="view3" href="[[rootPath]]view3">View Three</a> -->
-        <a name="accueil" id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil</a>
+        <a name="accueil" id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil ([[lang]])</a>
 
         <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Fichier</h3>
@@ -337,10 +338,12 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
           <div hidden$="[[!isEmpty(mode)]]">
             <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
-              <spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
+              <!--<spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
               <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
-              <spoggy-global-card  mode={{mode}}></spoggy-global-card>
+              <spoggy-global-card  mode={{mode}}></spoggy-global-card>-->
+              <spoggy-accueil mode={{mode}} lang={{lang}}></spoggy-accueil>
             </div>
+
           </div>
 
           <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
@@ -460,6 +463,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });
+
   }
   _deferred(){
     this.importLazyGroup('lazy').then((results) => {
