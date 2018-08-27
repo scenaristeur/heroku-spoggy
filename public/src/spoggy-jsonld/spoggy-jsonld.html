@@ -25,6 +25,7 @@
   handle-as="document"
   content-type="application/x-www-form-urlencoded"
   with-credentials = true
+  headers="[[headers]]"
 
   on-response="_handleResponse"
   on-error="_handleError">
@@ -51,10 +52,21 @@ class SpoggyJsonld extends Polymer.LazyImportsMixin(JsonldBehaviorMixin(Polymer.
       prop1: {
         type: String,
         value: 'spoggy-jsonld'
+      },
+      headers: {
+        computed: '_computeHeader(token)'
+      },
+      token: {
+        type: String,
+        value: '1234'
       }
     };
   }
 
+
+  _computeHeader(token) {
+    return {Authorization: 'Bearer ' + token};
+  }
   constructor(){
     super();
     console.log("chargement "+this.prop1)
