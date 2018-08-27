@@ -8,64 +8,71 @@
   <link rel="lazy-import" group="lazy" href="./accueil-import.html">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
     <h2>Hello [[prop1]]!</h2>
     <lang-picker selected="{{lang}}"></lang-picker>
   </template>
 
   <script>
-    /**
-     * `spoggy-accueil`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyAccueil extends Polymer.LazyImportsMixin(AccueilBehaviorMixin(Polymer.Element)) {
-      static get is() { return 'spoggy-accueil'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-accueil'
-          },
-          lang: {
-            type: String,
-            observer: '_changeLang',
-            notify: true
-          },
-          mode: {
-            type: String,
-            notify: true
-          }
-        };
-      }
+  /**
+  * `spoggy-accueil`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyAccueil extends Polymer.LazyImportsMixin(AccueilBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-accueil'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-accueil'
+        },
+        lang: {
+          type: String,
+          observer: '_changeLang',
+          notify: true
+        },
+        mode: {
+          type: String,
+          notify: true
+        },
+        /*fichier: {
+        type: String,
+        value: "/exemple_files/Spoggy_accueil.json"
+      }*/
+    };
+  }
 
-      constructor(){
-        super();
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          this._deferred();
-        });
-        this.lang = (navigator.language || navigator.userLanguage ). substring(0,2);
-        console.log(this.lang);
-      }
-      _deferred(){
-        this.importLazyGroup('lazy').then((results) => {
-          console.log(results);
-          this.dispatchEvent(new CustomEvent('import-loaded', results));
-          this.agentAccueil = new AccueilAgent('agentAccueil', this);
-        });
-      }
-      _changeLang(){
-        console.log(this.lang);
-        this.mode = "solo";
-      }
-    }
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+    this.lang = (navigator.language || navigator.userLanguage ). substring(0,2);
+    console.log(this.lang);
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      this.agentAccueil = new AccueilAgent('agentAccueil', this);
 
-    window.customElements.define(SpoggyAccueil.is, SpoggyAccueil);
-  </script>
+
+    });
+  }
+  _changeLang(){
+    console.log(this.lang);
+    this.mode = "solo";
+
+  }
+}
+
+window.customElements.define(SpoggyAccueil.is, SpoggyAccueil);
+</script>
 </dom-module>

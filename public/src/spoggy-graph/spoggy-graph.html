@@ -59,8 +59,8 @@
     }
     </style>
     <div id="action" hidden$="[[actionHide]]">
-      <paper-button on-tap="_cacheAction">Action</paper-button>
-      <paper-button on-tap="_cacheAction">Action 2</paper-button>
+<!--      <paper-button on-tap="_cacheAction">Action</paper-button>
+      <paper-button on-tap="_cacheAction">Action 2</paper-button>-->
     </div>
 
     <div id="mynetwork"></div>
@@ -224,6 +224,10 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
 
       this.network = this.networkDivInitialize(this.$.mynetwork, this);
 
+/* BIDOUILLE A REVOIR POUR INITIALISATION */
+this.params = {};
+this.params.source = "/exemple_files/Spoggy_accueil.json"
+  this.agentGraph.send('agentGraph', {type: 'importFromParam', params: this.params});
       /*this.network.on("selectEdge", function (params){
       console.log('dernier edge selectionné: ', params)
       app.lastEdgeSelected = params.edges[0];
