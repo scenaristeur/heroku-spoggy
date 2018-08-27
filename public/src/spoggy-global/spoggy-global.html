@@ -584,7 +584,7 @@ class SpoggyGlobal extends Polymer.LazyImportsMixin(Polymer.Element) {
         et un cadriciel (framework) pour construire des applications d'entreprise centrées sur les formulaires (entrée ou lecture seule).",
         courte: 'endpoint Assemblée Virtuelle',
         plus : 'https://github.com/jmvanel/semantic_forms/wiki/Manuel-utilisateur',
-        url: 'http://163.172.179.125:9112/sparql',
+        url: 'http://semantic-forms.cc:9112/sparql2', /*'http://163.172.179.125:9112/sparql' */
         exploreQuery: {
         /*  query: 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\
           PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
@@ -592,13 +592,13 @@ class SpoggyGlobal extends Polymer.LazyImportsMixin(Polymer.Element) {
             ?s rdf:type <http://rdfs.org/sioc/ns#Post> .\
             ?s rdfs:label ?label. \
             ?s <http://purl.org/dc/terms/subject> ?subj.\
-          } }',*/
+          } }',
           query: 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
 PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>\
-CONSTRUCT { ?S ?P ?O . } WHERE { GRAPH ?G { ?S ?P ?O . } } LIMIT 10',
+CONSTRUCT { ?S ?P ?O . } WHERE { GRAPH ?G { ?S ?P ?O . } } LIMIT 10',*/
           // LIMIT 400',
-          //  SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } ORDER BY DESC(?o) LIMIT 100'
+          query: 'SELECT * WHERE { GRAPH ?g {?s ?p ?o . } } ORDER BY DESC(?o) LIMIT 100',
           //SELECT * WHERE { GRAPH ?G {?S <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Organization>. } } LIMIT 1000
 
           parseToVis : function(app, results, endpointUrl,typeResources, group){

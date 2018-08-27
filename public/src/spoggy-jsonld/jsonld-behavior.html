@@ -21,7 +21,7 @@ var JsonldBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     requestJsonLd(params){
       //exemple    http://127.0.0.1:8080/?format=jsonld&endpoint=http://163.172.179.125:9112/sparql&uri=http://semantic-forms.cc:9112/ldp/1507730036573-23410983362747940
       console.log(params);
-
+this.group = 0;
 
       let options = {
         query: 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
@@ -45,6 +45,8 @@ var JsonldBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 
     complementaire(node){
+      var app = this;
+      app.group = app.group+1;
       console.log(node);
       if(node.type == "Literal"){
         console.log("Node est un Literal");
@@ -63,27 +65,48 @@ var JsonldBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           { ?s ?p <'+node.url+'> . \
         } \
       }   LIMIT 100',
-      unionDefaultGraph: 'on',
-    //  format: 'application/sparql-results+json',
+      //  unionDefaultGraph: 'on',
+      //  format: 'application/sparql-results+json',
       //  format: 'json',
     }
     console.log(options)
-    this.$.fetch.url = node.sparql+"/sparql";
+    if(node.sparql.includes("semantic-forms.cc")){
+      this.$.fetch.url = node.sparql+"/sparql2";
+    }else{
+      this.$.fetch.url = node.sparql+"/sparql";
+    }
+
     this.$.fetch.params = options;
     this.$.fetch.generateRequest().completes.then(function(req,resp) {
       console.log(req);
       console.log(resp);
-      console.log(req.response)
+      /*  console.log(req.response)
       var data = req.response;
-      let response = JSON.parse(data);
+      let response = JSON.parse(data);*/
+
+      console.log(req.response); // -->
+      let response = req.response;
+      let link = response.head.link;
+      let vars = response.head.vars;
+      let results = response.results.bindings;
+      //  console.log(this.head);
+      console.log(results);
+
+      var visResults = app.parseToVisComplement(results, node.id);
+      console.log(visResults);
+      app.agentJsonld.send('agentGraph', {type: "resultsFromSparql", results: visResults})
+
+
     });
   }
 }
 
 
+
 loadJsonLd(data){
   var url = data.url;
   this.sparql = data.sparql;
+  this.testurl = data.testurl;
   // exemple  http://127.0.0.1:8080/?jsonld=http%3A%2F%2Fsemantic-forms.cc%3A9112%2Fldp%2F1507730036573-23410983362747940
   if (url != null) {
     console.log(url);
@@ -152,7 +175,7 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
         font: {
           color: 'rgb(255,255,255)'
         },
-        //  cid: group,
+          cid: app.group,
         y: 100,
         x:100,
       }
@@ -180,7 +203,7 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
         //  endpointUrl: endpointUrl,
 
 
-        //cid: group,
+        cid: app.group,
         //  y: 2*Math.random()
       }
       if (app.visLabel(o.value).length > 40){
@@ -233,6 +256,124 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
     return visRes;
   }
 
+
+
+
+  parseToVisComplement(triplets, id){
+    var app = this;
+    var visRes = {nodes:[], edges:[]};
+    triplets.forEach(function(t){
+      var s = t.s;
+      var p = t.p;
+      var o = t.o;
+
+      if (s == undefined || s.value == undefined || s.value.length == 0) {
+        s={value: id};
+        s.type = "uri";
+      }
+      if (s == undefined || o.value == undefined || o.value.length == 0) {
+        o={value : id};
+        o.type = "uri";
+      }
+      //  var g = q.graph;
+      let node = {
+        id: s.value,
+        type: s.type,
+        //  resourceType: typeResources.s,
+        url: s.value,
+        label: app.visLabel(s.value),
+        sparql: app.sparql,
+        //  title: r.s.value,
+        //  endpointUrl: endpointUrl,
+        color: "rgb(76,0,74)",
+        font: {
+          color: 'rgb(255,255,255)'
+        },
+          cid: app.group,
+        y: 100,
+        x:100,
+      }
+
+
+
+      var trouveN = visRes.nodes.find(function(element){
+        return node.id == element.id
+      });
+      if (trouveN) {
+        //  console.log("TROUVE ")
+        //  console.log(trouveN)
+        node = trouveN;
+      }else{
+        visRes.nodes.push(node);
+      }
+
+
+
+      let nodeO = {
+        id: o.value ,
+        type: o.type ,
+        //  resourceType: typeResources.sub,
+        url: o.value,
+        sparql: app.sparql,
+        //label: app.visLabel(r.subj.value),
+        //  label : ,
+        //  endpointUrl: endpointUrl,
+
+
+        cid: app.group,
+        //  y: 2*Math.random()
+      }
+
+      if (app.visLabel(o.value).length > 40){
+        var lab = app.visLabelSplit(app.visLabel(o.value))
+        nodeO.label = lab.substr(0, 37)+" ...";
+        nodeO.title = lab;
+      }else{
+        nodeO.label = app.visLabel(o.value);
+      }
+      if (o.type == "Literal" ){
+        nodeO.color= "rgb(107,142,35)";
+        nodeO.shape= "box";
+      }else{
+        if (nodeO.id.includes("ldp")){
+          nodeO.color= "rgb(76,0,74)";
+        }else{
+          nodeO.color= "rgba(76,0,74,.5)";
+        }
+
+        nodeO.font= {};
+        nodeO.font.color = 'rgb(255,255,255)';
+        //  nodeO.shape = "ellipse";
+        console.log(nodeO);
+      }
+
+      var trouveO = visRes.nodes.find(function(element){
+        return nodeO.id == element.id
+      });
+      if (trouveO) {
+        //  console.log("TROUVE ")
+        //  console.log(trouveS)
+        nodeO = trouveO;
+      }else{
+        visRes.nodes.push(nodeO);
+      }
+
+      let  eType = {from : node.id, to: nodeO.id, label: app.visLabel(p.value), type: p.type};
+      var trouveE = visRes.edges.find(function(e){
+        return eType.from == e.from && eType.to == e.to && eType.label == e.label;
+      })
+      if(trouveE){
+        eType = trouveE;
+      } else{
+        visRes.edges.push(eType);
+      }
+
+
+    });
+
+    return visRes;
+  }
+
   visLabel(texte){
     /// FONCTION GENERALISTE DE NETTOYAGE DES LABELS
     let text = texte.trim();
@@ -262,6 +403,92 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
       return texte;
     }
   }
+
+  testupdate(){
+    console.log("testupdate");
+    console.log( "url sparql : "+this.sparql);
+
+    /*  var  headers = {
+    'user-agent': 'SemanticFormsClient',
+    'Accept' : 'application/json',
+    'Accept-Language' : 'fr',
+  }
+  //  # login and password of the user to register on semanticform
+  var   credentials={
+  'userid': 'aa',
+  'password': 'aa',
+  'confirmPassword': 'aa', # used for register
+}*/
+
+var options = {userid:"aa", passowrd:"aa"};
+
+var triples = [{subject:"Test", predicate:"time", object: Date.now()}];
+//  options.update =
+//console.log(options)
+
+if(this.testurl != undefined){
+  this.$.ajaxupdate.url = this.testurl;
+}else{
+   this.$.ajaxupdate.url = this.sparql+"/update";
+}
+
+//this.$.ajaxupdate.url = "http://127.0.0.1:3030/test/update";
+options.update =  this.computeUpdateTriplets(triples).update;
+this.$.ajaxupdate.body = options;
+console.log(this.$.ajaxupdate.body);
+this.$.ajaxupdate.generateRequest();
+
+}
+
+
+computeUpdateTriplets (triplets){
+  var update  =  "PREFIX rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n";
+  update +=  "PREFIX rdfs:   <http://www.w3.org/2000/01/rdf-schema#> \n";
+  update += "PREFIX smag:   <http://smag0.blogspot.fr/NS#> \n";
+  update += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n";
+  update += "INSERT DATA { \n";
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT  update += "GRAPH <http://smag0.blogspot.fr/SparqlUpdate>{ \n";
+  triplets.forEach(function(triplet) {
+    //  update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   smag:\""+triplet.object+"\" . \n";
+    update += "smag:_"+triplet.subject+"   smag:"+triplet.predicate+"   \""+triplet.object+"\" . \n";
+  });
+  // POUR UTILISER UN AUTRE GRAPH QUE LE GRAPH PAR DEFAUT   update += " } \n";
+  update += " } \n";
+  console.log(update);
+  this.requete=update;
+  return {update: update};
+
+  //var propSend="smag:"+propriete+" ";
+  //if ((propriete == "type") || (propriete == "a")){
+  //  propSend="<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
+  //  }
+}
+
+_handleResponse(data){
+  console.log("server ok");
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+//  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+  //  this.agentFuseki.send('agentGlobal', {type: "updateEndpointData", server:{datasets: this.datasets, selected: this.dataset}});
+}
+_handleError(data){
+  console.log("error server");
+  console.log(data);
+  console.log(data.detail);
+  console.log(data.detail.error);
+  console.log(data.detail.error.message);
+  console.log(data.detail.request);
+  console.log(data.detail.response);
+  console.log(data.detail.request.response);
+  this.server = data.detail.error.type + ", Impossible d'atteindre les informations relatives a l'endpoint ";
+  console.log(this.server);
+  //  this.agentFuseki.send('agentGlobal', {type: "updateEndpointData", server: {error:this.server}});
+}
+
 
 }
 });

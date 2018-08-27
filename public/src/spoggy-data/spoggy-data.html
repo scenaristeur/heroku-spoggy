@@ -52,6 +52,7 @@
         if (this.params.url != undefined ){
           console.log("ENVOI JSONLD");
           this.agentData.send('agentJsonld', {type: 'params', params: this.params});
+          //  this.agentData.send('agentApp', {type: 'setMode', value: 'global'});
         }else{
             this.agentData.send('agentGraph', {type: 'importFromParam', params: this.params});
         }
