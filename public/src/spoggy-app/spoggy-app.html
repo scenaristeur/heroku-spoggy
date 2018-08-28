@@ -14,7 +14,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
 
 
 <script src="agents/AppAgent.js"></script>
@@ -95,6 +95,13 @@
     color: black;
     font-weight: bold;
   }
+  .drawer-list a {
+    display: block;
+    padding: 0 16px;
+    text-decoration: none;
+    color: var(--app-secondary-color);
+    line-height: 40px;
+  }
   </style>
   <style include="shared-styles">
   /* STYLES A NETTOYER car récupéré tel quel DE SPOGGY-ENDPOINT */
@@ -163,37 +170,7 @@
 
 }
 </style>
-<style>
-app-drawer-layout:not([narrow]) [drawer-toggle] {
-  display: none;
-}
 
-app-header {
-  color: #fff;
-  background-color: var(--app-primary-color);
-}
-
-app-header paper-icon-button {
-  --paper-icon-button-ink-color: white;
-}
-
-.drawer-list {
-  margin: 0 20px;
-}
-
-.drawer-list a {
-  display: block;
-  padding: 0 16px;
-  text-decoration: none;
-  color: var(--app-secondary-color);
-  line-height: 40px;
-}
-
-.drawer-list a.iron-selected {
-  color: black;
-  font-weight: bold;
-}
-</style>
 <style is="custom-style">
 .cafe-header { @apply --paper-font-headline; }
 .cafe-light { color: var(--paper-grey-600); }
@@ -346,7 +323,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
   </div>
 
-  <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]">></spoggy-solo>
+  <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]"></spoggy-solo>
   <spoggy-collaboratif
   mode={{mode}}
   hidden$="[[!isEqual(mode,'collaboratif')]]"

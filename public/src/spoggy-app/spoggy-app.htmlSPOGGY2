@@ -1,0 +1,246 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="../spoggy-agent/spoggy-agent.html">
+
+
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+
+
+<script src="agents/AppAgent.js"></script>
+
+<dom-module id="spoggy-app">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse/iron-collapse.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icon/iron-icon.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/communication-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/social-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+  <template>
+    <style>
+    :host {
+      --app-primary-color: #4285f4;
+      --app-secondary-color: black;
+
+      /*display: block;*/
+    }
+
+    app-drawer-layout:not([narrow]) [drawer-toggle] {
+      display: none;
+    }
+
+    app-header {
+      color: #fff;
+      background-color: var(--app-primary-color);
+    }
+
+    app-header paper-icon-button {
+      --paper-icon-button-ink-color: white;
+    }
+
+    .drawer-list {
+      margin: 0 20px;
+    }
+
+    .drawer-list paper-button {
+      display: block;
+      padding: 0 16px;
+      text-decoration: none;
+      color: var(--app-secondary-color);
+      line-height: 40px;
+    }
+
+    .drawer-list paper-button.iron-selected {
+      color: black;
+      font-weight: bold;
+    }
+    .drawer-list a {
+      display: block;
+      padding: 0 16px;
+      text-decoration: none;
+      color: var(--app-secondary-color);
+      line-height: 40px;
+    }
+    </style>
+
+    <style include="shared-styles">
+    /* STYLES A NETTOYER car récupéré tel quel DE SPOGGY-ENDPOINT */
+    /*:host {
+    display: block;
+
+    padding: 10px;
+    }*/
+
+    .flex-wrap {
+      @apply --layout-horizontal;
+      @apply --layout-wrap;
+      /*  @apply --layout-fit;*/
+      @apply --layout-center-justified;
+
+    }
+
+    .vertical-section-container {
+      max-width: 400px;
+    }
+    paper-card {
+      max-width: 450px;
+      margin: 10px;
+      --paper-card-header-image: {
+        width: 50%;
+      };
+    }
+    .horizontal {
+      @apply --layout-horizontal;
+    }
+    .flex {
+      @apply --layout-flex;
+    }
+    .justified {
+      @apply --layout-justified;
+    }
+    .amber {
+      background: var(--paper-amber-900);
+    }
+    .lime {
+      background: var(--paper-lime-500);
+    }
+    .cyan {
+      background: var(--paper-cyan-500);
+    }
+    .dark {
+      background: var(--paper-blue-grey-500);
+    }
+    paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
+      color: white;
+      --paper-card-header-color: white;
+    }
+    paper-checkbox {
+      display: block;
+      margin-bottom: 4px;
+      --paper-checkbox-label-color: green;
+      --paper-checkbox-unchecked-color: red;
+    }
+    paper-icon-button {
+      color: var(--paper-grey-600);
+    }
+    paper-icon-button.white {
+      color: white !important;
+    }
+
+
+  }
+  </style>
+
+    <app-drawer-layout fullbleed narrow="{{narrow}}">
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]" >
+        <app-toolbar>  Spoggy    <paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide"></paper-icon-button>
+        </app-toolbar>
+        <div style="height: 80%; overflow-y: auto;"> <!-- make drawer scrollable -->
+
+          <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+            <a name="view1" href="[[rootPath]]view1">View One</a>
+            <a name="view2" href="[[rootPath]]view2">View Two</a>
+            <a name="view3" href="[[rootPath]]view3">View Three</a>
+            <a name="accueil" id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil ([[lang]])</a>
+
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Fichier</h3>
+
+              <div slot="collapse-content">
+                <a name = "solo" id="solo" class="cafe-reserve" on-tap="import">Importer</a>
+                <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="export">Exporter</a>
+                <a name="global" id="global" class="cafe-reserve" on-tap="exportTtl">Exporter (.ttl)</a>
+              </div>
+            </iron-collapse-button>
+
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Modes</h3>
+
+              <div slot="collapse-content">
+
+                <a name = "solo" id="solo" class="cafe-reserve" on-tap="setmode">Solo <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
+                  <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
+                    <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
+                    </div>
+                  </iron-collapse-button>
+
+
+
+
+                </iron-selector>
+                <spoggy-graph-reglages></spoggy-graph-reglages>
+                <fieldset hidden$="[[isEmpty(mode)]]">
+                  <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
+                  </legend>
+                  <div hidden$="[[isEmpty(pseudo)]]">
+                    - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
+                  </div>
+                  <div hidden$="[[isEmpty(room)]]">
+                    - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
+                  </div>
+                  <div hidden$="[[isEmpty(endpointName)]]">
+                    - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
+                  </div>
+                </fieldset>
+
+
+              </div>
+              </app-drawer>
+
+
+              <!-- Main content -->
+              <app-header-layout has-scrolling-region>
+
+                <app-header slot="header" condenses fixed effects="waterfall">
+                  <app-toolbar>
+                    <paper-icon-button class="white" icon="icons:menu" drawer-toggle></paper-icon-button>
+
+                    <spoggy-input >
+                      ... Chargement de l'interface  ... <br>
+                      Attendez jusqu'au chargement du cercle rose
+                    </spoggy-input>
+                  </app-toolbar>
+
+                </app-header>
+
+                  <spoggy-accueil mode={{mode}} lang={{lang}}></spoggy-accueil>
+
+
+                </app-header-layout>
+                </app-drawer-layout>
+
+
+
+
+
+
+
+
+
+
+
+  </template>
+  <script>
+  class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
+    static get is() { return 'spoggy-app'; }
+    static get properties() {
+      return {
+
+      }
+    }
+
+
+  }
+  window.customElements.define(SpoggyApp.is, SpoggyApp);
+  </script>
+  </dom-module>
