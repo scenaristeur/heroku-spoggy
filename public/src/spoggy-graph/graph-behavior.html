@@ -165,8 +165,8 @@ resultsFromExplore(results){
 
 clear(){
   console.log("clear")
-    this.network.body.data.nodes.clear();
-    this.network.body.data.edges.clear();
+  this.network.body.data.nodes.clear();
+  this.network.body.data.edges.clear();
 }
 
 
@@ -709,93 +709,93 @@ describeFromDBpedia(results, resource){
       console.log(sujetNode[0])
       //this.network.redraw();
       this.network.moveTo({    position: {x:0, y:0}});
-    /*  this.network.moveTo({
-  position: {x:sujetNode[0].x, y:sujetNode[0].y},
-  scale: 1,
-  offset: {x:20, y:20},
-  animation: {
-    duration: 3,
-    easingFunction: 'easeInOutCubic'
+      /*  this.network.moveTo({
+      position: {x:sujetNode[0].x, y:sujetNode[0].y},
+      scale: 1,
+      offset: {x:20, y:20},
+      animation: {
+      duration: 3,
+      easingFunction: 'easeInOutCubic'
+    }
+  });*/
+
+  //  actionsToSendTemp.push(actionEdge);
+  //console.log(actionsToSendTemp);
+  //  return actionsToSendTemp;
+}
+
+exportJson() {
+  var network = this.network;
+  console.log(network)
+  var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
+  //  app.$.inputMessage.value = '';
+  if (filename == null || filename == "") {
+    txt = "User cancelled the prompt.";
+    return;
   }
-});*/
+  var textToWrite = "";
+  var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
+  var textFileAsBlob = "";
 
-      //  actionsToSendTemp.push(actionEdge);
-      //console.log(actionsToSendTemp);
-      //  return actionsToSendTemp;
-    }
-
-    exportJson() {
-      var network = this.network;
-      console.log(network)
-      var filename = prompt("Sous quel nom sauvegarder ce graphe ?", "Spoggy");
-      //  app.$.inputMessage.value = '';
-      if (filename == null || filename == "") {
-        txt = "User cancelled the prompt.";
-        return;
-      }
-      var textToWrite = "";
-      var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
-      var textFileAsBlob = "";
-
-      console.log("export Json");
-      console.log(network.body.data);
-      var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
-      console.log(nodes_edges);
-      var nodes_edgesJSON = JSON.stringify(nodes_edges);
-      console.log(nodes_edgesJSON);
-      textFileAsBlob = new Blob([nodes_edgesJSON], {
-        type:
-        'application/json'
-      }
-    );
-    var downloadLink = document.createElement("a");
-    downloadLink.download = fileNameToSaveAs;
-    downloadLink.innerHTML = "Download File";
-    if(navigator.userAgent.indexOf("Chrome") != -1)
-    {
-      // Chrome allows the link to be clicked
-      // without actually adding it to the DOM.
-      console.log("CHROME");
-      downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-    } else
-    {
-      // Firefox requires the link to be added to the DOM
-      // before it can be clicked.
-      console.log("FF");
-      downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-      downloadLink.target="_blank";
-      //downloadLink.onclick = destroyClickedElement;
-      //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
-      downloadLink.style.display = "none";
-      document.body.appendChild(downloadLink);
-      //  console.log(app.$.popupTtl);
-    }
-    console.log(downloadLink);
-    /*downloadLink.click();*/
-    /* creation d'un event car download.click() ne fonctionne pas sous Firefox */
-    var event = document.createEvent("MouseEvents");
-    event.initMouseEvent(
-      "click", true, false, window, 0, 0, 0, 0, 0
-      , false, false, false, false, 0, null
-    );
-    downloadLink.dispatchEvent(event);
-    var app = this;
-    setTimeout(function(){
-      console.log(downloadLink.parentNode);
-      document.body.removeChild(downloadLink);
-      window.URL.revokeObjectURL(downloadLink);
-    }, 1000);
-    /*if (window.URL != null) {
-    // Chrome allows the link to be clicked
-    // without actually adding it to the DOM.
-    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-  } else {
+  console.log("export Json");
+  console.log(network.body.data);
+  var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
+  console.log(nodes_edges);
+  var nodes_edgesJSON = JSON.stringify(nodes_edges);
+  console.log(nodes_edgesJSON);
+  textFileAsBlob = new Blob([nodes_edgesJSON], {
+    type:
+    'application/json'
+  }
+);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
   // Firefox requires the link to be added to the DOM
   // before it can be clicked.
+  console.log("FF");
   downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-  downloadLink.onclick = destroyClickedElement;
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
   downloadLink.style.display = "none";
   document.body.appendChild(downloadLink);
+  //  console.log(app.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  console.log(downloadLink.parentNode);
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 1000);
+/*if (window.URL != null) {
+// Chrome allows the link to be clicked
+// without actually adding it to the DOM.
+downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else {
+// Firefox requires the link to be added to the DOM
+// before it can be clicked.
+downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+downloadLink.onclick = destroyClickedElement;
+downloadLink.style.display = "none";
+document.body.appendChild(downloadLink);
 }
 downloadLink.click();*/
 }
@@ -1535,7 +1535,7 @@ saveEdgeData (data, callback) {
   this.clearEdgePopUp();
   console.log(callback)
   if (typeof callback == 'function'){
-      callback(data);
+    callback(data);
   }
 
   var edge = this.network.body.data.edges.get({

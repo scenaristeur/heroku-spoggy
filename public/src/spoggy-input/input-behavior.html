@@ -184,6 +184,11 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.agentInput.send('agentGraph', {type:'exportTtl'}); // , what: 'network', to: 'agentDialogs', where: 'inputTextToSave'
       //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
       break;
+      case "/s":
+      //  this.exportTtl(this.network,this);
+      this.agentInput.send('agentGraph', {type:'exportSolid'}); // , what: 'network', to: 'agentDialogs', where: 'inputTextToSave'
+      //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
+      break;
       case "/i":
       case "/import":
       case "/importJson":

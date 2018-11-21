@@ -35,10 +35,10 @@
       font-size:28px;
     }
     .popup {
-      position: absolute;
+    /*  position: absolute;
       z-index: 10;
       top: 2vw;
-      left: 2vw;
+      left: 2vw;*/
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -362,7 +362,7 @@
                           <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
 
                           <paper-dialog-scrollable>
-                            <paper-textarea id="inputTextToSave" rows="10"></paper-textarea>
+                            <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>
                           </paper-dialog-scrollable>
 
                           <div style="padding-top:10px" horizontal end-justified layout self-stretch>
@@ -371,6 +371,7 @@
                             <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
                             <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
                             <paper-button raised on-tap="saveTextAsFile" dialog-confirm>Exporter le fichier Ttl</paper-button>
+                            <paper-button raised on-tap="saveTextAsFileSolid" dialog-confirm>Exporter vers mon POD Solid</paper-button>
                             <br>
                           </div>
 
