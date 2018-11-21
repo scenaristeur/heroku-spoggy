@@ -35,10 +35,11 @@
       font-size:28px;
     }
     .popup {
-      /*  position: absolute;
+      position: absolute;
+      top: 20vh;
+      left: 2vw;
       z-index: 10;
-      top: 2vw;
-      left: 2vw;*/
+      width: 90vw;
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -396,6 +397,7 @@
                               <!--  <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>-->
                               <paper-input id="inputSolid" label="POD"></paper-input>
                               <paper-input id="inputDirectory" label="Spoggy directory"></paper-input>
+                              <paper-input id="inputFileNameToSaveAsPOD" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
 
                             </paper-dialog-scrollable>
 
@@ -405,7 +407,7 @@
                               <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
                               <!--  <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input> -->
                               <paper-button raised  dialog-dismiss>Annuler</paper-button>
-                              <paper-button raised on-tap="send" dialog-confirm>Send To POD</paper-button>
+                              <paper-button raised on-tap="send2POD" dialog-confirm>Send To POD</paper-button>
                               <br>
                             </div>
 
@@ -671,37 +673,81 @@ _deferred(){
     this.initAgents()
 
 
-  solid.auth.trackSession(session => {
-    const loggedIn = !!session;
-  console.log("#\n#\n#\n#\ntrackSession#\n#\n#\n#\n")
+    solid.auth.trackSession(session => {
+      const loggedIn = !!session;
+      console.log("#\n#\n#\n#\ntrackSession#\n#\n#\n#\n")
 
-    if (loggedIn){
-      this.$.solidLogin.style.visibility="hidden";
-      this.$.solidLogout.style.visibility="visible";
-      //  this._card.style.visibility="visible";
-      this.$.inputSolid.value = session.webId;
-      console.log(session.webId)
-      this.session = session;
-      // Update components to match the user's login status
-      //  this.FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
+      if (loggedIn){
+        this.$.solidLogin.style.visibility="hidden";
+        this.$.solidLogout.style.visibility="visible";
+        //  this._card.style.visibility="visible";
+        this.$.inputSolid.value = session.webId;
+        console.log(session.webId)
+        this.session = session;
+        // Update components to match the user's login status
+        //  this.FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
 
-      // Set up a local data store and associated data fetcher
-      this.store = $rdf.graph();
-      this.fetcher = new $rdf.Fetcher(this.store);
-      this.updateManager = new $rdf.UpdateManager(this.store);
-      this.loadProfile();
-    }else{
-      this.$.solidLogin.style.visibility="visible";
-      this.$.solidLogout.style.visibility="hidden";
-      //this._card.style.visibility="hidden";
-      this.$.inputSolid.value = "";
-    }
+        // Set up a local data store and associated data fetcher
+        this.store = $rdf.graph();
+        this.fetcher = new $rdf.Fetcher(this.store);
+        this.updateManager = new $rdf.UpdateManager(this.store);
+        this.loadProfile();
+
+        //_publicFolder
+        var wedIdSpilt = this.session.webId.split("/");
+        this.webIdRoot = wedIdSpilt[0]+"//"+wedIdSpilt[2]+"/";
+        console.log(this.webIdRoot);
+        this.publicFolder = this.webIdRoot+"public/spoggy/";
+        //  this._test = this._publicFolder;
+        this.updatePublicFolder(this.publicFolder)
+        this.$.inputFileNameToSaveAsPOD.value = this.$.inputFileNameToSaveAs.value
+
+      }else{
+        this.$.solidLogin.style.visibility="visible";
+        this.$.solidLogout.style.visibility="hidden";
+        //this._card.style.visibility="hidden";
+        this.$.inputSolid.value = "";
+      }
+    });
+
   });
+}
 
-  });
+updatePublicFolder(folder){
+  console.log(folder)
+  this.$.inputDirectory.value = folder;
 
 
 }
+
+send2POD(){
+  var pod = this.$.inputSolid.value;
+  var dir = this.$.inputDirectory.value;
+  var filename = this.$.inputFileNameToSaveAsPOD.value;
+  var data = this.$.inputTextToSave.value;
+  console.log(pod, dir, filename,data)
+  solid.auth.fetch(dir+filename, {
+    method: 'PUT', // or 'PUT'
+    headers:{
+      'Content-Type': 'text/plain',
+      'Content-Length': data.length.toString()
+    },
+    body: data // data can be `string` or {object}!
+  }).then((res) => {return res;})
+  .then((response) => {
+    console.log(response)
+    this.sendResult(null);
+  })
+  .catch((error) => {
+    this.sendResult('Error: '+JSON.stringify(error));
+  });
+}
+
+sendResult(result){
+  console.log(result)
+}
+
+
 initAgents(){
   //  console.log(this.agentInput)
   this.agentDialogs.send('agentHello', 'Hello agentHello!');
@@ -763,7 +809,15 @@ try {
 }
 };
 
+saveOldUserData(profile) {
+  if (!localStorage.getItem('oldProfileData')) {
+    localStorage.setItem('oldProfileData', JSON.stringify(profile));
+  }
+}
 
+getOldUserData() {
+  return JSON.parse(localStorage.getItem('oldProfileData'));
+}
 
 getValueFromVcard(node, webId) {
   return this.getValueFromNamespace(node, this.VCARD, webId);
