@@ -24,6 +24,8 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/color-picker/color-element.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-listbox/paper-listbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-item/paper-item.html">
   <!--
   <link rel="lazy-import" group="lazy" href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html"> -->
@@ -333,6 +335,7 @@
                           <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
                           <div style="padding-left:20px" vertical start-justified start layout wrap>
                             <h2 id="importOperation" style="margin: 0;color: #0D578B;">Import JSON (ou ttl) <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
+                            <paper-button raised on-tap="importFromSolid" dialog-confirm>Importer depuis mon POD Solid</paper-button>
                             <p >
                               <fieldset>
                                 <legend>Paramètres</legend>
@@ -393,13 +396,24 @@
                             <p>
                               <paper-button id="solidLogout" raised on-tap="logout">Logout</paper-button>
                             </p>
-                            <paper-dialog-scrollable>
+                            <!--<paper-dialog-scrollable>-->
                               <!--  <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>-->
                               <paper-input id="inputSolid" label="POD"></paper-input>
                               <paper-input id="inputDirectory" label="Spoggy directory"></paper-input>
+long [[files.length]] long
+f1
+                              <paper-listbox selected="0"  >
+                                <template is="dom-repeat" items="[[files]]">
+
+                                  <paper-item file="[[item]]" on-tap="loadFile">[[item]]pp</paper-item>
+
+                                </template>
+                              </paper-listbox>
+f2
+
                               <paper-input id="inputFileNameToSaveAsPOD" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
 
-                            </paper-dialog-scrollable>
+                          <!--  </paper-dialog-scrollable>-->
 
                             <div style="padding-top:10px" horizontal end-justified layout self-stretch>
 
@@ -407,7 +421,8 @@
                               <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
                               <!--  <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input> -->
                               <paper-button raised  dialog-dismiss>Annuler</paper-button>
-                              <paper-button raised on-tap="send2POD" dialog-confirm>Send To POD</paper-button>
+                              <paper-button id="send2PODBtn" raised on-tap="send2POD" dialog-confirm>Send To POD</paper-button>
+                              <paper-button id="importFromPODBtn" raised on-tap="importFromPOD" dialog-confirm>Import from POD</paper-button>
                               <br>
                             </div>
 
@@ -651,6 +666,10 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
     {name: 'Smag global', url: 'http://5.51.110.50:3030', actif: false, type: 'fuseki', read: true, write: true},
     {name: 'Semantic Forms', url: 'http://192...', actif: false, type: 'sf', read: true, write: true},
     {name: 'Smag local', url: 'http://127.0.0.1:3030', actif: true, type: 'fuseki', read: true, write: true}]
+  },
+  files: {
+    type: Array,
+    value: ["test8.ttl", "machin bidule2.ttl", "file3"]
   }
 };
 }
@@ -707,6 +726,7 @@ _deferred(){
         this.$.solidLogout.style.visibility="hidden";
         //this._card.style.visibility="hidden";
         this.$.inputSolid.value = "";
+        this.$.inputDirectory.value = "";
       }
     });
 

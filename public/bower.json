@@ -28,7 +28,9 @@
     "lazy-imports": "^2.1.0",
     "paper-card": "PolymerElements/paper-card#^2.1.0",
     "loglevel-debug": "*",
-    "lang-picker": "mrsideshowjack/lang-picker#^1.0.2"
+    "lang-picker": "mrsideshowjack/lang-picker#^1.0.2",
+    "paper-listbox": "^3.0.1",
+    "paper-item": "^3.0.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

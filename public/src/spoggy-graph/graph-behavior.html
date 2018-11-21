@@ -183,6 +183,10 @@ importFromParam(params){
   }else{
     console.log("PARAMETRES");
     var source = params.source;
+
+
+
+
     var network = this.network;
     var output = [];
     var xhr = new XMLHttpRequest();
@@ -196,6 +200,12 @@ importFromParam(params){
       reader.addEventListener('load', function () {
         //  console.log(reader.result);
         // ajouter test en fonction du type de fichier, extension
+
+
+if ((extension == "json") || (reader.result.startsWith("[{"))) {
+
+
+
         var nodes = JSON.parse(reader.result).nodes;
         //    console.log(nodes);
         var edges = JSON.parse(reader.result).edges;
@@ -212,6 +222,30 @@ importFromParam(params){
         catch(e){
           console.log(e);
         }
+      }else{
+        //console.log("ce type de fichier n'est pas pris en compte (" + fichier.type + ")");
+        var extension = source.split('.').pop();
+        console.log(extension);
+      //  console.log(fichier);
+        //  console.log(reader.result);
+        if ((extension == "ttl") || (extension == "n3") || (extension == "n3t")) {
+          //   sketch.ttl2Xml(reader.result);
+          ttl2Xml(reader.result, network);
+          //  network.dispatch('addTriplets', network.triplets);
+        } else if ((extension == "rdf") || (extension == "owl")) {
+          //  sketch.data2Xml(reader.result); //if srdf
+          rdf2Xml(reader.result, network);
+          //  network.dispatch('addTriplets', network.triplets);
+        }
+         else {
+          data2Xml(reader.result, network);
+        }
+        console.log("fichier lu");
+
+
+
+
+      }
         //  console.log(network);
         //  console.log(partageImport);
       });
