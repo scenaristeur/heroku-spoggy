@@ -133,6 +133,62 @@ var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
+saveTextAsFileSolid(){
+console.log($rdf)
+console.log(solid)
+this.$.popupSolid.toggle();
+
+}
+
+
+login(){
+  console.log("login")
+  localStorage.clear();
+  solid.auth.popupLogin(
+//{popupUri: "https://tag42git.github.io/polymer-solid/popup.html"}
+          {popupUri: this.absolutePath('/popup.html')}
+          ).then(
+    (session) => {
+        if (session) {
+          //this.userNotification = this.loggedInLabel(this.lang)+', webId= '+session.webId;
+          //this.usersWebid = session.webId;
+          console.log("SESSION",session)
+        }
+        else {
+          //this.userNotification = this.couldntGetSessionLabel(this.lang);
+          console.log("could not get session")
+        }
+      },
+      (reason) => {
+        console.log("REASON",reason)
+        //this.userNotification = this.couldntAuthorizeLabel(this.lang)+"= "+reason;
+      }
+    ).catch(err => {
+      console.log("ERREUR",err)
+        //this.userNotification = this.unableToAuthorizeLabel(this.lang)+": "+err;
+      }
+    );
+
+
+}
+
+logout(){
+  console.log("logout")
+}
+
+_checkWebid(){
+  console.log("checkWebid")
+}
+
+
+absolutePath(href) {
+      var link = document.createElement("a");
+      link.href = href;
+      return (link.protocol + "//" + link.host + link.pathname + link.search + link.hash);
+  }
+
+
+
     saveTextAsFile(){
       var textToWrite="";
       var fileNameToSaveAs="";

@@ -35,7 +35,7 @@
       font-size:28px;
     }
     .popup {
-    /*  position: absolute;
+      /*  position: absolute;
       z-index: 10;
       top: 2vw;
       left: 2vw;*/
@@ -378,148 +378,186 @@
 
 
                         </paper-dialog>
-                        <!--      <iron-collapse-button>
-                        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
-                        <div slot="collapse-content">
-                        (developpements en cours)
-                        <fieldset>
-                        <legend>Type</legend>
-                        <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
-                        <paper-checkbox name="node">Node</paper-checkbox>
-                        <paper-checkbox name="url">Url</paper-checkbox>
-                        <paper-checkbox name="graph">Graphe</paper-checkbox>
-                        <paper-checkbox name="source">Source</paper-checkbox>
-                      </iron-selector>
-                    </fieldset>
-                  </div>
-                </iron-collapse-button>
-              -->
-              <paper-dialog id="settings"  class="popup" on-iron-overlay-opened="_openSettings" > <!--       on-iron-overlay-closed="_closeImport"-->
-                <h2 style="margin: 0;color: #0D578B;">Réglages <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
-                <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
-                  <p>Déplacez les curseurs & bougez un noeud sur le graphe pour voir vos modifications s'appliquer</p>
-                  Longueur des liens     <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
-                  Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstant}}"  step="0.001"></paper-slider>
-                  Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
-                  Gravité   <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
-                  Amortissement         <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>
-
-                  <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
-                  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                    <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
-                    <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
-                    <paper-button  dialog-dismiss raised>Fermer</paper-button>
-                  </div>
-                </div>
-                <div>
-                  <!--<spog-source></spog-source>-->
-                </div>
-              </paper-dialog>
 
 
-              <paper-dialog id="pseudoPopup" class="popup" >
-                <h2 style="margin: 0;color: #0D578B;">
-                  Choisissez un pseudo pour connection au graphe collaboratif : <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
-                </h2>
-                <paper-input label="Entrez un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
-                <paper-button raised dialog-confirm>Entrer</paper-button>
-              </paper-dialog>
+                        <paper-dialog id="popupSolid" class="popup" backdrop transition="core-transition-bottom" on-iron-overlay-opened="_checkWebid"><!-- on-iron-overlay-opened="_myOpenFunction"
+                          on-iron-overlay-closed="_myClosedFunction" -->
+                          <h2  style="margin: 0;color: #0D578B;"> Connexion POD
+                            <!--<paper-button ontap="_pageAide">?</paper-button>-->
+                            <!--  <paper-button dialog-dismiss raised>X</paper-button> -->
+                            <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
+                            <p>
+                              <paper-button id="solidLogin" raised  on-tap="login">Login</paper-button>
+                            </p>
+                            <p>
+                              <paper-button id="solidLogout" raised on-tap="logout">Logout</paper-button>
+                            </p>
+                            <paper-dialog-scrollable>
+                              <!--  <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>-->
+                              <paper-input id="inputSolid" label="POD"></paper-input>
+                              <paper-input id="inputDirectory" label="Spoggy directory"></paper-input>
+
+                            </paper-dialog-scrollable>
+
+                            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+
+                              <!--<paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+                              <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
+                              <!--  <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input> -->
+                              <paper-button raised  dialog-dismiss>Annuler</paper-button>
+                              <paper-button raised on-tap="send" dialog-confirm>Send To POD</paper-button>
+                              <br>
+                            </div>
 
 
-              <paper-dialog id="modePopup" class="popup" withBackdrop transition="core-transition-bottom" autoFitOnAttach verticalAlign="middle"> <!--    on-iron-overlay-opened="_openModePopp"
-                on-iron-overlay-closed="_closeModePopup"-->
-                <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
-                <!--
-                <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
-                <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
-                <h2 style="margin: 0;color: #0D578B;">
-                  Choisissez un mode d'utilisation pour Spoggy
-                  <paper-icon-button icon="help-outline"></paper-icon-button><paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
-                </h2>
-                <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                  <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
-                    <paper-checkbox name="solo"  dialog-dismiss>Solo</paper-checkbox>
-                    <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
-                    <paper-checkbox name="global" auto >Global</paper-checkbox>
-                  </iron-selector>
-                </div>
 
-                <paper-dialog-scrollable>
-                  <div hidden$="[[!isEqual(mode,'collab')]]">
-                    Choisissez le graphe que vous souhaitez rejoindre :
-                    <paper-item  hidden$="[[!isEqual(rooms.length,0)]]" style="height:100px;" > Chargement de la liste des graphes</paper-item>
-                    <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(rooms.length,0)]]" >
-                      <template is="dom-repeat" items="[[rooms]]">
-                        <paper-item room="[[item.name]]" on-tap="rejoindre">[[item.name]] ([[item.count]])</paper-item>
-                      </template>
-                    </paper-listbox>
+                          </paper-dialog>
+
+
+
+
+                          <!--      <iron-collapse-button>
+                          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Type</h3>
+                          <div slot="collapse-content">
+                          (developpements en cours)
+                          <fieldset>
+                          <legend>Type</legend>
+                          <iron-selector id="typeSelector" attr-for-selected="name" selected="{{selectedType}}" selected-attribute="checked">
+                          <paper-checkbox name="node">Node</paper-checkbox>
+                          <paper-checkbox name="url">Url</paper-checkbox>
+                          <paper-checkbox name="graph">Graphe</paper-checkbox>
+                          <paper-checkbox name="source">Source</paper-checkbox>
+                        </iron-selector>
+                      </fieldset>
+                    </div>
+                  </iron-collapse-button>
+                -->
+                <paper-dialog id="settings"  class="popup" on-iron-overlay-opened="_openSettings" > <!--       on-iron-overlay-closed="_closeImport"-->
+                  <h2 style="margin: 0;color: #0D578B;">Réglages <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
+                  <div>  <!--AJOUTER LE CHANGEMENT DE PHYSICS -->
+                    <p>Déplacez les curseurs & bougez un noeud sur le graphe pour voir vos modifications s'appliquer</p>
+                    Longueur des liens     <paper-slider  min="0" max="800" value="{{springLength}}"  ></paper-slider>
+                    Force des liens   <paper-slider  min="0" max="0.2" value="{{springConstant}}"  step="0.001"></paper-slider>
+                    Distance entre deux noeuds     <paper-slider  min="0" max="800" value="{{nodeDistance}}"></paper-slider>
+                    Gravité   <paper-slider  min="-10" max="10" value="{{centralGravity}}"  step="1"  ></paper-slider>
+                    Amortissement         <paper-slider  min="0" max="1" value="{{damping}}"  step="0.001"></paper-slider>
+
+                    <!-- Pour isoler les noeuds qui ont bcp de connexions <paper-button raised  on-tap="_recalculMassesPhysicValues">Recalcul Masses</paper-button>-->
                     <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-                      <paper-input id="roomInput" label="ou créez un nouveau graphe" value={{newRoom}}></paper-input>
-                      <paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+                      <paper-button raised  on-tap="_defaultPhysicValues">Défaut</paper-button>
+                      <paper-button raised disabled on-tap="_recalculMassesPhysicValues">Recalculer</paper-button>
                       <paper-button  dialog-dismiss raised>Fermer</paper-button>
-                      <br>
                     </div>
                   </div>
-                </paper-dialog-scrollable>
+                  <div>
+                    <!--<spog-source></spog-source>-->
+                  </div>
+                </paper-dialog>
 
 
-                <div hidden$="[[!isEqual(mode,'global')]]">
-                  <!--  <paper-dropdown-menu label="Endpoint2" vertical-align="bottom" horizontal-align="left">
-                  <paper-listbox slot="dropdown-content" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">-->
-                  <paper-dialog-scrollable id="scrollEndpoints">
-                    <template is="dom-repeat" items="[[endpoints]]">
-                      <paper-item  value="{{item.url}}">
-                        <paper-checkbox checked="{{item.actif}}">
-                        </paper-checkbox>
-                        [[item.name]] / [[item.url]] / type: [[item.type]] read: [[item.read]] / write: [[item.write]] </paper-item>
-                      </template>
-                    </paper-dialog-scrollable>
-                    <!--                        </paper-listbox>
-                  </paper-dropdown-menu>-->
-                  <paper-button on-tap="_updateEndpoints" dialog-dismiss raised>Connecter</paper-button>
-                </div>
+                <paper-dialog id="pseudoPopup" class="popup" >
+                  <h2 style="margin: 0;color: #0D578B;">
+                    Choisissez un pseudo pour connection au graphe collaboratif : <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
+                  </h2>
+                  <paper-input label="Entrez un pseudo" on-change="pseudoChanged" value={{pseudo::input}}></paper-input>
+                  <paper-button raised dialog-confirm>Entrer</paper-button>
+                </paper-dialog>
 
 
-                <!--
-                <div hidden$="[[!isEqual(mode,'global')]]">
-                <br>
-                <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
-                <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
-                https://www.w3.org/wiki/SparqlEndpoints<br>
-                <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
-                <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
-                <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
-                <br>
+                <paper-dialog id="modePopup" class="popup" withBackdrop transition="core-transition-bottom" autoFitOnAttach verticalAlign="middle"> <!--    on-iron-overlay-opened="_openModePopp"
+                  on-iron-overlay-closed="_closeModePopup"-->
+                  <!--  <h3>Mode <paper-button dialog-dismiss raised>X</paper-button></h3>-->
+                  <!--
+                  <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
+                  <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
+                  <h2 style="margin: 0;color: #0D578B;">
+                    Choisissez un mode d'utilisation pour Spoggy
+                    <paper-icon-button icon="help-outline"></paper-icon-button><paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
+                  </h2>
+                  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+                    <iron-selector id="modeSelector" attr-for-selected="name" selected="{{selectedMode}}" selected-attribute="checked">
+                      <paper-checkbox name="solo"  dialog-dismiss>Solo</paper-checkbox>
+                      <paper-checkbox name="collab" >Collaboratif</paper-checkbox>
+                      <paper-checkbox name="global" auto >Global</paper-checkbox>
+                    </iron-selector>
+                  </div>
 
-              </iron-selector>
-              <paper-input id="labelEndpoint"
-              hidden$="[[!isEqual(selectedEndpoint,'fuseki')]]"
-              label="Endpoint (http://)"
-              value="{{endpoint::input}}">
-            </paper-input>
-
-            <paper-dropdown-menu hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" label="Endpoint2" vertical-align="bottom" horizontal-align="left">
-            <paper-listbox slot="dropdown-content" hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">
-            <template is="dom-repeat" items="[[virtuosoEndpoints]]">
-            <paper-item  value="{{item.url}}">[[item.name]]</paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
-      label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
-
-
-
-      <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
-    </div>-->
-
-  </paper-dialog>
+                  <paper-dialog-scrollable>
+                    <div hidden$="[[!isEqual(mode,'collab')]]">
+                      Choisissez le graphe que vous souhaitez rejoindre :
+                      <paper-item  hidden$="[[!isEqual(rooms.length,0)]]" style="height:100px;" > Chargement de la liste des graphes</paper-item>
+                      <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(rooms.length,0)]]" >
+                        <template is="dom-repeat" items="[[rooms]]">
+                          <paper-item room="[[item.name]]" on-tap="rejoindre">[[item.name]] ([[item.count]])</paper-item>
+                        </template>
+                      </paper-listbox>
+                      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+                        <paper-input id="roomInput" label="ou créez un nouveau graphe" value={{newRoom}}></paper-input>
+                        <paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+                        <paper-button  dialog-dismiss raised>Fermer</paper-button>
+                        <br>
+                      </div>
+                    </div>
+                  </paper-dialog-scrollable>
 
 
+                  <div hidden$="[[!isEqual(mode,'global')]]">
+                    <!--  <paper-dropdown-menu label="Endpoint2" vertical-align="bottom" horizontal-align="left">
+                    <paper-listbox slot="dropdown-content" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">-->
+                    <paper-dialog-scrollable id="scrollEndpoints">
+                      <template is="dom-repeat" items="[[endpoints]]">
+                        <paper-item  value="{{item.url}}">
+                          <paper-checkbox checked="{{item.actif}}">
+                          </paper-checkbox>
+                          [[item.name]] / [[item.url]] / type: [[item.type]] read: [[item.read]] / write: [[item.write]] </paper-item>
+                        </template>
+                      </paper-dialog-scrollable>
+                      <!--                        </paper-listbox>
+                    </paper-dropdown-menu>-->
+                    <paper-button on-tap="_updateEndpoints" dialog-dismiss raised>Connecter</paper-button>
+                  </div>
 
-<!--
-  <valle-speed-dial id="dial" direction="top" label="Menu" backdrop >
+
+                  <!--
+                  <div hidden$="[[!isEqual(mode,'global')]]">
+                  <br>
+                  <a href="https://onsem.wp.imt.fr/2014/07/09/quelques-points-dacces-sparql-francais/" target="_blank">Quelques exemples</a> <br>
+                  <a href="https://www.lespetitescases.net/ou-s-amuser-avec-sparql" target="_blank">D'autres exemples</a> <br>
+                  https://www.w3.org/wiki/SparqlEndpoints<br>
+                  <iron-selector id="endpointSelector" attr-for-selected="name" selected="{{selectedEndpoint}}" selected-attribute="checked">
+                  <paper-checkbox name="fuseki" >Fuseki</paper-checkbox>
+                  <paper-checkbox name="virtuoso" >Virtuoso</paper-checkbox>
+                  <br>
+
+                </iron-selector>
+                <paper-input id="labelEndpoint"
+                hidden$="[[!isEqual(selectedEndpoint,'fuseki')]]"
+                label="Endpoint (http://)"
+                value="{{endpoint::input}}">
+              </paper-input>
+
+              <paper-dropdown-menu hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" label="Endpoint2" vertical-align="bottom" horizontal-align="left">
+              <paper-listbox slot="dropdown-content" hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" class="dropdown-content"  attr-for-selected="value" selected="{{endpoint}}">
+              <template is="dom-repeat" items="[[virtuosoEndpoints]]">
+              <paper-item  value="{{item.url}}">[[item.name]]</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+
+        <paper-input hidden$="[[!isEqual(selectedEndpoint,'virtuoso')]]" id="resourceInput"
+        label="Quelle resource rechercher ?" value="{{resource::input}}"></paper-input>
+
+
+
+        <paper-button on-tap="_testEndpoint" dialog-dismiss raised>Connecter</paper-button>
+      </div>-->
+
+    </paper-dialog>
+
+
+
+    <!--
+    <valle-speed-dial id="dial" direction="top" label="Menu" backdrop >
     <valle-speed-dial-action
     class="dial-action"
     label="Réglages"
@@ -631,7 +669,37 @@ _deferred(){
     this.dispatchEvent(new CustomEvent('import-loaded', results));
     this.agentDialogs = new DialogsAgent('agentDialogs', this);
     this.initAgents()
+
+
+  solid.auth.trackSession(session => {
+    const loggedIn = !!session;
+  console.log("#\n#\n#\n#\ntrackSession#\n#\n#\n#\n")
+
+    if (loggedIn){
+      this.$.solidLogin.style.visibility="hidden";
+      this.$.solidLogout.style.visibility="visible";
+      //  this._card.style.visibility="visible";
+      this.$.inputSolid.value = session.webId;
+      console.log(session.webId)
+      this.session = session;
+      // Update components to match the user's login status
+      //  this.FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
+
+      // Set up a local data store and associated data fetcher
+      this.store = $rdf.graph();
+      this.fetcher = new $rdf.Fetcher(this.store);
+      this.updateManager = new $rdf.UpdateManager(this.store);
+      this.loadProfile();
+    }else{
+      this.$.solidLogin.style.visibility="visible";
+      this.$.solidLogout.style.visibility="hidden";
+      //this._card.style.visibility="hidden";
+      this.$.inputSolid.value = "";
+    }
   });
+
+  });
+
 
 }
 initAgents(){
@@ -649,6 +717,105 @@ initAgents(){
 
   //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
 }
+
+async loadProfile() {
+  var app = this;
+
+  await console.log("------------------------loadProfile")
+  try {
+    //  this.loadingProfile = true;
+    //  const profile = await this.rdf.getProfile();
+    this.profile = await app.getProfile();
+    if (this.profile) {
+      console.log(this.profile)
+      //  app.profile = profile;
+      app.saveOldUserData(this.profile);
+    }
+
+    //  this.loadingProfile = false;
+    //  this.setupProfileData();
+  } catch (error) {
+    console.log(`Error: ${error}`);
+  }
+
+}
+
+async getProfile () {
+
+  /*if (!this.session) {
+  await this.getSession();
+}*/
+this.VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#');
+try {
+  await this.fetcher.load(this.session.webId);
+
+  return {
+    fn : this.getValueFromVcard('fn'),
+    company : this.getValueFromVcard('organization-name'),
+    phone: this.getPhone(),
+    role: this.getValueFromVcard('role'),
+    image: this.getValueFromVcard('hasPhoto'),
+    address: this.getAddress(),
+    email: this.getEmail(),
+  };
+} catch (error) {
+  console.log(`Error fetching data: ${error}`);
+}
+};
+
+
+
+getValueFromVcard(node, webId) {
+  return this.getValueFromNamespace(node, this.VCARD, webId);
+};
+
+getValueFromNamespace(node, namespace, webId) {
+  const store = this.store.any($rdf.sym(webId || this.session.webId), namespace(node));
+  if (store) {
+    return store.value;
+  }
+  return '';
+}
+
+getAddress() {
+  const linkedUri = this.getValueFromVcard('hasAddress');
+
+  if (linkedUri) {
+    return {
+      locality: this.getValueFromVcard('locality', linkedUri),
+      country_name: this.getValueFromVcard('country-name', linkedUri),
+      region: this.getValueFromVcard('region', linkedUri),
+      street: this.getValueFromVcard('street-address', linkedUri),
+    };
+  }
+
+  return {};
+};
+
+//Function to get email. This returns only the first email, which is temporary
+getEmail() {
+  const linkedUri = this.getValueFromVcard('hasEmail');
+
+  if (linkedUri) {
+    return this.getValueFromVcard('value', linkedUri).split('mailto:')[1];
+  }
+
+  return '';
+}
+
+//Function to get phone number. This returns only the first phone number, which is temporary. It also ignores the type.
+getPhone () {
+  const linkedUri = this.getValueFromVcard('hasTelephone');
+
+  if(linkedUri) {
+    return this.getValueFromVcard('value', linkedUri).split('tel:+')[1];
+  }else{
+    return '';
+  }
+};
+
+
+
 /*_virtuosoEndpointChanged(e){
 console.log(e.model.item)
 this.endpoint = e.model.item.url;
