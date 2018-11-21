@@ -29,7 +29,7 @@
     "paper-card": "PolymerElements/paper-card#^2.1.0",
     "loglevel-debug": "*",
     "lang-picker": "mrsideshowjack/lang-picker#^1.0.2",
-    "paper-listbox": "^3.0.1",
+    "paper-listbox": "^2.1.1",
     "paper-item": "^2.1.1"
   },
   "devDependencies": {
