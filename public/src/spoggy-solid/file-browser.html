@@ -7,7 +7,9 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/csak-tree/csak-tree.html">
-
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
 
   <template>
     <style>
@@ -39,51 +41,54 @@
 
     </style>
 
-<paper-button raised on-tap="btnExpandAll">Expand all</paper-button>
+    <paper-button raised on-tap="btnExpandAll">Expand all</paper-button>
 
-<paper-button raised on-tap="btnCollapseAll">Collapse all</paper-button>
+    <paper-button raised on-tap="btnCollapseAll">Collapse all</paper-button>
 
-<paper-button raised on-tap="btnSelectLeaf">Select leaf2 by id</paper-button>
-<br>
+    <paper-button raised on-tap="btnSelectLeaf">Select leaf2 by id</paper-button>
+    <br>
 
-<!--<paper-checkbox checked="{{locked}}">Lock tree (prevent expand/collapse user action)</paper-checkbox>
-<br>-->
-<br> Selected node:
-<label id="idselectednode"></label>
-<csak-tree
- id="eventsdemotree"
-  class="eventsdemotree"
-  locked="{{locked}}"
-   leaficon="editor:insert-drive-file"
-    branchiconopen="vaadin:folder-open"
-     branchicon="icons:folder"
-     data="{{folders}}">
-  <!--<csak-tree-item>
-    Branch
-    <csak-tree-item>Branch
-      <csak-tree-item>Leaf</csak-tree-item>
-      <csak-tree-item>Leaf</csak-tree-item>
-    </csak-tree-item>
-    <csak-tree-item>Branch
-      <csak-tree-item>Leaf</csak-tree-item>
-      <csak-tree-item id="leaf2" icon="icons:alarm">Leaf 2</csak-tree-item>
+    <!--<paper-checkbox checked="{{locked}}">Lock tree (prevent expand/collapse user action)</paper-checkbox>
+    <br>-->
+    <br> Selected node:
+    <label id="idselectednode"></label>
+
+    <paper-dialog-scrollable>
+
+      <csak-tree
+      id="eventsdemotree"
+      class="eventsdemotree"
+      locked="{{locked}}"
+      leaficon="editor:insert-drive-file"
+      branchiconopen="vaadin:folder-open"
+      branchicon="icons:folder"
+      data="{{folders}}">
+      <!--<csak-tree-item>
+      Branch
       <csak-tree-item>Branch
-        <csak-tree-item>Leaf</csak-tree-item>
-        <csak-tree-item>Leaf</csak-tree-item>
-        <csak-tree-item>Branch
-          <csak-tree-item>Leaf</csak-tree-item>
-          <csak-tree-item>Branch
-            <csak-tree-item>Leaf</csak-tree-item>
-            <csak-tree-item>Branch
-              <csak-tree-item>Leaf</csak-tree-item>
-            </csak-tree-item>
-          </csak-tree-item>
-        </csak-tree-item>
-      </csak-tree-item>
+      <csak-tree-item>Leaf</csak-tree-item>
+      <csak-tree-item>Leaf</csak-tree-item>
     </csak-tree-item>
-  </csak-tree-item>-->
+    <csak-tree-item>Branch
+    <csak-tree-item>Leaf</csak-tree-item>
+    <csak-tree-item id="leaf2" icon="icons:alarm">Leaf 2</csak-tree-item>
+    <csak-tree-item>Branch
+    <csak-tree-item>Leaf</csak-tree-item>
+    <csak-tree-item>Leaf</csak-tree-item>
+    <csak-tree-item>Branch
+    <csak-tree-item>Leaf</csak-tree-item>
+    <csak-tree-item>Branch
+    <csak-tree-item>Leaf</csak-tree-item>
+    <csak-tree-item>Branch
+    <csak-tree-item>Leaf</csak-tree-item>
+  </csak-tree-item>
+</csak-tree-item>
+</csak-tree-item>
+</csak-tree-item>
+</csak-tree-item>
+</csak-tree-item>-->
 </csak-tree>
-
+</paper-dialog-scrollable>
 
 </template>
 
@@ -134,58 +139,277 @@ class FileBrowser extends Polymer.LazyImportsMixin(FileBehaviorMixin(Polymer.Ele
     console.log(this.eventsDemo)
     this.eventsdemotree = this.$.eventsdemotree;
     this.eventsdemotree.onclick = this.treeOnClick.bind(this);
-    this.fold = {
-      "children ": [
+
+
+
+    solid.auth.trackSession(session => {
+      const loggedIn = !!session;
+      console.log("#\n#\n#\n#\ntrackSession#\n#\n#\n#\n")
+
+      if (loggedIn){
+        console.log("LOGGED IN")
+        //  this.$.solidLogin.style.visibility="hidden";
+        //  this.$.solidLogout.style.visibility="visible";
+        //  this._card.style.visibility="visible";
+        //this.$.inputSolid.value = session.webId;
+        console.log(session.webId)
+        this.session = session;
+        // Update components to match the user's login status
+        //  this.FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
+
+        // Set up a local data store and associated data fetcher
+        this.store = $rdf.graph();
+        this.fetcher = new $rdf.Fetcher(this.store);
+        this.updateManager = new $rdf.UpdateManager(this.store);
+        //  this.loadProfile();
+
+        //_publicFolder
+        var wedIdSpilt = this.session.webId.split("/");
+        this.webIdRoot = wedIdSpilt[0]+"//"+wedIdSpilt[2]+"/";
+        console.log(this.webIdRoot);
+        this.publicFolder = this.webIdRoot+"public/spoggy/";
+        //  this._test = this._publicFolder;
+        this.updatePublicFolder(this.publicFolder)
+        this.getUserProfile(session.webId)
+        //this.$.inputFileNameToSaveAsPOD.value = this.$.inputFileNameToSaveAs.value
+
+      }else{
+        console.log("LOGGED OUT")
+        //  this.$.solidLogin.style.visibility="visible";
+        //  this.$.solidLogout.style.visibility="hidden";
+        //this._card.style.visibility="hidden";
+        //  this.$.inputSolid.value = "";
+        //  this.$.inputDirectory.value = "";
+      }
+    });
+
+
+  }
+
+
+
+  getUserProfile(webid){
+    console.log(webid)
+    var app = this;
+    var PROXY = "https://databox.me/proxy?uri={uri}";
+    var AUTH_PROXY = "https://databox.me/proxy?uri={uri}";
+    var TIMEOUT = 90000;
+    var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+    var FOAF =  $rdf.Namespace("http://xmlns.com/foaf/0.1/");
+    var SPACE =  $rdf.Namespace("http://www.w3.org/ns/pim/space#");
+    var ACL =  $rdf.Namespace("http://www.w3.org/ns/auth/acl#");
+    var LDP =  $rdf.Namespace("http://www.w3.org/ns/ldp#>");
+    var STAT =  $rdf.Namespace('http://www.w3.org/ns/posix/stat#')
+    var store = $rdf.graph();
+    this.fetcher = new $rdf.Fetcher(store);
+    this.updateManager = new $rdf.UpdateManager(store);
+    //var f = $rdf.fetcher(g, TIMEOUT);
+    // add CORS proxy
+    //$rdf.Fetcher.crossSiteProxyTemplate=PROXY;
+    this.userProfile = {};
+    var docURI = webid.slice(0, webid.indexOf('#'));
+    var webidRes = $rdf.sym(webid);
+    console.log(webidRes)
+    try {
+      this.fetcher.load(webid).then(response => {
+        console.log(response.responseText)
+        const fullName = store.any(webidRes, FOAF('name'));
+        console.log("211",fullName)
+        var storage = store.any(webidRes, SPACE('storage'));
+        console.log("216",storage)
+        var publicStorage = storage.value+"public/";
+        let folder = $rdf.sym(publicStorage)
+
+
+        this.fetcher.load(folder).then(resp => {
+          console.log(resp.responseText)
+          let files = store.match(folder, LDP('contains'));
+          console.log("FILES ",files)
+          files.forEach(function(file) {
+            console.log('contains' + file);
+          })
+
+
+          let all = store.match();
+          console.log("ALL ",all);
+
+          app.dossiers = [];
+          app.fichiers = [];
+          let sizes = store.match(null, STAT('size'));
+          console.log("SIZES ",sizes);
+          var cpt = 0;
+          sizes.forEach(function(size){
+            console.log(size.subject.value, ": ",size.object.value)
+            cpt ++;
+            if (size.object.value == '4096'){
+              console.log(cpt, size)
+              app.dossiers.push(size.subject.value)
+              console.log(app.dossiers)
+              var f = {name: size.subject.value, children:[{name:"test56"}, {name: "testis cool"}]}
+              app.push('fold.children',f)
+          //  var id  = f+cpt;
+          //  app.fold.children[id]=f;
+              console.log(app.fold)
+            }else{
+              //console.log()
+              app.fichiers.push(size.subject.value)
+              var f = {name: size.subject.value}
+              app.push('fold.children',f)
+              console.log(app.fold)
+            }
+
+          })
+          console.log("dossiers ",app.dossiers)
+          console.log("fichiers ",app.fichiers)
+
+          app.folders = JSON.stringify(app.fold)
+          console.log(app.folders)
+
+
+
+
+
+        }, errFolder => {
+          console.log("Load failed 2" +  errFolder);
+        });
+
+        /*if (storage !== undefined) {
+        storage = storage.value;
+      }*/
+      /*  var name1 = store.any(webidRes, VCARD('fn'));
+
+      var name2 = store.any(webidRes, FOAF('name'));
+      // Clean up name
+      //  name = (name)?name.value:'';
+      console.log("NAMES",name1,name2);*/
+    }, err => {
+      console.log("Load failed " +  err);
+    });
+
+
+  } catch (error) {
+    console.log(`Error fetching data: ${error}`);
+  }
+
+
+
+
+  // fetch user data
+  /* f.nowOrWhenFetched(docURI,undefined,function(ok, body) {
+  if (!ok) {
+  console.log("fetch error")
+}
+
+// get some basic info
+var name = g.any(webidRes, FOAF('name'));
+// Clean up name
+name = (name)?name.value:'';
+var pic = g.any(webidRes, FOAF('img'));
+var depic = g.any(webidRes, FOAF('depiction'));
+// set avatar picture
+if (pic) {
+pic = pic.value;
+} else {
+if (depic) {
+pic = depic.value;
+} else {
+pic = 'assets/generic_photo.png';
+}
+}
+// get storage endpoints
+var storage = g.any(webidRes, SPACE('storage'));
+if (storage !== undefined) {
+storage = storage.value;
+}
+
+this.userProfile.webid = webid;
+this.userProfile.name = name;
+this.userProfile.picture = pic;
+this.userProfile.storagespace = storage;
+
+// this.parent.userProfile = this.userProfile;
+
+// cache user credentials in sessionStorage
+//   this.saveCredentials();
+
+// update DOM
+//   ngProgress.complete();
+// $scope.$apply();
+
+this.userProfile.path('/list/'+stripSchema(storage));
+console.log("#\n#\n#\n#\n#\n#\n#\nuserprofile",this.userProfile)
+
+});*/
+
+}
+
+
+
+updatePublicFolder(folder){
+  this.fold = {
+    "children": [
       {
         "name": "One",
         "children": [
-        {
-          "name": "Two",
-          "children": [
           {
-            "name": "Graph"
-          },
+            "name": "Two",
+            "children": [
+              {
+                "name": "Graph"
+              },
+              {
+                "name": "Fichier"
+              }
+            ]
+          }   ,
           {
-            "name": "Fichier"
+            "name": "Branch",
+            "children": [
+              {
+                "name": "Leaf"
+              },
+              {
+                "name": "Leaf"
+              }
+            ]
           }
-          ]
-        }   ,
-        {
-          "name": "Branch",
-          "children": [
-          {
-            "name": "Leaf"
-          },
-          {
-            "name": "Leaf"
-          }
-          ]
-        }
         ]
       }
-      ]
-    }
-      console.log(this.fold)
-    this.folders = JSON.stringify(this.fold)
-    console.log(this.folders)
+    ]
   }
+  console.log(this.fold)
+  this.folders = JSON.stringify(this.fold)
+  console.log(this.folders)
+  console.log(folder)
+  //  this.$.inputDirectory.value = folder;
+  var f = {name: folder, children: [{'name': "test1"}, {name: "test2"}, {name: "test3", children: [{name:"test56"}, {name: "testis cool"}]}]}
+  console.log(f)
+  console.log("FOLD",this.fold)
+  var children = this.fold.children
+  console.log(children)
+  this.push('fold.children',f)
+  console.log(this.fold)
+  this.folders = JSON.stringify(this.fold)
+  console.log(this.folders)
+}
 
-  treeOnClick(e) {
-    var s = e.target.selectedItem ? e.target.selectedItem.text : '<span style="font-style: italic">&lt;selected file&gt;</span>';
-    this.$.idselectednode.innerHTML = s;
-  }
 
-  btnExpandAll() {
-    this.eventsdemotree.expandAll();
-  }
+treeOnClick(e) {
+  var s = e.target.selectedItem ? e.target.selectedItem.text : '<span style="font-style: italic">&lt;selected file&gt;</span>';
+  this.$.idselectednode.innerHTML = s;
+}
 
-  btnCollapseAll() {
-    this.eventsdemotree.collapseAll();
-  }
+btnExpandAll() {
+  this.eventsdemotree.expandAll();
+}
 
-  btnSelectLeaf() {
-    this.eventsdemotree.selectedItem = this.$.leaf2;
-  }
+btnCollapseAll() {
+  this.eventsdemotree.collapseAll();
+}
+
+btnSelectLeaf() {
+  this.eventsdemotree.selectedItem = this.$.leaf2;
+}
 
 }
 
