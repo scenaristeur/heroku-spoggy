@@ -189,8 +189,11 @@ class FileBrowser extends Polymer.LazyImportsMixin(FileBehaviorMixin(Polymer.Ele
 
 
   getUserProfile(webid){
-    console.log(webid)
     var app = this;
+    console.log(webid)
+    app.dossiers = [];
+    app.fichiers = [];
+
     var PROXY = "https://databox.me/proxy?uri={uri}";
     var AUTH_PROXY = "https://databox.me/proxy?uri={uri}";
     var TIMEOUT = 90000;
@@ -218,60 +221,11 @@ class FileBrowser extends Polymer.LazyImportsMixin(FileBehaviorMixin(Polymer.Ele
         var storage = store.any(webidRes, SPACE('storage'));
         console.log("216",storage)
         var publicStorage = storage.value+"public/";
-        let folder = $rdf.sym(publicStorage)
 
 
-        this.fetcher.load(folder).then(resp => {
-          console.log(resp.responseText)
-          let files = store.match(folder, LDP('contains'));
-          console.log("FILES ",files)
-          files.forEach(function(file) {
-            console.log('contains' + file);
-          })
+        app.recursiveFletcher(publicStorage, store);
 
 
-          let all = store.match();
-          console.log("ALL ",all);
-
-          app.dossiers = [];
-          app.fichiers = [];
-          let sizes = store.match(null, STAT('size'));
-          console.log("SIZES ",sizes);
-          var cpt = 0;
-          sizes.forEach(function(size){
-            console.log(size.subject.value, ": ",size.object.value)
-            cpt ++;
-            if (size.object.value == '4096'){
-              console.log(cpt, size)
-              app.dossiers.push(size.subject.value)
-              console.log(app.dossiers)
-              var f = {name: size.subject.value, children:[{name:"test56"}, {name: "testis cool"}]}
-              app.push('fold.children',f)
-          //  var id  = f+cpt;
-          //  app.fold.children[id]=f;
-              console.log(app.fold)
-            }else{
-              //console.log()
-              app.fichiers.push(size.subject.value)
-              var f = {name: size.subject.value}
-              app.push('fold.children',f)
-              console.log(app.fold)
-            }
-
-          })
-          console.log("dossiers ",app.dossiers)
-          console.log("fichiers ",app.fichiers)
-
-          app.folders = JSON.stringify(app.fold)
-          console.log(app.folders)
-
-
-
-
-
-        }, errFolder => {
-          console.log("Load failed 2" +  errFolder);
-        });
 
         /*if (storage !== undefined) {
         storage = storage.value;
@@ -341,6 +295,75 @@ console.log("#\n#\n#\n#\n#\n#\n#\nuserprofile",this.userProfile)
 
 });*/
 
+}
+
+
+recursiveFletcher(storage, store){
+  let folder = $rdf.sym(storage)
+  console.log("RECURSIVE ", folder)
+  var STAT =  $rdf.Namespace('http://www.w3.org/ns/posix/stat#')
+  var app = this;
+  this.fetcher.load(folder).then(resp => {
+    console.log(resp.responseText)
+    /*  let files = store.match(folder, LDP('contains'));
+    console.log("FILES ",files)
+    files.forEach(function(file) {
+    console.log('contains' + file);
+  })*/
+
+
+  var all = store.match();
+  console.log("ALL ",all);
+
+
+  var sizes = store.match(null, STAT('size'));
+  console.log("SIZES ",sizes);
+  var cpt = 0;
+  sizes.forEach(function(size){
+    console.log(size.subject.value, ": ",size.object.value)
+    cpt ++;
+    if (size.object.value == '4096'){
+      console.log(cpt, size)
+      app.dossiers.push(size.subject.value)
+      //  console.log(app.dossiers)
+      var f = {name: size.subject.value, children:[{name:"test56"}, {name: "testis cool"}]}
+      app.push('fold.children',f)
+      if (storage == size.subject.value){
+        console.log("ca va pas !!!",size.subject.value)
+      }else{
+        console.log("OK ",size.subject.value)
+      //  app.recursiveFletcher(size.subject.value, store)
+
+      console.log("dossiers ",app.dossiers)
+      console.log("fichiers ",app.fichiers)
+
+      app.folders = JSON.stringify(app.fold)
+      console.log(app.folders)
+      }
+
+
+      //  app.recursiveFletcher(size.subject.value, store)
+      //  var id  = f+cpt;
+      //  app.fold.children[id]=f;
+      //  console.log(app.fold)
+    }else{
+      //console.log()
+      app.fichiers.push(size.subject.value)
+      var f = {name: size.subject.value}
+      app.push('fold.children',f)
+      //  console.log(app.fold)
+    }
+
+  })
+
+
+
+
+
+
+}, errFolder => {
+  console.log("Load failed 2" +  errFolder);
+});
 }
 
 
