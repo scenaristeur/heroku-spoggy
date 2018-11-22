@@ -1,0 +1,194 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./file-behavior.html">
+
+<dom-module id="file-browser">
+  <!--  <link rel="lazy-import" group="lazy" href="./solid-import.html">-->
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/csak-tree/csak-tree.html">
+
+
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    .eventsdemotree csak-tree-item {
+      --iron-icon-width: 24px;
+      font-family: 'Roboto', 'Noto', sans-serif;
+    }
+
+    .eventsdemotree .selected {
+      color: rgb(6, 135, 185);
+      font-weight: bolder;
+    }
+
+    .eventsdemotree csak-tree-item {
+      color: rgb(5, 150, 207);
+      font-weight: normal;
+    }
+
+    .eventsdemotree #alarmitem {
+      --iron-icon-fill-color: rgb(12, 8, 248);
+    }
+
+    .eventsdemotree #alarmitem.selected {
+      --iron-icon-fill-color: rgb(201, 198, 17);
+    }
+
+    </style>
+
+<paper-button raised on-tap="btnExpandAll">Expand all</paper-button>
+
+<paper-button raised on-tap="btnCollapseAll">Collapse all</paper-button>
+
+<paper-button raised on-tap="btnSelectLeaf">Select leaf2 by id</paper-button>
+<br>
+
+<!--<paper-checkbox checked="{{locked}}">Lock tree (prevent expand/collapse user action)</paper-checkbox>
+<br>-->
+<br> Selected node:
+<label id="idselectednode"></label>
+<csak-tree
+ id="eventsdemotree"
+  class="eventsdemotree"
+  locked="{{locked}}"
+   leaficon="editor:insert-drive-file"
+    branchiconopen="vaadin:folder-open"
+     branchicon="icons:folder"
+     data="{{folders}}">
+  <!--<csak-tree-item>
+    Branch
+    <csak-tree-item>Branch
+      <csak-tree-item>Leaf</csak-tree-item>
+      <csak-tree-item>Leaf</csak-tree-item>
+    </csak-tree-item>
+    <csak-tree-item>Branch
+      <csak-tree-item>Leaf</csak-tree-item>
+      <csak-tree-item id="leaf2" icon="icons:alarm">Leaf 2</csak-tree-item>
+      <csak-tree-item>Branch
+        <csak-tree-item>Leaf</csak-tree-item>
+        <csak-tree-item>Leaf</csak-tree-item>
+        <csak-tree-item>Branch
+          <csak-tree-item>Leaf</csak-tree-item>
+          <csak-tree-item>Branch
+            <csak-tree-item>Leaf</csak-tree-item>
+            <csak-tree-item>Branch
+              <csak-tree-item>Leaf</csak-tree-item>
+            </csak-tree-item>
+          </csak-tree-item>
+        </csak-tree-item>
+      </csak-tree-item>
+    </csak-tree-item>
+  </csak-tree-item>-->
+</csak-tree>
+
+
+</template>
+
+<script>
+/**
+* `spoggy-chat`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class FileBrowser extends Polymer.LazyImportsMixin(FileBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'file-browser'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'file-browser'
+      },
+      folders : {
+        type : String,
+        value : ""
+      }
+
+    };
+  }
+
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      //  this.agentSolid = new SolidAgent('agentSolid', this);
+    });
+    //binding variables
+    this.autobind = document.querySelector('dom-bind');
+    //this.autobind.locked = true;
+
+    //init variables
+    this.eventsDemo = document.querySelector('.eventsdemo');
+    console.log(this.eventsDemo)
+    this.eventsdemotree = this.$.eventsdemotree;
+    this.eventsdemotree.onclick = this.treeOnClick.bind(this);
+    this.fold = {
+      "children ": [
+      {
+        "name": "One",
+        "children": [
+        {
+          "name": "Two",
+          "children": [
+          {
+            "name": "Graph"
+          },
+          {
+            "name": "Fichier"
+          }
+          ]
+        }   ,
+        {
+          "name": "Branch",
+          "children": [
+          {
+            "name": "Leaf"
+          },
+          {
+            "name": "Leaf"
+          }
+          ]
+        }
+        ]
+      }
+      ]
+    }
+      console.log(this.fold)
+    this.folders = JSON.stringify(this.fold)
+    console.log(this.folders)
+  }
+
+  treeOnClick(e) {
+    var s = e.target.selectedItem ? e.target.selectedItem.text : '<span style="font-style: italic">&lt;selected file&gt;</span>';
+    this.$.idselectednode.innerHTML = s;
+  }
+
+  btnExpandAll() {
+    this.eventsdemotree.expandAll();
+  }
+
+  btnCollapseAll() {
+    this.eventsdemotree.collapseAll();
+  }
+
+  btnSelectLeaf() {
+    this.eventsdemotree.selectedItem = this.$.leaf2;
+  }
+
+}
+
+window.customElements.define(FileBrowser.is, FileBrowser);
+</script>
+</dom-module>

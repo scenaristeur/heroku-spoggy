@@ -30,10 +30,11 @@
     "loglevel-debug": "*",
     "lang-picker": "mrsideshowjack/lang-picker#^1.0.2",
     "paper-listbox": "^2.1.1",
-    "paper-item": "^2.1.1"
+    "paper-item": "^2.1.1",
+    "csak-tree": "^0.4.16"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.1.0"
   }
 }

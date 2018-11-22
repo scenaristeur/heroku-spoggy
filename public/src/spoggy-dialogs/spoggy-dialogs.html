@@ -384,51 +384,7 @@
                         </paper-dialog>
 
 
-                        <paper-dialog id="popupSolid" class="popup" backdrop transition="core-transition-bottom" on-iron-overlay-opened="_checkWebid"><!-- on-iron-overlay-opened="_myOpenFunction"
-                          on-iron-overlay-closed="_myClosedFunction" -->
-                          <h2  style="margin: 0;color: #0D578B;"> Connexion POD
-                            <!--<paper-button ontap="_pageAide">?</paper-button>-->
-                            <!--  <paper-button dialog-dismiss raised>X</paper-button> -->
-                            <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
-                            <p>
-                              <paper-button id="solidLogin" raised  on-tap="login">Login</paper-button>
-                            </p>
-                            <p>
-                              <paper-button id="solidLogout" raised on-tap="logout">Logout</paper-button>
-                            </p>
-                            <!--<paper-dialog-scrollable>-->
-                              <!--  <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>-->
-                              <paper-input id="inputSolid" label="POD"></paper-input>
-                              <paper-input id="inputDirectory" label="Spoggy directory"></paper-input>
-long [[files.length]] long
-f1
-                              <paper-listbox selected="0"  >
-                                <template is="dom-repeat" items="[[files]]">
 
-                                  <paper-item file="[[item]]" on-tap="loadFile">[[item]]pp</paper-item>
-
-                                </template>
-                              </paper-listbox>
-f2
-
-                              <paper-input id="inputFileNameToSaveAsPOD" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-
-                          <!--  </paper-dialog-scrollable>-->
-
-                            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-
-                              <!--<paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
-                              <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
-                              <!--  <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input> -->
-                              <paper-button raised  dialog-dismiss>Annuler</paper-button>
-                              <paper-button id="send2PODBtn" raised on-tap="send2POD" dialog-confirm>Send To POD</paper-button>
-                              <paper-button id="importFromPODBtn" raised on-tap="importFromPOD" dialog-confirm>Import from POD</paper-button>
-                              <br>
-                            </div>
-
-
-
-                          </paper-dialog>
 
 
 
@@ -692,80 +648,12 @@ _deferred(){
     this.initAgents()
 
 
-    solid.auth.trackSession(session => {
-      const loggedIn = !!session;
-      console.log("#\n#\n#\n#\ntrackSession#\n#\n#\n#\n")
 
-      if (loggedIn){
-        this.$.solidLogin.style.visibility="hidden";
-        this.$.solidLogout.style.visibility="visible";
-        //  this._card.style.visibility="visible";
-        this.$.inputSolid.value = session.webId;
-        console.log(session.webId)
-        this.session = session;
-        // Update components to match the user's login status
-        //  this.FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
-
-        // Set up a local data store and associated data fetcher
-        this.store = $rdf.graph();
-        this.fetcher = new $rdf.Fetcher(this.store);
-        this.updateManager = new $rdf.UpdateManager(this.store);
-        this.loadProfile();
-
-        //_publicFolder
-        var wedIdSpilt = this.session.webId.split("/");
-        this.webIdRoot = wedIdSpilt[0]+"//"+wedIdSpilt[2]+"/";
-        console.log(this.webIdRoot);
-        this.publicFolder = this.webIdRoot+"public/spoggy/";
-        //  this._test = this._publicFolder;
-        this.updatePublicFolder(this.publicFolder)
-        this.$.inputFileNameToSaveAsPOD.value = this.$.inputFileNameToSaveAs.value
-
-      }else{
-        this.$.solidLogin.style.visibility="visible";
-        this.$.solidLogout.style.visibility="hidden";
-        //this._card.style.visibility="hidden";
-        this.$.inputSolid.value = "";
-        this.$.inputDirectory.value = "";
-      }
-    });
 
   });
 }
 
-updatePublicFolder(folder){
-  console.log(folder)
-  this.$.inputDirectory.value = folder;
 
-
-}
-
-send2POD(){
-  var pod = this.$.inputSolid.value;
-  var dir = this.$.inputDirectory.value;
-  var filename = this.$.inputFileNameToSaveAsPOD.value;
-  var data = this.$.inputTextToSave.value;
-  console.log(pod, dir, filename,data)
-  solid.auth.fetch(dir+filename, {
-    method: 'PUT', // or 'PUT'
-    headers:{
-      'Content-Type': 'text/plain',
-      'Content-Length': data.length.toString()
-    },
-    body: data // data can be `string` or {object}!
-  }).then((res) => {return res;})
-  .then((response) => {
-    console.log(response)
-    this.sendResult(null);
-  })
-  .catch((error) => {
-    this.sendResult('Error: '+JSON.stringify(error));
-  });
-}
-
-sendResult(result){
-  console.log(result)
-}
 
 
 initAgents(){
@@ -784,109 +672,6 @@ initAgents(){
   //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
 }
 
-async loadProfile() {
-  var app = this;
-
-  await console.log("------------------------loadProfile")
-  try {
-    //  this.loadingProfile = true;
-    //  const profile = await this.rdf.getProfile();
-    this.profile = await app.getProfile();
-    if (this.profile) {
-      console.log(this.profile)
-      //  app.profile = profile;
-      app.saveOldUserData(this.profile);
-    }
-
-    //  this.loadingProfile = false;
-    //  this.setupProfileData();
-  } catch (error) {
-    console.log(`Error: ${error}`);
-  }
-
-}
-
-async getProfile () {
-
-  /*if (!this.session) {
-  await this.getSession();
-}*/
-this.VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#');
-try {
-  await this.fetcher.load(this.session.webId);
-
-  return {
-    fn : this.getValueFromVcard('fn'),
-    company : this.getValueFromVcard('organization-name'),
-    phone: this.getPhone(),
-    role: this.getValueFromVcard('role'),
-    image: this.getValueFromVcard('hasPhoto'),
-    address: this.getAddress(),
-    email: this.getEmail(),
-  };
-} catch (error) {
-  console.log(`Error fetching data: ${error}`);
-}
-};
-
-saveOldUserData(profile) {
-  if (!localStorage.getItem('oldProfileData')) {
-    localStorage.setItem('oldProfileData', JSON.stringify(profile));
-  }
-}
-
-getOldUserData() {
-  return JSON.parse(localStorage.getItem('oldProfileData'));
-}
-
-getValueFromVcard(node, webId) {
-  return this.getValueFromNamespace(node, this.VCARD, webId);
-};
-
-getValueFromNamespace(node, namespace, webId) {
-  const store = this.store.any($rdf.sym(webId || this.session.webId), namespace(node));
-  if (store) {
-    return store.value;
-  }
-  return '';
-}
-
-getAddress() {
-  const linkedUri = this.getValueFromVcard('hasAddress');
-
-  if (linkedUri) {
-    return {
-      locality: this.getValueFromVcard('locality', linkedUri),
-      country_name: this.getValueFromVcard('country-name', linkedUri),
-      region: this.getValueFromVcard('region', linkedUri),
-      street: this.getValueFromVcard('street-address', linkedUri),
-    };
-  }
-
-  return {};
-};
-
-//Function to get email. This returns only the first email, which is temporary
-getEmail() {
-  const linkedUri = this.getValueFromVcard('hasEmail');
-
-  if (linkedUri) {
-    return this.getValueFromVcard('value', linkedUri).split('mailto:')[1];
-  }
-
-  return '';
-}
-
-//Function to get phone number. This returns only the first phone number, which is temporary. It also ignores the type.
-getPhone () {
-  const linkedUri = this.getValueFromVcard('hasTelephone');
-
-  if(linkedUri) {
-    return this.getValueFromVcard('value', linkedUri).split('tel:+')[1];
-  }else{
-    return '';
-  }
-};
 
 
 

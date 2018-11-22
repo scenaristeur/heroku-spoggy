@@ -1,0 +1,273 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./connect-behavior.html">
+
+<dom-module id="solid-connect">
+  <link rel="lazy-import" group="lazy" href="./connect-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+
+
+
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+
+
+
+
+
+          <paper-button id="solidLogin" raised  on-tap="login">Login</paper-button>
+
+          <paper-button id="solidLogout" raised on-tap="logout">Logout</paper-button>
+
+        <!--<paper-dialog-scrollable>-->
+          <!--  <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>-->
+          <paper-input id="inputSolid" label="POD"></paper-input>
+          <paper-input id="inputDirectory" label="Spoggy directory"></paper-input>
+<!--long [[files.length]] long
+f1
+          <paper-listbox selected="0"  >
+            <template is="dom-repeat" items="[[files]]">
+
+              <paper-item file="[[item]]" on-tap="loadFile">[[item]]pp</paper-item>
+
+            </template>
+          </paper-listbox>
+f2-->
+
+
+
+
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-chat`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SolidConnect extends Polymer.LazyImportsMixin(ConnectBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'solid-connect'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'solid-connect'
+        }/*,
+        files: {
+          type: Array,
+          value: ["test8.ttl", "machin bidule2.ttl", "file3"]
+        }*/
+      };
+    }
+
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+        this.agentConnect = new ConnectAgent('agentConnect', this);
+      });
+
+
+      solid.auth.trackSession(session => {
+        const loggedIn = !!session;
+        console.log("#\n#\n#\n#\ntrackSession#\n#\n#\n#\n")
+
+        if (loggedIn){
+          this.$.solidLogin.style.visibility="hidden";
+          this.$.solidLogout.style.visibility="visible";
+          //  this._card.style.visibility="visible";
+          this.$.inputSolid.value = session.webId;
+          console.log(session.webId)
+          this.session = session;
+          // Update components to match the user's login status
+          //  this.FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/');
+
+          // Set up a local data store and associated data fetcher
+          this.store = $rdf.graph();
+          this.fetcher = new $rdf.Fetcher(this.store);
+          this.updateManager = new $rdf.UpdateManager(this.store);
+          this.loadProfile();
+
+          //_publicFolder
+          var wedIdSpilt = this.session.webId.split("/");
+          this.webIdRoot = wedIdSpilt[0]+"//"+wedIdSpilt[2]+"/";
+          console.log(this.webIdRoot);
+          this.publicFolder = this.webIdRoot+"public/spoggy/";
+          //  this._test = this._publicFolder;
+          this.updatePublicFolder(this.publicFolder)
+          //this.$.inputFileNameToSaveAsPOD.value = this.$.inputFileNameToSaveAs.value
+
+        }else{
+          this.$.solidLogin.style.visibility="visible";
+          this.$.solidLogout.style.visibility="hidden";
+          //this._card.style.visibility="hidden";
+          this.$.inputSolid.value = "";
+          this.$.inputDirectory.value = "";
+        }
+      });
+
+    }
+
+    updatePublicFolder(folder){
+      console.log(folder)
+      this.$.inputDirectory.value = folder;
+
+
+    }
+
+    send2POD(){
+      var pod = this.$.inputSolid.value;
+      var dir = this.$.inputDirectory.value;
+      var filename = this.$.inputFileNameToSaveAsPOD.value;
+      var data = this.$.inputTextToSave.value;
+      console.log(pod, dir, filename,data)
+      solid.auth.fetch(dir+filename, {
+        method: 'PUT', // or 'PUT'
+        headers:{
+          'Content-Type': 'text/plain',
+          'Content-Length': data.length.toString()
+        },
+        body: data // data can be `string` or {object}!
+      }).then((res) => {return res;})
+      .then((response) => {
+        console.log(response)
+        this.sendResult(null);
+      })
+      .catch((error) => {
+        this.sendResult('Error: '+JSON.stringify(error));
+      });
+    }
+
+    sendResult(result){
+      console.log(result)
+    }
+
+
+
+    async loadProfile() {
+      var app = this;
+
+      await console.log("------------------------loadProfile")
+      try {
+        //  this.loadingProfile = true;
+        //  const profile = await this.rdf.getProfile();
+        this.profile = await app.getProfile();
+        if (this.profile) {
+          console.log(this.profile)
+          //  app.profile = profile;
+          app.saveOldUserData(this.profile);
+        }
+
+        //  this.loadingProfile = false;
+        //  this.setupProfileData();
+      } catch (error) {
+        console.log(`Error: ${error}`);
+      }
+
+    }
+
+    async getProfile () {
+
+      /*if (!this.session) {
+      await this.getSession();
+    }*/
+    this.VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#');
+    try {
+      await this.fetcher.load(this.session.webId);
+
+      return {
+        fn : this.getValueFromVcard('fn'),
+        company : this.getValueFromVcard('organization-name'),
+        phone: this.getPhone(),
+        role: this.getValueFromVcard('role'),
+        image: this.getValueFromVcard('hasPhoto'),
+        address: this.getAddress(),
+        email: this.getEmail(),
+      };
+    } catch (error) {
+      console.log(`Error fetching data: ${error}`);
+    }
+  };
+
+  saveOldUserData(profile) {
+    if (!localStorage.getItem('oldProfileData')) {
+      localStorage.setItem('oldProfileData', JSON.stringify(profile));
+    }
+  }
+
+  getOldUserData() {
+    return JSON.parse(localStorage.getItem('oldProfileData'));
+  }
+
+  getValueFromVcard(node, webId) {
+    return this.getValueFromNamespace(node, this.VCARD, webId);
+  };
+
+  getValueFromNamespace(node, namespace, webId) {
+    const store = this.store.any($rdf.sym(webId || this.session.webId), namespace(node));
+    if (store) {
+      return store.value;
+    }
+    return '';
+  }
+
+  getAddress() {
+    const linkedUri = this.getValueFromVcard('hasAddress');
+
+    if (linkedUri) {
+      return {
+        locality: this.getValueFromVcard('locality', linkedUri),
+        country_name: this.getValueFromVcard('country-name', linkedUri),
+        region: this.getValueFromVcard('region', linkedUri),
+        street: this.getValueFromVcard('street-address', linkedUri),
+      };
+    }
+
+    return {};
+  };
+
+  //Function to get email. This returns only the first email, which is temporary
+  getEmail() {
+    const linkedUri = this.getValueFromVcard('hasEmail');
+
+    if (linkedUri) {
+      return this.getValueFromVcard('value', linkedUri).split('mailto:')[1];
+    }
+
+    return '';
+  }
+
+  //Function to get phone number. This returns only the first phone number, which is temporary. It also ignores the type.
+  getPhone () {
+    const linkedUri = this.getValueFromVcard('hasTelephone');
+
+    if(linkedUri) {
+      return this.getValueFromVcard('value', linkedUri).split('tel:+')[1];
+    }else{
+      return '';
+    }
+  };
+
+
+}
+
+window.customElements.define(SolidConnect.is, SolidConnect);
+</script>
+</dom-module>
