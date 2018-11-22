@@ -112,7 +112,12 @@ class FileBrowser extends Polymer.LazyImportsMixin(FileBehaviorMixin(Polymer.Ele
       folders : {
         type : String,
         value : ""
+      },
+      profondeur : {
+        type: Number,
+        value: 0
       }
+
 
     };
   }
@@ -167,7 +172,7 @@ class FileBrowser extends Polymer.LazyImportsMixin(FileBehaviorMixin(Polymer.Ele
         var wedIdSpilt = this.session.webId.split("/");
         this.webIdRoot = wedIdSpilt[0]+"//"+wedIdSpilt[2]+"/";
         console.log(this.webIdRoot);
-        this.publicFolder = this.webIdRoot+"public/spoggy/";
+        this.publicFolder = this.webIdRoot+"public/";
         //  this._test = this._publicFolder;
         this.updatePublicFolder(this.publicFolder)
         this.getUserProfile(session.webId)
@@ -223,7 +228,14 @@ class FileBrowser extends Polymer.LazyImportsMixin(FileBehaviorMixin(Polymer.Ele
         var publicStorage = storage.value+"public/";
 
 
-        app.recursiveFletcher(publicStorage, store);
+        var all = store.match();
+        console.log("ALL PROFILE",all);
+        all.forEach(function(s){
+          console.log(s.subject.value," -> ", s.predicate.value, "-->", s.object.value )
+        })
+
+
+        app.recursiveFletcher(publicStorage, store, app.profondeur);
 
 
 
@@ -298,11 +310,15 @@ console.log("#\n#\n#\n#\n#\n#\n#\nuserprofile",this.userProfile)
 }
 
 
-recursiveFletcher(storage, store){
-  let folder = $rdf.sym(storage)
-  console.log("RECURSIVE ", folder)
-  var STAT =  $rdf.Namespace('http://www.w3.org/ns/posix/stat#')
+recursiveFletcher(storage, store, profondeur){
   var app = this;
+  profondeur ++;
+
+  let folder = $rdf.sym(storage)
+  console.log("PROFONDEUR ", app.profondeur, " RECURSIVE ", folder)
+  var STAT =  $rdf.Namespace('http://www.w3.org/ns/posix/stat#');
+    var LDP =  $rdf.Namespace("http://www.w3.org/ns/ldp#>");
+
   this.fetcher.load(folder).then(resp => {
     console.log(resp.responseText)
     /*  let files = store.match(folder, LDP('contains'));
@@ -310,6 +326,25 @@ recursiveFletcher(storage, store){
     files.forEach(function(file) {
     console.log('contains' + file);
   })*/
+  /*
+  var all = store.match();
+  console.log("ALL PUBLIC",all);*/
+  /*all.forEach(function(s){
+    console.log(s.subject.value," -> ", s.predicate.value, "-->", s.object.value )
+  })*/
+/*
+  let files = store.match(null, '<http://www.w3.org/ns/ldp#contains>'); //http://www.w3.org/ns/ldp#contains
+  console.log("FILES ",files)
+
+  let files2 = store.match(null, '<http://www.w3.org/ns/ldp#contains>'); // http://www.w3.org/ns/ldp#contains
+  console.log("FILES2 ",files2)
+
+  let files3 = store.match(folder); // http://www.w3.org/ns/ldp#contains
+  console.log("FILES3 ",files3)
+
+  let files4 = store.match(storage); // http://www.w3.org/ns/ldp#contains
+  console.log("FILES4 ",files4)*/
+
 
 
   var all = store.match();
@@ -320,41 +355,60 @@ recursiveFletcher(storage, store){
   console.log("SIZES ",sizes);
   var cpt = 0;
   sizes.forEach(function(size){
-    console.log(size.subject.value, ": ",size.object.value)
-    cpt ++;
-    if (size.object.value == '4096'){
-      console.log(cpt, size)
-      app.dossiers.push(size.subject.value)
-      //  console.log(app.dossiers)
-      var f = {name: size.subject.value, children:[{name:"test56"}, {name: "testis cool"}]}
-      app.push('fold.children',f)
-      if (storage == size.subject.value){
-        console.log("ca va pas !!!",size.subject.value)
-      }else{
-        console.log("OK ",size.subject.value)
-      //  app.recursiveFletcher(size.subject.value, store)
+  console.log(size.subject.value, ": ",size.object.value)
+  cpt ++;
+  console.log(cpt, "profondeur : ", profondeur)
+  if (size.object.value == '4096'){
 
-      console.log("dossiers ",app.dossiers)
-      console.log("fichiers ",app.fichiers)
+  app.dossiers.push(size.subject.value)
+  //  console.log(app.dossiers)
+  var f = {name: size.subject.value, children:[{name:"test56"}, {name: "testis cool"}], profondeur: profondeur}
+  app.push('fold.children',f)
+  if (storage == size.subject.value){
+  console.log("ca va pas !!!",size.subject.value)
+}else{
+console.log("OK ",size.subject.value)
 
-      app.folders = JSON.stringify(app.fold)
-      console.log(app.folders)
-      }
+if (profondeur>2){
+console.log("STOP ",profondeur)
+
+}
+else{
+console.log("PAS STOP ",profondeur)
+var  subFolder = $rdf.sym(size.subject.value)
+console.log("RECHERCHE DANS AVANT  ", size.subject.value)
+app.fetcher.load(subFolder).then(resp1 => {
+  console.log("RECHERCHE DANS ", size.subject.value)
+  console.log(resp1.responseText)
+
+}, errFolder3 => {
+  console.log("Load failed 3" +  errFolder3);
+});
+//  app.recursiveFletcher(size.subject.value, store,profondeur)
+}
 
 
-      //  app.recursiveFletcher(size.subject.value, store)
-      //  var id  = f+cpt;
-      //  app.fold.children[id]=f;
-      //  console.log(app.fold)
-    }else{
-      //console.log()
-      app.fichiers.push(size.subject.value)
-      var f = {name: size.subject.value}
-      app.push('fold.children',f)
-      //  console.log(app.fold)
-    }
+console.log("dossiers ",app.dossiers)
+console.log("fichiers ",app.fichiers)
 
-  })
+app.folders = JSON.stringify(app.fold)
+console.log(app.folders)
+}
+
+
+//  app.recursiveFletcher(size.subject.value, store)
+//  var id  = f+cpt;
+//  app.fold.children[id]=f;
+//  console.log(app.fold)
+}else{
+//console.log()
+app.fichiers.push(size.subject.value)
+var f = {name: size.subject.value}
+app.push('fold.children',f)
+//  console.log(app.fold)
+}
+
+})
 
 
 
@@ -369,38 +423,8 @@ recursiveFletcher(storage, store){
 
 
 updatePublicFolder(folder){
-  this.fold = {
-    "children": [
-      {
-        "name": "One",
-        "children": [
-          {
-            "name": "Two",
-            "children": [
-              {
-                "name": "Graph"
-              },
-              {
-                "name": "Fichier"
-              }
-            ]
-          }   ,
-          {
-            "name": "Branch",
-            "children": [
-              {
-                "name": "Leaf"
-              },
-              {
-                "name": "Leaf"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  console.log(this.fold)
+  this.fold = {children:[]}
+  /*console.log(this.fold)
   this.folders = JSON.stringify(this.fold)
   console.log(this.folders)
   console.log(folder)
@@ -411,7 +435,7 @@ updatePublicFolder(folder){
   var children = this.fold.children
   console.log(children)
   this.push('fold.children',f)
-  console.log(this.fold)
+  console.log(this.fold)*/
   this.folders = JSON.stringify(this.fold)
   console.log(this.folders)
 }
