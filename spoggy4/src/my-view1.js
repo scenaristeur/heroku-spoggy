@@ -36,6 +36,18 @@ class MyView1 extends PolymerElement {
         <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
       </div>
       <div class="card">
+        <div class="circle">Import_/_Export</div>
+        <h1>Import / Export</h1>
+        <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
+        <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+      </div>
+      <div class="card">
+        <div class="circle">Paramètre_Source</div>
+        <h1>Paramètre Source</h1>
+        <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
+        <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+      </div>
+      <div class="card">
         <div class="circle">Collab</div>
         <h1>Collab</h1>
         <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
