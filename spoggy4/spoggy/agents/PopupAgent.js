@@ -44,6 +44,10 @@ PopupAgent.prototype.receive = function(from, message) {
     console.log("visresults", message.visresults);
     this.app.updateNetwork(message.visresults);
     break;
+    case 'editNode':
+    console.log("editNode", message.data);
+    this.app.editNode(message.data, message.callback);
+    break;
 
 
     default:

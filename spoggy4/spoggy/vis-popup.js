@@ -7,15 +7,16 @@ import '@polymer/paper-dialog-scrollable/paper-dialog-scrollable.js';
 import '@polymer/paper-dialog-behavior/paper-dialog-behavior.js';
 import '@polymer/neon-animation/animations/scale-up-animation.js';
 import '@polymer/neon-animation/animations/fade-out-animation.js';
-
 import '@polymer/paper-checkbox/paper-checkbox.js';
 import '@polymer/paper-slider/paper-slider.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import 'paper-collapse-item/paper-collapse-item.js';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-
 import '@polymer/paper-input/paper-textarea.js';
+import '@polymer/paper-swatch-picker/paper-swatch-picker.js';
+import '@fooloomanzoo/color-picker/color-picker.js';
+import '@fooloomanzoo/color-picker/color-element.js';
 
 import  '/node_modules/evejs/dist/eve.custom.js';
 import { PopupAgent } from './agents/PopupAgent.js'
@@ -44,7 +45,6 @@ class VisPopup extends LitElement {
     }
     </style>
     Web Components are <span class="mood">${this.mood}</span>!<br>
-    Which : ${this.which}<br>
     <hr>
 
     <paper-dialog id="node-popUp" class="popup" backdrop transition="core-transition-bottom"  >
@@ -90,6 +90,8 @@ class VisPopup extends LitElement {
     <!--<div slot="collapse-content">-->
     <!--  <fieldset>
     <legend>Couleur</legend>-->
+    <paper-swatch-picker color="#E91E63"></paper-swatch-picker>
+    <paper-swatch-picker color="{{selectedColor}}"></paper-swatch-picker>
     <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
     <!--  </fieldset> -->
     <!--</div>-->
@@ -120,8 +122,8 @@ class VisPopup extends LitElement {
     <!--</paper-dialog-scrollable>-->
     </br>
     <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-    <paper-button id="node-saveButton" dialog-confirm  raised @click="${() =>  this._saveNode()}" >ok</paper-button>
-    <paper-button id="node-cancelButton"  dialog-dismiss raised>Annuler</paper-button>
+    <paper-button id="nodeSaveButton" dialog-confirm  raised @click="${() =>  this._saveNode()}" >ok</paper-button>
+    <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
     </div>
     </div>
     <!--</div>-->
@@ -222,13 +224,6 @@ class VisPopup extends LitElement {
     var app = this;
     return {
       mood: {type: String},
-      which: {
-        type: String,
-        reflect: true,
-        /*hasChanged(newVal, oldVal) {
-        console.log(newVal,oldVal)
-      }*/
-    },
     parent: {
       type: String
     },
@@ -238,8 +233,7 @@ class VisPopup extends LitElement {
 constructor() {
   super();
   this.mood = 'vis-popup';
-  this.which = "none";
-
+  this.colorValue = "rgb(173,208,255)";
 }
 
 
@@ -249,6 +243,211 @@ firstUpdated(){
   //console.log(this.agentPopup);
   //console.log("PArent",this.parent)
   this.agentPopup.send(this.parent, {type: 'dispo', name: this.id });
+}
+
+
+
+_saveNode(){
+  console.log("POPUP SAVE NODE ", this.data);
+  this.data = {};
+  this.data.blop = "swing";
+  var label = this.shadowRoot.getElementById("node-label").value;
+  this.data.label = label;
+  this.agentPopup.send(this.parent, {type: 'savenode', data: this.data });
+}
+
+
+editNode(data, callback){
+console.log("POPUP EDIT NODE ", data, callback);
+  if (data.title != undefined){
+    this.shadowRoot.getElementById("node-label").value= data.title.replace(/<br\s*\/?>/mg,"");
+  }else{
+    this.shadowRoot.getElementById("node-label").value=  data.label || "";
+  }
+  this.selectedShape = data.shape || "ellipse";
+  this.selectedType = data.type || "normal";
+  this.imageUrl = data.image || "";
+  if ((data.color != undefined) && (data.color.background != undefined)){
+    this.colorValue = data.color.background
+  }
+  else{
+    this.colorValue =   "rgb(173,208,255)";
+  }
+  this.shadowRoot.getElementById("nodeSaveButton").onclick = this.saveNodeData.bind(this, data, callback);
+  this.shadowRoot.getElementById("nodeCancelButton").onclick = this.cancelNodeEdit.bind(this, callback);
+  this.shadowRoot.getElementById("node-popUp").toggle(); //style.display = 'block';
+}
+
+cancelNodeEdit (callback) {
+  console.log("POPUP CANCEL NODE EDIT ", callback);
+  this.clearNodePopUp(this);
+  callback(null);
+}
+
+clearNodePopUp () {
+  console.log("POPUP CLEAR NODE POPUP ");
+  this.shadowRoot.getElementById("nodeSaveButton").onclick = null;
+  this.shadowRoot.getElementById("nodeCancelButton").onclick = null;
+  //  this.$.nodePopUp.toggle();//style.display = 'none';
+}
+
+saveNodeData (data, callback) {
+  console.log("POPUP SAVE NODE DATA", data, callback);
+/*
+  data et callback apparaissent comme des events ?????
+  {id: "38e05a49-feb0-4d65-a35f-c7c7d973390e", x: -518.5339336634761, y: -388.3170534287593, label: ""}
+  spoggy-graph.html:373 Event {isTrusted: false, detail: {…}, type: "tap", target: paper-button#nodeSaveButton, currentTarget: paper-button#nodeSaveButton, …}
+  spoggy-graph.html:374 {x: 138, y: 588, sourceEvent: MouseEvent, preventer: undefined}preventer: undefinedsourceEvent: MouseEvent {isTrusted: true, __polymerGesturesHandled: {…}, screenX: 2058, screenY: 654, clientX: 138, …}x: 138y: 588__proto__: Object
+  spoggy-graph.html:378 tap
+  */
+
+  data.label = this.shadowRoot.getElementById("node-label").value;
+  data.shape = this.selectedShape;
+  data.color = this.colorValue;
+  data.image = this.shadowRoot.getElementById("imgUrl").value;
+
+  data.type = this.selectedType;
+  if (data.label.length > 40){
+    var titleTemp =data.label.match(/.{1,40}/g);
+    //  console.log(titleTemp);
+    data.title = titleTemp.join("<br>");
+    data.label = titleTemp[0]+'...';
+    data.shape = "box";
+    //  data.mass = 1/data.label.length
+  }
+  console.log(data)
+  this.clearNodePopUp(this);
+  callback(data);
+  /*var node = this.network.body.data.nodes.get(data.id);
+  console.log(node);
+  var action = {};
+  action.type = "newNode";
+  action.data = node;
+  console.log
+  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+  if( data.type == "graph"){
+    console.log("nodeID");
+    console.log(node.id);
+    var graphNode = this.network.body.data.nodes.get({
+      filter: function(node){
+        console.log(node);
+        return (node.label == "Graph" );
+      }
+    });
+    console.log(graphNode);
+    if (graphNode.length == 0){
+      console.log("creation du noeud graph");
+      var nodeGraph = {};
+      nodeGraph.label = "Graph";
+      nodeGraph.shape = "star";
+      nodeGraph.type = "node";
+      nodeGraph.color= "rgb(255,0,0)";
+      this.network.body.data.nodes.add(nodeGraph);
+    }else{
+      console.log("récupération du noeud graph");
+    }
+    graphNode = this.network.body.data.nodes.get({
+      filter: function(node){
+        console.log(node);
+        return (node.label == "Graph" );
+      }
+    });
+    var actionNodeGraph = {};
+    actionNodeGraph.type = "newNode";
+    actionNodeGraph.data = graphNode[0];
+    //  this.addAction(actionNodeGraph);
+    this.agentGraph.send('agentSocket', {type: "newActions", actions: [actionNodeGraph]});
+    this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [actionNodeGraph]});
+    console.log(graphNode);
+    console.log(node.id);
+    var edgeGraph = {};
+    edgeGraph.from = node.id;
+    edgeGraph.to = graphNode[0].id;
+    edgeGraph.label = "type";
+    var graphEdge = this.network.body.data.edges.get({
+      filter: function(edge){
+        console.log(edge);
+        return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+      }
+    });
+    console.log(graphEdge);
+    if(graphEdge.length == 0){
+      this.network.body.data.edges.add(edgeGraph);
+    }
+    graphEdge = this.network.body.data.edges.get({
+      filter: function(edge){
+        console.log(edge);
+        return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+      }
+    });
+    console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEee");
+    console.log(graphEdge);
+    var actionedgeGraph = {};
+    actionedgeGraph.type = "newEdge";
+    actionedgeGraph.data = graphEdge;
+    //    this.addAction(actionedgeGraph);
+    console.log([action]);
+    this.agentPopup.send('agentSocket', {type: "newActions", actions: [action]});
+    this.agentPopup.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+  }*/
+  /*
+  if( data.type == "graph"){
+  var graphNode = this.network.body.data.nodes.get({
+  filter: function(node){
+  console.log(node);
+  return (node.label == "Graph" );
+}
+});
+console.log(graphNode);
+var n ;
+if(graphNode.length==0){
+console.log("creation");
+// creation du noeud Graph
+var nodeGraph = {};
+nodeGraph.label = "Graph";
+nodeGraph.shape = "star";
+n= this.network.body.data.nodes.add(nodeGraph)[0];
+}else{
+console.log("exist");
+n = graphNode[0].id;
+}
+console.log(n);
+var actionTo = {};
+actionTo.type = "newNode";
+actionTo.data = this.network.body.data.nodes.get(n);
+console.log(actionTo);
+this.addAction(actionTo);
+var edgeGraph = {};
+edgeGraph.label = "type";
+edgeGraph.from = data.id;
+edgeGraph.to = n;
+this.addEdgeIfNotExist(this.network, edgeGraph);
+var edge;
+var existEdge = this.network.body.data.edges.get({
+filter: function(edge){
+return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+}
+});
+console.log(existEdge);
+if(existEdge.length == 0){
+edge = this.network.body.data.edges.update(edgeGraph);
+}else{
+edge = existEdge[0];
+}
+console.log(edge);
+var actionGraph = {};
+actionGraph.type = "newEdge";
+//var e= this.network.body.data.edges.update(edgeGraph);
+var e = this.network.body.data.edges.get(edge[0]);
+console.log(e);
+actionGraph.data = e;
+console.log(actionGraph);
+this.addAction(actionGraph);
+*/
+//}
+/*this.nodes = [];
+this.nodes = this.network.body.data.nodes;*/
 }
 
 updated(changedProperties){
@@ -268,24 +467,15 @@ update(changedProperties){
 });*/
 //console.log("HAS WHICH : ",changedProperties.has('which'))
 //console.log("HAS MOOD : ",changedProperties.has('mood'))
-if (changedProperties.has('which')){
+/*if (changedProperties.has('which')){
   //console.log(this.which)
   let pop = this.shadowRoot.getElementById(this.which);
   if(pop != null){
     console.log(pop);
     pop.toggle();
   }
+}*/
 }
-}
-
-_saveNode(){
-  this.data = {};
-  this.data.blop = "swing";
-  var label = this.shadowRoot.getElementById("node-label").value;
-  this.data.label = label;
-  this.agentPopup.send(this.parent, {type: 'savenode', data: this.data });
-}
-
 /*update(changedProperties) {
 super.update(changedProperties);
 console.log(changedProperties)

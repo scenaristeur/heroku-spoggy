@@ -213,36 +213,20 @@ class SpoggyVis extends LitElement {
 
 
     <div id="mynetwork"></div>
-    <vis-popup id="popup" which="${this.popup}" parent="${this.id}"></vis-popup>
+    <vis-popup id="popupAgent" parent="${this.id}"></vis-popup>
     `;
   }
 
   static get properties() {
     return {
       id: {type: String, value:""},
-      mood: {type: String},
-      popup: {type: String},
+      mood: {type: String}
     };
   }
 
   constructor() {
     super();
     this.mood = 'Spoggy Vis';
-    this.popup = 'flok';
-    // Add an event listener
-    document.addEventListener("name-of-event", function(e) {
-      console.log(e.detail); // Prints "Example of an event"
-    });
-
-
-
-
-  }
-
-
-  attributeChangedCallback(name, oldval, newval) {
-    console.log('attribute change: ', name, oldval, newval);
-    super.attributeChangedCallback(name, oldval, newval);
   }
 
   firstUpdated(){
@@ -300,19 +284,20 @@ class SpoggyVis extends LitElement {
           addNode: function (data, callback) {
             // filling in the popup DOM elements
             //  app.shadowRoot.getElementById('node-operation').innerHTML = "Add Node";
-            app.popup="node-popUp";
             data.label =""
-            console.log(app.shadowRoot.getElementById('popup'));
+            //console.log(app.shadowRoot.getElementById('popup'));
             //  console.log(this.shadowRoot.getElementById('popup'));
-            //  app.editNode(data, app.clearNodePopUp, callback);
+            console.log("NETWORK ADD NODE ",data,callback)
+            app.editNode(data, app.clearNodePopUp, callback);
           },
           editNode: function (data, callback) {
             // filling in the popup DOM elements
-            app.shadowRoot.getElementById('node-operation').innerHTML = "Edit Node";
+            //app.shadowRoot.getElementById('node-operation').innerHTML = "Edit Node";
+            console.log("NETWORK EDIT NODE ",data,callback)
             app.editNode(data, app.cancelNodeEdit, callback);
           },
           addEdge: function (data, callback) {
-            app.popup="edge-popUp";
+            console.log("NETWORK ADD EDGE ", data,callback)
             if (data.from == data.to) {
               var r = confirm("Do you want to connect the node to itself?");
               if (r != true) {
@@ -324,7 +309,9 @@ class SpoggyVis extends LitElement {
             app.editEdgeWithoutDrag(data, callback);
           },
           editEdge: {
+            //console.log("EDIT EDGE ", data,callback)
             editWithoutDrag: function(data, callback) {
+              console.log("NETWORK EDIT WITHOUT DRAG ", data,callback)
               app.shadowRoot.getElementById('edge-operation').innerHTML = "Edit Edge";
               app.editEdgeWithoutDrag(data,callback);
             }
@@ -339,21 +326,364 @@ class SpoggyVis extends LitElement {
       console.log(app.network)
     }
 
-    updated(changedProperties){
-      super.updated(changedProperties)
-      changedProperties.forEach((oldValue, propName) => {
-        console.log(`${propName} changed. oldValue: ${oldValue}`);
-        console.log("responseData UPDATED: ",this.responseData)
-      });
-    }
 
     savenode(data){
       this.popup = null;
       console.log("SAVENODE :",data)
     }
 
+    editNode (data, callback) {
+      console.log("EDIT NODE EXTERNE", data, callback);
+      this.agentVis.send('popupAgent', {type: "editNode", data: data, callback: callback});
 
 
+      /*
+      if (data.title != undefined){
+      this.$.nodeLabel.value= data.title.replace(/<br\s*\/?>/mg,"");
+    }else{
+    this.$.nodeLabel.value=  data.label || "";
+  }
+  this.selectedShape = data.shape || "ellipse";
+  this.selectedType = data.type || "normal";
+  this.imageUrl = data.image || "";
+  if ((data.color != undefined) && (data.color.background != undefined)){
+  this.colorValue = data.color.background
+}
+else{
+this.colorValue =   "rgb(173,208,255)";
+}
+this.$.nodeSaveButton.onclick = this.saveNodeData.bind(this, data, callback);
+this.$.nodeCancelButton.onclick = this.cancelNodeEdit.bind(this, callback);
+this.$.nodePopUp.toggle(); //style.display = 'block';
+*/
+
+}
+
+
+
+
+clearNodePopUp () {
+  console.log("CLEAR NODE POPUP EXTERNE");
+
+  //this.$.nodeSaveButton.onclick = null;
+  //this.$.nodeCancelButton.onclick = null;
+  //  this.$.nodePopUp.toggle();//style.display = 'none';
+}
+cancelNodeEdit (callback) {
+  console.log("CANCEL NODE EDIT EXTERNE",  callback);
+  //this.clearNodePopUp(this);
+  callback(null);
+}
+saveNodeData (data, callback) {
+  console.log("SAVE NODE DATA EXTERNE", data, callback);
+  /*
+  let dataTemp = data;
+  let cb = callback;
+  console.log(dataTemp);
+  console.log(cb);
+  console.log(data.type);
+  data et callback apparaissent comme des events ?????
+  {id: "38e05a49-feb0-4d65-a35f-c7c7d973390e", x: -518.5339336634761, y: -388.3170534287593, label: ""}
+  spoggy-graph.html:373 Event {isTrusted: false, detail: {…}, type: "tap", target: paper-button#nodeSaveButton, currentTarget: paper-button#nodeSaveButton, …}
+  spoggy-graph.html:374 {x: 138, y: 588, sourceEvent: MouseEvent, preventer: undefined}preventer: undefinedsourceEvent: MouseEvent {isTrusted: true, __polymerGesturesHandled: {…}, screenX: 2058, screenY: 654, clientX: 138, …}x: 138y: 588__proto__: Object
+  spoggy-graph.html:378 tap
+  */
+
+  data.label = this.$.nodeLabel.value;
+  data.shape = this.selectedShape;
+  data.color = this.colorValue;
+  data.image = this.$.imgUrl.value;
+
+  data.type = this.selectedType;
+  if (data.label.length > 40){
+    var titleTemp =data.label.match(/.{1,40}/g);
+    //  console.log(titleTemp);
+    data.title = titleTemp.join("<br>");
+    data.label = titleTemp[0]+'...';
+    data.shape = "box";
+    //  data.mass = 1/data.label.length
+  }
+  this.clearNodePopUp(this);
+  callback(data);
+  var node = this.network.body.data.nodes.get(data.id);
+  console.log(node);
+  var action = {};
+  action.type = "newNode";
+  action.data = node;
+  console.log
+  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+  if( data.type == "graph"){
+    console.log("nodeID");
+    console.log(node.id);
+    var graphNode = this.network.body.data.nodes.get({
+      filter: function(node){
+        console.log(node);
+        return (node.label == "Graph" );
+      }
+    });
+    console.log(graphNode);
+    if (graphNode.length == 0){
+      console.log("creation du noeud graph");
+      var nodeGraph = {};
+      nodeGraph.label = "Graph";
+      nodeGraph.shape = "star";
+      nodeGraph.type = "node";
+      nodeGraph.color= "rgb(255,0,0)";
+      this.network.body.data.nodes.add(nodeGraph);
+    }else{
+      console.log("récupération du noeud graph");
+    }
+    graphNode = this.network.body.data.nodes.get({
+      filter: function(node){
+        console.log(node);
+        return (node.label == "Graph" );
+      }
+    });
+    var actionNodeGraph = {};
+    actionNodeGraph.type = "newNode";
+    actionNodeGraph.data = graphNode[0];
+    //  this.addAction(actionNodeGraph);
+    this.agentGraph.send('agentSocket', {type: "newActions", actions: [actionNodeGraph]});
+    this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [actionNodeGraph]});
+    console.log(graphNode);
+    console.log(node.id);
+    var edgeGraph = {};
+    edgeGraph.from = node.id;
+    edgeGraph.to = graphNode[0].id;
+    edgeGraph.label = "type";
+    var graphEdge = this.network.body.data.edges.get({
+      filter: function(edge){
+        console.log(edge);
+        return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+      }
+    });
+    console.log(graphEdge);
+    if(graphEdge.length == 0){
+      this.network.body.data.edges.add(edgeGraph);
+    }
+    graphEdge = this.network.body.data.edges.get({
+      filter: function(edge){
+        console.log(edge);
+        return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+      }
+    });
+    console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEee");
+    console.log(graphEdge);
+    var actionedgeGraph = {};
+    actionedgeGraph.type = "newEdge";
+    actionedgeGraph.data = graphEdge;
+    //    this.addAction(actionedgeGraph);
+    this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+    this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+  }
+  /*
+  if( data.type == "graph"){
+  var graphNode = this.network.body.data.nodes.get({
+  filter: function(node){
+  console.log(node);
+  return (node.label == "Graph" );
+}
+});
+console.log(graphNode);
+var n ;
+if(graphNode.length==0){
+console.log("creation");
+// creation du noeud Graph
+var nodeGraph = {};
+nodeGraph.label = "Graph";
+nodeGraph.shape = "star";
+n= this.network.body.data.nodes.add(nodeGraph)[0];
+}else{
+console.log("exist");
+n = graphNode[0].id;
+}
+console.log(n);
+var actionTo = {};
+actionTo.type = "newNode";
+actionTo.data = this.network.body.data.nodes.get(n);
+console.log(actionTo);
+this.addAction(actionTo);
+var edgeGraph = {};
+edgeGraph.label = "type";
+edgeGraph.from = data.id;
+edgeGraph.to = n;
+this.addEdgeIfNotExist(this.network, edgeGraph);
+var edge;
+var existEdge = this.network.body.data.edges.get({
+filter: function(edge){
+return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+}
+});
+console.log(existEdge);
+if(existEdge.length == 0){
+edge = this.network.body.data.edges.update(edgeGraph);
+}else{
+edge = existEdge[0];
+}
+console.log(edge);
+var actionGraph = {};
+actionGraph.type = "newEdge";
+//var e= this.network.body.data.edges.update(edgeGraph);
+var e = this.network.body.data.edges.get(edge[0]);
+console.log(e);
+actionGraph.data = e;
+console.log(actionGraph);
+this.addAction(actionGraph);
+*/
+//}
+/*this.nodes = [];
+this.nodes = this.network.body.data.nodes;*/
+}
+
+
+
+editEdgeWithoutDrag (data, callback) {
+  console.log("EDIT EDGE WITHOUT DRAG EXTERNE", data, callback);
+  this.$.edgeLabel.value = data.label || "";
+  this.$.edgeSaveButton.onclick = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeLabel.onchange = this.saveEdgeData.bind(this, data, callback);
+  this.$.edgeCancelButton.onclick = this.cancelEdgeEdit.bind(this,callback);
+  this.$.edgePopUp.toggle(); //style.display = 'block';
+}
+clearEdgePopUp () {
+  console.log("CLEAR EDGE POPUP EXTERNE");
+  this.$.edgeSaveButton.onclick = null;
+  this.$.edgeCancelButton.onclick = null;
+  //  this.$.edgePopUp.toggle(); //style.display = 'none';
+}
+cancelEdgeEdit (callback) {
+  console.log("CANCEL EDGE EDIT EXTERNE", callback);
+  this.clearEdgePopUp();
+  callback(null);
+}
+saveEdgeData (data, callback) {
+  console.log("SAVE EDGE DATE  EXTERNE", data, callback);
+  if (typeof data.to === 'object')
+  data.to = data.to.id
+  if (typeof data.from === 'object')
+  data.from = data.from.id
+  data.label = this.$.edgeLabel.value;
+  this.clearEdgePopUp();
+  console.log(callback)
+  if (typeof callback == 'function'){
+    callback(data);
   }
 
-  customElements.define('spoggy-vis', SpoggyVis);
+  var edge = this.network.body.data.edges.get({
+    filter: function(edge) {
+      return (edge.from == data.from && edge.to == data.to && edge.label == data.label);
+    }
+  });
+  var action = {};
+  action.type = "newEdge";
+  action.data = edge;
+  //  this.addAction(action);
+  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+}
+deleteNode (data, callback){
+  console.log("DELETE NODE EXTERNE", data, callback);
+  var action = {};
+  action.type = "deleteNode";
+  action.data = data;
+  //  this.addAction(action);
+  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+  callback(data);
+}
+deleteEdge (data, callback){
+  console.log("DELETE EDGE EXTERNE", data, callback);
+  var action = {};
+  action.type = "deleteEdge";
+  action.data = data;
+  //  this.addAction(action);
+  this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+  this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+  callback(data);
+}
+
+addEdgeIfNotExist (network, data){
+  console.log("ADD EDGE IF NOT EXIST EXTERNE", data);
+  var existEdge = false;
+  console.log(data);
+  try {
+    existEdge = this.network.body.data.edges.get({
+      filter: function(edge){
+        return (edge.id == data[0].id);
+      }
+    });
+    if (existEdge.length == 0){
+      this.network.body.data.edges.add(data[0]);
+    }else{
+      this.network.body.data.edges.update({id: data[0].id, label: data[0].label});
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+addNodeIfNotExist(network, data){
+  console.log("ADD NODE IF NOT EXIST EXTERNE", data);
+  var existNode = false;
+  //console.log(data);
+  var nodeId;
+  try{
+    existNode = network.body.data.nodes.get({
+      filter: function(n){
+        return (n.id == data.id || (n.label == data.label)); //  || n.title == data.label
+      }
+    });
+    //console.log(existNode);
+    if (existNode.length == 0){
+      //  console.log("n'existe pas")
+      nodeId =   network.body.data.nodes.add(data)[0];
+    }else{
+      //  console.log("existe")
+      delete data.x;
+      delete data.y
+      nodeId =  network.body.data.nodes.update(data)[0];
+    }
+  }
+  catch (err){
+    console.log(err);
+  }
+  /*  console.log("GESTION TYPE RESOURCE")
+  console.log(nodeId)
+  //AJOUT du noeud resourceType
+  if (data.resourceType != undefined){
+  console.log("ajout "+data.resourceType +" à "+ nodeId)
+  var nodeResource = {
+  label : data.resourceType
+}
+var nodeIdResourceType =  this.addNodeIfNotExist(network, nodeResource);
+
+console.log("TYPE de  "+nodeId +" à "+ nodeIdResourceType)
+var edge = {
+from: nodeId,
+to: nodeIdResourceType,
+label: "type"
+}
+this.addEdgeIfNotExist(network,edge)
+}
+
+return nodeId;*/
+
+}
+
+updated(changedProperties){
+  super.updated(changedProperties)
+  changedProperties.forEach((oldValue, propName) => {
+    console.log(`${propName} changed. oldValue: ${oldValue}`);
+    console.log("responseData UPDATED: ",this.responseData)
+  });
+}
+
+attributeChangedCallback(name, oldval, newval) {
+  console.log('attribute change: ', name, oldval, newval);
+  super.attributeChangedCallback(name, oldval, newval);
+}
+
+}
+
+customElements.define('spoggy-vis', SpoggyVis);

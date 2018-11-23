@@ -13,6 +13,7 @@
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   },
   "dependencies": {
+    "@fooloomanzoo/color-picker": "^3.0.2",
     "@polymer/app-layout": "^3.0.1",
     "@polymer/app-route": "^3.0.2",
     "@polymer/iron-flex-layout": "^3.0.1",
@@ -30,11 +31,13 @@
     "@polymer/paper-icon-button": "^3.0.1",
     "@polymer/paper-input": "^3.0.1",
     "@polymer/paper-slider": "^3.0.1",
+    "@polymer/paper-swatch-picker": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.2.0",
     "evejs": "github:scenaristeur/evejs#develop",
     "paper-collapse-item": "^4.0.5",
-    "vis": "^4.21.0"
+    "vis": "^4.21.0",
+    "web-animations-js": "^2.3.1"
   },
   "devDependencies": {
     "polymer-cli": "^1.9.1",
