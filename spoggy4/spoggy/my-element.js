@@ -22,3 +22,4 @@
     }
 
     customElements.define('my-element', MyElement);
+/* <my-element mood="happy"></my-element>*/

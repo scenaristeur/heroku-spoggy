@@ -1,6 +1,10 @@
 
 import {LitElement, html} from '@polymer/lit-element';
+/*import  '/node_modules/evejs/dist/eve.custom.js';
+import { VisAgent } from './agents/VisAgent.js'
+*/
 import './vis-popup.js';
+
 
 class SpoggyVis extends LitElement {
 
@@ -207,15 +211,26 @@ class SpoggyVis extends LitElement {
     </style>
     Spoggy Vis Web Components are <span class="mood">${this.mood}</span>!<br>
 
+
     <div id="mynetwork"></div>
-    <vis-popup which="${this.popup}"></vis-popup>
+    <vis-popup id="popup" which="${this.popup}" response-data="${this.responseData}"></vis-popup>
+    resp : ${this.responseData} : fin resp
     `;
   }
 
   static get properties() {
     return {
       mood: {type: String},
-      popup: {type: String}
+      popup: {type: String},
+      responseData: {
+        type: String,
+        reflect: true,
+        attribute: 'response-data',
+        hasChanged(newVal, oldVal) {
+          console.log("VIS : responseData : ", newVal,oldVal)
+        }
+
+      }
     };
   }
 
@@ -223,13 +238,61 @@ class SpoggyVis extends LitElement {
     super();
     this.mood = 'Spoggy Vis';
     this.popup = 'flok';
+    // Add an event listener
+    document.addEventListener("name-of-event", function(e) {
+      console.log(e.detail); // Prints "Example of an event"
+    });
+
+
+
+
   }
 
+
+  attributeChangedCallback(name, oldval, newval) {
+    console.log('attribute change: ', name, oldval, newval);
+    super.attributeChangedCallback(name, oldval, newval);
+  }
 
   firstUpdated(){
     var app = this;
     var container = this.shadowRoot.getElementById('mynetwork');
     console.log(container)
+
+    var element = this.shadowRoot.getElementById('popup');
+    //////////////////////////////
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type == "attributes") {
+
+          switch (mutation.attributeName) {
+            case "response-data":
+            console.log("attributes changed")
+            console.log("MUTATION :",mutation)
+            var element = app.shadowRoot.getElementById('popup');
+            var att = element.getAttribute('response-data');
+            console.log(att)
+
+            if (att != "undefined"){
+              var attJson = JSON.parse(att)
+              console.log(attJson)
+            }
+            break;
+            default:
+          }
+        }
+      });
+    });
+
+
+    observer.observe(element, {
+      attributes: true //configure it to listen to attribute changes
+    });
+    console.log(observer)
+    /////////////////////////
+
+
 
     // create an array with nodes
     var nodes = new vis.DataSet([
@@ -276,7 +339,9 @@ class SpoggyVis extends LitElement {
             //  app.shadowRoot.getElementById('node-operation').innerHTML = "Add Node";
             app.popup="node-popUp";
             data.label =""
-          //  app.editNode(data, app.clearNodePopUp, callback);
+            console.log(app.shadowRoot.getElementById('popup'));
+            //  console.log(this.shadowRoot.getElementById('popup'));
+            //  app.editNode(data, app.clearNodePopUp, callback);
           },
           editNode: function (data, callback) {
             // filling in the popup DOM elements
@@ -312,6 +377,15 @@ class SpoggyVis extends LitElement {
 
 
     }
+
+    updated(changedProperties){
+      super.updated(changedProperties)
+      changedProperties.forEach((oldValue, propName) => {
+        console.log(`${propName} changed. oldValue: ${oldValue}`);
+        console.log("responseData UPDATED: ",this.responseData)
+      });
+    }
+
 
   }
 
