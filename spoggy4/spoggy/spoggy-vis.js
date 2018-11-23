@@ -213,8 +213,7 @@ class SpoggyVis extends LitElement {
 
 
     <div id="mynetwork"></div>
-    <vis-popup id="popup" which="${this.popup}" response-data="${this.responseData}"></vis-popup>
-    resp : ${this.responseData} : fin resp
+    <vis-popup id="popup" which="${this.popup}" parent="${this.id}"></vis-popup>
     `;
   }
 
@@ -223,15 +222,6 @@ class SpoggyVis extends LitElement {
       id: {type: String, value:""},
       mood: {type: String},
       popup: {type: String},
-      responseData: {
-        type: String,
-        reflect: true,
-        attribute: 'response-data',
-        hasChanged(newVal, oldVal) {
-          console.log("VIS : responseData : ", newVal,oldVal)
-        }
-
-      }
     };
   }
 
@@ -260,47 +250,12 @@ class SpoggyVis extends LitElement {
 
     console.log( 'id : ', this.id);
     this.agentVis = new VisAgent(this.id, this);
-      console.log(this.agentVis);
-  //this.agentVis.send('agentApp', {type: 'dispo', name: this.id });
+    console.log(this.agentVis);
+    //this.agentVis.send('agentApp', {type: 'dispo', name: this.id });
 
 
     var container = this.shadowRoot.getElementById('mynetwork');
-    console.log(container)
-
-    var element = this.shadowRoot.getElementById('popup');
-    //////////////////////////////
-    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type == "attributes") {
-
-          switch (mutation.attributeName) {
-            case "response-data":
-            console.log("attributes changed")
-            console.log("MUTATION :",mutation)
-            var element = app.shadowRoot.getElementById('popup');
-            var att = element.getAttribute('response-data');
-            console.log(att)
-
-            if (att != "undefined"){
-              var attJson = JSON.parse(att)
-              console.log(attJson)
-            }
-            break;
-            default:
-          }
-        }
-      });
-    });
-
-
-    observer.observe(element, {
-      attributes: true //configure it to listen to attribute changes
-    });
-    console.log(observer)
-    /////////////////////////
-
-
+    //  console.log(container)
 
     // create an array with nodes
     var nodes = new vis.DataSet([
@@ -382,8 +337,6 @@ class SpoggyVis extends LitElement {
         console.log('selectNode Event: ', params);
       });
       console.log(app.network)
-
-
     }
 
     updated(changedProperties){
@@ -393,6 +346,12 @@ class SpoggyVis extends LitElement {
         console.log("responseData UPDATED: ",this.responseData)
       });
     }
+
+    savenode(data){
+      this.popup = null;
+      console.log("SAVENODE :",data)
+    }
+
 
 
   }

@@ -30,10 +30,12 @@ class VisPopup extends LitElement {
     }
 
     .popup {
-      /*position: absolute;
-      z-index: 10;
-      top: 2vw;
-      left: 2vw;*/
+      position: absolute;
+      z-index: 99;
+      top: 10%;
+      left: 1vw;
+      width: 99vw;
+
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -227,11 +229,9 @@ class VisPopup extends LitElement {
         console.log(newVal,oldVal)
       }*/
     },
-    /**
-    * Changes to attribute `my-prop` cause updates to property `myProp`
-    * Changes to property `myProp` reflect to attribute `my-prop`
-    */
-    responseData: { type: String, attribute: 'response-data', reflect: true },
+    parent: {
+      type: String
+    },
   };
 }
 
@@ -239,22 +239,24 @@ constructor() {
   super();
   this.mood = 'vis-popup';
   this.which = "none";
+
 }
 
 
 firstUpdated(){
   console.log( 'id : ', this.id);
   this.agentPopup = new PopupAgent(this.id, this);
-  console.log(this.agentPopup);
-  this.agentPopup.send('agentVis', {type: 'dispo', name: this.id });
+  //console.log(this.agentPopup);
+  //console.log("PArent",this.parent)
+  this.agentPopup.send(this.parent, {type: 'dispo', name: this.id });
 }
 
 updated(changedProperties){
   super.updated(changedProperties)
   changedProperties.forEach((oldValue, propName) => {
     console.log(`${propName} changed. oldValue: ${oldValue}`);
-    console.log("WHICH UPDATED: ",this.which)
-    console.log("DATA UPDATED: ",this.data)
+    //  console.log("WHICH UPDATED: ",this.which)
+    //  console.log("DATA UPDATED: ",this.data)
   });
 }
 
@@ -279,11 +281,9 @@ if (changedProperties.has('which')){
 _saveNode(){
   this.data = {};
   this.data.blop = "swing";
-  //  this.set("responseData", "ok");
-  console.log("saveNode ", this.responseData)
-  this.responseData  = JSON.stringify(this.data)
-  // Create the event
-  //var event = new CustomEvent("name-of-event", { "detail": "Example of an event" });
+  var label = this.shadowRoot.getElementById("node-label").value;
+  this.data.label = label;
+  this.agentPopup.send(this.parent, {type: 'savenode', data: this.data });
 }
 
 /*update(changedProperties) {

@@ -44,6 +44,10 @@ VisAgent.prototype.receive = function(from, message) {
     console.log("visresults", message.visresults);
     this.app.updateNetwork(message.visresults);
     break;
+    case 'savenode':
+    console.log("savenode", message.data);
+    this.app.savenode(message.data);
+    break;
 
 
     default:

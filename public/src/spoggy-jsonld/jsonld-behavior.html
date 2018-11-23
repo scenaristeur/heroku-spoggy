@@ -419,6 +419,28 @@ rdfURL2SimpleArray(/*String: */url)/*: Promise*/ {
   'password': 'aa',
   'confirmPassword': 'aa', # used for register
 }*/
+var url;
+if(this.testurl != undefined){
+  url = this.testurl;
+}else{
+   url = this.sparql+"/update";
+}
+this.$.ajaxupdate.url = url;
+
+var xhr = new XMLHttpRequest();
+xhr.open('POST', url, true);
+xhr.withCredentials = true;
+xhr.onreadystatechange = function() {
+    if(xhr.readyState == 4 && xhr.status == 200) {
+        console.log(xhr.responseText);
+        // Get header from php server request if you want for something
+        var cookie = xhr.getResponseHeader("Cookie");
+        console.log("Cookie: " + cookie);
+    }
+}
+xhr.send();
+
+
 
 var options = {userid:"aa", passowrd:"aa"};
 
@@ -426,11 +448,7 @@ var triples = [{subject:"Test", predicate:"time", object: Date.now()}];
 //  options.update =
 //console.log(options)
 
-if(this.testurl != undefined){
-  this.$.ajaxupdate.url = this.testurl;
-}else{
-   this.$.ajaxupdate.url = this.sparql+"/update";
-}
+
 
 //this.$.ajaxupdate.url = "http://127.0.0.1:3030/test/update";
 options.update =  this.computeUpdateTriplets(triples).update;
