@@ -22,6 +22,9 @@ import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import './my-icons.js';
+/*
+import  '/node_modules/evejs/dist/eve.custom.js';
+import { AppAgent } from '../spoggy/agents/AppAgent.js';*/
 
 // Gesture events like tap and track generated from touch will not be
 // preventable, allowing for better scrolling performance.
@@ -173,6 +176,11 @@ class MyApp extends PolymerElement {
         break;
     }
   }
+
+/*  connectedCallback(){
+      this.agentApp = new AppAgent('agentApp', this);
+      console.log(this.agentApp)
+  }*/
 }
 
 window.customElements.define('my-app', MyApp);

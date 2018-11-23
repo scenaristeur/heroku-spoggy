@@ -1,8 +1,8 @@
 
 import {LitElement, html} from '@polymer/lit-element';
-/*import  '/node_modules/evejs/dist/eve.custom.js';
+import  '/node_modules/evejs/dist/eve.custom.js';
 import { VisAgent } from './agents/VisAgent.js'
-*/
+
 import './vis-popup.js';
 
 
@@ -220,6 +220,7 @@ class SpoggyVis extends LitElement {
 
   static get properties() {
     return {
+      id: {type: String, value:""},
       mood: {type: String},
       popup: {type: String},
       responseData: {
@@ -256,6 +257,13 @@ class SpoggyVis extends LitElement {
 
   firstUpdated(){
     var app = this;
+
+    console.log( 'id : ', this.id);
+    this.agentVis = new VisAgent(this.id, this);
+      console.log(this.agentVis);
+  //this.agentVis.send('agentApp', {type: 'dispo', name: this.id });
+
+
     var container = this.shadowRoot.getElementById('mynetwork');
     console.log(container)
 

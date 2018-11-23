@@ -17,6 +17,9 @@ import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
 
 import '@polymer/paper-input/paper-textarea.js';
 
+import  '/node_modules/evejs/dist/eve.custom.js';
+import { PopupAgent } from './agents/PopupAgent.js'
+
 class VisPopup extends LitElement {
   render() {
     return html`
@@ -239,6 +242,13 @@ constructor() {
 }
 
 
+firstUpdated(){
+  console.log( 'id : ', this.id);
+  this.agentPopup = new PopupAgent(this.id, this);
+  console.log(this.agentPopup);
+  this.agentPopup.send('agentVis', {type: 'dispo', name: this.id });
+}
+
 updated(changedProperties){
   super.updated(changedProperties)
   changedProperties.forEach((oldValue, propName) => {
@@ -269,7 +279,7 @@ if (changedProperties.has('which')){
 _saveNode(){
   this.data = {};
   this.data.blop = "swing";
-//  this.set("responseData", "ok");
+  //  this.set("responseData", "ok");
   console.log("saveNode ", this.responseData)
   this.responseData  = JSON.stringify(this.data)
   // Create the event

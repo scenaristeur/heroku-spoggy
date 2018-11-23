@@ -25,7 +25,7 @@ class SpoggyGraph extends PolymerElement {
 
     <div class="card">
     <spoggy-input></spoggy-input><!--import "../spoggy/spoggy-input.js";-->
-    <spoggy-vis></spoggy-vis>
+    <spoggy-vis id="novicegraph"></spoggy-vis>
 
     </div>
     `;

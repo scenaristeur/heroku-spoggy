@@ -32,6 +32,7 @@
     "@polymer/paper-slider": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.2.0",
+    "evejs": "github:scenaristeur/evejs#develop",
     "paper-collapse-item": "^4.0.5",
     "vis": "^4.21.0"
   },

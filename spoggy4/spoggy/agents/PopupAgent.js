@@ -4,7 +4,7 @@
 * @constructor
 * @extend eve.Agent
 */
-export function VisAgent(id, app) {
+export function PopupAgent(id, app) {
   // execute super constructor
   eve.Agent.call(this, id);
   this.app = app;
@@ -13,24 +13,24 @@ export function VisAgent(id, app) {
 }
 
 // extend the eve.Agent prototype
-VisAgent.prototype = Object.create(eve.Agent.prototype);
-VisAgent.prototype.constructor = VisAgent;
+PopupAgent.prototype = Object.create(eve.Agent.prototype);
+PopupAgent.prototype.constructor = PopupAgent;
 
 /**
 * Send a greeting to an agent
 * @param {String} to
 */
-VisAgent.prototype.sayHello = function(to) {
+PopupAgent.prototype.sayHello = function(to) {
   this.send(to, 'Hello ' + to + '!');
 };
 
 /**
 * Handle incoming greetings. This overloads the default receive,
-* so we can't use VisAgent.on(pattern, listener) anymore
+* so we can't use PopupAgent.on(pattern, listener) anymore
 * @param {String} from     Id of the sender
 * @param {*} message       Received message, a JSON object (often a string)
 */
-VisAgent.prototype.receive = function(from, message) {
+PopupAgent.prototype.receive = function(from, message) {
 
   if (typeof message == String && message.indexOf('Hello') === 0) {
     // reply to the greeting
