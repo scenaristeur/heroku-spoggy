@@ -44,9 +44,22 @@ PopupAgent.prototype.receive = function(from, message) {
     console.log("visresults", message.visresults);
     this.app.updateNetwork(message.visresults);
     break;
+
+    case 'addNode':
+    console.log("editNode", message.data);
+    this.app.addNode(message.data, message.callback, message.callback2);
+    break;
     case 'editNode':
     console.log("editNode", message.data);
-    this.app.editNode(message.data, message.callback);
+    this.app.editNode(message.data, message.callback, message.callback2);
+    break;
+    case 'addEdge':
+    console.log("addEdge", message.data);
+    this.app.addEdge(message.data, message.callback, message.callback2);
+    break;
+    case 'editEdgeWithoutDrag':
+    console.log("editEdgeWithoutDrag", message.data);
+    this.app.editEdgeWithoutDrag(message.data, message.callback, message.callback2);
     break;
 
 

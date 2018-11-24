@@ -14,7 +14,6 @@ import '@polymer/paper-icon-button/paper-icon-button.js';
 import 'paper-collapse-item/paper-collapse-item.js';
 import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
 import '@polymer/paper-input/paper-textarea.js';
-import '@polymer/paper-swatch-picker/paper-swatch-picker.js';
 import '@fooloomanzoo/color-picker/color-picker.js';
 import '@fooloomanzoo/color-picker/color-element.js';
 
@@ -29,14 +28,12 @@ class VisPopup extends LitElement {
     #operation {
       font-size:28px;
     }
-
     .popup {
       position: absolute;
       z-index: 99;
       top: 10%;
       left: 1vw;
       width: 99vw;
-
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -45,14 +42,16 @@ class VisPopup extends LitElement {
     }
     </style>
     Web Components are <span class="mood">${this.mood}</span>!<br>
+    Shape : ${this.selectedShape}<br>
+    Color : ${this.colorValue}
     <hr>
 
-    <paper-dialog id="node-popUp" class="popup" backdrop transition="core-transition-bottom"  >
+    <paper-dialog id="nodePopUp" class="popup" backdrop transition="core-transition-bottom"  >
     <!--  <div horizontal start-justified start layout > -->
     <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon> -->
     <div style="padding-left:20px" vertical start-justified start layout wrap>
-    <h2 id="node-operation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
-    <paper-input id="node-label" label="Nom du noeud" autofocus ></paper-input>
+    <h2 id="nodeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un noeud</h2>
+    <paper-input id="nodeLabel" label="Nom du noeud" autofocus ></paper-input>
 
 
 
@@ -62,13 +61,22 @@ class VisPopup extends LitElement {
     <!--  <div slot="collapse-content">-->
     <!--  <fieldset>
     <legend>Forme</legend> -->
-    <iron-selector id="shapeSelector" attr-for-selected="name" selected="{{selectedShape}}" selected-attribute="checked">
+    selected="${this.selectedShape}"
+
+
+    <iron-selector
+    id="shapeSelector"
+    attr-for-selected="name"
+    selected="${this.selectedShape}"
+
+    selected-attribute="checked">
     <div>Label interne</div>
-    <paper-checkbox name="ellipse">Ellipse</paper-checkbox>
-    <paper-checkbox name="circle">Cercle</paper-checkbox>
-    <paper-checkbox name="database">Database</paper-checkbox>
-    <paper-checkbox name="box">Box</paper-checkbox>
-    <paper-checkbox name="text">Texte</paper-checkbox>
+
+    <paper-checkbox name="ellipse"   @change="${() =>  this._shapeChanged("ellipse")}">Ellipse</paper-checkbox>
+    <paper-checkbox name="circle"  @change="${() =>  this._shapeChanged("circle")}">Cercle</paper-checkbox>
+    <paper-checkbox name="database"  @change="${() =>  this._shapeChanged("database")}">Database</paper-checkbox>
+    <paper-checkbox name="box"  @change="${() =>  this._shapeChanged("box")}">Box</paper-checkbox>
+    <paper-checkbox name="text"  @change="${() =>  this._shapeChanged("text")}">Texte</paper-checkbox>
     <hr>
     <div>Label externe</div>
     <paper-checkbox name="diamond">Diamant</paper-checkbox>
@@ -79,9 +87,9 @@ class VisPopup extends LitElement {
     <paper-checkbox name="image" >Image</paper-checkbox>
     <paper-checkbox name="circularImage" >Image Circulaire</paper-checkbox>
     </iron-selector>
-    <div hidden$="[[shapeIsImage(selectedShape)]]">
+    <!--<div hidden$="[[shapeIsImage(selectedShape)]]">
     <paper-input id="imgUrl" label="Url de l'image (http://...)"></paper-input>
-    </div>
+    </div>-->
     <!--  </fieldset>-->
     <!--</div>-->
     </paper-collapse-item>
@@ -90,9 +98,15 @@ class VisPopup extends LitElement {
     <!--<div slot="collapse-content">-->
     <!--  <fieldset>
     <legend>Couleur</legend>-->
-    <paper-swatch-picker color="#E91E63"></paper-swatch-picker>
-    <paper-swatch-picker color="{{selectedColor}}"></paper-swatch-picker>
-    <color-picker  id="colorpicker" native value="{{colorValue}}"  position="right"></color-picker>
+    <!--  <paper-swatch-picker color="#E91E63"></paper-swatch-picker>
+    <paper-swatch-picker color="{{selectedColor}}"></paper-swatch-picker>-->
+    color: ${this.colorValue}
+    <color-picker
+    id="colorpicker"
+    native value="colorValue"
+    colorValue="colorValue"
+    position="right"
+    ></color-picker>
     <!--  </fieldset> -->
     <!--</div>-->
     </paper-collapse-item>
@@ -122,8 +136,9 @@ class VisPopup extends LitElement {
     <!--</paper-dialog-scrollable>-->
     </br>
     <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-    <paper-button id="nodeSaveButton" dialog-confirm  raised @click="${() =>  this._saveNode()}" >ok</paper-button>
+    <paper-button id="nodeSaveButton" dialog-confirm  raised >ok</paper-button>
     <paper-button id="nodeCancelButton"  dialog-dismiss raised>Annuler</paper-button>
+
     </div>
     </div>
     <!--</div>-->
@@ -135,15 +150,15 @@ class VisPopup extends LitElement {
 
 
 
-    <paper-dialog id="edge-popUp" class="popup"> <!--  backdrop transition="core-transition-bottom" -->
+    <paper-dialog id="edgePopUp" class="popup"> <!--  backdrop transition="core-transition-bottom" -->
     <!--  <div horizontal start-justified start layout > -->
     <!--  <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>-->
     <div style="padding-left:20px" vertical start-justified start layout wrap>
-    <h2 id="edge-operation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
-    <paper-input id="edge-label" label="Nom du lien" autofocus></paper-input>
+    <h2 id="edgeOperation" style="margin: 0;color: #0D578B;">Ajouter ou modifier un lien</h2>
+    <paper-input id="edgeLabel" label="Nom du lien" autofocus></paper-input>
     <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-    <paper-button id="edge-saveButton"  on-tap="saveEdgeData" dialog-confirm raised>ok</paper-button>
-    <paper-button id="edge-cancelButton" dialog-dismiss raised>Annuler</paper-button>
+    <paper-button id="edgeSaveButton"  on-tap="saveEdgeData" dialog-confirm raised>ok</paper-button>
+    <paper-button id="edgeCancelButton" dialog-dismiss raised>Annuler</paper-button>
     </div>
     </div>
     <!--  </div> -->
@@ -221,90 +236,151 @@ class VisPopup extends LitElement {
 
 
   static get properties() {
-    var app = this;
+
     return {
       mood: {type: String},
-    parent: {
-      type: String
-    },
-  };
+      parent: {type: String},
+      selectedShape: {type: String},
+      colorValue: {type: Object}
+    };
+  }
+
+  constructor() {
+    super();
+    this.mood = 'vis-popup';
+    this.colorValue = "rgb(173,208,255)";
+    this.selectedShape = "box";
+  }
+
+
+_handleOnChecked(e){
+  console.log("CHECK : ",e)
+}// = e => this.handleOnChecked(e);
+
+_handleOnRemoved(e){
+  console.log("REMOVE : ",e)
 }
 
-constructor() {
-  super();
-  this.mood = 'vis-popup';
-  this.colorValue = "rgb(173,208,255)";
+_shapeChanged(shape){
+  this.selectedShape = shape;
+  //console.log(this.selectedShape)
+}
+
+_colorChanged(e){
+  console.log(e)
+  console.log(this.colorValue)
 }
 
 
-firstUpdated(){
-  console.log( 'id : ', this.id);
-  this.agentPopup = new PopupAgent(this.id, this);
-  //console.log(this.agentPopup);
-  //console.log("PArent",this.parent)
-  this.agentPopup.send(this.parent, {type: 'dispo', name: this.id });
-}
+  firstUpdated(){
+    console.log( 'id : ', this.id);
+    this.agentPopup = new PopupAgent(this.id, this);
+    //console.log(this.agentPopup);
+    //console.log("PArent",this.parent)
+    this.selectedShape = "ellipse";
+    this.agentPopup.send(this.parent, {type: 'dispo', name: this.id });
+  }
 
 
 
-_saveNode(){
+  /*_saveNode(){
   console.log("POPUP SAVE NODE ", this.data);
   this.data = {};
   this.data.blop = "swing";
   var label = this.shadowRoot.getElementById("node-label").value;
   this.data.label = label;
   this.agentPopup.send(this.parent, {type: 'savenode', data: this.data });
+}*/
+
+addNode(data, callback){
+  console.log("POPUP ADD NODE ", data, callback);
+  this.shadowRoot.getElementById("nodeLabel").value = "";
+  this.shadowRoot.getElementById("nodeSaveButton").onclick = this.saveNodeData.bind(this, data, callback);
+  this.shadowRoot.getElementById("nodeCancelButton").onclick = this.cancelNodeEdit.bind(this, callback);
+  this.shadowRoot.getElementById("nodePopUp").toggle();
+}
+
+addEdge(data, callback, callback2){
+  console.log("POPUP ADD EDGE ", data, callback, callback2);
+  this.shadowRoot.getElementById("edgeLabel").value = "";
+  this.shadowRoot.getElementById("edgeSaveButton").onclick = this.saveEdgeData.bind(this, data, callback, callback2);
+  this.shadowRoot.getElementById("edgeLabel").onchange = this.saveEdgeData.bind(this, data, callback, callback2);
+  this.shadowRoot.getElementById("edgeCancelButton").onclick = this.cancelEdgeEdit.bind(this,callback, callback2);
+  this.shadowRoot.getElementById("edgePopUp").toggle();
+}
+
+editEdgeWithoutDrag(data, callback, callback2){
+  console.log("POPUP editEdgeWithoutDrag ", data, callback, callback2);
+  this.shadowRoot.getElementById("edgeLabel").value = data.label || "";
+  this.shadowRoot.getElementById("edgeSaveButton").onclick = this.saveEdgeData.bind(this, data, callback, callback2);
+  this.shadowRoot.getElementById("edgeLabel").onchange = this.saveEdgeData.bind(this, data, callback, callback2);
+  this.shadowRoot.getElementById("edgeCancelButton").onclick = this.cancelEdgeEdit.bind(this,callback, callback2);
+  this.shadowRoot.getElementById("edgePopUp").toggle();
 }
 
 
-editNode(data, callback){
-console.log("POPUP EDIT NODE ", data, callback);
+cancelEdgeEdit (callback) {
+  console.log("POPUP CANCEL EDGE EDIT", callback);
+  this.clearEdgePopUp();
+  callback(null);
+}
+
+clearEdgePopUp () {
+  console.log("CLEAR EDGE POPUP EXTERNE");
+  //this.$.edgeSaveButton.onclick = null;
+  //this.$.edgeCancelButton.onclick = null;
+  //  this.$.edgePopUp.toggle(); //style.display = 'none';
+}
+editNode(data, callback, callback2){
+  console.log("POPUP EDIT NODE ", data, callback, callback2);
   if (data.title != undefined){
-    this.shadowRoot.getElementById("node-label").value= data.title.replace(/<br\s*\/?>/mg,"");
+    this.shadowRoot.getElementById("nodeLabel").value= data.title.replace(/<br\s*\/?>/mg,"");
   }else{
-    this.shadowRoot.getElementById("node-label").value=  data.label || "";
+    this.shadowRoot.getElementById("nodeLabel").value=  data.label || "";
   }
   this.selectedShape = data.shape || "ellipse";
   this.selectedType = data.type || "normal";
-  this.imageUrl = data.image || "";
+  //  this.imageUrl = data.image || "";
   if ((data.color != undefined) && (data.color.background != undefined)){
     this.colorValue = data.color.background
   }
   else{
     this.colorValue =   "rgb(173,208,255)";
   }
-  this.shadowRoot.getElementById("nodeSaveButton").onclick = this.saveNodeData.bind(this, data, callback);
-  this.shadowRoot.getElementById("nodeCancelButton").onclick = this.cancelNodeEdit.bind(this, callback);
-  this.shadowRoot.getElementById("node-popUp").toggle(); //style.display = 'block';
+  this.shadowRoot.getElementById("nodeSaveButton").onclick = this.saveNodeData.bind(this, data, callback, callback2);
+  this.shadowRoot.getElementById("nodeCancelButton").onclick = this.cancelNodeEdit.bind(this, callback, callback2);
+  this.shadowRoot.getElementById("nodePopUp").toggle(); //style.display = 'block';
 }
 
-cancelNodeEdit (callback) {
-  console.log("POPUP CANCEL NODE EDIT ", callback);
+cancelNodeEdit (callback, callback2) {
+  console.log("POPUP CANCEL NODE EDIT ", callback, callback2);
   this.clearNodePopUp(this);
   callback(null);
 }
 
 clearNodePopUp () {
   console.log("POPUP CLEAR NODE POPUP ");
+
   this.shadowRoot.getElementById("nodeSaveButton").onclick = null;
   this.shadowRoot.getElementById("nodeCancelButton").onclick = null;
   //  this.$.nodePopUp.toggle();//style.display = 'none';
 }
 
-saveNodeData (data, callback) {
-  console.log("POPUP SAVE NODE DATA", data, callback);
-/*
+saveNodeData (data, callback, callback2) {
+  console.log("POPUP SAVE NODE DATA", data, callback, callback2);
+  /*
   data et callback apparaissent comme des events ?????
   {id: "38e05a49-feb0-4d65-a35f-c7c7d973390e", x: -518.5339336634761, y: -388.3170534287593, label: ""}
   spoggy-graph.html:373 Event {isTrusted: false, detail: {…}, type: "tap", target: paper-button#nodeSaveButton, currentTarget: paper-button#nodeSaveButton, …}
   spoggy-graph.html:374 {x: 138, y: 588, sourceEvent: MouseEvent, preventer: undefined}preventer: undefinedsourceEvent: MouseEvent {isTrusted: true, __polymerGesturesHandled: {…}, screenX: 2058, screenY: 654, clientX: 138, …}x: 138y: 588__proto__: Object
   spoggy-graph.html:378 tap
   */
-
-  data.label = this.shadowRoot.getElementById("node-label").value;
+  console.log(this.shadowRoot.getElementById("colorpicker"))
+  console.log(this.shadowRoot.getElementById("shapeSelector"))
+  data.label = this.shadowRoot.getElementById("nodeLabel").value;
   data.shape = this.selectedShape;
   data.color = this.colorValue;
-  data.image = this.shadowRoot.getElementById("imgUrl").value;
+  //  data.image = this.shadowRoot.getElementById("imgUrl").value;
 
   data.type = this.selectedType;
   if (data.label.length > 40){
@@ -327,76 +403,76 @@ saveNodeData (data, callback) {
   this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
   this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
   if( data.type == "graph"){
-    console.log("nodeID");
-    console.log(node.id);
-    var graphNode = this.network.body.data.nodes.get({
-      filter: function(node){
-        console.log(node);
-        return (node.label == "Graph" );
-      }
-    });
-    console.log(graphNode);
-    if (graphNode.length == 0){
-      console.log("creation du noeud graph");
-      var nodeGraph = {};
-      nodeGraph.label = "Graph";
-      nodeGraph.shape = "star";
-      nodeGraph.type = "node";
-      nodeGraph.color= "rgb(255,0,0)";
-      this.network.body.data.nodes.add(nodeGraph);
-    }else{
-      console.log("récupération du noeud graph");
-    }
-    graphNode = this.network.body.data.nodes.get({
-      filter: function(node){
-        console.log(node);
-        return (node.label == "Graph" );
-      }
-    });
-    var actionNodeGraph = {};
-    actionNodeGraph.type = "newNode";
-    actionNodeGraph.data = graphNode[0];
-    //  this.addAction(actionNodeGraph);
-    this.agentGraph.send('agentSocket', {type: "newActions", actions: [actionNodeGraph]});
-    this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [actionNodeGraph]});
-    console.log(graphNode);
-    console.log(node.id);
-    var edgeGraph = {};
-    edgeGraph.from = node.id;
-    edgeGraph.to = graphNode[0].id;
-    edgeGraph.label = "type";
-    var graphEdge = this.network.body.data.edges.get({
-      filter: function(edge){
-        console.log(edge);
-        return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
-      }
-    });
-    console.log(graphEdge);
-    if(graphEdge.length == 0){
-      this.network.body.data.edges.add(edgeGraph);
-    }
-    graphEdge = this.network.body.data.edges.get({
-      filter: function(edge){
-        console.log(edge);
-        return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
-      }
-    });
-    console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEee");
-    console.log(graphEdge);
-    var actionedgeGraph = {};
-    actionedgeGraph.type = "newEdge";
-    actionedgeGraph.data = graphEdge;
-    //    this.addAction(actionedgeGraph);
-    console.log([action]);
-    this.agentPopup.send('agentSocket', {type: "newActions", actions: [action]});
-    this.agentPopup.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
-  }*/
-  /*
-  if( data.type == "graph"){
+  console.log("nodeID");
+  console.log(node.id);
   var graphNode = this.network.body.data.nodes.get({
   filter: function(node){
   console.log(node);
   return (node.label == "Graph" );
+}
+});
+console.log(graphNode);
+if (graphNode.length == 0){
+console.log("creation du noeud graph");
+var nodeGraph = {};
+nodeGraph.label = "Graph";
+nodeGraph.shape = "star";
+nodeGraph.type = "node";
+nodeGraph.color= "rgb(255,0,0)";
+this.network.body.data.nodes.add(nodeGraph);
+}else{
+console.log("récupération du noeud graph");
+}
+graphNode = this.network.body.data.nodes.get({
+filter: function(node){
+console.log(node);
+return (node.label == "Graph" );
+}
+});
+var actionNodeGraph = {};
+actionNodeGraph.type = "newNode";
+actionNodeGraph.data = graphNode[0];
+//  this.addAction(actionNodeGraph);
+this.agentGraph.send('agentSocket', {type: "newActions", actions: [actionNodeGraph]});
+this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [actionNodeGraph]});
+console.log(graphNode);
+console.log(node.id);
+var edgeGraph = {};
+edgeGraph.from = node.id;
+edgeGraph.to = graphNode[0].id;
+edgeGraph.label = "type";
+var graphEdge = this.network.body.data.edges.get({
+filter: function(edge){
+console.log(edge);
+return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+}
+});
+console.log(graphEdge);
+if(graphEdge.length == 0){
+this.network.body.data.edges.add(edgeGraph);
+}
+graphEdge = this.network.body.data.edges.get({
+filter: function(edge){
+console.log(edge);
+return (edge.from == edgeGraph.from && edge.to == edgeGraph.to && edge.label == edgeGraph.label);
+}
+});
+console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEee");
+console.log(graphEdge);
+var actionedgeGraph = {};
+actionedgeGraph.type = "newEdge";
+actionedgeGraph.data = graphEdge;
+//    this.addAction(actionedgeGraph);
+console.log([action]);
+this.agentPopup.send('agentSocket', {type: "newActions", actions: [action]});
+this.agentPopup.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+}*/
+/*
+if( data.type == "graph"){
+var graphNode = this.network.body.data.nodes.get({
+filter: function(node){
+console.log(node);
+return (node.label == "Graph" );
 }
 });
 console.log(graphNode);
@@ -450,6 +526,36 @@ this.addAction(actionGraph);
 this.nodes = this.network.body.data.nodes;*/
 }
 
+
+saveEdgeData (data, callback) {
+  console.log("POPUP SAVE EDGE DATA", data, callback);
+  if (typeof data.to === 'object')
+  data.to = data.to.id
+  if (typeof data.from === 'object')
+  data.from = data.from.id
+  data.label = this.shadowRoot.getElementById("edgeLabel").value;
+  console.log(data);
+  this.clearEdgePopUp();
+  console.log(callback)
+  if (typeof callback == 'function'){
+    callback(data);
+  }
+
+  /*  var edge = this.network.body.data.edges.get({
+  filter: function(edge) {
+  return (edge.from == data.from && edge.to == data.to && edge.label == data.label);
+}
+});*/
+/*  var action = {};
+action.type = "newEdge";
+action.data = edge;
+console.log(action)*/
+//  this.addAction(action);
+//this.agentGraph.send('agentSocket', {type: "newActions", actions: [action]});
+//this.agentGraph.send('agentSparqlUpdate', {type: "newActions", actions: [action]});
+}
+
+
 updated(changedProperties){
   super.updated(changedProperties)
   changedProperties.forEach((oldValue, propName) => {
@@ -468,12 +574,12 @@ update(changedProperties){
 //console.log("HAS WHICH : ",changedProperties.has('which'))
 //console.log("HAS MOOD : ",changedProperties.has('mood'))
 /*if (changedProperties.has('which')){
-  //console.log(this.which)
-  let pop = this.shadowRoot.getElementById(this.which);
-  if(pop != null){
-    console.log(pop);
-    pop.toggle();
-  }
+//console.log(this.which)
+let pop = this.shadowRoot.getElementById(this.which);
+if(pop != null){
+console.log(pop);
+pop.toggle();
+}
 }*/
 }
 /*update(changedProperties) {
