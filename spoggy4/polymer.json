@@ -8,7 +8,9 @@
     "manifest.json",
     "node_modules/@webcomponents/webcomponentsjs/*.js",
     "!node_modules/@webcomponents/webcomponentsjs/gulpfile.js",
-    "node_modules/@webcomponents/webcomponentsjs/bundles/*.js"
+    "node_modules/@webcomponents/webcomponentsjs/bundles/*.js",
+    "node_modules/vis/dist/vis.js",
+    "node_modules/web-animations-js/web-animations-next.min.js"
   ],
   "builds": [
     {
