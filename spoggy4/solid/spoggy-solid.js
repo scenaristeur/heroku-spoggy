@@ -5,6 +5,9 @@ import  '/node_modules/rdflib/dist/rdflib.min.js';
 import "./solid-login.js";
 import "./solid-profile.js";
 import "./solid-browser.js";
+import "./solid-friends.js";
+import "./solid-apps.js";
+import "./solid-spoggy.js";
 /*import "../spoggy/my-element.js";*/
 
 
@@ -32,6 +35,12 @@ class SpoggySolid extends PolymerElement {
     <solid-login id="solid-login"></solid-login>
     <solid-profile id="solid-profile"></solid-profile>
     <solid-browser id="solid-browser"></solid-browser>
+    <solid-friends id="solid-friends"></solid-friends>
+    <solid-apps id="solid-apps"></solid-apps>
+    <solid-spoggy id="solid-spoggy"></solid-spoggy>
+
+
+
 
     </div>
     `;

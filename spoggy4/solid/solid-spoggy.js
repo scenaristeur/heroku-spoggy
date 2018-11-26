@@ -5,7 +5,7 @@ import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
 
 
-class SolidBrowser extends PolymerElement {
+class SolidSpoggy extends PolymerElement {
   static get template() {
     return html`
     <style include="shared-styles">
@@ -17,7 +17,11 @@ class SolidBrowser extends PolymerElement {
     </style>
 
     <div class="card">
-    <div class="circle">SolidBrowser</div>
+    <div class="circle">SolidSpoggy</div>
+
+    <div>
+emplacement du graphe SPOGGY
+    </div>
     <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
     <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
@@ -45,4 +49,4 @@ class SolidBrowser extends PolymerElement {
   }
 }
 
-window.customElements.define('solid-browser', SolidBrowser);
+window.customElements.define('solid-spoggy', SolidSpoggy);
