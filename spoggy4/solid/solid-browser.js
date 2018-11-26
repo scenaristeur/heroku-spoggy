@@ -31,16 +31,36 @@ class SolidBrowser extends PolymerElement {
     `;
   }
 
+  static get properties() {
+    return {
+      store: Object,
+      fetcher: Object,
+      me: Object
+    }
+  }
+
   connectedCallback(){
     super.connectedCallback();
+    var app = this;
     console.log(solid)
     console.log($rdf)
 
     solid.auth.trackSession(session => {
-      if (!session)
-      console.log('The user is not logged in')
-      else
-      console.log(`The user is ${session.webId}`)
+      if (!session){
+        console.log('The user is not logged in')
+        app.me = null;
+      }
+      else{
+        console.log(`The user is ${session.webId}`)
+        app.me = $rdf.sym(session.webId)
+        app.store = $rdf.graph() // Make a Quad store
+        app.fetcher = $rdf.fetcher(this.store) // Attach a web I/O module, store.fetcher
+        app.store.updater = new $rdf.UpdateManager(this.store) // Add real-time live updates store.updater
+        console.log(app.me)
+        console.log(app.fetcher)
+        console.log(app.store)
+      }
+
     })
   }
 }
