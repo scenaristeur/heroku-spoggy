@@ -3,6 +3,7 @@ import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import "./spoggy-solid.js";
 import  '/node_modules/solid-auth-client/dist-lib/solid-auth-client.bundle.js';
+import  '/node_modules/rdflib/dist/rdflib.min.js';
 
 //import  { traiteMessage} from './lib/inputBehavior.js';
 /*
@@ -14,7 +15,7 @@ class SpoggySoliddemo extends LitElement {
   render() {
     return html`
 
-    <spoggy-solid></spoggy-solid>
+    <spoggy-solid solid="{{solid}}"></spoggy-solid>
 
     `;
   }
@@ -31,6 +32,7 @@ class SpoggySoliddemo extends LitElement {
   }
   firstUpdated() {
     console.log(solid)
+      console.log($rdf)
     /*  this.name = this.destinataire+"_Input"
     this.agentInput = new InputAgent(this.name, this);
     console.log(this.agentInput);

@@ -18,10 +18,10 @@ class SolidBrowser extends PolymerElement {
 
     <div class="card">
     <div class="circle">SpoggyBrowser</div>
-  <!--  <h1>Tutoriel</h1>
+    <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
     <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
--6>    </div>
+    -6>    </div>
 
     <div class="card">
     <spoggy-input></spoggy-input><!--import "../spoggy/spoggy-input.js";-->
@@ -29,6 +29,19 @@ class SolidBrowser extends PolymerElement {
 
     </div>
     `;
+  }
+
+  connectedCallback(){
+    super.connectedCallback();
+    console.log(solid)
+    console.log($rdf)
+
+    solid.auth.trackSession(session => {
+      if (!session)
+      console.log('The user is not logged in')
+      else
+      console.log(`The user is ${session.webId}`)
+    })
   }
 }
 

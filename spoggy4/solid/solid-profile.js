@@ -1,12 +1,11 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '../src/shared-styles.js';
-import "./solid-login.js";
-import "./solid-profile.js";
-import "./solid-browser.js";
+/*import "../spoggy/spoggy-input.js";
+import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
 
 
-class SpoggySolid extends PolymerElement {
+class SolidProfile extends PolymerElement {
   static get template() {
     return html`
     <style include="shared-styles">
@@ -18,8 +17,7 @@ class SpoggySolid extends PolymerElement {
     </style>
 
     <div class="card">
-    <div class="circle">Solid</div>
-    <p> status : {{status}}</p>
+    <div class="circle">SolidProfile</div>
     <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
     <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
@@ -27,37 +25,24 @@ class SpoggySolid extends PolymerElement {
 
     <div class="card">
     <spoggy-input></spoggy-input><!--import "../spoggy/spoggy-input.js";-->
-    <solid-login id="solid-login"></solid-login>
-    <solid-profile id="solid-profile"></solid-profile>
-    <solid-browser id="solid-browser"></solid-browser>
+    <!--<solid-login id="solid-login"></solid-login>-->
 
     </div>
     `;
   }
 
-  static get properties() {
-   return {
-     status: String
-   }
- }
-
   connectedCallback(){
     super.connectedCallback();
     console.log(solid)
     console.log($rdf)
-    this.status = "inconnu"
 
     solid.auth.trackSession(session => {
-      if (!session){
+      if (!session)
       console.log('The user is not logged in')
-      this.status = "deconnecté"
-    }
-      else{
+      else
       console.log(`The user is ${session.webId}`)
-      this.status = "connecté"
-    }
     })
   }
 }
 
-window.customElements.define('spoggy-solid', SpoggySolid);
+window.customElements.define('solid-profile', SolidProfile);

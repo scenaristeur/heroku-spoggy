@@ -1,12 +1,11 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '../src/shared-styles.js';
-import '@polymer/paper-input/paper-input.js';
-import '@polymer/paper-button/paper-button.js';
-/*import "../spoggy/spoggy-vis.js";*/
+/*import "../spoggy/spoggy-input.js";
+import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
 
 
-class SolidLogin extends PolymerElement {
+class SolidModele extends PolymerElement {
   static get template() {
     return html`
     <style include="shared-styles">
@@ -18,11 +17,7 @@ class SolidLogin extends PolymerElement {
     </style>
 
     <div class="card">
-    <div class="circle">SolidLogin</div>
-    <paper-input label="POD"></paper-input>
-    <paper-button id="loginBtn" raised>Login</paper-button>
-
-    <paper-button id="logoutBtn" raised>Logout</paper-button>
+    <div class="circle">SolidModele</div>
     <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
     <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
@@ -38,17 +33,8 @@ class SolidLogin extends PolymerElement {
 
   connectedCallback(){
     super.connectedCallback();
-    console.log(solid)
-    console.log($rdf)
 
-
-    solid.auth.trackSession(session => {
-      if (!session)
-      console.log('The user is not logged in')
-      else
-      console.log(`The user is ${session.webId}`)
-    })
   }
 }
 
-window.customElements.define('solid-login', SolidLogin);
+window.customElements.define('solid-modele', SolidModele);
