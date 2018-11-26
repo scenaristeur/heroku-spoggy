@@ -18,7 +18,7 @@ class SolidLogin extends PolymerElement {
     </style>
 
     <div class="card">
-    <div class="circle">Spoggy-login</div>
+    <div class="circle">SpoggyLogin</div>
     <paper-input label="POD"></paper-input>
     <paper-button id="loginBtn" raised>Login</paper-button>
 
