@@ -120,6 +120,24 @@ class SolidProfile extends PolymerElement {
     // JSON.parse(localStorage['solid-auth-client']).session.webId
   }
 
+  newAppInstance (dom, appDetails, callback) {
+  var gotWS = function (ws, base) {
+    // $rdf.log.debug("newAppInstance: Selected workspace = " + (ws? ws.uri : 'none'))
+    callback(ws, base)
+  }
+  var div = dom.createElement('div')
+  var b = dom.createElement('button')
+  b.setAttribute('type', 'button')
+  div.appendChild(b)
+  b.innerHTML = 'Make new ' + appDetails.noun
+  // b.setAttribute('style', 'float: right; margin: 0.5em 1em;'); // Caller should set
+  b.addEventListener('click', (e) => {
+    div.appendChild(selectWorkspace(dom, appDetails, gotWS))
+  }, false)
+  div.appendChild(b)
+  return div
+}
+
   loadPreferences(){
     var app = this;
     console.log("LOADING Preferences : ")
