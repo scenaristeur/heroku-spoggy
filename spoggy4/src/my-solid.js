@@ -24,7 +24,8 @@ class MySolid extends PolymerElement {
       </style>
 
       <div class="card">
-        <div class="circle">Solid</div>
+        <div class="circle">Solid Test</div>
+<a href="/solid/solid-demo.html">Solid demo</a>
   <!--      <h1>Tutoriel</h1>
         <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
         <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>

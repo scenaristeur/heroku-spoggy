@@ -1,5 +1,7 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '../src/shared-styles.js';
+import  '/node_modules/solid-auth-client/dist-lib/solid-auth-client.bundle.js';
+import  '/node_modules/rdflib/dist/rdflib.min.js';
 import "./solid-login.js";
 import "./solid-profile.js";
 import "./solid-browser.js";
