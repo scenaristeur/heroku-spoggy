@@ -33,9 +33,9 @@ class SpoggySolid extends PolymerElement {
     <div class="card">
     <spoggy-input></spoggy-input><!--import "../spoggy/spoggy-input.js";-->
     <solid-login id="solid-login"></solid-login>
-    <solid-profile id="solid-profile"></solid-profile>
+    <!--<solid-profile id="solid-profile"></solid-profile>
     <solid-browser id="solid-browser"></solid-browser>
-    <solid-friends id="solid-friends"></solid-friends>
+    <solid-friends id="solid-friends"></solid-friends>-->
     <solid-apps id="solid-apps"></solid-apps>
     <solid-spoggy id="solid-spoggy"></solid-spoggy>
 
