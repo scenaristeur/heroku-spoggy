@@ -1,8 +1,8 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '../src/shared-styles.js';
 import '@polymer/paper-input/paper-input.js';
-/*import "../spoggy/spoggy-input.js";
-import "../spoggy/spoggy-vis.js";*/
+import "./user-profile.js";
+/*import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
 
 
@@ -21,6 +21,7 @@ class SolidProfile extends PolymerElement {
     <div class="circle">SolidProfile</div>
     <div>
     <paper-input id="podInput" label="POD"></paper-input>
+    <user-profile wedId="[[wedId]]"></user-profile>
     </div>
     <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>

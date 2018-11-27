@@ -97,3 +97,7 @@ Looking for our older PSK2 Polycast or migration blog post? See [the previous RE
 2014  npm install
 2015  npm audit fix
 2016  npm start
+
+
+# doc
+https://medium.com/@jecelynyeen/polymer-3-0-preview-building-a-mini-card-game-ce8948265fd6
