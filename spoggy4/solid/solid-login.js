@@ -22,7 +22,8 @@ class SolidLogin extends PolymerElement {
     <div>
     <p hidden$="{{connected}}">
     Pour pouvoir utiliser Solid, vous devez dans un premier temps vous connecter à votre POD.</br>
-    To use Solid, you must first login to your POD.
+    To use Solid, you must first login to your POD.<br>
+      (<a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank"> Get a POD / Obtenir un POD</a>)
     </p>
 
     <paper-button

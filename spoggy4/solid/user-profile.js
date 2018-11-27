@@ -254,7 +254,7 @@ class UserProfile extends LitElement {
     </div>
 
 
-    <solid-browser>test browser</solid-browser>
+    <!--<solid-browser>test browser</solid-browser>-->
 
 
     <table border="1">

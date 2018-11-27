@@ -1,0 +1,2403 @@
+[
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n4",
+      "value": "n4"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2000/01/rdf-schema#label"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "[14:54:1]  Request for https://smag0.solid.community/profile/card"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n4",
+      "value": "n4"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#requestedURI"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n4",
+      "value": "n4"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#status"
+    },
+    "object": {
+      "termType": "Collection",
+      "id": 5,
+      "elements": [
+        {
+          "termType": "Literal",
+          "value": "[14:54:2.652] N3 parsed: 40 triples in 53 lines."
+        },
+        {
+          "termType": "Literal",
+          "value": "[14:54:2.653] Done."
+        }
+      ],
+      "closed": false
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2000/01/rdf-schema#label"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "[14:54:1]  Request for https://smag0.solid.community/public/"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#requestedURI"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#status"
+    },
+    "object": {
+      "termType": "Collection",
+      "id": 7,
+      "elements": [
+        {
+          "termType": "Literal",
+          "value": "[14:54:2.702] N3 parsed: 47 triples in 49 lines."
+        },
+        {
+          "termType": "Literal",
+          "value": "[14:54:2.702] Done."
+        }
+      ],
+      "closed": false
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n4",
+      "value": "n4"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#response"
+    },
+    "object": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/http#status"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "200"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/http#statusText"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "OK"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#allow"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "OPTIONS, HEAD, GET, PATCH, POST, PUT, DELETE"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#content-type"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "text/turtle"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/iana/media-types/text/turtle#Resource"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#link"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "<card.acl>; rel=\"acl\", <card.meta>; rel=\"describedBy\", <http://www.w3.org/ns/ldp#Resource>; rel=\"type\""
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#updates-via"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "wss://smag0.solid.community"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#vary"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Accept, Authorization, Origin"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#wac-allow"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "user=\"read write append control\",public=\"read\""
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n12",
+      "value": "n12"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#Document"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.iana.org/assignments/link-relations/acl"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card.acl"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n4",
+      "value": "n4"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.iana.org/assignments/link-relations/describedBy"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card.meta"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n4",
+      "value": "n4"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Resource"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n4",
+      "value": "n4"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://xmlns.com/foaf/0.1/PersonalProfileDocument"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://xmlns.com/foaf/0.1/maker"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://xmlns.com/foaf/0.1/primaryTopic"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#email:1540740811961"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#type"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Personal"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#email:1540740811961"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#value"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "mailto:scenaristeur@gmail.com"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1532705055998"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#country-name"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "France"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1532705055998"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#locality"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Lyon"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1532705055998"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#postal-code"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "69008"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1532705055998"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#region"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "zer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1532705055998"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#street-address"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "zsdfr"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1532706451311"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#region"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Blop"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1540486115632"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#country-name"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "France"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1540486115632"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#locality"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Lyon"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1540771507411"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#value"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "tel:0671"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://schema.org/Person"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://xmlns.com/foaf/0.1/Person"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#fn"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Smag0"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#hasAddress"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#id1540486115632"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#hasEmail"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#email:1540740811961"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#organization-name"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Smag0"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#role"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Research & developer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#url"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://melvincarvalho.com/#me"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#url"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://ruben.verborgh.org/profile/#me"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#url"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#inbox"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/inbox/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/pim/space#preferencesFile"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/settings/prefs.ttl"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/pim/space#storage"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/solid/terms#account"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/solid/terms#privateTypeIndex"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/settings/privateTypeIndex.ttl"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/solid/terms#publicTypeIndex"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/publicTypeIndex.ttl"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/solid/terms#publicTypeIndex"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/settings/publicTypeIndex.ttl"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://xmlns.com/foaf/0.1/knows"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://jmvanel.free.fr/jmv.rdf#me"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://xmlns.com/foaf/0.1/knows"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://ruben.verborgh.org/profile/#me"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#me"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://xmlns.com/foaf/0.1/name"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "smag0"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#phone:1540771889385"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#type"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Home"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#phone:1540771889385"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#value"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "tel:+undefined"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#phone:1540771900292"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#type"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Home"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#phone:1540771900292"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#value"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "tel:+undefined"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#phone:1540771923680"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#type"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Home"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card#phone:1540771923680"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2006/vcard/ns#value"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "tel:+undefined"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/profile/card"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#RDFDocument"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#response"
+    },
+    "object": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/http#status"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "200"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/http#statusText"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "OK"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#allow"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "OPTIONS, HEAD, GET, PATCH, POST, PUT, DELETE"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#content-type"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "text/turtle"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/iana/media-types/text/turtle#Resource"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#link"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "<.acl>; rel=\"acl\", <.meta>; rel=\"describedBy\", <http://www.w3.org/ns/ldp#Container>; rel=\"type\", <http://www.w3.org/ns/ldp#BasicContainer>; rel=\"type\""
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#updates-via"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "wss://smag0.solid.community"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#vary"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "Accept, Authorization, Origin"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/httph#wac-allow"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "user=\"read write append control\",public=\"read\""
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n16",
+      "value": "n16"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#Document"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.iana.org/assignments/link-relations/acl"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/.acl"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.iana.org/assignments/link-relations/describedBy"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/.meta"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n6",
+      "value": "n6"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://purl.org/dc/terms/modified"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "2018-11-21T12:43:57Z",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#contains"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/bins/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#contains"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/meetings/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#contains"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/site/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#contains"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/smag0/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#contains"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/spoggy/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#contains"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/test/"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#mtime"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "1542804237.029",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#size"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "4096",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/bins/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/bins/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/bins/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Resource"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/bins/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://purl.org/dc/terms/modified"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "2018-11-14T09:59:07Z",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/bins/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#mtime"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "1542189547.766",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/bins/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#size"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "4096",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/meetings/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/meetings/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/meetings/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Resource"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/meetings/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://purl.org/dc/terms/modified"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "2018-07-27T15:53:46Z",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/meetings/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#mtime"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "1532706826.216",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/meetings/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#size"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "4096",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/site/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/site/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/site/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Resource"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/site/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://purl.org/dc/terms/modified"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "2018-11-15T14:43:29Z",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/site/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#mtime"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "1542293009.333",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/site/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#size"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "4096",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/smag0/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/smag0/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/smag0/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Resource"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/smag0/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://purl.org/dc/terms/modified"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "2018-11-14T15:48:41Z",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/smag0/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#mtime"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "1542210521.78",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/smag0/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#size"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "4096",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/spoggy/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/spoggy/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/spoggy/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Resource"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/spoggy/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://purl.org/dc/terms/modified"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "2018-11-21T18:34:50Z",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/spoggy/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#mtime"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "1542825290.386",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/spoggy/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#size"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "4096",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/test/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#BasicContainer"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/test/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Container"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/test/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/ldp#Resource"
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/test/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://purl.org/dc/terms/modified"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "2018-07-27T15:15:35Z",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#dateTime"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/test/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#mtime"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "1532704535.776",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#decimal"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/test/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/ns/posix/stat#size"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "4096",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#integer"
+      }
+    },
+    "why": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    }
+  },
+  {
+    "subject": {
+      "termType": "NamedNode",
+      "value": "https://smag0.solid.community/public/"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/2007/ont/link#RDFDocument"
+    },
+    "why": {
+      "termType": "BlankNode",
+      "id": "n3",
+      "value": "n3"
+    }
+  }
+]

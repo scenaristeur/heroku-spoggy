@@ -2,6 +2,7 @@ import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '../src/shared-styles.js';
 import '@polymer/paper-input/paper-input.js';
 import "./user-profile.js";
+//import '/node_modules/solid-namespace/index.js';//https://github.com/solid/solid-namespace/blob/master/index.js
 /*import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
 
@@ -50,10 +51,13 @@ class SolidProfile extends PolymerElement {
     var app = this;
     console.log(solid)
     console.log($rdf)
+    // NAMESPACES : https://github.com/solid/solid-namespace/blob/master/index.js
     this.VCARD = $rdf.Namespace('http://www.w3.org/2006/vcard/ns#');
     this.SPACE = $rdf.Namespace('http://www.w3.org/ns/pim/space#');
     this.SOLID = $rdf.Namespace('http://www.w3.org/ns/solid/terms#');
     this.LDP = $rdf.Namespace('http://www.w3.org/ns/ldp#');
+    this.RDFS = $rdf .Namespace('http://www.w3.org/2000/01/rdf-schema#');
+    this.OWL = $rdf .Namespace('http://www.w3.org/2002/07/owl#');
 
     solid.auth.trackSession(session => {
       if (!session){
@@ -93,6 +97,7 @@ class SolidProfile extends PolymerElement {
       //app.resolve(app.context)
       console.log(response.responseText)
       app.loadPreferences()
+      app.loadExtendedProfile()
     }, err => {
       console.log("erreur")
       let message = 'Logged in but cannot load profile ' + app.context.profileDocument + ' : ' + err
@@ -122,26 +127,37 @@ class SolidProfile extends PolymerElement {
   }
 
   newAppInstance (dom, appDetails, callback) {
-  var gotWS = function (ws, base) {
-    // $rdf.log.debug("newAppInstance: Selected workspace = " + (ws? ws.uri : 'none'))
-    callback(ws, base)
+    var gotWS = function (ws, base) {
+      // $rdf.log.debug("newAppInstance: Selected workspace = " + (ws? ws.uri : 'none'))
+      callback(ws, base)
+    }
+    var div = dom.createElement('div')
+    var b = dom.createElement('button')
+    b.setAttribute('type', 'button')
+    div.appendChild(b)
+    b.innerHTML = 'Make new ' + appDetails.noun
+    // b.setAttribute('style', 'float: right; margin: 0.5em 1em;'); // Caller should set
+    b.addEventListener('click', (e) => {
+      div.appendChild(selectWorkspace(dom, appDetails, gotWS))
+    }, false)
+    div.appendChild(b)
+    return div
   }
-  var div = dom.createElement('div')
-  var b = dom.createElement('button')
-  b.setAttribute('type', 'button')
-  div.appendChild(b)
-  b.innerHTML = 'Make new ' + appDetails.noun
-  // b.setAttribute('style', 'float: right; margin: 0.5em 1em;'); // Caller should set
-  b.addEventListener('click', (e) => {
-    div.appendChild(selectWorkspace(dom, appDetails, gotWS))
-  }, false)
-  div.appendChild(b)
-  return div
-}
+
+  loadExtendedProfile(){
+    //https://github.com/solid/solid-spec/blob/master/solid-webid-profiles.md#extended-profile
+    //https://github.com/solid/solid-namespace/blob/master/index.js
+    var app = this;
+    var extendsameAs = app.store.each(app.context.me, this.OWL('sameAs'), undefined, undefined)
+    var extendSeeAlso = app.store.each(app.context.me, this.RDFS('seeAlso'), undefined, undefined)
+    var extended = extendsameAs.concat(extendSeeAlso)
+    console.log("EXTENDED PROFILE: ",extended)
+  }
+
 
   loadPreferences(){
     var app = this;
-    console.log("LOADING Preferences : ")
+    //console.log("LOADING Preferences ")
     let preferencesFile = app.store.any(app.context.me, app.SPACE('preferencesFile'))
     console.log("PREFERNCES FILE :",preferencesFile)
 
@@ -223,7 +239,7 @@ findAppInstances (context, klass) {
   //var ns = UI.ns
   var fetcher = app.fetcher
   //var context = app.context
-console.log("find app : ",klass)
+  console.log("find app : ",klass)
   //  return new Promise(function (resolve, reject) {
   //  loadTypeIndexes(context).then(context => {
   var test = kb.each(undefined, undefined, undefined, context.index.public)
