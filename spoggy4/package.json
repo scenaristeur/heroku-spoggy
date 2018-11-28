@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@fooloomanzoo/color-picker": "^3.0.2",
+    "@granite-elements/ace-widget": "^2.2.7-b1",
     "@polymer/app-layout": "^3.0.1",
     "@polymer/app-route": "^3.0.2",
     "@polymer/iron-flex-layout": "^3.0.1",

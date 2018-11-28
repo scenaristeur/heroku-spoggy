@@ -253,9 +253,9 @@ class IdeFoldermenu extends PolymerElement {
     <hr>
 
     <template is="dom-repeat" items="[[folder.files]]">
-    <paper-item raised on-tap="get" title="[[item.type]]"><img src="./assets/document.png"> [[item.label]] [download]</paper-item>
+    <paper-item raised on-tap="get" title="[[item.type]]"><img src="./assets/document.png"> [[item.label]] </paper-item>
     </template>
-
+<!--[download]-->
     <!--<ul>
     <li v-for="f in folder.files">
     <button v-on:click="rm(f)" class="docIcon" v-bind:class="canControl()">
@@ -311,6 +311,7 @@ class IdeFoldermenu extends PolymerElement {
       this.folder = res.value;
     }else{
       console.log("traitement d'un fichier")
+      this.current = res;
     }
 
   }

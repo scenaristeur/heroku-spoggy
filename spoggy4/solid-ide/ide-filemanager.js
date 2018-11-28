@@ -20,6 +20,7 @@ class IdeFilemanager extends PolymerElement {
     <div class="circle">IdeFilemanager</div>
     <div>  Current : {{current}}
     </div>
+
     <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
     <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
@@ -33,10 +34,27 @@ class IdeFilemanager extends PolymerElement {
     `;
   }
 
+  static get properties() {
+    return {
+      current: {type: Object, notify: true, observer: "currentChanged"},
+    }
+  }
+
   connectedCallback(){
     super.connectedCallback();
 
   }
+
+
+  currentChanged(newValue, oldValue){
+    console.log(newValue)
+    console.log(oldValue)
+    console.log("CURRENT FILE :",this.current)
+  //  if(newValue.key == "file"){
+    //  this.file = newValue
+  //  }
+  }
+
 }
 
 window.customElements.define('ide-filemanager', IdeFilemanager);

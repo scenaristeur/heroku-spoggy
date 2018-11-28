@@ -1,12 +1,15 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '../src/shared-styles.js';
 import "./ide-current.js";
-import "./ide-commands.js";
 import "./ide-foldermenu.js";
+import "./ide-filedisplay.js";
+import "./ide-fileeditor.js";
+
+import "./ide-commands.js";
 import "./ide-filemanager.js";
 import "./ide-foldermanager.js";
 import "./ide-optionsmanager.js";
-import "./ide-filedisplay.js";
+
 /*import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
 
@@ -32,15 +35,18 @@ class SolidIde extends PolymerElement {
     <div class="card">
     <spoggy-input></spoggy-input><!--import "../spoggy/spoggy-input.js";-->
     <!--<solid-login id="solid-login"></solid-login>-->
-  <div>  Current : {{current}}
-  </div>
+    <div>  Current : {{current}}
+    </div>
     <ide-current current={{current}}></ide-current>
-    <ide-commands></ide-commands>
     <ide-foldermenu current={{current}}></ide-foldermenu>
+  <!--  <ide-filedisplay current={{current}}></ide-filedisplay>-->
+    <ide-fileeditor current={{current}}></ide-fileeditor>
+    <ide-commands></ide-commands>
+
     <ide-filemanager current={{current}}></ide-filemanager>
     <ide-foldermanager current={{current}}></ide-foldermanager>
     <ide-optionsmanager></ide-optionsmanager>
-    <ide-filedisplay current={{current}}></ide-filedisplay>
+
     </div>
     `;
   }
