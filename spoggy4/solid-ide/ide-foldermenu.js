@@ -239,7 +239,7 @@ class IdeFoldermenu extends PolymerElement {
     <paper-item raised on-tap="get"> <img src="./assets/folder.png" />[[item.name]]</paper-item>
     </template>
 
-    <ul>
+    <!--<ul>
     <li v-for="subFolder in folder.folders">
     <button class="docIcon">
     <img src="./assets/folder.png" />
@@ -249,14 +249,14 @@ class IdeFoldermenu extends PolymerElement {
     {{subFolder.name}}
     </button>
     </li>
-    </ul>
+    </ul>-->
     <hr>
 
     <template is="dom-repeat" items="[[folder.files]]">
     <paper-item raised on-tap="get" title="[[item.type]]"><img src="./assets/document.png"> [[item.label]] [download]</paper-item>
     </template>
 
-    <ul>
+    <!--<ul>
     <li v-for="f in folder.files">
     <button v-on:click="rm(f)" class="docIcon" v-bind:class="canControl()">
     <img src="./assets/document.png">
@@ -265,7 +265,7 @@ class IdeFoldermenu extends PolymerElement {
     {{f.label}}
     </button>
     </li>
-    </ul>
+    </ul>-->
     <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
     <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
@@ -307,7 +307,12 @@ class IdeFoldermenu extends PolymerElement {
     var thing = e.model.item
     var res = await this.st.get(thing);
     console.log("RESULT : ",res)
-    this.folder = res.value;
+    if (res.key == "folder"){
+      this.folder = res.value;
+    }else{
+      console.log("traitement d'un fichier")
+    }
+
   }
 }
 
