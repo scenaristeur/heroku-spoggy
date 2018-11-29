@@ -34,7 +34,7 @@ this.get = async function(thing){
   if(! thing.type) thing.type = fc.guessFileType(thing.url)
   console.log(thing)
   var body = await fc.fetch(thing.url)
-  console.log("BODY :",body)
+//  console.log("BODY :",body)
   if(!body){ self.err=fc.err; return false }
   self.log("got a "+thing.type)
   if( thing.type==="folder" ) {

@@ -1,3 +1,4 @@
+//https://github.com/jeff-zucker/solid-file-client
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-repeat';
 import '@polymer/paper-item/paper-item.js';
@@ -225,6 +226,9 @@ class IdeFoldermenu extends PolymerElement {
     <div class="card">
     <div class="circle">IdeFoldermenu</div>
     <div>  Current : {{folder.name}}
+    <paper-input id="nameInput" label="name of folder or file / nom du dossier ou du fichier"></paper-input>
+    <paper-button raised on-tap="createFolder">Create Folder / creer un dossier</paper-button>
+    <paper-button raised on-tap="createFile">Create File / creer un fichier</paper-button>
     </div>
 
     <button on-tap="manageResource({{folder}})" class="docIcon" v-bind:class="canControl()">
@@ -255,7 +259,7 @@ class IdeFoldermenu extends PolymerElement {
     <template is="dom-repeat" items="[[folder.files]]">
     <paper-item raised on-tap="get" title="[[item.type]]"><img src="./assets/document.png"> [[item.label]] </paper-item>
     </template>
-<!--[download]-->
+    <!--[download]-->
     <!--<ul>
     <li v-for="f in folder.files">
     <button v-on:click="rm(f)" class="docIcon" v-bind:class="canControl()">
@@ -315,6 +319,25 @@ class IdeFoldermenu extends PolymerElement {
     }
 
   }
+
+  createFile(){
+    var newFile = this.folder.url+this.$.nameInput.value;
+    console.log(newFile)
+    this.st.fileclient.createFile( newFile ).then( success => {
+      if(!success) console.log(this.st.fileclient.err)
+      else console.log( `Created file ${newFile}.`)
+    })
+  }
+
+  createFolder(){
+    var url = this.folder.url+this.$.nameInput.value;
+    console.log(url)
+    this.st.fileclient.createFolder( url ).then( success => {
+      if(!success) console.log(this.st.fileclient.err)
+      else console.log( `Created folder ${url}.`)
+    })
+  }
+
 }
 
 window.customElements.define('ide-foldermenu', IdeFoldermenu);
