@@ -1,8 +1,9 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '../src/shared-styles.js';
 //import "./solid-ide-editor.js";
+import '@polymer/paper-button/paper-button.js';
 import '@granite-elements/ace-widget/ace-widget.js';
-import 'ace-builds/src-noconflict/mode-turtle.js';
+//import 'ace-builds/src-noconflict/mode-turtle.js';
 /*import "../spoggy/spoggy-input.js";
 import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
@@ -24,19 +25,27 @@ class IdeFileeditor extends PolymerElement {
     <div>
     Current : {{file.url}}
     </div>
-<!--
-***
-<ace-widget placeholder="Write something... Anything..." initial-focus>
-</ace-widget>***
-<ace-widget theme="ace/theme/eclipse" softtabs="true" wrap="true" value="This is a nice widget">
-               </ace-widget>
-               <ace-widget id="aceone" theme="ace/theme/ambiance" softtabs="true" wrap="true">
-                  This is a nice widget... and we are writing a long text here to show the effets of the \`wrap\` attribute.
-                </ace-widget>-->
-                <ace-widget id="acetwo" theme="ace/theme/ambiance" softtabs="true" wrap="true">
-                  TURTLE This is a nice widget... and we are writing a long text here to show the effets of the \`wrap\` attribute.
-                 </ace-widget>
+    <!--
+    ***
+    <ace-widget placeholder="Write something... Anything..." initial-focus>
+    </ace-widget>***
+    <ace-widget theme="ace/theme/eclipse" softtabs="true" wrap="true" value="This is a nice widget">
+    </ace-widget>
+    <ace-widget id="aceone" theme="ace/theme/ambiance" softtabs="true" wrap="true">
+    This is a nice widget... and we are writing a long text here to show the effets of the \`wrap\` attribute.
+    </ace-widget>-->
 
+    <ace-widget
+    id="acetwo"
+    theme="ace/theme/monokai"
+    mode="ace/mode/turtle"
+    softtabs="true"
+    value="{{contenu::input}}"
+    wrap="true">
+
+    </ace-widget>
+    <paper-button id="save"  on-tap="save" raised>Save Edits / Enregistrer</paper-button>
+    <paper-button id="undo"  on-tap="undo" raised>Undo / Annuler</paper-button>
 
     <!--  <h1>Tutoriel</h1>
     <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
@@ -54,16 +63,17 @@ class IdeFileeditor extends PolymerElement {
   static get properties() {
     return {
       current: {type: Object, notify: true, observer: "currentChanged"},
+      contenu: {type: String, value: "contenu de l'éditeur"}
     }
   }
 
   connectedCallback(){
     super.connectedCallback();
-  //  console.log("ACE ",ace)
-  /*  var div = document.createElement('div');
+    //  console.log("ACE ",ace)
+    /*  var div = document.createElement('div');
     div.id="blop"
     var shadowRoot = div.attachShadow({mode: 'open'});
-shadowRoot.innerHTML = '<h1>Hello Shadow DOM</h1>';
+    shadowRoot.innerHTML = '<h1>Hello Shadow DOM</h1>';
     this.$.editor.appendChild(div)*/
 
   }
@@ -76,94 +86,24 @@ shadowRoot.innerHTML = '<h1>Hello Shadow DOM</h1>';
     this.file = this.current.value
 
     if(newValue.key == "file"){
-      //this.initEditor()
-    //  this.setContent(this.file.content)
-    //this.$.aceone.value = this.file.content;
-    this.$.acetwo.value = this.file.content;
-    this.$.acetwo.mode = this.file.type;
+      this.$.acetwo.value = this.file.content;
     }
   }
 
+  save(){
+    var url = this.file.url;
+    var value = this.$.acetwo.editorValue;
+    console.log("V",value)
+    console.log(url)
 
+  }
 
+  undo(){
+    console.log("UNDO nothing for the moment")
+    console.log(this.file.content)
+    //this.$.acetwo.value = this.file.content;
+  }
 
-  initEditor(){
-    var app = this;
-    //this.displayState = "both";
-    console.log(this.$.editor)
-
-
-    this.zed = new SolidIdeEditor("blop");
-  //  this.zed.ed.container = this.$.editor;
-    console.log("################# ZED", this.zed)
-    var keys  = app.editKeys  || "emacs"
-    var theme = app.editTheme || "dark theme"
-    //  this.setEditKeys(keys);
-    //  this.setEditTheme(theme);
-    var size=14; //1260x720 iH = 581px; 1366x768 = 618px
-    if(window.innerHeight>600) size = 18
-    if(window.innerHeight>900) size = 22
-    if(this.displayState==="edOnly") size = size*2;
-    this.zed.setSize(size);
-  }
-  setEditKeys(keys){
-    var newKey ="zemacs";
-    if(keys==='vim') newKey ="vim"
-    this.zed.setKeys(newKey)
-    this.keys = newKey;
-  }
-  setEditTheme(theme){
-    var newTheme = "github"
-    if(theme.match("dark")){
-      newTheme = "monokai"
-    }
-    this.zed.setTheme(newTheme)
-    this.theme=newTheme
-  }
-  setContent(content){
-    var app = this;
-    //  if(!this.zed) this.initEditor()
-    console.log("############ setContent\n ", content)
-    /*this.initEditor()
-    this.file = app.currentThing;
-    this.file.content = content;*/
-    if(!this.file.type && this.file.url)
-    this.file.type = sol.guessFileType(this.file.url)
-    this.zed.setModeFromType(this.file.type)
-    this.zed.setContents(content)
-    console.log("## ZED IS DED\n\n",this.zed)
-    console.log("-------------CONTENT-------------\n\n", this.zed.getContents())
-    this.zed.ed.clearSelection() // remove blue overlay*/
-  }
-  saveEdits(){
-    sol.replace(
-      this.file.url,
-      this.zed.getContents()
-    ).then( success => {
-      if(success){
-        alert("Resource saved: " + this.file.url)
-        view.refresh(this.file.url)
-      }
-      else alert("Couldn't save "+sol.err)
-    })
-  }
-  togglePanes(){
-    if(this.displayState==='edOnly'){
-      this.displayState="dataOnly";
-      this.initEditor()
-      return;
-    }
-    if(this.displayState==='dataOnly'){
-      this.displayState="both";
-      this.initEditor()
-      return;
-    }
-    if(this.displayState==='both'){
-      this.displayState="edOnly";
-      this.initEditor()
-      return;
-    }
-  }
 
 
 
