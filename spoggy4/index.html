@@ -60,27 +60,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <meta name="msapplication-tap-highlight" content="no">
 
 <script>
-/**
-* [polymer-root-path]
-*
-* Leave this line unchanged if you intend to serve your app from the root
-* path (e.g., with URLs like `my.domain/` and `my.domain/view1`).
-*
-* If you intend to serve your app from a non-root path (e.g., with URLs
-* like `my.domain/my-app/` and `my.domain/my-app/view1`), edit this line
-* to indicate the path from which you'll be serving, including leading
-* and trailing slashes (e.g., `/my-app/`).
-*/
-window.MyAppGlobals = { rootPath: '/' };
+  /**
+  * [polymer-root-path]
+  *
+  * Leave this line unchanged if you intend to serve your app from the root
+  * path (e.g., with URLs like `my.domain/` and `my.domain/view1`).
+  *
+  * If you intend to serve your app from a non-root path (e.g., with URLs
+  * like `my.domain/my-app/` and `my.domain/my-app/view1`), edit this line
+  * to indicate the path from which you'll be serving, including leading
+  * and trailing slashes (e.g., `/my-app/`).
+  */
+  window.MyAppGlobals = { rootPath: '/' };
 
-// Load and register pre-caching Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('service-worker.js', {
-      scope: MyAppGlobals.rootPath
+  // Load and register pre-caching Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('service-worker.js', {
+        scope: MyAppGlobals.rootPath
+      });
     });
-  });
-}
+  }
 </script>
 
 <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
@@ -91,13 +91,13 @@ if ('serviceWorker' in navigator) {
 
 <!-- Add any global styles for body, document, etc. -->
 <style>
-body {
-  margin: 0;
-  font-family: "Roboto", "Noto", sans-serif;
-  line-height: 1.5;
-  min-height: 100vh;
-  background-color: #eeeeee;
-}
+  body {
+    margin: 0;
+    font-family: "Roboto", "Noto", sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    background-color: #eeeeee;
+  }
 </style>
 </head>
 <body>
@@ -113,4 +113,9 @@ body {
   <!-- IMPORT WEB ANIMATION Pour PaperDropdown https://stackoverflow.com/questions/52193786/polymer-3-0-uncaught-reference-error-on-paper-drop-down-click -->
   <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script src="../node_modules/web-animations-js/web-animations-next.min.js"></script>
+  <script src="../node_modules/solid-file-client/solid-file-client.js"></script>
+  <script>
+    var fileClient = new SolidFileClient()
+    console.log(fileClient)
+  </script>
   </html>

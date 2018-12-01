@@ -1,5 +1,8 @@
-var SolidTools = function(){
 
+console.log("(((((((((((((((((((\nSOLID TOOLS DEFINITION")
+
+export const SolidTools = function(){
+console.log("(((((((((((((((((((\nSOLID TOOLS DEFINITION")
 var self = this
 
 if (typeof(module)!="undefined" ){
@@ -79,7 +82,7 @@ this.log = function(msg){console.log(msg) }
 this.checkForIndex = function( folder ){
 var self = this;
 self.hasIndexHtml = false
-for(f in folder.files){
+for( var f in folder.files){
   if( folder.files[f].name==="index.html" ) {
     self.hasIndexHtml = true;
     break;
@@ -89,5 +92,5 @@ for(f in folder.files){
 
 return this
 }
-if (typeof(module)!="undefined" )  module.exports = SolidTools()
+
 /* END */

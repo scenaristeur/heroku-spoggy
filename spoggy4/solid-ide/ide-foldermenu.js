@@ -3,7 +3,10 @@ import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 import '@polymer/polymer/lib/elements/dom-repeat';
 import '@polymer/paper-item/paper-item.js';
 import '../src/shared-styles.js';
-import "./solid-tools.js"
+import { SolidTools } from "./solid-tools.js"
+
+
+
 /*import "../spoggy/spoggy-input.js";
 import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/

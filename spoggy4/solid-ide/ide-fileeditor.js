@@ -4,6 +4,7 @@ import '../src/shared-styles.js';
 import  '/node_modules/solid-file-client/solid-file-client.js';
 import '@polymer/paper-button/paper-button.js';
 import '@granite-elements/ace-widget/ace-widget.js';
+import { SolidTools } from "./solid-tools.js"
 //import 'ace-builds/src-noconflict/mode-turtle.js';
 /*import "../spoggy/spoggy-input.js";
 import "../spoggy/spoggy-vis.js";*/
@@ -76,8 +77,7 @@ class IdeFileeditor extends PolymerElement {
     var shadowRoot = div.attachShadow({mode: 'open'});
     shadowRoot.innerHTML = '<h1>Hello Shadow DOM</h1>';
     this.$.editor.appendChild(div)*/
-    this.st = new SolidTools();
-    this.st.fileclient = new SolidFileClient();
+    this.fileclient = new SolidFileClient();
     console.log("FILE CLIENT ", this.fileclient )
 
   }
@@ -99,8 +99,8 @@ class IdeFileeditor extends PolymerElement {
     var newContent = this.$.acetwo.editorValue;
     console.log("V",newContent)
     console.log(url)
-    this.st.fileclient.updateFile( url, newContent ).then( success => {
-      if(!success) console.log(this.st.fileclient.err)
+    this.fileclient.updateFile( url, newContent ).then( success => {
+      if(!success) console.log(this.fileclient.err)
       else console.log( `Updated ${url}.`)
     })
 

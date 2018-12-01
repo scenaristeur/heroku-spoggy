@@ -5,7 +5,7 @@ import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-input/paper-input.js';
 //https://jeff-zucker.github.io/solid-file-client/
 import  '/node_modules/solid-file-client/solid-file-client.js';
-import "./solid-tools.js"
+import { SolidTools } from "./solid-tools.js"
 /*import "../spoggy/spoggy-vis.js";*/
 /*import "../spoggy/my-element.js";*/
 
