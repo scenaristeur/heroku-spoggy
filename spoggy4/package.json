@@ -42,6 +42,7 @@
     "solid-file-client": "github:jeff-zucker/solid-file-client",
     "solid-namespace": "^0.2.0",
     "solid-ui": "github:scenaristeur/solid-ui",
+    "spoggy-graph": "github:scenaristeur/spoggy-graph",
     "vis": "^4.21.0",
     "web-animations-js": "^2.3.1"
   },

@@ -1,15 +1,9 @@
-
-console.log("(((((((((((((((((((\nSOLID TOOLS DEFINITION")
-
 export const SolidTools = function(){
-console.log("(((((((((((((((((((\nSOLID TOOLS DEFINITION")
 var self = this
-
 if (typeof(module)!="undefined" ){
     if(typeof($rdf)==='undefined') $rdf = require('rdflib')
     if(typeof(solid)==='undefined') solid={auth:require('solid-auth-client')}
 }
-
 this.processFolder = function(graph,url,content,callback){
         // this.log("processing folder")
         var items = self.getFolderItems(graph,url);
