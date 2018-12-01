@@ -42,7 +42,7 @@ class SolidIde extends PolymerElement {
     <ide-foldermenu current={{current}}></ide-foldermenu>
   <!--  <ide-filedisplay current={{current}}></ide-filedisplay>-->
     <ide-fileeditor current={{current}}></ide-fileeditor>
-    <spoggy-graph current={{current}}> graph</spoggy-graph>
+    <spoggy-graph  id="idegraph" current={{current}}> graph</spoggy-graph>
     <ide-commands></ide-commands>
 
     <ide-filemanager current={{current}}></ide-filemanager>
