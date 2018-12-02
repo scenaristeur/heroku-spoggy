@@ -8,7 +8,8 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import '@polymer/polymer/polymer-element.js';
+ import {PolymerElement} from 'https://unpkg.com/@polymer/polymer@next/polymer-element.js?module';
+
 
 const $_documentContainer = document.createElement('template');
 $_documentContainer.innerHTML = `<dom-module id="shared-styles">
