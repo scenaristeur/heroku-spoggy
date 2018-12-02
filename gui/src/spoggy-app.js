@@ -11,6 +11,14 @@ class SpoggyApp extends PolymerElement {
       Web Components SPOGGY are <span class="mood">[[mood]]</span>!
       <br>
       <ide-current>ide-current chargement</ide-current>
+
+
+
+      dsgsdgf
+      gdfshdgh
+      dfshsfghsfg
+      sdgfhsfgh
+      dfghsfh
     `;
   }
 }
