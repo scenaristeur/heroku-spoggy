@@ -113,7 +113,7 @@ class IdeCurrent extends PolymerElement {
 
 }
 
-window.customElements.define('ide-current', IdeCurrent);
+//window.customElements.define('ide-current', IdeCurrent);
 
 
-//customElements.define('ide-current', IdeCurrent);
+customElements.define('ide-current', IdeCurrent);
