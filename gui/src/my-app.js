@@ -8,6 +8,8 @@ class MyApp extends PolymerElement {
     return html`
       <style> .mood { color: green; } </style>
       Web Components APP are <span class="mood">[[mood]]</span>!
+      <br>
+
     `;
   }
 }
