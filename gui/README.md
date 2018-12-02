@@ -1,8 +1,25 @@
-<!-- import Polymer https://github.com/Polymer/polymer-->
+# Spoggy-solid-gui
+
+A simple gui for Solid made with Polymer3 WebComponents
+
+# Demo
+[index-mini.html](https://smag0.solid.community/public/spoggy/gui/index-mini.html)
+
+[SPOGGY](https://smag0.solid.community/public/spoggy/gui/index.html)
+
+# Polymer Element / Webcomponents
+ https://github.com/Polymer/polymer
+
+# Install
+Just copy the content of the index-mini.html into an index.html file located in the public folder of your POD.
+
+content of index-mini.html
+```
+
 <html>
 <head>
   <meta charset="utf-8">
-  <script type="module" src="https://cdn.jsdelivr.net/gh/scenaristeur/heroku-spoggy/gui/src/spoggy-app.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/gh/scenaristeur/heroku-spoggy/gui/src/my-app.js"></script>
   <!-- Polyfills only needed for Firefox and Edge. -->
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@next/webcomponents-loader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/rdflib@0.19.1/dist/rdflib.min.js"></script>
@@ -10,7 +27,7 @@
   <script src="https://cdn.jsdelivr.net/gh/jeff-zucker/solid-file-client/solid-file-client.js"></script>
 </head>
 <body>
-  <spoggy-app mood="blip"></spoggy-app>
+  <my-app mood="blip"></my-app>
 </body>
 
 <script>
@@ -32,3 +49,5 @@
   console.log(fileClient)
 </script>
 </html>
+
+```
