@@ -1,6 +1,6 @@
 import {PolymerElement, html} from 'https://unpkg.com/@polymer/polymer@next/polymer-element.js?module';
 //import '../src/shared-styles.js';
-import 'https://cdn.jsdelivr.net/gh/scenaristeur/heroku-spoggy/spoggy4/src/shared-styles.js';
+import 'https://cdn.jsdelivr.net/gh/scenaristeur/heroku-spoggy/gui/src/shared-styles.js';
 /*import '@polymer/paper-card/paper-card.js';*/
 //import '@polymer/paper-button/paper-button.js';
 //import '@polymer/paper-input/paper-input.js';
