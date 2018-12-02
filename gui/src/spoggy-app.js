@@ -12,6 +12,7 @@ class SpoggyApp extends PolymerElement {
       <br>
       <ide-current>ide-current chargement</ide-current>
 flok a blop
+Blik a Blop Filk Flok
     `;
   }
 }
