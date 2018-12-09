@@ -2,12 +2,15 @@
 <head>
   <meta charset="utf-8">
   <script type="module" src="https://cdn.jsdelivr.net/gh/scenaristeur/heroku-spoggy/gui/src/spoggy-app.js"></script>
+  <script type="module" src="./src/custom-greeting.js"></script>
   <!-- Polyfills only needed for Firefox and Edge. -->
   <script src="https://unpkg.com/@webcomponents/webcomponentsjs@next/webcomponents-loader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/rdflib@0.19.1/dist/rdflib.min.js"></script>
   <script src="https://solid.github.io/solid-auth-client/dist/solid-auth-client.bundle.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/jeff-zucker/solid-file-client/solid-file-client.js"></script>
   <script src="https://unpkg.com/@polymer/paper-checkbox@next/paper-checkbox.js?module" type="module" ></script>
+    <script src="https://unpkg.com/@polymer/paper-button@next/paper-button.js?module" type="module" ></script>
+    <script src="https://unpkg.com/lit-html@0.14.0/lit-html.js?module" type="module" ></script>
   <style>
   .footer {
     position: absolute;
@@ -23,8 +26,14 @@
 <body>
 before
   <paper-checkbox>Web Components!</paper-checkbox>
-after
-  <spoggy-app mood="blip"></spoggy-app>
+after<br>
+beforeBtn
+  <paper-button raised >BTN!</paper-button>
+afterBtn
+fgtr
+<custom-greeting></custom-greeting>
+dsg
+  <!--<spoggy-app mood="blip"></spoggy-app>-->
   <div class="footer">
     <a href="https://github.com/scenaristeur/heroku-spoggy/tree/master/gui" target="_blank">scenaristeur/heroku-spoggy</a>
   </div>
