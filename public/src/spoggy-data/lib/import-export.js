@@ -272,67 +272,99 @@ function ttl2Xml(data,network){
     var p = t.propriete;
     var o = t.objet;
 
-    var nodeSujetTemp = {
+    var nodeSujetTemp, nodeObjetTemp;
+
+    if (s.startsWith("_:")){
+      console.log("blanknode",s)
+      nodeSujetTemp = {
+        id: s.substring(2,s.length),
+        type: "node"
+      };
+      if(p == "rdfs:label"){ // traitement d'un predicat rdfs:label
+      nodeSujetTemp.label = o.substring(1,o.length-1);
+    }
+  }else{
+    nodeSujetTemp = {
       label: s,
-
       type: "node"
     };
-    var nodeObjetTemp = {
-      label: o,
-
-      type: "node"
-    };
-
-
-    addNodeIfNotExist(network, nodeSujetTemp);
-    addNodeIfNotExist(network, nodeObjetTemp);
-
-    var nodeSujet = network.body.data.nodes.get({
-      filter: function(node){
-        //    console.log(node);
-        return (node.label == s );
-      }
-    });
-    var nodeObjet = network.body.data.nodes.get({
-      filter: function(node){
-        //    console.log(node);
-        return (node.label == o );
-      }
-    });
-
-    var sujetId , objetId;
-    //  console.log("8888888888888888888888888888888888888");
-    if(nodeSujet.length>0){
-      console.log("sujet exist "+s);
-      nodeSujet = nodeSujet[0];
-      sujetId = nodeSujet.id;
-    }
-    if(nodeObjet.length>0){
-      console.log("objet exist "+o);
-      nodeObjet = nodeObjet[0];
-      objetId = nodeObjet.id;
-    }
-    console.log(nodeSujet);
-    console.log(nodeObjet);
-    //console.log("8888888888888888888888888888888888888");
-
-
-    var edge = {
-      from: sujetId,
-      to: objetId,
-      arrows: "to",
-      label: p
-    }
-    network.body.data.edges.add(edge);
-
-    //  addEdgeIfNotExist(network, edge);
-    /*
-
-    var nodeSujet = network.body.data.nodes.get({
-    filter: function(node){
-    //    console.log(node);
-    return (node.label == s );
   }
+  addNodeIfNotExist(network, nodeSujetTemp);
+
+
+  if(p != "rdfs:label"){ // creation d'un noeud seulement si ce n'est pas un rdfs:label
+  if (o.startsWith("_:")){
+    console.log("blanknode",o)
+    nodeObjetTemp = {
+      id: o.substring(2,o.length),
+      type: "node"
+    };
+  }else{
+    nodeObjetTemp = {
+      label: o,
+      type: "node"
+    };
+  }
+  addNodeIfNotExist(network, nodeObjetTemp);
+
+  var nodeSujet = network.body.data.nodes.get({
+    filter: function(node){
+      //    console.log(node);
+      return (node.id == nodeSujetTemp.id || node.label == s );
+    }
+  });
+  
+  var nodeObjet = network.body.data.nodes.get({
+    filter: function(node){
+      //    console.log(node);
+      return (node.id == nodeObjetTemp.id || node.label == o );
+    }
+  });
+
+
+  var sujetId , objetId;
+  //  console.log("8888888888888888888888888888888888888");
+  if(nodeSujet.length>0){
+    console.log("sujet exist "+s);
+    nodeSujet = nodeSujet[0];
+    sujetId = nodeSujet.id;
+  }
+  if(nodeObjet.length>0){
+    console.log("objet exist "+o);
+    nodeObjet = nodeObjet[0];
+    objetId = nodeObjet.id;
+  }
+  console.log(nodeSujet);
+  console.log(nodeObjet);
+  //console.log("8888888888888888888888888888888888888");
+
+
+  var edge = {
+    from: sujetId,
+    to: objetId,
+    arrows: "to",
+    label: p
+  }
+  network.body.data.edges.add(edge);
+
+
+
+}
+
+
+
+
+
+
+
+//  addEdgeIfNotExist(network, edge);
+/*
+
+var nodeSujet = network.body.data.nodes.get({
+filter: function(node){
+//    console.log(node);
+return (node.label == s );
+}
 });
 var nodeObjet = network.body.data.nodes.get({
 filter: function(node){
@@ -475,7 +507,7 @@ function addNodeIfNotExist(network, data){
     console.log(existNode);
     if (existNode.length == 0){
       console.log("n'existe pas")
-    network.body.data.nodes.add(data);
+      network.body.data.nodes.add(data);
     }else{
       console.log("existe")
       delete data.x;
@@ -707,7 +739,7 @@ function parseRdfOther(data, triplets){
       if (item.value.trim() !="" && (item.name == "rdf:about" || item.name == "rdf:resource")){
         var t1 = {sujet: item.value, propriete: "rdf:type", objet: data.nodeName};
         triplets.push(t1);
-/*
+        /*
         var t2 = {sujet: data.nodeName, propriete: item.name, objet: item.value};
         triplets.push(t2);*/
 
@@ -723,13 +755,13 @@ function parseRdfOther(data, triplets){
   if (data.childNodes.length > 0){
     console.log("CHILDS :");
     data.childNodes.forEach(function(c) {
-    //  if(c.nodeValue!= undefined && c.nodeValue.trim().length>0){
-        console.log(data.nodeName);
-        console.log(c);
-        console.log("########################## "+data.nodeName +" -> "+ c.nodeName+ " -> "+c.nodeValue );
-        var triplet = {sujet: data.nodeName, propriete: c.nodeName, objet: c.nodeValue};
-        triplets.push(triplet);
-    //  }
+      //  if(c.nodeValue!= undefined && c.nodeValue.trim().length>0){
+      console.log(data.nodeName);
+      console.log(c);
+      console.log("########################## "+data.nodeName +" -> "+ c.nodeName+ " -> "+c.nodeValue );
+      var triplet = {sujet: data.nodeName, propriete: c.nodeName, objet: c.nodeValue};
+      triplets.push(triplet);
+      //  }
 
 
 

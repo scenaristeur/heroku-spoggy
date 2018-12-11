@@ -240,9 +240,6 @@ importFromParam(params){
           }
           console.log("fichier lu");
 
-
-
-
         }
         //  console.log(network);
         //  console.log(partageImport);
@@ -895,16 +892,16 @@ for (var i = 0; i < edges.length; i++) {
   var objetWithPrefix = this.validRdf(network, objet);
 
   if (sujetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
-  sujetWithPrefix = ':' + sujetWithPrefix;
+  sujetWithPrefix = '_:' + sujetWithPrefix; // blanknode
 }
 
 if (proprieteWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
-proprieteWithPrefix = ':' + proprieteWithPrefix;
+proprieteWithPrefix = ':' + proprieteWithPrefix; // propriete utilisant "@base <http://smag0.blogspot.fr/spoggy>"
 
 }
 
 if (objetWithPrefix.indexOf(':') == -1) { // ne contient pas de ':'
-objetWithPrefix = ':' + objetWithPrefix;
+objetWithPrefix = '_:' + objetWithPrefix;  // blanknode
 }
 
 
