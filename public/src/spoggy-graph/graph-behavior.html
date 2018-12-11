@@ -183,6 +183,7 @@ importFromParam(params){
   }else{
     console.log("PARAMETRES");
     var source = params.source;
+    var remplaceNetwork = params.remplaceNetwork || false;
 
     var network = this.network;
     var output = [];
@@ -227,15 +228,15 @@ importFromParam(params){
           //  console.log(reader.result);
           if ((extension == "ttl") || (extension == "n3") || (extension == "n3t")) {
             //   sketch.ttl2Xml(reader.result);
-            ttl2Xml(reader.result, network);
+            ttl2Xml(reader.result, network, remplaceNetwork);
             //  network.dispatch('addTriplets', network.triplets);
           } else if ((extension == "rdf") || (extension == "owl")) {
             //  sketch.data2Xml(reader.result); //if srdf
-            rdf2Xml(reader.result, network);
+            rdf2Xml(reader.result, network, remplaceNetwork);
             //  network.dispatch('addTriplets', network.triplets);
           }
           else {
-            ttl2Xml(reader.result, network);
+            ttl2Xml(reader.result, network, remplaceNetwork);
             //  data2Xml(reader.result, network);
           }
           console.log("fichier lu");

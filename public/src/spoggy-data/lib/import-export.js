@@ -1,7 +1,7 @@
 
 
 
-function rdf2Xml(data, network){
+function rdf2Xml(data, network, remplaceNetwork){
   // reprise de https://github.com/scenaristeur/graphe/blob/master/js/conversion.js
   console.log(data);
   var triplets = [];
@@ -156,7 +156,7 @@ function rdf2Xml(data, network){
 }
 
 
-function ttl2Xml(data,network){
+function ttl2Xml(data,network, remplaceNetwork){
   // reprise de https://github.com/scenaristeur/graphe/blob/master/js/conversion.js
   console.log(data);
   var triplets = [];
@@ -313,7 +313,7 @@ function ttl2Xml(data,network){
       return (node.id == nodeSujetTemp.id || node.label == s );
     }
   });
-  
+
   var nodeObjet = network.body.data.nodes.get({
     filter: function(node){
       //    console.log(node);

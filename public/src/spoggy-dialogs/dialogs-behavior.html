@@ -97,45 +97,54 @@ var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
 
+    importFromSolid(){
+      var url = this.$.importUrl.value;
+
+      console.log(url)
+      var params = {};
+      params.source= url;
+      params.remplaceNetwork = this.$.remplaceNetwork.checked;
+      params.partageImport = this.$.partageImport.checked;
+      this.agentDialogs.send('agentGraph', {type: 'importFromParam', params: params});
+    }
+
+
+
+    _toggleSettings(){
+
+      //this.$.settings.hidden= !this.$.settings.hidden;
+      //this.settinghidden = !this.settinghidden;
+      this.$.settings.toggle();
+      //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'settings'})
+      this.$.dial.open=false;
+    }
+
+    _toggleHelp(){
+
+      //this.$.settings.hidden= !this.$.settings.hidden;
+      //this.settinghidden = !this.settinghidden;
+      this.$.helpPopUp.toggle();
+      //    this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
+      this.$.dial.open=false;
+    }
+    _toggleMode(){
+
+      //this.$.settings.hidden= !this.$.settings.hidden;
+      //this.settinghidden = !this.settinghidden;
+      this.$.modePopup.toggle();
+      //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'modePopup'})
+      this.$.dial.open=false;
+    }
 
 
 
 
-_toggleSettings(){
-
-  //this.$.settings.hidden= !this.$.settings.hidden;
-  //this.settinghidden = !this.settinghidden;
-  this.$.settings.toggle();
-  //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'settings'})
-  this.$.dial.open=false;
-}
-
-_toggleHelp(){
-
-  //this.$.settings.hidden= !this.$.settings.hidden;
-  //this.settinghidden = !this.settinghidden;
-  this.$.helpPopUp.toggle();
-  //    this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
-  this.$.dial.open=false;
-}
-_toggleMode(){
-
-  //this.$.settings.hidden= !this.$.settings.hidden;
-  //this.settinghidden = !this.settinghidden;
-  this.$.modePopup.toggle();
-  //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'modePopup'})
-  this.$.dial.open=false;
-}
-
-
-
-
-_toggleEye(){
-  console.log(this.$.eye.hidden);
-  //this.$.eye.hidden= !this.$.eye.hidden;
-  //this.eyehidden = !this.eyehidden;
-  this.$.eye.toggle();
-}
+    _toggleEye(){
+      console.log(this.$.eye.hidden);
+      //this.$.eye.hidden= !this.$.eye.hidden;
+      //this.eyehidden = !this.eyehidden;
+      this.$.eye.toggle();
+    }
 
 
 
@@ -143,7 +152,7 @@ _toggleEye(){
 
 
 
-}
+  }
 });
 
 </script>

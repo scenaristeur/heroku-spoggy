@@ -246,6 +246,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
               </div>
             </fieldset>
 
+            <div on-tap="_toggleHelp"> HELP / Aide <paper-icon-button icon="help" label="Aide"></paper-icon-button></div>
 
           </div>
 
@@ -356,7 +357,7 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
   <spoggy-preferences></spoggy-preferences>
   <spoggy-historique></spoggy-historique>
-<!--  <spoggy-solid>SOLID</spoggy-solid>-->
+  <!--  <spoggy-solid>SOLID</spoggy-solid>-->
 </div>
 
 
@@ -463,6 +464,9 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     if (this.mode == 'global'){
       this.hideEndpoints = false;
     }
+    if (!this.$.drawer.persistent) {
+      this.$.drawer.close();
+    }
   }
 
   delmode(e){
@@ -563,6 +567,9 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     this.agentApp.send('agentGraph', {type: 'exportTtl'})
   }
   makeAmode(){
+    if (!this.$.drawer.persistent) {
+      this.$.drawer.close();
+    }
     if (this.mode.length == 0){
       this.mode='solo';
     }
