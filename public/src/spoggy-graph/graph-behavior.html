@@ -184,9 +184,6 @@ importFromParam(params){
     console.log("PARAMETRES");
     var source = params.source;
 
-
-
-
     var network = this.network;
     var output = [];
     var xhr = new XMLHttpRequest();
@@ -200,53 +197,53 @@ importFromParam(params){
       reader.addEventListener('load', function () {
         //  console.log(reader.result);
         // ajouter test en fonction du type de fichier, extension
+        var extension = source.split('.').pop();
 
+        if ((extension == "json") || (reader.result.startsWith("[{"))) {
 
-if ((extension == "json") || (reader.result.startsWith("[{"))) {
-
-
-
-        var nodes = JSON.parse(reader.result).nodes;
-        //    console.log(nodes);
-        var edges = JSON.parse(reader.result).edges;
-        //    console.log(edges);
-        network.beforeImport = [];
-        network.beforeImport.nodes = network.body.data.nodes.get();
-        network.beforeImport.edges = network.body.data.edges.get();
-        network.body.data.nodes.update(nodes);
-        network.body.data.edges.update(edges);
-        try{
+          var nodes = JSON.parse(reader.result).nodes;
+          console.log(nodes);
+          var edges = JSON.parse(reader.result).edges;
+          console.log(edges);
+          network.beforeImport = [];
+          network.beforeImport.nodes = network.body.data.nodes.get();
+          network.beforeImport.edges = network.body.data.edges.get();
           network.body.data.nodes.update(nodes);
           network.body.data.edges.update(edges);
-        }
-        catch(e){
-          console.log(e);
-        }
-      }else{
-        //console.log("ce type de fichier n'est pas pris en compte (" + fichier.type + ")");
-        var extension = source.split('.').pop();
-        console.log(extension);
-      //  console.log(fichier);
-        //  console.log(reader.result);
-        if ((extension == "ttl") || (extension == "n3") || (extension == "n3t")) {
-          //   sketch.ttl2Xml(reader.result);
-          ttl2Xml(reader.result, network);
-          //  network.dispatch('addTriplets', network.triplets);
-        } else if ((extension == "rdf") || (extension == "owl")) {
-          //  sketch.data2Xml(reader.result); //if srdf
-          rdf2Xml(reader.result, network);
-          //  network.dispatch('addTriplets', network.triplets);
-        }
-         else {
-             ttl2Xml(reader.result, network);
-        //  data2Xml(reader.result, network);
-        }
-        console.log("fichier lu");
+          try{
+            console.log("update")
+            network.body.data.nodes.update(nodes);
+            network.body.data.edges.update(edges);
+          }
+          catch(e){
+            console.log("erreur")
+            console.log(e);
+          }
+        }else{
+          //console.log("ce type de fichier n'est pas pris en compte (" + fichier.type + ")");
+
+          console.log(extension);
+          //  console.log(fichier);
+          //  console.log(reader.result);
+          if ((extension == "ttl") || (extension == "n3") || (extension == "n3t")) {
+            //   sketch.ttl2Xml(reader.result);
+            ttl2Xml(reader.result, network);
+            //  network.dispatch('addTriplets', network.triplets);
+          } else if ((extension == "rdf") || (extension == "owl")) {
+            //  sketch.data2Xml(reader.result); //if srdf
+            rdf2Xml(reader.result, network);
+            //  network.dispatch('addTriplets', network.triplets);
+          }
+          else {
+            ttl2Xml(reader.result, network);
+            //  data2Xml(reader.result, network);
+          }
+          console.log("fichier lu");
 
 
 
 
-      }
+        }
         //  console.log(network);
         //  console.log(partageImport);
       });
@@ -254,6 +251,8 @@ if ((extension == "json") || (reader.result.startsWith("[{"))) {
     };
     xhr.send();
   }
+  network.fit();
+  network.redraw();
 }
 
 addToGraph(data){

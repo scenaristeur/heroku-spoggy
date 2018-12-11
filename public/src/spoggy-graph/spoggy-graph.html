@@ -4,9 +4,10 @@
 <link rel="import" href="styles/vis-styles.html">
 
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="./graph-import.html">
 
 <dom-module id="spoggy-graph">
-  <link rel="lazy-import" group="lazy" href="./graph-import.html">
+
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-slider/paper-slider.html">
@@ -59,7 +60,7 @@
     }
     </style>
     <div id="action" hidden$="[[actionHide]]">
-<!--      <paper-button on-tap="_cacheAction">Action</paper-button>
+      <!--      <paper-button on-tap="_cacheAction">Action</paper-button>
       <paper-button on-tap="_cacheAction">Action 2</paper-button>-->
     </div>
 
@@ -206,6 +207,7 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });
+
     this.actionHide = true;
   }
   _cacheAction(){
@@ -214,20 +216,21 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
   _deferred(){
     let app = this;
     this.$.scrollNode.dialogElement = this.$.nodePopUp;
-
+    this.agentGraph = new GraphAgent('agentGraph', this);
+    console.log(this.agentGraph);
+    this.network = this.networkDivInitialize(this.$.mynetwork, this);
     this.importLazyGroup('lazy').then((results) => {
       console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
 
-      this.agentGraph = new GraphAgent('agentGraph', this);
-      console.log(this.agentGraph);
 
-      this.network = this.networkDivInitialize(this.$.mynetwork, this);
 
-/* BIDOUILLE A REVOIR POUR INITIALISATION */
-/*this.params = {};
-this.params.source = "/exemple_files/Spoggy_accueil.json"
-  this.agentGraph.send('agentGraph', {type: 'importFromParam', params: this.params});*/
+
+
+      /* BIDOUILLE A REVOIR POUR INITIALISATION */
+      /*this.params = {};
+      this.params.source = "/exemple_files/Spoggy_accueil.json"
+      this.agentGraph.send('agentGraph', {type: 'importFromParam', params: this.params});*/
       /*this.network.on("selectEdge", function (params){
       console.log('dernier edge selectionné: ', params)
       app.lastEdgeSelected = params.edges[0];
