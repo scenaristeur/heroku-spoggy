@@ -14,12 +14,15 @@
     }
     </style>
     <paper-button id="solidLogin" raised  on-tap="_popupLogin" hidden$="[[connected]]" >Login</paper-button>
-    <paper-button id="solidLogout" raised on-tap="_logout" hidden$="[[!connected]]" >Logout</paper-button>
+
     <p hidden$="[[connected]]">
       Pour pouvoir utiliser Solid, vous devez dans un premier temps vous connecter à votre POD.</br>
       To use Solid, you must first login to your POD.<br>
       (<a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank"> Get a POD / Obtenir un POD</a>)
     </p>
+
+    <paper-button id="solidLogout" raised on-tap="_logout" hidden$="[[!connected]]" >Logout</paper-button>
+    <paper-button id="showBrowser" raised on-tap="_showSolid" hidden$="[[!connected]]" >Show Browser</paper-button>
 
   </template>
 
@@ -89,6 +92,11 @@
       solid.auth.logout();
       this.agentConnect.send('agentApp', {type: 'closeDrawer' })
       //  .then(() => alert('Goodbye!'));
+    }
+
+    _showSolid(){
+      this.agentConnect.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
+      this.agentConnect.send('agentApp', {type: 'closeDrawer' })
     }
 
 
