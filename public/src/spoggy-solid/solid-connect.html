@@ -15,6 +15,12 @@
     </style>
     <paper-button id="solidLogin" raised  on-tap="_popupLogin" hidden$="[[connected]]" >Login</paper-button>
     <paper-button id="solidLogout" raised on-tap="_logout" hidden$="[[!connected]]" >Logout</paper-button>
+    <p hidden$="[[connected]]">
+      Pour pouvoir utiliser Solid, vous devez dans un premier temps vous connecter à votre POD.</br>
+      To use Solid, you must first login to your POD.<br>
+      (<a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank"> Get a POD / Obtenir un POD</a>)
+    </p>
+
   </template>
 
   <script>
@@ -57,12 +63,13 @@
         if (!session){
           console.log('The user is not logged in')
           this.connected = false;
-        //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
+          //  this.agentConnect.send('agentSolid', {type: 'sessionChanged', session: null })
         }
         else{
           console.log(`The user is ${session.webId}`)
           this.connected = true
-        //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
+          //  this.agentConnect.send('agentSolid', {type: 'sessionChanged', session: session })
+          //  this.agentConnect.send('agentSolid', {type:'toggle', popup: 'helpPopUp'})
         }
       })
     }
@@ -74,10 +81,13 @@
       if (!session)
       session = await solid.auth.popupLogin({ popupUri });
       //  alert(`Logged in as ${session.webId}`);
+
+      this.agentConnect.send('agentApp', {type: 'closeDrawer' })
     }
 
     _logout(){
-      solid.auth.logout()
+      solid.auth.logout();
+      this.agentConnect.send('agentApp', {type: 'closeDrawer' })
       //  .then(() => alert('Goodbye!'));
     }
 

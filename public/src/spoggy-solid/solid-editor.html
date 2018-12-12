@@ -1,10 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-<link rel="import" href="./browser-behavior.html">
+<link rel="import" href="./editor-behavior.html">
 
-<dom-module id="solid-browser">
-  <link rel="lazy-import" group="lazy" href="./browser-import.html">
+<dom-module id="solid-editor">
+  <link rel="lazy-import" group="lazy" href="./editor-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+
   <template>
     <style>
     :host {
@@ -19,17 +20,22 @@
       <paper-input id="inputDirectory" label="Spoggy directory" hidden$="[[!connected]]"></paper-input>
     </p>
 
+
+
+
+
+
   </template>
 
   <script>
 
-  class SolidBrowser extends Polymer.LazyImportsMixin(BrowserBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'solid-browser'; }
+  class SolidEditor extends Polymer.LazyImportsMixin(EditorBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'solid-editor'; }
     static get properties() {
       return {
         prop1: {
           type: String,
-          value: 'solid-browser'
+          value: 'solid-editor'
         },
         connected: {type: Boolean, value: false}
       };
@@ -45,26 +51,24 @@
       this.importLazyGroup('lazy').then((results) => {
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
-        this.agentBrowser = new BrowserAgent('agentBrowser', this);
+        this.agentEditor = new EditorAgent('agentEditor', this);
       });
       //  this.$.popupSolid.toggle();
       solid.auth.trackSession(session => {
         if (!session){
           console.log('The user is not logged in')
           this.connected = false;
-          //this.$.current.hide()
           //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
         }
         else{
           console.log(`The user is ${session.webId}`)
           this.connected = true
-          //this.$.current.show()
           //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
         }
       })
     }
   }
 
-  window.customElements.define(SolidBrowser.is, SolidBrowser);
+  window.customElements.define(SolidEditor.is, SolidEditor);
   </script>
 </dom-module>

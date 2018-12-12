@@ -579,20 +579,18 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     this.agentApp.send('agentGraph', {type: 'exportTtl'})
   }
   makeAmode(){
-    if (!this.$.drawer.persistent) {
-      this.$.drawer.close();
-    }
+    this.closeDrawer();
     if (this.mode.length == 0){
       this.mode='solo';
     }
   }
 
-  login(){
-    console.log("login")
+  closeDrawer(){
+    if (!this.$.drawer.persistent) {
+      this.$.drawer.close();
+    }
   }
-  logout(){
-    console.log("logout")
-  }
+
 
 }
 window.customElements.define(SpoggyApp.is, SpoggyApp);

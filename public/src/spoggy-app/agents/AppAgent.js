@@ -52,21 +52,24 @@ AppAgent.prototype.receive = function(from, message) {
   }
 
   switch(message.type){
+    case 'closeDrawer':
+    this.app.closeDrawer();
+    break;
     case 'setMode':
     //console.log(message)
 
     if (this.app.mode == ""){
-        this.app.mode = message.value;
+      this.app.mode = message.value;
     }
 
-  //  this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
+    //  this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
     break;
-      //this.agentGlobal.send('agentApp', {type: 'setEndpoint', endpoint: this.endpoint.name });
-case 'setEndpoint' :
+    //this.agentGlobal.send('agentApp', {type: 'setEndpoint', endpoint: this.endpoint.name });
+    case 'setEndpoint' :
 
-this.app.endpointName = message.value.name;
-      break;
-  /*  case 'show':
+    this.app.endpointName = message.value.name;
+    break;
+    /*  case 'show':
     //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });
     var el = message.element;
     var element = this.app.$[el];
@@ -81,5 +84,6 @@ this.app.endpointName = message.value.name;
     default:
     console.log(message);
   }
+
 
 };

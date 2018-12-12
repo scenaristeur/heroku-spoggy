@@ -1,0 +1,29 @@
+
+<script>
+/* @polymerMixin */
+var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class SolidBehavior extends superClass {
+    constructor() {
+      super();
+        console.log("Connect behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'modeB'
+        }
+      };
+    }
+
+    ma_fonction(){
+        //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    }
+
+
+  }
+});
+
+</script>

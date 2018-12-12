@@ -3,54 +3,98 @@
 <link rel="import" href="./solid-behavior.html">
 
 <dom-module id="spoggy-solid">
-    <link rel="lazy-import" group="lazy" href="./solid-import.html">
-    <link rel="lazy-import" group="lazy" href="./solid-browser.html">
+  <link rel="lazy-import" group="lazy" href="./solid-import.html">
+  <link rel="lazy-import" group="lazy" href="./solid-current.html">
+  <link rel="lazy-import" group="lazy" href="./solid-browser.html">
+  <link rel="lazy-import" group="lazy" href="./solid-editor.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
+    .popup {
+      position: absolute;
+      top: 5vh;
+      left: 1vw;
+      z-index: 10;
+      width: 100vw;
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      padding:1px;
+    }
     </style>
-    <h2>Hello [[prop1]]!</h2>
-    <solid-browser></solid-browser>
+
+    <paper-dialog id="popupSolid" class="popup" backdrop transition="core-transition-bottom"><!--  on-iron-overlay-opened="_openImport"
+      on-iron-overlay-closed="_closeImport"-->
+      <div horizontal start-justified start layout >
+        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
+        <div style="padding-left:20px" vertical start-justified start layout wrap>
+          <h2 id="Solid" style="margin: 0;color: #0D578B;">Spoggy-Solid <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
+
+          <solid-current></solid-current>
+          <solid-browser></solid-browser>
+          <solid-editor></solid-editor>
+
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-button id="importCancelButton" dialog-dismiss raised>Fermer</paper-button>
+
+          </div>
+        </div>
+      </div>
+    </paper-dialog>
+
+
   </template>
 
   <script>
-    /**
-     * `spoggy-solid`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.Element)) {
-      static get is() { return 'spoggy-solid'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-solid'
-          }
-        };
-      }
 
-      constructor(){
-        super();
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          this._deferred();
-        });
-      }
-      _deferred(){
-        this.importLazyGroup('lazy').then((results) => {
-          console.log(results);
-          this.dispatchEvent(new CustomEvent('import-loaded', results));
-          this.agentSolid = new SolidAgent('agentSolid', this);
-        });
-          //  this.$.popupSolid.toggle();
-      }
+  class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-solid'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-solid'
+        }
+      };
     }
 
-    window.customElements.define(SpoggySolid.is, SpoggySolid);
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+        this.agentSolid = new SolidAgent('agentSolid', this);
+      });
+      solid.auth.trackSession(session => {
+        if (!session){
+          console.log('The user is not logged in')
+          //  this.connected = false;
+          //this.$.current.hide()
+          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
+        }
+        else{
+          console.log(`The user is ${session.webId}`)
+          this.$.popupSolid.toggle();
+          //  this.connected = true
+          //this.$.current.show()
+          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
+        }
+      })
+    }
+  }
+
+  window.customElements.define(SpoggySolid.is, SpoggySolid);
   </script>
 </dom-module>
