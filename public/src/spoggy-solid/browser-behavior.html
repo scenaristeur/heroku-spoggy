@@ -5,7 +5,7 @@ var BrowserBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class SolidBehavior extends superClass {
     constructor() {
       super();
-        console.log("Browser behavior")
+      console.log("Browser behavior")
       //  console.log(this.inputProp);
     }
 
@@ -19,7 +19,10 @@ var BrowserBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     ma_fonction(){
-        //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+      //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    }
+    sessionChanged(session){
+      console.log("SESSION NOW", session)
     }
 
 

@@ -42,10 +42,9 @@ BrowserAgent.prototype.receive = function(from, message) {
   }
 
   switch(message.type){
-    case 'updaterooms':
-    this.app.rooms = message.rooms;
-    this.app.current_room = message.current_room;
-    console.log("update");
+    case 'sessionChanged':
+    this.app.sessionChanged(message.session)
+    console.log("sessionChanged", message);
     break;
 
     default:

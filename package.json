@@ -32,6 +32,7 @@
     "levelgraph": "^2.1.1",
     "npm": "^6.4.1",
     "socket.io": "^2.2.0",
+    "solid-auth-client": "^2.2.14",
     "vis": "^4.21.0"
   }
 }

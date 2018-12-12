@@ -3,52 +3,70 @@
 <link rel="import" href="./browser-behavior.html">
 
 <dom-module id="solid-browser">
-    <link rel="lazy-import" group="lazy" href="./solid-import.html">
+  <link rel="lazy-import" group="lazy" href="./browser-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
     <h2>Hello [[prop1]]!</h2>
+    connected : [[connected]]
+
+    <paper-input id="inputSolid" label="POD" hidden$="[[!connected]]"></paper-input>
+    <paper-input id="inputDirectory" label="Spoggy directory" hidden$="[[!connected]]"></paper-input>
   </template>
 
   <script>
-    /**
-     * `spoggy-solid`
-     *
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SolidBrowser extends Polymer.LazyImportsMixin(BrowserBehaviorMixin(Polymer.Element)) {
-      static get is() { return 'solid-browser'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'solid-browser'
-          }
-        };
-      }
-
-      constructor(){
-        super();
-        Polymer.RenderStatus.afterNextRender(this, function() {
-          this._deferred();
-        });
-      }
-      _deferred(){
-        this.importLazyGroup('lazy').then((results) => {
-          console.log(results);
-          this.dispatchEvent(new CustomEvent('import-loaded', results));
-          this.agentBrowser = new BrowserAgent('agentBrowser', this);
-        });
-          //  this.$.popupSolid.toggle();
-      }
+  /**
+  * `spoggy-solid`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SolidBrowser extends Polymer.LazyImportsMixin(BrowserBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'solid-browser'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'solid-browser'
+        },
+        connected: {type: Boolean, value: false}
+      };
     }
 
-    window.customElements.define(SolidBrowser.is, SolidBrowser);
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+        this.agentBrowser = new BrowserAgent('agentBrowser', this);
+      });
+      //  this.$.popupSolid.toggle();
+      solid.auth.trackSession(session => {
+        if (!session){
+          console.log('The user is not logged in')
+          this.connected = false;
+          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
+        }
+        else{
+          console.log(`The user is ${session.webId}`)
+          this.connected = true
+          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
+        }
+      })
+    }
+  }
+
+  window.customElements.define(SolidBrowser.is, SolidBrowser);
   </script>
 </dom-module>
