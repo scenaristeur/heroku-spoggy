@@ -13,96 +13,98 @@
       display: block;
     }
     </style>
-    <paper-button id="solidLogin" raised  on-tap="_popupLogin" hidden$="[[connected]]" >Login</paper-button>
+    <paper-button id="showBrowser" raised on-tap="_showSolid" >Show Browser</paper-button>
+  </br>
+  <paper-button id="solidLogin" raised  on-tap="_popupLogin" hidden$="[[connected]]" >Login</paper-button>
 
-    <p hidden$="[[connected]]">
-      Pour pouvoir utiliser Solid, vous devez dans un premier temps vous connecter à votre POD.</br>
-      To use Solid, you must first login to your POD.<br>
-      (<a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank"> Get a POD / Obtenir un POD</a>)
-    </p>
+  <p hidden$="[[connected]]">
+    Pour pouvoir utiliser Solid, vous devez dans un premier temps vous connecter à votre POD.</br>
+    To use Solid, you must first login to your POD.<br>
+    (<a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank"> Get a POD / Obtenir un POD</a>)
+  </p>
 
-    <paper-button id="solidLogout" raised on-tap="_logout" hidden$="[[!connected]]" >Logout</paper-button>
-    <paper-button id="showBrowser" raised on-tap="_showSolid" hidden$="[[!connected]]" >Show Browser</paper-button>
-
-  </template>
-
-  <script>
-  /**
-  * `spoggy-solid`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class SolidConnect extends Polymer.LazyImportsMixin(ConnectBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'solid-connect'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'solid-connect'
-        },
-        connected: {type: Boolean, value: false}
-      };
-    }
-
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this._deferred();
-      });
-    }
-    _deferred(){
-      this.importLazyGroup('lazy').then((results) => {
-        console.log(results);
-        this.dispatchEvent(new CustomEvent('import-loaded', results));
-
-      });
-
-      this.agentConnect = new ConnectAgent('agentConnect', this);
-      //  this.$.popupSolid.toggle();
-      solid.auth.trackSession(session => {
-        if (!session){
-          console.log('The user is not logged in')
-          this.connected = false;
-          //  this.agentConnect.send('agentSolid', {type: 'sessionChanged', session: null })
-        }
-        else{
-          console.log(`The user is ${session.webId}`)
-          this.connected = true
-          //  this.agentConnect.send('agentSolid', {type: 'sessionChanged', session: session })
-          //  this.agentConnect.send('agentSolid', {type:'toggle', popup: 'helpPopUp'})
-        }
-      })
-    }
-
-    async _popupLogin() {
-      let session = await solid.auth.currentSession();
-      //  let popupUri = 'https://solid.community/common/popup.html';
-      let popupUri = './popup.html';
-      if (!session)
-      session = await solid.auth.popupLogin({ popupUri });
-      //  alert(`Logged in as ${session.webId}`);
-
-      this.agentConnect.send('agentApp', {type: 'closeDrawer' })
-    }
-
-    _logout(){
-      solid.auth.logout();
-      this.agentConnect.send('agentApp', {type: 'closeDrawer' })
-      //  .then(() => alert('Goodbye!'));
-    }
-
-    _showSolid(){
-      this.agentConnect.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
-      this.agentConnect.send('agentApp', {type: 'closeDrawer' })
-    }
+  <paper-button id="solidLogout" raised on-tap="_logout" hidden$="[[!connected]]" >Logout</paper-button>
 
 
+</template>
 
+<script>
+/**
+* `spoggy-solid`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SolidConnect extends Polymer.LazyImportsMixin(ConnectBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'solid-connect'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'solid-connect'
+      },
+      connected: {type: Boolean, value: false}
+    };
   }
 
-  window.customElements.define(SolidConnect.is, SolidConnect);
-  </script>
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+
+    });
+
+    this.agentConnect = new ConnectAgent('agentConnect', this);
+    //  this.$.popupSolid.toggle();
+    solid.auth.trackSession(session => {
+      if (!session){
+        console.log('The user is not logged in')
+        this.connected = false;
+        //  this.agentConnect.send('agentSolid', {type: 'sessionChanged', session: null })
+      }
+      else{
+        console.log(`The user is ${session.webId}`)
+        this.connected = true
+        //  this.agentConnect.send('agentSolid', {type: 'sessionChanged', session: session })
+        //  this.agentConnect.send('agentSolid', {type:'toggle', popup: 'helpPopUp'})
+      }
+    })
+  }
+
+  async _popupLogin() {
+    let session = await solid.auth.currentSession();
+    //  let popupUri = 'https://solid.community/common/popup.html';
+    let popupUri = './popup.html';
+    if (!session)
+    session = await solid.auth.popupLogin({ popupUri });
+    //  alert(`Logged in as ${session.webId}`);
+
+    this.agentConnect.send('agentApp', {type: 'closeDrawer' })
+  }
+
+  _logout(){
+    solid.auth.logout();
+    this.agentConnect.send('agentApp', {type: 'closeDrawer' })
+    //  .then(() => alert('Goodbye!'));
+  }
+
+  _showSolid(){
+    this.agentConnect.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
+    this.agentConnect.send('agentApp', {type: 'closeDrawer' })
+  }
+
+
+
+}
+
+window.customElements.define(SolidConnect.is, SolidConnect);
+</script>
 </dom-module>

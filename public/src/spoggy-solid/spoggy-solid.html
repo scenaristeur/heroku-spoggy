@@ -11,6 +11,8 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+
   <template>
     <style>
     :host {
@@ -37,9 +39,31 @@
         <div style="padding-left:20px" vertical start-justified start layout wrap>
           <h2 id="Solid" style="margin: 0;color: #0D578B;">Spoggy-Solid <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
 
-          <solid-current>Chargement Current</solid-current>
-          <solid-browser>Chargement Browser</solid-browser>
-          <solid-editor>Chargement Editeur</solid-editor>
+          <iron-collapse-button opened>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
+            <div slot="collapse-content">
+              <solid-current>Chargement Current</solid-current>
+
+            </div>
+          </iron-collapse-button>
+
+          <iron-collapse-button opened>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Browser</h3>
+            <div slot="collapse-content">
+              <solid-browser>Chargement Browser</solid-browser>
+
+            </div>
+          </iron-collapse-button>
+
+          <iron-collapse-button>
+            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Editor</h3>
+            <div slot="collapse-content">
+              <solid-editor>Chargement Editeur</solid-editor>
+            </div>
+          </iron-collapse-button>
+
+
+
 
           <div style="padding-top:10px" horizontal end-justified layout self-stretch>
             <paper-button id="importCancelButton" dialog-dismiss raised>Fermer</paper-button>

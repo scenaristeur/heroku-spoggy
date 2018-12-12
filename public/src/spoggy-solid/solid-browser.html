@@ -12,7 +12,7 @@
     }
     </style>
     <h2>Hello [[prop1]]!</h2>
-    connected : [[connected]]
+    connected : [[connected]] to [[folder.name]]
 
     <paper-input id="inputSolid" label="POD" hidden$="[[!connected]]"></paper-input>
     <p>
@@ -46,6 +46,8 @@
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentBrowser = new BrowserAgent('agentBrowser', this);
+        this.fileclient = new SolidFileClient();
+        console.log("FileClient ok",this.st)
       });
       //  this.$.popupSolid.toggle();
       solid.auth.trackSession(session => {
@@ -62,6 +64,8 @@
           //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
         }
       })
+
+
     }
   }
 

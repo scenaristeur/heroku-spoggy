@@ -42,9 +42,8 @@ BrowserAgent.prototype.receive = function(from, message) {
   }
 
   switch(message.type){
-    case 'sessionChanged':
-    this.app.sessionChanged(message.session)
-    console.log("sessionChanged", message);
+    case 'currentChanged':
+    this.app.currentChanged(message.current);
     break;
 
     default:

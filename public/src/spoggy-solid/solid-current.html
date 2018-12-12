@@ -12,13 +12,8 @@
       display: block;
     }
     </style>
-    connected : [[connected]]
-
-    <paper-input id="inputSolid" label="POD" hidden$="[[!connected]]"></paper-input>
-    <p>
-      <paper-input id="inputDirectory" label="Spoggy directory" hidden$="[[!connected]]"></paper-input>
-    </p>
-
+    <paper-input id="inputSolid" label="POD"  value=[[webId]]></paper-input>
+    <paper-input id="inputDirectory" label="Spoggy directory" value="[[url]]"></paper-input>
   </template>
 
   <script>
@@ -46,21 +41,43 @@
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentCurrent = new CurrentAgent('agentCurrent', this);
+
+        solid.auth.trackSession(session => {
+          if (!session){
+            console.log('The user is not logged in')
+            this.connected = false;
+            this.webId= "https://smag0.solid.community/profile/card#me"
+            this.updateUrl();
+            //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
+          }
+          else{
+            console.log(`The user is ${session.webId}`)
+            this.connected = true
+            this.webId = session.webId;
+            this.updateUrl();
+
+            //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
+          }
+        })
       });
       //  this.$.popupSolid.toggle();
-      solid.auth.trackSession(session => {
-        if (!session){
-          console.log('The user is not logged in')
-          this.connected = false;
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
-        }
-        else{
-          console.log(`The user is ${session.webId}`)
-          this.connected = true
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
-        }
-      })
+
     }
+
+    updateUrl(){
+      var wedIdSpilt = this.webId.split("/");
+      this._webIdRoot = wedIdSpilt[0]+"//"+wedIdSpilt[2]+"/";
+      console.log(this._webIdRoot);
+      this.url = this._webIdRoot+"public/";
+      var current = {}
+      current.key = "folder"
+      current.value = {}
+      current.value.url = this.url
+      this.agentCurrent.send('agentBrowser', {type: 'currentChanged', current: current })
+      this.agentCurrent.send('agentEditor', {type: 'currentChanged', current: current })
+    }
+
+
   }
 
   window.customElements.define(SolidCurrent.is, SolidCurrent);

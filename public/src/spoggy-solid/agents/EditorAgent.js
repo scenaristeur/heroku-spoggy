@@ -42,11 +42,9 @@ EditorAgent.prototype.receive = function(from, message) {
   }
 
   switch(message.type){
-    case 'updaterooms':
-    this.app.rooms = message.rooms;
-    this.app.current_room = message.current_room;
-    console.log("update");
-    break;
+    case 'currentChanged':
+        this.app.currentChanged(message.current);
+        break;
 
     default:
     console.log(message);

@@ -5,7 +5,7 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class SolidBehavior extends superClass {
     constructor() {
       super();
-        console.log("Connect behavior")
+      console.log("Connect behavior")
       //  console.log(this.inputProp);
     }
 
@@ -18,10 +18,11 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       };
     }
 
-    ma_fonction(){
-        //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    currentChanged(current){
+      console.log(current)
+      /*  this.current = await this.st.get(current);
+      console.log("RESULT : ",this.current)*/
     }
-
 
   }
 });
