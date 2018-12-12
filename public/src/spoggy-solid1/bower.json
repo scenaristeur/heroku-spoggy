@@ -1,6 +1,6 @@
 {
-  "name": "spoggy-solid",
-  "main": "spoggy-solid.html",
+  "name": "spoggy-chat",
+  "main": "spoggy-chat.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },

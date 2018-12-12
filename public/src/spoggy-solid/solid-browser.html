@@ -1,10 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-<link rel="import" href="./solid-behavior.html">
+<link rel="import" href="./browser-behavior.html">
 
-<dom-module id="spoggy-solid">
+<dom-module id="solid-browser">
     <link rel="lazy-import" group="lazy" href="./solid-import.html">
-    <link rel="lazy-import" group="lazy" href="./solid-browser.html">
   <template>
     <style>
       :host {
@@ -12,7 +11,6 @@
       }
     </style>
     <h2>Hello [[prop1]]!</h2>
-    <solid-browser></solid-browser>
   </template>
 
   <script>
@@ -24,13 +22,13 @@
      * @polymer
      * @demo demo/index.html
      */
-    class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.Element)) {
-      static get is() { return 'spoggy-solid'; }
+    class SolidBrowser extends Polymer.LazyImportsMixin(BrowserBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'solid-browser'; }
       static get properties() {
         return {
           prop1: {
             type: String,
-            value: 'spoggy-solid'
+            value: 'solid-browser'
           }
         };
       }
@@ -45,12 +43,12 @@
         this.importLazyGroup('lazy').then((results) => {
           console.log(results);
           this.dispatchEvent(new CustomEvent('import-loaded', results));
-          this.agentSolid = new SolidAgent('agentSolid', this);
+          this.agentBrowser = new BrowserAgent('agentBrowser', this);
         });
           //  this.$.popupSolid.toggle();
       }
     }
 
-    window.customElements.define(SpoggySolid.is, SpoggySolid);
+    window.customElements.define(SolidBrowser.is, SolidBrowser);
   </script>
 </dom-module>

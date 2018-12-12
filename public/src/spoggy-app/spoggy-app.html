@@ -49,7 +49,8 @@
   <link rel="lazy-import" group="lazy" href="../spoggy-accueil/spoggy-accueil.html">
 
   <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph-reglages.html">
-  <!--<link rel="lazy-import" group="lazy" href="../spoggy-solid/spoggy-solid.html">-->
+  <link rel="lazy-import" group="lazy" href="../spoggy-solid/spoggy-solid.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-solid/solid-connect.html">
   <!--<link rel="import" href="../shared-styles.html">-->
 
   <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
@@ -227,6 +228,16 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
                 </div>
               </iron-collapse-button>
 
+              <iron-collapse-button>
+                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid Connect</h3>
+
+                <div slot="collapse-content">
+
+                  <solid-connect></solid-connect>
+
+                </div>
+              </iron-collapse-button>
+
 
 
 
@@ -357,7 +368,8 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
   <spoggy-preferences></spoggy-preferences>
   <spoggy-historique></spoggy-historique>
-  <!--  <spoggy-solid>SOLID</spoggy-solid>-->
+  <spoggy-solid>SOLID</spoggy-solid>
+
 </div>
 
 
@@ -573,6 +585,13 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     if (this.mode.length == 0){
       this.mode='solo';
     }
+  }
+
+  login(){
+    console.log("login")
+  }
+  logout(){
+    console.log("logout")
   }
 
 }

@@ -1,4 +1,4 @@
-# \<spoggy-solid\>
+# \<spoggy-chat\>
 
 
 

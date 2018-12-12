@@ -1,0 +1,104 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./solid-behavior.html">
+
+<dom-module id="spoggy-solid">
+  <link rel="lazy-import" group="lazy" href="./solid-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <!--<link rel="lazy-import" group="lazy" href="../../bower_components/paper-listbox/paper-listbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-item/paper-item.html">-->
+  <link rel="lazy-import" group="lazy" href="./solid-connect.html">
+  <link rel="lazy-import" group="lazy" href="./file-browser.html">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    .popup {
+      position: absolute;
+      top: 20vh;
+      left: 2vw;
+      z-index: 10;
+      width: 90vw;
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      padding:1px;
+    }
+    </style>
+    SOLID SPOGGY
+    <paper-dialog id="popupSolid" class="popup" backdrop transition="core-transition-bottom" on-iron-overlay-opened="_checkWebid"><!-- on-iron-overlay-opened="_myOpenFunction"
+      on-iron-overlay-closed="_myClosedFunction" -->
+      <h2  style="margin: 0;color: #0D578B;"> Connexion POD
+        <!--<paper-button ontap="_pageAide">?</paper-button>-->
+        <!--  <paper-button dialog-dismiss raised>X</paper-button> -->
+        <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
+
+    <!--<solid-connect>Blop</solid-connect>
+    <file-browser>Browser</file-browser>-->
+
+
+    <paper-input id="inputFileNameToSaveAsPOD" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+
+<!--  </paper-dialog-scrollable>-->
+
+  <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+
+    <!--<paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+    <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
+    <!--  <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input> -->
+    <paper-button raised  dialog-dismiss>Annuler</paper-button>
+    <paper-button id="send2PODBtn" raised on-tap="send2POD" dialog-confirm>Send To POD</paper-button>
+    <paper-button id="importFromPODBtn" raised on-tap="importFromPOD" dialog-confirm>Import from POD</paper-button>
+    <br>
+  </div>
+</paper-dialog>
+
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-chat`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'spoggy-solid'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-solid'
+        }
+      };
+    }
+
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+        this.agentSolid = new SolidAgent('agentSolid', this);
+      });
+        //  this.$.popupSolid.toggle();
+    }
+  }
+
+  window.customElements.define(SpoggySolid.is, SpoggySolid);
+  </script>
+</dom-module>
