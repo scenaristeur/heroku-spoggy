@@ -5,20 +5,15 @@
 <dom-module id="solid-browser">
   <link rel="lazy-import" group="lazy" href="./browser-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="./solid-foldermenu.html">
   <template>
     <style>
     :host {
       display: block;
     }
     </style>
-    <h2>Hello [[prop1]]!</h2>
     connected : [[connected]] to [[folder.name]]
-
-    <paper-input id="inputSolid" label="POD" hidden$="[[!connected]]"></paper-input>
-    <p>
-      <paper-input id="inputDirectory" label="Spoggy directory" hidden$="[[!connected]]"></paper-input>
-    </p>
-
+    <solid-foldermenu folder=[[folder]]>chargement Foldermenu</solid-foldermenu>
   </template>
 
   <script>

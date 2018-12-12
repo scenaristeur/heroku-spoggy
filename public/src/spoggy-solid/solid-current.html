@@ -71,8 +71,8 @@
       this.url = this._webIdRoot+"public/";
       var current = {}
       current.key = "folder"
-      current.value = {}
-      current.value.url = this.url
+    //  current.value = {}
+      current.url = this.url
       this.agentCurrent.send('agentBrowser', {type: 'currentChanged', current: current })
       this.agentCurrent.send('agentEditor', {type: 'currentChanged', current: current })
     }

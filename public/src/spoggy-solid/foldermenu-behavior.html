@@ -1,7 +1,7 @@
 
 <script>
 /* @polymerMixin */
-var CurrentBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+var FoldermenuBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   return class SolidBehavior extends superClass {
     constructor() {
       super();
@@ -22,9 +22,7 @@ var CurrentBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log(current)
       /*  this.current = await this.st.get(current);
       console.log("RESULT : ",this.current)*/
-      this.url = current.url
     }
-
 
   }
 });

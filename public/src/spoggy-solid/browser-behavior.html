@@ -24,7 +24,7 @@ var BrowserBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
     currentChanged(current){
       console.log(current)
-      this.fileclient.readFolder( current.value.url ).then( folder => {
+      this.fileclient.readFolder( current.url ).then( folder => {
         if(!folder) console.log(this.fileclient.err)
         else console.log(
           `Read ${folder.name}, it has ${folder.files.length} files.`,folder);
