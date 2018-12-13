@@ -48,6 +48,9 @@ EditorAgent.prototype.receive = function(from, message) {
     case 'folderChanged':
     this.app.folderChanged(message.folder);
     break;
+    case 'fileChanged':
+    this.app.fileChanged(message.file);
+    break;
 
     default:
     console.log(message);

@@ -28,6 +28,19 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.content = folder.content;
     }
 
+    fileChanged(file){
+      this.url = file.url;
+      console.log(file.type)
+      this.fileclient.readFile( file.url ).then( response => {
+        if(!response)
+        { console.log(this.fileclient.err)}
+        else {
+          console.log( `File content is : ${response.value}.`)
+          this.content = response.value;
+        }
+      })
+    }
+
   }
 });
 
