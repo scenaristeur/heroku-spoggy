@@ -2009,7 +2009,11 @@ folder2vis(sfolder){
     edges: edges
   };
   console.log(data)
+  this.network.body.data.nodes.clear();
+  this.network.body.data.edges.clear();
   this.addSolidToGraph(data);
+  this.network.fit();
+  this.network.redraw();
 }
 
 addSolidToGraph(data){
@@ -2029,7 +2033,11 @@ fileChanged(file){
   //  this.clear()
   console.log(file);
 
-  switch(file.value.type) {
+  //this.url = file.url;
+  console.log(file.type)
+
+
+  switch(file.type) {
     case "application/json":
     this.parseJson(file)
     break;
@@ -2045,24 +2053,39 @@ fileChanged(file){
 clear(){
   this.network.body.data.nodes.clear();
   this.network.body.data.edges.clear();
+  this.network.fit();
+  this.network.redraw();
 }
 parseJson(file){
   console.log("JSON\n\n")
-  //  console.log(file.value.content)
-  var data = JSON.parse(file.value.content);
-  console.log(data)
-  //  console.log(typeof data)
-  this.network.body.data.nodes.update(data.nodes)
-  this.network.body.data.edges.update(data.edges)
-  /*  console.log(data.nodes)
-  console.log(data.edges)
-  data.nodes.forEach(function(n){
-  console.log(n)
+
+  this.fileclient.readFile( file.url ).then( response => {
+    if(!response)
+    { console.log(this.fileclient.err)}
+    else {
+      console.log( `File content is : ${response.value}.`)
+
+      //  this.content = response.value;
+      //this.agentEditor.send('agentGraph', {type: 'fileChanged', file: file })
+      //  console.log(data)
+      var data = JSON.parse(response.value);
+      console.log(data)
+      //  console.log(typeof data)
+      this.network.body.data.nodes.update(data.nodes)
+      this.network.body.data.edges.update(data.edges)
+      /*  console.log(data.nodes)
+      console.log(data.edges)
+      data.nodes.forEach(function(n){
+      console.log(n)
+    })
+
+    data.edges.forEach(function(e){
+    console.log(e)
+  })*/
+}
 })
 
-data.edges.forEach(function(e){
-console.log(e)
-})*/
+
 }
 
 
@@ -2076,7 +2099,7 @@ parseTurtle(file){
   console.log(store)
   const fetcher = new $rdf.Fetcher(store);
   console.log(fetcher)
-  fetcher.load(file.value.url).then( response => {
+  fetcher.load(file.url).then( response => {
     console.log(response)
     console.log(store)
     console.log(store.statements)
