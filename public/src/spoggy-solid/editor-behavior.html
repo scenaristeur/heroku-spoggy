@@ -23,6 +23,10 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       /*  this.current = await this.st.get(current);
       console.log("RESULT : ",this.current)*/
     }
+    folderChanged(folder){
+      this.url = folder.url;
+      this.content = folder.content;
+    }
 
   }
 });

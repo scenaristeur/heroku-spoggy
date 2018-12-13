@@ -43,8 +43,11 @@ EditorAgent.prototype.receive = function(from, message) {
 
   switch(message.type){
     case 'currentChanged':
-        this.app.currentChanged(message.current);
-        break;
+    this.app.currentChanged(message.current);
+    break;
+    case 'folderChanged':
+    this.app.folderChanged(message.folder);
+    break;
 
     default:
     console.log(message);

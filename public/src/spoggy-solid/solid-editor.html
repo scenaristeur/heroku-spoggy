@@ -2,29 +2,48 @@
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./editor-behavior.html">
 
+
 <dom-module id="solid-editor">
   <link rel="lazy-import" group="lazy" href="./editor-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html">
+  <!--  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer-ace-editor/ace-editor.html">-->
 
   <template>
     <style>
     :host {
       display: block;
     }
+    .container {
+      display: flex;
+      flex-direction: row;
+    }
+    .item {
+      flex: 2; /* default 0 */
+    }
+    #editor {
+      /*  position: absolute;
+      top: 10px;
+      left: 10px;*/
+      width:100%;
+      height: 400px
+    }
     </style>
-    <h2>Hello [[prop1]]!</h2>
-    connected : [[connected]]
 
-    <paper-input id="inputSolid" label="POD" hidden$="[[!connected]]"></paper-input>
-    <p>
-      <paper-input id="inputDirectory" label="Spoggy directory" hidden$="[[!connected]]"></paper-input>
-    </p>
+    [[url]]</br>
 
 
+    <div class="container">
 
+      <juicy-ace-editor
+      id="editor"
+      theme="ace/theme/monokai"
+      mode="ace/mode/turtle"
+      softtabs="true"
+      wrap="true"
+      >[[content]]</juicy-ace-editor>
 
-
-
+    </div>
   </template>
 
   <script>
@@ -52,6 +71,10 @@
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentEditor = new EditorAgent('agentEditor', this);
+        /*var define = ace.define;
+        this.editor = ace.edit("editor");
+        console.log(editor)*/
+
       });
       //  this.$.popupSolid.toggle();
       solid.auth.trackSession(session => {
@@ -66,9 +89,11 @@
           //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
         }
       })
+
+
     }
   }
 
   window.customElements.define(SolidEditor.is, SolidEditor);
-  </script>
+</script>
 </dom-module>
