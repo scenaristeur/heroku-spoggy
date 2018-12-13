@@ -293,6 +293,9 @@
     _browse(e){
       console.log(e.model.item)
       var current = e.model.item;
+      if (current.type != "folder"){
+        this.agentFoldermenu.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
+      }
       this.agentFoldermenu.send('agentCurrent', {type: 'currentChanged', current: current })
       this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
       this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })

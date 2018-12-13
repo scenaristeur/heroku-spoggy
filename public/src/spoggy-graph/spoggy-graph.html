@@ -273,6 +273,53 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
         console.log("Plusieurs noeuds selectionnes")
       }
     });
+
+
+
+    app.network.on("doubleClick", async function (params) {
+      console.log('selectNode Event: ', params);
+      var id = params.nodes[0];
+      var existNode;
+      try{
+        existNode = app.network.body.data.nodes.get({
+          filter: function(node){
+            return (node.id == id );
+          }
+        });
+        console.log(existNode);
+        if (existNode.length != 0){
+          console.log("existe")
+          app.nodeChanged(existNode[0]);
+          //  app.agentVis.send('agentFileeditor', {type: "nodeChanged", node: existNode[0]});
+          //  app.agentVis.send('agentFoldermenu', {type: "nodeChanged", node: existNode[0]});
+          //  network.body.data.nodes.add(data);
+          //  var thing = this.thing;
+
+        }else{
+
+          console.log("n'existe pas")
+          //  delete data.x;
+          //  delete data.y
+          //  network.body.data.nodes.update(data);
+
+        }
+      }
+      catch (err){
+        console.log(err);
+      }
+      //  app.agentVis.send('agentCurrent', {type: "urlChanged", url: params.nodes[0]});
+    });
+
+
+
+
+
+
+
+
+
+
+
     this.agentGraph.send('agentReglagesGraph', {type:'initOptions', repulsion : this.network.physics.options.repulsion});
 
   });
