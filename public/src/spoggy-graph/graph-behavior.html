@@ -1930,6 +1930,183 @@ recupParams(){
 return params;
 }
 
+/*currentChanged(current){
+console.log(current)
+if ((current.key == "folder") ||(current.type == "folder")) {
+this.folder2vis(current.value)
+}else if ((current.key == "file") || (current.type == "folder")){
+this.file2vis(current)
+}else{
+console.log("Current.key inconnu",current)
+}
+}*/
+
+folder2vis(sfolder){
+  var app = this;
+  //  this.clear()
+  console.log('sfolder')
+  console.log(sfolder)
+  var name = sfolder.name;
+  var url = sfolder.url;
+  var parent = sfolder.parent;
+  //  var folders = sfolder.folders||"Folders";
+  //  var files = sfolder.files|| "Files";
+
+  var nodes = [];
+  var edges = [];
+  nodes.push({id: url, label: name, type: "folder"});
+  nodes.push({id:'folders', label:"Folder"});
+  edges.push({from:url, to: 'folders', arrows: 'to', label:"type"});
+  //console.log("PAREnT", parent)
+
+  if (parent != undefined){
+    //  console.log("undef")
+    nodes.push({id: parent, label: parent, type: "folder"});
+    edges.push({from: url, to: parent, arrows:'to', label: "parent"});
+  }
+  //  {id: "urlNode"+url, label: url},
+  /*,
+  {id: "folderCluster", label: folders},
+  {id: "fileCluster", label: files}*/
+
+
+  // create an array with edges
+
+  //{from: url, to: "urlNode"+url, arrows:'to', label: "url"},
+  /*,
+  {from: url, to: "folderCluster", arrows:'to', label: "folders"},
+  {from: url, to: "fileCluster", arrows:'to', label: "files"},*/
+
+
+  if (sfolder.folders && sfolder.folders.length >0){
+
+    sfolder.folders.forEach(function(fo){
+      if(fo.name != ".."){
+        app.folder2vis(fo)
+        var node = {id:fo.url, label:fo.name, type: 'folder'}
+        //  console.log(node)
+        nodes.push(node);
+        edges.push({from:url, to: fo.url, arrows: 'to', label:"folder"});
+        edges.push({from:fo.url, to: 'folders', arrows: 'to', label:"type"});
+      }
+    })
+  }
+  if (sfolder.files && sfolder.files.length > 0){
+    nodes.push({id:'files', label:"File"});
+    sfolder.files.forEach(function(fi){
+      //  console.log(fi)
+      //  app.file2vis(fi)
+      var node = {id:fi.url, label:fi.label, type: 'file'};
+      //  console.log(node)
+      nodes.push(node);
+      edges.push({from:url, to: fi.url, arrows: 'to', label:"file"});
+      edges.push({from:fi.url, to: 'files', arrows: 'to', label:"type"});
+    })
+  }
+
+  var  data = {
+    nodes: nodes,
+    edges: edges
+  };
+  console.log(data)
+  this.addSolidToGraph(data);
+}
+
+addSolidToGraph(data){
+  console.log(data)
+
+  this.network.body.data.nodes.update(data.nodes)
+  this.network.body.data.edges.update(data.edges)
+}
+
+/*file2vis(sfile){
+console.log('sfile',sfile)
+this.fileChanged(sfile);
+}*/
+
+
+fileChanged(file){
+  //  this.clear()
+  console.log(file);
+
+  switch(file.value.type) {
+    case "application/json":
+    this.parseJson(file)
+    break;
+    case "text/turtle":
+    this.parseTurtle(file)
+    break;
+    default:
+    this.parseTurtle(file)
+  }
+
+}
+
+clear(){
+  this.network.body.data.nodes.clear();
+  this.network.body.data.edges.clear();
+}
+parseJson(file){
+  console.log("JSON\n\n")
+  //  console.log(file.value.content)
+  var data = JSON.parse(file.value.content);
+  console.log(data)
+  //  console.log(typeof data)
+  this.network.body.data.nodes.update(data.nodes)
+  this.network.body.data.edges.update(data.edges)
+  /*  console.log(data.nodes)
+  console.log(data.edges)
+  data.nodes.forEach(function(n){
+  console.log(n)
+})
+
+data.edges.forEach(function(e){
+console.log(e)
+})*/
+}
+
+
+
+parseTurtle(file){
+  var app = this;
+  //  console.log(file.value.content)
+  //  ttl2Xml(file.value.content, this.network)
+  /* TEST AVEC STORE+SPARQL, mais on a dejà les infos dans file.value.content */
+  const store = $rdf.graph();
+  console.log(store)
+  const fetcher = new $rdf.Fetcher(store);
+  console.log(fetcher)
+  fetcher.load(file.value.url).then( response => {
+    console.log(response)
+    console.log(store)
+    console.log(store.statements)
+    var edges=[];
+    console.log(store.statements)
+    if (store.statements.length > 0){
+      store.statements.forEach(function (s){
+        var nodeSujetTemp = {
+          id: s.subject.value,
+          label: s.subject.value,
+          type: "node"
+        };
+        var nodeObjetTemp = {
+          id:  s.object.value,
+          label: s.object.value,
+          type: "node"
+        };
+        app.addNodeIfNotExist(app.network, nodeSujetTemp)
+        app.addNodeIfNotExist(app.network, nodeObjetTemp)
+        edges.push({from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+        console.log(edges)
+        app.network.body.data.edges.update(edges)
+      })}
+    })
+    /*let name = store.any(person, VCARD(‘fn’));
+    if (name) {
+    label.textContent =  name.value; // name is a Literal object
+  }*/
+}
+
 }
 });
 </script>

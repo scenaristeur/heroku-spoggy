@@ -108,8 +108,14 @@ GraphAgent.prototype.receive = function(from, message) {
     case 'exportTtl':
     console.log('exportTtl')
     this.exportTtl();
-
     break;
+    // depuis solid
+    case 'folderChanged':
+    console.log('folderChanged', message)
+    this.app.folder2vis(message.folder)
+    case 'fileChanged':
+    console.log('fileChanged', message)
+    this.app.fileChanged(message.file)
 
     default:
     console.log(message);
