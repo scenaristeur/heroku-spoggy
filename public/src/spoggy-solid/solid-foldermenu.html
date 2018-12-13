@@ -232,18 +232,19 @@
             <paper-item raised on-tap="_browse"> <img src="./assets/document.png" />[[item.name]]</paper-item>
           </template>
         </td>
+      </tr>
+      <tr>
+        <td  colspan="2">
+          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+            <paper-input id="nameInput" label="name of folder or file to create / nom du dossier ou du fichier a créer" ></paper-input>
+            <paper-button raised  @click="${(e) =>  this.createFolder()}"><img src="./assets/folder.png" /> Create Folder / creer un dossier</paper-button>
+            <paper-button raised  @click="${(e) =>  this.createFile()}"><img src="./assets/document.png" /> Create File / creer un fichier</paper-button>
+            <p class="${this.myBool?'red':'green'}">${this.log}</p>
+          </div>
 
-        <td>
-          <paper-input id="nameInput" label="name of folder or file to create / nom du dossier ou du fichier a créer" ></paper-input>
-          <paper-button raised  @click="${(e) =>  this.createFolder()}">Create Folder / creer un dossier</paper-button><br>
-          <paper-button raised  @click="${(e) =>  this.createFile()}">Create File / creer un fichier</paper-button><br>
-          <p class="${this.myBool?'red':'green'}">${this.log}</p>
         </td>
       </tr>
     </table>
-
-
-
 
   </template>
 
@@ -298,12 +299,14 @@
     }
 
     _browseParent(){
-      var current = {}
-      current.key = "folder"
-    //  current.value = {}
-      current.url = this.folder.parent
-      this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
-      this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
+      if (this.folder.parent != "https://"){
+        var current = {}
+        current.key = "folder"
+        //  current.value = {}
+        current.url = this.folder.parent
+        this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
+        this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
+      }
     }
   }
 

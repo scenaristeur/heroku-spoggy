@@ -8,6 +8,9 @@
   <link rel="lazy-import" group="lazy" href="./solid-browser.html">
   <link rel="lazy-import" group="lazy" href="./solid-editor.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-textarea.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
@@ -21,9 +24,9 @@
     .popup {
       position: absolute;
       top: 5vh;
-      left: 1vw;
+      left: 0.2vw;
       z-index: 10;
-      /*width: 100vw;*/
+      width: 70vw;
       background-color: #f9f9f9;
       border-style:solid;
       border-width:3px;
@@ -32,48 +35,49 @@
     }
     </style>
 
-    <paper-dialog id="popupSolid" class="popup" backdrop transition="core-transition-bottom"><!--  on-iron-overlay-opened="_openImport"
-      on-iron-overlay-closed="_closeImport"-->
-      <div horizontal start-justified start layout >
-        <core-icon icon="thumb-up" style="height: 150px; width:150px;color: #0D578B;"></core-icon>
-        <div style="padding-left:20px" vertical start-justified start layout wrap>
-          <h2 id="Solid" style="margin: 0;color: #0D578B;">Spoggy-Solid <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
 
+    <paper-dialog id="popupSolid" class="popup" backdrop transition="core-transition-bottom">
 
-          <iron-collapse-button opened>
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
-            <div slot="collapse-content">
-              <solid-current>Chargement Current</solid-current>
+      <h2 style="margin: 0;color: #0D578B;">Spoggy-Solid<paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
+      <!--<paper-button dialog-dismiss raised on-tap="_closeHelpPopUp">X</paper-button> -->
+      <!--
+      <paper-input id="inputFileNameToSaveAs" label="Rechercher dans l'aide"></paper-input>
+      <paper-button raised on-tap="saveTextAsFile">Rechercher</paper-button>-->
+      <p hidden$="[[connected]]">
+        Pour pouvoir utiliser Solid,<br> vous devez dans un premier temps vous connecter à votre POD.<br>
+        To use Solid, you must first login to your POD.<br>
+        <a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank">Get a POD / Obtenir un POD</a>
+      </p>
+      <paper-dialog-scrollable>
 
-            </div>
-          </iron-collapse-button>
-
-          <iron-collapse-button opened>
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Browser</h3>
-            <div slot="collapse-content">
-              <solid-browser>Chargement Browser</solid-browser>
-
-            </div>
-          </iron-collapse-button>
-
-          <iron-collapse-button>
-            <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Editor</h3>
-            <div slot="collapse-content">
-              <solid-editor>Chargement Editeur</solid-editor>
-            </div>
-          </iron-collapse-button>
-
-          
-
-
-          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-            <paper-button id="importCancelButton" dialog-dismiss raised>Fermer</paper-button>
+        <iron-collapse-button opened>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
+          <div slot="collapse-content">
+            <solid-current>Chargement Current</solid-current>
 
           </div>
-        </div>
+        </iron-collapse-button>
+
+        <iron-collapse-button opened>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Browser</h3>
+          <div slot="collapse-content">
+            <solid-browser>Chargement Browser</solid-browser>
+
+          </div>
+        </iron-collapse-button>
+
+        <iron-collapse-button>
+          <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Editor</h3>
+          <div slot="collapse-content">
+            <solid-editor>Chargement Editeur</solid-editor>
+          </div>
+        </iron-collapse-button>
+      </paper-dialog-scrollable>
+      <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+        <paper-button  dialog-dismiss raised>Fermer</paper-button>
+
       </div>
     </paper-dialog>
-
 
   </template>
 
@@ -86,7 +90,8 @@
         prop1: {
           type: String,
           value: 'spoggy-solid'
-        }
+        },
+        connected: {type: Boolean, value: false}
       };
     }
 
@@ -101,22 +106,23 @@
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentSolid = new SolidAgent('agentSolid', this);
+        solid.auth.trackSession(session => {
+          if (!session){
+            console.log('The user is not logged in')
+            this.connected = false;
+            //this.$.current.hide()
+            //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
+          }
+          else{
+            console.log(`The user is ${session.webId}`)
+            this.$.popupSolid.toggle();
+            this.connected = true
+            //this.$.current.show()
+            //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
+          }
+        })
       });
-      solid.auth.trackSession(session => {
-        if (!session){
-          console.log('The user is not logged in')
-          //  this.connected = false;
-          //this.$.current.hide()
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
-        }
-        else{
-          console.log(`The user is ${session.webId}`)
-          this.$.popupSolid.toggle();
-          //  this.connected = true
-          //this.$.current.show()
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
-        }
-      })
+
     }
   }
 
