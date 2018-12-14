@@ -2096,27 +2096,36 @@ parseTurtle(file){
   //  ttl2Xml(file.value.content, this.network)
   /* TEST AVEC STORE+SPARQL, mais on a dejà les infos dans file.value.content */
   const store = $rdf.graph();
-  console.log(store)
+  //  console.log(store)
   const fetcher = new $rdf.Fetcher(store);
-  console.log(fetcher)
+  //  console.log(fetcher)
   fetcher.load(file.url).then( response => {
-    console.log(response)
-    console.log(store)
-    console.log(store.statements)
+    //  console.log(response)
+    //  console.log(store)
+    //  console.log(store.statements)
     var edges=[];
-    console.log(store.statements)
+    //  console.log(store.statements)
     if (store.statements.length > 0){
       store.statements.forEach(function (s){
+        console.log("STATEMENT2VIS", s)
+        console.log("sujet",s.subject)
         var nodeSujetTemp = {
           id: s.subject.value,
-          label: s.subject.value,
+          title: s.subject.value,
+          label: app.localname(s.subject),
           type: "node"
         };
+        console.log(nodeSujetTemp)
+
+        console.log("objet",s.object)
         var nodeObjetTemp = {
           id:  s.object.value,
-          label: s.object.value,
+          title: s.object.value,
+          label: app.localname(s.object),
           type: "node"
         };
+
+        console.log(nodeObjetTemp)
         app.addNodeIfNotExist(app.network, nodeSujetTemp)
         app.addNodeIfNotExist(app.network, nodeObjetTemp)
         edges.push({from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
@@ -2130,50 +2139,76 @@ parseTurtle(file){
   }*/
 }
 
+localname(node){
+  var labelU = node.value;
+  if (node.termType == "NamedNode"){
+    let uLabel = node.value.split("#");
+    var labelU = uLabel[uLabel.length-1];
+    if (labelU == uri){
+      uLabel = node.value.split("/");
+      labelU = uLabel[uLabel.length-1];
+    }
+  }
+  //  console.log(labelU)
+  return labelU;
+}
+
 async nodeChanged(node){
+  var current = {};
+  current.url = node.id;
+  current.type = node.type;
+
   if (node.type == "folder"){
     this.fileclient.readFolder( node.id ).then( folder => {
       if(!folder){
         console.log("ce n'est pas un folder")
         console.log(this.fileclient.err)
       }
-      else {console.log(
-        `Read ${folder.name}, it has ${folder.files.length} files.`
-      )
-      console.log(folder)}
-    })
-  }else if (node.type == "file"){
-    this.fileclient.fetchAndParse(node.id).then( response => {
-      if(!response) {
-        alert("Couldn't fetch or parse RESP : "+this.fileclient.err)
-      }
       else {
-        console.log("RESP")
-        console.log(response)
-        //  console.log(graph.statements)
-        //  let something = graph.any(someSubject,somePredicate)
-      /*  var contentType = response.headers.get("content-type");
-        console.log(contentType)
-        if(contentType && contentType.indexOf("application/json") !== -1) {
+        console.log(`Read ${folder.name}, it has ${folder.files.length} files.`)
+        this.agentGraph.send('agentEditor', {type: "folderChanged", folder: folder});
+
+        //    this.agentGraph.send('agentGraph', {type: 'folderChanged', folder: folder })
+
+        console.log(folder)}
+      })
+    }else if (node.type == "file"){
+      this.fileclient.fetchAndParse(node.id).then( response => {
+        if(!response) {
+          alert("Couldn't fetch or parse RESP : "+this.fileclient.err)
+        }
+        else {
+          console.log("RESP")
+          console.log(response)
+
+          this.agentBrowser.send('agentEditor', {type: "fileChanged", file: current});
+          //  this.agentBrowser.send('agentGraph', {type: 'fileChanged', file: current })
+          //  this.agentGraph.send('agentFoldermenu', {type: 'folderChanged', folder: folder });
+          //  console.log(graph.statements)
+          //  let something = graph.any(someSubject,somePredicate)
+          /*  var contentType = response.headers.get("content-type");
+          console.log(contentType)
+          if(contentType && contentType.indexOf("application/json") !== -1) {
           return response.json().then(function(json) {
-            // traitement du JSON
-            console.log("C'est du JSON!");
-          });
-        } else {
-          console.log("Oops, nous n'avons pas du JSON!");
-        }*/
-      }
-    })
-  }else{
-    console.log("node.type inconnu", node)
+          // traitement du JSON
+          console.log("C'est du JSON!");
+        });
+      } else {
+      console.log("Oops, nous n'avons pas du JSON!");
+    }*/
   }
-  /*
+})
+}else{
+  console.log("node.type inconnu", node)
+}
+this.agentGraph.send('agentBrowser', {type: 'currentChanged', current: current });
+/*
 
-  console.log("-boo-")
+console.log("-boo-")
 
-  this.fileclient.readFile( node.id ).then( response => {
-  if(!response) console.log(this.fileclient.err)
-  else console.log( `File content is : ${response.value}.` )
+this.fileclient.readFile( node.id ).then( response => {
+if(!response) console.log(this.fileclient.err)
+else console.log( `File content is : ${response.value}.` )
 })
 
 this.fileclient.fetchAndParse(node.id,'text/turtle').then( graph => {
