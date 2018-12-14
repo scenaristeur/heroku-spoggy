@@ -266,8 +266,8 @@ function ttl2Xml(data,network, remplaceNetwork){
   }
   console.log(triplets);
 
-  triplets.forEach(function(t) {
-    console.log(t);
+  triplets.forEach(function(t,index) {
+    console.log("\nTRIPLET "+index,t);
     var s = t.sujet;
     var p = t.propriete;
     var o = t.objet;
@@ -275,7 +275,7 @@ function ttl2Xml(data,network, remplaceNetwork){
     var nodeSujetTemp, nodeObjetTemp;
 
     if (s.startsWith("_:")){
-      console.log("blanknode",s)
+      //  console.log("blanknode",s)
       nodeSujetTemp = {
         id: s.substring(2,s.length),
         type: "node"
@@ -294,7 +294,7 @@ function ttl2Xml(data,network, remplaceNetwork){
 
   if(p != "rdfs:label"){ // creation d'un noeud seulement si ce n'est pas un rdfs:label
   if (o.startsWith("_:")){
-    console.log("blanknode",o)
+    //  console.log("blanknode",o)
     nodeObjetTemp = {
       id: o.substring(2,o.length),
       type: "node"
@@ -325,17 +325,17 @@ function ttl2Xml(data,network, remplaceNetwork){
   var sujetId , objetId;
   //  console.log("8888888888888888888888888888888888888");
   if(nodeSujet.length>0){
-    console.log("sujet exist "+s);
+    //  console.log("sujet exist "+s);
     nodeSujet = nodeSujet[0];
     sujetId = nodeSujet.id;
   }
   if(nodeObjet.length>0){
-    console.log("objet exist "+o);
+    //  console.log("objet exist "+o);
     nodeObjet = nodeObjet[0];
     objetId = nodeObjet.id;
   }
-  console.log(nodeSujet);
-  console.log(nodeObjet);
+  //  console.log(nodeSujet);
+  //  console.log(nodeObjet);
   //console.log("8888888888888888888888888888888888888");
 
 
@@ -345,10 +345,8 @@ function ttl2Xml(data,network, remplaceNetwork){
     arrows: "to",
     label: p
   }
+  console.log("EDGE ",edge,"\n\n")
   network.body.data.edges.add(edge);
-
-
-
 }
 
 
@@ -456,60 +454,27 @@ app.addAction(action);*/
 
 
 });
+
 console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& MISE A JOUR DU GRAPHE TTL 2 XML 1");
-var nodes = new vis.DataSet([
-  {id: "whd", label: 'whd', color: 'rgb(195,238,0)'},
-  {id: "wfd", label: 'wfd', color: 'rgba(97,238,195,0.5)'}/*,
-  {id: "node3", label: 'David'},
-  {id: "node4", label: 'Bob'},
-  {id: "node5", label: 'Graph', color: 'rgba(195,238,97,0.5)', cid:2},
-  {id: "node6", label: 'Spoggy est une application multiutilisateurs\n permettant la création de graphes de connaissance.\n Cliquez sur le bouton Edit\n pour ajouter / modifier un noeud ou un lien.', color: 'rgba(238,97,195,0.5)', shape: 'box', cid:1},
-  {id: "node7", label: 'Description', color: 'rgba(238,97,195,0.5)', cid:1},
-  {id: "node8", label: 'Un graphe est un ensemble de noeuds\n et de liens entre ces noeuds.', color: 'rgba(238,97,195,0.5)', shape: 'box', cid:1},
-  {id: "node9", label: 'graph0', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph0'},
-  {id: "node10", label: 'graph1', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph1'},
-  {id: "node11", label: 'graph2', color: 'rgba(238,97,195,0.5)', type: 'graph', name: 'graph2'},*/
-]);
 
-// create an array with edges
-var edges = new vis.DataSet([
-  {from: "whd", to: "wfd", label: "type", array:"to"}/*,
-  {from: "node1", to: "node3", label: "developpeur", array:"to"},
-  {from: "node3", to: "node4", label: "connait", array:"to"},
-  {from: "node1", to: "node5", label: "hasPart", array:"to"},
-  {from: "node1", to: "node6", label: "description", array:"to"},
-  {from: "node6", to: "node7", label: "type", array:"to"},
-  {from: "node5", to: "node8", label: "description", array:"to"},
-  {from: "node8", to: "node7", label: "type", array:"to"},
-  {from: "node9", to: "node5", label: "type", array:"to"},
-  {from: "node10", to: "node5", label: "type", array:"to"},
-  {from: "node11", to: "node5", label: "type", array:"to"},
-  {from: "node1", to: "node9", label: "first", array:"to"},*/
-
-]);
-
-
-network.body.data.nodes.update(nodes);
-network.body.data.edges.update(edges);
-//  destinataire.triplets=this.triplets;
 }
 
 
 function addNodeIfNotExist(network, data){
   var existNode = false;
-  console.log(data);
+  //  console.log(data);
   try{
     existNode = network.body.data.nodes.get({
       filter: function(node){
-        return (node.id == data.id );
+        return (node.id == data.id || node.label == data.label );
       }
     });
-    console.log(existNode);
+    //  console.log(existNode);
     if (existNode.length == 0){
-      console.log("n'existe pas")
+      console.log("NEW NODE ",data)
       network.body.data.nodes.add(data);
     }else{
-      console.log("existe")
+      console.log("EXISTE NODE ",data)
       delete data.x;
       delete data.y
       network.body.data.nodes.update(data);

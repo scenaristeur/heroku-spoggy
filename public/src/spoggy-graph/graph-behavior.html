@@ -175,9 +175,9 @@ clear(){
 
 
 importFromParam(params){
-  console.log(params);
+  console.log("\nPARAMS :",params);
   var app = this;
-  this.agentGraph.send('agentBrowser', {type: "hasParams", params:params});
+  //
   if(params.uri != undefined && params.endpoint!= undefined){
     console.log("URI = "+params.uri);
     console.log("ENDPOINT: "+params.uri);
@@ -253,6 +253,7 @@ importFromParam(params){
   }
   network.fit();
   network.redraw();
+  this.agentGraph.send('agentBrowser', {type: "hasParams", params:params});
 }
 
 addToGraph(data){
