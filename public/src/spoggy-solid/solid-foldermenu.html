@@ -5,6 +5,7 @@
 <dom-module id="solid-foldermenu">
   <link rel="lazy-import" group="lazy" href="./foldermenu-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-item/paper-item.html">
 
 
@@ -217,6 +218,10 @@
     }
     </style>
     <paper-input id="inputDirectory" label="current" value=[[folder.url]]></paper-input>
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+      <paper-input id="nameInput" label="name of folder or file to create / nom du dossier ou du fichier a créer" value="[[url]]" ></paper-input>
+      <paper-button raised  on-tap="createFolder"><img src="./assets/folder.png" /> Create Folder / creer un dossier</paper-button>
+    </div>
     <table border="1">
       <tr>
         <td>
@@ -231,18 +236,6 @@
           <template is="dom-repeat" items="{{folder.files}}">
             <paper-item raised on-tap="_browse"> <img src="./assets/document.png" />[[item.name]]</paper-item>
           </template>
-        </td>
-      </tr>
-      <tr>
-        <td  colspan="2">
-          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-            <paper-input id="nameInput" label="name of folder or file to create / nom du dossier ou du fichier a créer" ></paper-input>
-            <paper-button raised  on-tap="createFolder"><img src="./assets/folder.png" /> Create Folder / creer un dossier</paper-button>
-            <paper-button raised  on-tap="createFile"><img src="./assets/document.png" /> Create File / creer un fichier</paper-button>
-            <!--  <p class="${this.myBool?'red':'green'}">${this.log}</p>-->
-            <!--disabled$="[[inputIsfolder()]]" disabled$="[[!inputIsfolder()]]"-->
-          </div>
-
         </td>
       </tr>
     </table>
@@ -322,11 +315,6 @@
   }*/
 
   createFolder(){
-    var url = folder.url+this.$.nameInput.value
-    console.log(url)
-  }
-
-  createFile(){
     var url = folder.url+this.$.nameInput.value
     console.log(url)
   }

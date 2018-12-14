@@ -42,9 +42,8 @@ FoldermenuAgent.prototype.receive = function(from, message) {
   }
 
   switch(message.type){
-    case 'updaterooms':
-    this.app.rooms = message.rooms;
-    this.app.current_room = message.current_room;
+    case 'update':
+    this.app.update(message.url);
     console.log("update");
     break;
     case 'saveToSolid':

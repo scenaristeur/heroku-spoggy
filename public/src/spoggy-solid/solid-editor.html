@@ -6,7 +6,11 @@
 <dom-module id="solid-editor">
   <link rel="lazy-import" group="lazy" href="./editor-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/juicy-ace-editor/juicy-ace-editor.html">
+
+
+
   <!--  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer-ace-editor/ace-editor.html">-->
 
   <template>
@@ -28,10 +32,28 @@
       width:100%;
       height: 400px
     }
+    img {
+      height:1em !important;
+      width:1em !impoortant;
+      margin-right:0.1em;
+    }
+
+    a img.icon {
+      height:1em !important;
+      width:1em !important;
+      text-decoration:none;
+    }
     </style>
 
     [[url]]</br>
 
+    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+      <paper-input id="folderInput" label="Folder"></paper-input>
+      <paper-input id="nameInput" label="File"></paper-input>
+      <paper-button raised  on-tap="updateFile"><img src="./assets/document.png" /> Update File</paper-button>
+      <!--  <p class="${this.myBool?'red':'green'}">${this.log}</p>-->
+      <!--disabled$="[[inputIsfolder()]]" disabled$="[[!inputIsfolder()]]"-->
+    </div>
 
     <div class="container">
 

@@ -24,12 +24,16 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log("RESULT : ",this.current)*/
     }
     folderChanged(folder){
-      this.url = folder.url;
-      this.content = folder.content;
+      console.log("FOLDER",folder)
+      this.$.folderInput.value = folder.url;
+
+      //  this.content = folder.content;
     }
 
     fileChanged(file){
-      this.url = file.url;
+      //this.url = file.url;
+      console.log("FILE",file)
+      this.$.nameInput.value = file.name;
       console.log(file.type)
       this.fileclient.readFile( file.url ).then( response => {
         if(!response)
@@ -45,18 +49,29 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     saveToSolid(message){
       console.log(message)
       this.content = message.data;
-      //  this.url = message
+      this.$.nameInput.value = message.name
+      this.blob = message.blob;
     }
 
-    /*  createFile(){
-    var url = folder.url+this.$.nameInput.value
-    console.log(url)
-    fileClient.updateFile( url, newContent, contentType ).then( success => {
-    if(!success) console.log(fileClient.err)
-    else console.log( `Updated ${url}.`)
-  })
-}*/
-}
+    updateFile(){
+      var url = this.$.folderInput.value+this.$.nameInput.value
+      console.log(url)
+      this.fileclient.updateFile( url, this.content, this.blob.type ).then( success => {
+        if(!success)
+        {
+          console.log(this.fileclient.err)
+          alert(this.fileclient.err)
+        }
+        else {
+          console.log( `Updated ${url}.`)
+          var current = {}
+          current.type = "folder";
+          current.url = this.$.folderInput.value;
+          this.agentEditor.send('agentBrowser', {type: 'currentChanged', current: current })
+        }
+      })
+    }
+  }
 });
 
 </script>
