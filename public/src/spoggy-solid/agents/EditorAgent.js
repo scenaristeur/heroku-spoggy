@@ -51,6 +51,9 @@ EditorAgent.prototype.receive = function(from, message) {
     case 'fileChanged':
     this.app.fileChanged(message.file);
     break;
+    case 'saveToSolid':
+    this.app.saveToSolid(message);
+    break;
 
     default:
     console.log(message);

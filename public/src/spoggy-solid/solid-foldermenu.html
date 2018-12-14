@@ -237,9 +237,10 @@
         <td  colspan="2">
           <div style="padding-top:10px" horizontal end-justified layout self-stretch>
             <paper-input id="nameInput" label="name of folder or file to create / nom du dossier ou du fichier a créer" ></paper-input>
-            <paper-button raised  @click="${(e) =>  this.createFolder()}"><img src="./assets/folder.png" /> Create Folder / creer un dossier</paper-button>
-            <paper-button raised  @click="${(e) =>  this.createFile()}"><img src="./assets/document.png" /> Create File / creer un fichier</paper-button>
+            <paper-button raised  on-tap="createFolder"><img src="./assets/folder.png" /> Create Folder / creer un dossier</paper-button>
+            <paper-button raised  on-tap="createFile"><img src="./assets/document.png" /> Create File / creer un fichier</paper-button>
             <!--  <p class="${this.myBool?'red':'green'}">${this.log}</p>-->
+            <!--disabled$="[[inputIsfolder()]]" disabled$="[[!inputIsfolder()]]"-->
           </div>
 
         </td>
@@ -295,6 +296,8 @@
       var current = e.model.item;
       if (current.type != "folder"){
         this.agentFoldermenu.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
+      }else{
+
       }
       this.agentFoldermenu.send('agentCurrent', {type: 'currentChanged', current: current })
       this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
@@ -313,8 +316,22 @@
 
       }
     }
+    /*inputIsfolder(){
+    var nameInput = this.$.nameInput;
+    return ( nameInput.value != undefined && nameInput.value.indexOf(".") !== -1);
+  }*/
+
+  createFolder(){
+    var url = folder.url+this.$.nameInput.value
+    console.log(url)
   }
 
-  window.customElements.define(SolidFoldermenu.is, SolidFoldermenu);
-  </script>
+  createFile(){
+    var url = folder.url+this.$.nameInput.value
+    console.log(url)
+  }
+}
+
+window.customElements.define(SolidFoldermenu.is, SolidFoldermenu);
+</script>
 </dom-module>

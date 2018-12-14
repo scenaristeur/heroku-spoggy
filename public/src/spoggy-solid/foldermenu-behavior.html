@@ -24,6 +24,12 @@ var FoldermenuBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log("RESULT : ",this.current)*/
     }
 
+    saveToSolid(message){
+      //
+      console.log(message)
+      this.$.nameInput.value = message.name; 
+    }
+
   }
 });
 

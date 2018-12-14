@@ -42,7 +42,21 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       })
     }
 
-  }
+    saveToSolid(message){
+      console.log(message)
+      this.content = message.data;
+      //  this.url = message
+    }
+
+    /*  createFile(){
+    var url = folder.url+this.$.nameInput.value
+    console.log(url)
+    fileClient.updateFile( url, newContent, contentType ).then( success => {
+    if(!success) console.log(fileClient.err)
+    else console.log( `Updated ${url}.`)
+  })
+}*/
+}
 });
 
 </script>
