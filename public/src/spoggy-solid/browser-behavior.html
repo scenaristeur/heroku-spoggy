@@ -32,12 +32,22 @@ var BrowserBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             `Read ${folder.name}, it has ${folder.files.length} files.`,folder);
             this.folder = folder;
             this.agentBrowser.send('agentEditor', {type: "folderChanged", folder: folder});
-            this.agentBrowser.send('agentGraph', {type: 'folderChanged', folder: folder })
+            if (this.params.source != undefined){
+              console.log("got params",params)
+            }else{
+              this.agentBrowser.send('agentGraph', {type: 'folderChanged', folder: folder })
+            }
+
           })
         }else{
           console.log("type file")
           this.agentBrowser.send('agentEditor', {type: "fileChanged", file: current});
-          this.agentBrowser.send('agentGraph', {type: 'fileChanged', file: current })
+
+          if (this.params.source != undefined){
+            console.log("got params",params)
+          }else{
+            this.agentBrowser.send('agentGraph', {type: 'fileChanged', file: current })
+          }
         }
       }
     }

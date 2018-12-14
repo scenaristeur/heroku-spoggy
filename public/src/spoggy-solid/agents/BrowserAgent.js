@@ -45,6 +45,9 @@ BrowserAgent.prototype.receive = function(from, message) {
     case 'currentChanged':
     this.app.currentChanged(message.current);
     break;
+    case 'hasParams':
+    this.app.params = message.params;
+    break;
 
     default:
     console.log(message);

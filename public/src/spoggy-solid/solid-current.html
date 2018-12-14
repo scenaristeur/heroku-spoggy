@@ -55,7 +55,7 @@
             this.connected = true
             this.webId = session.webId;
             this.updateUrl();
-
+            
             //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
           }
         })
@@ -71,7 +71,7 @@
       this.url = this._webIdRoot+"public/";
       var current = {}
       current.key = "folder"
-    //  current.value = {}
+      //  current.value = {}
       current.url = this.url
       this.agentCurrent.send('agentBrowser', {type: 'currentChanged', current: current })
       this.agentCurrent.send('agentEditor', {type: 'currentChanged', current: current })

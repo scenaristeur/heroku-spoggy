@@ -176,6 +176,8 @@ clear(){
 
 importFromParam(params){
   console.log(params);
+  var app = this;
+  this.agentGraph.send('agentBrowser', {type: "hasParams", params:params});
   if(params.uri != undefined && params.endpoint!= undefined){
     console.log("URI = "+params.uri);
     console.log("ENDPOINT: "+params.uri);
@@ -2011,51 +2013,68 @@ parseJson(file){
 
 parseTurtle(file){
   var app = this;
+  console.log(file)
+  var params = {}
+  params.source = file.url;
+  this.importFromParam(params)
   //  console.log(file.value.content)
   //  ttl2Xml(file.value.content, this.network)
   /* TEST AVEC STORE+SPARQL, mais on a dejà les infos dans file.value.content */
-  const store = $rdf.graph();
-  //  console.log(store)
-  const fetcher = new $rdf.Fetcher(store);
-  //  console.log(fetcher)
-  fetcher.load(file.url).then( response => {
-    //  console.log(response)
-    //  console.log(store)
-    //  console.log(store.statements)
-    var edges=[];
-    //  console.log(store.statements)
-    if (store.statements.length > 0){
-      store.statements.forEach(function (s){
-        console.log("STATEMENT2VIS", s)
-        console.log("sujet",s.subject)
-        var nodeSujetTemp = {
-          id: s.subject.value,
-          title: s.subject.value,
-          label: app.localname(s.subject),
-          type: "node"
-        };
-        console.log(nodeSujetTemp)
 
-        console.log("objet",s.object)
-        var nodeObjetTemp = {
-          id:  s.object.value,
-          title: s.object.value,
-          label: app.localname(s.object),
-          type: "node"
-        };
+  /*this.fileclient.readFile( file.url ).then( response => {
+  if(!response)
+  { console.log(this.fileclient.err)}
+  else {
+  console.log( `File content is : ${response.value}.`)
+  console.log( "Response : ",response)
+}
+});*/
 
-        console.log(nodeObjetTemp)
-        app.addNodeIfNotExist(app.network, nodeSujetTemp)
-        app.addNodeIfNotExist(app.network, nodeObjetTemp)
-        edges.push({from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
-        console.log(edges)
-        app.network.body.data.edges.update(edges)
-      })}
-    })
-    /*let name = store.any(person, VCARD(‘fn’));
-    if (name) {
-    label.textContent =  name.value; // name is a Literal object
-  }*/
+
+
+///////////////// V1
+/*const store = $rdf.graph();
+//  console.log(store)
+const fetcher = new $rdf.Fetcher(store);
+//  console.log(fetcher)
+fetcher.load(file.url).then( response => {
+//  console.log(response)
+//  console.log(store)
+//  console.log(store.statements)
+var edges=[];
+//  console.log(store.statements)
+if (store.statements.length > 0){
+store.statements.forEach(function (s){
+console.log("STATEMENT2VIS", s)
+console.log("sujet",s.subject)
+var nodeSujetTemp = {
+id: s.subject.value,
+title: s.subject.value,
+label: app.localname(s.subject),
+type: "node"
+};
+console.log(nodeSujetTemp)
+
+console.log("objet",s.object)
+var nodeObjetTemp = {
+id:  s.object.value,
+title: s.object.value,
+label: app.localname(s.object),
+type: "node"
+};
+
+console.log(nodeObjetTemp)
+app.addNodeIfNotExist(app.network, nodeSujetTemp)
+app.addNodeIfNotExist(app.network, nodeObjetTemp)
+edges.push({from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+console.log(edges)
+app.network.body.data.edges.update(edges)
+})}
+})*/
+/*let name = store.any(person, VCARD(‘fn’));
+if (name) {
+label.textContent =  name.value; // name is a Literal object
+}*/
 }
 
 localname(node){
