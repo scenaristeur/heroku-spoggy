@@ -161,3 +161,6 @@ java -Xmx1024M -jar fuseki-server.jar %*
 
 
     "evejs": "^0.5.0",
+
+# API github to make a graphe of all contribs
+https://api.github.com/users/scenaristeur --> source https://developer.github.com/v3/
