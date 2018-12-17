@@ -142,51 +142,49 @@
   }
   </style>
 
-  <iron-collapse-button opened>
-    <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid</h3>
-    <div slot="collapse-content">
-      <div id="eyediv">
-        <paper-tabs selected={{selected}}>
-          <paper-tab>POD</paper-tab>
-          <paper-tab>Browser</paper-tab>
-          <paper-tab>Editor</paper-tab>
-        </paper-tabs>
-
-        <div>
-          <iron-pages selected={{selected}}>
-            <div>
-              <iron-collapse-button>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Connect</h3>
-                <div slot="collapse-content">
-                  <solid-connect></solid-connect>
-                </div>
-              </iron-collapse-button>
-
-              <iron-collapse-button opened>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
-                <div slot="collapse-content">
-                  <solid-current>Chargement Current</solid-current>
-                </div>
-              </iron-collapse-button>
-            </div>
-            <div>
-              <solid-browser>Chargement Browser</solid-browser>
-            </div>
-            <div>
-              <solid-editor>Chargement Editeur</solid-editor>
-            </div>
-          </iron-pages>
-
-        </div>
-
-      </div>
-    </div>
-  </iron-collapse-button>
-
   <!--
-  <paper-tabs selected="0">
-  <paper-tab link>
-  <a href="#link1" class="link" tabindex="-1">TAB ONE</a>
+  <div id="eyediv">
+  <paper-tabs selected={{selected}}>
+  <paper-tab >Données</paper-tab>
+  <paper-tab>Règles</paper-tab>
+  <paper-tab>Requête</paper-tab>
+  <paper-tab>Résultat</paper-tab>
+  <paper-tab>Info</paper-tab>
+</paper-tabs>
+
+<div>
+<iron-pages selected={{selected}}>
+<div>
+<paper-textarea class="eyetab1" rows=5 max-rows=7 value="{{input_n3}}"></paper-textarea>
+<paper-button raised  on-tap="_executeEye">Execute Eye</paper-button>
+</div>
+<div>
+<paper-textarea class="eyetab1"  rows=5 max-rows=7 value="{{rules_n3}}"></paper-textarea>
+</div>
+<div>
+<paper-textarea class="eyetab1"  rows=5 max-rows=7 value="{{query_n3}}"></paper-textarea>
+</div>
+<div>
+<paper-textarea class="eyetab1" rows=5 max-rows=7 value="[[serverSuccessObj]]"></paper-textarea>
+<paper-button raised  on-tap="_supprInf">supprimer inférences</paper-button>
+</div>
+<div class="eyetab1" >
+doc : https://github.com/RubenVerborgh/EyeClient<br>
+serveur Eye : http://eye.restdesc.org/<br>
+reste a lier aux données du graphe
+
+</div>
+
+</iron-pages>
+
+</div>
+
+</div>-->
+
+<!--
+<paper-tabs selected="0">
+<paper-tab link>
+<a href="#link1" class="link" tabindex="-1">TAB ONE</a>
 </paper-tab>
 <paper-tab link>
 <a href="#link2" class="link" tabindex="-1">TAB TWO</a>
@@ -194,75 +192,75 @@
 <paper-tab link>
 <a href="#link3" class="link" tabindex="-1">TAB THREE</a>
 </paper-tab>
-</paper-tabs>
+</paper-tabs>-->
 
 
 <paper-card hidden$="[[hidePseudo]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
-<div class="card-content">
-<iron-collapse-button>
-<h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid POD Connect</h3>
-<div slot="collapse-content">
-<solid-connect></solid-connect>
-</div>
-</iron-collapse-button>
+  <div class="card-content">
+    <iron-collapse-button>
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid POD Connect</h3>
+      <div slot="collapse-content">
+        <solid-connect></solid-connect>
+      </div>
+    </iron-collapse-button>
 
-<iron-collapse-button>
-<h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
-<div slot="collapse-content">
-<solid-current>Chargement Current</solid-current>
-</div>
-</iron-collapse-button>
-</div>
-
-<div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Solid POD</h2>
+    <iron-collapse-button>
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
+      <div slot="collapse-content">
+        <solid-current>Chargement Current</solid-current>
+      </div>
+    </iron-collapse-button>
+  </div>
+  <!--
+  <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Solid POD</h2>
 </div>
 
 </div>
 <div class="horizontal justified">
 <paper-button class="cafe-reserve" on-tap="pseudoChanged">Enregistrer</paper-button>
-</div>
-</paper-card>-->
-<!--
+</div>-->
+</paper-card>
+
 <br>
 
 <paper-card hidden$="[[hidePseudo]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
-<div class="card-content">
-<iron-collapse-button opened>
-<h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Browser</h3>
-<div slot="collapse-content">
-<solid-browser>Chargement Browser</solid-browser>
+  <div class="card-content">
+    <iron-collapse-button opened>
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Browser</h3>
+      <div slot="collapse-content">
+        <solid-browser>Chargement Browser</solid-browser>
 
-</div>
-</iron-collapse-button>
-</div>-->
-<!--
-<div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Solid POD</h2>
+      </div>
+    </iron-collapse-button>
+  </div>
+  <!--
+  <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Solid POD</h2>
 </div>
 
 </div>
 <div class="horizontal justified">
 <paper-button class="cafe-reserve" on-tap="pseudoChanged">Enregistrer</paper-button>
 </div>-->
-<!--</paper-card>
+</paper-card>
 
 <paper-card hidden$="[[hidePseudo]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
-<div class="card-content">
-<iron-collapse-button >
-<h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Editor</h3>
-<div slot="collapse-content">
-<solid-editor>Chargement Editeur</solid-editor>
-</div>
-</iron-collapse-button>
-</div>-->
-<!--
-<div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Solid POD</h2>
+  <div class="card-content">
+    <iron-collapse-button >
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Editor</h3>
+      <div slot="collapse-content">
+        <solid-editor>Chargement Editeur</solid-editor>
+      </div>
+    </iron-collapse-button>
+  </div>
+  <!--
+  <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Solid POD</h2>
 </div>
 
 </div>
 <div class="horizontal justified">
 <paper-button class="cafe-reserve" on-tap="pseudoChanged">Enregistrer</paper-button>
 </div>-->
-<!--</paper-card>-->
+</paper-card>
 
 </template>
 
@@ -304,7 +302,7 @@ class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.El
         }
         else{
           console.log(`The user is ${session.webId}`)
-          //  this.$.popupSolid.toggle();
+          this.$.popupSolid.toggle();
           this.connected = true
           //this.$.current.show()
           //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })

@@ -5,15 +5,33 @@
 <dom-module id="solid-current">
   <link rel="lazy-import" group="lazy" href="./current-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
-
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  
   <template>
     <style>
     :host {
       display: block;
     }
+    .inline {
+      display: flex;
+      flex-direction: row;
+      align-self: flex-end;
+      justify-content: flex-start;
+      width:100%;
+    }
+    .input {
+      width:100%;
+    }
     </style>
-    <paper-input id="inputSolid" label="POD"  value=[[webId]]></paper-input>
-    <paper-input id="inputDirectory" label="Spoggy directory" value="[[url]]"></paper-input>
+
+    <div class="inline">
+      <paper-input class="input" id="inputSolid" label="POD"  value=[[webId]]></paper-input>
+      <paper-button raised on-tap="{{update}}">Go</paper-button>
+    </div>
+    <div class="inline">
+      <paper-input class="input" id="inputDirectory" label="Spoggy directory" value="[[url]]"></paper-input>
+      <paper-button  raised on-tap="{{update}}">Go</paper-button>
+    </div>
   </template>
 
   <script>
@@ -55,7 +73,7 @@
             this.connected = true
             this.webId = session.webId;
             this.updateUrl();
-            
+
             //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
           }
         })
@@ -75,6 +93,9 @@
       current.url = this.url
       this.agentCurrent.send('agentBrowser', {type: 'currentChanged', current: current })
       this.agentCurrent.send('agentEditor', {type: 'currentChanged', current: current })
+    }
+    update(){
+      cosnole.log("update")
     }
 
 
