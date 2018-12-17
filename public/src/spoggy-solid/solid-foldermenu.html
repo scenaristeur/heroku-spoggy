@@ -269,7 +269,7 @@
         this.agentFoldermenu = new FoldermenuAgent('agentFoldermenu', this);
         console.log(this.agentFoldermenu)
       });
-      //  this.$.popupSolid.toggle();
+
       solid.auth.trackSession(session => {
         if (!session){
           console.log('The user is not logged in')
@@ -287,15 +287,9 @@
     _browse(e){
       console.log(e.model.item)
       var current = e.model.item;
-      if (current.type != "folder"){
-        this.agentFoldermenu.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
-      }else{
-
-      }
       this.agentFoldermenu.send('agentCurrent', {type: 'currentChanged', current: current })
       this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
       this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
-
     }
 
     _browseParent(){

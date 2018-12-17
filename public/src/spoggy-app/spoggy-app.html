@@ -51,7 +51,9 @@
   <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph-reglages.html">
 
   <link rel="lazy-import" group="lazy" href="../spoggy-solid/spoggy-solid.html">
-  <link rel="lazy-import" group="lazy" href="../spoggy-solid/solid-connect.html">
+  <!--<link rel="lazy-import" group="lazy" href="../spoggy-solid/solid-connect.html">-->
+
+
   <!--<link rel="import" href="../shared-styles.html">-->
 
   <!--<link rel="lazy-import" group="lazy" href="../spoggy-hello/spoggy-hello.html">-->
@@ -212,9 +214,9 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Fichier</h3>
 
           <div slot="collapse-content">
-            <a name = "solo" id="solo" class="cafe-reserve" on-tap="import">Importer</a>
-            <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="export">Exporter</a>
-            <a name="global" id="global" class="cafe-reserve" on-tap="exportTtl">Exporter (.ttl)</a>
+            <a class="cafe-reserve" on-tap="import">Importer</a>
+            <a class="cafe-reserve" on-tap="export">Exporter</a>
+            <a class="cafe-reserve" on-tap="exportTtl">Exporter (.ttl)</a>
           </div>
         </iron-collapse-button>
 
@@ -223,21 +225,22 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
           <div slot="collapse-content">
 
-            <a name = "solo" id="solo" class="cafe-reserve" on-tap="setmode">Solo <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
-              <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
-                <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global <!--<paper-icon-button  on-tap="_toggleHelp" icon="help" label="Aide">--></a>
+            <a name = "solo" id="solo" class="cafe-reserve" on-tap="setmode">Solo</a>
+              <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif </a>
+                <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global</a>
+                <a name="solid" id="solid" class="cafe-reserve" on-tap="setmode">Solid</a>
                 </div>
               </iron-collapse-button>
 
-              <iron-collapse-button>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid Connect</h3>
+              <!--<iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid Connect</h3>
 
                 <div slot="collapse-content">
 
                   <solid-connect></solid-connect>
 
                 </div>
-              </iron-collapse-button>
+              </iron-collapse-button>-->
 
 
 
@@ -353,6 +356,11 @@ mode={{mode}}
 hide-endpoints="{{hideEndpoints}}"
 hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
+  <spoggy-solid
+  mode={{mode}}
+  hide-endpoints="{{hideEndpoints}}"
+  hidden$="[[!isEqual(mode,'solid')]]">SOLID</spoggy-solid>
+
 <div hidden$="[[isEmpty(mode)]]">
   <spoggy-sparql></spoggy-sparql>
   <spoggy-presentation></spoggy-presentation>
@@ -369,7 +377,7 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
   <spoggy-preferences></spoggy-preferences>
   <spoggy-historique></spoggy-historique>
-  <spoggy-solid>SOLID</spoggy-solid>
+
 
 </div>
 
@@ -543,6 +551,11 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         this.hideEndpoints = false;
         // expected output: "Mangoes and papayas are $2.79 a pound."
         break;
+        case 'solid':
+        console.log('selection mode solid');
+      //  this.hideEndpoints = false;
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
         default:
         console.log('Sorry, we are out of ' + newMode + '.');
       }
@@ -564,6 +577,11 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         console.log('deconnect endpoint');
         this.hideEndpoints = true;
         this.endpointName = "";
+        break;
+        case 'solid':
+        console.log('quit solid mode');
+        //this.hideEndpoints = true;
+      //this.endpointName = "";
         break;
         default:
       }
