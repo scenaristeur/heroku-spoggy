@@ -295,7 +295,7 @@ class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.El
       console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
       this.agentSolid = new SolidAgent('agentSolid', this);
-      solid.auth.trackSession(session => {
+    /*  solid.auth.trackSession(session => {
         if (!session){
           console.log('The user is not logged in')
           this.connected = false;
@@ -309,7 +309,7 @@ class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.El
           //this.$.current.show()
           //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
         }
-      })
+      })*/
     });
 
   }

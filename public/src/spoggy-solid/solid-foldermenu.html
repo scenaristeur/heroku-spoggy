@@ -222,24 +222,21 @@
       <paper-input id="nameInput" label="name of folder or file to create / nom du dossier ou du fichier a créer" value="[[url]]" ></paper-input>
       <paper-button raised  on-tap="createFolder"><img src="./assets/folder.png" /> Create Folder / creer un dossier</paper-button>
     </div>
-    <table border="1">
+    <table border="1" style="width:100%;">
       <tr>
-        <td>
+        <td valign="top">
           <paper-item raised on-tap="_browseParent"> <img src="./assets/folder.png" />..</paper-item>
-
           <template is="dom-repeat" items="{{folder.folders}}">
             <paper-item raised on-tap="_browse"> <img src="./assets/folder.png" />[[item.name]]</paper-item>
           </template>
         </td>
-
-        <td>
+        <td valign="top">
           <template is="dom-repeat" items="{{folder.files}}">
             <paper-item raised on-tap="_browse"> <img src="./assets/document.png" />[[item.name]]</paper-item>
           </template>
         </td>
       </tr>
     </table>
-
   </template>
 
   <script>

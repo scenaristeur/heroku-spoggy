@@ -6,32 +6,42 @@
   <link rel="lazy-import" group="lazy" href="./current-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
-  
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+
+
   <template>
     <style>
     :host {
       display: block;
     }
-    .inline {
-      display: flex;
-      flex-direction: row;
-      align-self: flex-end;
-      justify-content: flex-start;
-      width:100%;
+    .flex-wrap {
+      @apply --layout-horizontal;
+      @apply --layout-wrap;
+      @apply --layout-fit;
+      @apply --layout-center-justified;
+
     }
-    .input {
-      width:100%;
+    .flex {
+      @apply --layout-flex;
+    }
+    .justified {
+      @apply --layout-justified;
     }
     </style>
 
-    <div class="inline">
-      <paper-input class="input" id="inputSolid" label="POD"  value=[[webId]]></paper-input>
-      <paper-button raised on-tap="{{update}}">Go</paper-button>
+    <div flex-wrap>
+      <paper-input id="inputSolid" label="POD"  value={{webId::change}}></paper-input>
+      <paper-checkbox id="remplaceNetwork" checked>Remplacer Network</paper-checkbox>
+      <paper-button raised on-tap="updatePOD">Go</paper-button>
+      <!--<paper-button raised on-tap="updatePOD">Profile</paper-button>
+      <paper-button raised on-tap="updatePOD">Root</paper-button>
+      <paper-button raised on-tap="updatePOD">Friends</paper-button>-->
+
     </div>
-    <div class="inline">
-      <paper-input class="input" id="inputDirectory" label="Spoggy directory" value="[[url]]"></paper-input>
-      <paper-button  raised on-tap="{{update}}">Go</paper-button>
-    </div>
+    <paper-input class="input" id="inputDirectory" label="Url" value="{{url::change}}"></paper-input>
+    <paper-checkbox id="remplaceNetwork">Remplacer Network</paper-checkbox>
+    <paper-button  raised on-tap="updateUrl">Explore</paper-button>
+
   </template>
 
   <script>
@@ -65,14 +75,15 @@
             console.log('The user is not logged in')
             this.connected = false;
             this.webId= "https://smag0.solid.community/profile/card#me"
-            this.updateUrl();
+            this.updatePOD();
+            //  this.updateUrl();
             //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
           }
           else{
             console.log(`The user is ${session.webId}`)
             this.connected = true
             this.webId = session.webId;
-            this.updateUrl();
+            this.updatePOD();
 
             //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
           }
@@ -82,20 +93,25 @@
 
     }
 
-    updateUrl(){
+    updatePOD(){
       var wedIdSpilt = this.webId.split("/");
       this._webIdRoot = wedIdSpilt[0]+"//"+wedIdSpilt[2]+"/";
       console.log(this._webIdRoot);
       this.url = this._webIdRoot+"public/";
+      this.updateUrl();
+    }
+    updateUrl(){
+      if (this.$.remplaceNetwork.checked){
+        console.log("remplace");
+        this.agentCurrent.send('agentGraph', {type: 'clear'})
+      }
+      console.log("update")
       var current = {}
       current.key = "folder"
       //  current.value = {}
       current.url = this.url
       this.agentCurrent.send('agentBrowser', {type: 'currentChanged', current: current })
       this.agentCurrent.send('agentEditor', {type: 'currentChanged', current: current })
-    }
-    update(){
-      cosnole.log("update")
     }
 
 
