@@ -32,7 +32,8 @@
     "paper-listbox": "^2.1.1",
     "paper-item": "^2.1.1",
     "csak-tree": "^0.4.16",
-    "juicy-ace-editor": "^2.2.1"
+    "juicy-ace-editor": "^2.2.1",
+    "bottom-nav": "^2.0.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

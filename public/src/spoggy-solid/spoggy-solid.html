@@ -21,6 +21,10 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-tabs/paper-tab.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-pages/iron-pages.html">
 
+  <link rel="lazy-import" group="lazy" href="/bower_components/bottom-nav/bottom-nav.html">
+  <link rel="lazy-import" group="lazy" href="/bower_components/bottom-nav/bottom-toolbar.html">
+  <link rel="lazy-import" group="lazy" href="/bower_components/bottom-nav/bottom-tab.html">
+
   <template>
     <style is="custom-style" include="demo-pages-shared-styles">
 
@@ -73,12 +77,33 @@
     </iron-collapse-button>
 
     <!--
-    <paper-tabs selected="0">
-    <paper-tab link>
-    <a href="#link1" class="link" tabindex="-1">TAB ONE</a>
-  </paper-tab>
-  <paper-tab link>
-  <a href="#link2" class="link" tabindex="-1">TAB TWO</a>
+    <bottom-nav>
+    <bottom-toolbar selected="0">
+    <bottom-tab sticky icon="icons:home"></bottom-tab>
+    <bottom-tab icon="icons:menu"></bottom-tab>
+    <bottom-tab icon="icons:close"></bottom-tab>
+    <bottom-tab icon="icons:chevron-right"></bottom-tab>
+  </bottom-toolbar>
+</bottom-nav>-->
+
+<!--
+<bottom-nav shadow>
+<bottom-toolbar selected="0">
+<bottom-tab  selected-class="grey" label="Movies & TV" icon="notification:ondemand-video"></bottom-tab>
+<bottom-tab  selected-class="green"label="Music" icon="image:music-note"></bottom-tab>
+<bottom-tab  selected-class="brown"label="Books" icon="icons:book"></bottom-tab>
+<bottom-tab  selected-class="darkbrown" label="Newstand" icon="av:web"></bottom-tab>
+</bottom-toolbar>
+</bottom-nav>
+<sample-content size="10">blop</sample-content>-->
+
+<!--
+<paper-tabs selected="0">
+<paper-tab link>
+<a href="#link1" class="link" tabindex="-1">TAB ONE</a>
+</paper-tab>
+<paper-tab link>
+<a href="#link2" class="link" tabindex="-1">TAB TWO</a>
 </paper-tab>
 <paper-tab link>
 <a href="#link3" class="link" tabindex="-1">TAB THREE</a>
