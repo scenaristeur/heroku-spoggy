@@ -22,174 +22,63 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-pages/iron-pages.html">
 
   <template>
-    <style>
-    :host {
-      display: block;
-    }
-    .popup {
-      position: absolute;
-      top: 5vh;
-      left: 0.2vw;
-      z-index: 10;
-      width: 70vw;
-      background-color: #f9f9f9;
-      border-style:solid;
-      border-width:3px;
-      border-color: #5394ed;
-      padding:1px;
-    }
-    .flex-wrap {
-      @apply --layout-horizontal;
-      @apply --layout-wrap;
-      /*  @apply --layout-fit;*/
-      @apply --layout-center-justified;
-
-    }
-
-    .vertical-section-container {
-      max-width: 400px;
-    }
-    paper-card {
-      max-width: 450px;
-      margin: 10px;
-      --paper-card-header-image: {
-        width: 50%;
-      };
-    }
-    .horizontal {
-      @apply --layout-horizontal;
-    }
-    .flex {
-      @apply --layout-flex;
-    }
-    .justified {
-      @apply --layout-justified;
-    }
-    .amber {
-      background: var(--paper-amber-900);
-    }
-    .lime {
-      background: var(--paper-lime-500);
-    }
-    .cyan {
-      background: var(--paper-cyan-500);
-    }
-    .dark {
-      background: var(--paper-blue-grey-500);
-    }
-    paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
-      color: white;
-      --paper-card-header-color: white;
-    }
-    paper-checkbox {
-      display: block;
-      margin-bottom: 4px;
-      --paper-checkbox-label-color: green;
-      --paper-checkbox-unchecked-color: red;
-    }
-    paper-icon-button {
-      color: var(--paper-grey-600);
-    }
-    paper-icon-button.white {
-      color: white !important;
-    }
+    <style is="custom-style" include="demo-pages-shared-styles">
 
 
-  }
-  </style>
-  <style is="custom-style">
-  .cafe-header { @apply --paper-font-headline; }
-  .cafe-light { color: var(--paper-grey-600); }
-  .cafe-location {
-    float: right;
-    font-size: 15px;
-    vertical-align: middle;
-  }
-  .cafe-reserve { color: var(--google-blue-500); }
-  iron-icon.star {
-    --iron-icon-width: 16px;
-    --iron-icon-height: 16px;
-    color: var(--paper-amber-500);
-  }
-  iron-icon.star:last-of-type { color: var(--paper-grey-500);}
+    paper-tabs {
+      background-color: var(--paper-blue-900);
+      color: #fff;
+    }
+    </style>
 
-  /* paper-tab*/
-  .link {
-    @apply --layout-horizontal;
-    @apply --layout-center-center;
-  }
 
-  #eyediv {
-    padding: .2em;
-    border: 1px solid #aaaaaa;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    margin: 10px;
-  }
-  paper-tabs {
-    background-color: black;
-    width: 100%;
-    margin-bottom: 1px;
-    color: #fff;
-  }
-  .eyetab1 {
-    width: 100%;
-    height: 200px;
+    <iron-collapse-button opened>
+      <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid</h3>
+      <div slot="collapse-content">
 
-    font-family: Courier, "Courier New", monospace !important;
-  }
-  </style>
-
-  <iron-collapse-button opened>
-    <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid</h3>
-    <div slot="collapse-content">
-      <div id="eyediv">
         <paper-tabs selected={{selected}}>
           <paper-tab>POD</paper-tab>
           <paper-tab>Browser</paper-tab>
           <paper-tab>Editor</paper-tab>
         </paper-tabs>
 
-        <div>
-          <iron-pages selected={{selected}}>
-            <div>
-              <iron-collapse-button>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Connect</h3>
-                <div slot="collapse-content">
-                  <solid-connect></solid-connect>
-                </div>
-              </iron-collapse-button>
 
-              <iron-collapse-button opened>
-                <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
-                <div slot="collapse-content">
-                  <solid-current>Chargement Current</solid-current>
-                </div>
-              </iron-collapse-button>
-            </div>
-            <div>
-              <solid-browser>Chargement Browser</solid-browser>
-            </div>
-            <div>
-              <solid-editor>Chargement Editeur</solid-editor>
-            </div>
-          </iron-pages>
+        <iron-pages selected={{selected}}>
+          <div>
+            <iron-collapse-button>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Connect</h3>
+              <div slot="collapse-content">
+                <solid-connect></solid-connect>
+              </div>
+            </iron-collapse-button>
 
-        </div>
+            <iron-collapse-button opened>
+              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Current</h3>
+              <div slot="collapse-content">
+                <solid-current>Chargement Current</solid-current>
+              </div>
+            </iron-collapse-button>
+          </div>
+          <div>
+            <solid-browser>Chargement Browser</solid-browser>
+          </div>
+          <div>
+            <solid-editor>Chargement Editeur</solid-editor>
+          </div>
+        </iron-pages>
 
       </div>
-    </div>
-  </iron-collapse-button>
 
-  <!--
-  <paper-tabs selected="0">
+
+    </iron-collapse-button>
+
+    <!--
+    <paper-tabs selected="0">
+    <paper-tab link>
+    <a href="#link1" class="link" tabindex="-1">TAB ONE</a>
+  </paper-tab>
   <paper-tab link>
-  <a href="#link1" class="link" tabindex="-1">TAB ONE</a>
-</paper-tab>
-<paper-tab link>
-<a href="#link2" class="link" tabindex="-1">TAB TWO</a>
+  <a href="#link2" class="link" tabindex="-1">TAB TWO</a>
 </paper-tab>
 <paper-tab link>
 <a href="#link3" class="link" tabindex="-1">TAB THREE</a>
@@ -295,24 +184,24 @@ class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.El
       console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
       this.agentSolid = new SolidAgent('agentSolid', this);
-    /*  solid.auth.trackSession(session => {
-        if (!session){
-          console.log('The user is not logged in')
-          this.connected = false;
-          //this.$.current.hide()
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
-        }
-        else{
-          console.log(`The user is ${session.webId}`)
-          //  this.$.popupSolid.toggle();
-          this.connected = true
-          //this.$.current.show()
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
-        }
-      })*/
-    });
-
+      /*  solid.auth.trackSession(session => {
+      if (!session){
+      console.log('The user is not logged in')
+      this.connected = false;
+      //this.$.current.hide()
+      //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
+    }
+    else{
+    console.log(`The user is ${session.webId}`)
+    //  this.$.popupSolid.toggle();
+    this.connected = true
+    //this.$.current.show()
+    //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
   }
+})*/
+});
+
+}
 }
 
 window.customElements.define(SpoggySolid.is, SpoggySolid);

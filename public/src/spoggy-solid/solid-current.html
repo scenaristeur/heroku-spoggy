@@ -33,9 +33,9 @@
       <paper-input id="inputSolid" label="POD"  value={{webId::change}}></paper-input>
       <paper-checkbox id="remplaceNetwork" checked>Remplacer Network</paper-checkbox>
       <paper-button raised on-tap="updatePOD">Go</paper-button>
-      <!--<paper-button raised on-tap="updatePOD">Profile</paper-button>
-      <paper-button raised on-tap="updatePOD">Root</paper-button>
-      <paper-button raised on-tap="updatePOD">Friends</paper-button>-->
+      <paper-button raised on-tap="updatePOD" disabled>Profile</paper-button>
+      <paper-button raised on-tap="updatePOD" disabled>Root</paper-button>
+      <paper-button raised on-tap="updatePOD" disabled>Friends</paper-button>
 
     </div>
     <paper-input class="input" id="inputDirectory" label="Url" value="{{url::change}}"></paper-input>

@@ -218,99 +218,106 @@
     }
     </style>
     <paper-input id="inputDirectory" label="current" value=[[folder.url]]></paper-input>
-    <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-      <paper-input id="nameInput" label="name of folder or file to create / nom du dossier ou du fichier a créer" value="[[url]]" ></paper-input>
-      <paper-button raised  on-tap="createFolder"><img src="./assets/folder.png" /> Create Folder / creer un dossier</paper-button>
-    </div>
+
+    <paper-input id="nameInput" label="Name of folder to create / nom du dossier à créer" value="[[url]]" ></paper-input>
+    <paper-button raised  on-tap="createFolder"><img src="./assets/folder.png" />  Create Folder / creer un dossier</paper-button>
+
     <table border="1" style="width:100%;">
       <tr>
         <td valign="top">
-          <paper-item raised on-tap="_browseParent"> <img src="./assets/folder.png" />..</paper-item>
+          <paper-item raised>
+            <p  on-tap="_browseParent"> <img src="./assets/folder.png" />..</p>
+            <paper-button raised disabled> + </paper-button>
+          </paper-item>
           <template is="dom-repeat" items="{{folder.folders}}">
             <paper-item raised on-tap="_browse"> <img src="./assets/folder.png" />[[item.name]]</paper-item>
           </template>
         </td>
         <td valign="top">
+          <paper-item raised>
+            <paper-button raised disabled> + </paper-button>
+          </paper-item>
           <template is="dom-repeat" items="{{folder.files}}">
-            <paper-item raised on-tap="_browse"> <img src="./assets/document.png" />[[item.name]]</paper-item>
-          </template>
-        </td>
-      </tr>
-    </table>
-  </template>
+            <paper-item raised on-tap="_browse">
+              <img src="./assets/document.png" />[[item.name]]</paper-item>
+            </template>
+          </td>
+        </tr>
+      </table>
+    </template>
 
-  <script>
+    <script>
 
-  class SolidFoldermenu extends Polymer.LazyImportsMixin(FoldermenuBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'solid-foldermenu'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'solid-foldermenu'
-        },
-        connected: {type: Boolean, value: false}
-      };
-    }
-
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this._deferred();
-      });
-    }
-    _deferred(){
-      this.importLazyGroup('lazy').then((results) => {
-        console.log(results);
-        this.dispatchEvent(new CustomEvent('import-loaded', results));
-        this.agentFoldermenu = new FoldermenuAgent('agentFoldermenu', this);
-        console.log(this.agentFoldermenu)
-      });
-
-      solid.auth.trackSession(session => {
-        if (!session){
-          console.log('The user is not logged in')
-          this.connected = false;
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
-        }
-        else{
-          console.log(`The user is ${session.webId}`)
-          this.connected = true
-          //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
-        }
-      })
-    }
-
-    _browse(e){
-      console.log(e.model.item)
-      var current = e.model.item;
-      this.agentFoldermenu.send('agentCurrent', {type: 'currentChanged', current: current })
-      this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
-      this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
-    }
-
-    _browseParent(){
-      if (this.folder.parent != "https://"){
-        var current = {}
-        current.key = "folder"
-        //  current.value = {}
-        current.url = this.folder.parent
-        this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
-        this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
-
+    class SolidFoldermenu extends Polymer.LazyImportsMixin(FoldermenuBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'solid-foldermenu'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'solid-foldermenu'
+          },
+          connected: {type: Boolean, value: false}
+        };
       }
+
+      constructor(){
+        super();
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+        });
+      }
+      _deferred(){
+        this.importLazyGroup('lazy').then((results) => {
+          console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+          this.agentFoldermenu = new FoldermenuAgent('agentFoldermenu', this);
+          console.log(this.agentFoldermenu)
+        });
+
+        solid.auth.trackSession(session => {
+          if (!session){
+            console.log('The user is not logged in')
+            this.connected = false;
+            //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
+          }
+          else{
+            console.log(`The user is ${session.webId}`)
+            this.connected = true
+            //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: session })
+          }
+        })
+      }
+
+      _browse(e){
+        console.log(e.model.item)
+        var current = e.model.item;
+        this.agentFoldermenu.send('agentCurrent', {type: 'currentChanged', current: current })
+        this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
+        this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
+      }
+
+      _browseParent(){
+        if (this.folder.parent != "https://"){
+          var current = {}
+          current.key = "folder"
+          //  current.value = {}
+          current.url = this.folder.parent
+          this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
+          this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
+
+        }
+      }
+      /*inputIsfolder(){
+      var nameInput = this.$.nameInput;
+      return ( nameInput.value != undefined && nameInput.value.indexOf(".") !== -1);
+    }*/
+
+    createFolder(){
+      var url = folder.url+this.$.nameInput.value
+      console.log(url)
     }
-    /*inputIsfolder(){
-    var nameInput = this.$.nameInput;
-    return ( nameInput.value != undefined && nameInput.value.indexOf(".") !== -1);
-  }*/
-
-  createFolder(){
-    var url = folder.url+this.$.nameInput.value
-    console.log(url)
   }
-}
 
-window.customElements.define(SolidFoldermenu.is, SolidFoldermenu);
+  window.customElements.define(SolidFoldermenu.is, SolidFoldermenu);
 </script>
 </dom-module>
