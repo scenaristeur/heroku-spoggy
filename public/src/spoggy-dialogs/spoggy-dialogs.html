@@ -26,13 +26,17 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-listbox/paper-listbox.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-item/paper-item.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-tabs/paper-tabs.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-tabs/paper-tab.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-pages/iron-pages.html">
   <!--
   <link rel="lazy-import" group="lazy" href="../../bower_components/valle-speed-dial/valle-speed-dial.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html"> -->
 
   <link rel="lazy-import" group="lazy" href="./dialogs-import.html">
   <template>
-    <style>
+    <style is="custom-style" include="demo-pages-shared-styles">
     #operation {
       font-size:28px;
     }
@@ -63,6 +67,10 @@
     }
   }
 
+  paper-tabs {
+    background-color: var(--paper-blue-900);
+    color: #fff;
+  }
   </style>
   <paper-dialog id="helpPopUp" class="popup">
 
@@ -357,26 +365,50 @@
                       <paper-dialog id="popupTtl" class="popup" backdrop transition="core-transition-bottom"  iron-overlay-opened="fillTextToSave"><!-- on-iron-overlay-opened="_myOpenFunction"
                         on-iron-overlay-closed="_myClosedFunction" -->
                         <h2  style="margin: 0;color: #0D578B;"> Export au format turtle (RDF)
+                          <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
                           <!--<paper-button ontap="_pageAide">?</paper-button>-->
                           <!--  <paper-button dialog-dismiss raised>X</paper-button> -->
-                          <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button></h2>
-
-                          <paper-dialog-scrollable>
-                            <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>
-                          </paper-dialog-scrollable>
-
-                          <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-
-                            <!--<paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
-                            <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
-                            <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
-                            <paper-button raised on-tap="saveTextAsFile" dialog-confirm>Exporter le fichier Ttl</paper-button>
-                            <paper-button raised on-tap="saveTextAsFileSolid" dialog-confirm>Exporter vers mon POD Solid</paper-button>
-                            <br>
-                          </div>
 
 
 
+                          <paper-tabs selected={{selected}}>
+                            <paper-tab>JSON</paper-tab>
+                            <paper-tab>TURTLE</paper-tab>
+
+                          </paper-tabs>
+
+
+                          <iron-pages selected={{selected}}>
+                            <div>
+                              <paper-textarea id="inputTextToSaveJSON" max-rows="10"></paper-textarea>
+
+                              <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+
+                                <!--<paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+                                <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
+                                <paper-input id="inputFileNameToSaveAsJSON" label="Nom du fichier à sauvegarder (.json)"></paper-input>
+                                <paper-button raised on-tap="saveTextAsFileJSON" dialog-confirm>Exporter le fichier JSON</paper-button>
+                                <paper-button raised on-tap="saveTextAsFileSolidJSON" dialog-confirm>Exporter le JSON vers mon POD Solid</paper-button>
+                                <br>
+                              </div>
+                            </div>
+                            <div>
+                              <!--<paper-dialog-scrollable>-->
+                              <paper-textarea id="inputTextToSave" max-rows="10"></paper-textarea>
+                              <!--  </paper-dialog-scrollable>-->
+
+                              <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+
+                                <!--<paper-button raised on-tap="creer" dialog-confirm>Créer</paper-button>
+                                <paper-button  dialog-dismiss raised>Fermer</paper-button>-->
+                                <paper-input id="inputFileNameToSaveAs" label="Nom du fichier à sauvegarder (.ttl)"></paper-input>
+                                <paper-button raised on-tap="saveTextAsFile" dialog-confirm>Exporter le fichier Ttl</paper-button>
+                                <paper-button raised on-tap="saveTextAsFileSolid" dialog-confirm>Exporter vers mon POD Solid</paper-button>
+                                <br>
+                              </div>
+                            </div>
+
+                          </iron-pages>
                         </paper-dialog>
 
 
@@ -565,7 +597,10 @@ class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(Di
         type: String,
         value: 'spoggy-dialogs'
       },
-
+      selected: {
+        type: Number,
+        value: 0
+      },
       centralGravity: {
         type: Number,
         observer: "_updateCentralGravity"

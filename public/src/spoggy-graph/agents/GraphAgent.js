@@ -117,6 +117,11 @@ GraphAgent.prototype.receive = function(from, message) {
     console.log('fileChanged', message)
     this.app.fileChanged(message.file)
 
+    case 'exportJsonSolid':
+    console.log('exportJsonSolid')
+    this.app.exportJsonSolid();
+    break;
+
     default:
     console.log(message);
   }

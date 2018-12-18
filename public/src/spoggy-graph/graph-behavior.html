@@ -759,6 +759,32 @@ describeFromDBpedia(results, resource){
   //  return actionsToSendTemp;
 }
 
+
+exportJsonSolid() {
+  var network = this.network;
+  console.log(network)
+  var textToWrite = "";
+  //  var fileNameToSaveAs = filename+"_spoggy_nodes_edges_" + Date.now() + ".json";
+  //var textFileAsBlob = "";
+
+  console.log("export Json");
+  console.log(network.body.data);
+  var nodes_edges = { nodes: network.body.data.nodes.get(), edges: network.body.data.edges.get() };
+  console.log(nodes_edges);
+  var nodes_edgesJSON = JSON.stringify(nodes_edges);
+  console.log(nodes_edgesJSON);
+  /*textFileAsBlob = new Blob([nodes_edgesJSON], {
+  type:
+  'application/json'
+}
+);*/
+
+this.agentGraph.send('agentDialogs', {type:'exportJsonSolid', jsonData : nodes_edgesJSON});
+
+}
+
+
+
 exportJson() {
   var network = this.network;
   console.log(network)

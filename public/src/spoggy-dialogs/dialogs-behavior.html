@@ -278,6 +278,108 @@ this.$.popupTtl.toggle();
 }
 
 
+saveTextAsFileJSON(){
+  console.log("saveTextAsFileJSON")
+  var textToWrite="";
+  var fileNameToSaveAs="";
+  var textFileAsBlob="";
+  var extension="json";
+  var nomFichier="";
+  var data = this.$.inputTextToSaveJSON.value;
+  console.log(data);
+  if((typeof data != "undefined")&& (data.length>0)){
+    textToWrite=data;
+  }else{
+    textToWrite = this.$.inputFileNameToSaveAsJSON.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+  }
+  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+    fileNameToSaveAs = nomFichier+"."+extension;
+  }else{
+    fileNameToSaveAs = this.$.inputFileNameToSaveAsJSON.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+  }
+
+  textFileAsBlob = new Blob([textToWrite], {
+    type:
+    'application/json'
+  }
+);
+
+console.log(fileNameToSaveAs+" : "+extension);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+//console.log(window.URL);
+//if (window.URL != null)
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  console.log("FF");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  console.log(this.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 100);
+console.log(this.$.popupTtl);
+this.$.popupTtl.toggle();
+}
+
+saveTextAsFileSolidJSON(){
+  console.log("saveTextAsFileSolidJSON")
+
+  var textToWrite="";
+  var fileNameToSaveAs="";
+  var textFileAsBlob="";
+  var extension="json";
+  var nomFichier="";
+  var data = this.$.inputTextToSaveJSON.value;
+  console.log(data);
+  if((typeof data != "undefined")&& (data.length>0)){
+    textToWrite=data;
+  }else{
+    textToWrite = this.$.inputTextToSaveJSON.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+  }
+  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+    fileNameToSaveAs = nomFichier+"."+extension;
+  }else{
+    fileNameToSaveAs = this.$.inputFileNameToSaveAsJSON.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+  }
+
+  textFileAsBlob = new Blob([textToWrite], {
+    type:
+    'application/json'
+  }
+);
+console.log(fileNameToSaveAs+" : "+extension);
+console.log(textFileAsBlob)
+//  this.agentDialogs.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
+this.agentDialogs.send('agentEditor', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
+//this.agentDialogs.send('agentFoldermenu', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
+
+}
 
 
 

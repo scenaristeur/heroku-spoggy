@@ -35,7 +35,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     traiteMessage(){
-          this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
+      this.agentInput.send('agentApp', {type: "setMode", value: "solo"});
       if (this.mode == "search"){
         this.lanceRecherche();
       }else{
@@ -182,6 +182,7 @@ var InputBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       case "/t":
       //  this.exportTtl(this.network,this);
       this.agentInput.send('agentGraph', {type:'exportTtl'}); // , what: 'network', to: 'agentDialogs', where: 'inputTextToSave'
+      this.agentInput.send('agentGraph', {type:'exportJsonSolid'});
       //    this.agentInput.send('agentDialogs', {type:'toggle', popup: 'popupTtl'})
       break;
       case "/s":

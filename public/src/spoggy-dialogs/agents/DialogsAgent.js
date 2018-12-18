@@ -90,13 +90,20 @@ DialogsAgent.prototype.receive = function(from, message) {
     break;
 
     case 'exportTtl':
-  //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
-    console.log(message);
+    //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
+  //  console.log(message);
     this.app.$.popupTtl.toggle();
     this.app.$.inputTextToSave.value = message.ttlData;
     this.app.$.inputFileNameToSaveAs.value ="Spoggy-exportTTL_"+Date.now();
     break;
 
+    case 'exportJsonSolid':
+    //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
+  //  console.log(message);
+    //  this.app.$.popupTtl.toggle();
+    this.app.$.inputTextToSaveJSON.value = message.jsonData;
+    this.app.$.inputFileNameToSaveAsJSON.value ="Spoggy-exportJSON_"+Date.now();
+    break;
     default:
     console.log(message);
   }
