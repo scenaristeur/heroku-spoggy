@@ -215,8 +215,8 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 
           <div slot="collapse-content">
             <a class="cafe-reserve" on-tap="import">Importer</a>
-            <a class="cafe-reserve" on-tap="export">Exporter</a>
-            <a class="cafe-reserve" on-tap="exportTtl">Exporter (.ttl)</a>
+            <!--  <a class="cafe-reserve" on-tap="export">Exporter</a>-->
+            <a class="cafe-reserve" on-tap="exportTtl">Exporter</a>
           </div>
         </iron-collapse-button>
 
@@ -226,91 +226,91 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
           <div slot="collapse-content">
 
             <a name = "solo" id="solo" class="cafe-reserve" on-tap="setmode">Solo</a>
-              <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif </a>
-                <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global</a>
-                <a name="solid" id="solid" class="cafe-reserve" on-tap="setmode">Solid</a>
-                </div>
-              </iron-collapse-button>
-
-              <!--<iron-collapse-button>
-              <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid Connect</h3>
-
-                <div slot="collapse-content">
-
-                  <solid-connect></solid-connect>
-
-                </div>
-              </iron-collapse-button>-->
-
-
-
-
-            </iron-selector>
-            <spoggy-graph-reglages></spoggy-graph-reglages>
-            <fieldset hidden$="[[isEmpty(mode)]]">
-              <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
-              </legend>
-              <div hidden$="[[isEmpty(pseudo)]]">
-                - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
-              </div>
-              <div hidden$="[[isEmpty(room)]]">
-                - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
-              </div>
-              <div hidden$="[[isEmpty(endpointName)]]">
-                - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
-              </div>
-            </fieldset>
-
-            <div on-tap="_toggleHelp"> HELP / Aide <paper-icon-button icon="help" label="Aide"></paper-icon-button></div>
-
+            <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif </a>
+            <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global</a>
+            <a name="solid" id="solid" class="cafe-reserve" on-tap="setmode">Solid</a>
           </div>
+        </iron-collapse-button>
 
-          <!--  buy me a coffe -->
-          <!--  <style>
-          .bmc-button img{
-          width: 27px !important;
-          margin-bottom: 1px !important;
-          box-shadow: none !important;
-          border: none !important;
-          vertical-align: middle !important;
-        }
-        .bmc-button{
-        line-height: 36px !important;
-        height:37px !important;
-        text-decoration: none !important;
-        display:inline-flex !important;
-        color:#ffffff !important;background-color:#000000 !important;
-        border-radius: 3px !important;
-        border: 1px solid transparent !important;
-        padding: 1px 9px !important;
-        font-size: 23px !important;
-        letter-spacing: 0.6px !important;
-        box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
-        -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-        margin: 0 auto !important;
-        font-family:'Cookie', cursive !important;
-        -webkit-box-sizing: border-box !important;
-        box-sizing: border-box !important;
-        -o-transition: 0.3s all linear !important;
-        -webkit-transition: 0.3s all linear !important;
-        -moz-transition: 0.3s all linear !important;
-        -ms-transition: 0.3s all linear !important;
-        transition: 0.3s all linear !important;
-      }
-      .bmc-button:hover,
-      .bmc-button:active,
-      .bmc-button:focus {
-      -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-      text-decoration: none !important;
-      box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
-      opacity: 0.85 !important;
-      color:#ffffff !important;
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
-  <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/SqdOnMgfw">
-  <img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee">
-  <span style="margin-left:5px">Buy me a coffee</span>
+        <!--<iron-collapse-button>
+        <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Solid Connect</h3>
+
+        <div slot="collapse-content">
+
+        <solid-connect></solid-connect>
+
+      </div>
+    </iron-collapse-button>-->
+
+
+
+
+  </iron-selector>
+  <spoggy-graph-reglages></spoggy-graph-reglages>
+  <fieldset hidden$="[[isEmpty(mode)]]">
+    <legend>  [[mode]]  <!-- <paper-icon-button  icon="icons:create" ></paper-icon-button>-->
+    </legend>
+    <div hidden$="[[isEmpty(pseudo)]]">
+      - Pseudo : [[pseudo]] <paper-icon-button  icon="icons:create" on-tap="pseudoEdit"></paper-icon-button>
+    </div>
+    <div hidden$="[[isEmpty(room)]]">
+      - Graphe : [[room]] <paper-icon-button  icon="icons:create" on-tap="roomEdit"></paper-icon-button>
+    </div>
+    <div hidden$="[[isEmpty(endpointName)]]">
+      - Endpoint : [[endpointName]] <paper-icon-button  icon="icons:create" on-tap="endpointEdit"></paper-icon-button>
+    </div>
+  </fieldset>
+
+  <div on-tap="_toggleHelp"> HELP / Aide <paper-icon-button icon="help" label="Aide"></paper-icon-button></div>
+
+</div>
+
+<!--  buy me a coffe -->
+<!--  <style>
+.bmc-button img{
+width: 27px !important;
+margin-bottom: 1px !important;
+box-shadow: none !important;
+border: none !important;
+vertical-align: middle !important;
+}
+.bmc-button{
+line-height: 36px !important;
+height:37px !important;
+text-decoration: none !important;
+display:inline-flex !important;
+color:#ffffff !important;background-color:#000000 !important;
+border-radius: 3px !important;
+border: 1px solid transparent !important;
+padding: 1px 9px !important;
+font-size: 23px !important;
+letter-spacing: 0.6px !important;
+box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+margin: 0 auto !important;
+font-family:'Cookie', cursive !important;
+-webkit-box-sizing: border-box !important;
+box-sizing: border-box !important;
+-o-transition: 0.3s all linear !important;
+-webkit-transition: 0.3s all linear !important;
+-moz-transition: 0.3s all linear !important;
+-ms-transition: 0.3s all linear !important;
+transition: 0.3s all linear !important;
+}
+.bmc-button:hover,
+.bmc-button:active,
+.bmc-button:focus {
+-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+text-decoration: none !important;
+box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+opacity: 0.85 !important;
+color:#ffffff !important;
+}
+</style>
+<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+<a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/SqdOnMgfw">
+<img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee">
+<span style="margin-left:5px">Buy me a coffee</span>
 </a>-->
 <!-- fin buy me a coffe -->
 </app-drawer>
@@ -356,10 +356,7 @@ mode={{mode}}
 hide-endpoints="{{hideEndpoints}}"
 hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
-  <spoggy-solid
-  mode={{mode}}
-  hide-endpoints="{{hideEndpoints}}"
-  hidden$="[[!isEqual(mode,'solid')]]">SOLID</spoggy-solid>
+
 
 <div hidden$="[[isEmpty(mode)]]">
   <spoggy-sparql></spoggy-sparql>
@@ -369,25 +366,20 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
   <spoggy-graph hidden$="[[hideGraph(hidePseudo,hideRejoindre, hideCreer)]]">
     ... Chargement du système ... <br>
   </spoggy-graph>
-
-
   <spoggy-dialogs></spoggy-dialogs>
+  <spoggy-solid
+  mode={{mode}}
+  hide-endpoints="{{hideEndpoints}}"
+  hidden$="[[!isEqual(mode,'solid')]]">SOLID</spoggy-solid>
   <!--<spoggy-jsonld></spoggy-jsonld>-->
   <spoggy-data></spoggy-data>
-
   <spoggy-preferences></spoggy-preferences>
   <spoggy-historique></spoggy-historique>
-
-
 </div>
-
-
 <div hidden$="[[!isEmpty(mode)]]">
   Chargement du graphe Spoggy,<br>
   Patientez jusqu'au chargement du cercle rose, SVP
 </div>
-
-
 
 </app-header-layout>
 </app-drawer-layout>
@@ -496,6 +488,11 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     }
   }
 
+  changeMode(mode){
+    this.mode = mode;
+    console.log(this.mode)
+  }
+
   delmode(e){
     this.mode = "";
   }
@@ -553,7 +550,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         break;
         case 'solid':
         console.log('selection mode solid');
-      //  this.hideEndpoints = false;
+        //  this.hideEndpoints = false;
         // expected output: "Mangoes and papayas are $2.79 a pound."
         break;
         default:
@@ -581,7 +578,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         case 'solid':
         console.log('quit solid mode');
         //this.hideEndpoints = true;
-      //this.endpointName = "";
+        //this.endpointName = "";
         break;
         default:
       }
@@ -595,26 +592,27 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     this.makeAmode();
     this.agentApp.send('agentDialogs', {type: 'toggle', popup:'importPopUp'})
   }
-  export(){
-    this.makeAmode();
-    this.agentApp.send('agentGraph', {type: 'exportJson'})
+  /*export(){
+  this.makeAmode();
+  this.agentApp.send('agentGraph', {type: 'exportJson'})
+}*/
+exportTtl(){
+  this.makeAmode();
+  this.agentApp.send('agentGraph', {type: 'exportTtl'});
+  this.agentApp.send('agentGraph', {type:'exportJsonSolid'});
+}
+makeAmode(){
+  this.closeDrawer();
+  if (this.mode.length == 0){
+    this.mode='solo';
   }
-  exportTtl(){
-    this.makeAmode();
-    this.agentApp.send('agentGraph', {type: 'exportTtl'})
-  }
-  makeAmode(){
-    this.closeDrawer();
-    if (this.mode.length == 0){
-      this.mode='solo';
-    }
-  }
+}
 
-  closeDrawer(){
-    if (!this.$.drawer.persistent) {
-      this.$.drawer.close();
-    }
+closeDrawer(){
+  if (!this.$.drawer.persistent) {
+    this.$.drawer.close();
   }
+}
 
 
 }

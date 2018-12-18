@@ -43,11 +43,16 @@ SolidAgent.prototype.receive = function(from, message) {
 
   switch(message.type){
     case 'toggle':
-  //  console.log(message.popup);
+    //  console.log(message.popup);
     let popup = message.popup;
     let pop = this.app.$[popup];
-  //  console.log(pop);
+    //  console.log(pop);
     pop.toggle();
+    break;
+
+    case 'changeSelected':
+    console.log(message);
+    this.app.changeSelected(message.selected)
     break;
 
     default:

@@ -51,6 +51,7 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       this.content = message.data;
       this.$.nameInput.value = message.name
       this.blob = message.blob;
+      this.agentEditor.send('agentSolid', {type: 'changeSelected', selected: 3 })
     }
 
     updateFile(){

@@ -75,15 +75,17 @@
 
 
     </iron-collapse-button>
+  </br>
+</br>
 
-    <!--
-    <bottom-nav>
-    <bottom-toolbar selected="0">
-    <bottom-tab sticky icon="icons:home"></bottom-tab>
-    <bottom-tab icon="icons:menu"></bottom-tab>
-    <bottom-tab icon="icons:close"></bottom-tab>
-    <bottom-tab icon="icons:chevron-right"></bottom-tab>
-  </bottom-toolbar>
+<!--
+<bottom-nav>
+<bottom-toolbar selected="0">
+<bottom-tab sticky icon="icons:home"></bottom-tab>
+<bottom-tab icon="icons:menu"></bottom-tab>
+<bottom-tab icon="icons:close"></bottom-tab>
+<bottom-tab icon="icons:chevron-right"></bottom-tab>
+</bottom-toolbar>
 </bottom-nav>-->
 
 <!--
@@ -225,7 +227,12 @@ class SpoggySolid extends Polymer.LazyImportsMixin(SolidBehaviorMixin(Polymer.El
   }
 })*/
 });
+}
 
+changeSelected(selected){
+  console.log(selected)
+  this.selected = selected;
+  console.log(this.selected)
 }
 }
 
