@@ -8,13 +8,13 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-fab/paper-fab.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/chat-window/chat-window.html">
-    <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
+  <link rel="lazy-import" group="lazy"  href="../../bower_components/valle-speed-dial/valle-speed-dial-action.html">
   <template>
     <style>
     :host {
       position: fixed;
       left: 10px;
-      bottom: 50px;
+      bottom: 60px;
     }
     </style>
 
@@ -24,10 +24,13 @@
       font-size: small;
       /*position: absolute;*/
       top: 100px;
+      background-color: #0f0f0f;
+      width: 90vw;
       --chat-messages-height: 12em;
       --paper-input-container-input: {
         margin: 0 2px;
         z-index:100;
+        background-color: #f0f0f0;
       }
       --chat-message-text: {
         z-index:100;
@@ -45,23 +48,23 @@
 
 
 <div hidden$="[[!visible]]">
-<chat-window
-id = "chat"
-class="styled"
-author="me"
-single-line
-input-text="{{newInput}}"
-messages="[[messages]]"
-on-send="sendMsg"
-></chat-window>
+  <chat-window
+  id = "chat"
+  class="styled"
+  author="me"
+  single-line
+  input-text="{{newInput}}"
+  messages="[[messages]]"
+  on-send="sendMsg"
+  ></chat-window>
 </div>
 
 <div  horizontal end-justified layout self-stretch>
   <paper-label hidden$="[[visible]]">[[room]]</paper-label>
-<paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab>
+  <paper-fab id="fabChat" on-tap="_toggleChat"   label="{{nonlu}}" icon="{{icon}}" style="height: 50px; width:50px;"></paper-fab>
 </div>
 
- <!-- mettre une icon si nonlu = 0 et au début  -->
+<!-- mettre une icon si nonlu = 0 et au début  -->
 
 
 
@@ -70,7 +73,7 @@ on-send="sendMsg"
 <valle-speed-dial-action
 id="action"
 class="dial-action"
- label="blop"
+label="blop"
 on-tap="_toggleChat"
 label-direction="direction"
 ></valle-speed-dial-action>-->
