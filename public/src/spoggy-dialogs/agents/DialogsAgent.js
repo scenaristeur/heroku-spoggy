@@ -91,7 +91,7 @@ DialogsAgent.prototype.receive = function(from, message) {
 
     case 'exportTtl':
     //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
-  //  console.log(message);
+    //  console.log(message);
     this.app.$.popupTtl.toggle();
     this.app.$.inputTextToSave.value = message.ttlData;
     this.app.$.inputFileNameToSaveAs.value ="Spoggy-exportTTL_"+Date.now();
@@ -99,9 +99,10 @@ DialogsAgent.prototype.receive = function(from, message) {
 
     case 'exportJsonSolid':
     //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
-  //  console.log(message);
+    //  console.log(message);
     //  this.app.$.popupTtl.toggle();
-    this.app.$.inputTextToSaveJSON.value = message.jsonData;
+    //this.app.$.inputTextToSaveJSON.value = message.jsonData;
+    this.app.$.inputTextToSaveJSON.value =  JSON.stringify(JSON.parse(message.jsonData), undefined, 4);
     this.app.$.inputFileNameToSaveAsJSON.value ="Spoggy-exportJSON_"+Date.now();
     break;
     default:

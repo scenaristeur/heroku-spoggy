@@ -54,7 +54,11 @@
           type: String,
           value: 'solid-current'
         },
-        connected: {type: Boolean, value: false}
+        connected: {type: Boolean, value: false},
+        params: {
+          type: Object,
+          value:{}
+        }
       };
     }
 
@@ -63,6 +67,7 @@
       Polymer.RenderStatus.afterNextRender(this, function() {
         this._deferred();
       });
+      this.params = this.recupParams();
     }
     _deferred(){
       this.importLazyGroup('lazy').then((results) => {
@@ -75,6 +80,7 @@
             console.log('The user is not logged in')
             this.connected = false;
             this.webId= "https://smag0.solid.community/profile/card#me"
+
             this.updatePOD();
             //  this.updateUrl();
             //  this.agentConnect.send('agentBrowser', {type: 'sessionChanged', session: null })
@@ -101,22 +107,42 @@
       this.updateUrl();
     }
     updateUrl(){
-      if (this.$.remplaceNetwork.checked){
-        console.log("remplace");
-        this.agentCurrent.send('agentGraph', {type: 'clear'})
+      console.log("PARAM SOURCE : ",this.params.source)
+      if (this.params.source == null){
+        if (this.$.remplaceNetwork.checked){
+          console.log("remplace");
+          this.agentCurrent.send('agentGraph', {type: 'clear'})
+        }
+        console.log("update")
+        var current = {}
+        current.key = "folder"
+        //  current.value = {}
+        current.url = this.url
+        this.agentCurrent.send('agentBrowser', {type: 'currentChanged', current: current })
+        this.agentCurrent.send('agentEditor', {type: 'currentChanged', current: current })
+      }else{
+        console.log("on ne charge pas le POD , car on a une source, mais on l'efface pour pas que ça nous bloque plus tard")
+        this.params.source = null;
       }
-      console.log("update")
-      var current = {}
-      current.key = "folder"
-      //  current.value = {}
-      current.url = this.url
-      this.agentCurrent.send('agentBrowser', {type: 'currentChanged', current: current })
-      this.agentCurrent.send('agentEditor', {type: 'currentChanged', current: current })
     }
 
-
+    recupParams(){
+      var params = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {        var p=a[i].split('=', 2);
+        if (p.length == 1)
+        b[p[0]] = "";
+        else
+        b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+      }
+      return b;
+    })(window.location.search.substr(1).split('&'));
+    return params;
   }
+}
 
-  window.customElements.define(SolidCurrent.is, SolidCurrent);
-  </script>
+window.customElements.define(SolidCurrent.is, SolidCurrent);
+</script>
 </dom-module>

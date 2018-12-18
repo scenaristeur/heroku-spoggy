@@ -42,7 +42,7 @@
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentBrowser = new BrowserAgent('agentBrowser', this);
         this.fileclient = new SolidFileClient();
-        console.log("FileClient ok",this.st)
+        console.log("FileClient ok",this.fileclient)
       });
       //  this.$.popupSolid.toggle();
       solid.auth.trackSession(session => {
