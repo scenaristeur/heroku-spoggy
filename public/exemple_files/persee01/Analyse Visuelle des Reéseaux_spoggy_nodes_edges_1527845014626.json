@@ -1,1 +1,550 @@
-{"nodes":[{"label":"Analyse Visuelle Des Réseaux","shape":"star","color":"green","type":"node","id":"b7544def-9790-42a6-9612-f55361a7a969"},{"label":"Graph","type":"node","id":"677852ae-c34d-490c-bd0e-8b382f5ab03c"},{"label":"Conférence","type":"node","x":-0.7608415002508071,"y":-1.157284728867697,"id":"7946c9a9-f4e4-497e-b873-846bd8f6156e"},{"label":"PerseeUp01","type":"node","x":-1.2155152422888817,"y":-0.35347380826429564,"id":"73b3657f-a4ec-421f-bc93-632a398477b8"},{"label":"Tommaso Venturini","type":"node","x":-1.2151320055516597,"y":-0.9667456558207181,"id":"1de47b69-4000-4b32-b7bc-bbcc8759c2a4"},{"label":" ENS de Lyon","type":"node","x":-0.023297046834958035,"y":-1.9233993497324327,"id":"d9a90ae9-a5fd-4272-ada9-476a25d540c8"},{"label":"Advanced Research Fellow of INRIA","type":"node","x":-0.21518377324950277,"y":-1.886195638397223,"id":"66c965e5-ef83-4b0b-bccf-42419dd9bb1c"},{"label":"From Math to map and back","type":"node","x":-1.1370447314763465,"y":-1.2757105908019701,"id":"906459cf-2051-4066-9bca-e67297db9bd4"},{"label":"probleme des ponts de Königsberg","type":"node","x":-0.12109906083885269,"y":-1.738686592255494,"id":"f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23"},{"label":"abstraction mathématique","type":"node","x":-1.0766958601658776,"y":-0.5310018760658592,"id":"4c0a370c-8566-430f-9b95-f33efaf918a6"},{"label":"Mathématique des réseaux","type":"node","x":-0.06748728764588785,"y":-1.3976004322987507,"id":"6206f9ad-e708-4f15-95bf-4694852aa99f"},{"label":"Analyse des réseaux Sociaux","type":"node","x":-1.596248419230467,"y":-0.14757447174907812,"id":"022fb1ba-af65-4981-969c-c866e0f1ae14"},{"label":"Jacob L. Moréno","type":"node","x":-1.6781190720072994,"y":-0.18425233561178178,"id":"54574a29-aa99-4b83-b068-1daf389294b1"},{"label":"Sociogramme","type":"node","x":-0.7925483977005339,"y":-1.4117524384848164,"id":"73685809-cdeb-407a-93fa-43ef55d3967d"},{"label":"Diagramme de réseau","type":"node","x":-0.9580451044783622,"y":-1.661419590175088,"id":"03f938c9-4356-42ce-9991-14e43096b5c3"},{"label":"Emotion mapped by new geography","type":"node","x":-0.20488697670381173,"y":-0.1555077906385245,"id":"f60cf1e1-8c05-4729-8e89-3e52c179be18"},{"label":"Sociogram ball","type":"node","x":-1.8786399318082405,"y":-1.4053924317081705,"id":"3fcb61d5-dc01-487f-a5b8-620244103207"},{"label":"analyse mathématique","type":"node","x":-0.8823794847343969,"y":-0.8037763693470286,"id":"51c281b4-36d3-4789-bca3-7599d108c007"},{"label":"analyse visuelle des réseaux","type":"node","x":-1.031355785148726,"y":-0.8180169517579032,"id":"11df0a68-b311-44c1-a4d4-55d52bfaa977"},{"label":"what do we see when we look at networks","type":"node","x":-1.350910493420265,"y":-0.3083829652574681,"id":"19b7bde7-fd36-419a-b3f8-cb5ff803b6b8"},{"label":"Resonance, not resemblance","type":"node","x":-0.2744537460230627,"y":-0.839104656499412,"id":"64e58d5b-8d35-4205-b70b-1c9177fff7b0"},{"label":"Carte du métro Londres 1933 par Harry Beck","type":"node","x":-0.12763758866345176,"y":-0.03778782367929612,"id":"1cee7820-a32b-4ad4-ac82-31d24cb1ed9d"},{"label":"Présentation algorythmes de reseau","type":"node","x":-1.2495132254559311,"y":-1.864674016711584,"id":"d25421c2-228d-49b6-8651-385604725892"},{"label":"force-vecteur","type":"node","x":1041.0244097759044,"y":-627.4978111892068,"id":"36067068-8c33-4e94-8fc6-f89969a0cec2","color":"rgb(173,208,255)","fixed":{},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true,"shape":"ellipse","image":""},{"label":"deux noeuds se trouvent proches car (in)-directement connectés","type":"node","x":-0.7896941281624259,"y":-0.06855672488817266,"id":"10f290c7-7c47-43aa-bb63-993d3dfea912"},{"label":"données multidimensionnelles représenté en 2 dimension","type":"node","x":-0.6132113481805179,"y":-0.004107162713843149,"id":"865bf867-12c9-47bf-a946-d48525d59159"},{"label":"Visualisation dans l'espace","type":"node","x":-1.7689354035116232,"y":-1.626041212076235,"id":"1926e54f-2b66-4d22-b4b9-30bf914533ec"},{"label":"Casque de réalité virtuelle","type":"node","x":-1.8233950143174567,"y":-0.5754239120886537,"id":"74eaae87-6454-4bf2-97a3-6a7c524d90bd"},{"label":"analyse exploratoire des données","type":"node","x":-1.3595188294801428,"y":-1.961757290194372,"id":"491195de-092f-43c1-90df-b1247ac2a50d"},{"label":"analyse verificatoire des données","type":"node","x":-0.2690124075596052,"y":-1.2249650558725684,"id":"c9b4d462-72ec-4bb8-9c7c-1b3da8b0e55d"},{"label":"Moreno's Sociograms revisited","type":"node","x":-0.08968650296277492,"y":-1.8906034273753702,"id":"2194c744-0397-4f98-b98d-6f7bc9590501"},{"label":"Martin Granjean -2015","type":"node","x":-1.4615686696562564,"y":-0.00712066143351997,"id":"8e058184-86e5-42ac-a1ff-88fca745b54c"},{"label":"Difference carte politique - carte physique","type":"node","x":-1.1047172120510567,"y":-0.9740851630138274,"id":"ce50bcc0-a5dc-49ce-84c7-2e48f18d31fa"},{"label":"Ambiguité","type":"node","x":-0.529955304345648,"y":-1.2733441896049866,"id":"2851fb0f-364f-4cb4-9280-6e8866ac2cfb"},{"label":"Humanities Approaches to Graphical Display","type":"node","x":-1.243784845945319,"y":-0.14009479511399947,"id":"988c0f14-441f-4045-bc37-1927462cb20d"},{"label":"Drucker J","type":"node","x":-0.42056589303614933,"y":-0.8091157103395723,"id":"ec64eae5-32c7-4fe9-b4ec-aabed57daee9"},{"label":"http://www.tommasoventurini.it","type":"node","x":-354.266384538383,"y":-124.57388927276689,"id":"0a648d75-6d7a-4ce0-abf5-ace61805f63a","color":"rgb(173,208,255)","fixed":{},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true,"shape":"ellipse","image":""}],"edges":[{"from":"b7544def-9790-42a6-9612-f55361a7a969","to":"677852ae-c34d-490c-bd0e-8b382f5ab03c","arrows":"to","label":"type","id":"e3b46e22-468d-45e5-9e5f-bde48cc330ae"},{"label":"type","from":"b7544def-9790-42a6-9612-f55361a7a969","to":"7946c9a9-f4e4-497e-b873-846bd8f6156e","type":"edge","id":"f8ac8b54-0700-41dd-8ea3-6cf271a35510"},{"label":"partOf","from":"b7544def-9790-42a6-9612-f55361a7a969","to":"73b3657f-a4ec-421f-bc93-632a398477b8","type":"edge","id":"0c82b167-9c51-429e-8441-64fe95286392"},{"label":"présentéPar","from":"b7544def-9790-42a6-9612-f55361a7a969","to":"1de47b69-4000-4b32-b7bc-bbcc8759c2a4","type":"edge","id":"b1f8c06e-390a-48d2-ae6f-3e49ef7130b4"},{"label":"partOf","from":"1de47b69-4000-4b32-b7bc-bbcc8759c2a4","to":"d9a90ae9-a5fd-4272-ada9-476a25d540c8","type":"edge","id":"2023ede9-5ae5-47a4-b330-05a2c2b2c37e"},{"label":"partOf","from":"1de47b69-4000-4b32-b7bc-bbcc8759c2a4","to":"66c965e5-ef83-4b0b-bccf-42419dd9bb1c","type":"edge","id":"6cfbeffc-cfac-4bf4-9068-5fd15b367165"},{"label":"first","from":"b7544def-9790-42a6-9612-f55361a7a969","to":"906459cf-2051-4066-9bca-e67297db9bd4","type":"edge","id":"e4025cb0-061d-4925-8887-dbf26a1d2050"},{"label":"first","from":"906459cf-2051-4066-9bca-e67297db9bd4","to":"f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23","type":"edge","id":"bf1ae71a-f538-4f2f-85cc-ff6fe4cce50f"},{"label":"first","from":"f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23","to":"4c0a370c-8566-430f-9b95-f33efaf918a6","type":"edge","id":"a8adf0d4-fa78-40de-8d73-7e388a53e29f"},{"label":"next","from":"4c0a370c-8566-430f-9b95-f33efaf918a6","to":"6206f9ad-e708-4f15-95bf-4694852aa99f","type":"edge","id":"a73a9bf7-f17d-4f65-b539-61b024486e5f"},{"label":"next","from":"f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23","to":"022fb1ba-af65-4981-969c-c866e0f1ae14","type":"edge","id":"c97ed0b5-66f1-47c8-a9bf-a555f861a479"},{"label":"first","from":"022fb1ba-af65-4981-969c-c866e0f1ae14","to":"54574a29-aa99-4b83-b068-1daf389294b1","type":"edge","id":"d492a6e0-61e1-4c9b-a988-9f97d79da040"},{"label":"aInvente","from":"54574a29-aa99-4b83-b068-1daf389294b1","to":"73685809-cdeb-407a-93fa-43ef55d3967d","type":"edge","id":"00520d38-35d6-4c8c-8299-413f888b75c7"},{"label":"type","from":"73685809-cdeb-407a-93fa-43ef55d3967d","to":"03f938c9-4356-42ce-9991-14e43096b5c3","type":"edge","id":"ad220ffa-576b-4d62-a79a-3bf3083af119"},{"label":"publie","from":"54574a29-aa99-4b83-b068-1daf389294b1","to":"f60cf1e1-8c05-4729-8e89-3e52c179be18","type":"edge","id":"60a182f4-dca1-4640-8626-636863ec8c07"},{"label":"next","from":"54574a29-aa99-4b83-b068-1daf389294b1","to":"3fcb61d5-dc01-487f-a5b8-620244103207","type":"edge","id":"84b9163d-aee6-4474-91f1-d8f670e7668a"},{"label":"next","from":"3fcb61d5-dc01-487f-a5b8-620244103207","to":"51c281b4-36d3-4789-bca3-7599d108c007","type":"edge","id":"b5a0017f-132b-44a8-bfe8-6d6be3eccbae"},{"label":"next","from":"51c281b4-36d3-4789-bca3-7599d108c007","to":"11df0a68-b311-44c1-a4d4-55d52bfaa977","type":"edge","id":"b61a502e-63f7-40c4-839d-362b78372fb3"},{"label":"next","from":"906459cf-2051-4066-9bca-e67297db9bd4","to":"19b7bde7-fd36-419a-b3f8-cb5ff803b6b8","type":"edge","id":"4286011b-9639-4f6a-8f10-feba42510c49"},{"label":"we see","from":"19b7bde7-fd36-419a-b3f8-cb5ff803b6b8","to":"64e58d5b-8d35-4205-b70b-1c9177fff7b0","type":"edge","id":"1e5554a7-5a45-40c6-b741-f24eb4c19553"},{"label":"exemple","from":"64e58d5b-8d35-4205-b70b-1c9177fff7b0","to":"1cee7820-a32b-4ad4-ac82-31d24cb1ed9d","type":"edge","id":"6673e118-5a73-4088-91e1-f7d75dcf8b6b"},{"label":"next","from":"19b7bde7-fd36-419a-b3f8-cb5ff803b6b8","to":"d25421c2-228d-49b6-8651-385604725892","type":"edge","id":"1e81bbde-9e5b-4aca-be7f-0f540c46a01e"},{"label":"algorythme","from":"d25421c2-228d-49b6-8651-385604725892","to":"36067068-8c33-4e94-8fc6-f89969a0cec2","type":"edge","id":"7f27bc42-a700-4e3b-a717-cfe648279660"},{"from":"36067068-8c33-4e94-8fc6-f89969a0cec2","to":"10f290c7-7c47-43aa-bb63-993d3dfea912","label":"avantage","id":"aee2a038-b9b8-49d1-b7f5-908be9273abc"},{"label":"probleme","from":"36067068-8c33-4e94-8fc6-f89969a0cec2","to":"865bf867-12c9-47bf-a946-d48525d59159","type":"edge","id":"664d3796-55b6-4bdd-960e-d49f05bc5b88"},{"label":"problème","from":"865bf867-12c9-47bf-a946-d48525d59159","to":"1926e54f-2b66-4d22-b4b9-30bf914533ec","type":"edge","id":"faf025c6-dd22-4166-9fbd-c4128d9ee3e0"},{"label":"solution?","from":"1926e54f-2b66-4d22-b4b9-30bf914533ec","to":"74eaae87-6454-4bf2-97a3-6a7c524d90bd","type":"edge","id":"ceab8696-8be7-41ba-9417-0c79c0b2397d"},{"label":"permet","from":"d25421c2-228d-49b6-8651-385604725892","to":"491195de-092f-43c1-90df-b1247ac2a50d","type":"edge","id":"68576101-6775-451c-af77-805b4a5a3fa7"},{"label":"permet","from":"d25421c2-228d-49b6-8651-385604725892","to":"c9b4d462-72ec-4bb8-9c7c-1b3da8b0e55d","type":"edge","id":"59aa0154-a731-4364-b4cb-ab39d21a966f"},{"label":"exemple","from":"36067068-8c33-4e94-8fc6-f89969a0cec2","to":"2194c744-0397-4f98-b98d-6f7bc9590501","type":"edge","id":"19d7366b-5406-4b50-a6d1-a5b017ec5261"},{"label":"publiéPar","from":"2194c744-0397-4f98-b98d-6f7bc9590501","to":"8e058184-86e5-42ac-a1ff-88fca745b54c","type":"edge","id":"adfc642c-b074-47ad-aa06-1452d1de286b"},{"label":"next","from":"36067068-8c33-4e94-8fc6-f89969a0cec2","to":"ce50bcc0-a5dc-49ce-84c7-2e48f18d31fa","type":"edge","id":"79f28ac7-acd3-4aef-ad8c-409743a96e9f"},{"label":"procure","from":"ce50bcc0-a5dc-49ce-84c7-2e48f18d31fa","to":"2851fb0f-364f-4cb4-9280-6e8866ac2cfb","type":"edge","id":"9c7411ec-d23d-43eb-b589-6523b2b0d06e"},{"label":"voir","from":"2851fb0f-364f-4cb4-9280-6e8866ac2cfb","to":"988c0f14-441f-4045-bc37-1927462cb20d","type":"edge","id":"8c28e538-9bd3-4e21-8b77-dcb45113b8b0"},{"label":"auteur","from":"988c0f14-441f-4045-bc37-1927462cb20d","to":"ec64eae5-32c7-4fe9-b4ec-aabed57daee9","type":"edge","id":"79250c31-9f7d-450d-bdd0-3988fba77c63"},{"label":"website","from":"1de47b69-4000-4b32-b7bc-bbcc8759c2a4","to":"0a648d75-6d7a-4ce0-abf5-ace61805f63a","type":"edge","id":"56c7240d-c2c8-4aab-902f-a9b091ea5ece"}]}
+{
+  "nodes": [
+    {
+      "label": "Analyse Visuelle Des Réseaux",
+      "shape": "star",
+      "color": "green",
+      "type": "node",
+      "id": "b7544def-9790-42a6-9612-f55361a7a969"
+    },
+    {
+      "label": "Graph",
+      "type": "node",
+      "id": "677852ae-c34d-490c-bd0e-8b382f5ab03c"
+    },
+    {
+      "label": "Conférence",
+      "type": "node",
+      "x": -0.7608415002508071,
+      "y": -1.157284728867697,
+      "id": "7946c9a9-f4e4-497e-b873-846bd8f6156e"
+    },
+    {
+      "label": "PerseeUp01",
+      "type": "node",
+      "x": -1.2155152422888817,
+      "y": -0.35347380826429564,
+      "id": "73b3657f-a4ec-421f-bc93-632a398477b8"
+    },
+    {
+      "label": "Tommaso Venturini",
+      "type": "node",
+      "x": -1.2151320055516597,
+      "y": -0.9667456558207181,
+      "id": "1de47b69-4000-4b32-b7bc-bbcc8759c2a4"
+    },
+    {
+      "label": " ENS de Lyon",
+      "type": "node",
+      "x": -0.023297046834958035,
+      "y": -1.9233993497324327,
+      "id": "d9a90ae9-a5fd-4272-ada9-476a25d540c8"
+    },
+    {
+      "label": "Advanced Research Fellow of INRIA",
+      "type": "node",
+      "x": -0.21518377324950277,
+      "y": -1.886195638397223,
+      "id": "66c965e5-ef83-4b0b-bccf-42419dd9bb1c"
+    },
+    {
+      "label": "From Math to map and back",
+      "type": "node",
+      "x": -1.1370447314763465,
+      "y": -1.2757105908019701,
+      "id": "906459cf-2051-4066-9bca-e67297db9bd4"
+    },
+    {
+      "label": "probleme des ponts de Königsberg",
+      "type": "node",
+      "x": -0.12109906083885269,
+      "y": -1.738686592255494,
+      "id": "f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23"
+    },
+    {
+      "label": "abstraction mathématique",
+      "type": "node",
+      "x": -1.0766958601658776,
+      "y": -0.5310018760658592,
+      "id": "4c0a370c-8566-430f-9b95-f33efaf918a6"
+    },
+    {
+      "label": "Mathématique des réseaux",
+      "type": "node",
+      "x": -0.06748728764588785,
+      "y": -1.3976004322987507,
+      "id": "6206f9ad-e708-4f15-95bf-4694852aa99f"
+    },
+    {
+      "label": "Analyse des réseaux Sociaux",
+      "type": "node",
+      "x": -1.596248419230467,
+      "y": -0.14757447174907812,
+      "id": "022fb1ba-af65-4981-969c-c866e0f1ae14"
+    },
+    {
+      "label": "Jacob L. Moréno",
+      "type": "node",
+      "x": -1.6781190720072994,
+      "y": -0.18425233561178178,
+      "id": "54574a29-aa99-4b83-b068-1daf389294b1"
+    },
+    {
+      "label": "Sociogramme",
+      "type": "node",
+      "x": -0.7925483977005339,
+      "y": -1.4117524384848164,
+      "id": "73685809-cdeb-407a-93fa-43ef55d3967d"
+    },
+    {
+      "label": "Diagramme de réseau",
+      "type": "node",
+      "x": -0.9580451044783622,
+      "y": -1.661419590175088,
+      "id": "03f938c9-4356-42ce-9991-14e43096b5c3"
+    },
+    {
+      "label": "Emotion mapped by new geography",
+      "type": "node",
+      "x": -0.20488697670381173,
+      "y": -0.1555077906385245,
+      "id": "f60cf1e1-8c05-4729-8e89-3e52c179be18"
+    },
+    {
+      "label": "Sociogram ball",
+      "type": "node",
+      "x": -1.8786399318082405,
+      "y": -1.4053924317081705,
+      "id": "3fcb61d5-dc01-487f-a5b8-620244103207"
+    },
+    {
+      "label": "analyse mathématique",
+      "type": "node",
+      "x": -0.8823794847343969,
+      "y": -0.8037763693470286,
+      "id": "51c281b4-36d3-4789-bca3-7599d108c007"
+    },
+    {
+      "label": "analyse visuelle des réseaux",
+      "type": "node",
+      "x": -1.031355785148726,
+      "y": -0.8180169517579032,
+      "id": "11df0a68-b311-44c1-a4d4-55d52bfaa977"
+    },
+    {
+      "label": "what do we see when we look at networks",
+      "type": "node",
+      "x": -1.350910493420265,
+      "y": -0.3083829652574681,
+      "id": "19b7bde7-fd36-419a-b3f8-cb5ff803b6b8"
+    },
+    {
+      "label": "Resonance, not resemblance",
+      "type": "node",
+      "x": -0.2744537460230627,
+      "y": -0.839104656499412,
+      "id": "64e58d5b-8d35-4205-b70b-1c9177fff7b0"
+    },
+    {
+      "label": "Carte du métro Londres 1933 par Harry Beck",
+      "type": "node",
+      "x": -0.12763758866345176,
+      "y": -0.03778782367929612,
+      "id": "1cee7820-a32b-4ad4-ac82-31d24cb1ed9d"
+    },
+    {
+      "label": "Présentation algorythmes de reseau",
+      "type": "node",
+      "x": -1.2495132254559311,
+      "y": -1.864674016711584,
+      "id": "d25421c2-228d-49b6-8651-385604725892"
+    },
+    {
+      "label": "force-vecteur",
+      "type": "node",
+      "x": 1041.0244097759044,
+      "y": -627.4978111892068,
+      "id": "36067068-8c33-4e94-8fc6-f89969a0cec2",
+      "color": "rgb(173,208,255)",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true,
+      "shape": "ellipse",
+      "image": ""
+    },
+    {
+      "label": "deux noeuds se trouvent proches car (in)-directement connectés",
+      "type": "node",
+      "x": -0.7896941281624259,
+      "y": -0.06855672488817266,
+      "id": "10f290c7-7c47-43aa-bb63-993d3dfea912"
+    },
+    {
+      "label": "données multidimensionnelles représenté en 2 dimension",
+      "type": "node",
+      "x": -0.6132113481805179,
+      "y": -0.004107162713843149,
+      "id": "865bf867-12c9-47bf-a946-d48525d59159"
+    },
+    {
+      "label": "Visualisation dans l'espace",
+      "type": "node",
+      "x": -1.7689354035116232,
+      "y": -1.626041212076235,
+      "id": "1926e54f-2b66-4d22-b4b9-30bf914533ec"
+    },
+    {
+      "label": "Casque de réalité virtuelle",
+      "type": "node",
+      "x": -1.8233950143174567,
+      "y": -0.5754239120886537,
+      "id": "74eaae87-6454-4bf2-97a3-6a7c524d90bd"
+    },
+    {
+      "label": "analyse exploratoire des données",
+      "type": "node",
+      "x": -1.3595188294801428,
+      "y": -1.961757290194372,
+      "id": "491195de-092f-43c1-90df-b1247ac2a50d"
+    },
+    {
+      "label": "analyse verificatoire des données",
+      "type": "node",
+      "x": -0.2690124075596052,
+      "y": -1.2249650558725684,
+      "id": "c9b4d462-72ec-4bb8-9c7c-1b3da8b0e55d"
+    },
+    {
+      "label": "Moreno's Sociograms revisited",
+      "type": "node",
+      "x": -0.08968650296277492,
+      "y": -1.8906034273753702,
+      "id": "2194c744-0397-4f98-b98d-6f7bc9590501"
+    },
+    {
+      "label": "Martin Granjean -2015",
+      "type": "node",
+      "x": -1.4615686696562564,
+      "y": -0.00712066143351997,
+      "id": "8e058184-86e5-42ac-a1ff-88fca745b54c"
+    },
+    {
+      "label": "Difference carte politique - carte physique",
+      "type": "node",
+      "x": -1.1047172120510567,
+      "y": -0.9740851630138274,
+      "id": "ce50bcc0-a5dc-49ce-84c7-2e48f18d31fa"
+    },
+    {
+      "label": "Ambiguité",
+      "type": "node",
+      "x": -0.529955304345648,
+      "y": -1.2733441896049866,
+      "id": "2851fb0f-364f-4cb4-9280-6e8866ac2cfb"
+    },
+    {
+      "label": "Humanities Approaches to Graphical Display",
+      "type": "node",
+      "x": -1.243784845945319,
+      "y": -0.14009479511399947,
+      "id": "988c0f14-441f-4045-bc37-1927462cb20d"
+    },
+    {
+      "label": "Drucker J",
+      "type": "node",
+      "x": -0.42056589303614933,
+      "y": -0.8091157103395723,
+      "id": "ec64eae5-32c7-4fe9-b4ec-aabed57daee9"
+    },
+    {
+      "label": "http://www.tommasoventurini.it",
+      "type": "node",
+      "x": -354.266384538383,
+      "y": -124.57388927276689,
+      "id": "0a648d75-6d7a-4ce0-abf5-ace61805f63a",
+      "color": "rgb(173,208,255)",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true,
+      "shape": "ellipse",
+      "image": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "b7544def-9790-42a6-9612-f55361a7a969",
+      "to": "677852ae-c34d-490c-bd0e-8b382f5ab03c",
+      "arrows": "to",
+      "label": "type",
+      "id": "e3b46e22-468d-45e5-9e5f-bde48cc330ae"
+    },
+    {
+      "label": "type",
+      "from": "b7544def-9790-42a6-9612-f55361a7a969",
+      "to": "7946c9a9-f4e4-497e-b873-846bd8f6156e",
+      "type": "edge",
+      "id": "f8ac8b54-0700-41dd-8ea3-6cf271a35510"
+    },
+    {
+      "label": "partOf",
+      "from": "b7544def-9790-42a6-9612-f55361a7a969",
+      "to": "73b3657f-a4ec-421f-bc93-632a398477b8",
+      "type": "edge",
+      "id": "0c82b167-9c51-429e-8441-64fe95286392"
+    },
+    {
+      "label": "présentéPar",
+      "from": "b7544def-9790-42a6-9612-f55361a7a969",
+      "to": "1de47b69-4000-4b32-b7bc-bbcc8759c2a4",
+      "type": "edge",
+      "id": "b1f8c06e-390a-48d2-ae6f-3e49ef7130b4"
+    },
+    {
+      "label": "partOf",
+      "from": "1de47b69-4000-4b32-b7bc-bbcc8759c2a4",
+      "to": "d9a90ae9-a5fd-4272-ada9-476a25d540c8",
+      "type": "edge",
+      "id": "2023ede9-5ae5-47a4-b330-05a2c2b2c37e"
+    },
+    {
+      "label": "partOf",
+      "from": "1de47b69-4000-4b32-b7bc-bbcc8759c2a4",
+      "to": "66c965e5-ef83-4b0b-bccf-42419dd9bb1c",
+      "type": "edge",
+      "id": "6cfbeffc-cfac-4bf4-9068-5fd15b367165"
+    },
+    {
+      "label": "first",
+      "from": "b7544def-9790-42a6-9612-f55361a7a969",
+      "to": "906459cf-2051-4066-9bca-e67297db9bd4",
+      "type": "edge",
+      "id": "e4025cb0-061d-4925-8887-dbf26a1d2050"
+    },
+    {
+      "label": "first",
+      "from": "906459cf-2051-4066-9bca-e67297db9bd4",
+      "to": "f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23",
+      "type": "edge",
+      "id": "bf1ae71a-f538-4f2f-85cc-ff6fe4cce50f"
+    },
+    {
+      "label": "first",
+      "from": "f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23",
+      "to": "4c0a370c-8566-430f-9b95-f33efaf918a6",
+      "type": "edge",
+      "id": "a8adf0d4-fa78-40de-8d73-7e388a53e29f"
+    },
+    {
+      "label": "next",
+      "from": "4c0a370c-8566-430f-9b95-f33efaf918a6",
+      "to": "6206f9ad-e708-4f15-95bf-4694852aa99f",
+      "type": "edge",
+      "id": "a73a9bf7-f17d-4f65-b539-61b024486e5f"
+    },
+    {
+      "label": "next",
+      "from": "f7dc7015-ebcd-44a8-a3e1-404c1a0a0e23",
+      "to": "022fb1ba-af65-4981-969c-c866e0f1ae14",
+      "type": "edge",
+      "id": "c97ed0b5-66f1-47c8-a9bf-a555f861a479"
+    },
+    {
+      "label": "first",
+      "from": "022fb1ba-af65-4981-969c-c866e0f1ae14",
+      "to": "54574a29-aa99-4b83-b068-1daf389294b1",
+      "type": "edge",
+      "id": "d492a6e0-61e1-4c9b-a988-9f97d79da040"
+    },
+    {
+      "label": "aInvente",
+      "from": "54574a29-aa99-4b83-b068-1daf389294b1",
+      "to": "73685809-cdeb-407a-93fa-43ef55d3967d",
+      "type": "edge",
+      "id": "00520d38-35d6-4c8c-8299-413f888b75c7"
+    },
+    {
+      "label": "type",
+      "from": "73685809-cdeb-407a-93fa-43ef55d3967d",
+      "to": "03f938c9-4356-42ce-9991-14e43096b5c3",
+      "type": "edge",
+      "id": "ad220ffa-576b-4d62-a79a-3bf3083af119"
+    },
+    {
+      "label": "publie",
+      "from": "54574a29-aa99-4b83-b068-1daf389294b1",
+      "to": "f60cf1e1-8c05-4729-8e89-3e52c179be18",
+      "type": "edge",
+      "id": "60a182f4-dca1-4640-8626-636863ec8c07"
+    },
+    {
+      "label": "next",
+      "from": "54574a29-aa99-4b83-b068-1daf389294b1",
+      "to": "3fcb61d5-dc01-487f-a5b8-620244103207",
+      "type": "edge",
+      "id": "84b9163d-aee6-4474-91f1-d8f670e7668a"
+    },
+    {
+      "label": "next",
+      "from": "3fcb61d5-dc01-487f-a5b8-620244103207",
+      "to": "51c281b4-36d3-4789-bca3-7599d108c007",
+      "type": "edge",
+      "id": "b5a0017f-132b-44a8-bfe8-6d6be3eccbae"
+    },
+    {
+      "label": "next",
+      "from": "51c281b4-36d3-4789-bca3-7599d108c007",
+      "to": "11df0a68-b311-44c1-a4d4-55d52bfaa977",
+      "type": "edge",
+      "id": "b61a502e-63f7-40c4-839d-362b78372fb3"
+    },
+    {
+      "label": "next",
+      "from": "906459cf-2051-4066-9bca-e67297db9bd4",
+      "to": "19b7bde7-fd36-419a-b3f8-cb5ff803b6b8",
+      "type": "edge",
+      "id": "4286011b-9639-4f6a-8f10-feba42510c49"
+    },
+    {
+      "label": "we see",
+      "from": "19b7bde7-fd36-419a-b3f8-cb5ff803b6b8",
+      "to": "64e58d5b-8d35-4205-b70b-1c9177fff7b0",
+      "type": "edge",
+      "id": "1e5554a7-5a45-40c6-b741-f24eb4c19553"
+    },
+    {
+      "label": "exemple",
+      "from": "64e58d5b-8d35-4205-b70b-1c9177fff7b0",
+      "to": "1cee7820-a32b-4ad4-ac82-31d24cb1ed9d",
+      "type": "edge",
+      "id": "6673e118-5a73-4088-91e1-f7d75dcf8b6b"
+    },
+    {
+      "label": "next",
+      "from": "19b7bde7-fd36-419a-b3f8-cb5ff803b6b8",
+      "to": "d25421c2-228d-49b6-8651-385604725892",
+      "type": "edge",
+      "id": "1e81bbde-9e5b-4aca-be7f-0f540c46a01e"
+    },
+    {
+      "label": "algorythme",
+      "from": "d25421c2-228d-49b6-8651-385604725892",
+      "to": "36067068-8c33-4e94-8fc6-f89969a0cec2",
+      "type": "edge",
+      "id": "7f27bc42-a700-4e3b-a717-cfe648279660"
+    },
+    {
+      "from": "36067068-8c33-4e94-8fc6-f89969a0cec2",
+      "to": "10f290c7-7c47-43aa-bb63-993d3dfea912",
+      "label": "avantage",
+      "id": "aee2a038-b9b8-49d1-b7f5-908be9273abc"
+    },
+    {
+      "label": "probleme",
+      "from": "36067068-8c33-4e94-8fc6-f89969a0cec2",
+      "to": "865bf867-12c9-47bf-a946-d48525d59159",
+      "type": "edge",
+      "id": "664d3796-55b6-4bdd-960e-d49f05bc5b88"
+    },
+    {
+      "label": "problème",
+      "from": "865bf867-12c9-47bf-a946-d48525d59159",
+      "to": "1926e54f-2b66-4d22-b4b9-30bf914533ec",
+      "type": "edge",
+      "id": "faf025c6-dd22-4166-9fbd-c4128d9ee3e0"
+    },
+    {
+      "label": "solution?",
+      "from": "1926e54f-2b66-4d22-b4b9-30bf914533ec",
+      "to": "74eaae87-6454-4bf2-97a3-6a7c524d90bd",
+      "type": "edge",
+      "id": "ceab8696-8be7-41ba-9417-0c79c0b2397d"
+    },
+    {
+      "label": "permet",
+      "from": "d25421c2-228d-49b6-8651-385604725892",
+      "to": "491195de-092f-43c1-90df-b1247ac2a50d",
+      "type": "edge",
+      "id": "68576101-6775-451c-af77-805b4a5a3fa7"
+    },
+    {
+      "label": "permet",
+      "from": "d25421c2-228d-49b6-8651-385604725892",
+      "to": "c9b4d462-72ec-4bb8-9c7c-1b3da8b0e55d",
+      "type": "edge",
+      "id": "59aa0154-a731-4364-b4cb-ab39d21a966f"
+    },
+    {
+      "label": "exemple",
+      "from": "36067068-8c33-4e94-8fc6-f89969a0cec2",
+      "to": "2194c744-0397-4f98-b98d-6f7bc9590501",
+      "type": "edge",
+      "id": "19d7366b-5406-4b50-a6d1-a5b017ec5261"
+    },
+    {
+      "label": "publiéPar",
+      "from": "2194c744-0397-4f98-b98d-6f7bc9590501",
+      "to": "8e058184-86e5-42ac-a1ff-88fca745b54c",
+      "type": "edge",
+      "id": "adfc642c-b074-47ad-aa06-1452d1de286b"
+    },
+    {
+      "label": "next",
+      "from": "36067068-8c33-4e94-8fc6-f89969a0cec2",
+      "to": "ce50bcc0-a5dc-49ce-84c7-2e48f18d31fa",
+      "type": "edge",
+      "id": "79f28ac7-acd3-4aef-ad8c-409743a96e9f"
+    },
+    {
+      "label": "procure",
+      "from": "ce50bcc0-a5dc-49ce-84c7-2e48f18d31fa",
+      "to": "2851fb0f-364f-4cb4-9280-6e8866ac2cfb",
+      "type": "edge",
+      "id": "9c7411ec-d23d-43eb-b589-6523b2b0d06e"
+    },
+    {
+      "label": "voir",
+      "from": "2851fb0f-364f-4cb4-9280-6e8866ac2cfb",
+      "to": "988c0f14-441f-4045-bc37-1927462cb20d",
+      "type": "edge",
+      "id": "8c28e538-9bd3-4e21-8b77-dcb45113b8b0"
+    },
+    {
+      "label": "auteur",
+      "from": "988c0f14-441f-4045-bc37-1927462cb20d",
+      "to": "ec64eae5-32c7-4fe9-b4ec-aabed57daee9",
+      "type": "edge",
+      "id": "79250c31-9f7d-450d-bdd0-3988fba77c63"
+    },
+    {
+      "label": "website",
+      "from": "1de47b69-4000-4b32-b7bc-bbcc8759c2a4",
+      "to": "0a648d75-6d7a-4ce0-abf5-ace61805f63a",
+      "type": "edge",
+      "id": "56c7240d-c2c8-4aab-902f-a9b091ea5ece"
+    }
+  ]
+}

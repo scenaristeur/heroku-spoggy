@@ -1,1 +1,1083 @@
-{"nodes":[{"id":"36638c60-4a86-49ee-b91a-37b4e24a85e7","x":1210.9871913101072,"y":-152.7895963436083,"label":"Méthodologies de Conception de Data Visu...","shape":"box","color":"rgb(255, 0, 0)","image":"","type":"node","title":"Méthodologies de Conception de Data Visu<br>alization: Etudes de Design et Prototypa<br>ge Rapide","fixed":{"x":false,"y":false},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true},{"id":"b6bf9408-d87c-4fd5-b454-9a81bfd855a7","x":-597.8200423573071,"y":-819.4252079668354,"label":"Romain Vuillemot","shape":"ellipse","color":"rgb(173,208,255)","image":"","type":"node"},{"id":"c8a890a1-a646-4a4f-bb85-61b4a54ca17f","x":-391.61393027127514,"y":-914.0479260669193,"label":"Enseignant-Chercheur","shape":"ellipse","color":"rgb(173,208,255)","image":"","type":"node"},{"id":"48535d06-5631-4eab-803d-925c0aaa1d9a","x":-240.7531816022735,"y":-1184.5260730888572,"label":"Ecole centrale de Lyon","shape":"ellipse","color":"rgb(173,208,255)","image":"","type":"node"},{"id":"88e8fa65-25ed-4fe8-8202-71926f64ff8c","x":-208.82303119515794,"y":-549.141822915862,"label":"Etude de Design et de prototypage rapide","shape":"ellipse","color":"rgb(173,208,255)","image":"","type":"node"},{"label":"DesOutils","type":"node","x":-1.1943114384549118,"y":-0.09765340411755519,"id":"99bd6591-13c0-448c-910b-30ff57548f7d"},{"label":"VisualisationStatique","type":"node","x":-1.9130920142557626,"y":-0.5921482089477124,"id":"a4b436e0-819b-4dd5-a4eb-3a98727ccc7c"},{"label":"Widget","type":"node","x":-0.3859993523042613,"y":-0.15052454631864753,"id":"62c42d64-3383-4f6c-aa7f-045ac67e63ff"},{"label":"https://atlas.media.mit.edu/en/profile/country/ind/","type":"node","x":-1.1199814489858713,"y":-1.3055747021543178,"id":"b9854d4b-6a3c-45c6-b876-829ba73da824"},{"label":"Comment représenter visuallement ces deux chiffres 75 et 37 -> 45 représentations","type":"node","x":-0.3529410572240219,"y":-0.3240529609545888,"id":"1739ed4d-e416-402e-b873-f797b72f75e0"},{"label":"Pourquoi visualiser ?","type":"node","x":94.21448503041886,"y":340.51541933723695,"id":"772d5196-e9e8-43f4-94c6-5e47f47f8aa2","color":"rgb(80, 218, 132)","fixed":{},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true,"shape":"ellipse","image":""},{"label":"l'humain est tres bon pour visualiser","type":"node","x":-0.43660470509166727,"y":-1.2772836596940023,"id":"a2a1b73a-08e5-44ee-bb22-8379fef139dc"},{"label":"l'humain est meilleur que la machine","type":"node","x":-0.5027568068774944,"y":-1.091633098960779,"id":"91c062ae-cd20-4db0-a688-93914c19941b"},{"label":"la machine est meilleure pour stocker","type":"node","x":-1.9821951821823562,"y":-0.6379843109746819,"id":"aedff561-c7b3-4d14-85ab-d7b7db012b2c"},{"label":"saillance","type":"node","x":-0.18703931833378729,"y":-0.8437410901678968,"id":"0bce4f67-1c24-4a30-be48-14338c2fc5f5"},{"label":"couleur","type":"node","x":-1.9491342677890833,"y":-0.6233918042675772,"id":"a54c3f8d-6411-4969-8452-c156a4c467b3"},{"label":"taches non-preattentive / tache pre-attentives","type":"node","x":-0.8538589598016495,"y":-1.3266176078022882,"id":"401c9b88-6aad-45a9-bfb5-e25238fb69f6"},{"label":"element mis en avant","type":"node","x":-0.4203183545932174,"y":-1.8628386553824092,"id":"f1bb2fd1-5d56-4c1e-bb9f-cd7b8726e1e9"},{"label":"orientation","type":"node","x":-1.1474211560003367,"y":-0.1534360510837276,"id":"2db391f2-6a72-44da-b2cd-0290601a4452"},{"label":"taille","type":"node","x":-0.3666264328444422,"y":-0.9702962947296867,"id":"5b547458-3c68-4717-87a4-94f8a006afea"},{"label":"Comment visualiser ?","type":"node","x":-450.01196966516676,"y":-42.407237554119995,"id":"085611da-6836-4d3f-b27f-2eb552dcab13","color":"rgb(87, 227, 119)","fixed":{},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true,"shape":"ellipse","image":""},{"label":"briques","type":"node","x":-0.8911012527288693,"y":-1.630093244730992,"id":"0fadd726-018e-4c09-879d-8510d02ee755"},{"label":"position","type":"node","x":-0.37372656115993363,"y":-1.1587828829515407,"id":"0a86b86e-c4d2-4469-8e51-0a4e1be55d5b"},{"label":"marque","type":"node","x":-0.5749705133222198,"y":-1.3745996910252511,"id":"93fb8e6a-188d-4585-af73-dc7d04fed282"},{"label":"forme","type":"node","x":-0.847186319671946,"y":-0.17949856412659315,"id":"39c17dbe-8259-4069-9570-c1c86892e9b7"},{"label":"vocabulaire graphique de base","type":"node","x":-0.9401642833806712,"y":-1.5032500277081144,"id":"726944f5-657f-4e56-9586-0f10ad5210f3"},{"label":"BottomUp","type":"node","x":-1.7823666115753891,"y":-1.710320903368181,"id":"8637a3cc-0a87-4c8e-aa0b-a6dc7c2f5e74"},{"label":"TopDown","type":"node","x":-0.4513199968058341,"y":-0.35718359356920404,"id":"6e04fc26-56f7-4ed2-b076-696d279adfa5"},{"label":"graphiquePersonnalisé","type":"node","x":-1.3292133040079008,"y":-1.6947242092096957,"id":"93da1cf3-cf7e-45a1-82ef-f2bc9448baa3"},{"label":"Outils Issus De La Recherche","type":"node","x":-332.09346586037805,"y":-531.0505363283194,"id":"26e994c6-8118-40ed-9f14-c8ab92ac759a","color":"rgb(173,208,255)","fixed":{},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true,"shape":"ellipse","image":""},{"label":"Tableau.com","type":"node","x":-807.4381003505976,"y":-639.3168441445077,"id":"361755b9-960d-497d-bc32-49dd5277404a","color":"rgb(173,208,255)","fixed":{},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true,"shape":"ellipse","image":""},{"label":"Outils Commerciaux","type":"node","x":-1.9555129024224085,"y":-1.8415483246829853,"id":"b118e8eb-c094-4b62-95ac-2346131d6340"},{"label":"Librairies","type":"node","x":-0.26881797204499813,"y":-1.5819758621573028,"id":"0dcddf55-65b9-440b-8ba0-6d19d54ae9f6"},{"label":"D3.js","type":"node","x":-0.8228151243734607,"y":-0.7918899141385349,"id":"af6b2b12-ab62-4be6-8ec4-831402aec6c5"},{"label":"Saisie des données","type":"node","x":-1.267067760920158,"y":-0.3731713341006575,"id":"a81fc381-dccc-4ef5-8c49-1e15c1e9b883"},{"label":"résumé des données","type":"node","x":-0.14781656003413302,"y":-1.5898026054424923,"id":"648e5926-db51-4d8b-a716-2d081bdbb95b"},{"label":"creation graphique","type":"node","x":-0.8459670019539831,"y":-0.15859616116867015,"id":"0245dccb-93b0-4a52-b539-3cb28c57911c"},{"label":"Drag&Drop des catégories de données","type":"node","x":-1.9841705486535495,"y":-1.938527568572463,"id":"4284fb77-a15a-448f-b012-c95e2a7cfdf1"},{"label":"Personnalisation des marques/formes","type":"node","x":-1.9463705966052478,"y":-0.14875120992729052,"id":"8abe333b-28cb-4249-8095-3b6ec43e75d4"},{"label":"perso formes et couleurs","type":"node","x":-1.0040202945802195,"y":-0.903690095893007,"id":"b638f605-a079-4d72-b93f-23c6991f0f3b"},{"label":"Choix de visualisation","type":"node","x":-0.6678263895183596,"y":-0.737533925139823,"id":"ef08180d-4e91-4987-bf56-1b389889aca4"},{"label":"hebergé sur tableau.com, export difficile","type":"node","x":-0.5975196818554287,"y":-0.056898834020469025,"id":"3f1663b4-08e5-4f71-af03-35eaa6a46309"},{"label":"Vega","type":"node","x":-0.4233924160178866,"y":-1.342224242499026,"id":"60a2e514-8cdf-4a4e-9049-cb113930a393"},{"label":"Polestar","type":"node","x":-0.34480586933767077,"y":-1.074280490440195,"id":"2b8ef451-530c-407a-ab9b-2ac46bf7c457"},{"label":"Google visualisation","type":"node","x":-0.0976126963320354,"y":-1.029506206999757,"id":"81c84588-472f-4a57-9506-e1b3c8d61124"},{"label":"Python","type":"node","x":-0.41144711358668973,"y":-1.2044675585333673,"id":"c94afa42-b773-4f01-a77c-bd0ad20c7343"},{"label":"80% du temps pour préparer les données","type":"node","x":-1.0041616168355998,"y":-1.9755515781430542,"id":"0c124644-10e8-415e-aaf8-5c00001feef7"},{"label":"Des données vers le graphique","type":"node","x":-0.4154182165810534,"y":-0.2889231931945915,"id":"de7e7f66-6be4-4754-afde-96d6321a0a3a"},{"label":"Du graphique sans les données","type":"node","x":-0.3355948309577865,"y":-0.2726278604900707,"id":"2b3cf56e-7a3c-478e-abf8-730bf00967e0"},{"label":"Sketching","type":"node","x":-0.5322935690905273,"y":-0.6720504859415439,"id":"2b481c4a-6a0c-47e3-b09c-256e10a37791"},{"id":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","x":-94.18607325937447,"y":-254.82582893328978,"label":"Methode Design graphique","shape":"ellipse","color":"rgb(173,208,255)","image":"","type":"node"},{"label":"Grid","type":"node","x":-1.7942871329558798,"y":-0.7242955451045234,"id":"08122569-6777-42d3-8e14-d63952d70247"},{"label":"visualisation","type":"node","x":-1.7376590767424318,"y":-1.17033933514118,"id":"fc896cf8-2df4-46b9-b732-f21330657a89"},{"label":"Maquette en basse résolution : position, marque sans couleur, label","type":"node","x":-1.3059765876221507,"y":-1.856482476691192,"id":"21779bfd-cfff-4349-b2fb-f82feb1bfd26"},{"label":"Division progressive de l'espace","type":"node","x":-0.7901257609101022,"y":-1.2629860754368276,"id":"dc351ff4-bafe-44ef-a781-aeb970d99437"},{"label":"positionnement placeholder","type":"node","x":-1.1797948236856257,"y":-0.8144479746956113,"id":"fff6636a-78ab-40b6-b6c6-2e566dfaf13f"},{"label":"grid avec decomposition","type":"node","x":-0.860095641374309,"y":-1.376062237187821,"id":"1de88215-3a62-49ac-9dbb-703d22c89339"},{"label":"Ne pas être bloqué par l'absence ou l'incohérence de données","type":"node","x":-0.3456590079324364,"y":-1.0136468436670132,"id":"b9eefc60-760e-4e84-aa02-5ff8a97a0194"},{"label":"tester rapidement des variations","type":"node","x":-0.44448974250266193,"y":-0.11770757905884954,"id":"e57c3f69-5ad7-4674-8678-529497f09bd9"},{"label":"Outil","type":"node","x":-6.937843757962221,"y":-380.53760943055306,"id":"83ff87dc-903e-4a1a-9504-c7cd0a7f005d","color":"rgb(173,208,255)","fixed":{},"font":{"bold":{},"boldital":{},"ital":{},"mono":{}},"icon":{},"margin":{},"scaling":{"label":{}},"shadow":{},"shapeProperties":{},"edit":true,"shape":"ellipse","image":""},{"label":"NoteBook Jupyter","type":"node","x":-1.2822291141993714,"y":-1.6489222804533359,"id":"948d7186-4180-4f3d-85ff-499159ffb5d4"},{"label":"petites visualisations","type":"node","x":-0.46433712269655913,"y":-1.671373975018633,"id":"2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7"},{"label":"Correction Code","type":"node","x":-0.5050899064310483,"y":-1.819446201678549,"id":"72885fd1-8e3a-4e6c-b4a0-154c5e5e6795"},{"label":"tres flexible","type":"node","x":-1.9226630729071736,"y":-0.7062723108269839,"id":"2594a059-9da7-4091-8e19-d6c595b14432"},{"label":"librairie javascript","type":"node","x":-1.1228989787032941,"y":-0.30486581754208464,"id":"72c87687-a072-412f-b043-c8d4d3cc9179"}],"edges":[{"from":"36638c60-4a86-49ee-b91a-37b4e24a85e7","to":"b6bf9408-d87c-4fd5-b454-9a81bfd855a7","label":"présentéPar","id":"4f672f21-28e4-445d-a14b-1a1b87b2a76c"},{"from":"b6bf9408-d87c-4fd5-b454-9a81bfd855a7","to":"c8a890a1-a646-4a4f-bb85-61b4a54ca17f","label":"type","id":"a783c48d-2b0a-4493-a39f-0c7bd952c41c"},{"from":"c8a890a1-a646-4a4f-bb85-61b4a54ca17f","to":"48535d06-5631-4eab-803d-925c0aaa1d9a","label":"localisation","id":"84792a86-d715-4c69-82fb-9203e3778034"},{"from":"36638c60-4a86-49ee-b91a-37b4e24a85e7","to":"88e8fa65-25ed-4fe8-8202-71926f64ff8c","label":"hasPart","id":"1351aed4-710f-43e0-ae0f-68818cb408c5"},{"label":"cree","from":"b6bf9408-d87c-4fd5-b454-9a81bfd855a7","to":"99bd6591-13c0-448c-910b-30ff57548f7d","type":"edge","id":"8f88d82f-666a-458a-a87c-96d2efbc647a"},{"label":"type","from":"99bd6591-13c0-448c-910b-30ff57548f7d","to":"a4b436e0-819b-4dd5-a4eb-3a98727ccc7c","type":"edge","id":"af18be31-74fb-4ec0-9fcd-bc410f757828"},{"label":"type","from":"99bd6591-13c0-448c-910b-30ff57548f7d","to":"62c42d64-3383-4f6c-aa7f-045ac67e63ff","type":"edge","id":"51ef1207-8399-46d5-9ce4-b36e56b141f9"},{"label":"exemple","from":"a4b436e0-819b-4dd5-a4eb-3a98727ccc7c","to":"b9854d4b-6a3c-45c6-b876-829ba73da824","type":"edge","id":"69e922a3-6abf-4ad7-be42-ac46e8550c79"},{"label":"exercice","from":"b6bf9408-d87c-4fd5-b454-9a81bfd855a7","to":"1739ed4d-e416-402e-b873-f797b72f75e0","type":"edge","id":"c6dee7a2-9d32-4062-908c-fc428f30a264"},{"label":"next","from":"99bd6591-13c0-448c-910b-30ff57548f7d","to":"772d5196-e9e8-43f4-94c6-5e47f47f8aa2","type":"edge","id":"a2db6bbe-9ad5-48be-88c0-147cded898fb"},{"label":"reponse","from":"772d5196-e9e8-43f4-94c6-5e47f47f8aa2","to":"a2a1b73a-08e5-44ee-bb22-8379fef139dc","type":"edge","id":"5e6bbb23-cf1d-4a37-9832-d660ab250682"},{"label":"reponse","from":"772d5196-e9e8-43f4-94c6-5e47f47f8aa2","to":"91c062ae-cd20-4db0-a688-93914c19941b","type":"edge","id":"20fff92a-5e52-4d53-b18a-1553c2622981"},{"label":"contraire","from":"91c062ae-cd20-4db0-a688-93914c19941b","to":"aedff561-c7b3-4d14-85ab-d7b7db012b2c","type":"edge","id":"7843856e-94dd-4c78-9293-9d3b7f7af402"},{"label":"facilitePar","from":"91c062ae-cd20-4db0-a688-93914c19941b","to":"0bce4f67-1c24-4a30-be48-14338c2fc5f5","type":"edge","id":"fad35855-6ca1-4bd6-8c37-b26404c286e6"},{"label":"facilitePar","from":"91c062ae-cd20-4db0-a688-93914c19941b","to":"a54c3f8d-6411-4969-8452-c156a4c467b3","type":"edge","id":"4fc7a133-f637-471c-90f5-7601587b5577"},{"label":"voir","from":"91c062ae-cd20-4db0-a688-93914c19941b","to":"401c9b88-6aad-45a9-bfb5-e25238fb69f6","type":"edge","id":"eba4daf6-ee8c-4122-8103-2d8634b4acea"},{"label":"attirerAttention","from":"401c9b88-6aad-45a9-bfb5-e25238fb69f6","to":"f1bb2fd1-5d56-4c1e-bb9f-cd7b8726e1e9","type":"edge","id":"93e15e0d-abdf-453d-b886-8a905839c48b"},{"label":"facilitéPar","from":"91c062ae-cd20-4db0-a688-93914c19941b","to":"2db391f2-6a72-44da-b2cd-0290601a4452","type":"edge","id":"ee50e4bc-4478-417d-92d6-5678a246d07f"},{"label":"facilitéPar","from":"91c062ae-cd20-4db0-a688-93914c19941b","to":"5b547458-3c68-4717-87a4-94f8a006afea","type":"edge","id":"bd0b1fac-349e-4cfb-bde0-272985ae09ea"},{"label":"next","from":"772d5196-e9e8-43f4-94c6-5e47f47f8aa2","to":"085611da-6836-4d3f-b27f-2eb552dcab13","type":"edge","id":"1942accd-6a00-4cc1-a002-b972ffec39c9"},{"label":"utilise","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"0fadd726-018e-4c09-879d-8510d02ee755","type":"edge","id":"64dc54ab-03a6-475b-b0e5-c6a22e0d1463"},{"label":"next","from":"0fadd726-018e-4c09-879d-8510d02ee755","to":"0a86b86e-c4d2-4469-8e51-0a4e1be55d5b","type":"edge","id":"391281b0-29aa-414c-b082-9414430f7507"},{"label":"next","from":"0a86b86e-c4d2-4469-8e51-0a4e1be55d5b","to":"a54c3f8d-6411-4969-8452-c156a4c467b3","type":"edge","id":"146fe4d7-9de3-4270-a718-0c65cc747375"},{"label":"next","from":"0a86b86e-c4d2-4469-8e51-0a4e1be55d5b","to":"5b547458-3c68-4717-87a4-94f8a006afea","type":"edge","id":"47b6b6f4-eb41-438b-8252-acea833f96a9"},{"label":"ou","from":"0fadd726-018e-4c09-879d-8510d02ee755","to":"93fb8e6a-188d-4585-af73-dc7d04fed282","type":"edge","id":"b75a4aed-62df-4673-8170-7e7ff4843172"},{"label":"ou","from":"0fadd726-018e-4c09-879d-8510d02ee755","to":"39c17dbe-8259-4069-9570-c1c86892e9b7","type":"edge","id":"a1d50697-c876-4f4b-96ad-294fe6b19a6f"},{"label":"utiliser","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"726944f5-657f-4e56-9586-0f10ad5210f3","type":"edge","id":"0f5f18e0-16aa-4e5e-b653-fe1520375e3e"},{"label":"processus","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"8637a3cc-0a87-4c8e-aa0b-a6dc7c2f5e74","type":"edge","id":"67c57ea6-0a5b-4104-8a40-ddf74d41cdba"},{"label":"processus","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"6e04fc26-56f7-4ed2-b076-696d279adfa5","type":"edge","id":"bd65eae3-fe27-436c-870f-a07792e3bd7a"},{"label":"process","from":"6e04fc26-56f7-4ed2-b076-696d279adfa5","to":"93da1cf3-cf7e-45a1-82ef-f2bc9448baa3","type":"edge","id":"fb23c7d4-126b-48cc-b196-f35676d59a88"},{"label":"outils","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"26e994c6-8118-40ed-9f14-c8ab92ac759a","type":"edge","id":"8fb968e8-356b-43b8-a6b3-3d94d4132050"},{"label":"exemple","from":"26e994c6-8118-40ed-9f14-c8ab92ac759a","to":"361755b9-960d-497d-bc32-49dd5277404a","type":"edge","id":"5c640bff-8d93-48ed-9207-c34d7e3adc31"},{"label":"outils","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"b118e8eb-c094-4b62-95ac-2346131d6340","type":"edge","id":"9ad26560-24c4-4c4f-9436-8bdca8a5b357"},{"label":"outils","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"0dcddf55-65b9-440b-8ba0-6d19d54ae9f6","type":"edge","id":"b989f568-e5de-4980-96b8-dc318fc49bbb"},{"label":"outils","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"af6b2b12-ab62-4be6-8ec4-831402aec6c5","type":"edge","id":"256b7098-a36f-4ef6-95bf-f4d6924d9262"},{"label":"first","from":"361755b9-960d-497d-bc32-49dd5277404a","to":"a81fc381-dccc-4ef5-8c49-1e15c1e9b883","type":"edge","id":"ebcf10d5-33c4-401b-8d25-8656c1dcd99f"},{"label":"next","from":"648e5926-db51-4d8b-a716-2d081bdbb95b","to":"0245dccb-93b0-4a52-b539-3cb28c57911c","type":"edge","id":"4d74fe53-92f2-4ec9-bf9c-e1df4fb1f1ea"},{"label":"first","from":"0245dccb-93b0-4a52-b539-3cb28c57911c","to":"4284fb77-a15a-448f-b012-c95e2a7cfdf1","type":"edge","id":"e158debd-bfae-48fb-8ef5-07f09bf021d2"},{"label":"méthode","from":"361755b9-960d-497d-bc32-49dd5277404a","to":"6e04fc26-56f7-4ed2-b076-696d279adfa5","type":"edge","id":"080a8bee-856a-4a75-aa4e-2511fc5ccc1c"},{"label":"next","from":"4284fb77-a15a-448f-b012-c95e2a7cfdf1","to":"8abe333b-28cb-4249-8095-3b6ec43e75d4","type":"edge","id":"c52c9cd0-d2b9-40de-bd45-71b2e4aa67a0"},{"label":"next","from":"8abe333b-28cb-4249-8095-3b6ec43e75d4","to":"b638f605-a079-4d72-b93f-23c6991f0f3b","type":"edge","id":"bf43caa9-4525-407e-a383-204a953ad264"},{"label":"next","from":"a81fc381-dccc-4ef5-8c49-1e15c1e9b883","to":"ef08180d-4e91-4987-bf56-1b389889aca4","type":"edge","id":"eef1b5c1-89aa-47d2-b4c1-dd8d7b4ece9a"},{"from":"ef08180d-4e91-4987-bf56-1b389889aca4","to":"648e5926-db51-4d8b-a716-2d081bdbb95b","label":"next","id":"4269a361-1042-4a75-a65a-5fa4eb7e159b"},{"label":"probleme","from":"361755b9-960d-497d-bc32-49dd5277404a","to":"3f1663b4-08e5-4f71-af03-35eaa6a46309","type":"edge","id":"d0b45bb9-1ec4-46bb-8f82-6cfde35aae81"},{"label":"exemple","from":"26e994c6-8118-40ed-9f14-c8ab92ac759a","to":"60a2e514-8cdf-4a4e-9049-cb113930a393","type":"edge","id":"7bec142c-11fd-4a93-8f35-16859eb70445"},{"label":"exemple","from":"26e994c6-8118-40ed-9f14-c8ab92ac759a","to":"2b8ef451-530c-407a-ab9b-2ac46bf7c457","type":"edge","id":"e556ce41-5688-4db9-8fb1-9fda5dd71932"},{"label":"exemple","from":"26e994c6-8118-40ed-9f14-c8ab92ac759a","to":"81c84588-472f-4a57-9506-e1b3c8d61124","type":"edge","id":"51615340-e492-4e8e-878e-4d96b014e399"},{"label":"exemple","from":"0dcddf55-65b9-440b-8ba0-6d19d54ae9f6","to":"c94afa42-b773-4f01-a77c-bd0ad20c7343","type":"edge","id":"2d1f68bf-4fd5-4d0b-a9e4-377db2fb1054"},{"label":"travail","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"0c124644-10e8-415e-aaf8-5c00001feef7","type":"edge","id":"33a2b592-4d34-46bc-980c-a514a569bb3e"},{"label":"possibleVia","from":"0c124644-10e8-415e-aaf8-5c00001feef7","to":"c94afa42-b773-4f01-a77c-bd0ad20c7343","type":"edge","id":"fd7d1198-8ca2-481b-a0f5-b2494da14af3"},{"label":"depart1","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"de7e7f66-6be4-4754-afde-96d6321a0a3a","type":"edge","id":"86666044-f9c8-44b8-8ac6-ed9721500f17"},{"label":"depart2","from":"085611da-6836-4d3f-b27f-2eb552dcab13","to":"2b3cf56e-7a3c-478e-abf8-730bf00967e0","type":"edge","id":"80b78820-28d2-470c-9d6d-89814ea397af"},{"from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"2b481c4a-6a0c-47e3-b09c-256e10a37791","label":"exemple","id":"392c55a1-bd11-4fd6-9534-8e1a4d96faa0"},{"from":"2b3cf56e-7a3c-478e-abf8-730bf00967e0","to":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","label":"utilise","id":"c8fe36fb-4da3-4d58-973e-6185f6c6cbc7"},{"label":"exemple","from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"08122569-6777-42d3-8e14-d63952d70247","type":"edge","id":"3c9bc8bf-3b57-408c-aacc-e40af4bfebd5"},{"label":"appliquéA","from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"fc896cf8-2df4-46b9-b732-f21330657a89","type":"edge","id":"582ce5cb-df0d-46ba-be3b-db73154138d5"},{"label":"appliquéA","from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"21779bfd-cfff-4349-b2fb-f82feb1bfd26","type":"edge","id":"fe41cee0-fa25-4b3f-85fa-5729e0d0c0e5"},{"label":"first","from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"dc351ff4-bafe-44ef-a781-aeb970d99437","type":"edge","id":"ed9a98ce-c92f-4078-a8cd-637394cb719d"},{"label":"next","from":"dc351ff4-bafe-44ef-a781-aeb970d99437","to":"fff6636a-78ab-40b6-b6c6-2e566dfaf13f","type":"edge","id":"a2f93943-55b6-4505-9c57-264e559239cf"},{"label":"next","from":"fff6636a-78ab-40b6-b6c6-2e566dfaf13f","to":"1de88215-3a62-49ac-9dbb-703d22c89339","type":"edge","id":"d5517288-e6c5-4ee5-ab75-b663e7356cfe"},{"from":"1de88215-3a62-49ac-9dbb-703d22c89339","to":"dc351ff4-bafe-44ef-a781-aeb970d99437","label":"next","id":"545ebb98-50db-429b-a46e-a203ad46f42b"},{"label":"avantage","from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"b9eefc60-760e-4e84-aa02-5ff8a97a0194","type":"edge","id":"5ae3c0b6-2707-459b-a423-e9375b39a6ec"},{"label":"avantage","from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"e57c3f69-5ad7-4674-8678-529497f09bd9","type":"edge","id":"5fd4bdc3-7685-4d28-93c7-dddceba2602f"},{"label":"demo","from":"b0d707c8-1b02-4fb6-a8ff-407aadf8a074","to":"83ff87dc-903e-4a1a-9504-c7cd0a7f005d","type":"edge","id":"1a553f62-2dba-4836-9d6b-ebf7dac1a671"},{"label":"developpéEn","from":"83ff87dc-903e-4a1a-9504-c7cd0a7f005d","to":"af6b2b12-ab62-4be6-8ec4-831402aec6c5","type":"edge","id":"10318885-814f-4613-95fc-564efc8ba2b3"},{"label":"mode","from":"c94afa42-b773-4f01-a77c-bd0ad20c7343","to":"948d7186-4180-4f3d-85ff-499159ffb5d4","type":"edge","id":"48c45d57-a64f-464f-9484-aaca934fec6a"},{"label":"permet","from":"948d7186-4180-4f3d-85ff-499159ffb5d4","to":"2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7","type":"edge","id":"61643eef-c6f3-4b99-bc24-984f4937c61f"},{"label":"next","from":"2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7","to":"72885fd1-8e3a-4e6c-b4a0-154c5e5e6795","type":"edge","id":"034dd03b-9832-4378-a552-37f3e4a609a0"},{"from":"72885fd1-8e3a-4e6c-b4a0-154c5e5e6795","to":"2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7","label":"next","id":"696974f2-2e9f-4b62-bb09-184b238f0096"},{"label":"avantage","from":"af6b2b12-ab62-4be6-8ec4-831402aec6c5","to":"2594a059-9da7-4091-8e19-d6c595b14432","type":"edge","id":"1095d2bb-41bd-4d3f-ab09-41701eaa1e10"},{"label":"type","from":"af6b2b12-ab62-4be6-8ec4-831402aec6c5","to":"72c87687-a072-412f-b043-c8d4d3cc9179","type":"edge","id":"263bfeed-a3b9-45da-9be4-25f4e0091136"},{"label":"principe","from":"af6b2b12-ab62-4be6-8ec4-831402aec6c5","to":"8637a3cc-0a87-4c8e-aa0b-a6dc7c2f5e74","type":"edge","id":"3c653488-35d1-4d42-be62-1e370ef2a20f"}]}
+{
+  "nodes": [
+    {
+      "id": "36638c60-4a86-49ee-b91a-37b4e24a85e7",
+      "x": 1210.9871913101072,
+      "y": -152.7895963436083,
+      "label": "Méthodologies de Conception de Data Visu...",
+      "shape": "box",
+      "color": "rgb(255, 0, 0)",
+      "image": "",
+      "type": "node",
+      "title": "Méthodologies de Conception de Data Visu<br>alization: Etudes de Design et Prototypa<br>ge Rapide",
+      "fixed": {
+        "x": false,
+        "y": false
+      },
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true
+    },
+    {
+      "id": "b6bf9408-d87c-4fd5-b454-9a81bfd855a7",
+      "x": -597.8200423573071,
+      "y": -819.4252079668354,
+      "label": "Romain Vuillemot",
+      "shape": "ellipse",
+      "color": "rgb(173,208,255)",
+      "image": "",
+      "type": "node"
+    },
+    {
+      "id": "c8a890a1-a646-4a4f-bb85-61b4a54ca17f",
+      "x": -391.61393027127514,
+      "y": -914.0479260669193,
+      "label": "Enseignant-Chercheur",
+      "shape": "ellipse",
+      "color": "rgb(173,208,255)",
+      "image": "",
+      "type": "node"
+    },
+    {
+      "id": "48535d06-5631-4eab-803d-925c0aaa1d9a",
+      "x": -240.7531816022735,
+      "y": -1184.5260730888572,
+      "label": "Ecole centrale de Lyon",
+      "shape": "ellipse",
+      "color": "rgb(173,208,255)",
+      "image": "",
+      "type": "node"
+    },
+    {
+      "id": "88e8fa65-25ed-4fe8-8202-71926f64ff8c",
+      "x": -208.82303119515794,
+      "y": -549.141822915862,
+      "label": "Etude de Design et de prototypage rapide",
+      "shape": "ellipse",
+      "color": "rgb(173,208,255)",
+      "image": "",
+      "type": "node"
+    },
+    {
+      "label": "DesOutils",
+      "type": "node",
+      "x": -1.1943114384549118,
+      "y": -0.09765340411755519,
+      "id": "99bd6591-13c0-448c-910b-30ff57548f7d"
+    },
+    {
+      "label": "VisualisationStatique",
+      "type": "node",
+      "x": -1.9130920142557626,
+      "y": -0.5921482089477124,
+      "id": "a4b436e0-819b-4dd5-a4eb-3a98727ccc7c"
+    },
+    {
+      "label": "Widget",
+      "type": "node",
+      "x": -0.3859993523042613,
+      "y": -0.15052454631864753,
+      "id": "62c42d64-3383-4f6c-aa7f-045ac67e63ff"
+    },
+    {
+      "label": "https://atlas.media.mit.edu/en/profile/country/ind/",
+      "type": "node",
+      "x": -1.1199814489858713,
+      "y": -1.3055747021543178,
+      "id": "b9854d4b-6a3c-45c6-b876-829ba73da824"
+    },
+    {
+      "label": "Comment représenter visuallement ces deux chiffres 75 et 37 -> 45 représentations",
+      "type": "node",
+      "x": -0.3529410572240219,
+      "y": -0.3240529609545888,
+      "id": "1739ed4d-e416-402e-b873-f797b72f75e0"
+    },
+    {
+      "label": "Pourquoi visualiser ?",
+      "type": "node",
+      "x": 94.21448503041886,
+      "y": 340.51541933723695,
+      "id": "772d5196-e9e8-43f4-94c6-5e47f47f8aa2",
+      "color": "rgb(80, 218, 132)",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true,
+      "shape": "ellipse",
+      "image": ""
+    },
+    {
+      "label": "l'humain est tres bon pour visualiser",
+      "type": "node",
+      "x": -0.43660470509166727,
+      "y": -1.2772836596940023,
+      "id": "a2a1b73a-08e5-44ee-bb22-8379fef139dc"
+    },
+    {
+      "label": "l'humain est meilleur que la machine",
+      "type": "node",
+      "x": -0.5027568068774944,
+      "y": -1.091633098960779,
+      "id": "91c062ae-cd20-4db0-a688-93914c19941b"
+    },
+    {
+      "label": "la machine est meilleure pour stocker",
+      "type": "node",
+      "x": -1.9821951821823562,
+      "y": -0.6379843109746819,
+      "id": "aedff561-c7b3-4d14-85ab-d7b7db012b2c"
+    },
+    {
+      "label": "saillance",
+      "type": "node",
+      "x": -0.18703931833378729,
+      "y": -0.8437410901678968,
+      "id": "0bce4f67-1c24-4a30-be48-14338c2fc5f5"
+    },
+    {
+      "label": "couleur",
+      "type": "node",
+      "x": -1.9491342677890833,
+      "y": -0.6233918042675772,
+      "id": "a54c3f8d-6411-4969-8452-c156a4c467b3"
+    },
+    {
+      "label": "taches non-preattentive / tache pre-attentives",
+      "type": "node",
+      "x": -0.8538589598016495,
+      "y": -1.3266176078022882,
+      "id": "401c9b88-6aad-45a9-bfb5-e25238fb69f6"
+    },
+    {
+      "label": "element mis en avant",
+      "type": "node",
+      "x": -0.4203183545932174,
+      "y": -1.8628386553824092,
+      "id": "f1bb2fd1-5d56-4c1e-bb9f-cd7b8726e1e9"
+    },
+    {
+      "label": "orientation",
+      "type": "node",
+      "x": -1.1474211560003367,
+      "y": -0.1534360510837276,
+      "id": "2db391f2-6a72-44da-b2cd-0290601a4452"
+    },
+    {
+      "label": "taille",
+      "type": "node",
+      "x": -0.3666264328444422,
+      "y": -0.9702962947296867,
+      "id": "5b547458-3c68-4717-87a4-94f8a006afea"
+    },
+    {
+      "label": "Comment visualiser ?",
+      "type": "node",
+      "x": -450.01196966516676,
+      "y": -42.407237554119995,
+      "id": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "color": "rgb(87, 227, 119)",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true,
+      "shape": "ellipse",
+      "image": ""
+    },
+    {
+      "label": "briques",
+      "type": "node",
+      "x": -0.8911012527288693,
+      "y": -1.630093244730992,
+      "id": "0fadd726-018e-4c09-879d-8510d02ee755"
+    },
+    {
+      "label": "position",
+      "type": "node",
+      "x": -0.37372656115993363,
+      "y": -1.1587828829515407,
+      "id": "0a86b86e-c4d2-4469-8e51-0a4e1be55d5b"
+    },
+    {
+      "label": "marque",
+      "type": "node",
+      "x": -0.5749705133222198,
+      "y": -1.3745996910252511,
+      "id": "93fb8e6a-188d-4585-af73-dc7d04fed282"
+    },
+    {
+      "label": "forme",
+      "type": "node",
+      "x": -0.847186319671946,
+      "y": -0.17949856412659315,
+      "id": "39c17dbe-8259-4069-9570-c1c86892e9b7"
+    },
+    {
+      "label": "vocabulaire graphique de base",
+      "type": "node",
+      "x": -0.9401642833806712,
+      "y": -1.5032500277081144,
+      "id": "726944f5-657f-4e56-9586-0f10ad5210f3"
+    },
+    {
+      "label": "BottomUp",
+      "type": "node",
+      "x": -1.7823666115753891,
+      "y": -1.710320903368181,
+      "id": "8637a3cc-0a87-4c8e-aa0b-a6dc7c2f5e74"
+    },
+    {
+      "label": "TopDown",
+      "type": "node",
+      "x": -0.4513199968058341,
+      "y": -0.35718359356920404,
+      "id": "6e04fc26-56f7-4ed2-b076-696d279adfa5"
+    },
+    {
+      "label": "graphiquePersonnalisé",
+      "type": "node",
+      "x": -1.3292133040079008,
+      "y": -1.6947242092096957,
+      "id": "93da1cf3-cf7e-45a1-82ef-f2bc9448baa3"
+    },
+    {
+      "label": "Outils Issus De La Recherche",
+      "type": "node",
+      "x": -332.09346586037805,
+      "y": -531.0505363283194,
+      "id": "26e994c6-8118-40ed-9f14-c8ab92ac759a",
+      "color": "rgb(173,208,255)",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true,
+      "shape": "ellipse",
+      "image": ""
+    },
+    {
+      "label": "Tableau.com",
+      "type": "node",
+      "x": -807.4381003505976,
+      "y": -639.3168441445077,
+      "id": "361755b9-960d-497d-bc32-49dd5277404a",
+      "color": "rgb(173,208,255)",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true,
+      "shape": "ellipse",
+      "image": ""
+    },
+    {
+      "label": "Outils Commerciaux",
+      "type": "node",
+      "x": -1.9555129024224085,
+      "y": -1.8415483246829853,
+      "id": "b118e8eb-c094-4b62-95ac-2346131d6340"
+    },
+    {
+      "label": "Librairies",
+      "type": "node",
+      "x": -0.26881797204499813,
+      "y": -1.5819758621573028,
+      "id": "0dcddf55-65b9-440b-8ba0-6d19d54ae9f6"
+    },
+    {
+      "label": "D3.js",
+      "type": "node",
+      "x": -0.8228151243734607,
+      "y": -0.7918899141385349,
+      "id": "af6b2b12-ab62-4be6-8ec4-831402aec6c5"
+    },
+    {
+      "label": "Saisie des données",
+      "type": "node",
+      "x": -1.267067760920158,
+      "y": -0.3731713341006575,
+      "id": "a81fc381-dccc-4ef5-8c49-1e15c1e9b883"
+    },
+    {
+      "label": "résumé des données",
+      "type": "node",
+      "x": -0.14781656003413302,
+      "y": -1.5898026054424923,
+      "id": "648e5926-db51-4d8b-a716-2d081bdbb95b"
+    },
+    {
+      "label": "creation graphique",
+      "type": "node",
+      "x": -0.8459670019539831,
+      "y": -0.15859616116867015,
+      "id": "0245dccb-93b0-4a52-b539-3cb28c57911c"
+    },
+    {
+      "label": "Drag&Drop des catégories de données",
+      "type": "node",
+      "x": -1.9841705486535495,
+      "y": -1.938527568572463,
+      "id": "4284fb77-a15a-448f-b012-c95e2a7cfdf1"
+    },
+    {
+      "label": "Personnalisation des marques/formes",
+      "type": "node",
+      "x": -1.9463705966052478,
+      "y": -0.14875120992729052,
+      "id": "8abe333b-28cb-4249-8095-3b6ec43e75d4"
+    },
+    {
+      "label": "perso formes et couleurs",
+      "type": "node",
+      "x": -1.0040202945802195,
+      "y": -0.903690095893007,
+      "id": "b638f605-a079-4d72-b93f-23c6991f0f3b"
+    },
+    {
+      "label": "Choix de visualisation",
+      "type": "node",
+      "x": -0.6678263895183596,
+      "y": -0.737533925139823,
+      "id": "ef08180d-4e91-4987-bf56-1b389889aca4"
+    },
+    {
+      "label": "hebergé sur tableau.com, export difficile",
+      "type": "node",
+      "x": -0.5975196818554287,
+      "y": -0.056898834020469025,
+      "id": "3f1663b4-08e5-4f71-af03-35eaa6a46309"
+    },
+    {
+      "label": "Vega",
+      "type": "node",
+      "x": -0.4233924160178866,
+      "y": -1.342224242499026,
+      "id": "60a2e514-8cdf-4a4e-9049-cb113930a393"
+    },
+    {
+      "label": "Polestar",
+      "type": "node",
+      "x": -0.34480586933767077,
+      "y": -1.074280490440195,
+      "id": "2b8ef451-530c-407a-ab9b-2ac46bf7c457"
+    },
+    {
+      "label": "Google visualisation",
+      "type": "node",
+      "x": -0.0976126963320354,
+      "y": -1.029506206999757,
+      "id": "81c84588-472f-4a57-9506-e1b3c8d61124"
+    },
+    {
+      "label": "Python",
+      "type": "node",
+      "x": -0.41144711358668973,
+      "y": -1.2044675585333673,
+      "id": "c94afa42-b773-4f01-a77c-bd0ad20c7343"
+    },
+    {
+      "label": "80% du temps pour préparer les données",
+      "type": "node",
+      "x": -1.0041616168355998,
+      "y": -1.9755515781430542,
+      "id": "0c124644-10e8-415e-aaf8-5c00001feef7"
+    },
+    {
+      "label": "Des données vers le graphique",
+      "type": "node",
+      "x": -0.4154182165810534,
+      "y": -0.2889231931945915,
+      "id": "de7e7f66-6be4-4754-afde-96d6321a0a3a"
+    },
+    {
+      "label": "Du graphique sans les données",
+      "type": "node",
+      "x": -0.3355948309577865,
+      "y": -0.2726278604900707,
+      "id": "2b3cf56e-7a3c-478e-abf8-730bf00967e0"
+    },
+    {
+      "label": "Sketching",
+      "type": "node",
+      "x": -0.5322935690905273,
+      "y": -0.6720504859415439,
+      "id": "2b481c4a-6a0c-47e3-b09c-256e10a37791"
+    },
+    {
+      "id": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "x": -94.18607325937447,
+      "y": -254.82582893328978,
+      "label": "Methode Design graphique",
+      "shape": "ellipse",
+      "color": "rgb(173,208,255)",
+      "image": "",
+      "type": "node"
+    },
+    {
+      "label": "Grid",
+      "type": "node",
+      "x": -1.7942871329558798,
+      "y": -0.7242955451045234,
+      "id": "08122569-6777-42d3-8e14-d63952d70247"
+    },
+    {
+      "label": "visualisation",
+      "type": "node",
+      "x": -1.7376590767424318,
+      "y": -1.17033933514118,
+      "id": "fc896cf8-2df4-46b9-b732-f21330657a89"
+    },
+    {
+      "label": "Maquette en basse résolution : position, marque sans couleur, label",
+      "type": "node",
+      "x": -1.3059765876221507,
+      "y": -1.856482476691192,
+      "id": "21779bfd-cfff-4349-b2fb-f82feb1bfd26"
+    },
+    {
+      "label": "Division progressive de l'espace",
+      "type": "node",
+      "x": -0.7901257609101022,
+      "y": -1.2629860754368276,
+      "id": "dc351ff4-bafe-44ef-a781-aeb970d99437"
+    },
+    {
+      "label": "positionnement placeholder",
+      "type": "node",
+      "x": -1.1797948236856257,
+      "y": -0.8144479746956113,
+      "id": "fff6636a-78ab-40b6-b6c6-2e566dfaf13f"
+    },
+    {
+      "label": "grid avec decomposition",
+      "type": "node",
+      "x": -0.860095641374309,
+      "y": -1.376062237187821,
+      "id": "1de88215-3a62-49ac-9dbb-703d22c89339"
+    },
+    {
+      "label": "Ne pas être bloqué par l'absence ou l'incohérence de données",
+      "type": "node",
+      "x": -0.3456590079324364,
+      "y": -1.0136468436670132,
+      "id": "b9eefc60-760e-4e84-aa02-5ff8a97a0194"
+    },
+    {
+      "label": "tester rapidement des variations",
+      "type": "node",
+      "x": -0.44448974250266193,
+      "y": -0.11770757905884954,
+      "id": "e57c3f69-5ad7-4674-8678-529497f09bd9"
+    },
+    {
+      "label": "Outil",
+      "type": "node",
+      "x": -6.937843757962221,
+      "y": -380.53760943055306,
+      "id": "83ff87dc-903e-4a1a-9504-c7cd0a7f005d",
+      "color": "rgb(173,208,255)",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "edit": true,
+      "shape": "ellipse",
+      "image": ""
+    },
+    {
+      "label": "NoteBook Jupyter",
+      "type": "node",
+      "x": -1.2822291141993714,
+      "y": -1.6489222804533359,
+      "id": "948d7186-4180-4f3d-85ff-499159ffb5d4"
+    },
+    {
+      "label": "petites visualisations",
+      "type": "node",
+      "x": -0.46433712269655913,
+      "y": -1.671373975018633,
+      "id": "2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7"
+    },
+    {
+      "label": "Correction Code",
+      "type": "node",
+      "x": -0.5050899064310483,
+      "y": -1.819446201678549,
+      "id": "72885fd1-8e3a-4e6c-b4a0-154c5e5e6795"
+    },
+    {
+      "label": "tres flexible",
+      "type": "node",
+      "x": -1.9226630729071736,
+      "y": -0.7062723108269839,
+      "id": "2594a059-9da7-4091-8e19-d6c595b14432"
+    },
+    {
+      "label": "librairie javascript",
+      "type": "node",
+      "x": -1.1228989787032941,
+      "y": -0.30486581754208464,
+      "id": "72c87687-a072-412f-b043-c8d4d3cc9179"
+    }
+  ],
+  "edges": [
+    {
+      "from": "36638c60-4a86-49ee-b91a-37b4e24a85e7",
+      "to": "b6bf9408-d87c-4fd5-b454-9a81bfd855a7",
+      "label": "présentéPar",
+      "id": "4f672f21-28e4-445d-a14b-1a1b87b2a76c"
+    },
+    {
+      "from": "b6bf9408-d87c-4fd5-b454-9a81bfd855a7",
+      "to": "c8a890a1-a646-4a4f-bb85-61b4a54ca17f",
+      "label": "type",
+      "id": "a783c48d-2b0a-4493-a39f-0c7bd952c41c"
+    },
+    {
+      "from": "c8a890a1-a646-4a4f-bb85-61b4a54ca17f",
+      "to": "48535d06-5631-4eab-803d-925c0aaa1d9a",
+      "label": "localisation",
+      "id": "84792a86-d715-4c69-82fb-9203e3778034"
+    },
+    {
+      "from": "36638c60-4a86-49ee-b91a-37b4e24a85e7",
+      "to": "88e8fa65-25ed-4fe8-8202-71926f64ff8c",
+      "label": "hasPart",
+      "id": "1351aed4-710f-43e0-ae0f-68818cb408c5"
+    },
+    {
+      "label": "cree",
+      "from": "b6bf9408-d87c-4fd5-b454-9a81bfd855a7",
+      "to": "99bd6591-13c0-448c-910b-30ff57548f7d",
+      "type": "edge",
+      "id": "8f88d82f-666a-458a-a87c-96d2efbc647a"
+    },
+    {
+      "label": "type",
+      "from": "99bd6591-13c0-448c-910b-30ff57548f7d",
+      "to": "a4b436e0-819b-4dd5-a4eb-3a98727ccc7c",
+      "type": "edge",
+      "id": "af18be31-74fb-4ec0-9fcd-bc410f757828"
+    },
+    {
+      "label": "type",
+      "from": "99bd6591-13c0-448c-910b-30ff57548f7d",
+      "to": "62c42d64-3383-4f6c-aa7f-045ac67e63ff",
+      "type": "edge",
+      "id": "51ef1207-8399-46d5-9ce4-b36e56b141f9"
+    },
+    {
+      "label": "exemple",
+      "from": "a4b436e0-819b-4dd5-a4eb-3a98727ccc7c",
+      "to": "b9854d4b-6a3c-45c6-b876-829ba73da824",
+      "type": "edge",
+      "id": "69e922a3-6abf-4ad7-be42-ac46e8550c79"
+    },
+    {
+      "label": "exercice",
+      "from": "b6bf9408-d87c-4fd5-b454-9a81bfd855a7",
+      "to": "1739ed4d-e416-402e-b873-f797b72f75e0",
+      "type": "edge",
+      "id": "c6dee7a2-9d32-4062-908c-fc428f30a264"
+    },
+    {
+      "label": "next",
+      "from": "99bd6591-13c0-448c-910b-30ff57548f7d",
+      "to": "772d5196-e9e8-43f4-94c6-5e47f47f8aa2",
+      "type": "edge",
+      "id": "a2db6bbe-9ad5-48be-88c0-147cded898fb"
+    },
+    {
+      "label": "reponse",
+      "from": "772d5196-e9e8-43f4-94c6-5e47f47f8aa2",
+      "to": "a2a1b73a-08e5-44ee-bb22-8379fef139dc",
+      "type": "edge",
+      "id": "5e6bbb23-cf1d-4a37-9832-d660ab250682"
+    },
+    {
+      "label": "reponse",
+      "from": "772d5196-e9e8-43f4-94c6-5e47f47f8aa2",
+      "to": "91c062ae-cd20-4db0-a688-93914c19941b",
+      "type": "edge",
+      "id": "20fff92a-5e52-4d53-b18a-1553c2622981"
+    },
+    {
+      "label": "contraire",
+      "from": "91c062ae-cd20-4db0-a688-93914c19941b",
+      "to": "aedff561-c7b3-4d14-85ab-d7b7db012b2c",
+      "type": "edge",
+      "id": "7843856e-94dd-4c78-9293-9d3b7f7af402"
+    },
+    {
+      "label": "facilitePar",
+      "from": "91c062ae-cd20-4db0-a688-93914c19941b",
+      "to": "0bce4f67-1c24-4a30-be48-14338c2fc5f5",
+      "type": "edge",
+      "id": "fad35855-6ca1-4bd6-8c37-b26404c286e6"
+    },
+    {
+      "label": "facilitePar",
+      "from": "91c062ae-cd20-4db0-a688-93914c19941b",
+      "to": "a54c3f8d-6411-4969-8452-c156a4c467b3",
+      "type": "edge",
+      "id": "4fc7a133-f637-471c-90f5-7601587b5577"
+    },
+    {
+      "label": "voir",
+      "from": "91c062ae-cd20-4db0-a688-93914c19941b",
+      "to": "401c9b88-6aad-45a9-bfb5-e25238fb69f6",
+      "type": "edge",
+      "id": "eba4daf6-ee8c-4122-8103-2d8634b4acea"
+    },
+    {
+      "label": "attirerAttention",
+      "from": "401c9b88-6aad-45a9-bfb5-e25238fb69f6",
+      "to": "f1bb2fd1-5d56-4c1e-bb9f-cd7b8726e1e9",
+      "type": "edge",
+      "id": "93e15e0d-abdf-453d-b886-8a905839c48b"
+    },
+    {
+      "label": "facilitéPar",
+      "from": "91c062ae-cd20-4db0-a688-93914c19941b",
+      "to": "2db391f2-6a72-44da-b2cd-0290601a4452",
+      "type": "edge",
+      "id": "ee50e4bc-4478-417d-92d6-5678a246d07f"
+    },
+    {
+      "label": "facilitéPar",
+      "from": "91c062ae-cd20-4db0-a688-93914c19941b",
+      "to": "5b547458-3c68-4717-87a4-94f8a006afea",
+      "type": "edge",
+      "id": "bd0b1fac-349e-4cfb-bde0-272985ae09ea"
+    },
+    {
+      "label": "next",
+      "from": "772d5196-e9e8-43f4-94c6-5e47f47f8aa2",
+      "to": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "type": "edge",
+      "id": "1942accd-6a00-4cc1-a002-b972ffec39c9"
+    },
+    {
+      "label": "utilise",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "0fadd726-018e-4c09-879d-8510d02ee755",
+      "type": "edge",
+      "id": "64dc54ab-03a6-475b-b0e5-c6a22e0d1463"
+    },
+    {
+      "label": "next",
+      "from": "0fadd726-018e-4c09-879d-8510d02ee755",
+      "to": "0a86b86e-c4d2-4469-8e51-0a4e1be55d5b",
+      "type": "edge",
+      "id": "391281b0-29aa-414c-b082-9414430f7507"
+    },
+    {
+      "label": "next",
+      "from": "0a86b86e-c4d2-4469-8e51-0a4e1be55d5b",
+      "to": "a54c3f8d-6411-4969-8452-c156a4c467b3",
+      "type": "edge",
+      "id": "146fe4d7-9de3-4270-a718-0c65cc747375"
+    },
+    {
+      "label": "next",
+      "from": "0a86b86e-c4d2-4469-8e51-0a4e1be55d5b",
+      "to": "5b547458-3c68-4717-87a4-94f8a006afea",
+      "type": "edge",
+      "id": "47b6b6f4-eb41-438b-8252-acea833f96a9"
+    },
+    {
+      "label": "ou",
+      "from": "0fadd726-018e-4c09-879d-8510d02ee755",
+      "to": "93fb8e6a-188d-4585-af73-dc7d04fed282",
+      "type": "edge",
+      "id": "b75a4aed-62df-4673-8170-7e7ff4843172"
+    },
+    {
+      "label": "ou",
+      "from": "0fadd726-018e-4c09-879d-8510d02ee755",
+      "to": "39c17dbe-8259-4069-9570-c1c86892e9b7",
+      "type": "edge",
+      "id": "a1d50697-c876-4f4b-96ad-294fe6b19a6f"
+    },
+    {
+      "label": "utiliser",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "726944f5-657f-4e56-9586-0f10ad5210f3",
+      "type": "edge",
+      "id": "0f5f18e0-16aa-4e5e-b653-fe1520375e3e"
+    },
+    {
+      "label": "processus",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "8637a3cc-0a87-4c8e-aa0b-a6dc7c2f5e74",
+      "type": "edge",
+      "id": "67c57ea6-0a5b-4104-8a40-ddf74d41cdba"
+    },
+    {
+      "label": "processus",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "6e04fc26-56f7-4ed2-b076-696d279adfa5",
+      "type": "edge",
+      "id": "bd65eae3-fe27-436c-870f-a07792e3bd7a"
+    },
+    {
+      "label": "process",
+      "from": "6e04fc26-56f7-4ed2-b076-696d279adfa5",
+      "to": "93da1cf3-cf7e-45a1-82ef-f2bc9448baa3",
+      "type": "edge",
+      "id": "fb23c7d4-126b-48cc-b196-f35676d59a88"
+    },
+    {
+      "label": "outils",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "26e994c6-8118-40ed-9f14-c8ab92ac759a",
+      "type": "edge",
+      "id": "8fb968e8-356b-43b8-a6b3-3d94d4132050"
+    },
+    {
+      "label": "exemple",
+      "from": "26e994c6-8118-40ed-9f14-c8ab92ac759a",
+      "to": "361755b9-960d-497d-bc32-49dd5277404a",
+      "type": "edge",
+      "id": "5c640bff-8d93-48ed-9207-c34d7e3adc31"
+    },
+    {
+      "label": "outils",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "b118e8eb-c094-4b62-95ac-2346131d6340",
+      "type": "edge",
+      "id": "9ad26560-24c4-4c4f-9436-8bdca8a5b357"
+    },
+    {
+      "label": "outils",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "0dcddf55-65b9-440b-8ba0-6d19d54ae9f6",
+      "type": "edge",
+      "id": "b989f568-e5de-4980-96b8-dc318fc49bbb"
+    },
+    {
+      "label": "outils",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "af6b2b12-ab62-4be6-8ec4-831402aec6c5",
+      "type": "edge",
+      "id": "256b7098-a36f-4ef6-95bf-f4d6924d9262"
+    },
+    {
+      "label": "first",
+      "from": "361755b9-960d-497d-bc32-49dd5277404a",
+      "to": "a81fc381-dccc-4ef5-8c49-1e15c1e9b883",
+      "type": "edge",
+      "id": "ebcf10d5-33c4-401b-8d25-8656c1dcd99f"
+    },
+    {
+      "label": "next",
+      "from": "648e5926-db51-4d8b-a716-2d081bdbb95b",
+      "to": "0245dccb-93b0-4a52-b539-3cb28c57911c",
+      "type": "edge",
+      "id": "4d74fe53-92f2-4ec9-bf9c-e1df4fb1f1ea"
+    },
+    {
+      "label": "first",
+      "from": "0245dccb-93b0-4a52-b539-3cb28c57911c",
+      "to": "4284fb77-a15a-448f-b012-c95e2a7cfdf1",
+      "type": "edge",
+      "id": "e158debd-bfae-48fb-8ef5-07f09bf021d2"
+    },
+    {
+      "label": "méthode",
+      "from": "361755b9-960d-497d-bc32-49dd5277404a",
+      "to": "6e04fc26-56f7-4ed2-b076-696d279adfa5",
+      "type": "edge",
+      "id": "080a8bee-856a-4a75-aa4e-2511fc5ccc1c"
+    },
+    {
+      "label": "next",
+      "from": "4284fb77-a15a-448f-b012-c95e2a7cfdf1",
+      "to": "8abe333b-28cb-4249-8095-3b6ec43e75d4",
+      "type": "edge",
+      "id": "c52c9cd0-d2b9-40de-bd45-71b2e4aa67a0"
+    },
+    {
+      "label": "next",
+      "from": "8abe333b-28cb-4249-8095-3b6ec43e75d4",
+      "to": "b638f605-a079-4d72-b93f-23c6991f0f3b",
+      "type": "edge",
+      "id": "bf43caa9-4525-407e-a383-204a953ad264"
+    },
+    {
+      "label": "next",
+      "from": "a81fc381-dccc-4ef5-8c49-1e15c1e9b883",
+      "to": "ef08180d-4e91-4987-bf56-1b389889aca4",
+      "type": "edge",
+      "id": "eef1b5c1-89aa-47d2-b4c1-dd8d7b4ece9a"
+    },
+    {
+      "from": "ef08180d-4e91-4987-bf56-1b389889aca4",
+      "to": "648e5926-db51-4d8b-a716-2d081bdbb95b",
+      "label": "next",
+      "id": "4269a361-1042-4a75-a65a-5fa4eb7e159b"
+    },
+    {
+      "label": "probleme",
+      "from": "361755b9-960d-497d-bc32-49dd5277404a",
+      "to": "3f1663b4-08e5-4f71-af03-35eaa6a46309",
+      "type": "edge",
+      "id": "d0b45bb9-1ec4-46bb-8f82-6cfde35aae81"
+    },
+    {
+      "label": "exemple",
+      "from": "26e994c6-8118-40ed-9f14-c8ab92ac759a",
+      "to": "60a2e514-8cdf-4a4e-9049-cb113930a393",
+      "type": "edge",
+      "id": "7bec142c-11fd-4a93-8f35-16859eb70445"
+    },
+    {
+      "label": "exemple",
+      "from": "26e994c6-8118-40ed-9f14-c8ab92ac759a",
+      "to": "2b8ef451-530c-407a-ab9b-2ac46bf7c457",
+      "type": "edge",
+      "id": "e556ce41-5688-4db9-8fb1-9fda5dd71932"
+    },
+    {
+      "label": "exemple",
+      "from": "26e994c6-8118-40ed-9f14-c8ab92ac759a",
+      "to": "81c84588-472f-4a57-9506-e1b3c8d61124",
+      "type": "edge",
+      "id": "51615340-e492-4e8e-878e-4d96b014e399"
+    },
+    {
+      "label": "exemple",
+      "from": "0dcddf55-65b9-440b-8ba0-6d19d54ae9f6",
+      "to": "c94afa42-b773-4f01-a77c-bd0ad20c7343",
+      "type": "edge",
+      "id": "2d1f68bf-4fd5-4d0b-a9e4-377db2fb1054"
+    },
+    {
+      "label": "travail",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "0c124644-10e8-415e-aaf8-5c00001feef7",
+      "type": "edge",
+      "id": "33a2b592-4d34-46bc-980c-a514a569bb3e"
+    },
+    {
+      "label": "possibleVia",
+      "from": "0c124644-10e8-415e-aaf8-5c00001feef7",
+      "to": "c94afa42-b773-4f01-a77c-bd0ad20c7343",
+      "type": "edge",
+      "id": "fd7d1198-8ca2-481b-a0f5-b2494da14af3"
+    },
+    {
+      "label": "depart1",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "de7e7f66-6be4-4754-afde-96d6321a0a3a",
+      "type": "edge",
+      "id": "86666044-f9c8-44b8-8ac6-ed9721500f17"
+    },
+    {
+      "label": "depart2",
+      "from": "085611da-6836-4d3f-b27f-2eb552dcab13",
+      "to": "2b3cf56e-7a3c-478e-abf8-730bf00967e0",
+      "type": "edge",
+      "id": "80b78820-28d2-470c-9d6d-89814ea397af"
+    },
+    {
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "2b481c4a-6a0c-47e3-b09c-256e10a37791",
+      "label": "exemple",
+      "id": "392c55a1-bd11-4fd6-9534-8e1a4d96faa0"
+    },
+    {
+      "from": "2b3cf56e-7a3c-478e-abf8-730bf00967e0",
+      "to": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "label": "utilise",
+      "id": "c8fe36fb-4da3-4d58-973e-6185f6c6cbc7"
+    },
+    {
+      "label": "exemple",
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "08122569-6777-42d3-8e14-d63952d70247",
+      "type": "edge",
+      "id": "3c9bc8bf-3b57-408c-aacc-e40af4bfebd5"
+    },
+    {
+      "label": "appliquéA",
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "fc896cf8-2df4-46b9-b732-f21330657a89",
+      "type": "edge",
+      "id": "582ce5cb-df0d-46ba-be3b-db73154138d5"
+    },
+    {
+      "label": "appliquéA",
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "21779bfd-cfff-4349-b2fb-f82feb1bfd26",
+      "type": "edge",
+      "id": "fe41cee0-fa25-4b3f-85fa-5729e0d0c0e5"
+    },
+    {
+      "label": "first",
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "dc351ff4-bafe-44ef-a781-aeb970d99437",
+      "type": "edge",
+      "id": "ed9a98ce-c92f-4078-a8cd-637394cb719d"
+    },
+    {
+      "label": "next",
+      "from": "dc351ff4-bafe-44ef-a781-aeb970d99437",
+      "to": "fff6636a-78ab-40b6-b6c6-2e566dfaf13f",
+      "type": "edge",
+      "id": "a2f93943-55b6-4505-9c57-264e559239cf"
+    },
+    {
+      "label": "next",
+      "from": "fff6636a-78ab-40b6-b6c6-2e566dfaf13f",
+      "to": "1de88215-3a62-49ac-9dbb-703d22c89339",
+      "type": "edge",
+      "id": "d5517288-e6c5-4ee5-ab75-b663e7356cfe"
+    },
+    {
+      "from": "1de88215-3a62-49ac-9dbb-703d22c89339",
+      "to": "dc351ff4-bafe-44ef-a781-aeb970d99437",
+      "label": "next",
+      "id": "545ebb98-50db-429b-a46e-a203ad46f42b"
+    },
+    {
+      "label": "avantage",
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "b9eefc60-760e-4e84-aa02-5ff8a97a0194",
+      "type": "edge",
+      "id": "5ae3c0b6-2707-459b-a423-e9375b39a6ec"
+    },
+    {
+      "label": "avantage",
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "e57c3f69-5ad7-4674-8678-529497f09bd9",
+      "type": "edge",
+      "id": "5fd4bdc3-7685-4d28-93c7-dddceba2602f"
+    },
+    {
+      "label": "demo",
+      "from": "b0d707c8-1b02-4fb6-a8ff-407aadf8a074",
+      "to": "83ff87dc-903e-4a1a-9504-c7cd0a7f005d",
+      "type": "edge",
+      "id": "1a553f62-2dba-4836-9d6b-ebf7dac1a671"
+    },
+    {
+      "label": "developpéEn",
+      "from": "83ff87dc-903e-4a1a-9504-c7cd0a7f005d",
+      "to": "af6b2b12-ab62-4be6-8ec4-831402aec6c5",
+      "type": "edge",
+      "id": "10318885-814f-4613-95fc-564efc8ba2b3"
+    },
+    {
+      "label": "mode",
+      "from": "c94afa42-b773-4f01-a77c-bd0ad20c7343",
+      "to": "948d7186-4180-4f3d-85ff-499159ffb5d4",
+      "type": "edge",
+      "id": "48c45d57-a64f-464f-9484-aaca934fec6a"
+    },
+    {
+      "label": "permet",
+      "from": "948d7186-4180-4f3d-85ff-499159ffb5d4",
+      "to": "2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7",
+      "type": "edge",
+      "id": "61643eef-c6f3-4b99-bc24-984f4937c61f"
+    },
+    {
+      "label": "next",
+      "from": "2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7",
+      "to": "72885fd1-8e3a-4e6c-b4a0-154c5e5e6795",
+      "type": "edge",
+      "id": "034dd03b-9832-4378-a552-37f3e4a609a0"
+    },
+    {
+      "from": "72885fd1-8e3a-4e6c-b4a0-154c5e5e6795",
+      "to": "2863dc9a-0f0c-4e26-aa70-8d9c02d70cd7",
+      "label": "next",
+      "id": "696974f2-2e9f-4b62-bb09-184b238f0096"
+    },
+    {
+      "label": "avantage",
+      "from": "af6b2b12-ab62-4be6-8ec4-831402aec6c5",
+      "to": "2594a059-9da7-4091-8e19-d6c595b14432",
+      "type": "edge",
+      "id": "1095d2bb-41bd-4d3f-ab09-41701eaa1e10"
+    },
+    {
+      "label": "type",
+      "from": "af6b2b12-ab62-4be6-8ec4-831402aec6c5",
+      "to": "72c87687-a072-412f-b043-c8d4d3cc9179",
+      "type": "edge",
+      "id": "263bfeed-a3b9-45da-9be4-25f4e0091136"
+    },
+    {
+      "label": "principe",
+      "from": "af6b2b12-ab62-4be6-8ec4-831402aec6c5",
+      "to": "8637a3cc-0a87-4c8e-aa0b-a6dc7c2f5e74",
+      "type": "edge",
+      "id": "3c653488-35d1-4d42-be62-1e370ef2a20f"
+    }
+  ]
+}
