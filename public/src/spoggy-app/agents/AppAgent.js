@@ -56,10 +56,11 @@ AppAgent.prototype.receive = function(from, message) {
     this.app.closeDrawer();
     break;
     case 'changeMode':
+      console.log(message)
     this.app.changeMode(message.mode);
     break;
     case 'setMode':
-    //console.log(message)
+    console.log(message)
 
     if (this.app.mode == ""){
       this.app.mode = message.value;

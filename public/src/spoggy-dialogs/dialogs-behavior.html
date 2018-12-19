@@ -191,7 +191,7 @@ var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
   //  this.agentDialogs.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
   this.agentDialogs.send('agentEditor', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
   //this.agentDialogs.send('agentFoldermenu', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
-
+  this.agentDialogs.send('agentApp', {type: "changeMode", mode: 'solid' })
 }
 
 saveTextAsFile(){
