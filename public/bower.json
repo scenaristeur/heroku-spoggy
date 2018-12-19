@@ -2,7 +2,7 @@
   "name": "spoggy",
   "main": "index.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.6.0",
+    "polymer": "Polymer/polymer#^2.7.0",
     "vis": "^4.21.0",
     "iron-icon": "^2.1.0",
     "paper-dialog": "^2.1.1",

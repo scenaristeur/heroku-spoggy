@@ -1,0 +1,89 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./bottom-behavior.html">
+
+<dom-module id="spoggy-bottom">
+  <link rel="lazy-import" group="lazy" href="./bottom-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/bottom-nav/bottom-nav.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/bottom-nav/bottom-toolbar.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/bottom-nav/bottom-tab.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-fab/paper-fab.html">
+
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    bottom-toolbar, bottom-nav, bottom-tab {
+      background-color: var(--paper-blue-900);
+      color: #fff;
+    }
+    #fabMenu {
+      background-color: var(--paper-blue-900);
+      color: #fff;
+      position: absolute;
+      left: 50%;
+      bottom: 20px;
+      height: 30px;
+      width: 30px;
+    }
+    </style>
+
+
+    <paper-fab id="fabMenu" on-tap="_toggleMenu" label="Menu" icon="icons:more-vert"></paper-fab>
+    <div hidden$="[[!visible]]">
+      <bottom-nav shadow >
+        <bottom-toolbar selected="0">
+          <!--http://www.twelvetone.tv/iron-icons-search/index.html-->
+          <bottom-tab  selected-class="grey" label="Solo" icon="icons:accessibility"></bottom-tab>
+          <bottom-tab  selected-class="green"label="Collab" icon="icons:supervisor-account"></bottom-tab>
+          <bottom-tab  selected-class="brown"label="Solid" icon="icons:cloud-upload"></bottom-tab>
+          <bottom-tab  selected-class="darkbrown" label="Global" icon="icons:cloud"></bottom-tab>
+        </bottom-toolbar>
+      </bottom-nav>
+      <div>
+      </template>
+
+      <script>
+      /**
+      * `spoggy-bottom`
+      *
+      *
+      * @customElement
+      * @polymer
+      * @demo demo/index.html
+      */
+      class SpoggyBottom extends Polymer.LazyImportsMixin(BottomBehaviorMixin(Polymer.Element)) {
+        static get is() { return 'spoggy-bottom'; }
+        static get properties() {
+          return {
+            prop1: {
+              type: String,
+              value: 'spoggy-bottom'
+            },
+            visible:{
+              type: Boolean,
+              value: false
+            },
+          };
+        }
+
+        constructor(){
+          super();
+          Polymer.RenderStatus.afterNextRender(this, function() {
+            this._deferred();
+          });
+        }
+        _deferred(){
+          this.importLazyGroup('lazy').then((results) => {
+            console.log(results);
+            this.dispatchEvent(new CustomEvent('import-loaded', results));
+            this.agentBottom = new BottomAgent('agentBottom', this);
+          });
+        }
+      }
+
+      window.customElements.define(SpoggyBottom.is, SpoggyBottom);
+      </script>
+    </dom-module>

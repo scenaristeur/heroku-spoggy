@@ -1,0 +1,37 @@
+
+<script>
+/* @polymerMixin */
+var BottomBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class BottomBehavior extends superClass {
+    constructor() {
+      super();
+      console.log("Bottom behavior")
+      //  console.log(this.inputProp);
+    }
+
+    static get properties() {
+      return {
+        inputProp: {
+          type: String,
+          value: 'bottom'
+        }
+      };
+    }
+
+    _toggleMenu(){
+      //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+      this.visible = !this.visible;
+      console.log(this.visible)
+      if (this.visible){
+        this.$.fabMenu.style.bottom = "65px";
+      }else{
+        this.$.fabMenu.style.bottom = "20px";
+      }
+      console.log(this.$.fabMenu)
+    }
+
+
+  }
+});
+
+</script>

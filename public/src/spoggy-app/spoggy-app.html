@@ -57,6 +57,7 @@
   <link rel="lazy-import" group="lazy" href="/bower_components/bottom-nav/bottom-toolbar.html">
   <link rel="lazy-import" group="lazy" href="/bower_components/bottom-nav/bottom-tab.html">
 
+  <link rel="lazy-import" group="lazy" href="../spoggy-bottom/spoggy-bottom.html">
   <!--<link rel="lazy-import" group="lazy" href="../spoggy-solid/solid-connect.html">-->
 
 
@@ -112,10 +113,6 @@
     text-decoration: none;
     color: var(--app-secondary-color);
     line-height: 40px;
-  }
-  bottom-toolbar, bottom-nav, bottom-tab {
-    background-color: var(--paper-blue-900);
-    color: #fff;
   }
   </style>
   <style include="shared-styles">
@@ -395,21 +392,9 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 </app-drawer-layout>
 
 <spoggy-collab></spoggy-collab>
+<spoggy-bottom></spoggy-bottom>
 
 
-<bottom-nav shadow>
-  <bottom-toolbar selected="0">
-    <!--http://www.twelvetone.tv/iron-icons-search/index.html-->
-    <bottom-tab  selected-class="grey" label="Solo" icon="icons:accessibility"></bottom-tab>
-    <bottom-tab  selected-class="green"label="Collab" icon="icons:supervisor-account"></bottom-tab>
-    <bottom-tab  selected-class="brown"label="Solid" icon="icons:cloud-upload"></bottom-tab>
-    <bottom-tab  selected-class="darkbrown" label="Global" icon="icons:cloud"></bottom-tab>
-    <bottom-tab  selected-class="grey" label="Solo" icon="icons:accessibility"></bottom-tab>
-    <bottom-tab  selected-class="green"label="Collab" icon="icons:supervisor-account"></bottom-tab>
-    <bottom-tab  selected-class="brown"label="Solid" icon="icons:cloud-upload"></bottom-tab>
-    <bottom-tab  selected-class="darkbrown" label="Global" icon="icons:cloud"></bottom-tab>
-  </bottom-toolbar>
-</bottom-nav>
 
 <!--</div> -->
 
