@@ -253,7 +253,7 @@ importFromParam(params){
   }
   network.fit();
   network.redraw();
-//  this.agentGraph.send('agentCurrent', {type: "hasParams", params:params});
+  //  this.agentGraph.send('agentCurrent', {type: "hasParams", params:params});
 }
 
 addToGraph(data){
@@ -900,10 +900,10 @@ for (var i = 0; i < edges.length; i++) {
   var edge = edges[i];
 
   var sujet = edge.from;
-  var propriete = edge.label;
+  var propriete = edge.label.replace(/\s/g, "_");;
   var objet = edge.to;
 
-
+  
   //string.indexOf(substring) > -1
   //console.log(sujet);
   //console.log(propriete);

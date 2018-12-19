@@ -56,10 +56,10 @@ DialogsAgent.prototype.receive = function(from, message) {
     console.log(message.rooms);
     break;
     case 'toggle':
-    console.log(message.popup);
+  //  console.log(message.popup);
     let popup = message.popup;
     let pop = this.app.$[popup];
-    console.log(pop);
+  //  console.log(pop);
     pop.toggle();
     break;
 
