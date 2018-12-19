@@ -19,15 +19,12 @@ var BottomBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     _toggleMenu(){
-      //  this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
       this.visible = !this.visible;
-      console.log(this.visible)
       if (this.visible){
         this.$.fabMenu.style.bottom = "65px";
       }else{
         this.$.fabMenu.style.bottom = "20px";
       }
-      console.log(this.$.fabMenu)
     }
 
 
