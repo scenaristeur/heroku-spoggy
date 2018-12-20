@@ -1,0 +1,15 @@
+{
+	"elementName": {
+		"message": "Spoggy Global",
+		"description": "elementName"
+	},
+	"elementDescription": {
+		"message": "Explore the world with Spoggy's eye.",
+		"description": "elementDescription"
+	}
+	,
+	"action": {
+		"message": "Explore",
+		"description": "action"
+	}
+}

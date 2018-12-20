@@ -1,0 +1,15 @@
+{
+	"elementName": {
+		"message": "Spoggy Solid",
+		"description": "elementName"
+	},
+	"elementDescription": {
+		"message": "Store your data on your own POD.",
+		"description": "elementDescription"
+	}
+	,
+	"action": {
+		"message": "Use Solid",
+		"description": "action"
+	}
+}

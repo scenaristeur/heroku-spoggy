@@ -1,0 +1,15 @@
+{
+	"elementName": {
+		"message": "Spoggy Solid",
+		"description": "elementName"
+	},
+	"elementDescription": {
+		"message": "Stocker vos données dans votre POD personnel.",
+		"description": "elementDescription"
+	}
+	,
+	"action": {
+		"message": "Utiliser Solid",
+		"description": "action"
+	}
+}

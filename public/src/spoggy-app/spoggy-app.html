@@ -16,7 +16,7 @@
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../spoggy-accueil/spoggy-accueil-card.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
+<link rel="import" href="../spoggy-solid/spoggy-solid-card.html">
 
 <!--<link rel="import" href="../spoggy-accueil/localized-element.html">-->
 
@@ -360,9 +360,10 @@ color:#ffffff !important;
       <spoggy-accueil-card mode={{mode}} language={{language}}></spoggy-accueil-card>
     </div>
     <div class="container flex-wrap">
-      <spoggy-collaboratif-card  mode={{mode}}  language={{language}}></spoggy-collaboratif-card>
       <spoggy-solo-card  mode={{mode}}  language={{language}}></spoggy-solo-card>
+      <spoggy-collaboratif-card  mode={{mode}}  language={{language}}></spoggy-collaboratif-card>
       <spoggy-global-card  mode={{mode}}  language={{language}}></spoggy-global-card>
+      <spoggy-solid-card  mode={{mode}}  language={{language}}></spoggy-solid-card>
     </div>
 
   </div>

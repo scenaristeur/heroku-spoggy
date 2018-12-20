@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
-
+<link rel="import" href="../../bower_components/app-localize-chrome-i18n-mixin/app-localize-chrome-i18n-mixin.html">
 
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
@@ -116,23 +116,21 @@
   iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   </style>
 
-
-
-    <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
-      <div class="card-content">
-        <div class="cafe-header">    <h2>[[prop1]]</h2>
-        </div>
-        <p class="cafe-light">
-          Explorez le monde avec l'oeil de Spoggy.
-        </p>
+  <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+    <div class="card-content">
+      <div class="cafe-header">    <h2>[[localize('elementName')]]</h2>
       </div>
-      <div class="horizontal justified">
-        <paper-button id="global" class="cafe-reserve" on-tap="setmode">Explorer</paper-button>
-      </div>
-    </paper-card>
+
+      <p class="cafe-light">
+        [[localize('elementDescription')]]
+      </p>
+    </div>
+    <div class="horizontal justified">
+      <paper-button id="global" class="cafe-reserve" on-tap="setmode">[[localize('action')]]</paper-button>
+    </div>
+  </paper-card>
+
   </div>
-
-
 
 </template>
 
@@ -145,7 +143,7 @@
 * @polymer
 * @demo demo/index.html
 */
-class SpoggyGlobalCard extends Polymer.LazyImportsMixin(Polymer.Element) {
+class SpoggyGlobalCard extends Polymer.AppLocalizeChromeI18nMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
   static get is() { return 'spoggy-global-card'; }
   static get properties() {
     return {

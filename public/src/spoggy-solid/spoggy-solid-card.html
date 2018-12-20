@@ -3,7 +3,6 @@
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="../../bower_components/app-localize-chrome-i18n-mixin/app-localize-chrome-i18n-mixin.html">
 
-<script src="agents/SoloAgent.js"></script>
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
@@ -11,7 +10,7 @@
 
 <link rel="import" href="../shared-styles.html">
 
-<dom-module id="spoggy-solo-card">
+<dom-module id="spoggy-solid-card">
 
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-card/paper-card.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/color.html">
@@ -28,8 +27,6 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 
   <link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
-
-  <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph.html">
 
   <template>
 
@@ -118,7 +115,6 @@
   }
   iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   </style>
-
   <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
     <div class="card-content">
       <div class="cafe-header">    <h2>[[localize('elementName')]]</h2>
@@ -129,62 +125,90 @@
       </p>
     </div>
     <div class="horizontal justified">
-      <paper-button id="solo" class="cafe-reserve" on-tap="setmode">[[localize('action')]]</paper-button>
+      <paper-button id="solid" class="cafe-reserve" on-tap="setmode">[[localize('action')]]</paper-button>
     </div>
   </paper-card>
+</div>
+
+
 
 </template>
 
 <script>
 /**
-* `spoggy-solo-card`
+* `spoggy-global`
 *
 *
 * @customElement
 * @polymer
 * @demo demo/index.html
 */
-class SpoggySoloCard extends Polymer.AppLocalizeChromeI18nMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
-  static get is() { return 'spoggy-solo-card'; }
+class SpoggySolidCard extends Polymer.AppLocalizeChromeI18nMixin(Polymer.LazyImportsMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-solid-card'; }
   static get properties() {
     return {
       prop1: {
         type: String,
-        value: 'Spoggy Solo'
+        value: 'Spoggy Solid'
       },
       mode: {
         type: String,
         notify: true
-      }
+      },
+      logs: {
+        type: Array,
+        value:[]
+      },
+
     };
   }
 
   constructor(){
     super();
-    //  this.agentSolo = new SoloAgent('agentSolo', this);
-    Polymer.RenderStatus.afterNextRender(this, function() {
-      this._deferred();
-    });
-  }
-  _deferred(){
-    //  this.initAgents()
-  }
-  initAgents(){
-    this.agentSolo.send('agentHello', 'Hello agentHello!');
-  }
+    /*this.log = loglevelDebug('worker:spoggy-global');
+    loglevelDebug.enable('worker:*')*/
+    /* SYSTEME DE LOG */
 
-  isEmpty(value){
-    //  console.log(value)
-    return value == undefined || value.length == 0;
-  }
-  isEqual(mode, test){
-    return mode == test;
-  }
-  setmode(e){
-    this.mode = e.target.id;
-  }
+    //  loglevelDebug.enable('worker:*')
+    // type loglevelDebug.enable('worker:*'); in
+    // the console and refresh :)
+    /*var app = this;
+    var b = loglevelDebug('worker:b');
+    setInterval(function(){
+    app.log('doing some work');
+  }, 1000);
+  setInterval(function(){
+  b('doing some work');
+}, 1200);*/
+
+
+
+
+Polymer.RenderStatus.afterNextRender(this, function() {
+  this._deferred();
+});
+}
+_deferred(){
+  //this.initAgents()
+}
+initAgents(){
+
+
+
 }
 
-window.customElements.define(SpoggySoloCard.is, SpoggySoloCard);
+isEmpty(value){
+  //  console.log(value)
+  return value == undefined || value.length == 0;
+}
+isEqual(mode, test){
+  return mode == test;
+}
+setmode(e){
+  this.mode = e.target.id;
+}
+}
+
+window.customElements.define(SpoggySolidCard.is, SpoggySolidCard);
 </script>
 </dom-module>

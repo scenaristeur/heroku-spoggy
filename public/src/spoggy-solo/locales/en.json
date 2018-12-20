@@ -1,0 +1,15 @@
+{
+	"elementName": {
+		"message": "Spoggy Solo",
+		"description": "elementName"
+	},
+	"elementDescription": {
+		"message": "Describe your own world with Spoggy.",
+		"description": "elementDescription"
+	}
+	,
+	"action": {
+		"message": "Create",
+		"description": "action"
+	}
+}
