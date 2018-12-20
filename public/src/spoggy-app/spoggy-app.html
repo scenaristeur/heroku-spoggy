@@ -365,18 +365,18 @@ color:#ffffff !important;
       <spoggy-global-card  mode={{mode}}  language={{language}}></spoggy-global-card>
       <spoggy-solid-card  mode={{mode}}  language={{language}}></spoggy-solid-card>
     </div>
+  </br></br></br>
+</div>
 
-  </div>
-
-  <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]"></spoggy-solo>
-  <spoggy-collaboratif
-  mode={{mode}}
-  hidden$="[[!isEqual(mode,'collaboratif')]]"
-  pseudo="{{pseudo}}"
-  room="{{room}}"
-  hide-pseudo="{{hidePseudo}}"
-  hide-rejoindre="{{hideRejoindre}}"
-  hide-creer="{{hideCreer}}">
+<spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]"></spoggy-solo>
+<spoggy-collaboratif
+mode={{mode}}
+hidden$="[[!isEqual(mode,'collaboratif')]]"
+pseudo="{{pseudo}}"
+room="{{room}}"
+hide-pseudo="{{hidePseudo}}"
+hide-rejoindre="{{hideRejoindre}}"
+hide-creer="{{hideCreer}}">
 </spoggy-collaboratif>
 
 <spoggy-global
