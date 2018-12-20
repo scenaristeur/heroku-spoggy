@@ -10,6 +10,8 @@
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="../../bower_components/lang-picker/lang-picker.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
 
 <dom-module id="spoggy-accueil-card">
 
@@ -28,6 +30,9 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
 
   <link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
+
+
+
   <template>
 
     <style include="shared-styles">
@@ -120,21 +125,32 @@
 
 
   <paper-card image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
-    <div class="card-content">
-      <div class="cafe-header">    <h2>[[prop1]]</h2>
-      </div>
-
-      <p class="cafe-light">
-        [[localize('SpoggyDescription')]]
-      </p>
-      <p>[[localize('SpoggyDescription')]]</p>
-      <p>
-        Want to help translating Spoggy in your language ?
-      </p>
+    <div class="layout horizontal center-center horizontal-section">
+      <!--<lang-picker selected="{{language}}"></lang-picker>
+      Want to help translating Spoggy in your language ? -->
+      <span>Fr</span>
+      <paper-toggle-button on-change="_toggle" id="switch" ></paper-toggle-button>
+      <span>En</span>
     </div>
-    <!--<div class="horizontal justified">
-    <paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Rejoindre un graphe</paper-button>
-  </div>-->
+    <div class="card-content">
+      <div class="cafe-header"><h2>[[prop1]]</h2></div>
+      <p>
+        [[localize('SpoggyDescription1')]]
+      </p>
+      <p  class="cafe-light">
+        [[localize('SpoggyDescription2')]]
+      </p>
+      <!--  <p>
+      [[localize('SpoggyDescription3')]]
+    </p>
+    <p  class="cafe-light">
+    [[localize('SpoggyDescription4')]]
+  </p>-->
+
+</div>
+<!--<div class="horizontal justified">
+<paper-button id="collaboratif" class="cafe-reserve" on-tap="setmode">Rejoindre un graphe</paper-button>
+</div>-->
 </paper-card>
 
 </template>
@@ -158,6 +174,12 @@ class SpoggyAccueilCard extends Polymer.AppLocalizeChromeI18nMixin(Polymer.LazyI
       },
       mode: {
         type: String,
+        notify: true
+      },
+      language: {
+        type: String,
+        value: 'fr',
+        //  observer: '_changeLanguage',
         notify: true
       }
     };
@@ -187,6 +209,17 @@ isEmpty(value){
 isEqual(mode, test){
   return mode == test;
 }
+
+_changeLang(){
+  console.log(this.language);
+  //  this.mode = "solo";
+}
+
+
+_toggle() {
+  this.language = this.$.switch.checked ? 'en' : 'fr';
+  console.log(this.language);
+};
 setmode(e){
   this.mode = e.target.id;
 }

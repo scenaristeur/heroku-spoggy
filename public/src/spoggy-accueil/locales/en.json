@@ -3,8 +3,20 @@
 		"message": "Hello world!",
 		"description": "Greeting"
 	},
-	"SpoggyDescription": {
-		"message": "Spoggy helps you to create & read RDF Graphs as Mindmaps",
+	"SpoggyDescription1": {
+		"message": "Spoggy is an application allowing the representation of information, or knowledge in the form of a graph. A graph is composed of NODES (nodes) and LINKS (edges).",
+		"description": "SpoggyDescription"
+	},
+	"SpoggyDescription2": {
+		"message": "The nodes represent the concepts of a domain and the links allow to qualify the relation between two concepts. The links are oriented and end with an arrow. The set of two nodes and the link between these two nodes can also be called a TRIPLET.",
+		"description": "SpoggyDescription"
+	},
+	"SpoggyDescription3": {
+		"message": "For example {David, lives, Lyon} is a triplet in which the terms' David 'and' Lyon 'are nodes representing respectively a person (the subject of the triplet) and a city (the object of the triplet), whereas' 'is the relationship (also called' property 'or' predicate ') that connects the two nodes.",
+		"description": "SpoggyDescription"
+	},
+	"SpoggyDescription4": {
+		"message": "You can use the 'Edit / Add node' buttons to add a node or 'Edit / Add Edge' to link two nodes. I let you discover the features of 'Edit Node', 'Edit Edge', 'Delete Node', 'Delete Edge' ... ;-).You can also use the 'input box' to enter triplets more quickly.",
 		"description": "SpoggyDescription"
 	}
 }

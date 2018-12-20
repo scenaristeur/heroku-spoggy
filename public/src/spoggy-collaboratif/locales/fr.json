@@ -1,0 +1,15 @@
+{
+	"elementName": {
+		"message": "Spoggy Collaboratif",
+		"description": "elementName"
+	},
+	"elementDescription": {
+		"message": "Contribuez, collaborez, partagez en temps réel.",
+		"description": "elementDescription"
+	}
+	,
+	"joinGraph": {
+		"message": "Rejoindre un graphe",
+		"description": "joinGraph"
+	}
+}

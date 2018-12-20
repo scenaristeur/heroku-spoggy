@@ -16,8 +16,8 @@
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../spoggy-accueil/spoggy-accueil-card.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="../../bower_components/lang-picker/lang-picker.html">
+
+
 <!--<link rel="import" href="../spoggy-accueil/localized-element.html">-->
 
 <script src="../spoggy-solid/lib/solid-auth-client.bundle.js"></script>
@@ -78,9 +78,8 @@
 <template>
   <style>
   :host {
-    --app-primary-color: #4285f4;
+    --app-primary-color: var(--paper-blue-900);
     --app-secondary-color: black;
-
     /*display: block;*/
   }
 
@@ -348,12 +347,9 @@ color:#ffffff !important;
         Attendez jusqu'au chargement du cercle rose
       </spoggy-input>
 
-      <div class="layout horizontal center-center horizontal-section">
-        <span>En</span>
-        <paper-toggle-button on-change="_toggle" id="switch" checked></paper-toggle-button>
-        <span>Fr</span>
-      </div>
-      <!--  <lang-picker selected="{{language}}"></lang-picker>-->
+
+
+
 
     </app-toolbar>
 
@@ -485,12 +481,8 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
       endpointName: {
         type: String,
         value: ""
-      } ,
-      language: {
-        type: String,
-        //  observer: '_changeLanguage',
-        notify: true
-      },
+      }
+
     }
   }
   buttonPressed() {
@@ -504,9 +496,15 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });
-    this.language = (navigator.language || navigator.userLanguage ). substring(0,2) || "en";
+    var language = (navigator.language || navigator.userLanguage ). substring(0,2);
+    if ((language != "fr") || (language != "en")){
+      language = "fr"
+    }
+    this.language = language;
     console.log(this.language);
+
   }
+
   _deferred(){
     this.importLazyGroup('lazy').then((results) => {
       this.dispatchEvent(new CustomEvent('import-loaded', results));
@@ -519,16 +517,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   initAgents(){
     this.agentApp.send('agentHello', 'Hello agentHello!');
   }
-  _changeLang(){
-    console.log(this.language);
-    //  this.mode = "solo";
-  }
 
-
-  _toggle() {
-    this.language = this.$.switch.checked ? 'fr' : 'en';
-    console.log(this.language);
-  };
 
   setmode(e){
     this.mode = e.target.id;

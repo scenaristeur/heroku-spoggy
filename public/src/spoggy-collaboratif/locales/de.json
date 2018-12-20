@@ -1,0 +1,10 @@
+{
+	"hello": {
+		"message": "Hallo Welt!",
+		"description": "Greeting"
+	},
+	"SpoggyDescription": {
+		"message": "Spoggy helps you to create & read RDF Graphs as Mindmaps",
+		"description": "SpoggyDescription"
+	}
+}

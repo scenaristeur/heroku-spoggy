@@ -3,8 +3,20 @@
 		"message": "Salut le monde!",
 		"description": "Salutations"
 	},
-	"SpoggyDescription": {
-		"message": "Spoggy vous permet de générer des graphes",
+	"SpoggyDescription1": {
+		"message": "Spoggy est une application permettant la représentation de l'information, ou des connaissances sous forme de graphe. Un graphe est composé de NOEUDS (nodes) et de LIENS (edges).",
+		"description": "SpoggyDescription"
+	},
+	"SpoggyDescription2": {
+		"message": "Les noeuds représentent les concepts d'un domaine et les liens permettent de qualifier la relation entre deux concepts. Les liens sont orientés et se terminent par une flèche. L'ensemble de deux noeuds et du lien entre ces deux noeuds peut aussi être appelé un TRIPLET.",
+		"description": "SpoggyDescription"
+	},
+	"SpoggyDescription3": {
+		"message": "Par exemple { David, habite, Lyon } est un triplet dans lequel les termes 'David' et 'Lyon' sont des noeuds représentant respectivement une personne (le sujet du triplet) et une ville (l'objet du triplet), alors que 'habite' est la relation (aussi appelée 'propriété' ou 'predicat' ) qui relie les deux noeuds.",
+		"description": "SpoggyDescription"
+	},
+	"SpoggyDescription4": {
+		"message": "Vous pouvez utiliser les boutons 'Edit / Add node' pour ajouter un noeud ou 'Edit / Add Edge' pour relier deux noeuds. Je vous laisse découvrir les fonctionnalités de 'Edit Node', 'Edit Edge', 'Delete Node', 'Delete Edge'... ;-). Vous pouvez aussi utiliser la 'zone de saisie' pour saisir des triplets de manière plus rapide.",
 		"description": "SpoggyDescription"
 	}
 }
