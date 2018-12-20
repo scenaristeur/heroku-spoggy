@@ -1,7 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./accueil-behavior.html">
-<link rel="import" href="../../bower_components/lang-picker/lang-picker.html">
+<!--<link rel="import" href="../../bower_components/lang-picker/lang-picker.html">-->
+<link rel="import" href="../../bower_components/app-localize-chrome-i18n-mixin/app-localize-chrome-i18n-mixin.html">
 
 
 <dom-module id="spoggy-accueil">
@@ -12,8 +13,16 @@
       display: block;
     }
     </style>
-    <h2>Hello [[prop1]]!</h2>
+  <!--  <h2>Hello [[prop1]]!</h2>
     <lang-picker selected="{{lang}}"></lang-picker>
+  -->
+    ac<br>
+    <div>[[localize('hello')]]</div>
+    b</br>
+
+
+    <div>[[localize('SpoggyDescription')]]</div>
+    c<br>
   </template>
 
   <script>
@@ -25,7 +34,7 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyAccueil extends Polymer.LazyImportsMixin(AccueilBehaviorMixin(Polymer.Element)) {
+  class SpoggyAccueil extends Polymer.AppLocalizeChromeI18nMixin(Polymer.LazyImportsMixin(AccueilBehaviorMixin(Polymer.Element))) {
     static get is() { return 'spoggy-accueil'; }
     static get properties() {
       return {
@@ -68,7 +77,7 @@
   }
   _changeLang(){
     console.log(this.lang);
-    this.mode = "solo";
+    //this.mode = "solo";
 
   }
 }

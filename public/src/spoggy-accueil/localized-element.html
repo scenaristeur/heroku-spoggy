@@ -1,0 +1,23 @@
+<!doctype html>
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-localize-chrome-i18n-mixin/app-localize-chrome-i18n-mixin.html">
+
+<dom-module id="localized-element">
+
+	<template>
+		<div>[[localize('hello')]]</div>
+		blop
+		<div>[[localize('SpoggyDescription')]]</div>
+		swing
+	</template>
+
+	<script>
+	class LocalizedElement extends Polymer.AppLocalizeChromeI18nMixin(Polymer.Element) {
+		static get is() {
+			return 'localized-element';
+		}
+	}
+	customElements.define(LocalizedElement.is, LocalizedElement);
+	</script>
+
+</dom-module>

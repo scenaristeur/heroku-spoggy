@@ -14,7 +14,11 @@
 <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
-
+<link rel="import" href="../spoggy-accueil/spoggy-accueil-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/lang-picker/lang-picker.html">
+<!--<link rel="import" href="../spoggy-accueil/localized-element.html">-->
 
 <script src="../spoggy-solid/lib/solid-auth-client.bundle.js"></script>
 <script src="agents/AppAgent.js"></script>
@@ -46,7 +50,7 @@
   <link rel="lazy-import" group="lazy"  href="../spoggy-solo/spoggy-solo-card.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-global/spoggy-global-card.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-collaboratif/spoggy-collaboratif-card.html">
-  <link rel="lazy-import" group="lazy" href="../spoggy-accueil/spoggy-accueil.html">
+
 
   <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph-reglages.html">
 
@@ -58,6 +62,8 @@
   <link rel="lazy-import" group="lazy" href="/bower_components/bottom-nav/bottom-tab.html">
 
   <link rel="lazy-import" group="lazy" href="../spoggy-bottom/spoggy-bottom.html">
+
+
   <!--<link rel="lazy-import" group="lazy" href="../spoggy-solid/solid-connect.html">-->
 
 
@@ -200,6 +206,14 @@ iron-icon.star {
 iron-icon.star:last-of-type { color: var(--paper-grey-500); }
 </style>
 
+<custom-style>
+  <style include="iron-flex">
+  paper-toggle-button {
+    margin: 0 8px;
+  }
+  </style>
+</custom-style>
+
 
 
 
@@ -215,7 +229,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
         <!--<a name="view1" href="[[rootPath]]view1">View One</a>
         <a name="view2" href="[[rootPath]]view2">View Two</a>
         <a name="view3" href="[[rootPath]]view3">View Three</a> -->
-        <a name="accueil" id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil ([[lang]])</a>
+        <a name="accueil" id="collaboratif" class="cafe-reserve" on-tap="delmode">Accueil ([[language]])</a>
 
         <iron-collapse-button>
           <h3 slot="collapse-trigger" style="margin: 0;color: #0D578B;">Fichier</h3>
@@ -333,16 +347,26 @@ color:#ffffff !important;
         ... Chargement de l'interface  ... <br>
         Attendez jusqu'au chargement du cercle rose
       </spoggy-input>
+
+      <div class="layout horizontal center-center horizontal-section">
+        <span>En</span>
+        <paper-toggle-button on-change="_toggle" id="switch" checked></paper-toggle-button>
+        <span>Fr</span>
+      </div>
+      <!--  <lang-picker selected="{{language}}"></lang-picker>-->
+
     </app-toolbar>
 
   </app-header>
 
   <div hidden$="[[!isEmpty(mode)]]">
-    <div class="container flex-wrap"> <!-- hidden$="[[!isEmpty(mode)]]" -->
-      <!--<spoggy-collaboratif-card  mode={{mode}}></spoggy-collaboratif-card>
-      <spoggy-solo-card  mode={{mode}}></spoggy-solo-card>
-      <spoggy-global-card  mode={{mode}}></spoggy-global-card>-->
-      <spoggy-accueil mode={{mode}} lang={{lang}}></spoggy-accueil>
+    <div class="container flex-wrap">
+      <spoggy-accueil-card mode={{mode}} language={{language}}></spoggy-accueil-card>
+    </div>
+    <div class="container flex-wrap">
+      <spoggy-collaboratif-card  mode={{mode}}  language={{language}}></spoggy-collaboratif-card>
+      <spoggy-solo-card  mode={{mode}}  language={{language}}></spoggy-solo-card>
+      <spoggy-global-card  mode={{mode}}  language={{language}}></spoggy-global-card>
     </div>
 
   </div>
@@ -363,7 +387,12 @@ mode={{mode}}
 hide-endpoints="{{hideEndpoints}}"
 hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
+<spoggy-solid
+mode={{mode}}
+hide-endpoints="{{hideEndpoints}}"
+hidden$="[[!isEqual(mode,'solid')]]">SOLID</spoggy-solid>
 
+<spoggy-dialogs></spoggy-dialogs>
 
 <div hidden$="[[isEmpty(mode)]]">
   <spoggy-sparql></spoggy-sparql>
@@ -373,20 +402,17 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
   <spoggy-graph hidden$="[[hideGraph(hidePseudo,hideRejoindre, hideCreer)]]">
     ... Chargement du système ... <br>
   </spoggy-graph>
-  <spoggy-dialogs></spoggy-dialogs>
-  <spoggy-solid
-  mode={{mode}}
-  hide-endpoints="{{hideEndpoints}}"
-  hidden$="[[!isEqual(mode,'solid')]]">SOLID</spoggy-solid>
+
+
   <!--<spoggy-jsonld></spoggy-jsonld>-->
   <spoggy-data></spoggy-data>
   <spoggy-preferences></spoggy-preferences>
   <spoggy-historique></spoggy-historique>
 </div>
-<div hidden$="[[!isEmpty(mode)]]">
-  Chargement du graphe Spoggy,<br>
-  Patientez jusqu'au chargement du cercle rose, SVP
-</div>
+<!--<div hidden$="[[!isEmpty(mode)]]">
+Chargement du graphe Spoggy,<br>
+Patientez jusqu'au chargement du cercle rose, SVP
+</div>-->
 
 </app-header-layout>
 </app-drawer-layout>
@@ -459,7 +485,12 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
       endpointName: {
         type: String,
         value: ""
-      }
+      } ,
+      language: {
+        type: String,
+        //  observer: '_changeLanguage',
+        notify: true
+      },
     }
   }
   buttonPressed() {
@@ -473,7 +504,8 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
     });
-
+    this.language = (navigator.language || navigator.userLanguage ). substring(0,2) || "en";
+    console.log(this.language);
   }
   _deferred(){
     this.importLazyGroup('lazy').then((results) => {
@@ -487,6 +519,16 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
   initAgents(){
     this.agentApp.send('agentHello', 'Hello agentHello!');
   }
+  _changeLang(){
+    console.log(this.language);
+    //  this.mode = "solo";
+  }
+
+
+  _toggle() {
+    this.language = this.$.switch.checked ? 'fr' : 'en';
+    console.log(this.language);
+  };
 
   setmode(e){
     this.mode = e.target.id;

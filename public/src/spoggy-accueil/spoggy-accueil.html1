@@ -1,0 +1,99 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!--<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">-->
+<!--<link rel="import" href="./accueil-behavior.html">-->
+<link rel="import" href="../../bower_components/lang-picker/lang-picker.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<!--<link rel="import" href="localized-element.html">-->
+<link rel="import" href="../../bower_components/app-localize-chrome-i18n-mixin/app-localize-chrome-i18n-mixin.html">
+<link rel="import" href="./accueil-import.html">
+
+
+<dom-module id="spoggy-accueil">
+
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+
+
+
+    <!--
+    <h2>Hello [[prop1]]!</h2>
+    <lang-picker selected="{{lang}}"></lang-picker>-->
+
+
+
+
+
+    <!--<div class="horizontal-section">
+    one
+    <localized-element language="[[lang]]"></localized-element>
+    two
+    DESRIP
+    [[localize('SpoggyDescription')]]
+    FIN DESCRIP
+  </div>-->
+
+  <div>[[localize('hello')]]</div>
+
+  <div>[[localize('SpoggyDescription')]]</div>
+
+</template>
+
+
+<script>
+/**
+* `spoggy-accueil`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyAccueil extends Polymer.AppLocalizeChromeI18nMixin(Polymer.Element) {
+  static get is() { return 'spoggy-accueil'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-accueil'
+      },
+
+      mode: {
+        type: String,
+        notify: true
+      }
+      /*fichier: {
+      type: String,
+      value: "/exemple_files/Spoggy_accueil.json"
+    }*/
+  };
+}
+
+constructor(){
+  super();
+  Polymer.RenderStatus.afterNextRender(this, function() {
+    //this._deferred();
+  });
+
+}
+_deferred(){
+  this.importLazyGroup('lazy').then((results) => {
+    console.log(results);
+    this.dispatchEvent(new CustomEvent('import-loaded', results));
+    this.agentAccueil = new AccueilAgent('agentAccueil', this);
+
+
+  });
+}
+
+
+}
+
+window.customElements.define(SpoggyAccueil.is, SpoggyAccueil);
+</script>
+</dom-module>

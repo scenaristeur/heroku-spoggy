@@ -1,0 +1,10 @@
+{
+	"hello": {
+		"message": "Salut le monde!",
+		"description": "Salutations"
+	},
+	"SpoggyDescription": {
+		"message": "Spoggy vous permet de générer des graphes",
+		"description": "SpoggyDescription"
+	}
+}
