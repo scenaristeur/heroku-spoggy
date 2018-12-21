@@ -3,9 +3,7 @@
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="../spoggy-agent/spoggy-agent.html">
-<link rel="import" href="../spoggy-graph/spoggy-graph.html">
 
-<link rel="import"  href="../spoggy-sparql/spoggy-sparql.html">
 <!--<link rel="import" href="../spoggy-jsonld/spoggy-jsonld.html">-->
 
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
@@ -14,14 +12,23 @@
 <link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../spoggy-accueil/spoggy-accueil-card.html">
+
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../spoggy-accueil/spoggy-accueil-card.html">
 <link rel="import" href="../spoggy-solid/spoggy-solid-card.html">
+
+<link rel="import"  href="../spoggy-solo/spoggy-solo-card.html">
+<link rel="import" href="../spoggy-global/spoggy-global-card.html">
+<link rel="import" href="../spoggy-collaboratif/spoggy-collaboratif-card.html">
 
 <!--<link rel="import" href="../spoggy-accueil/localized-element.html">-->
 
 <script src="../spoggy-solid/lib/solid-auth-client.bundle.js"></script>
 <script src="agents/AppAgent.js"></script>
+
+<link rel="import" href="../spoggy-graph/spoggy-graph.html">
+
+<link rel="import"  href="../spoggy-sparql/spoggy-sparql.html">
 
 <dom-module id="spoggy-app">
   <link  rel="lazy-import" group="lazy"  href="../spoggy-input/spoggy-input.html">
@@ -415,7 +422,7 @@ Patientez jusqu'au chargement du cercle rose, SVP
 </app-drawer-layout>
 
 <spoggy-collab></spoggy-collab>
-<spoggy-bottom></spoggy-bottom>
+<spoggy-bottom mode={{mode}}  language={{language}}></spoggy-bottom>
 
 
 

@@ -36,10 +36,10 @@
       <bottom-nav shadow >
         <bottom-toolbar selected="0">
           <!--http://www.twelvetone.tv/iron-icons-search/index.html-->
-          <bottom-tab  selected-class="grey" label="Solo" icon="icons:accessibility"></bottom-tab>
-          <bottom-tab  selected-class="green"label="Collab" icon="icons:supervisor-account"></bottom-tab>
-          <bottom-tab  selected-class="brown"label="Solid" icon="icons:cloud-upload"></bottom-tab>
-          <bottom-tab  selected-class="darkbrown" label="Global" icon="icons:cloud"></bottom-tab>
+          <bottom-tab id="solo"  selected-class="grey" label="Solo"  icon="icons:accessibility" on-tap="setmode"></bottom-tab>
+          <bottom-tab id="collaboratif"  selected-class="green"label="Collab" icon="icons:supervisor-account" on-tap="setmode"></bottom-tab>
+          <bottom-tab id="global" selected-class="darkbrown" label="Global" icon="icons:cloud" on-tap="setmode"></bottom-tab>
+          <bottom-tab id="solid" selected-class="brown"label="Solid" icon="icons:cloud-upload" on-tap="setmode"></bottom-tab>
         </bottom-toolbar>
       </bottom-nav>
       <div>
@@ -66,6 +66,10 @@
               type: Boolean,
               value: false
             },
+            mode: {
+              type: String,
+              notify: true
+            }
           };
         }
 
@@ -81,6 +85,10 @@
             this.dispatchEvent(new CustomEvent('import-loaded', results));
             this.agentBottom = new BottomAgent('agentBottom', this);
           });
+        }
+
+        setmode(e){
+          this.mode = e.target.id;
         }
       }
 
