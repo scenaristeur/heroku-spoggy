@@ -41,7 +41,7 @@ var EditorBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         else {
           console.log( `File content is : ${response.value}.`)
           this.content = response.value;
-          this.agentEditor.send('agentGraph', {type: 'fileChanged', file: file })
+        //  this.agentEditor.send('agentGraph', {type: 'fileChanged', file: file })
         }
       })
     }

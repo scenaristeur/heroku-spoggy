@@ -291,8 +291,8 @@
       _browse(e){
         console.log(e.model.item)
         var current = e.model.item;
-        this.agentFoldermenu.send('agentCurrent', {type: 'currentChanged', current: current })
-        this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
+        //  this.agentFoldermenu.send('agentCurrent', {type: 'currentChanged', current: current })
+        //  this.agentFoldermenu.send('agentEditor', {type: 'currentChanged', current: current })
         this.agentFoldermenu.send('agentBrowser', {type: 'currentChanged', current: current })
       }
 
