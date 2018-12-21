@@ -54,8 +54,8 @@
 
   <link rel="lazy-import" group="lazy" href="../spoggy-global/spoggy-global.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-collaboratif/spoggy-collaboratif.html">
-  <link rel="lazy-import" group="lazy"  href="../spoggy-solo/spoggy-solo.html">
-  <link rel="lazy-import" group="lazy"  href="../spoggy-solo/spoggy-solo-card.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-solo/spoggy-solo.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-solo/spoggy-solo-card.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-global/spoggy-global-card.html">
   <link rel="lazy-import" group="lazy" href="../spoggy-collaboratif/spoggy-collaboratif-card.html">
 
@@ -379,6 +379,8 @@ color:#ffffff !important;
   </br></br></br>
 </div>
 
+<spoggy-holacratie mode={{mode}} hidden$="[[!isEqual(mode,'holacratie')]]">Holacratie</spoggy-holacratie>
+
 <spoggy-solo  mode={{mode}}  hidden$="[[!isEqual(mode,'solo')]]"></spoggy-solo>
 <spoggy-collaboratif
 mode={{mode}}
@@ -397,19 +399,16 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 
 <spoggy-solid
 mode={{mode}}
-hide-endpoints="{{hideEndpoints}}"
 hidden$="[[!isEqual(mode,'solid')]]">SOLID</spoggy-solid>
 
-mode : [[mode]] <br>
-cache hola : [[!isEqual(mode,'holacratie')]]
-<spoggy-holacratie
-mode={{mode}}
-hidden$="[[!isEqual(mode,'holacratie')]]">Holacratie</spoggy-holacratie>
+
 
 
 <spoggy-dialogs></spoggy-dialogs>
 
 <div hidden$="[[isEmpty(mode)]]">
+
+
   <spoggy-sparql></spoggy-sparql>
   <spoggy-presentation></spoggy-presentation>
   <spoggy-endpoints  hidden$="[[!isEqual(mode,'global')]]"></spoggy-endpoints>
@@ -562,6 +561,7 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
     return value == undefined || value.length == 0;
   }
   isEqual(mode, test){
+    console.log(mode, test, mode==test)
     return mode == test;
   }
   hideGraph(hidePseudo, hidRejoindre, hideCreer){

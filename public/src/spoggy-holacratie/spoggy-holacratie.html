@@ -10,7 +10,11 @@
       display: block;
     }
     </style>
-    <h2>.</h2>
+    <div  hidden$="[[!isEqual(mode,'holacratie')]]">
+      <h2>Hello [[prop1]]!</h2>
+      mode : [[mode]]
+      Ce module est en cours de developpement merci de patienter
+    </div>
   </template>
 
   <script>
@@ -22,14 +26,18 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyHolacratie extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.Element)) {
+  class SpoggyHolacratie extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
     static get is() { return 'spoggy-holacratie'; }
     static get properties() {
       return {
         prop1: {
           type: String,
           value: 'spoggy-holacratie'
-        }
+        },
+        mode: {
+          type: String,
+          notify: true
+        },
       };
     }
 
@@ -47,6 +55,10 @@
       });
     }
 
+    isEqual(mode, test){
+      console.log(mode, test, mode==test)
+      return mode == test;
+    }
   }
 
   window.customElements.define(SpoggyHolacratie.is, SpoggyHolacratie);
