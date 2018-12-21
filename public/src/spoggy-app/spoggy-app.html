@@ -16,6 +16,7 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../spoggy-accueil/spoggy-accueil-card.html">
 <link rel="import" href="../spoggy-solid/spoggy-solid-card.html">
+<link rel="import" href="../spoggy-holacratie/spoggy-holacratie-card.html">
 
 <link rel="import"  href="../spoggy-solo/spoggy-solo-card.html">
 <link rel="import" href="../spoggy-global/spoggy-global-card.html">
@@ -62,6 +63,7 @@
   <link rel="lazy-import" group="lazy" href="../spoggy-graph/spoggy-graph-reglages.html">
 
   <link rel="lazy-import" group="lazy" href="../spoggy-solid/spoggy-solid.html">
+  <link rel="lazy-import" group="lazy" href="../spoggy-holacratie/spoggy-holacratie.html">
 
 
   <link rel="lazy-import" group="lazy" href="/bower_components/bottom-nav/bottom-nav.html">
@@ -256,6 +258,7 @@ iron-icon.star:last-of-type { color: var(--paper-grey-500); }
             <a name="collaboratif" id="collaboratif" class="cafe-reserve" on-tap="setmode">Collaboratif </a>
             <a name="global" id="global" class="cafe-reserve" on-tap="setmode">Global</a>
             <a name="solid" id="solid" class="cafe-reserve" on-tap="setmode">Solid</a>
+            <a name="holacratie" id="holacratie" class="cafe-reserve" on-tap="setmode">Holacratie</a>
           </div>
         </iron-collapse-button>
 
@@ -371,6 +374,7 @@ color:#ffffff !important;
       <spoggy-collaboratif-card  mode={{mode}}  language={{language}}></spoggy-collaboratif-card>
       <spoggy-global-card  mode={{mode}}  language={{language}}></spoggy-global-card>
       <spoggy-solid-card  mode={{mode}}  language={{language}}></spoggy-solid-card>
+      <spoggy-holacratie-card  mode={{mode}}  language={{language}}></spoggy-holacratie-card>
     </div>
   </br></br></br>
 </div>
@@ -395,6 +399,13 @@ hidden$="[[!isEqual(mode,'global')]]"></spoggy-global>
 mode={{mode}}
 hide-endpoints="{{hideEndpoints}}"
 hidden$="[[!isEqual(mode,'solid')]]">SOLID</spoggy-solid>
+
+mode : [[mode]] <br>
+cache hola : [[!isEqual(mode,'holacratie')]]
+<spoggy-holacratie
+mode={{mode}}
+hidden$="[[!isEqual(mode,'holacratie')]]">Holacratie</spoggy-holacratie>
+
 
 <spoggy-dialogs></spoggy-dialogs>
 
@@ -603,6 +614,11 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         //  this.hideEndpoints = false;
         // expected output: "Mangoes and papayas are $2.79 a pound."
         break;
+        case 'holacratie':
+        console.log('selection mode holacratie');
+        //  this.hideEndpoints = false;
+        // expected output: "Mangoes and papayas are $2.79 a pound."
+        break;
         default:
         console.log('Sorry, we are out of ' + newMode + '.');
       }
@@ -625,8 +641,8 @@ class SpoggyApp extends Polymer.LazyImportsMixin(Polymer.Element) {
         this.hideEndpoints = true;
         this.endpointName = "";
         break;
-        case 'solid':
-        console.log('quit solid mode');
+        case 'holacratie':
+        console.log('quit holacratie mode');
         //this.hideEndpoints = true;
         //this.endpointName = "";
         break;

@@ -1,0 +1,10 @@
+{
+	"hello": {
+		"message": "Salut le monde!",
+		"description": "Salutations"
+	},
+	"SpoggyDescription": {
+		"message": "Le plugin Holcratie est en cours de developpement",
+		"description": "SpoggyDescription"
+	}
+}

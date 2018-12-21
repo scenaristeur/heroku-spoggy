@@ -1,0 +1,10 @@
+{
+	"hello": {
+		"message": "Hello world!",
+		"description": "Greeting"
+	},
+	"SpoggyDescription": {
+		"message": "We're developping the Holacraty Plugin, please wait ",
+		"description": "SpoggyDescription"
+	}
+}
