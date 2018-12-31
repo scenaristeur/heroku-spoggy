@@ -2160,12 +2160,14 @@ async nodeChanged(node){
         }
         else {
           console.log("RESP")
+          console.log( "TODO : ask/test if replace network")
           console.log(response)
+
           if (response.statements != undefined){
             console.log(response.statements)
 
-            app.network.body.data.nodes.clear();
-            app.network.body.data.edges.clear();
+            //  app.network.body.data.nodes.clear();
+            //  app.network.body.data.edges.clear();
 
 
             response.statements.forEach(function (statement){
@@ -2248,6 +2250,11 @@ async nodeChanged(node){
           }
         });
 
+      }else if (response.nodes != undefined || response.edges != undefined){
+        app.network.body.data.nodes.update(response.nodes)
+        app.network.body.data.edges.update(response.edges)
+      }else{
+        console.log("HOuston We've got a problem : no statements & no node/edges")
       }
 
 
