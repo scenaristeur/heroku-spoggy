@@ -2045,11 +2045,16 @@ parseJson(file){
 
 
 parseTurtle(file){
+  console.log("Parse turtle INUTILE ???")
   var app = this;
   console.log(file)
   var params = {}
   params.source = file.url;
-  this.importFromParam(params)
+  //  this.importFromParam(params)
+
+
+
+
   //  console.log(file.value.content)
   //  ttl2Xml(file.value.content, this.network)
   /* TEST AVEC STORE+SPARQL, mais on a dejà les infos dans file.value.content */
@@ -2111,21 +2116,26 @@ label.textContent =  name.value; // name is a Literal object
 }
 
 localname(node){
+  console.log("LOCALNAME OF ",node)
   var labelU = node.value;
   if (node.termType == "NamedNode"){
-    let uLabel = node.value.split("#");
+    console.log("namenode")
+    var uLabel = node.value.split("#");
     var labelU = uLabel[uLabel.length-1];
-    if (labelU == uri){
+    if (labelU == uLabel){
       uLabel = node.value.split("/");
       labelU = uLabel[uLabel.length-1];
     }
+  }else{
+    console.log("literal or blanknode ???")
   }
-  //  console.log(labelU)
+  console.log(labelU)
   return labelU;
 }
 
 async nodeChanged(node){
   var current = {};
+  var app = this;
   current.url = node.id;
   current.type = node.type;
 
@@ -2151,8 +2161,41 @@ async nodeChanged(node){
         else {
           console.log("RESP")
           console.log(response)
+          console.log(response.statements)
+          response.statements.forEach(function (s){
+            console.log("STATEMENT2VIS", s)
+            var edges = [];
+            console.log("sujet",s.subject)
+            var ls = app.localname(s.subject);
+            console.log(ls)
+            var nodeSujetTemp = {
+              id: s.subject.value,
+              title: s.subject.value,
+              label: ls,
+              type: "node"
+            };
+            console.log(nodeSujetTemp)
 
-          this.agentGraph.send('agentEditor', {type: "fileChanged", file: current});
+            console.log("objet",s.object)
+            var lo = app.localname(s.object);
+            console.log(lo)
+            var nodeObjetTemp = {
+              id:  s.object.value,
+              title: s.object.value,
+              label: lo,
+              type: "node"
+            };
+
+            console.log(nodeObjetTemp)
+            app.addNodeIfNotExist(app.network, nodeSujetTemp)
+            app.addNodeIfNotExist(app.network, nodeObjetTemp)
+            edges.push({from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+            //  app.addEdgeIfNotExist(app.network,{from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+            console.log(edges)
+            app.network.body.data.edges.update(edges)
+          })
+
+          //  this.agentGraph.send('agentEditor', {type: "fileChanged", file: current});
           //  this.agentBrowser.send('agentGraph', {type: 'fileChanged', file: current })
           //  this.agentGraph.send('agentFoldermenu', {type: 'folderChanged', folder: folder });
           //  console.log(graph.statements)
