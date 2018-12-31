@@ -2162,55 +2162,139 @@ async nodeChanged(node){
           console.log("RESP")
           console.log(response)
           console.log(response.statements)
-          response.statements.forEach(function (s){
-            console.log("STATEMENT2VIS", s)
+
+          app.network.body.data.nodes.clear();
+          app.network.body.data.edges.clear();
+
+
+          response.statements.forEach(function (statement){
+            console.log("STATEMENT2VIS", statement)
             var edges = [];
-            console.log("sujet",s.subject)
-            var ls = app.localname(s.subject);
-            console.log(ls)
-            var nodeSujetTemp = {
-              id: s.subject.value,
-              title: s.subject.value,
-              label: ls,
-              type: "node"
-            };
-            console.log(nodeSujetTemp)
+            var s = statement.subject;
+            var p = statement.predicate;
+            var o = statement.object;
+            var w = statement.why;
 
-            console.log("objet",s.object)
-            var lo = app.localname(s.object);
-            console.log(lo)
-            var nodeObjetTemp = {
-              id:  s.object.value,
-              title: s.object.value,
-              label: lo,
-              type: "node"
-            };
+            switch(p.value) {
+              case "http://www.w3.org/2000/01/rdf-schema#label":
+              //  console.log("LABEL")
+              //  console.log(s.value)
+              //  console.log(o.value)
+              var nodeAndLabel = {
+                id: s.value,
+                title: o.value,
+                label: o.value,
+                why: w.value,
+                type: "node"
+              };
+              console.log(nodeAndLabel)
+              app.addNodeIfNotExist(app.network, nodeAndLabel)
+              break;
+              default:
+              console.log("NON LABEL ",p.value);
+              var edges = [];
+              var nodeSujetTemp;
+              if (s.termType != "BlankNode"){
+                var ls = app.localname(s);
+                console.log(ls)
+                nodeSujetTemp = {
+                  id: s.value,
+                  title: s.value,
+                  label: ls,
+                  why: w.value,
+                  type: "node"
+                };
+                console.log(nodeSujetTemp)
+                app.addNodeIfNotExist(app.network, nodeSujetTemp)
+              }/*else{
+                nodeSujetTemp = {
+                id: s.value,
+                type: "node"
+              };
+            }*/
 
-            console.log(nodeObjetTemp)
-            app.addNodeIfNotExist(app.network, nodeSujetTemp)
-            app.addNodeIfNotExist(app.network, nodeObjetTemp)
-            edges.push({from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
-            //  app.addEdgeIfNotExist(app.network,{from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
-            console.log(edges)
-            app.network.body.data.edges.update(edges)
-          })
 
-          //  this.agentGraph.send('agentEditor', {type: "fileChanged", file: current});
-          //  this.agentBrowser.send('agentGraph', {type: 'fileChanged', file: current })
-          //  this.agentGraph.send('agentFoldermenu', {type: 'folderChanged', folder: folder });
-          //  console.log(graph.statements)
-          //  let something = graph.any(someSubject,somePredicate)
-          /*  var contentType = response.headers.get("content-type");
-          console.log(contentType)
-          if(contentType && contentType.indexOf("application/json") !== -1) {
-          return response.json().then(function(json) {
-          // traitement du JSON
-          console.log("C'est du JSON!");
-        });
-      } else {
-      console.log("Oops, nous n'avons pas du JSON!");
-    }*/
-  }
+            console.log("objet",o)
+            if (o.termType != "BlankNode"){
+              var lo = app.localname(o);
+              console.log(lo)
+              var nodeObjetTemp = {
+                id:  o.value,
+                title: o.value,
+                label: lo,
+                why: w.value,
+                type: "node"
+              };
+              console.log(nodeObjetTemp)
+              app.addNodeIfNotExist(app.network, nodeObjetTemp)
+            }
+
+            /*  let pArray = p.split("#");
+            //  console.log(conceptCut);
+            let labelP = pArray[pArray.length-1];
+            if (labelP == p){
+            pArray = p.split("/");
+            //console.log(conceptCut);
+            labelP = pArray[pArray.length-1];
+          }*/
+
+          edges.push({from:s.value, to: o.value, arrows: 'to', label: app.localname(p), uri: p.value});
+          //  app.addEdgeIfNotExist(app.network,{from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+          console.log(edges)
+          app.network.body.data.edges.update(edges)
+        }
+      });
+
+
+
+
+
+      /*console.log("sujet",s.subject)
+      var ls = app.localname(s.subject);
+      console.log(ls)
+      var nodeSujetTemp = {
+      id: s.subject.value,
+      title: s.subject.value,
+      label: ls,
+      type: "node"
+    };
+    console.log(nodeSujetTemp)
+
+    console.log("objet",s.object)
+    var lo = app.localname(s.object);
+    console.log(lo)
+    var nodeObjetTemp = {
+    id:  s.object.value,
+    title: s.object.value,
+    label: lo,
+    type: "node"
+  };
+
+  console.log(nodeObjetTemp)
+  app.addNodeIfNotExist(app.network, nodeSujetTemp)
+  app.addNodeIfNotExist(app.network, nodeObjetTemp)
+  edges.push({from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+  //  app.addEdgeIfNotExist(app.network,{from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+  console.log(edges)
+  app.network.body.data.edges.update(edges)
+})*/
+
+//  this.agentGraph.send('agentEditor', {type: "fileChanged", file: current});
+//  this.agentBrowser.send('agentGraph', {type: 'fileChanged', file: current })
+//  this.agentGraph.send('agentFoldermenu', {type: 'folderChanged', folder: folder });
+//  console.log(graph.statements)
+//  let something = graph.any(someSubject,somePredicate)
+/*  var contentType = response.headers.get("content-type");
+console.log(contentType)
+if(contentType && contentType.indexOf("application/json") !== -1) {
+return response.json().then(function(json) {
+// traitement du JSON
+console.log("C'est du JSON!");
+});
+} else {
+console.log("Oops, nous n'avons pas du JSON!");
+}*/
+}
 })
 }else{
   console.log("node.type inconnu", node)
