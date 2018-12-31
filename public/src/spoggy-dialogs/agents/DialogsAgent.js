@@ -108,9 +108,11 @@ DialogsAgent.prototype.receive = function(from, message) {
 
     case 'share':
     //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
-    //  console.log(message);
+    console.log(message);
     //  this.app.$.popupTtl.toggle();
     //this.app.$.inputTextToSaveJSON.value = message.jsonData;
+    this.app.$.popupShare.toggle();
+    this.app.$.inputShare.value = message.url;
     console.log(message)
     break;
     default:

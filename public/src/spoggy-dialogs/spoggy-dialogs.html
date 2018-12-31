@@ -37,40 +37,40 @@
   <link rel="lazy-import" group="lazy" href="./dialogs-import.html">
   <template>
     <style is="custom-style" include="demo-pages-shared-styles">
-    #operation {
-      font-size:28px;
-    }
-    .popup {
-      position: relative;
-      top: 5vh;
-      left: 1vw;
-      z-index: 10;
-      width: 100vw;
-      background-color: #f9f9f9;
-      border-style:solid;
-      border-width:3px;
-      border-color: #5394ed;
-      padding:1px;
-    }
-    #dial{
-      position: fixed;
-      left: 40%;
-      bottom: 15px;
+      #operation {
+        font-size:28px;
+      }
+      .popup {
+        position: relative;
+        top: 5vh;
+        left: 1vw;
+        z-index: 10;
+        width: 100vw;
+        background-color: #f9f9f9;
+        border-style:solid;
+        border-width:3px;
+        border-color: #5394ed;
+        padding:1px;
+      }
+      #dial{
+        position: fixed;
+        left: 40%;
+        bottom: 15px;
 
-      /*--valle-speed-dial-action-fab-color: #d4f442;*/
-      --valle-speed-dial-backdrop-color: rgba(55, 55, 255, 0.5) ; /* rgba(200, 200, 10, 0.2), */
-    }
-    #dial-action .label {
-      display: inline-block;
-      left: -158px;
+        /*--valle-speed-dial-action-fab-color: #d4f442;*/
+        --valle-speed-dial-backdrop-color: rgba(55, 55, 255, 0.5) ; /* rgba(200, 200, 10, 0.2), */
+      }
+      #dial-action .label {
+        display: inline-block;
+        left: -158px;
 
+      }
     }
-  }
 
-  paper-tabs {
-    background-color: var(--paper-blue-900);
-    color: #fff;
-  }
+    paper-tabs {
+      background-color: var(--paper-blue-900);
+      color: #fff;
+    }
   </style>
   <paper-dialog id="helpPopUp" class="popup">
 
@@ -578,56 +578,70 @@
   label-direction="right"
   ></valle-speed-dial-action>
 </valle-speed-dial> -->
+
+
+<paper-dialog id="popupShare" class="popup" >
+  <h2 style="margin: 0;color: #0D578B;">
+    Copy this url to share your graph : <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
+  </h2>
+  <!--  <paper-input id="inputShare" label="Url"></paper-input>-->
+  <input id="inputShare" type="text" style='width:90%; padding:0' /><br>
+
+  <paper-button raised dialog-dismiss on-tap="copyShare">Copy<paper-button">
+    <!--<paper-button raised dialog-dismiss>Close</paper-button>-->
+  </paper-dialog>
+
+
 </template>
 
 <script>
-/**
-* `spoggy-dialogs`
-*
-*
-* @customElement
-* @polymer
-* @demo demo/index.html
-*/
-class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(DialogsBehaviorMixin(Polymer.Element))) {
-  static get is() { return 'spoggy-dialogs'; }
-  static get properties() {
-    return {
-      prop1: {
-        type: String,
-        value: 'spoggy-dialogs'
-      },
-      selected: {
-        type: Number,
-        value: 0
-      },
-      centralGravity: {
-        type: Number,
-        observer: "_updateCentralGravity"
-      },
-      springLength: {
-        type: Number,
-        observer: "_updateSpringLength"
-      },
-      springConstant: {
-        type: Number,
-        observer: "_updateSpringConstant"
-      },
-      nodeDistance: {
-        type: Number,
-        observer: "_updateNodeDistance"
-      },
-      damping: {
-        type: Number,
-        observer: "_updateDamping"
-      },
-      virtuosoEndpoints:{
-        type: Array,
-        value: [{name: 'dbpedia', url:'http://fr.dbpedia.org', type: 'virtuoso'}, {name:'Persee', url: 'http://data.persee.fr'}]
-      },
-      endpoints:{
-        type: Array,
-        value: [
+  /**
+  * `spoggy-dialogs`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyDialogs extends Polymer.LazyImportsMixin(DialogsModeBehaviorMixin(DialogsBehaviorMixin(Polymer.Element))) {
+    static get is() { return 'spoggy-dialogs'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-dialogs'
+        },
+        selected: {
+          type: Number,
+          value: 0
+        },
+        centralGravity: {
+          type: Number,
+          observer: "_updateCentralGravity"
+        },
+        springLength: {
+          type: Number,
+          observer: "_updateSpringLength"
+        },
+        springConstant: {
+          type: Number,
+          observer: "_updateSpringConstant"
+        },
+        nodeDistance: {
+          type: Number,
+          observer: "_updateNodeDistance"
+        },
+        damping: {
+          type: Number,
+          observer: "_updateDamping"
+        },
+        virtuosoEndpoints:{
+          type: Array,
+          value: [{name: 'dbpedia', url:'http://fr.dbpedia.org', type: 'virtuoso'}, {name:'Persee', url: 'http://data.persee.fr'}]
+        },
+        endpoints:{
+          type: Array,
+          value: [
           {name: 'dbpedia',
           url:'http://fr.dbpedia.org',
           actif: false,
@@ -677,10 +691,6 @@ _deferred(){
     this.dispatchEvent(new CustomEvent('import-loaded', results));
     this.agentDialogs = new DialogsAgent('agentDialogs', this);
     this.initAgents()
-
-
-
-
   });
 }
 

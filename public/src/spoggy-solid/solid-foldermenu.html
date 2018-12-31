@@ -303,7 +303,7 @@
         _share(e){
           var url = "http://spoggy.herokuapp.com/?source="+e.model.item.url;
           console.log(url)
-          this.agentFoldermenu.send('agentDialog', {type: 'share', url: url })
+          this.agentFoldermenu.send('agentDialogs', {type: 'share', url: url })
         }
 
         _browseParent(){
