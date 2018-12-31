@@ -56,10 +56,10 @@ DialogsAgent.prototype.receive = function(from, message) {
     console.log(message.rooms);
     break;
     case 'toggle':
-  //  console.log(message.popup);
+    //  console.log(message.popup);
     let popup = message.popup;
     let pop = this.app.$[popup];
-  //  console.log(pop);
+    //  console.log(pop);
     pop.toggle();
     break;
 
@@ -104,6 +104,14 @@ DialogsAgent.prototype.receive = function(from, message) {
     //this.app.$.inputTextToSaveJSON.value = message.jsonData;
     this.app.$.inputTextToSaveJSON.value =  JSON.stringify(JSON.parse(message.jsonData), undefined, 4);
     this.app.$.inputFileNameToSaveAsJSON.value ="Spoggy-exportJSON_"+Date.now();
+    break;
+
+    case 'share':
+    //  this.app.agentGraph.send('agentDialogs', {type:'exportTtl', ttlData : output});
+    //  console.log(message);
+    //  this.app.$.popupTtl.toggle();
+    //this.app.$.inputTextToSaveJSON.value = message.jsonData;
+    console.log(message)
     break;
     default:
     console.log(message);

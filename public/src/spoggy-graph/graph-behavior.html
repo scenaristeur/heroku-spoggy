@@ -211,12 +211,15 @@ importFromParam(params){
           network.beforeImport = [];
           network.beforeImport.nodes = network.body.data.nodes.get();
           network.beforeImport.edges = network.body.data.edges.get();
-          network.body.data.nodes.update(nodes);
-          network.body.data.edges.update(edges);
+          //  network.body.data.nodes.update(nodes);
+          //  network.body.data.edges.update(edges);
           try{
             console.log("update")
+            console.log(nodes)
             network.body.data.nodes.update(nodes);
             network.body.data.edges.update(edges);
+            console.log(network.body.data.nodes)
+            console.log(network.body.data.edges)
           }
           catch(e){
             console.log("erreur")
@@ -246,13 +249,16 @@ importFromParam(params){
         }
         //  console.log(network);
         //  console.log(partageImport);
+        network.fit();
+        network.redraw();
+        console.log(network.body.data.nodes)
+        console.log(network.body.data.edges)
       });
       reader.readAsText(reponse);
     };
     xhr.send();
   }
-  network.fit();
-  network.redraw();
+
   //  this.agentGraph.send('agentCurrent', {type: "hasParams", params:params});
 }
 
