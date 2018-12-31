@@ -2161,93 +2161,94 @@ async nodeChanged(node){
         else {
           console.log("RESP")
           console.log(response)
-          console.log(response.statements)
+          if (response.statements != undefined){
+            console.log(response.statements)
 
-          app.network.body.data.nodes.clear();
-          app.network.body.data.edges.clear();
+            app.network.body.data.nodes.clear();
+            app.network.body.data.edges.clear();
 
 
-          response.statements.forEach(function (statement){
-            console.log("STATEMENT2VIS", statement)
-            var edges = [];
-            var s = statement.subject;
-            var p = statement.predicate;
-            var o = statement.object;
-            var w = statement.why;
-
-            switch(p.value) {
-              case "http://www.w3.org/2000/01/rdf-schema#label":
-              //  console.log("LABEL")
-              //  console.log(s.value)
-              //  console.log(o.value)
-              var nodeAndLabel = {
-                id: s.value,
-                title: o.value,
-                label: o.value,
-                why: w.value,
-                y:2*Math.random(),
-                type: "node"
-              };
-              console.log(nodeAndLabel)
-              app.addNodeIfNotExist(app.network, nodeAndLabel)
-              break;
-              default:
-              console.log("NON LABEL ",p.value);
+            response.statements.forEach(function (statement){
+              console.log("STATEMENT2VIS", statement)
               var edges = [];
-              var nodeSujetTemp;
-              if (s.termType != "BlankNode"){
-                var ls = app.localname(s);
-                console.log(ls)
-                nodeSujetTemp = {
+              var s = statement.subject;
+              var p = statement.predicate;
+              var o = statement.object;
+              var w = statement.why;
+
+              switch(p.value) {
+                case "http://www.w3.org/2000/01/rdf-schema#label":
+                //  console.log("LABEL")
+                //  console.log(s.value)
+                //  console.log(o.value)
+                var nodeAndLabel = {
                   id: s.value,
-                  title: s.value,
-                  label: ls,
+                  title: o.value,
+                  label: o.value,
                   why: w.value,
                   y:2*Math.random(),
                   type: "node"
                 };
-                console.log(nodeSujetTemp)
-                app.addNodeIfNotExist(app.network, nodeSujetTemp)
-              }/*else{
-                nodeSujetTemp = {
-                id: s.value,
-                type: "node"
-              };
+                console.log(nodeAndLabel)
+                app.addNodeIfNotExist(app.network, nodeAndLabel)
+                break;
+                default:
+                console.log("NON LABEL ",p.value);
+                var edges = [];
+                var nodeSujetTemp;
+                if (s.termType != "BlankNode"){
+                  var ls = app.localname(s);
+                  console.log(ls)
+                  nodeSujetTemp = {
+                    id: s.value,
+                    title: s.value,
+                    label: ls,
+                    why: w.value,
+                    y:2*Math.random(),
+                    type: "node"
+                  };
+                  console.log(nodeSujetTemp)
+                  app.addNodeIfNotExist(app.network, nodeSujetTemp)
+                }/*else{
+                  nodeSujetTemp = {
+                  id: s.value,
+                  type: "node"
+                };
+              }*/
+
+
+              console.log("objet",o)
+              if (o.termType != "BlankNode"){
+                var lo = app.localname(o);
+                console.log(lo)
+                var nodeObjetTemp = {
+                  id:  o.value,
+                  title: o.value,
+                  label: lo,
+                  why: w.value,
+                  type: "node"
+                };
+                console.log(nodeObjetTemp)
+                app.addNodeIfNotExist(app.network, nodeObjetTemp)
+              }
+
+              /*  let pArray = p.split("#");
+              //  console.log(conceptCut);
+              let labelP = pArray[pArray.length-1];
+              if (labelP == p){
+              pArray = p.split("/");
+              //console.log(conceptCut);
+              labelP = pArray[pArray.length-1];
             }*/
 
+            edges.push({from:s.value, to: o.value, arrows: 'to', label: app.localname(p), uri: p.value});
+            //  app.addEdgeIfNotExist(app.network,{from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+            console.log(edges)
+            app.network.body.data.edges.update(edges)
+          }
+        });
 
-            console.log("objet",o)
-            if (o.termType != "BlankNode"){
-              var lo = app.localname(o);
-              console.log(lo)
-              var nodeObjetTemp = {
-                id:  o.value,
-                title: o.value,
-                label: lo,
-                why: w.value,
-                type: "node"
-              };
-              console.log(nodeObjetTemp)
-              app.addNodeIfNotExist(app.network, nodeObjetTemp)
-            }
-
-            /*  let pArray = p.split("#");
-            //  console.log(conceptCut);
-            let labelP = pArray[pArray.length-1];
-            if (labelP == p){
-            pArray = p.split("/");
-            //console.log(conceptCut);
-            labelP = pArray[pArray.length-1];
-          }*/
-
-          edges.push({from:s.value, to: o.value, arrows: 'to', label: app.localname(p), uri: p.value});
-          //  app.addEdgeIfNotExist(app.network,{from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
-          console.log(edges)
-          app.network.body.data.edges.update(edges)
-        }
-      });
-
-
+      }
 
 
 
