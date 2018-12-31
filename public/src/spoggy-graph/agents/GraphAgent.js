@@ -113,10 +113,11 @@ GraphAgent.prototype.receive = function(from, message) {
     case 'folderChanged':
     console.log('folderChanged', message)
     this.app.folder2vis(message.folder)
+    break;
     case 'fileChanged':
-    console.log('fileChanged', message)
+    console.log('fileChanged from ', from, message)
     this.app.fileChanged(message.file)
-
+    break;
     case 'exportJsonSolid':
     console.log('exportJsonSolid')
     this.app.exportJsonSolid();

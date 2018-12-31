@@ -1909,7 +1909,7 @@ folder2vis(sfolder){
 
   if (parent != undefined){
     //  console.log("undef")
-    nodes.push({id: parent, label: parent, type: "folder", shape: "image", image: "./assets/folder.png" });
+    nodes.push({id: parent, label: parent, type: "folder", shape: "image", image: "./assets/parentfolder.png" });
     edges.push({from: url, to: parent, arrows:'to', label: "parent"});
   }
   //  {id: "urlNode"+url, label: url},
@@ -1940,7 +1940,7 @@ folder2vis(sfolder){
     })
   }
   if (sfolder.files && sfolder.files.length > 0){
-    nodes.push({id:'files', label:"File"});
+    //  nodes.push({id:'files', label:"File"});
     sfolder.files.forEach(function(fi){
       //  console.log(fi)
       //  app.file2vis(fi)
@@ -1956,7 +1956,7 @@ folder2vis(sfolder){
     nodes: nodes,
     edges: edges
   };
-  console.log(data)
+  //  console.log(data)
   this.network.body.data.nodes.clear();
   this.network.body.data.edges.clear();
   this.addSolidToGraph(data);
@@ -1965,7 +1965,7 @@ folder2vis(sfolder){
 }
 
 addSolidToGraph(data){
-  console.log(data)
+  //console.log(data)
 
   this.network.body.data.nodes.update(data.nodes)
   this.network.body.data.edges.update(data.edges)
@@ -2146,7 +2146,7 @@ async nodeChanged(node){
           console.log("RESP")
           console.log(response)
 
-          this.agentBrowser.send('agentEditor', {type: "fileChanged", file: current});
+          this.agentGraph.send('agentEditor', {type: "fileChanged", file: current});
           //  this.agentBrowser.send('agentGraph', {type: 'fileChanged', file: current })
           //  this.agentGraph.send('agentFoldermenu', {type: 'folderChanged', folder: folder });
           //  console.log(graph.statements)
