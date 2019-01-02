@@ -1,397 +1,398 @@
 <script>
-  /* @polymerMixin */
-  var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
-    return class DialogsBehavior extends superClass {
-      constructor() {
-        super();
-      }
-
-      static get properties() {
-        return {
-          urls: {
-            type : Array,
-            value: []
-          },
-          initPhase: {
-            type: Boolean,
-            value : true
-          }
-
-        };
-      }
-
-      _openSettings(){
-        this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
-      }
-
-      initOptions(optionsRepulsion){
-        this.initPhase = true;
-        //  console.log(optionsRepulsion)
-        this.set('centralGravity', optionsRepulsion.centralGravity);
-        this.set('springLength', optionsRepulsion.springLength);
-        this.set('springConstant', optionsRepulsion.springConstant);
-        this.set('nodeDistance', optionsRepulsion.nodeDistance);
-        this.set('damping', optionsRepulsion.damping);
-        this.initPhase = false;
-      }
-
-      _defaultPhysicValues(){
-        this.agentDialogs.send('agentGraph', {type: "resetNetworkOptions"} );
-      }
-
-      _updateCentralGravity(v){
-        if (!this.initPhase){
-          this.graphSettings = [];
-          this.set('graphSettings.centralGravity', v);
-          this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-        }
-      }
-      _updateSpringLength(v){
-        if (!this.initPhase){
-          this.graphSettings = [];
-          this.set('graphSettings.springLength',v);
-          this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-        }
-      }
-      _updateSpringConstant(v){
-        if (!this.initPhase){
-          this.graphSettings = [];
-          this.set('graphSettings.springConstant',v);
-          this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-        }
-      }
-      _updateNodeDistance(v){
-        if (!this.initPhase){
-          this.graphSettings = [];
-          this.set('graphSettings.nodeDistance', v);
-          this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-        }
-      }
-      _updateDamping(v){
-        if (!this.initPhase){
-          this.graphSettings = [];
-          this.set('graphSettings.damping', v);
-          this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
-        }
-      }
-
-      handleFileSelected(evt) {
-        var app = this;
-        var partageImport = app.$.partageImport.checked;
-        var remplaceNetwork = app.$.remplaceNetwork.checked;
-        var files = evt.target.files; // FileList object
-        // files is a FileList of File objects. List some properties.
-        var output = [];
-        for (var i = 0; i < files.length; i++) {
-          // Code to execute for every file selected
-          var fichier = files[i];
-          console.log(fichier);
-          this.agentDialogs.send('agentGraph', {type: 'decortiqueFile', fichier: fichier, remplaceNetwork: remplaceNetwork});
-          //    this.decortiqueFile(fichier, this.network, remplaceNetwork);
-        }
-        console.log("fin");
-        // Code to execute after that
-        evt.target.files = null;
-        app.$.importPopUp.toggle();
-        //  app.$.dialogs.$.inputMessage.value = '';
-      }
-
-
-      importFromSolid(){
-        var url = this.$.importUrl.value;
-
-        console.log(url)
-        var params = {};
-        params.source= url;
-        params.remplaceNetwork = this.$.remplaceNetwork.checked;
-        params.partageImport = this.$.partageImport.checked;
-        this.agentDialogs.send('agentGraph', {type: 'importFromParam', params: params});
-        this.agentDialogs.send('agentImport', {type: 'import', params: params});
-      }
-
-
-
-      _toggleSettings(){
-
-        //this.$.settings.hidden= !this.$.settings.hidden;
-        //this.settinghidden = !this.settinghidden;
-        this.$.settings.toggle();
-        //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'settings'})
-        this.$.dial.open=false;
-      }
-
-      _toggleHelp(){
-
-        //this.$.settings.hidden= !this.$.settings.hidden;
-        //this.settinghidden = !this.settinghidden;
-        this.$.helpPopUp.toggle();
-        //    this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
-        this.$.dial.open=false;
-      }
-      _toggleMode(){
-
-        //this.$.settings.hidden= !this.$.settings.hidden;
-        //this.settinghidden = !this.settinghidden;
-        this.$.modePopup.toggle();
-        //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'modePopup'})
-        this.$.dial.open=false;
-      }
-
-
-
-
-      _toggleEye(){
-        console.log(this.$.eye.hidden);
-        //this.$.eye.hidden= !this.$.eye.hidden;
-        //this.eyehidden = !this.eyehidden;
-        this.$.eye.toggle();
-      }
-
-      saveTextAsFileSolid(){
-        var textToWrite="";
-        var fileNameToSaveAs="";
-        var textFileAsBlob="";
-        var extension="ttl";
-        var nomFichier="";
-        var data = this.$.inputTextToSave.value;
-        console.log(data);
-        if((typeof data != "undefined")&& (data.length>0)){
-          textToWrite=data;
-        }else{
-          textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
-        }
-        if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
-          fileNameToSaveAs = nomFichier+"."+extension;
-        }else{
-          fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
-        }
-        if ((typeof extension != "undefined") && (extension.length>0)){
-          switch(extension){
-            case "ttl" :
-            textFileAsBlob = new Blob([textToWrite], {
-              type:
-              'text/turtle'
-            }
-            );
-            break;
-            case "rdf" :
-            //pas implementé pour l'instant
-            textFileAsBlob = new Blob([textToWrite], {
-              type:
-              'application/rdf+xml'
-            }
-            );
-            break;
-            default :
-            console.log("non traite  , extension : "+extension);
-            break;
-          }
-        }
-        console.log(fileNameToSaveAs+" : "+extension);
-        console.log(textFileAsBlob)
-        //  this.agentDialogs.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
-        this.agentDialogs.send('agentEditor', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
-        //this.agentDialogs.send('agentFoldermenu', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
-        this.agentDialogs.send('agentApp', {type: "changeMode", mode: 'solid' })
-      }
-
-      saveTextAsFile(){
-        var textToWrite="";
-        var fileNameToSaveAs="";
-        var textFileAsBlob="";
-        var extension="ttl";
-        var nomFichier="";
-        var data = this.$.inputTextToSave.value;
-        console.log(data);
-        if((typeof data != "undefined")&& (data.length>0)){
-          textToWrite=data;
-        }else{
-          textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
-        }
-        if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
-          fileNameToSaveAs = nomFichier+"."+extension;
-        }else{
-          fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
-        }
-        if ((typeof extension != "undefined") && (extension.length>0)){
-          switch(extension){
-            case "ttl" :
-            textFileAsBlob = new Blob([textToWrite], {
-              type:
-              'text/turtle'
-            }
-            );
-            break;
-            case "rdf" :
-            //pas implementé pour l'instant
-            textFileAsBlob = new Blob([textToWrite], {
-              type:
-              'application/rdf+xml'
-            }
-            );
-            break;
-            default :
-            console.log("non traite  , extension : "+extension);
-            break;
-          }
-        }
-        console.log(fileNameToSaveAs+" : "+extension);
-        var downloadLink = document.createElement("a");
-        downloadLink.download = fileNameToSaveAs;
-        downloadLink.innerHTML = "Download File";
-        //console.log(window.URL);
-        //if (window.URL != null)
-        if(navigator.userAgent.indexOf("Chrome") != -1)
-        {
-          // Chrome allows the link to be clicked
-          // without actually adding it to the DOM.
-          console.log("CHROME");
-          downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        } else
-        {
-          // Firefox requires the link to be added to the DOM
-          // before it can be clicked.
-          console.log("FF");
-          downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-          downloadLink.target="_blank";
-          //downloadLink.onclick = destroyClickedElement;
-          //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
-          downloadLink.style.display = "none";
-          document.body.appendChild(downloadLink);
-          console.log(this.$.popupTtl);
-        }
-        console.log(downloadLink);
-        /*downloadLink.click();*/
-        /* creation d'un event car download.click() ne fonctionne pas sous Firefox */
-        var event = document.createEvent("MouseEvents");
-        event.initMouseEvent(
-        "click", true, false, window, 0, 0, 0, 0, 0
-        , false, false, false, false, 0, null
-        );
-        downloadLink.dispatchEvent(event);
-        var app = this;
-        setTimeout(function(){
-          document.body.removeChild(downloadLink);
-          window.URL.revokeObjectURL(downloadLink);
-        }, 100);
-        console.log(this.$.popupTtl);
-        this.$.popupTtl.toggle();
-      }
-
-
-      saveTextAsFileJSON(){
-        console.log("saveTextAsFileJSON")
-        var textToWrite="";
-        var fileNameToSaveAs="";
-        var textFileAsBlob="";
-        var extension="json";
-        var nomFichier="";
-        var data = this.$.inputTextToSaveJSON.value;
-        console.log(data);
-        if((typeof data != "undefined")&& (data.length>0)){
-          textToWrite=data;
-        }else{
-          textToWrite = this.$.inputFileNameToSaveAsJSON.value;    //textToWrite = document.getElementById("inputTextToSave").value;
-        }
-        if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
-          fileNameToSaveAs = nomFichier+"."+extension;
-        }else{
-          fileNameToSaveAs = this.$.inputFileNameToSaveAsJSON.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
-        }
-
-        textFileAsBlob = new Blob([textToWrite], {
-          type:
-          'application/json'
-        }
-        );
-
-        console.log(fileNameToSaveAs+" : "+extension);
-        var downloadLink = document.createElement("a");
-        downloadLink.download = fileNameToSaveAs;
-        downloadLink.innerHTML = "Download File";
-        //console.log(window.URL);
-        //if (window.URL != null)
-        if(navigator.userAgent.indexOf("Chrome") != -1)
-        {
-          // Chrome allows the link to be clicked
-          // without actually adding it to the DOM.
-          console.log("CHROME");
-          downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        } else
-        {
-          // Firefox requires the link to be added to the DOM
-          // before it can be clicked.
-          console.log("FF");
-          downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-          downloadLink.target="_blank";
-          //downloadLink.onclick = destroyClickedElement;
-          //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
-          downloadLink.style.display = "none";
-          document.body.appendChild(downloadLink);
-          console.log(this.$.popupTtl);
-        }
-        console.log(downloadLink);
-        /*downloadLink.click();*/
-        /* creation d'un event car download.click() ne fonctionne pas sous Firefox */
-        var event = document.createEvent("MouseEvents");
-        event.initMouseEvent(
-        "click", true, false, window, 0, 0, 0, 0, 0
-        , false, false, false, false, 0, null
-        );
-        downloadLink.dispatchEvent(event);
-        var app = this;
-        setTimeout(function(){
-          document.body.removeChild(downloadLink);
-          window.URL.revokeObjectURL(downloadLink);
-        }, 100);
-        console.log(this.$.popupTtl);
-        this.$.popupTtl.toggle();
-      }
-
-      saveTextAsFileSolidJSON(){
-        console.log("saveTextAsFileSolidJSON")
-
-        var textToWrite="";
-        var fileNameToSaveAs="";
-        var textFileAsBlob="";
-        var extension="json";
-        var nomFichier="";
-        var data = this.$.inputTextToSaveJSON.value;
-        console.log(data);
-        if((typeof data != "undefined")&& (data.length>0)){
-          textToWrite=data;
-        }else{
-          textToWrite = this.$.inputTextToSaveJSON.value;    //textToWrite = document.getElementById("inputTextToSave").value;
-        }
-        if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
-          fileNameToSaveAs = nomFichier+"."+extension;
-        }else{
-          fileNameToSaveAs = this.$.inputFileNameToSaveAsJSON.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
-        }
-
-        textFileAsBlob = new Blob([textToWrite], {
-          type:
-          'application/json'
-        }
-        );
-        console.log(fileNameToSaveAs+" : "+extension);
-        console.log(textFileAsBlob)
-        //  this.agentDialogs.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
-        this.agentDialogs.send('agentEditor', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
-        this.agentDialogs.send('agentApp', {type: "changeMode", mode: 'solid' })
-
-        //this.agentDialogs.send('agentFoldermenu', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
-
-      }
-
-      copyShare(){
-        console.log(this.$.inputShare)
-        this.$.inputShare.select();
-        document.execCommand( 'copy' )
-      }
-
-
+/* @polymerMixin */
+var DialogsBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class DialogsBehavior extends superClass {
+    constructor() {
+      super();
     }
-  });
+
+    static get properties() {
+      return {
+        urls: {
+          type : Array,
+          value: []
+        },
+        initPhase: {
+          type: Boolean,
+          value : true
+        }
+
+      };
+    }
+
+    _openSettings(){
+      this.agentDialogs.send('agentGraph', {type: 'askNetworkOptions'});
+    }
+
+    initOptions(optionsRepulsion){
+      this.initPhase = true;
+      //  console.log(optionsRepulsion)
+      this.set('centralGravity', optionsRepulsion.centralGravity);
+      this.set('springLength', optionsRepulsion.springLength);
+      this.set('springConstant', optionsRepulsion.springConstant);
+      this.set('nodeDistance', optionsRepulsion.nodeDistance);
+      this.set('damping', optionsRepulsion.damping);
+      this.initPhase = false;
+    }
+
+    _defaultPhysicValues(){
+      this.agentDialogs.send('agentGraph', {type: "resetNetworkOptions"} );
+    }
+
+    _updateCentralGravity(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.centralGravity', v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateSpringLength(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.springLength',v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateSpringConstant(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.springConstant',v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateNodeDistance(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.nodeDistance', v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+    _updateDamping(v){
+      if (!this.initPhase){
+        this.graphSettings = [];
+        this.set('graphSettings.damping', v);
+        this.agentDialogs.send('agentGraph', {type: "updateNetworkOptions", repulsion: this.graphSettings} );
+      }
+    }
+
+    handleFileSelected(evt) {
+      var app = this;
+      var partageImport = app.$.partageImport.checked;
+      var remplaceNetwork = app.$.remplaceNetwork.checked;
+      var files = evt.target.files; // FileList object
+      // files is a FileList of File objects. List some properties.
+      var output = [];
+      for (var i = 0; i < files.length; i++) {
+        // Code to execute for every file selected
+        var fichier = files[i];
+        console.log(fichier);
+        this.agentDialogs.send('agentGraph', {type: 'decortiqueFile', fichier: fichier, remplaceNetwork: remplaceNetwork});
+        //    this.decortiqueFile(fichier, this.network, remplaceNetwork);
+      }
+      console.log("fin");
+      // Code to execute after that
+      evt.target.files = null;
+      app.$.importPopUp.toggle();
+      //  app.$.dialogs.$.inputMessage.value = '';
+    }
+
+
+    importFromSolid(){
+      var url = this.$.importUrl.value;
+
+      console.log(url)
+      var params = {};
+      params.source= url;
+      params.remplaceNetwork = this.$.remplaceNetwork.checked;
+      params.partageImport = this.$.partageImport.checked;
+      //  this.agentDialogs.send('agentGraph', {type: 'importFromParam', params: params});
+      // TEST NEW IMPORT
+      this.agentDialogs.send('agentImport', {type: 'import', params: params});
+    }
+
+
+
+    _toggleSettings(){
+
+      //this.$.settings.hidden= !this.$.settings.hidden;
+      //this.settinghidden = !this.settinghidden;
+      this.$.settings.toggle();
+      //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'settings'})
+      this.$.dial.open=false;
+    }
+
+    _toggleHelp(){
+
+      //this.$.settings.hidden= !this.$.settings.hidden;
+      //this.settinghidden = !this.settinghidden;
+      this.$.helpPopUp.toggle();
+      //    this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'helpPopUp'})
+      this.$.dial.open=false;
+    }
+    _toggleMode(){
+
+      //this.$.settings.hidden= !this.$.settings.hidden;
+      //this.settinghidden = !this.settinghidden;
+      this.$.modePopup.toggle();
+      //  this.agentGraph.send('agentDialogs', {type:'toggle', popup: 'modePopup'})
+      this.$.dial.open=false;
+    }
+
+
+
+
+    _toggleEye(){
+      console.log(this.$.eye.hidden);
+      //this.$.eye.hidden= !this.$.eye.hidden;
+      //this.eyehidden = !this.eyehidden;
+      this.$.eye.toggle();
+    }
+
+    saveTextAsFileSolid(){
+      var textToWrite="";
+      var fileNameToSaveAs="";
+      var textFileAsBlob="";
+      var extension="ttl";
+      var nomFichier="";
+      var data = this.$.inputTextToSave.value;
+      console.log(data);
+      if((typeof data != "undefined")&& (data.length>0)){
+        textToWrite=data;
+      }else{
+        textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+      }
+      if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+        fileNameToSaveAs = nomFichier+"."+extension;
+      }else{
+        fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+      }
+      if ((typeof extension != "undefined") && (extension.length>0)){
+        switch(extension){
+          case "ttl" :
+          textFileAsBlob = new Blob([textToWrite], {
+            type:
+            'text/turtle'
+          }
+        );
+        break;
+        case "rdf" :
+        //pas implementé pour l'instant
+        textFileAsBlob = new Blob([textToWrite], {
+          type:
+          'application/rdf+xml'
+        }
+      );
+      break;
+      default :
+      console.log("non traite  , extension : "+extension);
+      break;
+    }
+  }
+  console.log(fileNameToSaveAs+" : "+extension);
+  console.log(textFileAsBlob)
+  //  this.agentDialogs.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
+  this.agentDialogs.send('agentEditor', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
+  //this.agentDialogs.send('agentFoldermenu', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
+  this.agentDialogs.send('agentApp', {type: "changeMode", mode: 'solid' })
+}
+
+saveTextAsFile(){
+  var textToWrite="";
+  var fileNameToSaveAs="";
+  var textFileAsBlob="";
+  var extension="ttl";
+  var nomFichier="";
+  var data = this.$.inputTextToSave.value;
+  console.log(data);
+  if((typeof data != "undefined")&& (data.length>0)){
+    textToWrite=data;
+  }else{
+    textToWrite = this.$.inputTextToSave.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+  }
+  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+    fileNameToSaveAs = nomFichier+"."+extension;
+  }else{
+    fileNameToSaveAs = this.$.inputFileNameToSaveAs.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+  }
+  if ((typeof extension != "undefined") && (extension.length>0)){
+    switch(extension){
+      case "ttl" :
+      textFileAsBlob = new Blob([textToWrite], {
+        type:
+        'text/turtle'
+      }
+    );
+    break;
+    case "rdf" :
+    //pas implementé pour l'instant
+    textFileAsBlob = new Blob([textToWrite], {
+      type:
+      'application/rdf+xml'
+    }
+  );
+  break;
+  default :
+  console.log("non traite  , extension : "+extension);
+  break;
+}
+}
+console.log(fileNameToSaveAs+" : "+extension);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+//console.log(window.URL);
+//if (window.URL != null)
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  console.log("FF");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  console.log(this.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 100);
+console.log(this.$.popupTtl);
+this.$.popupTtl.toggle();
+}
+
+
+saveTextAsFileJSON(){
+  console.log("saveTextAsFileJSON")
+  var textToWrite="";
+  var fileNameToSaveAs="";
+  var textFileAsBlob="";
+  var extension="json";
+  var nomFichier="";
+  var data = this.$.inputTextToSaveJSON.value;
+  console.log(data);
+  if((typeof data != "undefined")&& (data.length>0)){
+    textToWrite=data;
+  }else{
+    textToWrite = this.$.inputFileNameToSaveAsJSON.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+  }
+  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+    fileNameToSaveAs = nomFichier+"."+extension;
+  }else{
+    fileNameToSaveAs = this.$.inputFileNameToSaveAsJSON.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+  }
+
+  textFileAsBlob = new Blob([textToWrite], {
+    type:
+    'application/json'
+  }
+);
+
+console.log(fileNameToSaveAs+" : "+extension);
+var downloadLink = document.createElement("a");
+downloadLink.download = fileNameToSaveAs;
+downloadLink.innerHTML = "Download File";
+//console.log(window.URL);
+//if (window.URL != null)
+if(navigator.userAgent.indexOf("Chrome") != -1)
+{
+  // Chrome allows the link to be clicked
+  // without actually adding it to the DOM.
+  console.log("CHROME");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+} else
+{
+  // Firefox requires the link to be added to the DOM
+  // before it can be clicked.
+  console.log("FF");
+  downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+  downloadLink.target="_blank";
+  //downloadLink.onclick = destroyClickedElement;
+  //downloadLink.onclick = window.URL.revokeObjectURL(downloadLink);
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  console.log(this.$.popupTtl);
+}
+console.log(downloadLink);
+/*downloadLink.click();*/
+/* creation d'un event car download.click() ne fonctionne pas sous Firefox */
+var event = document.createEvent("MouseEvents");
+event.initMouseEvent(
+  "click", true, false, window, 0, 0, 0, 0, 0
+  , false, false, false, false, 0, null
+);
+downloadLink.dispatchEvent(event);
+var app = this;
+setTimeout(function(){
+  document.body.removeChild(downloadLink);
+  window.URL.revokeObjectURL(downloadLink);
+}, 100);
+console.log(this.$.popupTtl);
+this.$.popupTtl.toggle();
+}
+
+saveTextAsFileSolidJSON(){
+  console.log("saveTextAsFileSolidJSON")
+
+  var textToWrite="";
+  var fileNameToSaveAs="";
+  var textFileAsBlob="";
+  var extension="json";
+  var nomFichier="";
+  var data = this.$.inputTextToSaveJSON.value;
+  console.log(data);
+  if((typeof data != "undefined")&& (data.length>0)){
+    textToWrite=data;
+  }else{
+    textToWrite = this.$.inputTextToSaveJSON.value;    //textToWrite = document.getElementById("inputTextToSave").value;
+  }
+  if ((typeof nomFichier != "undefined") && (nomFichier.length>0)){
+    fileNameToSaveAs = nomFichier+"."+extension;
+  }else{
+    fileNameToSaveAs = this.$.inputFileNameToSaveAsJSON.value+"."+extension; // fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value+"."+extension;
+  }
+
+  textFileAsBlob = new Blob([textToWrite], {
+    type:
+    'application/json'
+  }
+);
+console.log(fileNameToSaveAs+" : "+extension);
+console.log(textFileAsBlob)
+//  this.agentDialogs.send('agentSolid', {type:'toggle', popup: 'popupSolid'})
+this.agentDialogs.send('agentEditor', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
+this.agentDialogs.send('agentApp', {type: "changeMode", mode: 'solid' })
+
+//this.agentDialogs.send('agentFoldermenu', {type: "saveToSolid", data: textToWrite, blob: textFileAsBlob, name: fileNameToSaveAs })
+
+}
+
+copyShare(){
+  console.log(this.$.inputShare)
+  this.$.inputShare.select();
+  document.execCommand( 'copy' )
+}
+
+
+}
+});
 
 </script>

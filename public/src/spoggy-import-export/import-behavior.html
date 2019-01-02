@@ -18,9 +18,168 @@ var ImportBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     import(params){
       console.log(params)
+      var url = params.source;
+      var extension = url.split('.').pop();
+      console.log(extension)
+      if ((extension == "ttl") || (extension == "json") || (extension == "n3") || (extension == "n3t")) {
+        this.parseUrl(url, params);
+      }
+      else if ((extension == "rdf") || (extension == "owl")) {
+        //  sketch.data2Xml(reader.result); //if srdf
+        //rdf2Xml(reader.result, network, remplaceNetwork);
+        //  network.dispatch('addTriplets', network.triplets);
+        console.log("rdf\n\n")
+      }
+      else {
+        //ttl2Xml(reader.result, network, remplaceNetwork);
+        console.log("DEFAULT INCONNU\n\n")
+        //  data2Xml(reader.result, network);
+      }
+      console.log("fichier lu");
+
     }
 
+    parseUrl(url, params){
+      console.log("PARSE\n\n")
+      var data = {};
+      this.fileclient.fetchAndParse(url).then( response => {
+        if(!response)
+        { console.log(this.fileclient.err);
+          alert("HOuston We've got a problem :",this.fileclient.err)
+        }
+        else {
+          console.log( "Response is :",response)
+          if (response.statements != undefined){
+            console.log(response.statements)
+            data = this.statements2vis(response.statements);
+
+          }else if (response.nodes != undefined || response.edges != undefined){
+            //  app.network.body.data.nodes.update(response.nodes)
+            //  app.network.body.data.edges.update(response.edges)
+            /*var data = JSON.parse(response.value);
+            console.log(data)*/
+            data ={nodes: response.nodes, edges: response.edges}
+          }else{
+            console.log("Houston We've got a problem : no statements & no node/edges")
+          }
+          console.log(data)
+          //  this.agentImport.send('agentGraph', {type: 'decortiqueFile', fichier: data, remplaceNetwork: remplaceNetwork});
+          this.agentImport.send('agentGraph', {type: 'updateGraph', data: data, params: params});
+
+        }
+      });
+    }
+
+    statements2vis(statements){
+      var app = this;
+      var data = {nodes:[], edges:[]};
+      statements.forEach(function (statement){
+        //  console.log("STATEMENT2VIS", statement)
+        var edges = [];
+        var s = statement.subject;
+        var p = statement.predicate;
+        var o = statement.object;
+        var w = statement.why;
+
+        switch(p.value) {
+          case "http://www.w3.org/2000/01/rdf-schema#label":
+          case "http://xmlns.com/foaf/0.1/label":
+          //  console.log("LABEL")
+          //  console.log(s.value)
+          //  console.log(o.value)
+          var nodeAndLabel = {
+            id: s.value,
+            title: o.value,
+            label: o.value,
+            why: w.value,
+            y:2*Math.random(),
+            type: "node"
+          };
+          //  console.log(nodeAndLabel)
+          //app.addNodeIfNotExist(app.network, nodeAndLabel)
+          data.nodes.push(nodeAndLabel)
+          break;
+          default:
+          //  console.log("NON LABEL ",p.value);
+          var edges = [];
+          var nodeSujetTemp;
+          if (s.termType != "BlankNode"){
+            var ls = app.localname(s);
+            //  console.log(ls)
+            nodeSujetTemp = {
+              id: s.value,
+              title: s.value,
+              label: ls,
+              why: w.value,
+              y:2*Math.random(),
+              type: "node"
+            };
+            //    console.log(nodeSujetTemp)
+            //app.addNodeIfNotExist(app.network, nodeSujetTemp)
+            data.edges.push(nodeSujetTemp)
+          }/*else{
+            nodeSujetTemp = {
+            id: s.value,
+            type: "node"
+          };
+        }*/
+
+
+        //  console.log("objet",o)
+        if (o.termType != "BlankNode"){
+          var lo = app.localname(o);
+          //  console.log(lo)
+          var nodeObjetTemp = {
+            id:  o.value,
+            title: o.value,
+            label: lo,
+            why: w.value,
+            type: "node"
+          };
+          //  console.log(nodeObjetTemp)
+          //app.addNodeIfNotExist(app.network, nodeObjetTemp)
+          data.edges.push(nodeObjetTemp)
+        }
+
+        /*  let pArray = p.split("#");
+        //  console.log(conceptCut);
+        let labelP = pArray[pArray.length-1];
+        if (labelP == p){
+        pArray = p.split("/");
+        //console.log(conceptCut);
+        labelP = pArray[pArray.length-1];
+      }*/
+
+      data.edges.push({from:s.value, to: o.value, arrows: 'to', label: app.localname(p), uri: p.value});
+      //  app.addEdgeIfNotExist(app.network,{from:s.subject.value, to: s.object.value, arrows: 'to', label:s.predicate.value});
+
+      //app.network.body.data.edges.update(edges)
+    }
+  });
+  //  console.log(data)
+  return data;
+}
+
+localname(node){
+  //  console.log("LOCALNAME OF ",node)
+  var labelU = node.value;
+  if (node.termType == "NamedNode"){
+    //  console.log("namenode")
+    var uLabel = node.value.split("#");
+    var labelU = uLabel[uLabel.length-1];
+    if (labelU == uLabel){
+      uLabel = node.value.split("/");
+      labelU = uLabel[uLabel.length-1];
+    }
+  }else{
+    //  console.log("literal or blanknode ???")
   }
+  //  console.log(labelU)
+  return labelU;
+}
+
+}
+
 });
 
 </script>

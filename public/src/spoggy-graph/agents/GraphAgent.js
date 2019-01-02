@@ -64,6 +64,10 @@ GraphAgent.prototype.receive = function(from, message) {
     console.log(message.data)
     this.app.addToGraph(message.data);
     break;
+    case 'updateGraph':
+    console.log(message)
+    this.app.updateGraph(message);
+    break;
     case 'populateVis':
     console.log(message.data)
     this.app.populateVis(message.data);
