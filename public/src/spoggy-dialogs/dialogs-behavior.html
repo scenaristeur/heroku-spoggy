@@ -106,6 +106,7 @@
         params.remplaceNetwork = this.$.remplaceNetwork.checked;
         params.partageImport = this.$.partageImport.checked;
         this.agentDialogs.send('agentGraph', {type: 'importFromParam', params: params});
+        this.agentDialogs.send('agentImport', {type: 'import', params: params});
       }
 
 

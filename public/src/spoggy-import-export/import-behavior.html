@@ -1,0 +1,26 @@
+<script>
+/* @polymerMixin */
+var ImportBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+  return class ImportBehavior extends superClass {
+    constructor() {
+      super();
+      console.log(this.test)
+    }
+
+    static get properties() {
+      return {
+        test: {
+          type : String,
+          value: "IMPORT READY"
+        }
+      };
+    }
+
+    import(params){
+      console.log(params)
+    }
+
+  }
+});
+
+</script>

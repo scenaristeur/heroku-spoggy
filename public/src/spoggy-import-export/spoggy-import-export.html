@@ -1,36 +1,62 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./import-behavior.html">
+<link rel="import" href="./export-behavior.html">
+
+<link rel="import" href="./ie-import.html">
 
 <dom-module id="spoggy-import-export">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+    }
     </style>
     <h2>Hello [[prop1]]!</h2>
   </template>
 
   <script>
-    /**
-     * `spoggy-import-export`
-     * 
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class SpoggyImportExport extends Polymer.Element {
-      static get is() { return 'spoggy-import-export'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'spoggy-import-export'
-          }
-        };
-      }
+  /**
+  * `spoggy-import-export`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SpoggyImportExport extends Polymer.LazyImportsMixin(ExportBehaviorMixin(ImportBehaviorMixin(Polymer.Element))) {
+    static get is() { return 'spoggy-import-export'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'spoggy-import-export'
+        }
+      };
+    }
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+      });
     }
 
-    window.customElements.define(SpoggyImportExport.is, SpoggyImportExport);
+    _deferred(){
+      let app = this;
+      this.agentImport = new ImportAgent('agentImport', this);
+      console.log(this.agentImport);
+      this.agentExport = new ExportAgent('agentExport', this);
+      console.log(this.agentExport);
+
+      this.importLazyGroup('lazy').then((results) => {
+        console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+      });
+    }
+  }
+
+  window.customElements.define(SpoggyImportExport.is, SpoggyImportExport);
   </script>
 </dom-module>

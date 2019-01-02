@@ -1,0 +1,22 @@
+<script>
+  /* @polymerMixin */
+  var ExportBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+    return class ExportBehavior extends superClass {
+      constructor() {
+        super();
+        console.log(this.test)
+      }
+
+      static get properties() {
+        return {
+          test: {
+            type : String,
+            value: "EXPORT READY"
+          }
+        };
+      }
+
+    }
+  });
+
+</script>
