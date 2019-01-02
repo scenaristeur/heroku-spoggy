@@ -1,0 +1,55 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="solid-websocket">
+
+  <script>
+  /**
+  * `solid-websocket`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class SolidWebsocket extends Polymer.Element {
+    static get is() { return 'solid-websocket'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'solid-websocket'
+        }
+      };
+    }
+    constructor(){
+      super();
+      console.log("\n\n\n\n\n\n\nWEBSOCKET\n\n\n\n\n\n\n")
+      var socket = new WebSocket('wss://smag0.solid.community/');
+      console.log("WEBSOCKET", socket)
+      socket.onopen = function() {
+        this.send('sub https://smag0.solid.community/public');
+        this.send('sub https://smag0.solid.community/public/index.ttl');
+        this.send('sub https://smag0.solid.community/public/test.ttl');
+        console.log(socket)
+      };
+      socket.onmessage = function(msg) {
+        console.log("msg",msg)
+        console.log(msg.data)
+        if (msg.data && msg.data.slice(0, 3) === 'pub') {
+          // resource updated, refetch resource
+
+        }
+      };
+      socket.onerror = function(e){
+        console.log("error",e)
+      }
+      socket.onclose = function(){
+        console.log("close")
+      }
+
+    }
+  }
+
+  window.customElements.define(SolidWebsocket.is, SolidWebsocket);
+</script>
+</dom-module>
