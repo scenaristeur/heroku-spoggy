@@ -17,26 +17,75 @@ var ImportBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     import(params){
+      var app = this;
       console.log(params)
-      var url = params.source;
-      var extension = url.split('.').pop();
-      console.log(extension)
-      if ((extension == "ttl") || (extension == "json") || (extension == "n3") || (extension == "n3t")) {
-        this.parseUrl(url, params);
-      }
-      else if ((extension == "rdf") || (extension == "owl")) {
-        //  sketch.data2Xml(reader.result); //if srdf
-        //rdf2Xml(reader.result, network, remplaceNetwork);
-        //  network.dispatch('addTriplets', network.triplets);
-        console.log("rdf\n\n")
-      }
-      else {
-        //ttl2Xml(reader.result, network, remplaceNetwork);
-        console.log("DEFAULT INCONNU\n\n")
-        //  data2Xml(reader.result, network);
-      }
-      console.log("fichier lu");
+      if (params.source != undefined){
+        var url = params.source;
+        var extension = url.split('.').pop();
+        console.log(extension)
+        if ((extension == "ttl") || (extension == "json") || (extension == "n3") || (extension == "n3t")) {
+          this.parseUrl(url, params);
+        }
+        else if ((extension == "rdf") || (extension == "owl")) {
+          //  sketch.data2Xml(reader.result); //if srdf
+          //rdf2Xml(reader.result, network, remplaceNetwork);
+          //  network.dispatch('addTriplets', network.triplets);
+          console.log("rdf\n\n")
+        }
+        else {
+          //ttl2Xml(reader.result, network, remplaceNetwork);
+          console.log("DEFAULT INCONNU\n\n")
+          //  data2Xml(reader.result, network);
+        }
+        console.log("fichier lu");
+      }else   if (params.files != undefined){
+        var data = {};
+        for (var i = 0; i < params.files.length; i++) {
+          // Code to execute for every file selected
+          var fichier = params.files[i];
+          console.log(fichier);
+          var extension = fichier.name.split('.').pop();
+          console.log(extension)
 
+          var reader = new FileReader(); //https://openclassrooms.com/courses/dynamisez-vos-sites-web-avec-javascript/l-api-file
+          reader.addEventListener('load', function () {
+            var result = reader.result;
+            console.log(typeof result, result);
+            if ((extension == "ttl")  || (extension == "n3") || (extension == "n3t") || (extension == "owl")) {
+
+              let base = 'https://www.wikidata.org/wiki/Special:EntityData/Q2005.ttl'
+              let mimeType = 'text/turtle'
+              let store = $rdf.graph()
+              $rdf.parse(result, store,base, mimeType)
+              console.log("STORE",store)
+              console.log()
+
+              data = app.statements2vis(store.statements);
+              app.agentImport.send('agentGraph', {type: 'updateGraph', data: data, params: params});
+              console.log("OK")
+            }
+
+            else if ((extension == "json") ) {
+              //  sketch.data2Xml(reader.result); //if srdf
+              //rdf2Xml(reader.result, network, remplaceNetwork);
+              //  network.dispatch('addTriplets', network.triplets);
+              var res = JSON.parse(result)
+              var nodes = res.nodes;
+              var edges = res.edges;
+              data ={nodes: nodes, edges: edges}
+              console.log(data)
+              app.agentImport.send('agentGraph', {type: 'updateGraph', data: data, params: params});
+              console.log("JSON\n\n")
+            }
+
+
+          });
+
+          reader.readAsText(fichier);
+
+        }
+
+      }
     }
 
     parseUrl(url, params){
@@ -73,7 +122,10 @@ var ImportBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     statements2vis(statements){
       var app = this;
       var data = {nodes:[], edges:[]};
+      //  var i = 0;
       statements.forEach(function (statement){
+        //  i++;
+        //  app.agentImport.send('agentApp', {type: 'message', data: statements.length-i});
         //  console.log("STATEMENT2VIS", statement)
         var edges = [];
         var s = statement.subject;
@@ -116,7 +168,7 @@ var ImportBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             };
             //    console.log(nodeSujetTemp)
             //app.addNodeIfNotExist(app.network, nodeSujetTemp)
-            data.edges.push(nodeSujetTemp)
+            data.nodes.push(nodeSujetTemp)
           }/*else{
             nodeSujetTemp = {
             id: s.value,

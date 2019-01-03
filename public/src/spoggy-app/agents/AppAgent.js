@@ -56,7 +56,7 @@ AppAgent.prototype.receive = function(from, message) {
     this.app.closeDrawer();
     break;
     case 'changeMode':
-      console.log(message)
+    console.log(message)
     this.app.changeMode(message.mode);
     break;
     case 'setMode':
@@ -72,6 +72,10 @@ AppAgent.prototype.receive = function(from, message) {
     case 'setEndpoint' :
 
     this.app.endpointName = message.value.name;
+    break;
+    case 'message' :
+    console.log(message)
+    this.app.message = message.data;
     break;
     /*  case 'show':
     //    this.agentRecherche.send('agentEndpoints', {type: 'show', element: 'endpointsList' });

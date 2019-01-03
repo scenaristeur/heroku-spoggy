@@ -1,0 +1,40 @@
+[ {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Application",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Project"
+  } ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#David",
+  "@type" : [ "http://www.w3.org/2002/07/owl#NamedIndividual", "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Man" ],
+  "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#developperOf" : [ {
+    "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Spoggy"
+  } ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Man",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Person"
+  } ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Person",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Project",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Spoggy",
+  "@type" : [ "http://www.w3.org/2002/07/owl#NamedIndividual", "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#Application" ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#developpedBy",
+  "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
+  "http://www.w3.org/2002/07/owl#inverseOf" : [ {
+    "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#developperOf"
+  } ]
+}, {
+  "@id" : "http://www.semanticweb.org/dfaveris/ontologies/2019/0/untitled-ontology-8#developperOf",
+  "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ]
+} ]
