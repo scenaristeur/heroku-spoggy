@@ -1,6 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
+<link rel="import" href="./holacratie-liste.html">
+<link rel="import" href="./holacratie-ajouter.html">
+<link rel="import" href="./holacratie-modifier.html">
+<link rel="import" href="./holacratie-effacer.html">
+<link rel="import" href="./holacratie-detail.html">
 
 <dom-module id="holacratie-associe">
   <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
@@ -16,6 +21,11 @@
       <h2>Hello [[prop1]]!</h2>
       mode : [[mode]]
       Ce module est en cours de developpement merci de patienter
+      <holacratie-liste type="associe">Liste</holacratie-liste>
+      <holacratie-ajouter type="associe">Ajouter</holacratie-ajouter>
+      <holacratie-modifier type="associe">Modifier</holacratie-modifier>
+      <holacratie-effacer type="associe">Effacer</holacratie-effacer>
+      <holacratie-detail type="associe">Detail</holacratie-detail>
     </div>
   </template>
 
@@ -54,7 +64,7 @@
       this.importLazyGroup('lazy').then((results) => {
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
-      //  this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
+        //  this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
       });
     }
 
