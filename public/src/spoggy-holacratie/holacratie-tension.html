@@ -1,14 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
-<link rel="import" href="./holacratie-associe.html">
-<link rel="import" href="./holacratie-role.html">
-<link rel="import" href="./holacratie-tension.html">
-<link rel="import" href="./holacratie-cercle.html">
-<link rel="import" href="./holacratie-organisation.html">
 
-<dom-module id="spoggy-holacratie">
-  <link rel="lazy-import" group="lazy" href="./holacratie-import.html">
+<dom-module id="holacratie-tension">
+  <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
+
+  <link rel="import" href="../../bower_components/paper-input/paper-input.html">
   <template>
     <style>
     :host {
@@ -20,13 +17,6 @@
       mode : [[mode]]
       Ce module est en cours de developpement merci de patienter
     </div>
-    <holacratie-associe mode="[[mode]]">Associe</holacratie-associe>
-    <holacratie-role mode="[[mode]]">Role</holacratie-role>
-    <holacratie-organisation mode="[[mode]]">Organisation</holacratie-organisation>
-    <holacratie-tension mode="[[mode]]">Tension</holacratie-tension>
-    <holacratie-cercle mode="[[mode]]">Cercle</holacratie-cercle>
-
-
   </template>
 
   <script>
@@ -38,13 +28,13 @@
   * @polymer
   * @demo demo/index.html
   */
-  class SpoggyHolacratie extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'spoggy-holacratie'; }
+  class HolacratieTension extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'holacratie-tension'; }
     static get properties() {
       return {
         prop1: {
           type: String,
-          value: 'spoggy-holacratie'
+          value: 'holacratie-tension'
         },
         mode: {
           type: String,
@@ -57,13 +47,14 @@
       super();
       Polymer.RenderStatus.afterNextRender(this, function() {
         this._deferred();
+        console.log("LOADED : ",this.prop1)
       });
     }
     _deferred(){
       this.importLazyGroup('lazy').then((results) => {
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
-        this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
+        /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
       });
     }
 
@@ -73,6 +64,6 @@
     }
   }
 
-  window.customElements.define(SpoggyHolacratie.is, SpoggyHolacratie);
+  window.customElements.define(HolacratieTension.is, HolacratieTension);
   </script>
 </dom-module>
