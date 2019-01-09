@@ -5,6 +5,7 @@
 
 
 <dom-module id="spoggy-holacratie">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
   <link rel="lazy-import" group="lazy" href="./holacratie-import.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="./holacratie-associe.html">
@@ -12,6 +13,7 @@
   <link rel="lazy-import" group="lazy" href="./holacratie-tension.html">
   <link rel="lazy-import" group="lazy" href="./holacratie-cercle.html">
   <link rel="lazy-import" group="lazy" href="./holacratie-organisation.html">
+
   <template>
     <style>
     :host {
@@ -26,6 +28,15 @@
       <paper-input id="holarootInput" label="schema Root" value={{holaroot::change}}></paper-input>
       <paper-button raised on-tap="_loadSchema">TEST</paper-button>
     </div>
+    <br>
+    one<br>
+    [[defs.length]]
+    two<br>
+    <template is="dom-repeat" items="[[defs]]">
+      -- [[item.object.value]]
+    </template>
+    tri<br>
+
     <holacratie-tension mode="[[mode]]" holaroot="[[holaroot]]">Tension</holacratie-tension>
 
     <holacratie-associe mode="[[mode]]"  holaroot="[[holaroot]]">Associe</holacratie-associe>
@@ -60,6 +71,10 @@
         },
         holaroot: {
           type: String
+        },
+        defs: {
+          type: Array,
+          value: [{object:{value:"re"}}, {object:{value:"ro"}}]
         }
       };
     }
@@ -87,5 +102,5 @@
   }
 
   window.customElements.define(SpoggyHolacratie.is, SpoggyHolacratie);
-  </script>
+</script>
 </dom-module>

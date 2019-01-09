@@ -14,6 +14,7 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
     }
 
     _loadSchema(){
+      var app = this;
       console.log(this.type)
       console.log(this.holaroot)
       var url = this.holaroot;
@@ -22,6 +23,17 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log($rdf)
       this.fileclient = new SolidFileClient();
       console.log("FileClient ok",this.fileclient)
+
+      var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+      var FOAF =  $rdf.Namespace("http://xmlns.com/foaf/0.1/");
+      var SPACE =  $rdf.Namespace("http://www.w3.org/ns/pim/space#");
+      var ACL =  $rdf.Namespace("http://www.w3.org/ns/auth/acl#");
+      var LDP =  $rdf.Namespace("http://www.w3.org/ns/ldp#>");
+      var STAT =  $rdf.Namespace('http://www.w3.org/ns/posix/stat#');
+      var RDFS =  $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
+      var store = $rdf.graph();
+      var fetcher = new $rdf.Fetcher(store);
+
       this.fileclient.readFolder( urlSchema ).then( folder => {
         if(!folder) console.log(this.fileclient.err)
         else console.log(
@@ -29,20 +41,78 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           this.folder = folder;
           folder.files.forEach(function (file){
             console.log("parsing stockage et verification de l'existance des Folders de ", file.name)
-          })
+
+            fetcher.load(file.url).then(response => {
+              console.log("loaded :",file.url)
+            }, rejected =>{
+              console.log(rejected)
+            }
+          ).then(
+            ok =>{
+              //  console.log(response.responseText)
+              console.log(store.statements)
+              /*const defs = store.any(null, RDFS('isDefinedBy'), null);
+              console.log(defs)*/
+              const defs = store.match(null, RDFS('isDefinedBy'), null);
+              console.log("DEFS ",defs)
+              return defs
+            },
+            err=>{console.log("err :",err)}
+          ).then(defs =>{
+            console.log("DEFS : ", defs)
+            var props = [];
+            defs.forEach(function(d){
+              var def = d.object.value;
+
+              console.log(def)
+              var propsTemp = store.match($rdf.sym(def), null, null);
+              console.log("propsTemp ",propsTemp)
+              props.push(propsTemp)
+
+
+            })
+            console.log("props ",props)
+            //return props
+
+            var res = {defs: defs, props: props}
+            console.log("res ",res)
+            return res;
+          },
+          err => {console.log("ERR :", err)}
+        )
+        .then(
+          result => {
+            console.log("RESULT : ", result)
+            return result;
+          },
+          pasResult =>{
+            console.log("ERREUR : ",pasResult)
+          }).then(
+            final => {
+              console.log("ok")
+              console.log(final)
+              app.push("defs", final.defs)
+              app.push("props", final.props)
+
+            },
+            err =>{console.log("BAD ERR :",err)}
+          )
+
 
         })
-      }
-      _creer(){
-        console.log(this.type)
-        console.log(this.holaroot)
-      }
-      _showdetail(){
-        console.log(this.type)
-        console.log(this.holaroot)
-      }
 
-
+      })
     }
-  });
+    _creer(){
+      console.log(this.type)
+      console.log(this.holaroot)
+    }
+    _showdetail(){
+      console.log(this.type)
+      console.log(this.holaroot)
+    }
+
+
+  }
+});
 </script>
