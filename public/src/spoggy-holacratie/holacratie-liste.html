@@ -1,71 +1,186 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
 
 <dom-module id="holacratie-liste">
   <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
 
-  <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-  <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
-    <div  hidden$="[[!isEqual(mode,'holacratie')]]">
-      [[prop1]] [[type]]
-    </div>
-  </template>
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/color.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-styles/typography.html">
 
-  <script>
-  /**
-  * `spoggy-holacratie`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class HolacratieListe extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'holacratie-liste'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'holacratie-liste'
-        },
-        mode: {
-          type: String,
-          notify: true
-        },
-        type: {
-          type: String,
-          notify: true
-        },
+  <link rel="lazy-import" group="lazy" href="../shared-styles.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse/iron-collapse.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/iron-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/communication-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/social-icons.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
+
+  <link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
+  <template>
+    <style include="shared-styles">
+    /* STYLES A NETTOYER car récupéré tel quel DE SPOGGY-ENDPOINT */
+    /*:host {
+    display: block;
+
+    padding: 10px;
+    }*/
+    #endpointsList {
+      display: none;
+    }
+    .flex-wrap {
+      @apply --layout-horizontal;
+      @apply --layout-wrap;
+      /*  @apply --layout-fit;*/
+      @apply --layout-center-justified;
+
+    }
+
+    .vertical-section-container {
+      max-width: 400px;
+    }
+    paper-card {
+      max-width: 450px;
+      margin: 10px;
+      --paper-card-header-image: {
+        width: 50%;
       };
     }
+    .horizontal {
+      @apply --layout-horizontal;
+    }
+    .flex {
+      @apply --layout-flex;
+    }
+    .justified {
+      @apply --layout-justified;
+    }
+    .amber {
+      background: var(--paper-amber-900);
+    }
+    .lime {
+      background: var(--paper-lime-500);
+    }
+    .cyan {
+      background: var(--paper-cyan-500);
+    }
+    .dark {
+      background: var(--paper-blue-grey-500);
+    }
+    paper-card.dark, paper-card.amber, paper-card.lime, paper-card.cyan {
+      color: white;
+      --paper-card-header-color: white;
+    }
+    paper-checkbox {
+      display: block;
+      margin-bottom: 4px;
+      --paper-checkbox-label-color: green;
+      --paper-checkbox-unchecked-color: red;
+    }
+    paper-icon-button {
+      color: var(--paper-grey-600);
+    }
+    paper-icon-button.white {
+      color: white !important;
+    }
 
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this._deferred();
-        console.log("LOADED : ",this.prop1)
-      });
-    }
-    _deferred(){
-      this.importLazyGroup('lazy').then((results) => {
-        console.log(results);
-        this.dispatchEvent(new CustomEvent('import-loaded', results));
-        /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
-      });
-    }
 
-    isEqual(mode, test){
-      console.log(mode, test, mode==test)
-      return mode == test;
-    }
+  }
+  </style>
+  <style is="custom-style">
+  .cafe-header { @apply --paper-font-headline; }
+  .cafe-light { color: var(--paper-grey-600); }
+  .cafe-location {
+    float: right;
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  .cafe-reserve { color: var(--google-blue-500); }
+  iron-icon.star {
+    --iron-icon-width: 16px;
+    --iron-icon-height: 16px;
+    color: var(--paper-amber-500);
+  }
+  iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+  </style>
+  <div  hidden$="[[!isEqual(mode,'holacratie')]]">
+    [[prop1]] [[type]]
+  </div>
+
+  <paper-button raised on-tap="_loadSchema">TEST</paper-button>
+  schemaroot="[[schemaroot]]"
+  <br>
+  <paper-card  hidden$="[[hideRejoindre]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+    <div class="card-content">
+      <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Choisissez un(e) [[type]] :  </h2>
+      </div>
+      <paper-item  hidden$="[[!isEqual(rooms.length,0)]]" style="height:100px;" > Chargement de la liste des [[type]]s</paper-item>
+      <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(rooms.length,0)]]" >
+        <template is="dom-repeat" items="[[rooms]]">
+          <paper-item room="[[item.name]]" on-tap="_showdetail">[[item.name]] ([[item.count]])</paper-item>
+        </template>
+      </paper-listbox>
+    </div>
+  </paper-card>
+
+</template>
+
+<script>
+/**
+* `spoggy-holacratie`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class HolacratieListe extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'holacratie-liste'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'holacratie-liste'
+      },
+      mode: {
+        type: String,
+        notify: true
+      },
+      type: {
+        type: String,
+        notify: true
+      },
+    };
   }
 
-  window.customElements.define(HolacratieListe.is, HolacratieListe);
-  </script>
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+      console.log("LOADED : ",this.prop1)
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
+    });
+  }
+
+  isEqual(mode, test){
+    console.log(mode, test, mode==test)
+    return mode == test;
+  }
+}
+
+window.customElements.define(HolacratieListe.is, HolacratieListe);
+</script>
 </dom-module>

@@ -1,14 +1,17 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
-<link rel="import" href="./holacratie-associe.html">
-<link rel="import" href="./holacratie-role.html">
-<link rel="import" href="./holacratie-tension.html">
-<link rel="import" href="./holacratie-cercle.html">
-<link rel="import" href="./holacratie-organisation.html">
+
 
 <dom-module id="spoggy-holacratie">
   <link rel="lazy-import" group="lazy" href="./holacratie-import.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="./holacratie-associe.html">
+  <link rel="lazy-import" group="lazy" href="./holacratie-role.html">
+  <link rel="lazy-import" group="lazy" href="./holacratie-tension.html">
+  <link rel="lazy-import" group="lazy" href="./holacratie-cercle.html">
+  <link rel="lazy-import" group="lazy" href="./holacratie-organisation.html">
   <template>
     <style>
     :host {
@@ -17,14 +20,18 @@
     </style>
     <div  hidden$="[[!isEqual(mode,'holacratie')]]">
       <h2>Hello [[prop1]]!</h2>
-      mode : [[mode]]
+      mode : [[mode]]<br>
+      schemaroot : [[schemaroot]]<br>
       Ce module est en cours de developpement merci de patienter
+      <paper-input id="schemarootInput" label="schema Root" value={{schemaroot::change}}></paper-input>
     </div>
-    <holacratie-associe mode="[[mode]]">Associe</holacratie-associe>
-    <holacratie-role mode="[[mode]]">Role</holacratie-role>
-    <holacratie-organisation mode="[[mode]]">Organisation</holacratie-organisation>
-    <holacratie-tension mode="[[mode]]">Tension</holacratie-tension>
-    <holacratie-cercle mode="[[mode]]">Cercle</holacratie-cercle>
+    <holacratie-tension mode="[[mode]]" schemaroot="[[schemaroot]]">Tension</holacratie-tension>
+
+    <holacratie-associe mode="[[mode]]"  schemaroot="[[schemaroot]]">Associe</holacratie-associe>
+    <holacratie-role mode="[[mode]]"  schemaroot="[[schemaroot]]">Role</holacratie-role>
+    <holacratie-organisation mode="[[mode]]"  schemaroot="[[schemaroot]]">Organisation</holacratie-organisation>
+
+    <holacratie-cercle mode="[[mode]]"  schemaroot="[[schemaroot]]">Cercle</holacratie-cercle>
 
 
   </template>
@@ -50,6 +57,9 @@
           type: String,
           notify: true
         },
+        schemaroot: {
+          type: String
+        }
       };
     }
 
@@ -64,6 +74,8 @@
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
+
+        this.set("schemaroot","http://localhost:8443/public/holacratie/");
       });
     }
 

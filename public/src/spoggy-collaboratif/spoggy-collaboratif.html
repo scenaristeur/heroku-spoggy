@@ -6,9 +6,9 @@
 
 <script src="agents/CollaboratifAgent.js"></script>
 
-
+<!--
 <link rel="import" href="../../bower_components/paper-styles/color.html">
-<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">-->
 
 <link rel="import" href="../shared-styles.html">
 
@@ -24,6 +24,7 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-icons/social-icons.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
@@ -128,7 +129,7 @@
       <paper-input label="Entrez un pseudo" id="pseudoInput" value={{pseudo}}></paper-input>
     </div>
     <div class="horizontal justified">
-        <paper-button class="cafe-reserve" on-tap="pseudoChanged">Enregistrer</paper-button>
+      <paper-button class="cafe-reserve" on-tap="pseudoChanged">Enregistrer</paper-button>
     </div>
   </paper-card>
 
@@ -227,7 +228,7 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
   }
   initAgents(){
     this.agentCollaboratif.send('agentHello', 'Hello agentHello!');
-  this.hidePseudo = true;
+    this.hidePseudo = true;
   }
 
   isEmpty(value){
@@ -245,25 +246,25 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
     // test a faire pour voir si deconnecter ou changer de nom si deja connecté
     this.pseudo = this.$.pseudoInput.value;
     console.log('changePseu',this.pseudo)
-  this.hidePseudo = true;
+    this.hidePseudo = true;
     if (this.pseudo.length == 0 || this.pseudo == undefined){
-    //  this.$.pseudoPopup.toggle();
+      //  this.$.pseudoPopup.toggle();
       console.log(this.pseudo)
-    this.hidePseudo = false;
-  }else{
+      this.hidePseudo = false;
+    }else{
       console.log(this.pseudo)
-    this.agentCollaboratif.send('agentSocket', {type: "adduser", pseudo: this.pseudo, room: this.room});
-    this.agentCollaboratif.send('agentChat', {type: "changePseudo", pseudo: this.pseudo});
- }
+      this.agentCollaboratif.send('agentSocket', {type: "adduser", pseudo: this.pseudo, room: this.room});
+      this.agentCollaboratif.send('agentChat', {type: "changePseudo", pseudo: this.pseudo});
+    }
   }
 
   rejoindre(e){
     this.room = e.model.item.name;
     console.log(this.room);
-      console.log(this.pseudo)
+    console.log(this.pseudo)
     if (this.pseudo.length==0 || this.pseudo == undefined){
-    //  this.$.pseudoPopup.toggle();
-    this.hidePseudo = false;
+      //  this.$.pseudoPopup.toggle();
+      this.hidePseudo = false;
     }else{
       console.log(this.pseudo)
       //  this.modeBtnText = room.substring(0, 6);
@@ -271,17 +272,17 @@ class SpoggyCollaboratif extends Polymer.LazyImportsMixin(Polymer.Element) {
       this.agentCollaboratif.send('agentSocket', {type: "switchRoom", room: this.room, pseudo: this.pseudo});
 
     }
-  //  this.$.modePopup.toggle();
-//  this.hidePseudo = true;
-  this.hideRejoindre = true;
-  this.hideCreer = true
+    //  this.$.modePopup.toggle();
+    //  this.hidePseudo = true;
+    this.hideRejoindre = true;
+    this.hideCreer = true
   }
 
   creer(){
     if (this.$.roomInput.value.length>0){
       this.room = this.$.roomInput.value;
       this.$.roomInput.value = "";
-        console.log(this.pseudo)
+      console.log(this.pseudo)
       if (this.pseudo.length==0 || this.pseudo == undefined){
         this.hidePseudo = false;
         //  this.$.pseudoPopup.toggle();

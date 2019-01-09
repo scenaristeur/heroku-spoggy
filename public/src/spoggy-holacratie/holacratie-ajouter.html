@@ -1,11 +1,13 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
 
 <dom-module id="holacratie-ajouter">
   <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
 
-  <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
   <template>
     <style>
     :host {
@@ -15,57 +17,73 @@
     <div  hidden$="[[!isEqual(mode,'holacratie')]]">
       [[prop1]] [[type]]
     </div>
-  </template>
 
-  <script>
-  /**
-  * `spoggy-holacratie`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class HolacratieAjouter extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'holacratie-ajouter'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'holacratie-ajouter'
-        },
-        mode: {
-          type: String,
-          notify: true
-        },
-        type: {
-          type: String,
-          notify: true
-        },
-      };
+    <paper-card  hidden$="[[hideCreer]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+      <div class="card-content">
+        <div class="card-content">
+          <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Créer un(e) [[type]] :  </h2>
+          </div>
+          <p class="cafe-light">
+            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+              <paper-input id="nameInput" label="nom" value={{name}}></paper-input>
+            </div>
+          </p>
+        </div>
+        <div class="horizontal justified">
+          <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button>
+        </div>
+      </paper-card>
+    </template>
+
+    <script>
+    /**
+    * `spoggy-holacratie`
+    *
+    *
+    * @customElement
+    * @polymer
+    * @demo demo/index.html
+    */
+    class HolacratieAjouter extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'holacratie-ajouter'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'holacratie-ajouter'
+          },
+          mode: {
+            type: String,
+            notify: true
+          },
+          type: {
+            type: String,
+            notify: true
+          },
+        };
+      }
+
+      constructor(){
+        super();
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+          console.log("LOADED : ",this.prop1)
+        });
+      }
+      _deferred(){
+        this.importLazyGroup('lazy').then((results) => {
+          console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+          /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
+        });
+      }
+
+      isEqual(mode, test){
+        console.log(mode, test, mode==test)
+        return mode == test;
+      }
     }
 
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this._deferred();
-        console.log("LOADED : ",this.prop1)
-      });
-    }
-    _deferred(){
-      this.importLazyGroup('lazy').then((results) => {
-        console.log(results);
-        this.dispatchEvent(new CustomEvent('import-loaded', results));
-        /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
-      });
-    }
-
-    isEqual(mode, test){
-      console.log(mode, test, mode==test)
-      return mode == test;
-    }
-  }
-
-  window.customElements.define(HolacratieAjouter.is, HolacratieAjouter);
-  </script>
-</dom-module>
+    window.customElements.define(HolacratieAjouter.is, HolacratieAjouter);
+    </script>
+  </dom-module>

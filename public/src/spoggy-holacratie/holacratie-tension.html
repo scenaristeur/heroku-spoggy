@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
 <link rel="import" href="./holacratie-liste.html">
@@ -19,13 +20,13 @@
     </style>
     <div  hidden$="[[!isEqual(mode,'holacratie')]]">
       <h2>Hello [[prop1]]!</h2>
-      mode : [[mode]]
+      mode : [[mode]] <br>
       Ce module est en cours de developpement merci de patienter
-      <holacratie-liste type="tension">Liste</holacratie-liste>
-      <holacratie-ajouter type="tension">Ajouter</holacratie-ajouter>
-      <holacratie-modifier type="tension">Modifier</holacratie-modifier>
-      <holacratie-effacer type="tension">Effacer</holacratie-effacer>
-      <holacratie-detail type="tension">Detail</holacratie-detail>
+      <holacratie-liste type="tension"  schemaroot="[[schemaroot]]">Liste</holacratie-liste>
+      <holacratie-ajouter type="tension"  schemaroot="[[schemaroot]]">Ajouter</holacratie-ajouter>
+      <holacratie-modifier type="tension"  schemaroot="[[schemaroot]]">Modifier</holacratie-modifier>
+      <holacratie-effacer type="tension"  schemaroot="[[schemaroot]]">Effacer</holacratie-effacer>
+      <holacratie-detail type="tension"  schemaroot="[[schemaroot]]">Detail</holacratie-detail>
     </div>
 
   </template>
@@ -50,6 +51,9 @@
         mode: {
           type: String,
           notify: true
+        },
+        schemaroot: {
+          type: String,
         },
       };
     }

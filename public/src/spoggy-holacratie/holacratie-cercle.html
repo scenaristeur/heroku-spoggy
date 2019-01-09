@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
 <link rel="import" href="./holacratie-liste.html">
@@ -21,11 +22,11 @@
       <h2>Hello [[prop1]]!</h2>
       mode : [[mode]]
       Ce module est en cours de developpement merci de patienter
-      <holacratie-liste type="cercle">Liste</holacratie-liste>
-      <holacratie-ajouter type="cercle">Ajouter</holacratie-ajouter>
-      <holacratie-modifier type="cercle">Modifier</holacratie-modifier>
-      <holacratie-effacer type="cercle">Effacer</holacratie-effacer>
-      <holacratie-detail type="cercle">Detail</holacratie-detail>
+      <holacratie-liste type="cercle" schemaroot="[[schemaroot]]">Liste</holacratie-liste>
+      <holacratie-ajouter type="cercle" schemaroot="[[schemaroot]]">Ajouter</holacratie-ajouter>
+      <holacratie-modifier type="cercle" schemaroot="[[schemaroot]]">Modifier</holacratie-modifier>
+      <holacratie-effacer type="cercle" schemaroot="[[schemaroot]]">Effacer</holacratie-effacer>
+      <holacratie-detail type="cercle" schemaroot="[[schemaroot]]">Detail</holacratie-detail>
     </div>
   </template>
 
