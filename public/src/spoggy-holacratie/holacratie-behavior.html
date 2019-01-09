@@ -15,19 +15,34 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
     _loadSchema(){
       console.log(this.type)
-      console.log(this.schemaroot)
-      var url = this.schemaroot;
-    }
-    _creer(){
-      console.log(this.type)
-      console.log(this.schemaroot)
-    }
-    _showdetail(){
-      console.log(this.type)
-      console.log(this.schemaroot)
-    }
+      console.log(this.holaroot)
+      var url = this.holaroot;
+      var urlSchema = url+"Schema/";
+      console.log(solid)
+      console.log($rdf)
+      this.fileclient = new SolidFileClient();
+      console.log("FileClient ok",this.fileclient)
+      this.fileclient.readFolder( urlSchema ).then( folder => {
+        if(!folder) console.log(this.fileclient.err)
+        else console.log(
+          `Read ${folder.name}, it has ${folder.files.length} files.`,folder);
+          this.folder = folder;
+          folder.files.forEach(function (file){
+            console.log("parsing stockage et verification de l'existance des Folders de ", file.name)
+          })
+
+        })
+      }
+      _creer(){
+        console.log(this.type)
+        console.log(this.holaroot)
+      }
+      _showdetail(){
+        console.log(this.type)
+        console.log(this.holaroot)
+      }
 
 
-  }
-});
+    }
+  });
 </script>

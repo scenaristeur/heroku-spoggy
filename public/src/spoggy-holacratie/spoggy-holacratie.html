@@ -21,17 +21,18 @@
     <div  hidden$="[[!isEqual(mode,'holacratie')]]">
       <h2>Hello [[prop1]]!</h2>
       mode : [[mode]]<br>
-      schemaroot : [[schemaroot]]<br>
+      holaroot : [[holaroot]]<br>
       Ce module est en cours de developpement merci de patienter
-      <paper-input id="schemarootInput" label="schema Root" value={{schemaroot::change}}></paper-input>
+      <paper-input id="holarootInput" label="schema Root" value={{holaroot::change}}></paper-input>
+      <paper-button raised on-tap="_loadSchema">TEST</paper-button>
     </div>
-    <holacratie-tension mode="[[mode]]" schemaroot="[[schemaroot]]">Tension</holacratie-tension>
+    <holacratie-tension mode="[[mode]]" holaroot="[[holaroot]]">Tension</holacratie-tension>
 
-    <holacratie-associe mode="[[mode]]"  schemaroot="[[schemaroot]]">Associe</holacratie-associe>
-    <holacratie-role mode="[[mode]]"  schemaroot="[[schemaroot]]">Role</holacratie-role>
-    <holacratie-organisation mode="[[mode]]"  schemaroot="[[schemaroot]]">Organisation</holacratie-organisation>
+    <holacratie-associe mode="[[mode]]"  holaroot="[[holaroot]]">Associe</holacratie-associe>
+    <holacratie-role mode="[[mode]]"  holaroot="[[holaroot]]">Role</holacratie-role>
+    <holacratie-organisation mode="[[mode]]"  holaroot="[[holaroot]]">Organisation</holacratie-organisation>
 
-    <holacratie-cercle mode="[[mode]]"  schemaroot="[[schemaroot]]">Cercle</holacratie-cercle>
+    <holacratie-cercle mode="[[mode]]"  holaroot="[[holaroot]]">Cercle</holacratie-cercle>
 
 
   </template>
@@ -57,7 +58,7 @@
           type: String,
           notify: true
         },
-        schemaroot: {
+        holaroot: {
           type: String
         }
       };
@@ -75,7 +76,7 @@
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
 
-        this.set("schemaroot","http://localhost:8443/public/holacratie/");
+        this.set("holaroot","https://smag0.solid.community/public/holacratie/");
       });
     }
 
