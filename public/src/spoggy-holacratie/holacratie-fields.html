@@ -2,32 +2,24 @@
 <link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./holacratie-behavior.html">
-<link rel="import" href="./holacratie-liste.html">
-<link rel="import" href="./holacratie-ajouter.html">
-<link rel="import" href="./holacratie-modifier.html">
-<link rel="import" href="./holacratie-effacer.html">
-<link rel="import" href="./holacratie-detail.html">
 
-<dom-module id="holacratie-cercle">
+
+<dom-module id="holacratie-fields">
   <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
 
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
   <template>
     <style>
     :host {
       display: block;
     }
     </style>
-    <div  hidden$="[[!isEqual(mode,'holacratie')]]">
-      <h2>Hello [[prop1]]!</h2>
-      mode : [[mode]]
-      Ce module est en cours de developpement merci de patienter
-      <holacratie-liste type="cercle" holaroot="[[holaroot]]">Liste</holacratie-liste>
-      <holacratie-ajouter type="cercle" holaroot="[[holaroot]]">Ajouter</holacratie-ajouter>
-      <holacratie-modifier type="cercle" holaroot="[[holaroot]]">Modifier</holacratie-modifier>
-      <holacratie-effacer type="cercle" holaroot="[[holaroot]]">Effacer</holacratie-effacer>
-      <holacratie-detail type="cercle" holaroot="[[holaroot]]">Detail</holacratie-detail>
-    </div>
+    fields [[fields.length]]
+    <template is="dom-repeat" items="[[fields]]">
+      <span mode="[[mode]]" holaroot="[[holaroot]]" name="[[item.name]]" url="[[item.url]]" definition="[[item.definition]]">--- [[item.name]] / [[item.type]]</span><br>
+    </template>
+    end fields
   </template>
 
   <script>
@@ -39,13 +31,13 @@
   * @polymer
   * @demo demo/index.html
   */
-  class HolacratieCercle extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'holacratie-cercle'; }
+  class HolacratieFields extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'holacratie-fields'; }
     static get properties() {
       return {
         prop1: {
           type: String,
-          value: 'holacratie-cercle'
+          value: 'holacratie-fields'
         },
         mode: {
           type: String,
@@ -58,7 +50,7 @@
       super();
       Polymer.RenderStatus.afterNextRender(this, function() {
         this._deferred();
-        console.log("LOADED : ",this.prop1)
+        //  console.log("LOADED : ",this.prop1)
       });
     }
     _deferred(){
@@ -75,6 +67,6 @@
     }
   }
 
-  window.customElements.define(HolacratieCercle.is, HolacratieCercle);
+  window.customElements.define(HolacratieFields.is, HolacratieFields);
   </script>
 </dom-module>

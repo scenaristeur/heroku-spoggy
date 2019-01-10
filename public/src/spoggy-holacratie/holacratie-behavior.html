@@ -17,6 +17,7 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       console.log("_loadModule")
       console.log(this.name,this.url, this.definition)
       var app = this;
+      app.fields = [];
       var RDFS =  $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
       var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
       var OWL = $rdf.Namespace("http://www.w3.org/2002/07/owl#");
@@ -39,12 +40,25 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           console.log(moduleFields)
           while (moduleFields.length >0){
             var f = moduleFields.pop();
+            console.log(f)
             console.log(localname(f.subject),localname(f.predicate),localname(f.object))
-            field = {}
+            var field = {}
+            console.log(field)
             if (localname(f.predicate) == "has"){
-              
+              console.log("has")
+              field.name = localname(f.object)
+              field.type = "input"
+
+            }else{
+              console.log("else", localname(f.predicate) )
+              field.type = localname(f.predicate)
+              field.name = localname(f.object)
+
             }
+            console.log(field)
+            app.push("fields", field)
           }
+          console.log(app.fields)
         }
         ,err => {console.log(err)}
       )
