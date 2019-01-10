@@ -53,9 +53,11 @@
         <paper-input class="field" id="[[item.name]]" label="[[item.name]]" value="{{item.value}}"></paper-input>
       </template>
     </template>
-    <div class="horizontal justified">
-      <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button>
-    </div>
+    <template is="dom-if"  restamp="true" if="[[affiche_creer]]">
+      <div class="horizontal justified">
+        <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button>
+      </div>
+    </template>
   </template>
 
   <script>
@@ -80,6 +82,10 @@
           notify: true,
           value: {test:"blabla"}
         },
+        affiche_creer: {
+          type: Boolean,
+          value: false
+        }
       };
     }
 
@@ -99,6 +105,10 @@
     }
 
     _isEqualTo(test, string) {
+      if(test == string){
+        // au moins un field
+        this.affiche_creer = true
+      }
       return test == string;
     }
   }
