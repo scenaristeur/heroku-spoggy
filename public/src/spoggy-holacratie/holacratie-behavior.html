@@ -27,7 +27,7 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           console.log(graph)
           console.log(graph.statements)
           //recherche du module définit dans ce fichier
-          let root = graph.any(null, RDF('type'), $rdf.sym('http://www.w3.org/2002/07/owl#Ontology'));
+          let root = graph.any(null, RDF('type'), OWL('Ontology'));
           console.log("root ", root)
           let moduleSubject = graph.any(root, RDFS('isDefinedBy'));
           console.log("moduleSubject ",moduleSubject)
@@ -44,16 +44,15 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
             console.log(localname(f.subject),localname(f.predicate),localname(f.object))
             var field = {}
             console.log(field)
+            field.statement = f;
             if (localname(f.predicate) == "has"){
               console.log("has")
               field.name = localname(f.object)
               field.type = "input"
-
             }else{
               console.log("else", localname(f.predicate) )
               field.type = localname(f.predicate)
               field.name = localname(f.object)
-
             }
             console.log(field)
             app.push("fields", field)
@@ -62,11 +61,6 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
         }
         ,err => {console.log(err)}
       )
-
-
-
-
-
     }
 
 
@@ -174,9 +168,60 @@ err =>{console.log("BAD ERR :",err)}
 })
 }
 _creer(){
-  console.log(this.type)
-  console.log(this.holaroot)
+  console.log("url",this.url)
+  console.log("fields 2",this.fields)
+  var fields = this.fields
+  console.log("TEST if file exist -> create or update");
+  var nom = "unknown"
+  for (var i = 0; i < fields.length; i++){
+    if (fields[i].name == "Nom"){
+      nom = fields[i].value.split(' ').join('_');
+    }
+  }
+  var newFile = this.url+'/'+nom+".ttl";
+  console.log(newFile)
+
+  var content = this.createContent(this.url, this.fields)
+
+  var contentType = 'text/turtle';
+  this.fileclient = new SolidFileClient();
+  var realfile = this.fileclient.createFile(newFile,contentType,content).then(success => {
+    console.log(success)
+    console.log(`Created file ${newFile}.`);
+    console.log(this.fileclient)
+  },
+  err => console.log(err) )
+  .then(
+    created =>{console.log("created", created)},
+    err => {console.log(err)}
+  )
+
 }
+
+createContent(url, fields){
+  var content = '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n';
+  content +='@prefix foaf: <http://xmlns.com/foaf/0.1/>.\n\n';
+
+  for (var i = 0; i < fields.length; i++){
+
+
+
+
+
+    if (fields[i].name == "Nom"){
+      content +='<> rdfs:label "'+fields[i].value+'". \n';
+    }
+    if (fields[i].name == "Description"){
+      description = fields[i].value
+      content +='<> rdfs:comment "'+fields[i].value+'". \n';
+    }
+  }
+  console.log(content)
+  return content;
+}
+
+
+
 _showdetail(){
   console.log(this.type)
   console.log(this.holaroot)

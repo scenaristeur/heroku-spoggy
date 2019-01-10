@@ -4,7 +4,7 @@
 <link rel="import" href="./holacratie-behavior.html">
 
 
-<dom-module id="holacratie-fields">
+<dom-module id="holacratie-complements">
   <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
 
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
@@ -14,48 +14,12 @@
     :host {
       display: block;
     }
-    .cafe-reserve { color: var(--google-blue-500); }
-    iron-icon.star {
-      --iron-icon-width: 16px;
-      --iron-icon-height: 16px;
-      color: var(--paper-amber-500);
-    }
-    .flex-wrap {
-      @apply --layout-horizontal;
-      @apply --layout-wrap;
-      /*  @apply --layout-fit;*/
-      @apply --layout-center-justified;
-
-    }
-
-    .vertical-section-container {
-      max-width: 400px;
-    }
-    paper-card {
-      max-width: 450px;
-      margin: 10px;
-      --paper-card-header-image: {
-        width: 50%;
-      };
-    }
-    .horizontal {
-      @apply --layout-horizontal;
-    }
-    .flex {
-      @apply --layout-flex;
-    }
-    .justified {
-      @apply --layout-justified;
-    }
     </style>
     <template is="dom-repeat" items="[[fields]]">
-      <template is="dom-if"  restamp="true" if="[[_isEqualTo(item.type, 'input')]]">
-        <paper-input class="field" id="[[item.name]]" label="[[item.name]]" value="{{item.value}}"></paper-input>
+      <template is="dom-if"  restamp="true" if="[[!_isEqualTo(item.type, 'input')]]">
+        [[item.type]] --> [[item.name]]<br>
       </template>
     </template>
-    <div class="horizontal justified">
-      <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button>
-    </div>
   </template>
 
   <script>
@@ -67,18 +31,17 @@
   * @polymer
   * @demo demo/index.html
   */
-  class HolacratieFields extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'holacratie-fields'; }
+  class HolacratieComplements extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'holacratie-complements'; }
     static get properties() {
       return {
         prop1: {
           type: String,
-          value: 'holacratie-fields'
+          value: 'holacratie-complements'
         },
-        data: {
-          type: Object,
-          notify: true,
-          value: {test:"blabla"}
+        mode: {
+          type: String,
+          notify: true
         },
       };
     }
@@ -103,6 +66,6 @@
     }
   }
 
-  window.customElements.define(HolacratieFields.is, HolacratieFields);
+  window.customElements.define(HolacratieComplements.is, HolacratieComplements);
   </script>
 </dom-module>

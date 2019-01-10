@@ -63,7 +63,7 @@
     }
     _deferred(){
       this.importLazyGroup('lazy').then((results) => {
-        console.log(results);
+      //  console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         //this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
       });
