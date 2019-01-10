@@ -1,0 +1,92 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/render-status.html">
+<link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
+<link rel="import" href="./holacratie-behavior.html">
+<link rel="import" href="./holacratie-liste.html">
+<link rel="import" href="./holacratie-ajouter.html">
+<link rel="import" href="./holacratie-modifier.html">
+<link rel="import" href="./holacratie-effacer.html">
+<link rel="import" href="./holacratie-detail.html">
+
+<dom-module id="holacratie-module">
+  <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-card/paper-card.html">
+  <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+  <template>
+    <style>
+    :host {
+      display: block;
+    }
+    </style>
+    <paper-card   image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+      <div class="card-content">
+        <div class="card-content">
+          <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">[[name]]</h2>
+          </div>
+          <p class="cafe-light">
+            <div style="padding-top:10px" horizontal end-justified layout self-stretch>
+              url="[[url]]"<br> definition="[[definition]]"<br>
+              <holacratie-liste name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Liste</holacratie-liste>
+              <holacratie-ajouter name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Ajouter</holacratie-ajouter>
+              <holacratie-modifier name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Modifier</holacratie-modifier>
+              <holacratie-effacer name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Effacer</holacratie-effacer>
+              <holacratie-detail name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Detail</holacratie-detail>
+            </div>
+          </p>
+        </div>
+        <div class="horizontal justified">
+          <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button>
+        </div>
+      </paper-card>
+
+    </template>
+
+    <script>
+    /**
+    * `spoggy-holacratie`
+    *
+    *
+    * @customElement
+    * @polymer
+    * @demo demo/index.html
+    */
+    class HolacratieModule extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'holacratie-module'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'holacratie-module'
+          },
+          mode: {
+            type: String,
+            notify: true
+          },
+        };
+      }
+
+      constructor(){
+        super();
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+          //  console.log("LOADED : ",this.prop1)
+          console.log(this.url, this.definition)
+        });
+      }
+      _deferred(){
+        this.importLazyGroup('lazy').then((results) => {
+          console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+          /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
+        });
+      }
+
+      isEqual(mode, test){
+        console.log(mode, test, mode==test)
+        return mode == test;
+      }
+    }
+
+    window.customElements.define(HolacratieModule.is, HolacratieModule);
+    </script>
+  </dom-module>
