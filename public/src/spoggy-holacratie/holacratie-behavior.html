@@ -1,28 +1,28 @@
 <script>
-/* @polymerMixin */
-var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
-  return class HolacratieBehavior extends superClass {
-    constructor() {
-      super();
-      console.log("holacratie-behavior")
-    }
-    static get properties() {
-      return {
+  /* @polymerMixin */
+  var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
+    return class HolacratieBehavior extends superClass {
+      constructor() {
+        super();
+        console.log("holacratie-behavior")
+      }
+      static get properties() {
+        return {
 
 
-      };
-    }
+        };
+      }
 
-    _loadModule(){
-      console.log("_loadModule")
-      console.log(this.name,this.url, this.definition)
-      var app = this;
-      app.fields = [];
-      var RDFS =  $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
-      var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-      var OWL = $rdf.Namespace("http://www.w3.org/2002/07/owl#");
-      this.fileclient = new SolidFileClient();
-      this.fileclient.fetchAndParse(this.definition, 'text/turtle').then(
+      _loadModule(){
+        console.log("_loadModule")
+        console.log(this.name,this.url, this.definition)
+        var app = this;
+        app.fields = [];
+        var RDFS =  $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
+        var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        var OWL = $rdf.Namespace("http://www.w3.org/2002/07/owl#");
+        this.fileclient = new SolidFileClient();
+        this.fileclient.fetchAndParse(this.definition, 'text/turtle').then(
         graph => {
           console.log(graph)
           console.log(graph.statements)
@@ -35,7 +35,7 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           return moduleFields;
         },
         err => console.log(err)
-      ).then(
+        ).then(
         moduleFields =>{
           console.log(moduleFields)
           while (moduleFields.length >0){
@@ -60,107 +60,107 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
           console.log(app.fields)
         }
         ,err => {console.log(err)}
-      )
-    }
-
-
-    _loadSchema(){
-      var app = this;
-      //  console.log(this.type)
-      //  console.log(this.holaroot)
-      var url = this.holaroot;
-      //  var urlSchema = url+"Schema/";
-      this.fileclient = new SolidFileClient();
-      var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-      var FOAF =  $rdf.Namespace("http://xmlns.com/foaf/0.1/");
-      var SPACE =  $rdf.Namespace("http://www.w3.org/ns/pim/space#");
-      var ACL =  $rdf.Namespace("http://www.w3.org/ns/auth/acl#");
-      var LDP =  $rdf.Namespace("http://www.w3.org/ns/ldp#>");
-      var STAT =  $rdf.Namespace('http://www.w3.org/ns/posix/stat#');
-      var RDFS =  $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
-      var store = $rdf.graph();
-      var fetcher = new $rdf.Fetcher(store);
-
-
-      this.fileclient.readFolder( url ).then( folder => {
-        if(!folder) console.log(this.fileclient.err)
-        else console.log(`Read ${folder.name}, it has ${folder.files.length} files.`,folder);
-        this.folder = folder;
-        console.log(app.defs)
-        app.defs = [];
-        folder.files.forEach(function (file){
-          console.log("chargement ", file.name)
-
-          fetcher.load(file.url).then(response => {
-            console.log("loaded :",file.url)
-            console.log(store.statements)
-            /*const defs = store.any(null, RDFS('isDefinedBy'), null);
-            console.log(defs)*/
-            const defs = store.match(null, RDFS('isDefinedBy'), null);
-            console.log("DEFS ",defs)
-            return defs
-          }, rejected =>{
-            console.log(rejected)
-          }
-        ).then(
-          defs =>{
-            //  console.log(response.responseText)
-
-            while (defs.length >0){
-              var def = defs.pop();
-              var d = {}
-              d.name = localname(def.subject)
-              d.url = def.subject.value;
-              d.definition = def.object.value;
-              console.log(d.name, d.url, d.definition, defs.length);
-              app.push("defs", d)
-            }
-            console.log(app.defs)
-          },
-          err=>{console.log("err :",err)}
         )
+      }
+
+
+      _loadSchema(){
+        var app = this;
+        //  console.log(this.type)
+        //  console.log(this.holaroot)
+        var url = this.holaroot;
+        //  var urlSchema = url+"Schema/";
+        this.fileclient = new SolidFileClient();
+        var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        var FOAF =  $rdf.Namespace("http://xmlns.com/foaf/0.1/");
+        var SPACE =  $rdf.Namespace("http://www.w3.org/ns/pim/space#");
+        var ACL =  $rdf.Namespace("http://www.w3.org/ns/auth/acl#");
+        var LDP =  $rdf.Namespace("http://www.w3.org/ns/ldp#>");
+        var STAT =  $rdf.Namespace('http://www.w3.org/ns/posix/stat#');
+        var RDFS =  $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
+        var store = $rdf.graph();
+        var fetcher = new $rdf.Fetcher(store);
+
+
+        this.fileclient.readFolder( url ).then( folder => {
+          if(!folder) console.log(this.fileclient.err)
+          else console.log(`Read ${folder.name}, it has ${folder.files.length} files.`,folder);
+          this.folder = folder;
+          console.log(app.defs)
+          app.defs = [];
+          folder.files.forEach(function (file){
+            console.log("chargement ", file.name)
+
+            fetcher.load(file.url).then(response => {
+              console.log("loaded :",file.url)
+              console.log(store.statements)
+              /*const defs = store.any(null, RDFS('isDefinedBy'), null);
+              console.log(defs)*/
+              const defs = store.match(null, RDFS('isDefinedBy'), null);
+              console.log("DEFS ",defs)
+              return defs
+            }, rejected =>{
+              console.log(rejected)
+            }
+            ).then(
+            defs =>{
+              //  console.log(response.responseText)
+
+              while (defs.length >0){
+                var def = defs.pop();
+                var d = {}
+                d.name = localname(def.subject)
+                d.url = def.subject.value;
+                d.definition = def.object.value;
+                console.log(d.name, d.url, d.definition, defs.length);
+                app.push("defs", d)
+              }
+              console.log(app.defs)
+            },
+            err=>{console.log("err :",err)}
+            )
 
 
 
-        /*.then(defs =>{
-        console.log("DEFS : ", defs)
-        var props = [];
-        defs.forEach(function(d){
-        var def = d.object.value;
+            /*.then(defs =>{
+            console.log("DEFS : ", defs)
+            var props = [];
+            defs.forEach(function(d){
+            var def = d.object.value;
 
-        console.log(def)
-        var propsTemp = store.match($rdf.sym(def), null, null);
-        console.log("propsTemp ",propsTemp)
-        props.push(propsTemp)
+            console.log(def)
+            var propsTemp = store.match($rdf.sym(def), null, null);
+            console.log("propsTemp ",propsTemp)
+            props.push(propsTemp)
 
 
-      })
-      console.log("props ",props)
-      //return props
+          })
+          console.log("props ",props)
+          //return props
 
-      var res = {defs: defs, props: props}
-      console.log("res ",res)
-      return res;
-    },
-    err => {console.log("ERR :", err)}
-  )
-  .then(
-  result => {
-  console.log("RESULT : ", result)
-  return result;
-},
-pasResult =>{
-console.log("ERREUR : ",pasResult)
-}).then(
-final => {
-console.log("ok")
-console.log(final)
-app.push("defs", final.defs)
-app.push("props", final.props)
+          var res = {defs: defs, props: props}
+          console.log("res ",res)
+          return res;
+        },
+        err => {console.log("ERR :", err)}
+        )
+        .then(
+        result => {
+        console.log("RESULT : ", result)
+        return result;
+      },
+      pasResult =>{
+      console.log("ERREUR : ",pasResult)
+    }).then(
+    final => {
+    console.log("ok")
+    console.log(final)
+    app.push("defs", final.defs)
+    app.push("props", final.props)
 
-},
-err =>{console.log("BAD ERR :",err)}
-)*/
+  },
+  err =>{console.log("BAD ERR :",err)}
+  )*/
 
 
 })
@@ -192,8 +192,8 @@ _creer(){
   },
   err => console.log(err) )
   .then(
-    created =>{console.log("created", created)},
-    err => {console.log(err)}
+  created =>{console.log("created", created)},
+  err => {console.log(err)}
   )
 
 }
@@ -212,7 +212,7 @@ createContent(url, fields){
       content +='<> rdfs:label "'+fields[i].value+'". \n';
     }
     if (fields[i].name == "Description"){
-      description = fields[i].value
+      //description = fields[i].value
       content +='<> rdfs:comment "'+fields[i].value+'". \n';
     }
   }
