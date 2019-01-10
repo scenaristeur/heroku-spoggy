@@ -27,11 +27,12 @@
           console.log(graph)
           console.log(graph.statements)
           //recherche du module définit dans ce fichier
-          let root = graph.any(null, RDF('type'), OWL('Ontology'));
-          console.log("root ", root)
-          let moduleSubject = graph.any(root, RDFS('isDefinedBy'));
-          console.log("moduleSubject ",moduleSubject)
-          let moduleFields = graph.match(moduleSubject,null,null);
+          app.root = graph.any(null, RDF('type'), OWL('Ontology'));
+          console.log("root ", app.root)
+          app.moduleSubject = graph.any(app.root, RDFS('isDefinedBy'));
+          console.log("moduleSubject ",app.moduleSubject)
+
+          let moduleFields = graph.match(app.moduleSubject,null,null);
           return moduleFields;
         },
         err => console.log(err)

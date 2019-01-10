@@ -5,12 +5,12 @@
 <dom-module id="holacratie-effacer">
   <!--<link rel="lazy-import" group="lazy" href="./holacratie-import.html">-->
 
-  <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-input/paper-input.html">
   <template>
     <style>
-    :host {
-      display: block;
-    }
+      :host {
+        display: block;
+      }
     </style>
     <div  hidden$="[[!isEqual(mode,'holacratie')]]">
       [[prop1]] [[name]]
@@ -18,54 +18,54 @@
   </template>
 
   <script>
-  /**
-  * `spoggy-holacratie`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class HolacratieEffacer extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'holacratie-effacer'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'holacratie-effacer'
-        },
-        mode: {
-          type: String,
-          notify: true
-        },
-        name: {
-          type: String,
-          notify: true
-        },
-      };
+    /**
+    * `spoggy-holacratie`
+    *
+    *
+    * @customElement
+    * @polymer
+    * @demo demo/index.html
+    */
+    class HolacratieEffacer extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+      static get is() { return 'holacratie-effacer'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'holacratie-effacer'
+          },
+          mode: {
+            type: String,
+            notify: true
+          },
+          name: {
+            type: String,
+            notify: true
+          },
+        };
+      }
+
+      constructor(){
+        super();
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._deferred();
+          console.log("LOADED : ",this.prop1)
+        });
+      }
+      _deferred(){
+        this.importLazyGroup('lazy').then((results) => {
+          //  console.log(results);
+          this.dispatchEvent(new CustomEvent('import-loaded', results));
+          /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
+        });
+      }
+
+      isEqual(mode, test){
+        console.log(mode, test, mode==test)
+        return mode == test;
+      }
     }
 
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this._deferred();
-        console.log("LOADED : ",this.prop1)
-      });
-    }
-    _deferred(){
-      this.importLazyGroup('lazy').then((results) => {
-      //  console.log(results);
-        this.dispatchEvent(new CustomEvent('import-loaded', results));
-        /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
-      });
-    }
-
-    isEqual(mode, test){
-      console.log(mode, test, mode==test)
-      return mode == test;
-    }
-  }
-
-  window.customElements.define(HolacratieEffacer.is, HolacratieEffacer);
+    window.customElements.define(HolacratieEffacer.is, HolacratieEffacer);
   </script>
 </dom-module>
