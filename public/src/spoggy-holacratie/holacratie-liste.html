@@ -121,9 +121,8 @@
     <div class="card-content">
       <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Choisissez un(e) [[name]] :  </h2>
       </div>
-      <paper-button raised on-tap="_loadModule">_loadModule</paper-button>
-      <paper-button raised on-tap="_debug">_DEBUG</paper-button>
-      <paper-button raised on-tap="_loadListe">_loadListe</paper-button>
+      <!--<paper-button raised on-tap="_loadModule">_loadModule</paper-button>
+      <paper-button raised on-tap="_loadListe">_loadListe</paper-button>-->
       <paper-item  hidden$="[[!isEqual(files.length,0)]]" style="height:100px;" > Chargement de la liste des [[name]]s</paper-item>
       <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(files.length,0)]]" >
         <template is="dom-repeat" items="[[files]]">
@@ -131,7 +130,9 @@
 
         </template>
       </paper-listbox>
+
     </div>
+    <!--<paper-button raised on-tap="_debug">_DEBUG</paper-button>-->
   </paper-card>
 
 </template>
@@ -176,6 +177,7 @@ class HolacratieListe extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(P
       //  console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
       /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
+      this._loadListe()
     });
   }
 

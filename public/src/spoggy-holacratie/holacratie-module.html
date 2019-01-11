@@ -24,7 +24,7 @@
         </div>
         <p class="cafe-light">
           <div style="padding-top:10px" horizontal end-justified layout self-stretch>
-             <paper-button raised on-tap="_debug">DEBUG</paper-button>
+            <!--<paper-button raised on-tap="_debug">DEBUG</paper-button>-->
             <holacratie-ajouter name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Ajouter</holacratie-ajouter>
             <holacratie-liste name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Liste</holacratie-liste>
             <holacratie-modifier name="[[name]]" holaroot="[[holaroot]]" url="[[url]]" definition="[[definition]]">Modifier</holacratie-modifier>
@@ -69,7 +69,7 @@
     }
     _deferred(){
       this.importLazyGroup('lazy').then((results) => {
-      //  console.log(results);
+        //  console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
       });
