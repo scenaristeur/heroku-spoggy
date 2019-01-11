@@ -124,8 +124,16 @@
       <!--<paper-button raised on-tap="_loadModule">_loadModule</paper-button>
       <paper-button raised on-tap="_loadListe">_loadListe</paper-button>-->
       <paper-item  hidden$="[[!isEqual(files.length,0)]]" style="height:100px;" > Chargement de la liste des [[name]]s</paper-item>
+      Trier par <select value="{{sortVal::change}}">
+        <option value="label">Nom</option>
+        <option value="statut">Statut</option>
+        <option value="priorite">Priorité</option>
+        <option value="categorie">Catégorie</option>
+        <option value="mtime">Date de modification</option>
+      </select>
+      <paper-button raised on-tap="_loadListe">reload</paper-button>
       <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(files.length,0)]]" >
-        <template is="dom-repeat" items="[[files]]">
+        <template is="dom-repeat" items="[[files]]" sort="{{_sort(sortVal)}}">
           <paper-item file="[[item.url]]" on-tap="_showdetail">[[item.label]]<a href="[[item.url]]" title="[[item.url]]" target="_blank"> link</a></paper-item>
 
         </template>

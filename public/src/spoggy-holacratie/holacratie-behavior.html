@@ -205,14 +205,13 @@ _creer(){
 }
 
 createContent(url, fields){
+  var holaroot = this.holaroot;
+  console.log(holaroot)
   var content = '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n';
+  content += '@prefix hol: <https://holacratie.solid.community/public/holacratie/>.\n';
   content +='@prefix foaf: <http://xmlns.com/foaf/0.1/>.\n\n';
 
   for (var i = 0; i < fields.length; i++){
-
-
-
-
 
     if (fields[i].name == "Nom"){
       content +='<> rdfs:label "'+fields[i].value+'". \n';
@@ -221,6 +220,9 @@ createContent(url, fields){
       //description = fields[i].value
       content +='<> rdfs:comment "'+fields[i].value+'". \n';
     }
+    var pred = fields[i].name[0].toLowerCase() + fields[i].name.slice(1);
+    content +='<> hol:'+pred+' "'+fields[i].value+'". \n';
+
   }
   console.log(content)
   return content;
@@ -252,6 +254,48 @@ _loadListe(){
 _showdetail(){
   console.log(this.type)
   console.log(this.holaroot)
+}
+
+_sort(val) {
+  console.log(val)
+  switch(val) {
+    case 'label':
+    return function(a, b) {
+      if (a.label === b.label) return 0;
+      return a.label < b.label ? -1 : 1;
+    };
+    case 'statut':
+    return function(a, b) {
+      if (a.statut === b.statut) return 0;
+      return a.statut < b.statut ? -1 : 1;
+    };
+    case 'priorite':
+    return function(a, b) {
+      if (a.priorite === b.priorite) return 0;
+      return a.priorite < b.priorite ? -1 : 1;
+    };
+    case 'categorie':
+    return function(a, b) {
+      if (a.categorie === b.categorie) return 0;
+      return a.categorie < b.categorie ? -1 : 1;
+    };
+    case 'mtime':
+    return function(a, b) {
+      if (a.mtime === b.mtime) return 0;
+      return a.mtime < b.mtime ? -1 : 1;
+    };
+    case 'email_provider':
+    var regex = /@(.*)/;
+    return function(a, b) {
+      var a_provider = a.email.match(regex)[1];
+      var b_provider = b.email.match(regex)[1];
+      if (a_provider == b_provider) {
+        if (a.email === b.email) return 0;
+        return a.email < b.email ? -1 : 1;
+      }
+      return a_provider < b_provider ? -1 : 1;
+    };
+  }
 }
 
 
