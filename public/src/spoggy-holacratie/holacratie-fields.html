@@ -48,14 +48,14 @@
       @apply --layout-justified;
     }
     </style>
-    <template is="dom-repeat" items="[[fields]]">
+    <template is="dom-repeat" items="[[fields]]" sort="{{_sort(sortVal)}}">
       <template is="dom-if"  restamp="true" if="[[_isEqualTo(item.type, 'input')]]">
         <paper-input class="field" id="[[item.name]]" label="[[item.name]]" value="{{item.value}}"></paper-input>
       </template>
     </template>
     <template is="dom-if"  restamp="true" if="[[affiche_creer]]">
       <div class="horizontal justified">
-        <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button>
+        <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button> [[success]]
       </div>
     </template>
   </template>
@@ -85,6 +85,14 @@
         affiche_creer: {
           type: Boolean,
           value: false
+        },
+        sortVal: {
+          type: String,
+          value: "ordre"
+        },
+        success: {
+          type: String,
+          value: ""
         }
       };
     }
@@ -98,7 +106,7 @@
     }
     _deferred(){
       this.importLazyGroup('lazy').then((results) => {
-      //  console.log(results);
+        //  console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         //  this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
       });

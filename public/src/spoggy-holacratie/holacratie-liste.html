@@ -22,8 +22,8 @@
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-checkbox/paper-checkbox.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-icon-button/paper-icon-button.html">
   <link rel="lazy-import" group="lazy" href="../../bower_components/iron-collapse-button/iron-collapse-button.html">
-
   <link rel="lazy-import" group="lazy" href="../../bower_components/neon-animation/web-animations.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/paper-dialog/paper-dialog.html">
   <template>
     <style include="shared-styles">
     /* STYLES A NETTOYER car récupéré tel quel DE SPOGGY-ENDPOINT */
@@ -90,7 +90,18 @@
     paper-icon-button.white {
       color: white !important;
     }
-
+    .popup {
+      /*  position: relative;
+      top: 5vh;
+      left: 1vw;
+      width: 100vw;*/
+      z-index: 10;
+      background-color: #f9f9f9;
+      border-style:solid;
+      border-width:3px;
+      border-color: #5394ed;
+      padding:1px;
+    }
 
   }
   </style>
@@ -117,24 +128,29 @@
 
 
 
-  <paper-card  hidden$="[[hideRejoindre]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
+  <paper-card  hidden$="[[isEqual(files.length,0)]]"  justified>
     <div class="card-content">
       <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Choisissez un(e) [[name]] :  </h2>
       </div>
       <!--<paper-button raised on-tap="_loadModule">_loadModule</paper-button>
       <paper-button raised on-tap="_loadListe">_loadListe</paper-button>-->
-      <paper-item  hidden$="[[!isEqual(files.length,0)]]" style="height:100px;" > Chargement de la liste des [[name]]s</paper-item>
       Trier par <select value="{{sortVal::change}}">
         <option value="label">Nom</option>
+        <option value="mtimeinv" selected>Récent</option>
+        <option value="mtime">Ancient</option>
         <option value="statut">Statut</option>
         <option value="priorite">Priorité</option>
         <option value="categorie">Catégorie</option>
-        <option value="mtime">Date de modification</option>
       </select>
       <paper-button raised on-tap="_loadListe">reload</paper-button>
       <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(files.length,0)]]" >
         <template is="dom-repeat" items="[[files]]" sort="{{_sort(sortVal)}}">
-          <paper-item file="[[item.url]]" on-tap="_showdetail">[[item.label]]<a href="[[item.url]]" title="[[item.url]]" target="_blank"> link</a></paper-item>
+          <paper-item file="[[item.url]]" on-tap="_showdetail">[[item.label]]
+            <a href="[[item.url]]" title="[[item.url]]" target="_blank">
+              <img src="./assets/rdf.gif" />
+            </a>
+            <iron-icon on-tap="_share" icon="social:share"></iron-icon>
+          </paper-item>
 
         </template>
       </paper-listbox>
@@ -143,58 +159,70 @@
     <!--<paper-button raised on-tap="_debug">_DEBUG</paper-button>-->
   </paper-card>
 
-</template>
+  <paper-dialog id="popupShare" class="popup" >
+    <h2 style="margin: 0;color: #0D578B;">
+      Copy this url to share your graph : <paper-icon-button icon="clear" dialog-dismiss></paper-icon-button>
+    </h2>
+    <!--  <paper-input id="inputShare" label="Url"></paper-input>-->
+    <input id="inputShare" type="text" style='width:90%; padding:0' /><br>
 
-<script>
-/**
-* `spoggy-holacratie`
-*
-*
-* @customElement
-* @polymer
-* @demo demo/index.html
-*/
-class HolacratieListe extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-  static get is() { return 'holacratie-liste'; }
-  static get properties() {
-    return {
-      prop1: {
-        type: String,
-        value: 'holacratie-liste'
-      },
-      mode: {
-        type: String,
-        notify: true
-      },
-      name: {
-        type: String,
-        notify: true
-      },
-    };
+    <paper-button raised dialog-dismiss on-tap="copyShare">Copy<paper-button>
+      <!--<paper-button raised dialog-dismiss>Close</paper-button>-->
+    </paper-dialog>
+
+
+  </template>
+
+  <script>
+  /**
+  * `spoggy-holacratie`
+  *
+  *
+  * @customElement
+  * @polymer
+  * @demo demo/index.html
+  */
+  class HolacratieListe extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+    static get is() { return 'holacratie-liste'; }
+    static get properties() {
+      return {
+        prop1: {
+          type: String,
+          value: 'holacratie-liste'
+        },
+        mode: {
+          type: String,
+          notify: true
+        },
+        name: {
+          type: String,
+          notify: true
+        },
+      };
+    }
+
+    constructor(){
+      super();
+      Polymer.RenderStatus.afterNextRender(this, function() {
+        this._deferred();
+        //  console.log("LOADED : ",this.prop1)
+      });
+    }
+    _deferred(){
+      this.importLazyGroup('lazy').then((results) => {
+        //  console.log(results);
+        this.dispatchEvent(new CustomEvent('import-loaded', results));
+        /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
+        this._loadListe()
+      });
+    }
+
+    isEqual(variable, test){
+      //  console.log(mode, test, mode==test)
+      return variable == test;
+    }
   }
 
-  constructor(){
-    super();
-    Polymer.RenderStatus.afterNextRender(this, function() {
-      this._deferred();
-      //  console.log("LOADED : ",this.prop1)
-    });
-  }
-  _deferred(){
-    this.importLazyGroup('lazy').then((results) => {
-      //  console.log(results);
-      this.dispatchEvent(new CustomEvent('import-loaded', results));
-      /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
-      this._loadListe()
-    });
-  }
-
-  isEqual(variable, test){
-    //  console.log(mode, test, mode==test)
-    return variable == test;
-  }
-}
-
-window.customElements.define(HolacratieListe.is, HolacratieListe);
+  window.customElements.define(HolacratieListe.is, HolacratieListe);
 </script>
 </dom-module>

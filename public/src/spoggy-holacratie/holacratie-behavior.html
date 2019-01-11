@@ -44,6 +44,7 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       ).then(
         moduleFields =>{
           console.log(moduleFields)
+          var ordre = []
           while (moduleFields.length >0){
             var f = moduleFields.pop();
             console.log(f)
@@ -56,14 +57,38 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
               field.name = localname(f.object)
               field.type = "input"
             }else{
-              console.log("else", localname(f.predicate) )
-              field.type = localname(f.predicate)
-              field.name = localname(f.object)
+              var localPred = localname(f.predicate);
+              var localObj = localname(f.object);
+              console.log("else", localPred )
+
+              if (localPred.startsWith('_')){
+                var o = localPred.slice(1);
+                ordre[localObj] = o;
+
+
+              }else{
+                field.type = localPred
+                field.name = localObj
+
+              }
+
+
             }
             console.log(field)
             app.push("fields", field)
           }
+          console.log("ordre",ordre)
           console.log(app.fields)
+          app.fields.forEach(function(fi){
+            if((fi.name != undefined) && (ordre[fi.name] != undefined)){
+              console.log("update ordre de ",fi.name)
+              console.log(ordre[fi.name])
+              fi.ordre = ordre[fi.name];
+            }
+
+
+          })
+
         }
         ,err => {console.log(err)}
       )
@@ -174,6 +199,7 @@ err =>{console.log("BAD ERR :",err)}
 })
 }
 _creer(){
+  var app = this;
   console.log("url",this.url)
   console.log("fields 2",this.fields)
   var fields = this.fields
@@ -192,9 +218,10 @@ _creer(){
   var contentType = 'text/turtle';
   this.fileclient = new SolidFileClient();
   var realfile = this.fileclient.createFile(newFile,contentType,content).then(success => {
-    console.log(success)
-    console.log(`Created file ${newFile}.`);
-    console.log(this.fileclient)
+      console.log(success)
+    app.success = success;
+    console.log(`Created file ${newFile}`);
+      console.log(this.fileclient)
   },
   err => console.log(err) )
   .then(
@@ -208,26 +235,42 @@ createContent(url, fields){
   var holaroot = this.holaroot;
   console.log(holaroot)
   var content = '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.\n';
-  content += '@prefix hol: <https://holacratie.solid.community/public/holacratie/>.\n';
-  content +='@prefix foaf: <http://xmlns.com/foaf/0.1/>.\n\n';
+  content += '@prefix hol: <'+holaroot+'holacratie/>.\n';
+  content +='@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.\n\n';
 
   for (var i = 0; i < fields.length; i++){
 
     if (fields[i].name == "Nom"){
       content +='<> rdfs:label "'+fields[i].value+'". \n';
     }
-    if (fields[i].name == "Description"){
-      //description = fields[i].value
-      content +='<> rdfs:comment "'+fields[i].value+'". \n';
-    }
+    /*if (fields[i].name == "Description"){
+    //description = fields[i].value
+    content +='<> rdfs:comment "'+fields[i].value+'". \n';
+  }*/
+  if(fields[i].value != undefined && fields[i].value.length > 0){
+    var bnode = "_:_"+this.hashCode(fields[i].value);
     var pred = fields[i].name[0].toLowerCase() + fields[i].name.slice(1);
-    content +='<> hol:'+pred+' "'+fields[i].value+'". \n';
+    var classe = fields[i].name[0].toUpperCase() + fields[i].name.slice(1);
 
+    content +='<> hol:'+pred+" "+bnode+' . \n';
+    content +=bnode+' rdfs:label "'+fields[i].value+'" . \n';
+    content +=bnode+' rdf:type hol:'+classe+'.  \n';
   }
-  console.log(content)
-  return content;
+}
+console.log(content)
+return content;
 }
 
+hashCode(string) {
+  var hash = 0, i, chr;
+  if (string.length === 0) return hash;
+  for (i = 0; i < string.length; i++) {
+    chr   = string.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
 
 _loadListe(){
   var app = this;
@@ -284,6 +327,16 @@ _sort(val) {
       if (a.mtime === b.mtime) return 0;
       return a.mtime < b.mtime ? -1 : 1;
     };
+    case 'mtimeinv':
+    return function(a, b) {
+      if (a.mtime === b.mtime) return 0;
+      return a.mtime > b.mtime ? -1 : 1;
+    };
+    case 'ordre':
+    return function(a, b) {
+      if (a.ordre === b.ordre) return 0;
+      return a.ordre < b.ordre ? -1 : 1;
+    };
     case 'email_provider':
     var regex = /@(.*)/;
     return function(a, b) {
@@ -296,6 +349,19 @@ _sort(val) {
       return a_provider < b_provider ? -1 : 1;
     };
   }
+}
+
+_share(e){
+  var url = "https://spoggy.herokuapp.com/?source="+e.model.item.url;
+  console.log(url)
+  //this.agentFoldermenu.send('agentDialogs', {type: 'share', url: url })
+  this.$.popupShare.toggle();
+  this.$.inputShare.value = url;
+}
+copyShare(){
+  console.log(this.$.inputShare)
+  this.$.inputShare.select();
+  document.execCommand( 'copy' )
 }
 
 

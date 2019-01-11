@@ -13,6 +13,30 @@
 #    Object Properties
 #################################################################
 
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#_1
+rdf:_1 rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#_2
+rdf:_2 rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#_3
+rdf:_3 rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#_4
+rdf:_4 rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#_5
+rdf:_5 rdf:type owl:ObjectProperty .
+
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#_6
+rdf:_6 rdf:type owl:ObjectProperty .
+
+
 ###  https://holacratie.solid.community/public/holacratie/has
 :has rdf:type owl:ObjectProperty .
 
@@ -53,16 +77,27 @@
 :Priorité rdf:type owl:NamedIndividual .
 
 
+###  https://holacratie.solid.community/public/holacratie/Proposition
+:Proposition rdf:type owl:NamedIndividual .
+
+
 ###  https://holacratie.solid.community/public/holacratie/Statut
 :Statut rdf:type owl:NamedIndividual .
 
 
 ###  https://holacratie.solid.community/public/holacratie/Tension
 :Tension rdf:type owl:NamedIndividual ;
+         rdf:_1 :Nom ;
+         rdf:_2 :Description ;
+         rdf:_3 :Proposition ;
+         rdf:_4 :Catégorie ;
+         rdf:_5 :Priorité ;
+         rdf:_6 :Statut ;
          :has :Catégorie ,
               :Description ,
               :Nom ,
               :Priorité ,
+              :Proposition ,
               :Statut ;
          :initiateur :Associe ;
          :foldername "Tension"@fr .
