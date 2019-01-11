@@ -110,21 +110,25 @@
   }
   iron-icon.star:last-of-type { color: var(--paper-grey-500); }
   </style>
-<!--
+  <!--
   holaroot=[[holaroot]]  <br>
   definition=[[definition]]<br>
   url=[[url]]<br>-->
-  <paper-button raised on-tap="_loadModule">TEST</paper-button>
+
 
 
   <paper-card  hidden$="[[hideRejoindre]]" image="[[image(item.image)]]" alt="Ce endpoint ne semble pas accessible" justified>
     <div class="card-content">
       <div class="cafe-header">   <h2 style="margin: 0;color: #0D578B;">Choisissez un(e) [[name]] :  </h2>
       </div>
-      <paper-item  hidden$="[[!isEqual(rooms.length,0)]]" style="height:100px;" > Chargement de la liste des [[name]]s</paper-item>
-      <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(rooms.length,0)]]" >
-        <template is="dom-repeat" items="[[rooms]]">
-          <paper-item room="[[item.name]]" on-tap="_showdetail">[[item.name]] ([[item.count]])</paper-item>
+      <paper-button raised on-tap="_loadModule">_loadModule</paper-button>
+      <paper-button raised on-tap="_debug">_DEBUG</paper-button>
+      <paper-button raised on-tap="_loadListe">_loadListe</paper-button>
+      <paper-item  hidden$="[[!isEqual(files.length,0)]]" style="height:100px;" > Chargement de la liste des [[name]]s</paper-item>
+      <paper-listbox slot="dropdown-content"  class="dropdown-content" selected="0" hidden$="[[isEqual(files.length,0)]]" >
+        <template is="dom-repeat" items="[[files]]">
+          <paper-item file="[[item.url]]" on-tap="_showdetail">[[item.label]]<a href="[[item.url]]" title="[[item.url]]" target="_blank"> link</a></paper-item>
+
         </template>
       </paper-listbox>
     </div>
@@ -164,20 +168,20 @@ class HolacratieListe extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(P
     super();
     Polymer.RenderStatus.afterNextRender(this, function() {
       this._deferred();
-      console.log("LOADED : ",this.prop1)
+      //  console.log("LOADED : ",this.prop1)
     });
   }
   _deferred(){
     this.importLazyGroup('lazy').then((results) => {
-    //  console.log(results);
+      //  console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
       /*this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);*/
     });
   }
 
-  isEqual(mode, test){
-    console.log(mode, test, mode==test)
-    return mode == test;
+  isEqual(variable, test){
+    //  console.log(mode, test, mode==test)
+    return variable == test;
   }
 }
 
