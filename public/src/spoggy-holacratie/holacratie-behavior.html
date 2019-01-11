@@ -67,8 +67,11 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
 
 
               }else{
-                field.type = localPred
-                field.name = localObj
+                console.log("todo",f)
+                console.log("todo localObj",localPred)
+                console.log("todo localObj",localObj)
+                field.type = localPred || f.predicate.value
+                field.name = localObj || f.object.value
 
               }
 
@@ -218,10 +221,10 @@ _creer(){
   var contentType = 'text/turtle';
   this.fileclient = new SolidFileClient();
   var realfile = this.fileclient.createFile(newFile,contentType,content).then(success => {
-      console.log(success)
+    console.log(success)
     app.success = success;
     console.log(`Created file ${newFile}`);
-      console.log(this.fileclient)
+    console.log(this.fileclient)
   },
   err => console.log(err) )
   .then(

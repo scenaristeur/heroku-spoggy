@@ -9,8 +9,11 @@ localname = function(node){
       uLabel = node.value.split("/");
       labelU = uLabel[uLabel.length-1];
     }
+  }else if (node.termType == "Literal"){
+
+    labelU = node.value;
   }else{
-    console.log("literal or blanknode ???",node.value)
+    console.log("blanknode ???",node.value)
   }
   //console.log(labelU)
   return labelU;
