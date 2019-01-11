@@ -9,79 +9,97 @@
   <link rel="lazy-import" group="lazy" href="./holacratie-import.html">
 
   <link rel="lazy-import" group="lazy" href="./holacratie-module.html">
+  <!--  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="lazy-import" group="lazy" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+-->
 
-  <template>
-    <style>
-    :host {
-      display: block;
-    }
-    </style>
-    <div  hidden$="[[!isEqual(mode,'holacratie')]]">
-      <h2>[[prop1]]</h2>
-      Ce module est en cours de developpement merci de patienter
-      <paper-input id="holarootInput" label="schema Root" value={{holaroot::change}}></paper-input>
-      <paper-button raised on-tap="_loadSchema">Charger</paper-button>
+<template>
+  <style>
+  :host {
+    display: block;
+  }
+  .flex-wrap {
+    @apply --layout-horizontal;
+    @apply --layout-wrap;
+    @apply --layout-fit;
+    @apply --layout-center-justified;
 
+  }
+  .flex {
+    @apply --layout-flex;
+  }
+  .justified {
+    @apply --layout-justified;
+  }
+  </style>
+  <div  hidden$="[[!isEqual(mode,'holacratie')]]">
+    <h2>[[prop1]]</h2>
+    Ce module est en cours de developpement merci de patienter
+    <paper-input id="holarootInput" label="schema Root" value={{holaroot::change}}></paper-input>
+    <paper-button raised on-tap="_loadSchema">Charger</paper-button>
 
+    <div flex-wrap>
       <template is="dom-repeat" items="[[defs]]">
         <holacratie-module mode="[[mode]]" holaroot="[[holaroot]]" name="[[item.name]]" url="[[item.url]]" definition="[[item.definition]]">[[item.name]]</holacratie-module>
       </template>
     </div>
-  </template>
+  </div>
 
-  <script>
-  /**
-  * `spoggy-holacratie`
-  *
-  *
-  * @customElement
-  * @polymer
-  * @demo demo/index.html
-  */
-  class SpoggyHolacratie extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
-    static get is() { return 'spoggy-holacratie'; }
-    static get properties() {
-      return {
-        prop1: {
-          type: String,
-          value: 'spoggy-holacratie'
-        },
-        mode: {
-          type: String,
-          notify: true
-        },
-        holaroot: {
-          type: String
-        },
-        defs: {
-          type: Array,
-          value: []
-        }
-      };
-    }
+</template>
 
-    constructor(){
-      super();
-      Polymer.RenderStatus.afterNextRender(this, function() {
-        this._deferred();
-      });
-    }
-    _deferred(){
-      this.importLazyGroup('lazy').then((results) => {
-        //  console.log(results);
-        this.dispatchEvent(new CustomEvent('import-loaded', results));
-        this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
-
-        this.set("holaroot","https://holacratie.solid.community/public/");
-      });
-    }
-
-    isEqual(mode, test){
-      console.log(mode, test, mode==test)
-      return mode == test;
-    }
+<script>
+/**
+* `spoggy-holacratie`
+*
+*
+* @customElement
+* @polymer
+* @demo demo/index.html
+*/
+class SpoggyHolacratie extends Polymer.LazyImportsMixin(HolacratieBehaviorMixin(Polymer.Element)) {
+  static get is() { return 'spoggy-holacratie'; }
+  static get properties() {
+    return {
+      prop1: {
+        type: String,
+        value: 'spoggy-holacratie'
+      },
+      mode: {
+        type: String,
+        notify: true
+      },
+      holaroot: {
+        type: String
+      },
+      defs: {
+        type: Array,
+        value: []
+      }
+    };
   }
 
-  window.customElements.define(SpoggyHolacratie.is, SpoggyHolacratie);
+  constructor(){
+    super();
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      this._deferred();
+    });
+  }
+  _deferred(){
+    this.importLazyGroup('lazy').then((results) => {
+      //  console.log(results);
+      this.dispatchEvent(new CustomEvent('import-loaded', results));
+      this.agentHolacratie = new HolacratieAgent('agentHolacratie', this);
+
+      this.set("holaroot","https://holacratie.solid.community/public/");
+    });
+  }
+
+  isEqual(mode, test){
+    console.log(mode, test, mode==test)
+    return mode == test;
+  }
+}
+
+window.customElements.define(SpoggyHolacratie.is, SpoggyHolacratie);
 </script>
 </dom-module>
