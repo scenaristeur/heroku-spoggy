@@ -40,7 +40,8 @@
 :Holacratie rdf:type owl:NamedIndividual ,
                      :Methode ;
             rdfs:comment "Holacratie Constitution EN & other : https://github.com/holacracyone/Holacracy-Constitution"@en ,
-                         "Holacratie Constitution FR : https://github.com/holacracyone/Holacracy-Constitution/blob/master/Holacracy-Constitution.md"@fr .
+                         "Holacratie Constitution FR : https://github.com/holacracyone/Holacracy-Constitution-4.1-FRENCH"@fr ,
+                         "Holacratie PDF FR : https://igipartners.com/sites/default/files/constitution_4.1_0.pdf"@fr .
 
 
 ###  https://holacratie.solid.community/public/Organisation
