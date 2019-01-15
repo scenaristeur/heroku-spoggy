@@ -55,7 +55,7 @@
     </template>
     <template is="dom-if"  restamp="true" if="[[affiche_creer]]">
       <div class="horizontal justified">
-        <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button> [[success]]
+        <paper-button  class="cafe-reserve" on-tap="_creer">Créer</paper-button> [[created]]
       </div>
     </template>
   </template>
@@ -90,7 +90,7 @@
           type: String,
           value: "ordre"
         },
-        success: {
+        created: {
           type: String,
           value: ""
         }

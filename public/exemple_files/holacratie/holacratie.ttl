@@ -38,13 +38,27 @@
 
 ###  https://holacratie.solid.community/public/Holacratie
 :Holacratie rdf:type owl:NamedIndividual ,
-                     :Methode .
+                     :Methode ;
+            rdfs:comment "Holacratie Constitution EN & other : https://github.com/holacracyone/Holacracy-Constitution"@en ,
+                         "Holacratie Constitution FR : https://github.com/holacracyone/Holacracy-Constitution/blob/master/Holacracy-Constitution.md"@fr .
 
 
 ###  https://holacratie.solid.community/public/Organisation
 :Organisation rdf:type owl:NamedIndividual ,
                        :Agent ;
               rdfs:isDefinedBy "https://holacratie.solid.community/public/Schema/organisation.ttl" .
+
+
+###  https://holacratie.solid.community/public/ProchaineAction
+:ProchaineAction rdf:type owl:NamedIndividual ,
+                          :Agent ;
+                 rdfs:isDefinedBy "https://holacratie.solid.community/public/Schema/action.ttl" .
+
+
+###  https://holacratie.solid.community/public/Projet
+:Projet rdf:type owl:NamedIndividual ,
+                 :Agent ;
+        rdfs:isDefinedBy "https://holacratie.solid.community/public/Schema/projet.ttl" .
 
 
 ###  https://holacratie.solid.community/public/Reunion

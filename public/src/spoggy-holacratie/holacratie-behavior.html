@@ -216,23 +216,18 @@ _creer(){
   //var newFile = this.url+'/'+nom+".ttl";
   var newFile = this.url+'/'+nom;
   console.log(newFile)
-
   var content = this.createContent(this.url, this.fields)
-
   var contentType = 'text/turtle';
   this.fileclient = SolidFileClient;
-  var realfile = this.fileclient.createFile(newFile,content,contentType).then(created => {
+  this.fileclient.createFile(newFile,content,contentType).then(created => {
     console.log(created)
-    app.success = created;
+    app.created = created;
     console.log(`Created file ${created}`);
-    //  console.log(this.fileclient)
   },
-  err => console.log(err) )
-  .then(
-    created =>{console.log("created", created)},
-    err => {console.log(err)}
-  )
-
+  err => {
+    console.log(err)
+    app.created = err
+  })
 }
 
 createContent(url, fields){
