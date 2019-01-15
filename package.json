@@ -35,7 +35,7 @@
     "npm": "^6.5.0",
     "socket.io": "^2.2.0",
     "solid-auth-client": "^2.2.14",
-    "solid-file-client": "github:jeff-zucker/solid-file-client",
+    "solid-file-client": "^0.4.6",
     "vis": "^4.21.0"
   }
 }

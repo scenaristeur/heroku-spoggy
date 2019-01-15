@@ -26,7 +26,7 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       var RDFS =  $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
       var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
       var OWL = $rdf.Namespace("http://www.w3.org/2002/07/owl#");
-      this.fileclient = new SolidFileClient();
+      this.fileclient = SolidFileClient;
       this.fileclient.fetchAndParse(this.definition, 'text/turtle').then(
         graph => {
           console.log(graph)
@@ -104,7 +104,7 @@ var HolacratieBehaviorMixin = Polymer.dedupingMixin(function(superClass){
       //  console.log(this.holaroot)
       var url = this.holaroot;
       //  var urlSchema = url+"Schema/";
-      this.fileclient = new SolidFileClient();
+      this.fileclient = SolidFileClient;
       var RDF =  $rdf.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#");
       var FOAF =  $rdf.Namespace("http://xmlns.com/foaf/0.1/");
       var SPACE =  $rdf.Namespace("http://www.w3.org/ns/pim/space#");
@@ -219,7 +219,7 @@ _creer(){
   var content = this.createContent(this.url, this.fields)
 
   var contentType = 'text/turtle';
-  this.fileclient = new SolidFileClient();
+  this.fileclient = SolidFileClient;
   var realfile = this.fileclient.createFile(newFile,contentType,content).then(success => {
     console.log(success)
     app.success = success;
@@ -280,7 +280,7 @@ _loadListe(){
   console.log("url=", this.url);
   console.log("definition=", this.definition);
   console.log("holaroot=", this.holaroot);
-  this.fileclient = new SolidFileClient();
+  this.fileclient = SolidFileClient;
   var url = this.url;
   if (url.substr(-1) != '/') url += '/';
   console.log("fileclient reads",url)

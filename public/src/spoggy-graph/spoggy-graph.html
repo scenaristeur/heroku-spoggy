@@ -222,7 +222,7 @@ class SpoggyGraph extends Polymer.LazyImportsMixin(GraphBehaviorMixin(Polymer.El
     this.importLazyGroup('lazy').then((results) => {
       console.log(results);
       this.dispatchEvent(new CustomEvent('import-loaded', results));
-        this.fileclient = new SolidFileClient();
+        this.fileclient = SolidFileClient;
 
 
 

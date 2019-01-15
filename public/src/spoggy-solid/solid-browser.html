@@ -41,7 +41,7 @@
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
         this.agentBrowser = new BrowserAgent('agentBrowser', this);
-        this.fileclient = new SolidFileClient();
+        this.fileclient = SolidFileClient;
         console.log("FileClient ok",this.fileclient)
       });
       //  this.$.popupSolid.toggle();

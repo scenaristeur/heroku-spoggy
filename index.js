@@ -34,7 +34,7 @@ if (useLocalEndpoint){
   //console.log(fusekiServer)
   fusekiServer.start().then(function(s){
     //  console.log(fusekiServer)
-      console.log(fusekiServer.datasets())
+    console.log(fusekiServer.datasets())
   });
 
 
@@ -115,6 +115,9 @@ function shouldCompress (req, res) {
   // fallback to standard filter function
   return compression.filter(req, res)
 }
+app.use('/solid-auth-client', express.static(__dirname + '/node_modules/solid-auth-client/dist-lib/'));
+app.use('/rdflib', express.static(__dirname + '/node_modules/rdflib/dist/'));
+app.use('/solid-file-client', express.static(__dirname + '/node_modules/solid-file-client/dist/browser/'));
 app.use(express.static(__dirname + '/public'));
 app.get('*', function(req, res){
   //  console.log(req.originalUrl);
