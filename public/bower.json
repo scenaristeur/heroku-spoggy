@@ -35,7 +35,8 @@
     "juicy-ace-editor": "^2.2.1",
     "bottom-nav": "^2.0.1",
     "app-localize-chrome-i18n-mixin": "^2.2.6",
-    "paper-toggle-button": "^2.1.1"
+    "paper-toggle-button": "^2.1.1",
+    "paper-toast": "^2.1.2"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

@@ -363,6 +363,20 @@ copyShare(){
   document.execCommand( 'copy' )
 }
 
+_copylink(e){
+  var url = e.model.item.url;
+  console.log(url)
+  var x = document.createElement("INPUT");
+  x.setAttribute("type", "text");
+  x.value=url;
+  x.select();
+  console.log(x)
+  document.execCommand( 'copy' )
+  this.$.toast.text = "Url: "+url+" copiée"
+  console.log(this.$.toast)
+  this.$.toast.open();
+}
+
 
 }
 });
