@@ -2,10 +2,12 @@
 <link rel="import" href="../../bower_components/lazy-imports/lazy-imports-mixin.html">
 <link rel="import" href="./import-behavior.html">
 <link rel="import" href="./export-behavior.html">
-
 <link rel="import" href="./ie-import.html">
 
+
+
 <dom-module id="spoggy-import-export">
+
   <link rel="lazy-import" group="lazy" href="../../bower_components/paper-button/paper-button.html">
 
   <template>
@@ -38,6 +40,12 @@
     }
     constructor(){
       super();
+      this.fileclient = SolidFileClient;
+      console.log("FileClient ok",this.fileclient)
+      this.agentImport = new ImportAgent('agentImport', this);
+      console.log(this.agentImport);
+      this.agentExport = new ExportAgent('agentExport', this);
+      console.log(this.agentExport);
       Polymer.RenderStatus.afterNextRender(this, function() {
         this._deferred();
       });
@@ -45,15 +53,11 @@
 
     _deferred(){
       let app = this;
-      this.agentImport = new ImportAgent('agentImport', this);
-      console.log(this.agentImport);
-      this.agentExport = new ExportAgent('agentExport', this);
-      console.log(this.agentExport);
-
       this.importLazyGroup('lazy').then((results) => {
         console.log(results);
         this.dispatchEvent(new CustomEvent('import-loaded', results));
-        this.fileclient = SolidFileClient;
+
+
       });
     }
   }

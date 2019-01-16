@@ -47,6 +47,7 @@
         if (Object.keys(this.params).length === 0){ // si aucun parametre dans l'adresse de la page, on utilise la bdd
         console.log("pas de param");
       }else{
+
         console.log(this.network)
         console.log(this.params);
         if (this.params.url != undefined ){
@@ -54,7 +55,9 @@
           this.agentData.send('agentJsonld', {type: 'params', params: this.params});
           //  this.agentData.send('agentApp', {type: 'setMode', value: 'global'});
         }else{
-            this.agentData.send('agentGraph', {type: 'importFromParam', params: this.params});
+          console.log("IMPORT TAG")
+          //  this.agentData.send('agentGraph', {type: 'importFromParam', params: this.params});
+          this.agentData.send('agentImport', {type: 'import', params: this.params});
         }
 
         if(this.params.graph != undefined && this.params.graph.length > 0){
@@ -63,20 +66,20 @@
           this.agentData.send('agentApp', {type: 'setMode', value: 'solo'});
         }
 
-      /*
+        /*
         if (this.params.endpoint != undefined){
-          if( this.params.format == "jsonld" ){
-            console.log("ENVOI JSONLD");
-            this.agentData.send('agentJsonld', {type: 'params', params: this.params});
-          }else{
-            this.agentData.send('agentVirtuoso', {type: 'params', params: this.params});
-          }
+        if( this.params.format == "jsonld" ){
+        console.log("ENVOI JSONLD");
+        this.agentData.send('agentJsonld', {type: 'params', params: this.params});
+      }else{
+      this.agentData.send('agentVirtuoso', {type: 'params', params: this.params});
+    }
 
-        }*/
+  }*/
 
-      }
-    });
-  }
+}
+});
+}
 }
 
 window.customElements.define(SpoggyData.is, SpoggyData);
