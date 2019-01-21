@@ -213,13 +213,10 @@ _creer(){
       nom = fields[i].value.split(' ').join('_');
     }
   }
-  //var newFile = this.url+'/'+nom+".ttl";
-  var newFile = this.url+'/'+nom;
-  console.log(newFile)
+  var newFile = this.url+'/'+nom+".ttl";
   var content = this.createContent(this.url, this.fields)
-  var contentType = 'text/turtle';
   this.fileclient = SolidFileClient;
-  this.fileclient.createFile(newFile,content,contentType).then(created => {
+  this.fileclient.createFile(newFile,content).then(created => {
     console.log(created)
     app.created = created;
     console.log(`Created file ${created}`);
